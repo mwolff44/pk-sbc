@@ -1,0 +1,21 @@
+# FILES TYPES
+#################
+*.pyc
+
+# SPECIFIC FILES
+#################
+pyfreebilling/settings.py
+
+# DIRECTORY
+#################
+freeswitch/
+templates/
+media/
+templatetags/
+media/
+custom_admin_tools/
+
+# OS GENERATED FILES
+#################
+.DS_Store?
+*~
