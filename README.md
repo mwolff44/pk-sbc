@@ -10,7 +10,7 @@
 - Contact information
 
 ********************************************************************************
-                             What is vBilling
+                             What is pyfreebilling
 ********************************************************************************
 
 pyfreebilling is an open source wholesale billing platform for FreeSWITCH. 
