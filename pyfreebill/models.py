@@ -1,3 +1,19 @@
+# Copyright 2013 Mathias WOLFF
+# This file is part of pyfreebilling.
+# 
+# pyfreebilling is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# pyfreebilling is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
+
 from django.db import models
 from django.db.models import permalink
 from django.core.validators import EMPTY_VALUES
@@ -440,7 +456,7 @@ class AclLists(models.Model):
 class AclNodes(models.Model):
     """ ACL NODES model """
     company = models.ForeignKey(Company, verbose_name=_(u"company"))
-    cidr = fields.FSIPAddressField(_(u"ip/cidr Address"), help_text=_(u"Customer IP or cidr address."))
+    cidr = models.CharField(_(u"ip/cidr Address"), max_length=100, help_text=_(u"Customer IP or cidr address."))
     POLICY_CHOICES = (
         ('deny', _('deny')),
         ('allow', _('allow')),
@@ -536,3 +552,47 @@ class SofiaGateway(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.name
+
+# CDR
+
+class CDR(models.Model):
+    """ CDR Model    """
+    customer = models.ForeignKey(Company, verbose_name=_(u"customer"), related_name="customer_related")
+    customer_ip = models.CharField(_(u"customer IP address"), max_length=100, help_text=_(u"Customer IP address."))
+    uuid = models.CharField(_(u"UUID"), max_length=100)
+    bleg_uuid = models.CharField(_(u"b leg UUID"), null=True, default="", max_length=100)
+    caller_id_number = models.CharField(_(u"caller ID num"), max_length=100)
+    destination_number = models.CharField(_(u"Dest. number"), max_length=100)
+    chan_name = models.CharField(_(u"channel name"), max_length=100)
+    start_stamp = models.DateTimeField(_(u"start time"))
+    answered_stamp = models.DateTimeField(_(u"answered time"), null=True)
+    end_stamp = models.DateTimeField(_(u"hangup time"))
+    duration = models.IntegerField(_(u"duration"))
+    billsec = models.IntegerField(_(u"billsec"))
+    read_codec = models.CharField(_(u"read codec"), max_length=20)
+    write_codec = models.CharField(_(u"write codec"), max_length=20)
+    hangup_cause = models.CharField(_(u"hangup cause"), max_length=50)
+    hangup_cause_q850 = models.IntegerField(_(u"q.850"))
+    gateway = models.ForeignKey(SofiaGateway, verbose_name=_(u"gateway"))
+    cost_rate = models.DecimalField(_(u'buy rate'), max_digits=11, decimal_places=5)
+    prefix = models.CharField(_(u'Prefix'), max_length=30)
+    country = models.CharField(_(u'Country'), max_length=100)
+    rate = models.DecimalField(_(u'sell rate'), max_digits=11, decimal_places=5)
+    init_block = models.DecimalField(_(u'Init block rate'), max_digits=11, decimal_places=5)
+    block_min_duration = models.IntegerField(_(u'block min duration'))
+    lcr_carrier_id = models.ForeignKey(Company, verbose_name=_(u"carrier"), related_name="carrier_related")
+    ratecard_id = models.ForeignKey(RateCard, verbose_name=_(u"ratecard"))
+    lcr_group_id = models.ForeignKey(LCRGroup, verbose_name=_(u"lcr group"))
+    sip_user_agent = models.CharField(_(u'sip user agent'), max_length=30)
+    sip_rtp_rxstat = models.CharField(_(u'sip rtp rx stat'), max_length=30)
+    sip_rtp_txstat = models.CharField(_(u'sip rtp tx stat'), max_length=30)
+
+    class Meta:
+        db_table = 'cdr'
+        ordering = ('start_stamp', 'customer')
+        verbose_name = _(u"CDR")
+        verbose_name_plural = _(u"CDRs")
+
+    def __unicode__(self):
+        return u"%s" % self.uuid
+

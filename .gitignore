@@ -8,14 +8,17 @@ pyfreebilling/settings.py
 
 # DIRECTORY
 #################
-freeswitch/
-templates/
+freeswitch/scripts/
+templates/admin
 media/
 templatetags/
 media/
 custom_admin_tools/
+cdrreport/
 
 # OS GENERATED FILES
 #################
 .DS_Store?
 *~
+.gitignore
+manage.py
