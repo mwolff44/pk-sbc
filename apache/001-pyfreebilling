@@ -1,0 +1,29 @@
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+
+        DocumentRoot /usr/local/venv/pyfreebilling
+
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+        WSGIScriptAlias / /usr/local/venv/pyfreebilling/wsgi.py
+        WSGIDaemonProcess lostquery display-name=lostquery user=www-data processes=2 threads=15
+
+        Alias /static/ /usr/local/venv/pyfreebilling/static/
+        Alias /media/ /usr/local/venv/pyfreebilling/media/
+
+        <Location "/static/">
+                Options -Indexes
+        </Location>
+
+        <Directory /usr/local/venv/pyfreebilling>
+                Order deny,allow
+                Allow from all
+        </Directory>
+</VirtualHost>
