@@ -48,9 +48,10 @@
         <param name='rtp-timeout-sec' value='300'/>
 	<param name='rtp-hold-timeout-sec' value='1800'/>
         <param name='rtp-timer-name' value='soft'/>
-        <param name='inbound-codec-prefs' value='PCMU,PCMA,G729'/>
-        <param name='outbound-codec-prefs' value='PCMU,PCMA,G729'/>
-	<param name='inbound-codec-negociation' value='generous'/>
+        <param name='inbound-codec-prefs' value='{{ sipprofile.outbound_codec_prefs }}'/>
+        <param name='outbound-codec-prefs' value='{{ sipprofile.outbound_codec_prefs }}'/>
+	<param name='inbound-codec-negociation' value='greedy'/>
+        <param name='disable-transcoding' value='{{ sipprofile.disable_transcoding }}'/>
         <param name='debug' value='0'/>
         <param name='rfc2833-pt' value='101'/>
         <param name='dtmf-duration' value='100'/>

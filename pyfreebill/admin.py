@@ -23,7 +23,7 @@ from django.core import serializers
 from django.template import Context, loader
 from django.core.files import File
 from django.utils.translation import ugettext_lazy as _
-from pyfreebill.models import Company, Person, Group, PhoneNumber, EmailAddress, InstantMessenger, WebSite, StreetAddress, SpecialDate, CompanyBalanceHistory, LCRGroup, Lcr, RateCard, Rates, CustomerRateCards, CustomerDirectory, AclLists, AclNodes, SipProfile, SofiaGateway, CDR
+from pyfreebill.models import Company, Person, Group, PhoneNumber, EmailAddress, InstantMessenger, WebSite, StreetAddress, SpecialDate, CompanyBalanceHistory, LCRGroup, Lcr, RateCard, Rates, CustomerRateCards, CustomerDirectory, AclLists, AclNodes, VoipSwitch, SipProfile, SofiaGateway, CDR
 
 # site-wide actions
 
@@ -211,6 +211,11 @@ class CustomerDirectoryAdmin(admin.ModelAdmin):
     list_filter = ['enabled',]
     search_filter = ['^sip_ip', '^company', '^name']
 
+# VoipSwitch
+class VoipSwitchAdmin(admin.ModelAdmin):
+    list_display = ['name', 'ip','date_added', 'date_modified']
+    ordering = ['name',]
+
 # SofiaGateway
 class SofiaGatewayAdmin(admin.ModelAdmin):
     list_display = ['name', 'sip_profile', 'company', 'channels', 'proxy', 'register', 'date_added', 'date_modified']
@@ -245,7 +250,7 @@ class CDRAdmin(admin.ModelAdmin):
     ordering = ['-start_stamp', 'customer', 'gateway']
     list_filter = ['customer', 'gateway', 'lcr_carrier_id']
     search_fields = ['^destination_number', '^company__customer']
-    readonly_fields =('customer_ip', 'customer', 'caller_id_number', 'destination_number', 'start_stamp', 'answered_stamp', 'end_stamp', 'duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'cost_rate', 'prefix', 'country', 'rate', 'init_block', 'block_min_duration', 'ratecard_id', 'lcr_group_id', 'uuid', 'bleg_uuid', 'chan_name', 'read_codec', 'write_codec', 'sip_user_agent', 'sip_rtp_rxstat', 'sip_rtp_txstat')
+    readonly_fields =('customer_ip', 'customer', 'caller_id_number', 'destination_number', 'start_stamp', 'answered_stamp', 'end_stamp', 'duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'cost_rate', 'prefix', 'country', 'rate', 'init_block', 'block_min_duration', 'ratecard_id', 'lcr_group_id', 'uuid', 'bleg_uuid', 'chan_name', 'read_codec', 'write_codec', 'sip_user_agent', 'sip_rtp_rxstat', 'sip_rtp_txstat', 'switchname', 'switch_ipv4', 'hangup_disposition')
     list_per_page = 20
 
     def has_add_permission(self, request, obj=None):
@@ -271,6 +276,7 @@ admin.site.register(CustomerRateCards, CustomerRateCardsAdmin)
 admin.site.register(CustomerDirectory, CustomerDirectoryAdmin)
 admin.site.register(AclLists, AclListsAdmin)
 admin.site.register(AclNodes, AclNodesAdmin)
+admin.site.register(VoipSwitch, VoipSwitchAdmin)
 admin.site.register(SipProfile, SipProfileAdmin)
 admin.site.register(SofiaGateway, SofiaGatewayAdmin)
 admin.site.register(CDR, CDRAdmin)

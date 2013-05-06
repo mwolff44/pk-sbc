@@ -475,21 +475,42 @@ class AclNodes(models.Model):
     def __unicode__(self):
         return u"%s %s" % (self.company, self.cidr)
 
+# VOIP SWITCH
+
+class VoipSwitch(models.Model):
+    """ VoipSwitch Profile """
+    name = models.CharField(_(u"SIP profile name"), max_length=50, help_text=_(u"E.g.: external, internal, etc..."))
+    ip = models.CharField(_(u"switch IP"), max_length=100, default="auto", help_text=_(u"Switch IP."))
+    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+
+    class Meta:
+        db_table = 'voip_switch'
+        ordering = ('name', )
+        verbose_name = _(u'VoIP Switch')
+        verbose_name_plural = _(u'VoIP Switches')
+
+    def __unicode__(self):
+        return u"%s (:%s)" % (self.name, self.ip)
+
 # SOFIA 
 
 class SipProfile(models.Model):
     """ Sofia Sip profile """
-    name = models.CharField(_(u"SIP profile name"), max_length=50, help_text=_(u"E.g.: external, internal, etc..."))
+    name = models.CharField(_(u"SIP profile name"), max_length=50, help_text=_(u"E.g.: the name you want ..."))
     ext_rtp_ip = models.CharField(_(u"external RTP IP"), max_length=100, default="auto", help_text=_(u"External/public IP address to bind to for RTP."))
     ext_sip_ip = models.CharField(_(u"external SIP IP"), max_length=100, default="auto", help_text=_(u"External/public IP address to bind to for SIP."))
     rtp_ip = models.CharField(_(u"RTP IP"), max_length=100, default="auto", help_text=_(u"Internal IP address to bind to for RTP."))
     sip_ip = models.CharField(_(u"SIP IP"), max_length=100, default="auto", help_text=_(u"Internal IP address to bind to for SIP."))
     sip_port = models.PositiveIntegerField(_(u"SIP port"), default=5060)
+    disable_transcoding = models.BooleanField(_(u"disable transcoding"), default=True, help_text=_(u"If true, you can not use transcoding."))
     accept_blind_reg = models.BooleanField(_(u"accept blind registration"), default=False, help_text=_(u"If true, anyone can register to server and will not be challenged for username/password information."))
     auth_calls = models.BooleanField(_(u"authenticate calls"), default=True, help_text=_(u"If true, FreeeSWITCH will authorize all calls "
             "on this profile, i.e. challenge the other side for "
             "username/password information."))
     log_auth_failures = models.BooleanField(_(u"log auth failures"), default=False, help_text=_(u"It true, log authentication failures. Required for Fail2ban."))
+    inbound_codec_prefs = models.CharField(_(u"inbound codec prefs"), max_length=100, default="G729,PCMU,PCMA", help_text=_(u"Define allowed preferred codecs for inbound calls."))
+    outbound_codec_prefs = models.CharField(_(u"outbound codec prefs"), max_length=100, default="G729,PCMU,PCMA", help_text=_(u"Define allowed preferred codecs for outbound calls."))
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
 
@@ -574,7 +595,7 @@ class CDR(models.Model):
     hangup_cause = models.CharField(_(u"hangup cause"), max_length=50)
     hangup_cause_q850 = models.IntegerField(_(u"q.850"))
     gateway = models.ForeignKey(SofiaGateway, verbose_name=_(u"gateway"))
-    cost_rate = models.DecimalField(_(u'buy rate'), max_digits=11, decimal_places=5)
+    cost_rate = models.DecimalField(_(u'buy rate'), max_digits=11, decimal_places=5, default="", null=True)
     prefix = models.CharField(_(u'Prefix'), max_length=30)
     country = models.CharField(_(u'Country'), max_length=100)
     rate = models.DecimalField(_(u'sell rate'), max_digits=11, decimal_places=5)
@@ -586,6 +607,9 @@ class CDR(models.Model):
     sip_user_agent = models.CharField(_(u'sip user agent'), max_length=30)
     sip_rtp_rxstat = models.CharField(_(u'sip rtp rx stat'), max_length=30)
     sip_rtp_txstat = models.CharField(_(u'sip rtp tx stat'), max_length=30)
+    switchname = models.CharField(_(u"switchname"), null=True, default="", max_length=100)
+    switch_ipv4 = models.CharField(_(u"switch ipv4"), null=True, default="", max_length=100)
+    hangup_disposition = models.CharField(_(u"hangup disposition"), null=True, default="", max_length=100)
 
     class Meta:
         db_table = 'cdr'
