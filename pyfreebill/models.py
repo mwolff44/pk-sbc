@@ -314,11 +314,62 @@ class CustomerDirectory(models.Model):
         return "%s (%s:%s)" % (self.name, self.sip_ip, self.sip_port)
 
 
+# Provider Rates
+
+class ProviderTariff(models.Model):
+    """ Provider tariff """
+    name = models.CharField(_(u"name"), max_length=128)
+    carrier = models.ForeignKey(Company)
+    lead_strip = models.CharField(_(u'lead strip'), blank=True, default='', max_length=15)
+    tail_strip = models.CharField(_(u'tail strip'), blank=True, default='', max_length=15)
+    prefix = models.CharField(_(u'prefix'), blank=True, default='', max_length=15)
+    suffix = models.CharField(_(u'suffix'), blank=True, default='', max_length=15)
+    description = models.TextField(_(u'description'), blank=True)
+    date_start = models.DateTimeField()
+    date_end = models.DateTimeField()
+    quality = models.IntegerField(_(u'quality'), blank=True, default='', help_text=_(u"Alternate field to order by."))
+    reliability = models.IntegerField(_(u'reliability'), blank=True, default='', help_text=_(u"Alternate field to order by."))
+    cid = models.CharField(_(u'cid'), blank=True, default='', max_length=25, help_text=_(u"Regex to modify CallerID number."))
+    enabled = models.BooleanField(_(u"Enabled / Disabled"), default=True)
+    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+
+    class Meta:
+        db_table = 'provider_tariff'
+        ordering = ('enabled', 'quality', 'reliability')
+        verbose_name = _(u'provider tariff')
+        verbose_name_plural = _(u'provider tariffs')
+
+    def __unicode__(self):  
+        return u"%s" % self.name
+
+class ProviderRates(models.Model):
+    """ Provider Rates Model """
+    digits = models.CharField(_(u'Country Code'), max_length=15)
+    cost_rate = models.DecimalField(_(u'Cost rate'), max_digits=11, decimal_places=5)
+    block_min_duration = models.IntegerField(_(u'block min duration'), default=1)
+    init_block = models.DecimalField(_(u'Init block rate'), max_digits=11, decimal_places=5, default=1)
+    provider_tariff = models.ForeignKey(ProviderTariff)
+    date_start = models.DateTimeField()
+    date_end = models.DateTimeField()
+    enabled = models.BooleanField(_(u"Enabled / Disabled"), default=True)
+    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+
+    class Meta:
+        db_table = 'provider_rates'
+        ordering = ('enabled', 'provider_tariff', 'digits')
+        verbose_name = _(u'provider rate')
+        verbose_name_plural = _(u'provider rates')
+
+    def __unicode__(self):
+        return u"%s %s %s " % (self.digits, self.cost_rate, self.provider_tariff)
+
 # LCR
 
 class LCRGroup(models.Model):
     """ LCR group model """
-    name = models.CharField(_(u"name"), max_length=128)
+    name = models.CharField(_(u"name"), max_length=128, unique=True)
     description = models.TextField(_(u'description'), blank=True)
     LCR_TYPE_CHOICES = (
         ('p', _(u"lower price")),
@@ -331,50 +382,36 @@ class LCRGroup(models.Model):
 
     class Meta:
         db_table = 'lcr_group'
-        ordering = ('name',)
-        verbose_name = _(u'LCR group')
-        verbose_name_plural = _(u'LCR groups')
+        ordering = ('name',) 
+        verbose_name = _(u'LCR')
+        verbose_name_plural = _(u'LCRs')
 
-    def __unicode__(self):
-        return u"%s %s" % (self.name, self.lcrtype)
+    def __unicode__(self):   
+        return u"%s %s " % (self.name, self.lcrtype)
 
-class Lcr(models.Model):
-    """ LCR Model """
-    country = models.ForeignKey(Country, verbose_name=_(u"country"))
-    digits = models.CharField(_(u'Country Code'), max_length=15)
-    sell_rate = models.DecimalField(_(u'Sell rate'), blank=True, default='', max_digits=11, decimal_places=5)
-    cost_rate = models.DecimalField(_(u'Cost rate'), max_digits=11, decimal_places=5)
-    carrier = models.ForeignKey(Company)
-    lead_strip = models.CharField(_(u'lead strip'), blank=True, default='', max_length=15)
-    tail_strip = models.CharField(_(u'tail strip'), blank=True, default='', max_length=15)
-    prefix = models.CharField(_(u'prefix'), blank=True, default='', max_length=15)
-    suffix = models.CharField(_(u'suffix'), blank=True, default='', max_length=15)
-    lcr_profile = models.ForeignKey(LCRGroup, verbose_name=_(u"lcr groupe"))
-    date_start = models.DateTimeField()
-    date_end = models.DateTimeField()
-    quality = models.IntegerField(_(u'quality'), blank=True, default='', help_text=_(u"Alternate field to order by."))
-    reliability = models.IntegerField(_(u'reliability'), blank=True, default='', help_text=_(u"Alternate field to order by."))
-    cid = models.CharField(_(u'cid'), blank=True, default='', max_length=25, help_text=_(u"Regex to modify CallerID number."))
-    enabled = models.BooleanField(_(u"Enabled / Disabled"), default=True)
+class LCRProviders(models.Model):
+    """ LCR group model """
+    lcr = models.ForeignKey(LCRGroup, verbose_name=_(u"LCR"))
+    provider_tariff = models.ForeignKey(ProviderTariff, verbose_name=_(u"Provider tariff"))
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
 
     class Meta:
-        db_table = 'lcr'
-        ordering = ('enabled', 'lcr_profile', 'digits')
-        verbose_name = _(u'LCR')
-        verbose_name_plural = _(u'LCRs')
+        db_table = 'lcr_providers'
+        verbose_name = _(u'LCR provider')
+        verbose_name_plural = _(u'LCR providers')
 
     def __unicode__(self):
-        return u"%s %s %s %s %s " % (self.country, self.digits, self.cost_rate, self.lcr_profile, self.enabled)
+        return u"%s %s " % (self.lcr, self.provider_tariff)
+
 
 # Ratecard
 
 class RateCard(models.Model):
     """ RateCard Model """
-    name = models.CharField(_(u'name'), max_length=128)
+    name = models.CharField(_(u'name'), max_length=128, unique=True)
     description = models.TextField(_(u'description'), blank=True)
-    lcrgroup = models.ForeignKey(LCRGroup, verbose_name=_(u"lcr group"))
+    lcrgroup = models.ForeignKey(LCRGroup, verbose_name=_(u"lcr"))
     enabled = models.BooleanField(_(u"Enabled / Disabled"), default=False)
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
@@ -388,10 +425,9 @@ class RateCard(models.Model):
     def __unicode__(self):
         return u"%s" % self.name
 
-class Rates(models.Model):
-    """ Rates Model """
+class CustomerRates(models.Model):
+    """ Customer Rates Model """
     ratecard = models.ForeignKey(RateCard, verbose_name=_(u"ratecard"))
-    country = models.ForeignKey(Country, verbose_name=_(u"country"))
     prefix = models.CharField(_(u'Regex or numeric prefix'), max_length=30)
     rate = models.DecimalField(_(u'sell rate'), max_digits=11, decimal_places=5)
     block_min_duration = models.IntegerField(_(u'block min duration'), default=1)
@@ -403,10 +439,10 @@ class Rates(models.Model):
     date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
 
     class Meta:
-        db_table = 'rates'
+        db_table = 'customer_rates'
         ordering = ('ratecard', 'prefix', 'enabled')
-        verbose_name = _(u'Rate')
-        verbose_name_plural = _(u'Rates')
+        verbose_name = _(u'customer rate')
+        verbose_name_plural = _(u'customer rates')
 
     def __unicode__(self):
         return u"%s" % self.ratecard
@@ -417,7 +453,8 @@ class CustomerRateCards(models.Model):
     ratecard = models.ForeignKey(RateCard, verbose_name=_(u"ratecard"))
     description = models.TextField(_(u'description'), blank=True)
     tech_prefix = models.CharField(_(u"technical prefix"), blank=True, default='', max_length=15)
-    priority = models.IntegerField(_(u'priority'), help_text=_(u"Priority order."))
+    priority = models.IntegerField(_(u'priority'), help_text=_(u"Priority order, 1 is the higher priority and 3 the lower one. Correct values are : 1, 2 or 3 !."))
+    discount = models.DecimalField(_(u'discount'), max_digits=3, decimal_places=2, default=0, help_text=_(u"ratecard discount. For 10% discount, enter 10 !"))
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
 
@@ -604,7 +641,7 @@ class CDR(models.Model):
     lcr_carrier_id = models.ForeignKey(Company, verbose_name=_(u"carrier"), related_name="carrier_related")
     ratecard_id = models.ForeignKey(RateCard, verbose_name=_(u"ratecard"))
     lcr_group_id = models.ForeignKey(LCRGroup, verbose_name=_(u"lcr group"))
-    sip_user_agent = models.CharField(_(u'sip user agent'), max_length=30)
+    sip_user_agent = models.CharField(_(u'sip user agent'), max_length=100)
     sip_rtp_rxstat = models.CharField(_(u'sip rtp rx stat'), max_length=30)
     sip_rtp_txstat = models.CharField(_(u'sip rtp tx stat'), max_length=30)
     switchname = models.CharField(_(u"switchname"), null=True, default="", max_length=100)

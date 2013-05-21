@@ -23,7 +23,8 @@ from django.core import serializers
 from django.template import Context, loader
 from django.core.files import File
 from django.utils.translation import ugettext_lazy as _
-from pyfreebill.models import Company, Person, Group, PhoneNumber, EmailAddress, InstantMessenger, WebSite, StreetAddress, SpecialDate, CompanyBalanceHistory, LCRGroup, Lcr, RateCard, Rates, CustomerRateCards, CustomerDirectory, AclLists, AclNodes, VoipSwitch, SipProfile, SofiaGateway, CDR
+from import_export.admin import ImportExportMixin, ExportMixin
+from pyfreebill.models import Company, Person, Group, PhoneNumber, EmailAddress, InstantMessenger, WebSite, StreetAddress, SpecialDate, CompanyBalanceHistory, ProviderTariff, ProviderRates, LCRGroup, LCRProviders, RateCard, CustomerRates, CustomerRateCards, CustomerDirectory, AclLists, AclNodes, VoipSwitch, SipProfile, SofiaGateway, CDR
 
 # site-wide actions
 
@@ -152,6 +153,39 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
         messages.success(request, "balance updated")
       obj.save()
 
+# Provider Rates
+
+class ProviderTariffAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'carrier', 'description', 'quality', 'reliability', 'date_start', 'date_end', 'enabled']
+    ordering = ['name',]
+    readonly_fields = ['id',]
+
+class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ['provider_tariff', 'digits', 'cost_rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'enabled', 'date_added', 'date_modified']
+    ordering = ['provider_tariff', 'digits']
+    list_filter = ['provider_tariff', 'enabled']
+    search_fields = ['digits', 'date_start', 'date_end']
+    actions = ['make_enabled', 'make_disabled']
+
+    def make_enabled(self, request, queryset):
+        rows_updated = queryset.update(enabled=True)
+        if rows_updated == 1 :    
+            message_bit = "1 item was"
+        else:
+            message_bit = "%s items were" % rows_updated
+        self.message_user(request, "%s successfully marked as enabled." % message_bit)
+    make_enabled.short_description = _(u"mark selected items as enabled")
+
+    def make_disabled(self, request, queryset):
+        rows_updated = queryset.update(enabled=False)
+        if rows_updated == 1 :
+            message_bit = "1 item was"
+        else:
+            message_bit = "%s items were" % rows_updated
+        self.message_user(request, "%s successfully marked as disabled." % message_bit)
+    make_disabled.short_description = _(u"mark selected items as disabled")
+
+
 # LCR
 
 class LCRGroupAdmin(admin.ModelAdmin):
@@ -159,17 +193,15 @@ class LCRGroupAdmin(admin.ModelAdmin):
     ordering = ('name', 'lcrtype')
     list_filter = ('lcrtype',)
 
-class LcrAdmin(admin.ModelAdmin):
-    list_display = ['country', 'digits', 'cost_rate', 'carrier', 'lead_strip', 'tail_strip', 'prefix', 'suffix', 'lcr_profile', 'quality', 'enabled']
-    ordering = ['digits', 'country', 'carrier']
-    list_filter = ['enabled', 'carrier']
-    search_fields = ['^digits',]
+class LCRProvidersAdmin(admin.ModelAdmin):
+    list_display = ['lcr', 'provider_tariff']
+    list_filter = ('lcr',)
 
-# Rates
+# Customer Rates
 
-class RatesAdmin(admin.ModelAdmin):
-    list_display = ['ratecard', 'country', 'prefix', 'rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'enabled', 'date_added', 'date_modified']
-    ordering = ['ratecard', 'country', 'prefix']
+class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ['ratecard', 'prefix', 'rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'enabled', 'date_added', 'date_modified']
+    ordering = ['ratecard', 'prefix']
     list_filter = ['ratecard', 'enabled']
     search_fields = ['prefix', 'date_start', 'date_end']
     actions = ['make_enabled', 'make_disabled']
@@ -243,7 +275,7 @@ class AclNodesAdmin(admin.ModelAdmin):
     search_fields = ['cidr',]
 
 # CDR
-class CDRAdmin(admin.ModelAdmin):
+class CDRAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ('start_stamp', 'customer', 'caller_id_number', 'destination_number', 'duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'cost_rate', 'prefix', 'rate', 'ratecard_id', 'lcr_group_id')
     list_display_links = ('start_stamp',)
 #    _links = ('customer', 'gateway', 'lcr_carrier_id', 'ratecard_id', 'lcr_group_id')
@@ -251,7 +283,7 @@ class CDRAdmin(admin.ModelAdmin):
     list_filter = ['customer', 'gateway', 'lcr_carrier_id']
     search_fields = ['^destination_number', '^company__customer']
     readonly_fields =('customer_ip', 'customer', 'caller_id_number', 'destination_number', 'start_stamp', 'answered_stamp', 'end_stamp', 'duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'cost_rate', 'prefix', 'country', 'rate', 'init_block', 'block_min_duration', 'ratecard_id', 'lcr_group_id', 'uuid', 'bleg_uuid', 'chan_name', 'read_codec', 'write_codec', 'sip_user_agent', 'sip_rtp_rxstat', 'sip_rtp_txstat', 'switchname', 'switch_ipv4', 'hangup_disposition')
-    list_per_page = 20
+#    list_per_page = 20
 
     def has_add_permission(self, request, obj=None):
       return False
@@ -268,10 +300,12 @@ admin.site.register(Company, CompanyAdmin)
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Group, GroupAdmin)
 admin.site.register(CompanyBalanceHistory, CompanyBalanceHistoryAdmin)
+admin.site.register(ProviderTariff, ProviderTariffAdmin)
+admin.site.register(ProviderRates, ProviderRatesAdmin)
 admin.site.register(LCRGroup, LCRGroupAdmin)
-admin.site.register(Lcr, LcrAdmin)
+admin.site.register(LCRProviders, LCRProvidersAdmin)
 admin.site.register(RateCard, RateCardAdmin)
-admin.site.register(Rates, RatesAdmin)
+admin.site.register(CustomerRates, CustomerRatesAdmin)
 admin.site.register(CustomerRateCards, CustomerRateCardsAdmin)
 admin.site.register(CustomerDirectory, CustomerDirectoryAdmin)
 admin.site.register(AclLists, AclListsAdmin)
