@@ -1,7 +1,7 @@
 import os
 # Django settings for pyfreebilling project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 PROJECT_DIR = os.path.dirname(__file__)
@@ -28,7 +28,7 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [*]
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -143,6 +143,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.comments',
     'axes',
+    'import_export',
     'pyfreebill',
     'django.contrib.admin',
     'south',
@@ -203,3 +204,6 @@ AXES_LOGIN_FAILURE_LIMIT = 5
 # For the flags head over to http://www.famfamfam.com/lab/icons/flags/ and download the ISO 3166-1 alpha-2 country code flag package. Add a 'flags' directory to your media root and copy the .gif flags there.
 # COUNTRIES_FLAG_PATH = '<path relative to media root>flags/%s.png' Specify directory
 COUNTRIES_FLAG_PATH = 'flags/%s.png'
+
+ADMIN_TOOLS_MENU = 'pyfreebilling.menu.CustomMenu'
+

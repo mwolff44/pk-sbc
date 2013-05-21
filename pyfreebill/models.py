@@ -345,7 +345,7 @@ class ProviderTariff(models.Model):
 
 class ProviderRates(models.Model):
     """ Provider Rates Model """
-    digits = models.CharField(_(u'Country Code'), max_length=15)
+    digits = models.CharField(_(u'numeric prefix'), max_length=30)
     cost_rate = models.DecimalField(_(u'Cost rate'), max_digits=11, decimal_places=5)
     block_min_duration = models.IntegerField(_(u'block min duration'), default=1)
     init_block = models.DecimalField(_(u'Init block rate'), max_digits=11, decimal_places=5, default=1)
@@ -402,7 +402,7 @@ class LCRProviders(models.Model):
         verbose_name_plural = _(u'LCR providers')
 
     def __unicode__(self):
-        return u"%s %s " % (self.lcr, self.provider_tariff)
+        return u"%s - %s " % (self.lcr, self.provider_tariff)
 
 
 # Ratecard
@@ -428,7 +428,7 @@ class RateCard(models.Model):
 class CustomerRates(models.Model):
     """ Customer Rates Model """
     ratecard = models.ForeignKey(RateCard, verbose_name=_(u"ratecard"))
-    prefix = models.CharField(_(u'Regex or numeric prefix'), max_length=30)
+    prefix = models.CharField(_(u'numeric prefix'), max_length=30)
     rate = models.DecimalField(_(u'sell rate'), max_digits=11, decimal_places=5)
     block_min_duration = models.IntegerField(_(u'block min duration'), default=1)
     init_block = models.DecimalField(_(u'Init block rate'), max_digits=11, decimal_places=5, default=1)

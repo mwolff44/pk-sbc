@@ -71,25 +71,32 @@ admin.site.add_action(sofiaupdate, _(u"generate sofia configuration file"))
 
 class EmailAddressInline(generic.GenericTabularInline):
     model = EmailAddress
+    extra = 0
 
 class PhoneNumberInline(generic.GenericTabularInline):
     model = PhoneNumber
+    extra = 0
 
 class InstantMessengerInline(generic.GenericTabularInline):
     model = InstantMessenger
+    extra = 0
 
 class WebSiteInline(generic.GenericTabularInline):
     model = WebSite
+    extra = 0
 
 class StreetAddressInline(generic.GenericStackedInline):
     model = StreetAddress
+    extra = 0
 
 class SpecialDateInline(generic.GenericStackedInline):
     model = SpecialDate
+    extra = 0
 
 class CommentInline(generic.GenericStackedInline):
     model = Comment
     ct_fk_field = 'object_pk'
+    extra = 0
 
 class CompanyAdmin(admin.ModelAdmin):
     inlines = [
@@ -155,10 +162,18 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
 
 # Provider Rates
 
+class ProviderRatesInline(admin.TabularInline):
+    model = ProviderRates
+    max_count = 40
+    extra = 0
+
 class ProviderTariffAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'carrier', 'description', 'quality', 'reliability', 'date_start', 'date_end', 'enabled']
     ordering = ['name',]
     readonly_fields = ['id',]
+    inlines = [
+        ProviderRatesInline,
+    ]
 
 class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ['provider_tariff', 'digits', 'cost_rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'enabled', 'date_added', 'date_modified']
@@ -188,16 +203,28 @@ class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
 
 # LCR
 
+class LCRProvidersInline(admin.TabularInline):
+    model = LCRProviders
+    extra = 0
+
 class LCRGroupAdmin(admin.ModelAdmin):
     list_display = ['name', 'description', 'lcrtype']
     ordering = ('name', 'lcrtype')
     list_filter = ('lcrtype',)
+    inlines = [
+        LCRProvidersInline,
+    ]
 
 class LCRProvidersAdmin(admin.ModelAdmin):
     list_display = ['lcr', 'provider_tariff']
     list_filter = ('lcr',)
 
 # Customer Rates
+
+class CustomerRatesInline(admin.TabularInline):
+    model = CustomerRates
+    max_num = 40
+    extra = 0
 
 class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ['ratecard', 'prefix', 'rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'enabled', 'date_added', 'date_modified']
@@ -229,6 +256,9 @@ class RateCardAdmin(admin.ModelAdmin):
     ordering = ['name', 'enabled', 'lcrgroup']
     list_filter = ['enabled', 'lcrgroup']
     search_fields = ['description', '^name']
+    inlines = [
+        CustomerRatesInline,
+    ]
 
 class CustomerRateCardsAdmin(admin.ModelAdmin):
     list_display = ['company', 'ratecard', 'tech_prefix', 'priority', 'description']
