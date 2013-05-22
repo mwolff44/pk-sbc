@@ -25,7 +25,7 @@ from django.template import Context, loader
 from django.core.files import File
 from django.utils.translation import ugettext_lazy as _
 from import_export.admin import ImportExportMixin, ExportMixin
-from pyfreebill.models import Company, Person, Group, PhoneNumber, EmailAddress, InstantMessenger, WebSite, StreetAddress, SpecialDate, CompanyBalanceHistory, ProviderTariff, ProviderRates, LCRGroup, LCRProviders, RateCard, CustomerRates, CustomerRateCards, CustomerDirectory, AclLists, AclNodes, VoipSwitch, SipProfile, SofiaGateway, CDR
+from pyfreebill.models import Company, Person, Group, PhoneNumber, EmailAddress, InstantMessenger, WebSite, StreetAddress, SpecialDate, CompanyBalanceHistory, ProviderTariff, ProviderRates, LCRGroup, LCRProviders, RateCard, CustomerRates, CustomerRateCards, CustomerDirectory, AclLists, AclNodes, VoipSwitch, SipProfile, SofiaGateway, HangupCause, CDR
 
 # site-wide actions
 
@@ -312,6 +312,11 @@ class AclNodesAdmin(admin.ModelAdmin):
     list_filter = ['company', 'list']
     search_fields = ['cidr',]
 
+# Hangup Cause
+class HangupCauseAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = ('id', 'code', 'enumeration', 'cause', 'description')
+    search_fields = ('code', 'enumeration')
+
 # CDR
 class CDRAdmin(ExportMixin, admin.ModelAdmin):
     list_display = ('start_stamp', 'customer', 'caller_id_number', 'destination_number', 'duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'cost_rate', 'prefix', 'rate', 'ratecard_id', 'lcr_group_id')
@@ -351,5 +356,6 @@ admin.site.register(AclNodes, AclNodesAdmin)
 admin.site.register(VoipSwitch, VoipSwitchAdmin)
 admin.site.register(SipProfile, SipProfileAdmin)
 admin.site.register(SofiaGateway, SofiaGatewayAdmin)
+admin.site.register(HangupCause, HangupCauseAdmin)
 admin.site.register(CDR, CDRAdmin)
 #admin.site.register()

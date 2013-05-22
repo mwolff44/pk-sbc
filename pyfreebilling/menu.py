@@ -53,11 +53,18 @@ class CustomMenu(Menu):
                     ),
                 ]
             ),
-            items.MenuItem(_('CDRs'), '/admin/pyfreebill/cdr/'),
-           # items.AppList(
-           #     _('Applications'),
-           #     exclude=('django.contrib.*',)
-           # ),
+            items.MenuItem(_('CDRs'), '/admin/pyfreebill/cdr/')
+                children=[
+                    items.MenuItem(_('Sell rates'),
+                        children=[
+                            items.MenuItem(_('Ratecards'), '/admin/pyfreebill/ratecard/'),
+                            items.MenuItem(_('Customer ratecards'), '/admin/pyfreebill/customerratecards/'),
+                            items.MenuItem(_('Rates'), '/admin/pyfreebill/customerrates/'),
+                        ]
+                    ),
+                    items.MenuItem(_('Hangup Causes'), '/admin/pyfreebill/hangupcause/'),
+                ]
+            ),
             items.MenuItem(_('Admin'),
                 children=[
                     items.MenuItem(_('Users'), '/admin/auth/',

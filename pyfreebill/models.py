@@ -611,6 +611,26 @@ class SofiaGateway(models.Model):
     def __unicode__(self):
         return u"%s" % self.name
 
+# Hangup Cause
+
+class HangupCause(models.Model):
+    """ Hangup Cause Model """
+    code = models.PositiveIntegerField(_(u"Hangup code"), unique=True, help_text=_(u"ITU-T Q.850 Code."))
+    enumeration = models.CharField(_(u"enumeration"), max_length=100, null=True, blank=True, help_text=_(u"enumeration."))
+    cause = models.CharField(_(u"cause"), max_length=100, null=True, blank=True, help_text=_(u"Cause."))
+    description = models.TextField(_(u'description'), blank=True)
+    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+
+    class Meta:
+        db_table = 'hangup_cause'
+        ordering = ('code',)
+        verbose_name = _(u"hangupcause")
+        verbose_name_plural = _(u"hangupcauses")
+
+    def __unicode__(self):
+        return u"[%s] %s" % (self.code, self.enumeration)
+
 # CDR
 
 class CDR(models.Model):
