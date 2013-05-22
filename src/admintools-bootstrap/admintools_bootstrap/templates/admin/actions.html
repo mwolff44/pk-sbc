@@ -1,0 +1,45 @@
+{% load i18n %}
+{% spaceless %}
+<div class="actions changelist-actions">
+  <div class="changelist-action ui-toolbar ui-widget-header ui-corner-all">
+    <div class="action-wrapper">
+      {% for field in action_form %}
+        {% if field.label %}
+          <label>{{ field.label }}</label>
+        {% endif %}
+        {{ field }}
+      {% endfor %}
+      <button type="submit" class="ui-button ui-corner-all" title="{% trans "Run the selected action" %}" name="index" value="{{ action_index|default:0 }}">
+        <span class="ui-icon ui-icon-play"></span>
+        {% trans "Go" %}
+      </button>
+    </div>
+      {% if actions_selection_counter %}
+          {% if cl.result_count != cl.result_list|length %}
+            <span class="question">
+                <a href="javascript:;" class="btn" title="{% trans "Click here to select the objects across all pages" %}">
+                  <span class="ui-icon ui-icon-carat-2-n-s"></span>
+                {% blocktrans with cl.result_count as total_count %}Select all {{ total_count }} {{ module_name }}{% endblocktrans %}</a>
+            </span>
+            <span class="clear">
+              <a href="javascript:;" class="clear-selection btn">
+                  <span class="ui-icon ui-icon-close"></span>
+              {% trans "Clear selection" %}</a>
+            </span>
+          {% endif %}
+      {% endif %}
+  </div>
+  {% if actions_selection_counter %}
+  <div class="ui-widget selection-info">
+      <div class="ui-state-highlight ui-corner-all">
+        <p>
+          <span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+          <span class="all">{{ selection_note_all }}</span>
+          <script type="text/javascript">var _actions_icnt="{{ cl.result_list|length|default:"0" }}";</script>
+          <span class="action-counter">{{ selection_note }}</span>
+        </p>
+      </div>
+  </div>
+{% endif %}
+</div>
+{% endspaceless %}

@@ -1,0 +1,16 @@
+{% load i18n admin_tools_menu_tags %}
+{% if menu.children %}
+{% comment %}
+{% if has_bookmark_item %}
+
+{% if bookmark %}
+{% include "admin_tools/menu/remove_bookmark_form.html" %}
+{% else %}
+{% include "admin_tools/menu/add_bookmark_form.html" %}
+{% endif %}
+{% endif %}
+{% endcomment %}
+<ul id="navigation-menu" class="nav">
+    {% for item in menu.children %}{% admin_tools_render_menu_item item forloop.counter %}{% endfor %}
+</ul>
+{% endif %}

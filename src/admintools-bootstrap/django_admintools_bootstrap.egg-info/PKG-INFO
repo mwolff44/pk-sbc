@@ -1,0 +1,14 @@
+Metadata-Version: 1.1
+Name: django-admintools-bootstrap
+Version: -versiontools-admintools-bootstrap-
+Summary: Bootstrap theme for django admin
+Home-page: https://bitbucket.org/salvator/django-admintools-bootstrap
+Author: Dmitry Belyaev
+Author-email: ssalvator@gmail.com
+License: MIT
+Description: 
+        django-admin-tools fork
+        
+Platform: UNKNOWN
+Classifier: Framework :: Django
+Classifier: Operating System :: POSIX

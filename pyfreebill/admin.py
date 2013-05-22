@@ -20,6 +20,7 @@ from django.contrib import messages
 from django.contrib.contenttypes import generic
 from django.contrib.comments.models import Comment
 from django.core import serializers
+from django.forms import ModelForm
 from django.template import Context, loader
 from django.core.files import File
 from django.utils.translation import ugettext_lazy as _
@@ -98,8 +99,15 @@ class CommentInline(generic.GenericStackedInline):
     ct_fk_field = 'object_pk'
     extra = 0
 
+class CustomerRateCardsInline(admin.TabularInline):
+    model = CustomerRateCards
+#    form = CustomerRateCardsForm
+    max_num = 3
+    extra = 0
+
 class CompanyAdmin(admin.ModelAdmin):
     inlines = [
+        CustomerRateCardsInline,
         PhoneNumberInline,
         EmailAddressInline,
         InstantMessengerInline,
