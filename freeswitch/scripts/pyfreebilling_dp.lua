@@ -155,6 +155,11 @@ if session:ready() then
   channel["sip_from_user"] = get_Variable("sip_from_user")
   channel["sip_received_ip"] = get_Variable("sip_received_ip")
   channel["sip_user_agent"] = get_Variable("sip_user_agent")
+  if channel["sip_user_agent"] then
+    log("Sip_user_agent :", "is OK", "debug")
+  else 
+    channel["sip_user_agent"] = "not set"
+  end
   channel["ep_codec_string"] = get_Variable("ep_codec_string")
 --  channel["FreeSWITCH-IPv4"] = get_Variable("FreeSWITCH-IPv4")
 --  channel["FreeSWITCH-Switchname"] = get_Variable("FreeSWITCH-Switchname")
@@ -186,7 +191,7 @@ if channel["sip_authorized"] then
     custok = 1
   end))
   log("Customer data - num of records", custok, "debug")
-  if custok == "0" then
+  if custok == 0 then
     log("CUSTOMER NOT FOUND!","Exiting")
     session:hangup("NO_ROUTE_DESTINATION");
   end
