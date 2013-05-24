@@ -274,7 +274,7 @@ if channel["sip_authorized"] then
       lcr_quality = {}
       lcr_gwid = {}
     log("rate_lcrgroup_id : ", rate["lcrgroup_id"], "debug")
-    local query_cost_sql = "SELECT s.channels AS channels, s.prefix AS gwprefix, s.suffix AS gwsuffix, s.codec AS codec, s.name AS gwname, lg.name AS lcrname, lg.lcrtype AS lcrtype, s.id AS gwid, pr.digits AS digits, pr.cost_rate AS cost_rate, pt.carrier_id as carrier_id, pt.lead_strip AS lead_strip, pt.tail_strip AS tail_strip, pt.prefix AS prefix, pt.suffix AS suffix, pt.quality AS quality FROM lcr_group lg, lcr_providers lp, provider_rates pr, provider_tariff pt , sofia_gateway s WHERE lg.id = '" .. rate["lcrgroup_id"] .. "' AND lp.lcr_id = lg.id AND pt.id = lp.id AND pt.enabled = TRUE AND now() > pt.date_start AND now() < pt.date_end AND pr.provider_tariff_id = pt.id AND pr.enabled = TRUE AND now() > pr.date_start AND now() < pr.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(pr.digits,'%')  AND s.company_id = pt.carrier_id ORDER BY LENGTH(pr.digits) DESC, pr.cost_rate DESC LIMIT 5"
+    local query_cost_sql = "SELECT s.channels AS channels, s.prefix AS gwprefix, s.suffix AS gwsuffix, s.codec AS codec, s.name AS gwname, lg.name AS lcrname, lg.lcrtype AS lcrtype, s.id AS gwid, pr.digits AS digits, pr.cost_rate AS cost_rate, pt.carrier_id as carrier_id, pt.lead_strip AS lead_strip, pt.tail_strip AS tail_strip, pt.prefix AS prefix, pt.suffix AS suffix, pt.quality AS quality FROM lcr_group lg, lcr_providers lp, provider_rates pr, provider_tariff pt , sofia_gateway s WHERE lg.id = '" .. rate["lcrgroup_id"] .. "' AND lp.lcr_id = lg.id AND pt.id = lp.provider_tariff_id AND pt.enabled = TRUE AND now() > pt.date_start AND now() < pt.date_end AND pr.provider_tariff_id = pt.id AND pr.enabled = TRUE AND now() > pr.date_start AND now() < pr.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(pr.digits,'%')  AND s.company_id = pt.carrier_id ORDER BY LENGTH(pr.digits) DESC, pr.cost_rate DESC LIMIT 5"
     assert(dbh:query(query_cost_sql, function(row)
       lcr_channels[lcrok] = tonumber(row.channels)
       lcr_gwprefix[lcrok] = row.gwprefix
@@ -298,7 +298,7 @@ if channel["sip_authorized"] then
     assert(dbh:release())
     lcrok = lcrok - 1
     log("lcr - num of records", lcrok, "debug")
-    if lcrok == "0" then  
+    if lcrok == 0 then  
       set_variable("cost_rate", O)
       execute("set", "cost_rate=0")
       session:hangup("DESTINATION_OUT_OF_ORDER")
@@ -364,7 +364,7 @@ if channel["sip_authorized"] then
      
    -- hangup
     ws_hangup_cause = get_Variable("last_bridge_proto_specific_hangup_cause")
-    ws_hangup_cause = string.gsub(ws_hangup_cause, "sip:", "", 1)
+--    ws_hangup_cause = string.gsub(ws_hangup_cause, "sip:", "", 1)
     log("Hangup Cause : ", ws_hangup_cause) 
     channel["last_bridge_hangup_cause"] = get_Variable("last_bridge_hangup_cause")    
     channel["originate_disposition"] = get_Variable("originate_disposition")

@@ -359,6 +359,9 @@ class ProviderRates(models.Model):
     class Meta:
         db_table = 'provider_rates'
         ordering = ('enabled', 'provider_tariff', 'digits')
+        index_together = [
+            ["provider_tariff" ,"digits", "enabled"],
+        ]
         verbose_name = _(u'provider rate')
         verbose_name_plural = _(u'provider rates')
 
