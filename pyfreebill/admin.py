@@ -27,6 +27,12 @@ from django.utils.translation import ugettext_lazy as _
 from import_export.admin import ImportExportMixin, ExportMixin
 from pyfreebill.models import Company, Person, Group, PhoneNumber, EmailAddress, InstantMessenger, WebSite, StreetAddress, SpecialDate, CompanyBalanceHistory, ProviderTariff, ProviderRates, LCRGroup, LCRProviders, RateCard, CustomerRates, CustomerRateCards, CustomerDirectory, AclLists, AclNodes, VoipSwitch, SipProfile, SofiaGateway, HangupCause, CDR
 
+# Specific admin register view
+
+#def report_view(request, *args, **kwargs):
+#    pass
+#admin.site.register_view('report', report_view, 'Reporting')
+
 # site-wide actions
 
 def sofiaupdate(modeladmin, request, queryset):
@@ -319,13 +325,13 @@ class HangupCauseAdmin(ImportExportMixin, admin.ModelAdmin):
 
 # CDR
 class CDRAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ('start_stamp', 'customer', 'caller_id_number', 'destination_number', 'duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'cost_rate', 'prefix', 'rate', 'ratecard_id', 'lcr_group_id')
+    list_display = ('start_stamp', 'customer', 'caller_id_number', 'destination_number', 'duration', 'effective_duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'cost_rate', 'prefix', 'rate', 'ratecard_id', 'lcr_group_id')
     list_display_links = ('start_stamp',)
 #    _links = ('customer', 'gateway', 'lcr_carrier_id', 'ratecard_id', 'lcr_group_id')
     ordering = ['-start_stamp', 'customer', 'gateway']
     list_filter = ['customer', 'gateway', 'lcr_carrier_id']
     search_fields = ['^destination_number', '^company__customer']
-    readonly_fields =('customer_ip', 'customer', 'caller_id_number', 'destination_number', 'start_stamp', 'answered_stamp', 'end_stamp', 'duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'cost_rate', 'prefix', 'country', 'rate', 'init_block', 'block_min_duration', 'ratecard_id', 'lcr_group_id', 'uuid', 'bleg_uuid', 'chan_name', 'read_codec', 'write_codec', 'sip_user_agent', 'sip_rtp_rxstat', 'sip_rtp_txstat', 'switchname', 'switch_ipv4', 'hangup_disposition')
+    readonly_fields =('customer_ip', 'customer', 'caller_id_number', 'destination_number', 'start_stamp', 'answered_stamp', 'end_stamp', 'duration', 'effective_duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'cost_rate', 'prefix', 'country', 'rate', 'init_block', 'block_min_duration', 'ratecard_id', 'lcr_group_id', 'uuid', 'bleg_uuid', 'chan_name', 'read_codec', 'write_codec', 'sip_user_agent', 'sip_rtp_rxstat', 'sip_rtp_txstat', 'switchname', 'switch_ipv4', 'hangup_disposition')
 #    list_per_page = 20
 
     def has_add_permission(self, request, obj=None):

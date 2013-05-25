@@ -1,2 +1,3 @@
 [paths]
-default = https://bitbucket.org/salvator/django-admintools-bootstrap
+default = https://bitbucket.org/robertofaga/django-admintools-bootstrap
+

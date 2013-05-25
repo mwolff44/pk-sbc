@@ -1,13 +1,14 @@
 {% load theming_tags admintools_bootstrap %}
+{% load static from staticfiles %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 <head>
 <title>{% block title %}{% endblock %}</title>
 {% block extrastyle %}{% endblock %}
-<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="{% block stylesheet_ie %}{% load adminmedia %}{% admin_media_prefix %}css/ie.css{% endblock %}" /><![endif]-->
-{% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% admin_media_prefix %}css/rtl.css{% endblock %}" />{% endif %}
+<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="{% block stylesheet_ie %}{% static "admin/css/ie.css" %}{% endblock %}" /><![endif]-->
+{% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}" />{% endif %}
 {#{% render_theming_css %}#}
-<script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{% admin_media_prefix %}{% endfilter %}";</script>
+<script type="text/javascript">window.__admin_media_prefix__ = "{% filter escapejs %}{% static "admin/" %}{% endfilter %}";</script>
 {% block extrahead %}{% endblock %}
 {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
 
@@ -124,11 +125,11 @@ $(function(){
               </a>
               <ul class="dropdown-menu">
               {% block userlinks %}
-                  {% url django-admindocs-docroot as docsroot %}
+                  {% url 'django-admindocs-docroot' as docsroot %}
                   {% if docsroot %}
                       <li><a href="{{ docsroot }}">{% trans 'Documentation' %}</a></li>
                   {% endif %}
-                  {% url admin:password_change as password_change_url %}
+                  {% url 'admin:password_change' as password_change_url %}
                   <li>
                     {% if password_change_url %}
                         <a href="{{ password_change_url }}">
@@ -137,7 +138,7 @@ $(function(){
                     {% endif %}
                     {% trans 'Change password' %}</a>
                   </li>
-                  {% url admin:logout as logout_url %}
+                  {% url 'admin:logout' as logout_url %}
                   <li>
                     {% if logout_url %}
                         <a href="{{ logout_url }}">

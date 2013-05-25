@@ -53,16 +53,15 @@ class CustomMenu(Menu):
                     ),
                 ]
             ),
-            items.MenuItem(_('CDRs'), '/admin/pyfreebill/cdr/')
+            items.MenuItem(_('Reports'),
                 children=[
-                    items.MenuItem(_('Sell rates'),
+                    items.MenuItem(_('CDRs'), '/admin/pyfreebill/cdr/',
                         children=[
-                            items.MenuItem(_('Ratecards'), '/admin/pyfreebill/ratecard/'),
-                            items.MenuItem(_('Customer ratecards'), '/admin/pyfreebill/customerratecards/'),
-                            items.MenuItem(_('Rates'), '/admin/pyfreebill/customerrates/'),
+                            items.MenuItem(_('CDRs view'), '/admin/pyfreebill/cdr/'),
+                            items.MenuItem(_('Hangup Cause'), '/admin/pyfreebill/hangupcause/'),
                         ]
                     ),
-                    items.MenuItem(_('Hangup Causes'), '/admin/pyfreebill/hangupcause/'),
+                    items.MenuItem(_('N/A'), '/admin/pyfreebill/hangupcause/'),
                 ]
             ),
             items.MenuItem(_('Admin'),
@@ -90,10 +89,10 @@ class CustomMenu(Menu):
                 ]
             ),
 
-           # items.AppList(
-           #     _('Administration'),
-           #     models=('django.contrib.*',)
-           # )
+            items.AppList(
+                _('Administration'),
+                models=('django.contrib.*',)
+            )
         ]
 
     def init_with_context(self, context):

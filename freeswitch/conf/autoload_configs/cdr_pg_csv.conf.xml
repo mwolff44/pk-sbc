@@ -29,7 +29,8 @@
     <field var="answer_stamp" column="answered_stamp"/>
     <field var="end_stamp"/>
     <field var="duration" quote="false"/>
-    <field var="billsec" quote="false"/>
+    <field var="billsec" column="effective_duration" quote="false"/>
+    <field var="nibble_total_billed" column="billsec" quote="false"/>
     <field var="read_codec" not-null="true"/> 
     <field var="write_codec" not-null="true"/>
     <field var="hangup_cause"/>

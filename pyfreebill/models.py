@@ -649,6 +649,7 @@ class CDR(models.Model):
     answered_stamp = models.DateTimeField(_(u"answered time"), null=True)
     end_stamp = models.DateTimeField(_(u"hangup time"))
     duration = models.IntegerField(_(u"duration"))
+    effective_duration = models.IntegerField(_(u"effective duration"))
     billsec = models.IntegerField(_(u"billsec"))
     read_codec = models.CharField(_(u"read codec"), max_length=20)
     write_codec = models.CharField(_(u"write codec"), max_length=20)
