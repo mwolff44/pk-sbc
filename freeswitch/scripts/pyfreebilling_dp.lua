@@ -229,7 +229,7 @@ if channel["sip_authorized"] then
       if rateprio == 4 then
 	break
       else
-        local query_rate_sql = "SELECT c.tech_prefix AS tech_prefix, c.ratecard_id AS ratecard_id, c.priority AS priority, c.discount AS discount, rc.lcrgroup_id AS lcrgroup_id, r.prefix AS prefix, r.rate AS rate, r.block_min_duration AS block_min_duration, r.init_block AS init_block FROM customer_ratecards c, ratecard rc, customer_rates r WHERE c.company_id = '" .. channel["accountcode"] .. "' AND c.priority = '" .. rateprio .. "' AND rc.enabled = TRUE AND rc.id = r.ratecard_id AND r.enabled = true AND now() > r.date_start AND now() < r.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(r.prefix,'%') ORDER BY LENGTH(r.prefix) desc LIMIT 1"
+        local query_rate_sql = "SELECT c.tech_prefix AS tech_prefix, c.ratecard_id AS ratecard_id, c.priority AS priority, c.discount AS discount, rc.lcrgroup_id AS lcrgroup_id, r.prefix AS prefix, lg.name AS lcrgoup, lg.lcrtype AS lcrtype, r.rate AS rate, r.block_min_duration AS block_min_duration, r.init_block AS init_block FROM customer_ratecards c INNER JOIN ratecard rc ON rc.id = c.ratecard_id AND c.company_id = '" .. channel["accountcode"] .. "' AND c.priority = '" .. rateprio .. "' INNER JOIN lcr_group lg ON lg.id = rc.lcrgroup_id INNER JOIN customer_rates r ON rc.id = r.ratecard_id WHERE rc.enabled = TRUE AND r.enabled = true AND now() > r.date_start AND now() < r.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(r.prefix,'%') ORDER BY LENGTH(r.prefix) desc LIMIT 1"
         log("SQL: ", query_rate_sql, "debug")
 	assert(dbh:query(query_rate_sql, function(row)
 	  for key, val in pairs(row) do
@@ -253,6 +253,21 @@ if channel["sip_authorized"] then
       log("Rate", "OK")
     end
   end
+
+-----------------------------------------------
+--        SELECT LCR TYPE
+-----------------------------------------------
+  log("LCR Type : ", rate["lcrtype"], "debug")
+  if rate["lcrtype"] == "p" then
+    ratefilter = "cost_rate ASC"
+    log("LCR Type : ", "Price", "debug")
+  elseif rate["lcrtype"] == "q" then
+    ratefilter = "quality DESC"
+    log("LCR Type : ", "Quality", "debug")
+  elseif rate["lcrtype"] == "r" then
+    ratefilter = "reliability DESC"
+    log("LCR Type : ", "Reliability", "debug")
+  end
 -----------------------------------------------
 --        Get LCR / Gateway
 -----------------------------------------------
@@ -267,35 +282,39 @@ if channel["sip_authorized"] then
       lcr_gwname = {}
       lcr_lcrname = {}
       lcr_lcrtype = {}
-      lcr_country = {}
       lcr_digits = {}
-      lcr_sell_rate = {}
       lcr_cost_rate = {}
+      lcr_block_min_duration = {}
+      lcr_init_block = {}
       lcr_carrier = {}
       lcr_lead_strip = {}
       lcr_tail_strip = {}
       lcr_prefix = {}
       lcr_suffix = {}
       lcr_quality = {}
+      lcr_reliability = {}
       lcr_gwid = {}
     log("rate_lcrgroup_id : ", rate["lcrgroup_id"], "debug")
-    local query_cost_sql = "SELECT DISTINCT ON (pr.provider_tariff_id) s.channels AS channels, s.prefix AS gwprefix, s.suffix AS gwsuffix, s.codec AS codec, s.name AS gwname, lg.name AS lcrname, lg.lcrtype AS lcrtype, s.id AS gwid, pr.digits AS digits, pr.cost_rate AS cost_rate, pt.carrier_id as carrier_id, pt.lead_strip AS lead_strip, pt.tail_strip AS tail_strip, pt.prefix AS prefix, pt.suffix AS suffix, pt.quality AS quality FROM lcr_group lg, lcr_providers lp, provider_rates pr, provider_tariff pt , sofia_gateway s WHERE lg.id = '" .. rate["lcrgroup_id"] .. "' AND lp.lcr_id = lg.id AND pt.id = lp.provider_tariff_id AND pt.enabled = TRUE AND now() > pt.date_start AND now() < pt.date_end AND pr.provider_tariff_id = pt.id AND pr.enabled = TRUE AND now() > pr.date_start AND now() < pr.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(pr.digits,'%')  AND s.company_id = pt.carrier_id ORDER BY pr.provider_tariff_id, LENGTH(pr.digits) DESC, pr.cost_rate DESC LIMIT 5"
+    local query_cost_sql = "SELECT * FROM (SELECT DISTINCT ON (pr.provider_tariff_id) s.channels AS channels, s.prefix AS gwprefix, s.suffix AS gwsuffix, s.codec AS codec, s.name AS gwname, s.id AS gwid, pr.digits AS digits, pr.cost_rate AS cost_rate, pr.block_min_duration AS block_min_duration, pr.init_block AS init_block, pt.carrier_id AS carrier_id, pt.lead_strip AS lead_strip, pt.tail_strip AS tail_strip, pt.prefix AS prefix, pt.suffix AS suffix, pt.quality AS quality, pt.reliability AS reliability FROM lcr_providers lp INNER JOIN provider_tariff pt ON pt.id = lp.provider_tariff_id AND pt.enabled = TRUE AND now() > pt.date_start AND now() < pt.date_end INNER JOIN sofia_gateway s ON s.company_id = pt.carrier_id INNER JOIN provider_rates pr ON pr.provider_tariff_id = pt.id AND pr.enabled = TRUE AND now() > pr.date_start AND now() < pr.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(pr.digits,'%') WHERE lp.lcr_id = '" .. rate["lcrgroup_id"] .. "' ORDER BY pr.provider_tariff_id, LENGTH(pr.digits) DESC) T ORDER BY " .. ratefilter .. ""
     assert(dbh:query(query_cost_sql, function(row)
       lcr_channels[lcrok] = tonumber(row.channels)
       lcr_gwprefix[lcrok] = row.gwprefix
       lcr_gwsuffix[lcrok] = row.gwsuffix
       lcr_codec[lcrok] = row.codec
       lcr_gwname[lcrok] = row.gwname
-      lcr_lcrname[lcrok] = row.lcrname
-      lcr_lcrtype[lcrok] = row.lcrtype
+      lcr_lcrname[lcrok] = rate["lcrgroup"]
+      lcr_lcrtype[lcrok] = rate["lcrtype"]
       lcr_digits[lcrok] = tonumber(row.digits)
       lcr_cost_rate[lcrok] = tonumber(row.cost_rate)
+      lcr_block_min_duration[lcrok] = tonumber(row.block_min_duration)
+      lcr_init_block[lcrok] = tonumber(row.init_block)
       lcr_carrier[lcrok] = row.carrier_id
       lcr_lead_strip[lcrok] = row.lead_strip
       lcr_tail_strip[lcrok] = row.tail_strip
       lcr_prefix[lcrok] = row.prefix
       lcr_suffix[lcrok] = row.suffix
       lcr_quality[lcrok] = row.quality
+      lcr_reliability[lcrok] = row.reliability
       lcr_gwid[lcrok] = row.gwid
       lcrok = lcrok + 1
     end))
