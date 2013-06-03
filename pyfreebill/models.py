@@ -26,12 +26,14 @@ from django.contrib.contenttypes.generic import GenericRelation
 from django.utils.translation import ugettext_lazy as _
 from country_dialcode.models import Country, Prefix
 from pyfreebill import fields
+import decimal
+import math
 
 # Finance
 
 class Company(models.Model):
     """Company model."""
-    name = models.CharField(_(u'name'), max_length=200)
+    name = models.CharField(_(u'name'), max_length=200, unique=True)
     nickname = models.CharField(_('nickname'), max_length=50, blank=True, null=True)
     slug = models.SlugField(_('slug'), max_length=50, unique=True)
     about = models.TextField(_(u'about'), blank=True, null=True)
@@ -44,14 +46,16 @@ class Company(models.Model):
     vat_number = models.TextField(_(u"VAT number"), blank=True)
     prepaid = models.BooleanField(_(u"Prepaid / Postpaid"), default=True, help_text=_(u"If checked, this account customer is prepaid."))
     credit_limit = models.DecimalField(_(u'credit limit'), max_digits=12, decimal_places=4, default=0, help_text=_(u"Credit limit for postpaid account."))
-    balance = models.DecimalField(_(u'balance'), max_digits=12, decimal_places=4, default=0, help_text=_(u"Actual balance."))
+    customer_balance = models.DecimalField(_(u'customer balance'), max_digits=12, decimal_places=6, default=0, help_text=_(u"Actual customer balance."))
+    supplier_balance = models.DecimalField(_(u'supplier balance'), max_digits=12, decimal_places=6, default=0, help_text=_(u"Actual supplier balance."))
     max_calls = models.PositiveIntegerField(_(u'max simultaneous calls'), default=1, help_text=_(u"maximum simultaneous calls allowed for this customer account."))
     BILLING_CYCLE_CHOICES = (
         ('w', _(u'weekly')),
         ('m', _(u'monthly')),
     )
     billing_cycle = models.CharField(_(u'billing cycle'), max_length=10, choices=BILLING_CYCLE_CHOICES, default='m', help_text=_(u"billinng cycle for invoice generation."))
-    enabled = models.BooleanField(_(u"Enabled / Disabled"), default=False)
+    customer_enabled = models.BooleanField(_(u"Customer Enabled / Disabled"), default=True)
+    supplier_enabled = models.BooleanField(_(u"Supplier Enabled / Disabled"), default=True)
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
 
@@ -64,6 +68,18 @@ class Company(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.name
+
+    def colored_name(self):
+        if self.customer_enabled == False and self.supplier_enabled == False:
+            color = "red"
+        elif self.customer_enabled == False and self.supplier_enabled == True:
+            color = "orange"
+        elif self.customer_enabled == True and self.supplier_enabled == False:
+            color = "purple"
+        else:
+            color = "green"
+        return " <span style=color:%s>%s</span>" % (color, self.name)
+    colored_name.allow_tags = True
 
 class Person(models.Model):
     """Person model."""
@@ -100,7 +116,7 @@ class Person(models.Model):
 
 class Group(models.Model):
     """Group model."""
-    name = models.CharField(_('name'), max_length=200)
+    name = models.CharField(_('name'), max_length=200, unique=True)
     slug = models.SlugField(_('slug'), max_length=50, unique=True)
     about = models.TextField(_('about'), blank=True)
     people = models.ManyToManyField(Person, verbose_name='people', blank=True,null=True)
@@ -268,7 +284,13 @@ class CompanyBalanceHistory(models.Model):
     company = models.ForeignKey(Company, verbose_name=_(u"company"))
     amount_debited = models.DecimalField(_(u'amount debited'), max_digits=12, decimal_places=4)
     amount_refund = models.DecimalField(_(u'amount refund'), max_digits=12, decimal_places=4)
-    balance = models.DecimalField(_(u'balance'), max_digits=12, decimal_places=4, default=0, help_text=_(u"Resulting balance."))
+    customer_balance = models.DecimalField(_(u'customer balance'), max_digits=12, decimal_places=4, default=0, help_text=_(u"Resulting customer balance."))
+    supplier_balance = models.DecimalField(_(u'supplier balance'), max_digits=12, decimal_places=4, default=0, help_text=_(u"Resulting supplier balance."))
+    OPERATION_TYPE_CHOICES = (
+        ('customer', _(u"operation on customer account")),
+        ('supplier', _(u"operation on supplier account")),
+    )
+    operation_type = models.CharField(_(u"lcr type"), max_length=10, choices=OPERATION_TYPE_CHOICES, default='customer')
     reference = models.TextField(_(u'reference'), blank=True)
     description = models.TextField(_(u'description'), blank=True)
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True) 
@@ -281,15 +303,14 @@ class CompanyBalanceHistory(models.Model):
         verbose_name_plural = _(u'Company balance history')
 
     def __unicode__(self):
-        return u"%s %s %s %s" % (self.company, self.amount_debited, self.amount_refund, self.balance)
+        return u"%s %s %s %s" % (self.company, self.amount_debited, self.amount_refund, self.operation_type)
 
 class CustomerDirectory(models.Model):
     """ Customer Directory Model """
     company = models.ForeignKey(Company, verbose_name=_(u"company"))
-    name = models.CharField(_('name'), max_length=200)
     password = models.CharField(_(u"password"), max_length=100, blank=True, help_text=_(u"It's recomended to use strong passwords for the endpoint."))
     description = models.TextField(_(u'description'), blank=True)
-    name = models.CharField(_(u"SIP profile name"), max_length=50, help_text=_(u"E.g.: external, internal, etc..."))
+    name = models.CharField(_(u"SIP name"), max_length=50, unique=True, help_text=_(u"E.g.: customer name gateway for example, etc..."))
     rtp_ip = models.CharField(_(u"RTP IP"), max_length=100, default="auto", help_text=_(u"Internal IP address to bind to for RTP."))
     sip_ip = models.CharField(_(u"SIP IP"), max_length=100, default="auto", help_text=_(u"Internal IP address to bind to for SIP."))
     sip_port = models.PositiveIntegerField(_(u"SIP port"), default=5060)
@@ -362,6 +383,7 @@ class ProviderRates(models.Model):
         index_together = [
             ["provider_tariff" ,"digits", "enabled"],
         ]
+        unique_together = ("digits","provider_tariff")
         verbose_name = _(u'provider rate')
         verbose_name_plural = _(u'provider rates')
 
@@ -444,6 +466,7 @@ class CustomerRates(models.Model):
     class Meta:
         db_table = 'customer_rates'
         ordering = ('ratecard', 'prefix', 'enabled')
+        unique_together = ("ratecard", "prefix")
         verbose_name = _(u'customer rate')
         verbose_name_plural = _(u'customer rates')
 
@@ -456,7 +479,12 @@ class CustomerRateCards(models.Model):
     ratecard = models.ForeignKey(RateCard, verbose_name=_(u"ratecard"))
     description = models.TextField(_(u'description'), blank=True)
     tech_prefix = models.CharField(_(u"technical prefix"), blank=True, default='', max_length=15)
-    priority = models.IntegerField(_(u'priority'), help_text=_(u"Priority order, 1 is the higher priority and 3 the lower one. Correct values are : 1, 2 or 3 !."))
+    DEFAULT_PRIORITY_CHOICES = (
+        ('1', _(u'1st')),
+        ('2', _(u'2nd')),
+        ('3', _(u'3rd')),
+    )
+    priority = models.IntegerField(_(u'priority'), choices=DEFAULT_PRIORITY_CHOICES, help_text=_(u"Priority order, 1 is the higher priority and 3 the lower one. Correct values are : 1, 2 or 3 !."))
     discount = models.DecimalField(_(u'discount'), max_digits=3, decimal_places=2, default=0, help_text=_(u"ratecard discount. For 10% discount, enter 10 !"))
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
@@ -537,7 +565,7 @@ class VoipSwitch(models.Model):
 
 class SipProfile(models.Model):
     """ Sofia Sip profile """
-    name = models.CharField(_(u"SIP profile name"), max_length=50, help_text=_(u"E.g.: the name you want ..."))
+    name = models.CharField(_(u"SIP profile name"), max_length=50, unique=True, help_text=_(u"E.g.: the name you want ..."))
     ext_rtp_ip = models.CharField(_(u"external RTP IP"), max_length=100, default="auto", help_text=_(u"External/public IP address to bind to for RTP."))
     ext_sip_ip = models.CharField(_(u"external SIP IP"), max_length=100, default="auto", help_text=_(u"External/public IP address to bind to for SIP."))
     rtp_ip = models.CharField(_(u"RTP IP"), max_length=100, default="auto", help_text=_(u"Internal IP address to bind to for RTP."))
@@ -557,6 +585,7 @@ class SipProfile(models.Model):
     class Meta:
         db_table = 'sip_profile'
         ordering = ('name', )
+        unique_together = ("sip_ip", "sip_port")
         verbose_name = _(u'SIP profile')
         verbose_name_plural = _(u'SIP profiles')
 
@@ -566,7 +595,7 @@ class SipProfile(models.Model):
     def get_gateways(self):
         """Get all gateways in the system assigned to this sip profile."""
         retval = []  
-        accounts = Company.objects.filter(enabled=True)
+        accounts = Company.objects.filter(supplier_enabled=True)
         for account in accounts:
             for gateway in account.sofiagateway_set.all():
                 if gateway.sip_profile.id == self.id:
@@ -638,36 +667,36 @@ class HangupCause(models.Model):
 
 class CDR(models.Model):
     """ CDR Model    """
-    customer = models.ForeignKey(Company, verbose_name=_(u"customer"), related_name="customer_related")
-    customer_ip = models.CharField(_(u"customer IP address"), max_length=100, help_text=_(u"Customer IP address."))
-    uuid = models.CharField(_(u"UUID"), max_length=100)
+    customer = models.ForeignKey(Company, verbose_name=_(u"customer"), null=True, related_name="customer_related")
+    customer_ip = models.CharField(_(u"customer IP address"), max_length=100, null=True, help_text=_(u"Customer IP address."))
+    uuid = models.CharField(_(u"UUID"), max_length=100, null=True)
     bleg_uuid = models.CharField(_(u"b leg UUID"), null=True, default="", max_length=100)
-    caller_id_number = models.CharField(_(u"caller ID num"), max_length=100)
-    destination_number = models.CharField(_(u"Dest. number"), max_length=100)
-    chan_name = models.CharField(_(u"channel name"), max_length=100)
-    start_stamp = models.DateTimeField(_(u"start time"))
+    caller_id_number = models.CharField(_(u"caller ID num"), max_length=100, null=True)
+    destination_number = models.CharField(_(u"Dest. number"), max_length=100, null=True)
+    chan_name = models.CharField(_(u"channel name"), max_length=100, null=True)
+    start_stamp = models.DateTimeField(_(u"start time"), null=True)
     answered_stamp = models.DateTimeField(_(u"answered time"), null=True)
-    end_stamp = models.DateTimeField(_(u"hangup time"))
-    duration = models.IntegerField(_(u"duration"))
-    effective_duration = models.IntegerField(_(u"effective duration"))
-    billsec = models.IntegerField(_(u"billsec"))
-    read_codec = models.CharField(_(u"read codec"), max_length=20)
-    write_codec = models.CharField(_(u"write codec"), max_length=20)
-    hangup_cause = models.CharField(_(u"hangup cause"), max_length=50)
-    hangup_cause_q850 = models.IntegerField(_(u"q.850"))
-    gateway = models.ForeignKey(SofiaGateway, verbose_name=_(u"gateway"))
+    end_stamp = models.DateTimeField(_(u"hangup time"), null=True)
+    duration = models.IntegerField(_(u"duration"), null=True)
+    effective_duration = models.IntegerField(_(u"effective duration"), null=True)
+    billsec = models.IntegerField(_(u"billsec"), null=True)
+    read_codec = models.CharField(_(u"read codec"), max_length=20, null=True)
+    write_codec = models.CharField(_(u"write codec"), max_length=20, null=True)
+    hangup_cause = models.CharField(_(u"hangup cause"), max_length=50, null=True)
+    hangup_cause_q850 = models.IntegerField(_(u"q.850"), null=True)
+    gateway = models.ForeignKey(SofiaGateway, verbose_name=_(u"gateway"), null=True)
     cost_rate = models.DecimalField(_(u'buy rate'), max_digits=11, decimal_places=5, default="", null=True)
-    prefix = models.CharField(_(u'Prefix'), max_length=30)
-    country = models.CharField(_(u'Country'), max_length=100)
-    rate = models.DecimalField(_(u'sell rate'), max_digits=11, decimal_places=5)
-    init_block = models.DecimalField(_(u'Init block rate'), max_digits=11, decimal_places=5)
-    block_min_duration = models.IntegerField(_(u'block min duration'))
-    lcr_carrier_id = models.ForeignKey(Company, verbose_name=_(u"carrier"), related_name="carrier_related")
-    ratecard_id = models.ForeignKey(RateCard, verbose_name=_(u"ratecard"))
-    lcr_group_id = models.ForeignKey(LCRGroup, verbose_name=_(u"lcr group"))
-    sip_user_agent = models.CharField(_(u'sip user agent'), max_length=100)
-    sip_rtp_rxstat = models.CharField(_(u'sip rtp rx stat'), max_length=30)
-    sip_rtp_txstat = models.CharField(_(u'sip rtp tx stat'), max_length=30)
+    prefix = models.CharField(_(u'Prefix'), max_length=30, null=True)
+    country = models.CharField(_(u'Country'), max_length=100, null=True)
+    rate = models.DecimalField(_(u'sell rate'), max_digits=11, decimal_places=5, null=True)
+    init_block = models.DecimalField(_(u'Init block rate'), max_digits=11, decimal_places=5, null=True)
+    block_min_duration = models.IntegerField(_(u'block min duration'), null=True)
+    lcr_carrier_id = models.ForeignKey(Company, verbose_name=_(u"carrier"), null=True, related_name="carrier_related")
+    ratecard_id = models.ForeignKey(RateCard, null=True, verbose_name=_(u"ratecard"))
+    lcr_group_id = models.ForeignKey(LCRGroup, null=True, verbose_name=_(u"lcr group"))
+    sip_user_agent = models.CharField(_(u'sip user agent'), null=True, max_length=100)
+    sip_rtp_rxstat = models.CharField(_(u'sip rtp rx stat'), null=True, max_length=30)
+    sip_rtp_txstat = models.CharField(_(u'sip rtp tx stat'), null=True, max_length=30)
     switchname = models.CharField(_(u"switchname"), null=True, default="", max_length=100)
     switch_ipv4 = models.CharField(_(u"switch ipv4"), null=True, default="", max_length=100)
     hangup_disposition = models.CharField(_(u"hangup disposition"), null=True, default="", max_length=100)
@@ -681,3 +710,27 @@ class CDR(models.Model):
     def __unicode__(self):
         return u"%s" % self.uuid
 
+    def _get_total_sell(self):
+        if self.init_block:
+            if self.effective_duration < self.block_min_duration:
+                billduration = self.block_min_duration
+            else:
+                billduration = math.ceil(self.effective_duration / self.block_min_duration) * self.block_min_duration
+        else:
+            billduration = self.effective_duration
+        if self.rate:
+            totalsell = decimal.Decimal(billduration) * decimal.Decimal(self.rate) / 60
+        else:
+            totalsell = "0"
+        if self.init_block:
+            totalsell = decimal.Decimal(totalsell) + decimal.Decimal(self.init_block)           
+        return round(totalsell,6)
+    total_sell = property(_get_total_sell)
+
+    def _get_total_cost(self):
+        if self.cost_rate:
+            totalcost = decimal.Decimal(self.effective_duration) * decimal.Decimal(self.cost_rate) / 60
+        else:
+            totalcost = "0"
+        return round(totalcost,6)
+    total_cost = property(_get_total_cost)

@@ -26,20 +26,13 @@ from django.core.files import File
 from django.utils.translation import ugettext_lazy as _
 from import_export.admin import ImportExportMixin, ExportMixin
 from pyfreebill.models import Company, Person, Group, PhoneNumber, EmailAddress, InstantMessenger, WebSite, StreetAddress, SpecialDate, CompanyBalanceHistory, ProviderTariff, ProviderRates, LCRGroup, LCRProviders, RateCard, CustomerRates, CustomerRateCards, CustomerDirectory, AclLists, AclNodes, VoipSwitch, SipProfile, SofiaGateway, HangupCause, CDR
-
-# Specific admin register view
-
-#def report_view(request, *args, **kwargs):
-#    pass
-#admin.site.register_view('report', report_view, 'Reporting')
-
-# site-wide actions
+from pyfreebill.forms import *
 
 def sofiaupdate(modeladmin, request, queryset):
     """ generate new sofia xml config file """
     t = loader.get_template('xml/sofia.conf.xml')
     sipprofiles = SipProfile.objects.all()
-    accounts = Company.objects.filter(enabled=True)
+    accounts = Company.objects.filter(supplier_enabled=True)
     c = Context({"sipprofiles": sipprofiles, "accounts": accounts})
     try:
         pwd = os.path.dirname(__file__)
@@ -56,8 +49,8 @@ sofiaupdate.short_description = _(u"update sofia config xml file")
 def directoryupdate(modeladmin, request, queryset):
     """ generate new directory xml config file """
     t = loader.get_template('xml/directory.conf.xml')
-    customerdirectorys = CustomerDirectory.objects.filter(company__enabled__exact=True, enabled=True)
-    accounts = Company.objects.filter(enabled=True)
+    customerdirectorys = CustomerDirectory.objects.filter(company__customer_enabled__exact=True, enabled=True)
+    accounts = Company.objects.filter(customer_enabled=True)
     c = Context({"customerdirectorys": customerdirectorys, "accounts": accounts})
     try:
         pwd = os.path.dirname(__file__)
@@ -107,7 +100,7 @@ class CommentInline(generic.GenericStackedInline):
 
 class CustomerRateCardsInline(admin.TabularInline):
     model = CustomerRateCards
-#    form = CustomerRateCardsForm
+    form = CustomerRateCardsForm
     max_num = 3
     extra = 0
 
@@ -123,10 +116,10 @@ class CompanyAdmin(admin.ModelAdmin):
         CommentInline,
     ]
 
-    list_display = ('name', 'prepaid', 'balance')
+    list_display = ('colored_name', 'prepaid', 'customer_balance', 'supplier_balance')
     search_fields = ['^name',]
     prepopulated_fields = {'slug': ('name',)}
-    readonly_fields = ('balance',)
+    readonly_fields = ('customer_balance', 'supplier_balance')
 
 class PersonAdmin(admin.ModelAdmin):
     inlines = [
@@ -155,9 +148,9 @@ class GroupAdmin(admin.ModelAdmin):
 
 class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
     list_display_links = ('company',)
-    list_display = ('company', 'amount_debited', 'amount_refund', 'balance', 'reference', 'date_modified')
+    list_display = ('company', 'amount_debited', 'amount_refund', 'customer_balance', 'supplier_balance', 'operation_type', 'reference', 'date_modified')
     ordering = ('-date_modified', 'company')
-    readonly_fields = ('balance',)
+    readonly_fields = ('customer_balance', 'supplier_balance')
     search_fields = ['company', '^reference']
 
     def save_model(self, request, obj, form, change):
@@ -167,10 +160,18 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
         company = form.cleaned_data['company']
         amount_debited = form.cleaned_data['amount_debited']
         amount_refund = form.cleaned_data['amount_refund']
-        balance = Company.objects.get(pk=company.id)
-        balance.balance = balance.balance - amount_debited + amount_refund
-        balance.save()
-        obj.balance = balance.balance
+        if form.cleaned_data['operation_type'] == "customer":
+            balance = Company.objects.get(pk=company.id)
+            balance.customer_balance = balance.customer_balance - amount_debited + amount_refund
+            balance.save()
+            obj.customer_balance = balance.customer_balance
+        elif form.cleaned_data['operation_type'] == "supplier":
+            balance = Company.objects.get(pk=company.id)
+            balance.supplier_balance = balance.supplier_balance - amount_debited + amount_refund
+            balance.save()
+            obj.supplier_balance = balance.supplier_balance
+        else:
+            pass
         messages.success(request, "balance updated")
       obj.save()
 
@@ -325,13 +326,13 @@ class HangupCauseAdmin(ImportExportMixin, admin.ModelAdmin):
 
 # CDR
 class CDRAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ('start_stamp', 'customer', 'caller_id_number', 'destination_number', 'duration', 'effective_duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'cost_rate', 'prefix', 'rate', 'ratecard_id', 'lcr_group_id')
+    list_display = ('start_stamp', 'customer', 'destination_number', 'effective_duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'cost_rate', 'rate', 'total_cost', 'total_sell', 'prefix', 'ratecard_id', 'lcr_group_id')
     list_display_links = ('start_stamp',)
 #    _links = ('customer', 'gateway', 'lcr_carrier_id', 'ratecard_id', 'lcr_group_id')
     ordering = ['-start_stamp', 'customer', 'gateway']
     list_filter = ['customer', 'gateway', 'lcr_carrier_id']
     search_fields = ['^destination_number', '^company__customer']
-    readonly_fields =('customer_ip', 'customer', 'caller_id_number', 'destination_number', 'start_stamp', 'answered_stamp', 'end_stamp', 'duration', 'effective_duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'cost_rate', 'prefix', 'country', 'rate', 'init_block', 'block_min_duration', 'ratecard_id', 'lcr_group_id', 'uuid', 'bleg_uuid', 'chan_name', 'read_codec', 'write_codec', 'sip_user_agent', 'sip_rtp_rxstat', 'sip_rtp_txstat', 'switchname', 'switch_ipv4', 'hangup_disposition')
+    readonly_fields =('customer_ip', 'customer', 'caller_id_number', 'destination_number', 'start_stamp', 'answered_stamp', 'end_stamp', 'duration', 'effective_duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'prefix', 'country','cost_rate', 'total_cost', 'total_sell', 'rate', 'init_block', 'block_min_duration', 'ratecard_id', 'lcr_group_id', 'uuid', 'bleg_uuid', 'chan_name', 'read_codec', 'write_codec', 'sip_user_agent', 'sip_rtp_rxstat', 'sip_rtp_txstat', 'switchname', 'switch_ipv4', 'hangup_disposition')
 #    list_per_page = 20
 
     def has_add_permission(self, request, obj=None):

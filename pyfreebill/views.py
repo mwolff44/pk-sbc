@@ -1,41 +1,27 @@
-from django import forms
-from django.forms import ModelForm, Form
-from django.contrib.contenttypes.generic import generic_inlineformset_factory as inlineformset_factory
+from django.template import RequestContext
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import render_to_response
+from django_tables2   import RequestConfig
+from pyfreebill.models import CDR
+from pyfreebill.tables import CDRTable
+import datetime, qsstats, simplejson
 
-from contacts.models import Company, Person, Group, PhoneNumber, EmailAddress, InstantMessenger, WebSite, StreetAddress, SpecialDate
+@staff_member_required
+def admin_report_view(request):
+    # view code
+    qs = CDR.objects.all()
+    qss = qsstats.QuerySetStats(qs, 'start_stamp')
+    today = datetime.date.today()
+    seven_days_ago = today - datetime.timedelta(days=7)
+    qss_by7day = qss.time_series(seven_days_ago, today, 'days')
+    days = [i[0].strftime("%A") for i in qss_by7day]
+    number_cdr = [i[1] for i in qss_by7day]
+    stats_cdr = []
+    for date, value in qss_by7day:
+        stats_cdr.append((date.strftime("%A"), value))
+    table = simplejson.dumps(stats_cdr)
+#    RequestConfig(request).configure(table)
 
-class CompanyCreateForm(ModelForm):
-	class Meta:
-		model = Company
-		fields = ('name', 'nickname', 'about')
-
-class CompanyUpdateForm(ModelForm):
-	class Meta:
-		model = Company
-
-class PersonCreateForm(ModelForm):
-	class Meta:
-		model = Person
-		fields = ('first_name', 'last_name', 'title', 'company', 'about')
-
-class PersonUpdateForm(ModelForm):
-	class Meta:
-		model = Person
-		fields = ('first_name', 'last_name', 'title', 'company')
-
-class GroupCreateForm(ModelForm):
-	class Meta:
-		model = Group
-		fields = ('name', 'about')
-
-class GroupUpdateForm(ModelForm):
-	class Meta:
-		model = Group
-		exclude = ('slug',)
-
-PhoneNumberFormSet = inlineformset_factory(PhoneNumber, extra=1)
-EmailAddressFormSet = inlineformset_factory(EmailAddress, extra=1)
-InstantMessengerFormSet = inlineformset_factory(InstantMessenger, extra=1)
-WebSiteFormSet = inlineformset_factory(WebSite, extra=1)
-StreetAddressFormSet = inlineformset_factory(StreetAddress, extra=1)
-SpecialDateFormSet = inlineformset_factory(SpecialDate, extra=1)
+    return render_to_response('admin/admin_report.html', {'table': qs},
+        context_instance=RequestContext(request))

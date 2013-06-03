@@ -61,7 +61,7 @@ class CustomMenu(Menu):
                             items.MenuItem(_('Hangup Cause'), '/admin/pyfreebill/hangupcause/'),
                         ]
                     ),
-                    items.MenuItem(_('N/A'), '/admin/pyfreebill/hangupcause/'),
+                    items.MenuItem(_('Reports'), '/admin/report/'),
                 ]
             ),
             items.MenuItem(_('Admin'),
@@ -88,11 +88,6 @@ class CustomMenu(Menu):
                     ),
                 ]
             ),
-
-            items.AppList(
-                _('Administration'),
-                models=('django.contrib.*',)
-            )
         ]
 
     def init_with_context(self, context):

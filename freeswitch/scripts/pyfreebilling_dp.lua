@@ -182,7 +182,7 @@ if channel["sip_authorized"] then
 -----------------------------------------------
   customer = {}
   custok = 0
-  local query_cust_sql = string.format("SELECT name, prepaid, credit_limit, balance, max_calls FROM company WHERE id='"..channel["accountcode"].."' AND enabled = TRUE")
+  local query_cust_sql = string.format("SELECT name, prepaid, credit_limit, customer_balance, max_calls FROM company WHERE id='"..channel["accountcode"].."' AND customer_enabled = TRUE")
   log("SQL: ", query_cust_sql, "debug")
   assert(dbh:query(query_cust_sql, function(row)
     for key, val in pairs(row) do
@@ -195,11 +195,11 @@ if channel["sip_authorized"] then
     log("CUSTOMER NOT FOUND!","Exiting")
     session:hangup("NO_ROUTE_DESTINATION");
   end
-  log("Prepaid / Balance / Credit limit : ".. customer["prepaid"] .." /  ".. tonumber(customer["balance"]) .." / " .. tonumber(customer["credit_limit"]),"")
+  log("Prepaid / Balance / Credit limit : ".. customer["prepaid"] .." /  ".. tonumber(customer["customer_balance"]) .." / " .. tonumber(customer["credit_limit"]),"")
   if (session:ready() == true) then 
     if customer["prepaid"] == "0" then
       log("Customer...: postpaid","")
-      if tonumber(customer["balance"]) < tonumber(customer["credit_limit"]) then
+      if tonumber(customer["customer_balance"]) < tonumber(customer["credit_limit"]) then
         log("CUSTOMER " .. customer["name"] .. " has reach credit limit... rejecting","")
         session:hangup("BEARERCAPABILITY_NOTAUTH");
       else
@@ -207,7 +207,7 @@ if channel["sip_authorized"] then
       end
     elseif customer["prepaid"] == "1" then
       log("Customer...: prepaid","")
-      if tonumber(customer["balance"]) < 0 then
+      if tonumber(customer["customer_balance"]) < 0 then
         log("CUSTOMER " .. customer["name"] .. " has no money... rejecting","")
         session:hangup("BEARERCAPABILITY_NOTAUTH");
       else
@@ -250,6 +250,7 @@ if channel["sip_authorized"] then
 --      set_variable("cost_rate", O)
       session:hangup("BEARERCAPABILITY_NOTAUTH");
     else
+      rate["rate"] = tonumber(rate["rate"])*(1-tonumber(rate["discount"])/100)
       log("Rate", "OK")
     end
   end
@@ -323,8 +324,8 @@ if channel["sip_authorized"] then
     lcrok = lcrok - 1
     log("lcr - num of records", lcrok, "debug")
     if lcrok == 0 then  
-      set_variable("cost_rate", O)
-      execute("set", "cost_rate=0")
+      --set_variable("cost_rate", O)
+      --execute("set", "cost_rate=0")
       session:hangup("DESTINATION_OUT_OF_ORDER")
     else
       log("lcr", "OK")
@@ -342,17 +343,15 @@ if channel["sip_authorized"] then
 --        BRIDGING
 ----------------------------------------------- 
   -- 
-    set_variable("nibble_rate", (tonumber(rate["rate"])*(1-tonumber(rate["discount"])/100)))
+    set_variable("nibble_rate", tonumber(rate["rate"]))
     set_variable("nibble_account", channel["accountcode"])
     set_variable("nibble_increment", rate["block_min_duration"])
     set_variable("effective_caller_id_number", channel["caller_id_number"])
     set_variable("effective_caller_id_name", channel["caller_id_name"])
     set_variable("bypass_media", "false")
     set_variable("hangup_after_bridge", "true")
-    -- set_variable("continue_on_fail", "NORMAL_TEMPORARY_FAILURE, NO_ROUTE_DESTINATION,DESTINATION_OUT_OF_ORDER, NORMAL_CIRCUIT_CONGESTION, SWITCH_CONGESTION, UNALLOCATED_NUMBER, 407")
-    execute("set", "hangup_after_bridge=false")
---    execute("set", "continue_on_fail=1,2,3,6,25,34,38,41,42,44,47,63,66,500,501")
-    execute("set", "continue_on_fail=true")
+    execute("set", "continue_on_fail=1,2,3,6,25,34,38,41,42,44,47,63,66,500,501")
+--    execute("set", "continue_on_fail=true")
     execute("set", "bypass_media=false")
     execute("sched_hangup", "+3600 alloted_timeout")
     execute("set", "inherit_codec=true")
@@ -368,13 +367,13 @@ if channel["sip_authorized"] then
       log("WS CALL prefix:", lcr_prefix[i])
       log("WS CALL dest number:", channel["destination_number"])
       log("WS CALL gwprefix :", lcr_gwprefix[i])
-      destination_number = string.gsub(channel["destination_number"], lcr_lead_strip[i], lcr_gwprefix[i]..lcr_prefix[i], 1)
-      myvarbridge = "\[user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"].."\]"
+      called_number = string.gsub(channel["destination_number"], lcr_lead_strip[i], lcr_gwprefix[i]..lcr_prefix[i], 1)
+      myvarbridge = "\[destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"].."\]"
 --      myvarbridge = ""
-      log("WS CALL dest num with prefix/suffix/strip : ", destination_number)
+      log("WS CALL dest num with prefix/suffix/strip : ", called_number)
       log("WS CALL my variables bridge : ", myvarbridge)
       if mydialbridge == "" then
-        mydialbridge = myvarbridge.."sofia/gateway/" .. lcr_gwname[i] .. "/" .. destination_number
+        mydialbridge = myvarbridge.."sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
       else
         mydialbridge = mydialbridge.."|" .. myvarbridge .. "sofia/gateway/" .. lcr_gwname[i] .. "/" .. destination_number
       end

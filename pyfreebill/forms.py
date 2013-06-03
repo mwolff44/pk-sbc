@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import ModelForm, Textarea
+from django.contrib.admin import widgets
 from pyfreebill.models import CustomerRateCards
 
 class CustomerRateCardsForm(forms.ModelForm):
