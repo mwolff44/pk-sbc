@@ -180,6 +180,14 @@ if channel["sip_authorized"] then
 -----------------------------------------------
 --        Get Wholesale Customer Settings
 -----------------------------------------------
+  set_variable("customer", channel["accountcode"])
+  set_variable("user_agent", channel["sip_user_agent"])
+  set_variable("customer_ip", channel["sip_received_ip"])
+  set_variable("cost_rate", "0.000000")
+  set_variable("sell_rate", "0.000000")
+  set_variable("init_block", "0.000000")
+  set_variable("sell_increment", "0")
+
   customer = {}
   custok = 0
   local query_cust_sql = string.format("SELECT name, prepaid, credit_limit, customer_balance, max_calls FROM company WHERE id='"..channel["accountcode"].."' AND customer_enabled = TRUE")
@@ -244,14 +252,16 @@ if channel["sip_authorized"] then
     log("Customer rate OK:", rateok)
     if rateok == 0 then
       log("RATE NOT FOUND!","Exiting")
-      set_variable("nibble_rate", 0)
-      set_variable("init_block", 0)
-      cost_rate = 0
---      set_variable("cost_rate", O)
       session:hangup("BEARERCAPABILITY_NOTAUTH");
     else
       rate["rate"] = tonumber(rate["rate"])*(1-tonumber(rate["discount"])/100)
       log("Rate", "OK")
+      set_variable("sell_rate", tonumber(rate["rate"]))
+      set_variable("sell_increment", rate["block_min_duration"])
+      set_variable("prefix", rate["prefix"])
+      set_variable("init_block", rate["init_block"])
+      set_variable("ratecard_id", rate["ratecard_id"])
+      set_variable("lcr_group_id", rate["lcrgroup_id"])
     end
   end
 
@@ -324,8 +334,6 @@ if channel["sip_authorized"] then
     lcrok = lcrok - 1
     log("lcr - num of records", lcrok, "debug")
     if lcrok == 0 then  
-      --set_variable("cost_rate", O)
-      --execute("set", "cost_rate=0")
       session:hangup("DESTINATION_OUT_OF_ORDER")
     else
       log("lcr", "OK")
@@ -343,9 +351,6 @@ if channel["sip_authorized"] then
 --        BRIDGING
 ----------------------------------------------- 
   -- 
-    set_variable("nibble_rate", tonumber(rate["rate"]))
-    set_variable("nibble_account", channel["accountcode"])
-    set_variable("nibble_increment", rate["block_min_duration"])
     set_variable("effective_caller_id_number", channel["caller_id_number"])
     set_variable("effective_caller_id_name", channel["caller_id_name"])
     set_variable("bypass_media", "false")
@@ -355,6 +360,7 @@ if channel["sip_authorized"] then
     execute("set", "bypass_media=false")
     execute("sched_hangup", "+3600 alloted_timeout")
     execute("set", "inherit_codec=true")
+    execute("set", "failed_xml_cdr_prefix=failinggw")
 --    execute("export", "disable_q850_reason=true")
 --    execute("nibblebill", "check")
     mydialbridge = ""
@@ -368,7 +374,7 @@ if channel["sip_authorized"] then
       log("WS CALL dest number:", channel["destination_number"])
       log("WS CALL gwprefix :", lcr_gwprefix[i])
       called_number = string.gsub(channel["destination_number"], lcr_lead_strip[i], lcr_gwprefix[i]..lcr_prefix[i], 1)
-      myvarbridge = "\[destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"].."\]"
+      myvarbridge = "\[sell_rate="..tonumber(rate["rate"])..",sell_increment="..rate["block_min_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"].."\]"
 --      myvarbridge = ""
       log("WS CALL dest num with prefix/suffix/strip : ", called_number)
       log("WS CALL my variables bridge : ", myvarbridge)
@@ -381,7 +387,7 @@ if channel["sip_authorized"] then
     end
     log("BRIDGE EXECUTE:", mydialbridge)
     execute("bridge", mydialbridge)
-     
+
    -- hangup
     ws_hangup_cause = get_Variable("last_bridge_proto_specific_hangup_cause")
 --    ws_hangup_cause = string.gsub(ws_hangup_cause, "sip:", "", 1)

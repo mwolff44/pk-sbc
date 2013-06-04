@@ -678,8 +678,7 @@ class CDR(models.Model):
     answered_stamp = models.DateTimeField(_(u"answered time"), null=True)
     end_stamp = models.DateTimeField(_(u"hangup time"), null=True)
     duration = models.IntegerField(_(u"duration"), null=True)
-    effective_duration = models.IntegerField(_(u"effective duration"), null=True)
-    billsec = models.IntegerField(_(u"billsec"), null=True)
+    effectiv_duration = models.IntegerField(_(u"effective duration"), null=True)
     read_codec = models.CharField(_(u"read codec"), max_length=20, null=True)
     write_codec = models.CharField(_(u"write codec"), max_length=20, null=True)
     hangup_cause = models.CharField(_(u"hangup cause"), max_length=50, null=True)
@@ -700,6 +699,7 @@ class CDR(models.Model):
     switchname = models.CharField(_(u"switchname"), null=True, default="", max_length=100)
     switch_ipv4 = models.CharField(_(u"switch ipv4"), null=True, default="", max_length=100)
     hangup_disposition = models.CharField(_(u"hangup disposition"), null=True, default="", max_length=100)
+    sip_hangup_cause = models.CharField(_(u"SIP hangup cause"), null=True, default="", max_length=100)
 
     class Meta:
         db_table = 'cdr'
@@ -711,17 +711,10 @@ class CDR(models.Model):
         return u"%s" % self.uuid
 
     def _get_total_sell(self):
-        if self.init_block:
-            if self.effective_duration < self.block_min_duration:
-                billduration = self.block_min_duration
-            else:
-                billduration = math.ceil(self.effective_duration / self.block_min_duration) * self.block_min_duration
+        if self.rate and self.rate != 0:
+            totalsell = decimal.Decimal(self.billsec) * decimal.Decimal(self.rate) / 60
         else:
-            billduration = self.effective_duration
-        if self.rate:
-            totalsell = decimal.Decimal(billduration) * decimal.Decimal(self.rate) / 60
-        else:
-            totalsell = "0"
+            totalsell = 0.000000
         if self.init_block:
             totalsell = decimal.Decimal(totalsell) + decimal.Decimal(self.init_block)           
         return round(totalsell,6)
@@ -731,6 +724,26 @@ class CDR(models.Model):
         if self.cost_rate:
             totalcost = decimal.Decimal(self.effective_duration) * decimal.Decimal(self.cost_rate) / 60
         else:
-            totalcost = "0"
+            totalcost = 0.000000
         return round(totalcost,6)
     total_cost = property(_get_total_cost)
+
+    def _get_effective_duration(self):
+        if self.effectiv_duration:
+            effdur = math.ceil(self.effectiv_duration / 1000.0)
+        else:
+            effdur = 0
+        return int(effdur)
+    effective_duration = property(_get_effective_duration)
+
+    def _get_billsec(self):
+        if self.block_min_duration and self.effective_duration:
+            if self.effective_duration < self.block_min_duration:
+                billsec = self.block_min_duration
+            else:
+                billsec = math.ceil(self.effective_duration / self.block_min_duration) * self.block_min_duration
+        else:
+            billsec = self.effective_duration
+        return int(billsec)
+    billsec = property(_get_billsec)
+
