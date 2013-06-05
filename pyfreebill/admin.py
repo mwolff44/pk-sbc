@@ -30,7 +30,10 @@ from pyfreebill.forms import *
 
 def sofiaupdate(modeladmin, request, queryset):
     """ generate new sofia xml config file """
-    t = loader.get_template('xml/sofia.conf.xml')
+    try:
+        t = loader.get_template('xml/sofia.conf.xml')
+    except IOError:
+        messages.error(request, "sofia config xml file update failed. Can not load template file !")
     sipprofiles = SipProfile.objects.all()
     accounts = Company.objects.filter(supplier_enabled=True)
     c = Context({"sipprofiles": sipprofiles, "accounts": accounts})
@@ -48,7 +51,10 @@ sofiaupdate.short_description = _(u"update sofia config xml file")
 
 def directoryupdate(modeladmin, request, queryset):
     """ generate new directory xml config file """
-    t = loader.get_template('xml/directory.conf.xml')
+    try:
+        t = loader.get_template('xml/directory.conf.xml')
+    except IOError:
+        messages.error(request, "customer sip config xml file update failed. Can not load template file !")
     customerdirectorys = CustomerDirectory.objects.filter(company__customer_enabled__exact=True, enabled=True)
     accounts = Company.objects.filter(customer_enabled=True)
     c = Context({"customerdirectorys": customerdirectorys, "accounts": accounts})
@@ -283,7 +289,7 @@ class CustomerRateCardsAdmin(admin.ModelAdmin):
 
 # CustomerDirectory
 class CustomerDirectoryAdmin(admin.ModelAdmin):
-    list_display = ['company', 'name', 'password', 'rtp_ip', 'sip_ip', 'enabled', 'description'] 
+    list_display = ['company', 'name', 'password', 'rtp_ip', 'sip_ip', 'max_calls', 'enabled', 'description'] 
     ordering = ['company', 'enabled']
     list_filter = ['enabled',]
     search_filter = ['^sip_ip', '^company', '^name']

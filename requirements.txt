@@ -1,10 +1,11 @@
 BeautifulSoup==3.2.1
 Django==1.5.1
+simplejson
 IPy==0.80
 PIL==1.1.7
 South==0.7.6
 argparse==1.2.1
-chardet==2.0.1
+chardet
 diff-match-patch==20120106
 django-admin-honeypot==0.2.5
 django-appconf==0.6

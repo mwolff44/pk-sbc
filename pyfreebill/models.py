@@ -311,9 +311,10 @@ class CustomerDirectory(models.Model):
     password = models.CharField(_(u"password"), max_length=100, blank=True, help_text=_(u"It's recomended to use strong passwords for the endpoint."))
     description = models.TextField(_(u'description'), blank=True)
     name = models.CharField(_(u"SIP name"), max_length=50, unique=True, help_text=_(u"E.g.: customer name gateway for example, etc..."))
-    rtp_ip = models.CharField(_(u"RTP IP"), max_length=100, default="auto", help_text=_(u"Internal IP address to bind to for RTP."))
-    sip_ip = models.CharField(_(u"SIP IP"), max_length=100, default="auto", help_text=_(u"Internal IP address to bind to for SIP."))
+    rtp_ip = models.CharField(_(u"RTP IP CIDR"), max_length=100, default="auto", help_text=_(u"Internal IP address/mask to bind to for RTP. Format : CIDR. Ex. 192.168.1.0/32"))
+    sip_ip = models.CharField(_(u"SIP IP CIDR"), max_length=100, default="auto", help_text=_(u"Internal IP address/mask to bind to for SIP. Format : CIRD."))
     sip_port = models.PositiveIntegerField(_(u"SIP port"), default=5060)
+    max_calls = models.PositiveIntegerField(_(u'max simultaneous calls'), default=1, help_text=_(u"maximum simultaneous calls allowed for this customer account."))
     log_auth_failures = models.BooleanField(_(u"log auth failures"), default=False, help_text=_(u"It true, log authentication failures. Required for Fail2ban."))
     MULTIPLE_REGISTRATIONS_CHOICES = (
         ("call-id", _(u"Call-id")), ("contact", _(u"Contact")),
@@ -480,9 +481,9 @@ class CustomerRateCards(models.Model):
     description = models.TextField(_(u'description'), blank=True)
     tech_prefix = models.CharField(_(u"technical prefix"), blank=True, default='', max_length=15)
     DEFAULT_PRIORITY_CHOICES = (
-        ('1', _(u'1st')),
-        ('2', _(u'2nd')),
-        ('3', _(u'3rd')),
+        (1, _(u'1')),
+        (2, _(u'2')),
+        (3, _(u'3')),
     )
     priority = models.IntegerField(_(u'priority'), choices=DEFAULT_PRIORITY_CHOICES, help_text=_(u"Priority order, 1 is the higher priority and 3 the lower one. Correct values are : 1, 2 or 3 !."))
     discount = models.DecimalField(_(u'discount'), max_digits=3, decimal_places=2, default=0, help_text=_(u"ratecard discount. For 10% discount, enter 10 !"))

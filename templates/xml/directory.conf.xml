@@ -31,7 +31,7 @@
             <variables>
               <variable name="accountcode" value="{{ customerdirectory.company.id }}"/>
               <variable name="user_context" value="pyfreebill"/>
-              <!--<variable name='max_calls' value='{{ company.max_calls }}'/>-->
+              <variable name='max_calls' value='{{ customerdirectory.max_calls }}'/>
             </variables>
           </user>{% endfor %}
         </users>{% endif %}

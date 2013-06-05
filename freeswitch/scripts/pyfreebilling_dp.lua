@@ -169,7 +169,6 @@ log("Get session variable :", "done", "debug")
 --        DATABASE CONNECTION
 -----------------------------------------------
 if channel["sip_authorized"] then
---  local dbh = freeswitch.Dbh("freeswitch", "pyfreebilling", "comtep")
   dbh = freeswitch.Dbh("odbc://freeswitch")
   if dbh:connected() == false then
     log("Dbh : ", "Database error - Hangup call")
