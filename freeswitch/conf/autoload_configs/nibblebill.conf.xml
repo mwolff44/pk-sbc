@@ -9,7 +9,7 @@
     <param name="db_table" value="company"/>
 
     <!-- The column name where we store the value of the account -->
-    <param name="db_column_cash" value="balance"/>
+    <param name="db_column_cash" value="customer_balance"/>
 
     <!-- The column name for the unique ID identifying the account -->
     <param name="db_column_account" value="id"/>
@@ -30,7 +30,7 @@
 
 
     <!-- Default heartbeat interval. Set to 'off' for no heartbeat (i.e. bill only at end of call) -->
-    <param name="global_heartbeat" value="60"/>
+    <param name="global_heartbeat" value="off"/>
 
     <!-- By default, warn a caller when their balance is at $5.00. You can set this to a negative number. -->
     <param name="lowbal_amt" value="-5"/>
