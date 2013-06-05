@@ -189,7 +189,9 @@ if channel["sip_authorized"] then
 
   customer = {}
   custok = 0
-  local query_cust_sql = string.format("SELECT name, prepaid, credit_limit, customer_balance, max_calls FROM company WHERE id='"..channel["accountcode"].."' AND customer_enabled = TRUE")
+--  local query_cust_sql = string.format("SELECT name, prepaid, credit_limit, customer_balance, max_calls FROM company WHERE id='"..channel["accountcode"].."' AND customer_enabled = TRUE")
+  local query_cust_sql = string.format("SELECT c.name AS name, c.prepaid AS prepaid, C.credit_limit AS credit_limit, c.customer_balance AS customer_balance, c.max_calls AS max_calls, cnr.prefix AS prefix, cnr.remove_prefix AS remove_prefix, cnr.add_prefix AS add_prefix FROM company c RIGHT JOIN customer_norm_rules cnr ON cnr.company_id = c.id WHERE c.id='"..channel["accountcode"].."' AND c.customer_enabled = TRUE AND '" .. channel["destination_number"] .. "' LIKE concat(cnr.prefix,'%')")
+
   log("SQL: ", query_cust_sql, "debug")
   assert(dbh:query(query_cust_sql, function(row)
     for key, val in pairs(row) do
@@ -228,6 +230,10 @@ if channel["sip_authorized"] then
 --        Get Customer Rate
 -----------------------------------------------
   if (session:ready() == true) then
+    if customer["remove_prefix"] == "" then
+      customer["remove_prefix"]  = "^"
+    end
+    channel["destination_number"] = string.gsub(channel["destination_number"], customer["remove_prefix"], customer["add_prefix"], 1)
     rate = {}
     local rateprio = 1
     rateok = 0

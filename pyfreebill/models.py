@@ -499,6 +499,45 @@ class CustomerRateCards(models.Model):
     def __unicode__(self):
         return u"%s %s %s" % (self.company, self.ratecard, self.tech_prefix)
 
+# NORMALIZATION
+class CustomerNormalizationRules(models.Model):
+    """ Customer Normalization Rules """
+    company = models.ForeignKey(Company, verbose_name=_(u"customer"))
+    prefix = models.CharField(_(u'numeric prefix'), max_length=30)
+    description = models.TextField(_(u'description'), blank=True)
+    remove_prefix = models.CharField(_(u"remove prefix"), blank=True, default='', max_length=15)
+    add_prefix = models.CharField(_(u"add prefix"), blank=True, default='', max_length=15)
+    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+
+    class Meta:
+        db_table = 'customer_norm_rules'
+        ordering = ('company', 'prefix')
+        verbose_name = _(u'Customer Normalization Rule')
+        verbose_name_plural = _(u'Customer Normalization Rules')
+
+    def __unicode__(self):
+        return u"%s -> %s -%s +%s" % (self.company, self.prefix, self.remove_prefix, self.add_prefix)
+
+class CarrierNormalizationRules(models.Model):
+    """ Carrier Normalization Rules """
+    company = models.ForeignKey(Company, verbose_name=_(u"carrier"))
+    prefix = models.CharField(_(u'numeric prefix'), max_length=30)
+    description = models.TextField(_(u'description'), blank=True)
+    remove_prefix = models.CharField(_(u"remove prefix"), blank=True, default='', max_length=15)
+    add_prefix = models.CharField(_(u"add prefix"), blank=True, default='', max_length=15)
+    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+
+    class Meta:
+        db_table = 'carrier_norm_rules'
+        ordering = ('company', 'prefix')
+        verbose_name = _(u'Carrier Normalization Rule')
+        verbose_name_plural = _(u'Carrier Normalization Rules')
+
+    def __unicode__(self):
+        return u"%s -> %s -%s +%s" % (self.company, self.prefix, self.remove_prefix, self.add_prefix)
+
 # ACL
 
 class AclLists(models.Model):

@@ -25,7 +25,7 @@ from django.template import Context, loader
 from django.core.files import File
 from django.utils.translation import ugettext_lazy as _
 from import_export.admin import ImportExportMixin, ExportMixin
-from pyfreebill.models import Company, Person, Group, PhoneNumber, EmailAddress, InstantMessenger, WebSite, StreetAddress, SpecialDate, CompanyBalanceHistory, ProviderTariff, ProviderRates, LCRGroup, LCRProviders, RateCard, CustomerRates, CustomerRateCards, CustomerDirectory, AclLists, AclNodes, VoipSwitch, SipProfile, SofiaGateway, HangupCause, CDR
+from pyfreebill.models import Company, Person, Group, PhoneNumber, EmailAddress, InstantMessenger, WebSite, StreetAddress, SpecialDate, CompanyBalanceHistory, ProviderTariff, ProviderRates, LCRGroup, LCRProviders, RateCard, CustomerRates, CustomerRateCards, CustomerDirectory, AclLists, AclNodes, VoipSwitch, SipProfile, SofiaGateway, HangupCause, CDR, CarrierNormalizationRules, CustomerNormalizationRules
 from pyfreebill.forms import *
 
 def sofiaupdate(modeladmin, request, queryset):
@@ -347,6 +347,16 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
       return False
 
+class CarrierNormalizationRulesAdmin(admin.ModelAdmin):
+    list_display = ('company', 'prefix', 'remove_prefix', 'add_prefix')
+    ordering = ('company', 'prefix')
+    search_fields = ('^prefix',)
+
+class CustomerNormalizationRulesAdmin(admin.ModelAdmin):
+    list_display = ('company', 'prefix', 'remove_prefix', 'add_prefix')
+    ordering = ('company', 'prefix')
+    search_fields = ('^prefix',)
+
 #    admin.site.disable_action('delete_selected')
 
 #----------------------------------------
@@ -371,4 +381,6 @@ admin.site.register(SipProfile, SipProfileAdmin)
 admin.site.register(SofiaGateway, SofiaGatewayAdmin)
 admin.site.register(HangupCause, HangupCauseAdmin)
 admin.site.register(CDR, CDRAdmin)
+admin.site.register(CarrierNormalizationRules, CarrierNormalizationRulesAdmin)
+admin.site.register(CustomerNormalizationRules, CustomerNormalizationRulesAdmin)
 #admin.site.register()
