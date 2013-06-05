@@ -1,10 +1,11 @@
 import os
 # Django settings for pyfreebilling project.
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-PROJECT_DIR = os.path.dirname(__file__)
+SETTINGS_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_DIR = os.path.dirname(SETTINGS_DIR)
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -15,10 +16,10 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
+        'NAME': 'pyfreebilling',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
+        'USER': 'pyfreebilling',
+        'PASSWORD': 'mypassword',
         'HOST': '127.0.0.1',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
@@ -57,7 +58,7 @@ USE_TZ = True
 # Example: "/var/www/example.com/media/"
 #MEDIA_ROOT = os.path.join(APPLICATION_DIR, 'media')
 
-MEDIA = ''
+MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -68,7 +69,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = os.path.join(PROJECT_DIR, "/static/")
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -86,15 +87,17 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'mysecretkey'
+SECRET_KEY = '&mr1sl68uoiwgbdb6ax$44-$(0=_c9^)s@!g1!v&wohgkgemx6'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
+     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -103,6 +106,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+#    'djangosecure.middleware.SecurityMiddleware',
     'axes.middleware.FailedLoginMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -124,17 +128,21 @@ ROOT_URLCONF = 'pyfreebilling.urls'
 WSGI_APPLICATION = 'pyfreebilling.wsgi.application'
 
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_DIR, "../templates"),
+    os.path.join(PROJECT_DIR, 'templates'),
+    #"/usr/local/venv/pyfreebilling/templates",
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
 
 INSTALLED_APPS = (
-    'admin_tools',
-    'admin_tools.theming',
-    'admin_tools.menu',
-    'admin_tools.dashboard',
+#    'admin_tools.menu',
+    'grappelli.dashboard',
+    'grappelli',
+#    'admin_tools',
+#    'admin_tools.theming',
+#    'admin_tools.menu',
+#    'admin_tools.dashboard',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -142,9 +150,15 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.comments',
+    'admin_honeypot',
+#    'djangosecure',
+    'chroniker',
+    'clear_cache',
     'axes',
     'import_export',
     'pyfreebill',
+    'qsstats',
+    'django_tables2',
     'django.contrib.admin',
     'south',
     'django_countries',
@@ -205,5 +219,31 @@ AXES_LOGIN_FAILURE_LIMIT = 5
 # COUNTRIES_FLAG_PATH = '<path relative to media root>flags/%s.png' Specify directory
 COUNTRIES_FLAG_PATH = 'flags/%s.png'
 
+
+#-----------------------
+# DJANGO-ADMIN-TOOLS
+#-----------------------
 ADMIN_TOOLS_MENU = 'pyfreebilling.menu.CustomMenu'
+#ADMIN_TOOLS_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
+#ADMIN_TTOLS_APP_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
+ADMIN_MEDIA_PREFIX = '/static/admin/'
+ADMINTOOLS_BOOTSTRAP_SITE_LINK = '/admin/'
+GRAPPELLI_ADMIN_TITLE = 'PyFreeBilling'
+GRAPPELLI_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
+AUTOCOMPLETE_LIMIT = '10'
+
+# SECURING SITE ACCESS
+ADMIN_HONEYPOT_EMAIL_ADMINS = False
+
+SECURE_SSL_REDIRECT = False
+#SECURE_BROWSER_XSS_FILTER = True
+#SECURE_FRAME_DENY = True
+#SECURE_CONTENT_TYPE_NOSNIFF = True
+#SECURE_HSTS_SECONDS = 60
+#SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+#SESSION_COOKIE_SECURE = True
+#SESSION_COOKIE_HTTPONLY = True
+#CSRF_COOKIE_SECURE = True
+
 
