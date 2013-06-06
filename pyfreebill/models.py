@@ -538,6 +538,42 @@ class CarrierNormalizationRules(models.Model):
     def __unicode__(self):
         return u"%s -> %s -%s +%s" % (self.company, self.prefix, self.remove_prefix, self.add_prefix)
 
+class CustomerCIDNormalizationRules(models.Model):
+    """ Customer Caller ID Number Normalization Rules """
+    company = models.ForeignKey(Company, verbose_name=_(u"customer"))
+    description = models.TextField(_(u'description'), blank=True)
+    remove_prefix = models.CharField(_(u"remove prefix"), blank=True, default='', max_length=15)
+    add_prefix = models.CharField(_(u"add prefix"), blank=True, default='', max_length=15)
+    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+
+    class Meta:
+        db_table = 'customer_cid_norm_rules'
+        ordering = ('company', )
+        verbose_name = _(u'Customer CallerID Normalization Rule')
+        verbose_name_plural = _(u'Customer CallerID Normalization Rules')
+
+    def __unicode__(self):
+        return u"%s -> -%s +%s" % (self.company, self.remove_prefix, self.add_prefix)
+
+class CarrierCIDNormalizationRules(models.Model):
+    """ Carrier Caller ID Number Normalization Rules """
+    company = models.ForeignKey(Company, verbose_name=_(u"carrier"))
+    description = models.TextField(_(u'description'), blank=True)
+    remove_prefix = models.CharField(_(u"remove prefix"), blank=True, default='', max_length=15)
+    add_prefix = models.CharField(_(u"add prefix"), blank=True, default='', max_length=15)
+    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+
+    class Meta:
+        db_table = 'carrier_cid_norm_rules'
+        ordering = ('company', )
+        verbose_name = _(u'Carrier CallerID Normalization Rule')
+        verbose_name_plural = _(u'Carrier CallerID Normalization Rules')
+
+    def __unicode__(self):
+        return u"%s -> -%s +%s" % (self.company, self.remove_prefix, self.add_prefix)
+
 # ACL
 
 class AclLists(models.Model):
@@ -717,8 +753,8 @@ class CDR(models.Model):
     start_stamp = models.DateTimeField(_(u"start time"), null=True)
     answered_stamp = models.DateTimeField(_(u"answered time"), null=True)
     end_stamp = models.DateTimeField(_(u"hangup time"), null=True)
-    duration = models.IntegerField(_(u"duration"), null=True)
-    effectiv_duration = models.IntegerField(_(u"effective duration"), null=True)
+    duration = models.IntegerField(_(u"global duration"), null=True)
+    effectiv_duration = models.IntegerField(_(u"effective duration"), null=True, help_text=_(u"Global call duration since call has been received by the switch in ms."))
     read_codec = models.CharField(_(u"read codec"), max_length=20, null=True)
     write_codec = models.CharField(_(u"write codec"), max_length=20, null=True)
     hangup_cause = models.CharField(_(u"hangup cause"), max_length=50, null=True)
