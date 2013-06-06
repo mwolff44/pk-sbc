@@ -190,7 +190,7 @@ if channel["sip_authorized"] then
   customer = {}
   custok = 0
 --  local query_cust_sql = string.format("SELECT name, prepaid, credit_limit, customer_balance, max_calls FROM company WHERE id='"..channel["accountcode"].."' AND customer_enabled = TRUE")
-  local query_cust_sql = "SELECT c.name AS name, c.prepaid AS prepaid, C.credit_limit AS credit_limit, c.customer_balance AS customer_balance, c.max_calls AS max_calls, cnr.prefix AS prefix, cnr.remove_prefix AS remove_prefix, cnr.add_prefix AS add_prefix FROM company c LEFT JOIN customer_norm_rules cnr ON cnr.company_id = c.id AND '" .. channel["destination_number"] .. "' LIKE concat(cnr.prefix,'%') WHERE c.id='"..channel["accountcode"].."' AND c.customer_enabled = TRUE"
+  local query_cust_sql = "SELECT c.name AS name, c.prepaid AS prepaid, C.credit_limit AS credit_limit, c.customer_balance AS customer_balance, c.max_calls AS max_calls, cnr.prefix AS prefix, cnr.remove_prefix AS remove_prefix, cnr.add_prefix AS add_prefix , ccnr.remove_prefix AS ccnr_remove_prefix, ccnr.add_prefix AS ccnr_add_prefix FROM company c LEFT JOIN customer_norm_rules cnr ON cnr.company_id = c.id AND '" .. channel["destination_number"] .. "' LIKE concat(cnr.prefix,'%') LEFT JOIN customer_cid_norm_rules ccnr ON ccnr.company_id = c.id  WHERE c.id='"..channel["accountcode"].."' AND c.customer_enabled = TRUE"
 
   log("SQL: ", query_cust_sql, "debug")
   assert(dbh:query(query_cust_sql, function(row)
@@ -227,9 +227,10 @@ if channel["sip_authorized"] then
     assert(dbh:release())
   end
 -----------------------------------------------
---        Get Customer Rate
+--        Customer Normalization
 -----------------------------------------------
   if (session:ready() == true) then
+    -- Called Num normalization
     if (customer["remove_prefix"] == "" or customer["remove_prefix"] == nil) then
       customer["remove_prefix"]  = "^"
     end
@@ -237,6 +238,26 @@ if channel["sip_authorized"] then
       customer["add_prefix"]  = ""
     end
     channel["destination_number"] = string.gsub(channel["destination_number"], customer["remove_prefix"], customer["add_prefix"], 1)
+
+    -- CallerID normalization
+    log("CallerID Norm - callerID num / rem_prefix / add_prefix : ", channel["caller_id_number"].." / "..customer["ccnr_remove_prefix"].." / "..customer["ccnr_add_prefix"])
+
+    if (customer["ccnr_remove_prefix"] == "" or customer["ccnr_remove_prefix"] == nil) then
+      customer["ccnr_remove_prefix"]  = "^"
+    end
+    if customer["ccnr_add_prefix"] == nil then
+      customer["ccnr_add_prefix"]  = ""
+    end
+    if (channel["caller_id_number"] == "" or channel["caller_id_number"] == nil) then
+        channel["caller_id_number"] = "anonymous"
+    else
+        channel["caller_id_number"] = string.gsub(channel["caller_id_number"], customer["ccnr_remove_prefix"], customer["ccnr_add_prefix"], 1)
+    end
+    log("Customer CallerID : ", channel["caller_id_number"])
+    set_variable("caller_id_number", channel["caller_id_number"])
+-----------------------------------------------
+--        Get Customer Rate
+-----------------------------------------------
     rate = {}
     local rateprio = 1
     rateok = 0
@@ -389,7 +410,7 @@ if channel["sip_authorized"] then
       if mydialbridge == "" then
         mydialbridge = myvarbridge.."sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
       else
-        mydialbridge = mydialbridge.."|" .. myvarbridge .. "sofia/gateway/" .. lcr_gwname[i] .. "/" .. destination_number
+        mydialbridge = mydialbridge.."|" .. myvarbridge .. "sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
       end
       log("construction bridge : ", mydialbridge, "debug") 
     end

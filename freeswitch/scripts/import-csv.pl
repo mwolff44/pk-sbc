@@ -19,8 +19,8 @@ my $csv = Text::CSV_XS->new({ quote_char => '"', always_quote => 1 }) or die "Ca
 #my $pg_host = localhost; 
 #my $pg_db = pyfreebilling1;
 my $pg_table = "cdr";
-my $pg_user = "importcdr";
-my $pg_pwd = "comtep";
+my $pg_user = "freebilling";
+my $pg_pwd = "password";
 
 # this commands HUPS fs, she creates new cdr.csv files, so we can load the old ones up
 my $command  = ("/usr/local/freeswitch/bin/fs_cli -x 'cdr_csv rotate'");

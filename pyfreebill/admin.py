@@ -192,9 +192,9 @@ class ProviderTariffAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'carrier', 'description', 'quality', 'reliability', 'date_start', 'date_end', 'enabled']
     ordering = ['name',]
     readonly_fields = ['id',]
-    inlines = [
-        ProviderRatesInline,
-    ]
+#    inlines = [
+#        ProviderRatesInline,
+#    ]
 
 class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ['provider_tariff', 'digits', 'cost_rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'enabled', 'date_added', 'date_modified']
@@ -277,9 +277,9 @@ class RateCardAdmin(admin.ModelAdmin):
     ordering = ['name', 'enabled', 'lcrgroup']
     list_filter = ['enabled', 'lcrgroup']
     search_fields = ['description', '^name']
-    inlines = [
-        CustomerRatesInline,
-    ]
+#    inlines = [
+#        CustomerRatesInline,
+#    ]
 
 class CustomerRateCardsAdmin(admin.ModelAdmin):
     list_display = ['company', 'ratecard', 'tech_prefix', 'priority', 'description']
