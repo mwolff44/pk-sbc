@@ -1,19 +1,23 @@
 from django.core.management.base import BaseCommand, CommandError
-from pyfreebill.models import CDR, dailystats
-import qsstats
+from pyfreebill.models import CDR, DailyStats
+import datetime, qsstats
+from django.db.models import Sum
 
 class Command(BaseCommand):
-    args = '<poll_id poll_id ...>'
+    args = '<date>'
     help = 'calculate on daily basis stats'
 
     def handle(self, *args, **options):
-        for poll_id in args:
+        for daystats in args:
             try:
-                poll = Poll.objects.get(pk=int(poll_id))
-            except Poll.DoesNotExist:
-                raise CommandError('Poll "%s" does not exist' % poll_id)
+                qs = CDR.objects.all()
+                qss = qsstats.QuerySetStats(qs, 'start_stamp', aggregate=Sum('effective_duration'))
+                today = datetime.date.today()
+                print 'daily stats : %s' % qss.this_month()   
+            except CDR.DoesNotExist:
+                raise CommandError('stats does not exist')
 
-            poll.opened = False
-            poll.save()
+            #poll.opened = False
+            #poll.save()
 
-            self.stdout.write('Successfully closed poll "%s"' % poll_id)
+            self.stdout.write('Successfully stats "%s"' % qss.this_day())

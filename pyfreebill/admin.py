@@ -25,7 +25,7 @@ from django.template import Context, loader
 from django.core.files import File
 from django.utils.translation import ugettext_lazy as _
 from import_export.admin import ImportExportMixin, ExportMixin
-from pyfreebill.models import Company, Person, Group, PhoneNumber, EmailAddress, InstantMessenger, WebSite, StreetAddress, SpecialDate, CompanyBalanceHistory, ProviderTariff, ProviderRates, LCRGroup, LCRProviders, RateCard, CustomerRates, CustomerRateCards, CustomerDirectory, AclLists, AclNodes, VoipSwitch, SipProfile, SofiaGateway, HangupCause, CDR, CarrierNormalizationRules, CustomerNormalizationRules, CarrierCIDNormalizationRules, CustomerCIDNormalizationRules
+from pyfreebill.models import Company, Person, Group, PhoneNumber, EmailAddress, InstantMessenger, WebSite, StreetAddress, SpecialDate, CompanyBalanceHistory, ProviderTariff, ProviderRates, LCRGroup, LCRProviders, RateCard, CustomerRates, CustomerRateCards, CustomerDirectory, AclLists, AclNodes, VoipSwitch, SipProfile, SofiaGateway, HangupCause, CDR, CarrierNormalizationRules, CustomerNormalizationRules, CarrierCIDNormalizationRules, CustomerCIDNormalizationRules, DailyStats
 from pyfreebill.forms import *
 
 def sofiaupdate(modeladmin, request, queryset):
@@ -336,7 +336,7 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
     list_display_links = ('start_stamp',)
 #    _links = ('customer', 'gateway', 'lcr_carrier_id', 'ratecard_id', 'lcr_group_id')
     ordering = ['-start_stamp', 'customer', 'gateway']
-    list_filter = ['customer', 'gateway', 'lcr_carrier_id', 'ratecard_id']
+    list_filter = ['start_stamp', 'customer', 'gateway', 'lcr_carrier_id', 'ratecard_id']
     search_fields = ['^destination_number', '^company__customer']
     readonly_fields =('customer_ip', 'customer', 'caller_id_number', 'destination_number', 'start_stamp', 'answered_stamp', 'end_stamp', 'duration', 'effective_duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'prefix', 'country','cost_rate', 'total_cost', 'total_sell', 'rate', 'init_block', 'block_min_duration', 'ratecard_id', 'lcr_group_id', 'uuid', 'bleg_uuid', 'chan_name', 'read_codec', 'write_codec', 'sip_user_agent', 'sip_rtp_rxstat', 'sip_rtp_txstat', 'switchname', 'switch_ipv4', 'hangup_disposition', 'effectiv_duration', 'sip_hangup_cause')
 #    list_per_page = 20
@@ -364,6 +364,20 @@ class CarrierCIDNormalizationRulesAdmin(admin.ModelAdmin):
 class CustomerCIDNormalizationRulesAdmin(admin.ModelAdmin):
     list_display = ('company', 'remove_prefix', 'add_prefix')
     ordering = ('company',)
+
+# STATS
+class DailyStatsAdmin(admin.ModelAdmin):
+    list_display = ('date', 'customer', 'total_calls', 'success_calls', 'total_duration', 'total_sell', 'total_cost')
+    read_onlyfields = ('date', 'customer', 'total_calls', 'success_calls', 'total_duration', 'total_sell', 'total_cost')
+    list_filter = ('date', 'customer')
+    ordering = ('-date', 'customer')
+
+    def has_add_permission(self, request, obj=None):
+      return False
+
+    def has_delete_permission(self, request, obj=None):
+      return False
+
 
 #    admin.site.disable_action('delete_selected')
 
@@ -393,4 +407,5 @@ admin.site.register(CarrierNormalizationRules, CarrierNormalizationRulesAdmin)
 admin.site.register(CustomerNormalizationRules, CustomerNormalizationRulesAdmin)
 admin.site.register(CarrierCIDNormalizationRules, CarrierCIDNormalizationRulesAdmin)
 admin.site.register(CustomerCIDNormalizationRules, CustomerCIDNormalizationRulesAdmin)
+admin.site.register(DailyStats, DailyStatsAdmin)
 #admin.site.register()

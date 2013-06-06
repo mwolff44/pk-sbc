@@ -823,3 +823,25 @@ class CDR(models.Model):
         return int(billsec)
     billsec = property(_get_billsec)
 
+# STATS
+
+class DailyStats(models.Model):
+    """ Hangup Cause Model """
+    customer = models.ForeignKey(Company, verbose_name=_(u"customer"))
+    date = models.DateField(_(u"stats date"))
+    total_calls = models.IntegerField(_(u"total calls"))
+    success_calls = models.IntegerField(_(u"success calls"))
+    total_duration = models.IntegerField(_(u"total duration"))
+    total_sell = models.DecimalField(_(u'total sell'), max_digits=12, decimal_places=2)
+    total_cost = models.DecimalField(_(u'total sell'), max_digits=12, decimal_places=2)
+    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+
+    class Meta:
+        db_table = 'daily_stats'
+        ordering = ('date', 'customer')
+        verbose_name = _(u"daily stat")
+        verbose_name_plural = _(u"daily stats")
+
+    def __unicode__(self):
+        return u"%s - %s" % (self.date, self.customer)
