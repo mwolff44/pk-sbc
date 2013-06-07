@@ -754,13 +754,17 @@ class CDR(models.Model):
     answered_stamp = models.DateTimeField(_(u"answered time"), null=True)
     end_stamp = models.DateTimeField(_(u"hangup time"), null=True)
     duration = models.IntegerField(_(u"global duration"), null=True)
-    effectiv_duration = models.IntegerField(_(u"effective duration"), null=True, help_text=_(u"Global call duration since call has been received by the switch in ms."))
+    effectiv_duration = models.IntegerField(_(u"total duration"), null=True, help_text=_(u"Global call duration since call has been received by the switch in ms."))
+    effective_duration = models.IntegerField(_(u"effective duration"), null=True, help_text=_(u"real call duration in s."))
+    billsec = models.IntegerField(_(u"billed duration"), null=True, help_text=_(u"billed call duration in s."))
     read_codec = models.CharField(_(u"read codec"), max_length=20, null=True)
     write_codec = models.CharField(_(u"write codec"), max_length=20, null=True)
     hangup_cause = models.CharField(_(u"hangup cause"), max_length=50, null=True)
     hangup_cause_q850 = models.IntegerField(_(u"q.850"), null=True)
     gateway = models.ForeignKey(SofiaGateway, verbose_name=_(u"gateway"), null=True)
-    cost_rate = models.DecimalField(_(u'buy rate'), max_digits=11, decimal_places=5, default="", null=True)
+    cost_rate = models.DecimalField(_(u'buy rate'), max_digits=11, decimal_places=5, default="0", null=True)
+    total_sell = models.DecimalField(_(u'total sell'), max_digits=11, decimal_places=5, default="0", null=True)
+    total_cost = models.DecimalField(_(u'total cost'), max_digits=11, decimal_places=5, default="0", null=True)
     prefix = models.CharField(_(u'Prefix'), max_length=30, null=True)
     country = models.CharField(_(u'Country'), max_length=100, null=True)
     rate = models.DecimalField(_(u'sell rate'), max_digits=11, decimal_places=5, null=True)
@@ -794,7 +798,7 @@ class CDR(models.Model):
         if self.init_block:
             totalsell = decimal.Decimal(totalsell) + decimal.Decimal(self.init_block)           
         return round(totalsell,6)
-    total_sell = property(_get_total_sell)
+    total_sell_py = property(_get_total_sell)
 
     def _get_total_cost(self):
         if self.cost_rate:
@@ -802,7 +806,7 @@ class CDR(models.Model):
         else:
             totalcost = 0.000000
         return round(totalcost,6)
-    total_cost = property(_get_total_cost)
+    total_cost_py = property(_get_total_cost)
 
     def _get_effective_duration(self):
         if self.effectiv_duration:
@@ -810,7 +814,7 @@ class CDR(models.Model):
         else:
             effdur = 0
         return int(effdur)
-    effective_duration = property(_get_effective_duration)
+    effective_duration_py = property(_get_effective_duration)
 
     def _get_billsec(self):
         if self.block_min_duration and self.effective_duration:
@@ -821,7 +825,7 @@ class CDR(models.Model):
         else:
             billsec = self.effective_duration
         return int(billsec)
-    billsec = property(_get_billsec)
+    billsec_py = property(_get_billsec)
 
 # STATS
 
