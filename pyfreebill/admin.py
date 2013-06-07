@@ -409,11 +409,12 @@ class CustomerRatesInline(admin.TabularInline):
     extra = 1
 
 class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ['ratecard', 'destination', 'prefix', 'rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'enabled', 'date_added', 'date_modified']
+    list_display = ['id', 'ratecard', 'destination', 'prefix', 'rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'enabled', 'date_added', 'date_modified']
     ordering = ['ratecard', 'prefix']
     list_filter = ['ratecard', 'enabled', 'destination']
     search_fields = ['^prefix', 'date_start', 'date_end', '^destination']
     actions = ['make_enabled', 'make_disabled']
+    readonly_fields = ['id',]
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
