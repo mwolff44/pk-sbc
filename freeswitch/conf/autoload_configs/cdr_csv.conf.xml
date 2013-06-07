@@ -4,7 +4,7 @@
     <param name="log-base" value="/tmp"/>
     <param name="default-template" value="pyfreebilling"/>
     <!-- This is like the info app but after the call is hung up -->
-    <param name="debug" value="true"/>
+    <param name="debug" value="false"/>
     <param name="rotate-on-hup" value="true"/>
     <!-- may be a b or ab -->
     <param name="legs" value="b"/>
@@ -12,7 +12,7 @@
     <param name="master-file-only" value="true"/>
   </settings>
   <templates>
-    <template name="pyfreebilling">"${customer}","${customer_ip}","${uuid}","${caller_id_number}","${destination_number}","${channel_name}","${start_stamp}","${answer_stamp}","${end_stamp}","${duration}","${read_codec}","${write_codec}","${hangup_cause}","${hangup_cause_q850}","${gateway}","${cost_rate}","${prefix}","","${sell_rate}","${init_block}","${sell_increment}","${lcr_carrier_id}","${ratecard_id}","${lcr_group_id}","${user_agent}","${sip_rtp_rxstat}","${sip_rtp_txstat}","${bleg_uuid}","${FreeSWITCH-Switchname}","${FreeSWITCH-IPv4}","${sip_hangup_disposition}","${billmsec}","${proto_specific_hangup_cause}"</template>
+    <template name="pyfreebilling">"${customer}","${customer_ip}","${uuid}","${caller_id_number}","${destination_number}","${channel_name}","${start_stamp}","${answer_stamp}","${end_stamp}","${duration}","${read_codec}","${write_codec}","${hangup_cause}","${hangup_cause_q850}","${gateway}","${cost_rate}","${prefix}","","${sell_rate}","${init_block}","${sell_increment}","${lcr_carrier_id}","${ratecard_id}","${lcr_group_id}","${user_agent}","${sip_rtp_rxstat}","${sip_rtp_txstat}","${bleg_uuid}","${FreeSWITCH-Switchname}","${FreeSWITCH-IPv4}","${sip_hangup_disposition}","${billmsec}","${proto_specific_hangup_cause}","${sell_destination}","${cost_destination}"</template>
   </templates>
 </configuration>
 

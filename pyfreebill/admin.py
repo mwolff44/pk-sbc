@@ -197,10 +197,10 @@ class ProviderTariffAdmin(admin.ModelAdmin):
 #    ]
 
 class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ['provider_tariff', 'digits', 'cost_rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'enabled', 'date_added', 'date_modified']
+    list_display = ['provider_tariff', 'destination', 'digits', 'cost_rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'enabled', 'date_added', 'date_modified']
     ordering = ['provider_tariff', 'digits']
-    list_filter = ['provider_tariff', 'enabled']
-    search_fields = ['digits', 'date_start', 'date_end']
+    list_filter = ['provider_tariff', 'enabled', 'destination']
+    search_fields = ['^digits', 'date_start', 'date_end', '^destination']
     actions = ['make_enabled', 'make_disabled']
 
     def make_enabled(self, request, queryset):
@@ -248,10 +248,10 @@ class CustomerRatesInline(admin.TabularInline):
     extra = 0
 
 class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ['ratecard', 'prefix', 'rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'enabled', 'date_added', 'date_modified']
+    list_display = ['ratecard', 'destination', 'prefix', 'rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'enabled', 'date_added', 'date_modified']
     ordering = ['ratecard', 'prefix']
-    list_filter = ['ratecard', 'enabled']
-    search_fields = ['prefix', 'date_start', 'date_end']
+    list_filter = ['ratecard', 'enabled', 'destination']
+    search_fields = ['^prefix', 'date_start', 'date_end', '^destination']
     actions = ['make_enabled', 'make_disabled']
 
     def make_enabled(self, request, queryset):
@@ -332,13 +332,13 @@ class HangupCauseAdmin(ImportExportMixin, admin.ModelAdmin):
 
 # CDR
 class CDRAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ('start_stamp', 'customer', 'destination_number', 'effective_duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'cost_rate', 'rate', 'total_cost', 'total_sell', 'prefix', 'ratecard_id', 'lcr_group_id')
+    list_display = ('start_stamp', 'customer', 'sell_destination', 'destination_number', 'effective_duration', 'hangup_cause', 'gateway', 'lcr_carrier_id', 'cost_rate', 'rate', 'total_cost', 'total_sell', 'prefix', 'ratecard_id', 'lcr_group_id')
     list_display_links = ('start_stamp',)
 #    _links = ('customer', 'gateway', 'lcr_carrier_id', 'ratecard_id', 'lcr_group_id')
     ordering = ['-start_stamp', 'customer', 'gateway']
-    list_filter = ['start_stamp', 'customer', 'gateway', 'lcr_carrier_id', 'ratecard_id']
-    search_fields = ['^destination_number', '^company__customer']
-    readonly_fields =('customer_ip', 'customer', 'caller_id_number', 'destination_number', 'start_stamp', 'answered_stamp', 'end_stamp', 'duration', 'effective_duration', 'effective_duration_py', 'billsec', 'billsec_py', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'prefix', 'country','cost_rate', 'total_cost', 'total_cost_py', 'total_sell', 'total_sell_py', 'rate', 'init_block', 'block_min_duration', 'ratecard_id', 'lcr_group_id', 'uuid', 'bleg_uuid', 'chan_name', 'read_codec', 'write_codec', 'sip_user_agent', 'sip_rtp_rxstat', 'sip_rtp_txstat', 'switchname', 'switch_ipv4', 'hangup_disposition', 'effectiv_duration', 'sip_hangup_cause')
+    list_filter = ['start_stamp', 'customer', 'gateway', 'lcr_carrier_id', 'ratecard_id', 'hangup_cause', 'sell_destination', 'cost_destination']
+    search_fields = ['^prefix', '^destination_number', '^customer__name', '^cost_destination', '^start_stamp']
+    readonly_fields =('customer_ip', 'customer', 'caller_id_number', 'destination_number', 'start_stamp', 'answered_stamp', 'end_stamp', 'duration', 'effective_duration', 'effective_duration_py', 'billsec', 'billsec_py', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'prefix', 'country','cost_rate', 'total_cost', 'total_cost_py', 'total_sell', 'total_sell_py', 'rate', 'init_block', 'block_min_duration', 'ratecard_id', 'lcr_group_id', 'uuid', 'bleg_uuid', 'chan_name', 'read_codec', 'write_codec', 'sip_user_agent', 'sip_rtp_rxstat', 'sip_rtp_txstat', 'switchname', 'switch_ipv4', 'hangup_disposition', 'effectiv_duration', 'sip_hangup_cause', 'sell_destination', 'cost_destination')
 #    list_per_page = 20
 
     def has_add_permission(self, request, obj=None):

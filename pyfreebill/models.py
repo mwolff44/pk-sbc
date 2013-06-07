@@ -367,6 +367,7 @@ class ProviderTariff(models.Model):
 
 class ProviderRates(models.Model):
     """ Provider Rates Model """
+    destination = models.CharField(_(u'destination'), blank=True, default='', null=True, max_length=128)
     digits = models.CharField(_(u'numeric prefix'), max_length=30)
     cost_rate = models.DecimalField(_(u'Cost rate'), max_digits=11, decimal_places=5)
     block_min_duration = models.IntegerField(_(u'block min duration'), default=1)
@@ -454,6 +455,7 @@ class RateCard(models.Model):
 class CustomerRates(models.Model):
     """ Customer Rates Model """
     ratecard = models.ForeignKey(RateCard, verbose_name=_(u"ratecard"))
+    destination = models.CharField(_(u'destination'), blank=True, default='', null=True, max_length=128)
     prefix = models.CharField(_(u'numeric prefix'), max_length=30)
     rate = models.DecimalField(_(u'sell rate'), max_digits=11, decimal_places=5)
     block_min_duration = models.IntegerField(_(u'block min duration'), default=1)
@@ -647,7 +649,7 @@ class SipProfile(models.Model):
     ext_rtp_ip = models.CharField(_(u"external RTP IP"), max_length=100, default="auto", help_text=_(u"External/public IP address to bind to for RTP."))
     ext_sip_ip = models.CharField(_(u"external SIP IP"), max_length=100, default="auto", help_text=_(u"External/public IP address to bind to for SIP."))
     rtp_ip = models.CharField(_(u"RTP IP"), max_length=100, default="auto", help_text=_(u"Internal IP address to bind to for RTP."))
-    sip_ip = models.CharField(_(u"SIP IP"), max_length=100, default="auto", help_text=_(u"Internal IP address to bind to for SIP."))
+    sip_ip = models.CharField(_(u"SIP IP"), max_length=100, default="/32", help_text=_(u"Internal IP address to bind to for SIP."))
     sip_port = models.PositiveIntegerField(_(u"SIP port"), default=5060)
     disable_transcoding = models.BooleanField(_(u"disable transcoding"), default=True, help_text=_(u"If true, you can not use transcoding."))
     accept_blind_reg = models.BooleanField(_(u"accept blind registration"), default=False, help_text=_(u"If true, anyone can register to server and will not be challenged for username/password information."))
@@ -703,8 +705,8 @@ class SofiaGateway(models.Model):
     caller_id_in_from = models.BooleanField(_(u"caller ID in From field"), default=False, help_text=_(u"Use the callerid of an inbound call in the from field on "
             "outbound calls via this gateway."))
     SIP_CID_TYPE_CHOICES = (
-        ('none', _(u'deny')),
-        ('default', _(u'allow')),
+        ('none', _(u'none')),
+        ('default', _(u'default')),
         ('pid', _(u'pid')),
         ('rpid', _(u'rpid')),
     )
@@ -782,6 +784,10 @@ class CDR(models.Model):
     switch_ipv4 = models.CharField(_(u"switch ipv4"), null=True, default="", max_length=100)
     hangup_disposition = models.CharField(_(u"hangup disposition"), null=True, default="", max_length=100)
     sip_hangup_cause = models.CharField(_(u"SIP hangup cause"), null=True, default="", max_length=100)
+    sell_destination = models.CharField(_(u'sell destination'), blank=True, default='', null=True, max_length=128)
+    cost_destination = models.CharField(_(u'cost destination'), blank=True, default='', null=True, max_length=128)
+
+
 
     class Meta:
         db_table = 'cdr'
