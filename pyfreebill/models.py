@@ -541,6 +541,7 @@ class CarrierNormalizationRules(models.Model):
 class CustomerCIDNormalizationRules(models.Model):
     """ Customer Caller ID Number Normalization Rules """
     company = models.ForeignKey(Company, verbose_name=_(u"customer"))
+    prefix = models.CharField(_(u'numeric prefix'), max_length=30)
     description = models.TextField(_(u'description'), blank=True)
     remove_prefix = models.CharField(_(u"remove prefix"), blank=True, default='', max_length=15)
     add_prefix = models.CharField(_(u"add prefix"), blank=True, default='', max_length=15)
@@ -559,6 +560,7 @@ class CustomerCIDNormalizationRules(models.Model):
 class CarrierCIDNormalizationRules(models.Model):
     """ Carrier Caller ID Number Normalization Rules """
     company = models.ForeignKey(Company, verbose_name=_(u"carrier"))
+    prefix = models.CharField(_(u'numeric prefix'), max_length=30)
     description = models.TextField(_(u'description'), blank=True)
     remove_prefix = models.CharField(_(u"remove prefix"), blank=True, default='', max_length=15)
     add_prefix = models.CharField(_(u"add prefix"), blank=True, default='', max_length=15)

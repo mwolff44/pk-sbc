@@ -190,7 +190,7 @@ if channel["sip_authorized"] then
   customer = {}
   custok = 0
 --  local query_cust_sql = string.format("SELECT name, prepaid, credit_limit, customer_balance, max_calls FROM company WHERE id='"..channel["accountcode"].."' AND customer_enabled = TRUE")
-  local query_cust_sql = "SELECT c.name AS name, c.prepaid AS prepaid, C.credit_limit AS credit_limit, c.customer_balance AS customer_balance, c.max_calls AS max_calls, cnr.prefix AS prefix, cnr.remove_prefix AS remove_prefix, cnr.add_prefix AS add_prefix , ccnr.remove_prefix AS ccnr_remove_prefix, ccnr.add_prefix AS ccnr_add_prefix FROM company c LEFT JOIN customer_norm_rules cnr ON cnr.company_id = c.id AND '" .. channel["destination_number"] .. "' LIKE concat(cnr.prefix,'%') LEFT JOIN customer_cid_norm_rules ccnr ON ccnr.company_id = c.id  WHERE c.id='"..channel["accountcode"].."' AND c.customer_enabled = TRUE"
+  local query_cust_sql = "SELECT c.name AS name, c.prepaid AS prepaid, C.credit_limit AS credit_limit, c.customer_balance AS customer_balance, c.max_calls AS max_calls, cnr.prefix AS prefix, cnr.remove_prefix AS remove_prefix, cnr.add_prefix AS add_prefix , ccnr.remove_prefix AS ccnr_remove_prefix, ccnr.add_prefix AS ccnr_add_prefix FROM company c LEFT JOIN customer_norm_rules cnr ON cnr.company_id = c.id AND '" .. channel["destination_number"] .. "' LIKE concat(cnr.prefix,'%') LEFT JOIN customer_cid_norm_rules ccnr ON ccnr.company_id = c.id AND '" .. channel["destination_number"] .. "' LIKE concat(ccnr.prefix,'%')  WHERE c.id='"..channel["accountcode"].."' AND c.customer_enabled = TRUE"
 
   log("SQL: ", query_cust_sql, "debug")
   assert(dbh:query(query_cust_sql, function(row)
@@ -202,7 +202,7 @@ if channel["sip_authorized"] then
   log("Customer data - num of records", custok, "debug")
   if custok == 0 then
     log("CUSTOMER NOT FOUND!","Exiting")
-    session:hangup("NO_ROUTE_DESTINATION");
+    session:hangup("BEARERCAPABILITY_NOTAVAIL");
   end
   log("Prepaid / Balance / Credit limit : ".. customer["prepaid"] .." /  ".. tonumber(customer["customer_balance"]) .." / " .. tonumber(customer["credit_limit"]),"")
   if (session:ready() == true) then 
@@ -210,7 +210,7 @@ if channel["sip_authorized"] then
       log("Customer...: postpaid","")
       if tonumber(customer["customer_balance"]) < tonumber(customer["credit_limit"]) then
         log("CUSTOMER " .. customer["name"] .. " has reach credit limit... rejecting","")
-        session:hangup("BEARERCAPABILITY_NOTAUTH");
+        session:hangup("BEARERCAPABILITY_NOTAVAIL");
       else
         log("Credit limit : ","OK")
       end
@@ -218,7 +218,7 @@ if channel["sip_authorized"] then
       log("Customer...: prepaid","")
       if tonumber(customer["customer_balance"]) < 0 then
         log("CUSTOMER " .. customer["name"] .. " has no money... rejecting","")
-        session:hangup("BEARERCAPABILITY_NOTAUTH");
+        session:hangup("BEARERCAPABILITY_NOTAVAIL");
       else
         log("balance : ","OK")
       end
@@ -281,7 +281,7 @@ if channel["sip_authorized"] then
     log("Customer rate OK:", rateok)
     if rateok == 0 then
       log("RATE NOT FOUND!","Exiting")
-      session:hangup("BEARERCAPABILITY_NOTAUTH");
+      session:hangup("BEARERCAPABILITY_NOTAVAIL");
     else
       rate["rate"] = tonumber(rate["rate"])*(1-tonumber(rate["discount"])/100)
       log("Rate", "OK")

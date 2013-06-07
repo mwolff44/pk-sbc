@@ -123,7 +123,7 @@ foreach my $line (@LS) {
                 {
                     $totalsell = sprintf("%.6f", 0);
                 }
-                if ($fields[19]){
+                if ($fields[19] and $billsec != 0){
                     $totalsell = sprintf("%.6f", ($totalsell + $fields[19]));
                 }
 #                print " total_sell : $totalsell \n\n";

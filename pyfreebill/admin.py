@@ -358,11 +358,11 @@ class CustomerNormalizationRulesAdmin(admin.ModelAdmin):
     search_fields = ('^prefix',)
 
 class CarrierCIDNormalizationRulesAdmin(admin.ModelAdmin):
-    list_display = ('company', 'remove_prefix', 'add_prefix')
+    list_display = ('company', 'prefix', 'remove_prefix', 'add_prefix')
     ordering = ('company',)
 
 class CustomerCIDNormalizationRulesAdmin(admin.ModelAdmin):
-    list_display = ('company', 'remove_prefix', 'add_prefix')
+    list_display = ('company', 'prefix', 'remove_prefix', 'add_prefix')
     ordering = ('company',)
 
 # STATS
