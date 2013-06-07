@@ -457,7 +457,7 @@ class CustomerRates(models.Model):
     ratecard = models.ForeignKey(RateCard, verbose_name=_(u"ratecard"))
     destination = models.CharField(_(u'destination'), blank=True, default='', null=True, max_length=128)
     prefix = models.CharField(_(u'numeric prefix'), max_length=30)
-    rate = models.DecimalField(_(u'sell rate'), max_digits=11, decimal_places=5)
+    rate = models.DecimalField(_(u'sell rate'), max_digits=11, decimal_places=5, help_text=_(u"to block the prefix, put -1"))
     block_min_duration = models.IntegerField(_(u'block min duration'), default=1)
     init_block = models.DecimalField(_(u'Init block rate'), max_digits=11, decimal_places=5, default=1)
     date_start = models.DateTimeField()
