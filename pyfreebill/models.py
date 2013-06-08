@@ -367,8 +367,8 @@ class ProviderTariff(models.Model):
 
 class ProviderRates(models.Model):
     """ Provider Rates Model """
-    destination = models.CharField(_(u'destination'), blank=True, default='', null=True, max_length=128)
-    digits = models.CharField(_(u'numeric prefix'), max_length=30)
+    destination = models.CharField(_(u'destination'), blank=True, default='', null=True, max_length=128, db_index=True)
+    digits = models.CharField(_(u'numeric prefix'), max_length=30, db_index=True)
     cost_rate = models.DecimalField(_(u'Cost rate'), max_digits=11, decimal_places=5)
     block_min_duration = models.IntegerField(_(u'block min duration'), default=1)
     init_block = models.DecimalField(_(u'Init block rate'), max_digits=11, decimal_places=5, default=1)
@@ -455,8 +455,8 @@ class RateCard(models.Model):
 class CustomerRates(models.Model):
     """ Customer Rates Model """
     ratecard = models.ForeignKey(RateCard, verbose_name=_(u"ratecard"))
-    destination = models.CharField(_(u'destination'), blank=True, default='', null=True, max_length=128)
-    prefix = models.CharField(_(u'numeric prefix'), max_length=30)
+    destination = models.CharField(_(u'destination'), blank=True, default='', null=True, max_length=128, db_index=True)
+    prefix = models.CharField(_(u'numeric prefix'), max_length=30, db_index=True)
     rate = models.DecimalField(_(u'sell rate'), max_digits=11, decimal_places=5, help_text=_(u"to block the prefix, put -1"))
     block_min_duration = models.IntegerField(_(u'block min duration'), default=1)
     init_block = models.DecimalField(_(u'Init block rate'), max_digits=11, decimal_places=5, default=1)
@@ -754,7 +754,7 @@ class CDR(models.Model):
     caller_id_number = models.CharField(_(u"caller ID num"), max_length=100, null=True)
     destination_number = models.CharField(_(u"Dest. number"), max_length=100, null=True)
     chan_name = models.CharField(_(u"channel name"), max_length=100, null=True)
-    start_stamp = models.DateTimeField(_(u"start time"), null=True)
+    start_stamp = models.DateTimeField(_(u"start time"), null=True, db_index=True)
     answered_stamp = models.DateTimeField(_(u"answered time"), null=True)
     end_stamp = models.DateTimeField(_(u"hangup time"), null=True)
     duration = models.IntegerField(_(u"global duration"), null=True)
@@ -763,7 +763,7 @@ class CDR(models.Model):
     billsec = models.IntegerField(_(u"billed duration"), null=True, help_text=_(u"billed call duration in s."))
     read_codec = models.CharField(_(u"read codec"), max_length=20, null=True)
     write_codec = models.CharField(_(u"write codec"), max_length=20, null=True)
-    hangup_cause = models.CharField(_(u"hangup cause"), max_length=50, null=True)
+    hangup_cause = models.CharField(_(u"hangup cause"), max_length=50, null=True, db_index=True)
     hangup_cause_q850 = models.IntegerField(_(u"q.850"), null=True)
     gateway = models.ForeignKey(SofiaGateway, verbose_name=_(u"gateway"), null=True)
     cost_rate = models.DecimalField(_(u'buy rate'), max_digits=11, decimal_places=5, default="0", null=True)
@@ -784,8 +784,8 @@ class CDR(models.Model):
     switch_ipv4 = models.CharField(_(u"switch ipv4"), null=True, default="", max_length=100)
     hangup_disposition = models.CharField(_(u"hangup disposition"), null=True, default="", max_length=100)
     sip_hangup_cause = models.CharField(_(u"SIP hangup cause"), null=True, default="", max_length=100)
-    sell_destination = models.CharField(_(u'sell destination'), blank=True, default='', null=True, max_length=128)
-    cost_destination = models.CharField(_(u'cost destination'), blank=True, default='', null=True, max_length=128)
+    sell_destination = models.CharField(_(u'sell destination'), blank=True, default='', null=True, max_length=128, db_index=True)
+    cost_destination = models.CharField(_(u'cost destination'), blank=True, default='', null=True, max_length=128, db_index=True)
 
 
 
@@ -797,6 +797,17 @@ class CDR(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.uuid
+
+    def _get_min_effective_duration(self):
+        if self.effective_duration:
+            min = int(self.effective_duration / 60)
+            sec = int(self.effective_duration % 60)
+        else:
+            min = 0
+            sec = 0
+
+        return "%02d:%02d" % (min, sec)
+    min_effective_duration = property(_get_min_effective_duration)
 
     def _get_total_sell(self):
         if self.rate and self.rate != 0:
@@ -835,6 +846,9 @@ class CDR(models.Model):
         return int(billsec)
     billsec_py = property(_get_billsec)
 
+    def success_cdr(self):
+        return self.CDR.objects.exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING")
+
 # STATS
 
 class DailyStats(models.Model):
@@ -844,6 +858,9 @@ class DailyStats(models.Model):
     total_calls = models.IntegerField(_(u"total calls"))
     success_calls = models.IntegerField(_(u"success calls"))
     total_duration = models.IntegerField(_(u"total duration"))
+    avg_duration = models.IntegerField(_(u"average duration"))
+    max_duration = models.IntegerField(_(u"max duration"))
+    min_duration = models.IntegerField(_(u"min duration"))
     total_sell = models.DecimalField(_(u'total sell'), max_digits=12, decimal_places=2)
     total_cost = models.DecimalField(_(u'total sell'), max_digits=12, decimal_places=2)
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)

@@ -227,7 +227,10 @@ if channel["sip_authorized"] then
       end
     end
   else
-    assert(dbh:release())
+    if dbh:connected() == true then
+      log("DBH Connected : releasing","","debug")
+      assert(dbh:release())
+    end
   end
 -----------------------------------------------
 --        Customer Normalization
@@ -241,6 +244,14 @@ if channel["sip_authorized"] then
       customer["add_prefix"]  = ""
     end
     channel["destination_number"] = string.gsub(channel["destination_number"], customer["remove_prefix"], customer["add_prefix"], 1)
+
+    -- test destination number
+    if string.match(channel["destination_number"],'^216[%d][%d][%d][%d][%d][%d][%d][%d]$') == nil and string.match(channel["destination_number"],'^216%d+') ~= nil then
+        log("Destination number mal formated :","NOK!")
+        session:hangup("UNALLOCATED_NUMBER");
+    else
+        log("Destination number well formated :","OK!")
+    end
 
     -- CallerID normalization
     log("CallerID Norm - callerID num / rem_prefix / add_prefix : ", channel["caller_id_number"].." / "..customer["ccnr_remove_prefix"].." / "..customer["ccnr_add_prefix"])
@@ -258,9 +269,19 @@ if channel["sip_authorized"] then
     end
     log("Customer CallerID : ", channel["caller_id_number"])
     set_variable("caller_id_number", channel["caller_id_number"])
+
+  else
+    if dbh:connected() == true then
+      log("DBH Connected : releasing","","debug")
+      assert(dbh:release())
+    end
+  end
+
 -----------------------------------------------
 --        Get Customer Rate
 -----------------------------------------------
+  if (session:ready() == true) then
+
     rate = {}
     local rateprio = 1
     rateok = 0
@@ -303,27 +324,32 @@ if channel["sip_authorized"] then
     else
       log("non blocked prefix : ", "OK!")
     end
+  else
+    if dbh:connected() == true then
+      log("DBH Connected : releasing","","debug")
+      assert(dbh:release())
+    end
   end
 
 -----------------------------------------------
 --        SELECT LCR TYPE
 -----------------------------------------------
-  log("LCR Type : ", rate["lcrtype"], "debug")
-  if rate["lcrtype"] == "p" then
-    ratefilter = "cost_rate ASC"
-    log("LCR Type : ", "Price", "debug")
-  elseif rate["lcrtype"] == "q" then
-    ratefilter = "quality DESC"
-    log("LCR Type : ", "Quality", "debug")
-  elseif rate["lcrtype"] == "r" then
-    ratefilter = "reliability DESC"
-    log("LCR Type : ", "Reliability", "debug")
-  end
+  if (session:ready() == true) then
+    log("LCR Type : ", rate["lcrtype"], "debug")
+    if rate["lcrtype"] == "p" then
+      ratefilter = "cost_rate ASC"
+      log("LCR Type : ", "Price", "debug")
+    elseif rate["lcrtype"] == "q" then
+      ratefilter = "quality DESC"
+      log("LCR Type : ", "Quality", "debug")
+    elseif rate["lcrtype"] == "r" then
+      ratefilter = "reliability DESC"
+      log("LCR Type : ", "Reliability", "debug")
+    end
 -----------------------------------------------
 --        Get LCR / Gateway
 -----------------------------------------------
    -- route only on cost rate - other routing purpose to be implemented
-  if (session:ready() == true) then
     lcrok = 1
     lcr = {}
     lcr_channels = {}
@@ -376,23 +402,20 @@ if channel["sip_authorized"] then
     lcrok = lcrok - 1
     log("lcr - num of records", lcrok, "debug")
     if lcrok == 0 then  
-      session:hangup("DESTINATION_OUT_OF_ORDER")
+      session:hangup("BEARERCAPABILITY_NOTAVAIL")
     else
       log("lcr", "OK")
     end
+  else
+    if dbh:connected() == true then
+      log("DBH Connected : releasing","","debug")
+      assert(dbh:release())
+    end
   end
   if (session:ready() == true) then  
---[[    ('p',"lower price"),
-        ('q',"best quality"),
-        ('r',"best reliability")
-    if lcr[lcrtype] = 'p' then
-      log("LCR Type : ", "lower price")
-      
-  end]]--
 -----------------------------------------------
 --        BRIDGING
 ----------------------------------------------- 
-  -- 
     set_variable("effective_caller_id_number", channel["caller_id_number"])
     set_variable("effective_caller_id_name", channel["caller_id_name"])
     set_variable("bypass_media", "false")
@@ -431,17 +454,11 @@ if channel["sip_authorized"] then
     execute("bridge", mydialbridge)
 
    -- hangup
-    ws_hangup_cause = get_Variable("last_bridge_proto_specific_hangup_cause")
---    ws_hangup_cause = string.gsub(ws_hangup_cause, "sip:", "", 1)
-    log("Hangup Cause : ", ws_hangup_cause) 
-    channel["last_bridge_hangup_cause"] = get_Variable("last_bridge_hangup_cause")    
-    channel["originate_disposition"] = get_Variable("originate_disposition")
-    channel["sip_hangup_disposition"] = get_Variable("sip_hangup_disposition")
-    hangup_cause = session:hangupCause()
-    log("Session hangup cause :", hangup_cause)
     session:hangup()          
   end
 end
-assert(dbh:release())
+if dbh:connected() == true then
+  log("DBH Connected : releasing","","debug")
+  assert(dbh:release())
+end
 freeswitch.consoleLog("info", "WS CALL -> I am now ending... <-----------\n");
-

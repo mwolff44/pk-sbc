@@ -23,6 +23,7 @@ from django.core import serializers
 from django.forms import ModelForm
 from django.template import Context, loader
 from django.core.files import File
+from django.conf.urls import patterns
 from django.utils.translation import ugettext_lazy as _
 from import_export.admin import ImportExportMixin, ExportMixin
 from pyfreebill.models import Company, Person, Group, PhoneNumber, EmailAddress, InstantMessenger, WebSite, StreetAddress, SpecialDate, CompanyBalanceHistory, ProviderTariff, ProviderRates, LCRGroup, LCRProviders, RateCard, CustomerRates, CustomerRateCards, CustomerDirectory, AclLists, AclNodes, VoipSwitch, SipProfile, SofiaGateway, HangupCause, CDR, CarrierNormalizationRules, CustomerNormalizationRules, CarrierCIDNormalizationRules, CustomerCIDNormalizationRules, DailyStats
@@ -332,13 +333,13 @@ class HangupCauseAdmin(ImportExportMixin, admin.ModelAdmin):
 
 # CDR
 class CDRAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ('start_stamp', 'customer', 'sell_destination', 'destination_number', 'effective_duration', 'hangup_cause', 'gateway', 'lcr_carrier_id', 'cost_rate', 'rate', 'total_cost', 'total_sell', 'prefix', 'ratecard_id', 'lcr_group_id')
+    list_display = ('start_stamp', 'customer', 'sell_destination', 'destination_number', 'min_effective_duration', 'hangup_cause', 'gateway', 'lcr_carrier_id', 'cost_rate', 'rate', 'total_cost', 'total_sell', 'prefix', 'ratecard_id', 'lcr_group_id')
     list_display_links = ('start_stamp',)
 #    _links = ('customer', 'gateway', 'lcr_carrier_id', 'ratecard_id', 'lcr_group_id')
     ordering = ['-start_stamp', 'customer', 'gateway']
     list_filter = ['start_stamp', 'customer', 'gateway', 'lcr_carrier_id', 'ratecard_id', 'hangup_cause', 'sell_destination', 'cost_destination']
     search_fields = ['^prefix', '^destination_number', '^customer__name', '^cost_destination', '^start_stamp']
-    readonly_fields =('customer_ip', 'customer', 'caller_id_number', 'destination_number', 'start_stamp', 'answered_stamp', 'end_stamp', 'duration', 'effective_duration', 'effective_duration_py', 'billsec', 'billsec_py', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'prefix', 'country','cost_rate', 'total_cost', 'total_cost_py', 'total_sell', 'total_sell_py', 'rate', 'init_block', 'block_min_duration', 'ratecard_id', 'lcr_group_id', 'uuid', 'bleg_uuid', 'chan_name', 'read_codec', 'write_codec', 'sip_user_agent', 'sip_rtp_rxstat', 'sip_rtp_txstat', 'switchname', 'switch_ipv4', 'hangup_disposition', 'effectiv_duration', 'sip_hangup_cause', 'sell_destination', 'cost_destination')
+    readonly_fields =('customer_ip', 'customer', 'caller_id_number', 'destination_number', 'start_stamp', 'answered_stamp', 'end_stamp', 'duration', 'min_effective_duration', 'effective_duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'prefix', 'country','cost_rate', 'total_cost', 'total_cost_py', 'total_sell', 'total_sell_py', 'rate', 'init_block', 'block_min_duration', 'ratecard_id', 'lcr_group_id', 'uuid', 'bleg_uuid', 'chan_name', 'read_codec', 'write_codec', 'sip_user_agent', 'sip_rtp_rxstat', 'sip_rtp_txstat', 'switchname', 'switch_ipv4', 'hangup_disposition', 'effectiv_duration', 'sip_hangup_cause', 'sell_destination', 'cost_destination')
 #    list_per_page = 20
 
     def has_add_permission(self, request, obj=None):
@@ -346,6 +347,77 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
       return False
+
+    def queryset(self, request):
+        user = getattr(request, 'user', None)
+        qs = super(CDRAdmin, self).queryset(request)
+        if user.is_superuser:
+            return qs
+        else:
+            usercompany = Person.objects.get(user=user)
+        return qs.filter(customer=usercompany.company)
+
+    def get_urls(self):
+        urls = super(CDRAdmin, self).get_urls()
+        my_urls = patterns('',
+            (r'^$', self.admin_site.admin_view(self.changelist_view)),
+            (r'^voip_daily_report/$', self.admin_site.admin_view(self.voip_daily_report)),
+        )
+        return my_urls + urls
+
+    def voip_daily_report(self, request):
+        opts = CDR._meta
+        kwargs = {}
+        if request.method == 'POST':
+            form = CDRSearchForm(request.user, request.POST)
+            kwargs = CDR_record_common_fun(request)
+        else:
+            kwargs = CDR_record_common_fun(request)
+            tday = datetime.today()
+            form = CDRSearchForm(request.user, initial={"from_date": tday.strftime("%Y-%m-%d"),
+                                                         "to_date": tday.strftime("%Y-%m-%d")})
+            if len(kwargs) == 0:
+                kwargs['starting_date__gte'] = datetime(tday.year, tday.month, tday.day,
+                                                        0, 0, 0, 0)
+
+        select_data = {"starting_date": "SUBSTR(CAST(starting_date as CHAR(30)),1,10)"}
+        # Get Total Records from VoIPCall Report table for Daily Call Report
+        total_data = CDR.objects.extra(select=select_data)\
+            .values('starting_stamp')\
+            .filter(**kwargs)\
+            .annotate(Count('start_stamp'))\
+            .annotate(Sum('effective_duration'))\
+            .annotate(Avg('effective_duration'))\
+            .order_by('-start_stamp')
+
+        # Following code will count total voip calls, duration
+        if total_data:
+            max_duration = max([x['effective_duration__sum'] for x in total_data])
+            total_duration = sum([x['effective_duration__sum'] for x in total_data])
+            total_calls = sum([x['start_stamp__count'] for x in total_data])
+            total_avg_duration = (sum([x['effective_duration__avg']
+                    for x in total_data])) / total_calls
+        else:
+            max_duration = 0
+            total_duration = 0
+            total_calls = 0
+            total_avg_duration = 0
+
+        ctx = RequestContext(request, {
+            'form': form,
+            'total_data': total_data,
+            'total_duration': total_duration,
+            'total_calls': total_calls,
+            'total_avg_duration': total_avg_duration,
+            'max_duration': max_duration,
+            'opts': opts,
+            'model_name': opts.object_name.lower(),
+            'app_label': APP_LABEL,
+            'title': _('call aggregate report'),
+        })
+
+        return render_to_response('admin/pyfreebill/voip_report.html',
+               context_instance=ctx)
 
 class CarrierNormalizationRulesAdmin(admin.ModelAdmin):
     list_display = ('company', 'prefix', 'remove_prefix', 'add_prefix')
