@@ -26,6 +26,8 @@ from django.contrib.contenttypes.generic import GenericRelation
 from django.utils.translation import ugettext_lazy as _
 from country_dialcode.models import Country, Prefix
 from pyfreebill import fields
+import datetime, qsstats
+from django.db.models import Sum, Avg, Count, Max, Min
 import decimal
 import math
 
@@ -797,6 +799,26 @@ class CDR(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.uuid
+
+    @property
+    def daily_total_answered_calls(self):
+        return qsstats.QuerySetStats(self.objects.all().exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING"),'start_stamp', aggregate=Count('id')).this_day()
+
+    @property
+    def daily_total_calls(self):
+        return qsstats.QuerySetStats(self.objects.all(),'start_stamp', aggregate=Count('id')).this_day()
+
+    @property
+    def daily_total_effective_duration_calls(self):
+        return qsstats.QuerySetStats(self.objects.all().exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING"),'start_stamp', aggregate=Sum('effective_duration')).this_day()
+
+    @property
+    def daily_total_sell_calls(self):
+        return qsstats.QuerySetStats(self.objects.all().exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING"),'start_stamp', aggregate=Sum('total_sell')).this_day()
+
+    @property
+    def daily_total_cost_calls(self):
+        return qsstats.QuerySetStats(self.objects.all().exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING"),'start_stamp', aggregate=Sum('total_cost')).this_day()
 
     def _get_min_effective_duration(self):
         if self.effective_duration:

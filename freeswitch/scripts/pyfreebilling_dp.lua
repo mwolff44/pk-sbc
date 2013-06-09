@@ -425,7 +425,7 @@ if channel["sip_authorized"] then
     execute("set", "bypass_media=false")
     execute("sched_hangup", "+3600 alloted_timeout")
     execute("set", "inherit_codec=true")
---    execute("set", "failed_xml_cdr_prefix=failinggw")
+    execute("set", "disable_hold=true")
 --    execute("export", "disable_q850_reason=true")
 --    execute("nibblebill", "check")
     mydialbridge = ""

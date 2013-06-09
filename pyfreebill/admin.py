@@ -19,15 +19,23 @@ from django.contrib import admin
 from django.contrib import messages
 from django.contrib.contenttypes import generic
 from django.contrib.comments.models import Comment
+from django.contrib.admin.options import IncorrectLookupParameters
+from django.contrib.admin.views.main import ERROR_FLAG
 from django.core import serializers
 from django.forms import ModelForm
 from django.template import Context, loader
 from django.core.files import File
 from django.conf.urls import patterns
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ungettext
+from common.common_functions import getvar
 from import_export.admin import ImportExportMixin, ExportMixin
 from pyfreebill.models import Company, Person, Group, PhoneNumber, EmailAddress, InstantMessenger, WebSite, StreetAddress, SpecialDate, CompanyBalanceHistory, ProviderTariff, ProviderRates, LCRGroup, LCRProviders, RateCard, CustomerRates, CustomerRateCards, CustomerDirectory, AclLists, AclNodes, VoipSwitch, SipProfile, SofiaGateway, HangupCause, CDR, CarrierNormalizationRules, CustomerNormalizationRules, CarrierCIDNormalizationRules, CustomerCIDNormalizationRules, DailyStats
-from pyfreebill.forms import *
+from pyfreebill.forms import CDRSearchForm, CustomerRateCardsForm
+from pyfreebill.functions import cdr_record_common_fun, cdr_search_admin_form_fun
+from django.http import HttpResponse, HttpResponseRedirect
+
+APP_LABEL = _('CDR report')
 
 def sofiaupdate(modeladmin, request, queryset):
     """ generate new sofia xml config file """
@@ -365,14 +373,81 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
         )
         return my_urls + urls
 
+    def changelist_view(self, request, extra_context=None):
+        opts = CDR._meta
+        query_string = ''
+        form = CDRSearchForm(request.user)
+        if request.method == 'POST':
+            # Session variable get record set with searched option into export file
+            request.session['admin_cdr_record_kwargs'] = cdr_record_common_fun(request)
+
+            query_string = cdr_search_admin_form_fun(request)
+            return HttpResponseRedirect("/extranet/%s/%s/?%s"
+                % (opts.app_label, opts.object_name.lower(), query_string))
+        else:
+            status = ''
+            from_date = ''
+            to_date = ''
+            campaign_id = ''
+
+            from_date = getvar(request, 'starting_date__gte')
+            to_date = getvar(request, 'starting_date__lte')[0:10]
+            status = getvar(request, 'disposition__exact')
+            campaign_id = getvar(request, 'callrequest__campaign_id')
+
+            form = CDRSearchForm(request.user,
+                                  initial={'status': status,
+                                           'from_date': from_date,
+                                           'to_date': to_date,
+                                           'campaign_id': campaign_id})
+
+        ChangeList = self.get_changelist(request)
+        try:
+            cl = ChangeList(request, self.model, self.list_display,
+                self.list_display_links, self.list_filter, self.date_hierarchy,
+                self.search_fields, self.list_select_related,
+                self.list_per_page, self.list_max_show_all, self.list_editable,
+                self)
+        except IncorrectLookupParameters:
+            if ERROR_FLAG in request.GET.keys():
+                return render_to_response('extranet/invalid_setup.html',
+                        {'title': _('Database error')})
+            return HttpResponseRedirect('%s?%s=1' % (request.path, ERROR_FLAG))
+
+        if request.META['QUERY_STRING'] == '':
+            # Default
+            # Session variable get record set with searched option into export file
+            request.session['admin_cdr_record_kwargs'] = cdr_record_common_fun(request)
+
+            query_string = cdr_search_admin_form_fun(request)
+            return HttpResponseRedirect("/extranet/%s/%s/?%s"
+                % (opts.app_label, opts.object_name.lower(), query_string))
+
+        cl.formset = None
+
+        selection_note_all = ungettext('%(total_count)s selected',
+            'All %(total_count)s selected', cl.result_count)
+
+        ctx = {
+            'selection_note': _('0 of %(cnt)s selected') % {'cnt': len(cl.result_list)},
+            'selection_note_all': selection_note_all % {'total_count': cl.result_count},
+            'cl': cl,
+            'form': form,
+            'opts': opts,
+            'model_name': opts.object_name.lower(),
+            'app_label': APP_LABEL,
+            'title': _('call report'),
+        }
+        return super(CDRAdmin, self).changelist_view(request, extra_context=ctx)
+
     def voip_daily_report(self, request):
         opts = CDR._meta
         kwargs = {}
         if request.method == 'POST':
             form = CDRSearchForm(request.user, request.POST)
-            kwargs = CDR_record_common_fun(request)
+            kwargs = cdr_record_common_fun(request)
         else:
-            kwargs = CDR_record_common_fun(request)
+            kwargs = cdr_record_common_fun(request)
             tday = datetime.today()
             form = CDRSearchForm(request.user, initial={"from_date": tday.strftime("%Y-%m-%d"),
                                                          "to_date": tday.strftime("%Y-%m-%d")})
@@ -416,7 +491,7 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
             'title': _('call aggregate report'),
         })
 
-        return render_to_response('admin/pyfreebill/voip_report.html',
+        return render_to_response('admin/pyfreebill/cdr/voip_report.html',
                context_instance=ctx)
 
 class CarrierNormalizationRulesAdmin(admin.ModelAdmin):

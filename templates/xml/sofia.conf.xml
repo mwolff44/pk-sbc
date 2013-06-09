@@ -27,6 +27,8 @@
     <param name='sip-capture' value='no'/>
     <param name='auth-calls' value='true'/>
     <param name='dtmf-type' value='rfc2833'/>
+    <param name='disable-hold' value='true'/>
+    <param name='disable-transfer' value='true'/>
   </global_settings>
 
   <profiles>
