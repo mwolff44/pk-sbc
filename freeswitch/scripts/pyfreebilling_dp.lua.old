@@ -201,6 +201,7 @@ if session:ready() then
   end
   customer = {}
   custok = 0
+--  local query_cust_sql = string.format("SELECT name, prepaid, credit_limit, customer_balance, max_calls FROM company WHERE id='"..channel["accountcode"].."' AND customer_enabled = TRUE")
   local query_cust_sql = "SELECT c.name AS name, c.prepaid AS prepaid, C.credit_limit AS credit_limit, c.customer_balance AS customer_balance, c.max_calls AS max_calls, cnr.prefix AS prefix, cnr.remove_prefix AS remove_prefix, cnr.add_prefix AS add_prefix , ccnr.remove_prefix AS ccnr_remove_prefix, ccnr.add_prefix AS ccnr_add_prefix FROM company c LEFT JOIN customer_norm_rules cnr ON cnr.company_id = c.id AND '" .. channel["destination_number"] .. "' LIKE concat(cnr.prefix,'%') LEFT JOIN customer_cid_norm_rules ccnr ON ccnr.company_id = c.id AND '" .. channel["caller_id_number"] .. "' LIKE concat(ccnr.prefix,'%')  WHERE c.id='"..channel["accountcode"].."' AND c.customer_enabled = TRUE"
 
   log("SQL: ", query_cust_sql, "debug")
@@ -253,223 +254,230 @@ end
 -----------------------------------------------
 --        Customer Normalization
 -----------------------------------------------
-if (session:ready() == true) then
-  -- Called Num normalization
-  if (customer["remove_prefix"] == "" or customer["remove_prefix"] == nil) then
-    customer["remove_prefix"]  = "^"
-  end
-  if customer["add_prefix"] == nil then
-    customer["add_prefix"]  = ""
-  end
-  channel["destination_number"] = string.gsub(channel["destination_number"], customer["remove_prefix"], customer["add_prefix"], 1)
-   -- test destination number
-  if string.match(channel["destination_number"],'^216[%d][%d][%d][%d][%d][%d][%d][%d]$') == nil and string.match(channel["destination_number"],'^216%d+') ~= nil then
-    set_variable("proto_specific_hangup_cause", "PFB_DESTINATION_NUMBER_WRONG_FORMAT")
-    log("Destination number wrong format :","NOK!", "debug")
-    session:hangup("UNALLOCATED_NUMBER");
+  if (session:ready() == true) then
+    -- Called Num normalization
+    if (customer["remove_prefix"] == "" or customer["remove_prefix"] == nil) then
+      customer["remove_prefix"]  = "^"
+    end
+    if customer["add_prefix"] == nil then
+      customer["add_prefix"]  = ""
+    end
+    channel["destination_number"] = string.gsub(channel["destination_number"], customer["remove_prefix"], customer["add_prefix"], 1)
+
+    -- test destination number
+    if string.match(channel["destination_number"],'^216[%d][%d][%d][%d][%d][%d][%d][%d]$') == nil and string.match(channel["destination_number"],'^216%d+') ~= nil then
+        log("Destination number mal formated :","NOK!")
+        session:hangup("UNALLOCATED_NUMBER");
+    else
+        log("Destination number well formated :","OK!")
+    end
+
+    -- CallerID normalization
+    log("CallerID Norm - callerID num / rem_prefix / add_prefix : ", channel["caller_id_number"].." / "..customer["ccnr_remove_prefix"].." / "..customer["ccnr_add_prefix"])
+
+    if (customer["ccnr_remove_prefix"] == "" or customer["ccnr_remove_prefix"] == nil) then
+      customer["ccnr_remove_prefix"]  = "^"
+    end
+    if customer["ccnr_add_prefix"] == nil then
+      customer["ccnr_add_prefix"]  = ""
+    end
+    if (channel["caller_id_number"] == "" or channel["caller_id_number"] == nil) then
+        channel["caller_id_number"] = "anonymous"
+    else
+        channel["caller_id_number"] = string.gsub(channel["caller_id_number"], customer["ccnr_remove_prefix"], customer["ccnr_add_prefix"], 1)
+    end
+    log("Customer CallerID : ", channel["caller_id_number"])
+    set_variable("caller_id_number", channel["caller_id_number"])
+
   else
-    log("Destination number well formated :","OK!")
+    if dbh:connected() == true then
+      log("DBH Connected : releasing","","debug")
+      assert(dbh:release())
+    end
   end
-  -- CallerID normalization
-  log("CallerID Norm - callerID num / rem_prefix / add_prefix : ", channel["caller_id_number"].." / "..customer["ccnr_remove_prefix"].." / "..customer["ccnr_add_prefix"], "debug")
-  if (customer["ccnr_remove_prefix"] == "" or customer["ccnr_remove_prefix"] == nil) then
-    customer["ccnr_remove_prefix"]  = "^"
-  end
-  if customer["ccnr_add_prefix"] == nil then
-    customer["ccnr_add_prefix"]  = ""
-  end
-  if (channel["caller_id_number"] == "" or channel["caller_id_number"] == nil) then
-    channel["caller_id_number"] = "anonymous"
-  else
-    channel["caller_id_number"] = string.gsub(channel["caller_id_number"], customer["ccnr_remove_prefix"], customer["ccnr_add_prefix"], 1)
-  end
-  log("Customer CallerID : ", channel["caller_id_number"])
-  set_variable("caller_id_number", channel["caller_id_number"])
-else
-  if dbh:connected() == true then
-    log("DBH Connected : releasing","","debug")
-    assert(dbh:release())
-  end
-end
 
 -----------------------------------------------
 --        Get Customer Rate
 -----------------------------------------------
-if (session:ready() == true) then
-  rate = {}
-  local rateprio = 1
-  rateok = 0
-  while rateok == 0 do
-    log("rateprio / rateok :", rateprio.." / "..rateok)
-    if rateprio == 4 then
-      break
+  if (session:ready() == true) then
+
+    rate = {}
+    local rateprio = 1
+    rateok = 0
+    while rateok == 0 do
+      log("rateprio / rateok :", rateprio.." / "..rateok)
+      if rateprio == 4 then
+	break
+      else
+        local query_rate_sql = "SELECT c.tech_prefix AS tech_prefix, c.ratecard_id AS ratecard_id, c.priority AS priority, c.discount AS discount, rc.lcrgroup_id AS lcrgroup_id, r.destination AS destination, r.prefix AS prefix, lg.name AS lcrgoup, lg.lcrtype AS lcrtype, r.rate AS rate, r.block_min_duration AS block_min_duration, r.init_block AS init_block FROM customer_ratecards c INNER JOIN ratecard rc ON rc.id = c.ratecard_id AND c.company_id = '" .. channel["accountcode"] .. "' AND c.priority = '" .. rateprio .. "' INNER JOIN lcr_group lg ON lg.id = rc.lcrgroup_id INNER JOIN customer_rates r ON rc.id = r.ratecard_id WHERE rc.enabled = TRUE AND r.enabled = true AND now() > r.date_start AND now() < r.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(r.prefix,'%') ORDER BY LENGTH(r.prefix) desc LIMIT 1"
+        log("SQL: ", query_rate_sql, "debug")
+	assert(dbh:query(query_rate_sql, function(row)
+	  for key, val in pairs(row) do
+	    rate[key] = val
+	  end
+          rateok = 1
+	end))
+	rateprio = rateprio + 1
+      end
+    end
+    log("Customer rate - num of records", rateok, "debug")
+    log("Customer rate OK:", rateok)
+    if rateok == 0 then
+      set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER _RATE_NOT_FOUND")
+      log("RATE NOT FOUND! : ", "Exiting")
+      session:hangup("BEARERCAPABILITY_NOTAVAIL");
     else
-      local query_rate_sql = "SELECT c.tech_prefix AS tech_prefix, c.ratecard_id AS ratecard_id, c.priority AS priority, c.discount AS discount, rc.lcrgroup_id AS lcrgroup_id, r.destination AS destination, r.prefix AS prefix, lg.name AS lcrgoup, lg.lcrtype AS lcrtype, r.rate AS rate, r.block_min_duration AS block_min_duration, r.init_block AS init_block FROM customer_ratecards c INNER JOIN ratecard rc ON rc.id = c.ratecard_id AND c.company_id = '" .. channel["accountcode"] .. "' AND c.priority = '" .. rateprio .. "' INNER JOIN lcr_group lg ON lg.id = rc.lcrgroup_id INNER JOIN customer_rates r ON rc.id = r.ratecard_id WHERE rc.enabled = TRUE AND r.enabled = true AND now() > r.date_start AND now() < r.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(r.prefix,'%') ORDER BY LENGTH(r.prefix) desc LIMIT 1"
-      log("SQL: ", query_rate_sql, "debug")
-      assert(dbh:query(query_rate_sql, function(row)
-        for key, val in pairs(row) do
-          rate[key] = val
-        end
-        rateok = 1
-      end))
-      rateprio = rateprio + 1
+      rate["rate"] = tonumber(rate["rate"])*(1-tonumber(rate["discount"])/100)
+      log("Rate", "OK")
+      set_variable("sell_rate", tonumber(rate["rate"]))
+      set_variable("sell_increment", rate["block_min_duration"])
+      set_variable("prefix", rate["prefix"])
+      set_variable("init_block", rate["init_block"])
+      set_variable("ratecard_id", rate["ratecard_id"])
+      set_variable("lcr_group_id", rate["lcrgroup_id"])
+      set_variable("sell_destination", rate["destination"])
+    end
+    -- test block prefix with rate -1
+    if rate["rate"] == -1 then
+      log("Blocked prefix ! : ", "Exiting")
+      set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_PREFIX_BLOCKED")
+      session:hangup("BEARERCAPABILITY_NOTAVAIL");
+    else
+      log("non blocked prefix : ", "OK!")
+    end
+  else
+    if dbh:connected() == true then
+      log("DBH Connected : releasing","","debug")
+      assert(dbh:release())
     end
   end
-  log("Customer rate - num of records", rateok, "debug")
-  log("Customer rate OK:", rateok)
-  if rateok == 0 then
-    set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER _RATE_NOT_FOUND")
-    log("RATE NOT FOUND! : ", "Exiting")
-    session:hangup("BEARERCAPABILITY_NOTAVAIL");
-  else
-    rate["rate"] = tonumber(rate["rate"])*(1-tonumber(rate["discount"])/100)
-    log("Rate", "OK")
-    set_variable("sell_rate", tonumber(rate["rate"]))
-    set_variable("sell_increment", rate["block_min_duration"])
-    set_variable("prefix", rate["prefix"])
-    set_variable("init_block", rate["init_block"])
-    set_variable("ratecard_id", rate["ratecard_id"])
-    set_variable("lcr_group_id", rate["lcrgroup_id"])
-    set_variable("sell_destination", rate["destination"])
-  end
-    -- test block prefix with rate -1
-  if rate["rate"] == -1 then
-    log("Blocked prefix ! : ", "Exiting")
-    set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_PREFIX_BLOCKED")
-    session:hangup("BEARERCAPABILITY_NOTAVAIL");
-  else
-    log("non blocked prefix : ", "OK!", "debug")
-  end
-else
-  if dbh:connected() == true then
-    log("DBH Connected : releasing","","debug")
-    assert(dbh:release())
-  end
-end
 
 -----------------------------------------------
 --        SELECT LCR TYPE
 -----------------------------------------------
-if (session:ready() == true) then
-  log("LCR Type : ", rate["lcrtype"], "debug")
-  if rate["lcrtype"] == "p" then
-    ratefilter = "cost_rate ASC"
-    log("LCR Type : ", "Price", "debug")
-  elseif rate["lcrtype"] == "q" then
-    ratefilter = "quality DESC"
-    log("LCR Type : ", "Quality", "debug")
-  elseif rate["lcrtype"] == "r" then
-    ratefilter = "reliability DESC"
-    log("LCR Type : ", "Reliability", "debug")
-  end
+  if (session:ready() == true) then
+    log("LCR Type : ", rate["lcrtype"], "debug")
+    if rate["lcrtype"] == "p" then
+      ratefilter = "cost_rate ASC"
+      log("LCR Type : ", "Price", "debug")
+    elseif rate["lcrtype"] == "q" then
+      ratefilter = "quality DESC"
+      log("LCR Type : ", "Quality", "debug")
+    elseif rate["lcrtype"] == "r" then
+      ratefilter = "reliability DESC"
+      log("LCR Type : ", "Reliability", "debug")
+    end
 -----------------------------------------------
 --        Get LCR / Gateway
 -----------------------------------------------
    -- route only on cost rate - other routing purpose to be implemented
-  lcrok = 1
-  lcr = {}
-  lcr_channels = {}
-  lcr_gwprefix = {}
-  lcr_gwsuffix = {}
-  lcr_codec = {}
-  lcr_gwname = {}
-  lcr_lcrname = {}
-  lcr_lcrtype = {}
-  lcr_digits = {}
-  lcr_destination = {}
-  lcr_cost_rate = {}
-  lcr_block_min_duration = {}
-  lcr_init_block = {}
-  lcr_carrier = {}
-  lcr_lead_strip = {}
-  lcr_tail_strip = {}
-  lcr_prefix = {}
-  lcr_suffix = {}
-  lcr_quality = {}
-  lcr_reliability = {}
-  lcr_gwid = {}
-  log("rate_lcrgroup_id : ", rate["lcrgroup_id"], "debug")
-  local query_cost_sql = "SELECT * FROM (SELECT DISTINCT ON (pr.provider_tariff_id) s.channels AS channels, s.prefix AS gwprefix, s.suffix AS gwsuffix, s.codec AS codec, s.name AS gwname, s.id AS gwid, pr.destination AS destination, pr.digits AS digits, pr.cost_rate AS cost_rate, pr.block_min_duration AS block_min_duration, pr.init_block AS init_block, pt.carrier_id AS carrier_id, pt.lead_strip AS lead_strip, pt.tail_strip AS tail_strip, pt.prefix AS prefix, pt.suffix AS suffix, pt.quality AS quality, pt.reliability AS reliability FROM lcr_providers lp INNER JOIN provider_tariff pt ON pt.id = lp.provider_tariff_id AND pt.enabled = TRUE AND now() > pt.date_start AND now() < pt.date_end INNER JOIN sofia_gateway s ON s.company_id = pt.carrier_id INNER JOIN provider_rates pr ON pr.provider_tariff_id = pt.id AND pr.enabled = TRUE AND now() > pr.date_start AND now() < pr.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(pr.digits,'%') WHERE lp.lcr_id = '" .. rate["lcrgroup_id"] .. "' ORDER BY pr.provider_tariff_id, LENGTH(pr.digits) DESC) T ORDER BY " .. ratefilter .. ""
-  assert(dbh:query(query_cost_sql, function(row)
-    lcr_channels[lcrok] = tonumber(row.channels)
-    lcr_gwprefix[lcrok] = row.gwprefix
-    lcr_gwsuffix[lcrok] = row.gwsuffix
-    lcr_codec[lcrok] = row.codec
-    lcr_gwname[lcrok] = row.gwname
-    lcr_lcrname[lcrok] = rate["lcrgroup"]
-    lcr_lcrtype[lcrok] = rate["lcrtype"]
-    lcr_digits[lcrok] = tonumber(row.digits)
-    lcr_destination[lcrok] = row.destination
-    lcr_cost_rate[lcrok] = tonumber(row.cost_rate)
-    lcr_block_min_duration[lcrok] = tonumber(row.block_min_duration)
-    lcr_init_block[lcrok] = tonumber(row.init_block)
-    lcr_carrier[lcrok] = row.carrier_id
-    lcr_lead_strip[lcrok] = row.lead_strip
-    lcr_tail_strip[lcrok] = row.tail_strip
-    lcr_prefix[lcrok] = row.prefix
-    lcr_suffix[lcrok] = row.suffix
-    lcr_quality[lcrok] = row.quality
-    lcr_reliability[lcrok] = row.reliability
-    lcr_gwid[lcrok] = row.gwid
-    lcrok = lcrok + 1
-  end))
-  log("SQL: ", query_cost_sql, "debug")
-  assert(dbh:release())
-  lcrok = lcrok - 1
-  log("lcr - num of records", lcrok, "debug")
-  if lcrok == 0 then  
-    set_variable("proto_specific_hangup_cause", "PFB_PROVIDER_RATE_NOT_FOUND")
-    session:hangup("BEARERCAPABILITY_NOTAVAIL")
-  else
-    log("lcr", "OK")
-  end
-else
-  if dbh:connected() == true then
-    log("DBH Connected : releasing","","debug")
+    lcrok = 1
+    lcr = {}
+    lcr_channels = {}
+      lcr_gwprefix = {}
+      lcr_gwsuffix = {}
+      lcr_codec = {}
+      lcr_gwname = {}
+      lcr_lcrname = {}
+      lcr_lcrtype = {}
+      lcr_digits = {}
+      lcr_destination = {}
+      lcr_cost_rate = {}
+      lcr_block_min_duration = {}
+      lcr_init_block = {}
+      lcr_carrier = {}
+      lcr_lead_strip = {}
+      lcr_tail_strip = {}
+      lcr_prefix = {}
+      lcr_suffix = {}
+      lcr_quality = {}
+      lcr_reliability = {}
+      lcr_gwid = {}
+    log("rate_lcrgroup_id : ", rate["lcrgroup_id"], "debug")
+    local query_cost_sql = "SELECT * FROM (SELECT DISTINCT ON (pr.provider_tariff_id) s.channels AS channels, s.prefix AS gwprefix, s.suffix AS gwsuffix, s.codec AS codec, s.name AS gwname, s.id AS gwid, pr.destination AS destination, pr.digits AS digits, pr.cost_rate AS cost_rate, pr.block_min_duration AS block_min_duration, pr.init_block AS init_block, pt.carrier_id AS carrier_id, pt.lead_strip AS lead_strip, pt.tail_strip AS tail_strip, pt.prefix AS prefix, pt.suffix AS suffix, pt.quality AS quality, pt.reliability AS reliability FROM lcr_providers lp INNER JOIN provider_tariff pt ON pt.id = lp.provider_tariff_id AND pt.enabled = TRUE AND now() > pt.date_start AND now() < pt.date_end INNER JOIN sofia_gateway s ON s.company_id = pt.carrier_id INNER JOIN provider_rates pr ON pr.provider_tariff_id = pt.id AND pr.enabled = TRUE AND now() > pr.date_start AND now() < pr.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(pr.digits,'%') WHERE lp.lcr_id = '" .. rate["lcrgroup_id"] .. "' ORDER BY pr.provider_tariff_id, LENGTH(pr.digits) DESC) T ORDER BY " .. ratefilter .. ""
+    assert(dbh:query(query_cost_sql, function(row)
+      lcr_channels[lcrok] = tonumber(row.channels)
+      lcr_gwprefix[lcrok] = row.gwprefix
+      lcr_gwsuffix[lcrok] = row.gwsuffix
+      lcr_codec[lcrok] = row.codec
+      lcr_gwname[lcrok] = row.gwname
+      lcr_lcrname[lcrok] = rate["lcrgroup"]
+      lcr_lcrtype[lcrok] = rate["lcrtype"]
+      lcr_digits[lcrok] = tonumber(row.digits)
+      lcr_destination[lcrok] = row.destination
+      lcr_cost_rate[lcrok] = tonumber(row.cost_rate)
+      lcr_block_min_duration[lcrok] = tonumber(row.block_min_duration)
+      lcr_init_block[lcrok] = tonumber(row.init_block)
+      lcr_carrier[lcrok] = row.carrier_id
+      lcr_lead_strip[lcrok] = row.lead_strip
+      lcr_tail_strip[lcrok] = row.tail_strip
+      lcr_prefix[lcrok] = row.prefix
+      lcr_suffix[lcrok] = row.suffix
+      lcr_quality[lcrok] = row.quality
+      lcr_reliability[lcrok] = row.reliability
+      lcr_gwid[lcrok] = row.gwid
+      lcrok = lcrok + 1
+    end))
+    log("SQL: ", query_cost_sql, "debug")
     assert(dbh:release())
+    lcrok = lcrok - 1
+    log("lcr - num of records", lcrok, "debug")
+    if lcrok == 0 then  
+      set_variable("proto_specific_hangup_cause", "PFB_PROVIDER_RATE_NOT_FOUND")
+      session:hangup("BEARERCAPABILITY_NOTAVAIL")
+    else
+      log("lcr", "OK")
+    end
+  else
+    if dbh:connected() == true then
+      log("DBH Connected : releasing","","debug")
+      assert(dbh:release())
+    end
   end
-end
-if (session:ready() == true) then  
+  if (session:ready() == true) then  
 -----------------------------------------------
 --        BRIDGING
 ----------------------------------------------- 
-  set_variable("effective_caller_id_number", channel["caller_id_number"])
-  set_variable("effective_caller_id_name", channel["caller_id_name"])
-  set_variable("bypass_media", "false")
-  set_variable("hangup_after_bridge", "true")
+    set_variable("effective_caller_id_number", channel["caller_id_number"])
+    set_variable("effective_caller_id_name", channel["caller_id_name"])
+    set_variable("bypass_media", "false")
+    set_variable("hangup_after_bridge", "true")
 --    execute("set", "continue_on_fail=1,2,3,6,25,34,38,41,42,44,47,63,66,403,480,488,500,501,503")
-  execute("set", "continue_on_fail=true")
-  execute("set", "bypass_media=false")
-  execute("sched_hangup", "+3600 alloted_timeout")
-  execute("set", "inherit_codec=true")
-  execute("set", "disable_hold=true")
+    execute("set", "continue_on_fail=true")
+    execute("set", "bypass_media=false")
+    execute("sched_hangup", "+3600 alloted_timeout")
+    execute("set", "inherit_codec=true")
+    execute("set", "disable_hold=true")
 --    execute("export", "disable_q850_reason=true")
 --    execute("nibblebill", "check")
-  mydialbridge = ""
-  myvarbridge = ""
-  for i=1,lcrok do
-    if lcr_lead_strip[i] == "" then
-      lcr_lead_strip[i]  = "^"
-    end
-    log("WS CALL strip:", lcr_lead_strip[i])
-    log("WS CALL prefix:", lcr_prefix[i])
-    log("WS CALL dest number:", channel["destination_number"])
-    log("WS CALL gwprefix :", lcr_gwprefix[i])
-    called_number = string.gsub(channel["destination_number"], lcr_lead_strip[i], lcr_gwprefix[i]..lcr_prefix[i], 1)
-    myvarbridge = "\[sell_destination="..rate["destination"]..",cost_destination="..lcr_destination[i]..",sell_rate="..tonumber(rate["rate"])..",sell_increment="..rate["block_min_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"].."\]"
+    mydialbridge = ""
+    myvarbridge = ""
+    for i=1,lcrok do
+      if lcr_lead_strip[i] == "" then
+        lcr_lead_strip[i]  = "^"
+      end
+      log("WS CALL strip:", lcr_lead_strip[i])
+      log("WS CALL prefix:", lcr_prefix[i])
+      log("WS CALL dest number:", channel["destination_number"])
+      log("WS CALL gwprefix :", lcr_gwprefix[i])
+      called_number = string.gsub(channel["destination_number"], lcr_lead_strip[i], lcr_gwprefix[i]..lcr_prefix[i], 1)
+      myvarbridge = "\[sell_destination="..rate["destination"]..",cost_destination="..lcr_destination[i]..",sell_rate="..tonumber(rate["rate"])..",sell_increment="..rate["block_min_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"].."\]"
 --      myvarbridge = ""
-    log("WS CALL dest num with prefix/suffix/strip : ", called_number)
-    log("WS CALL my variables bridge : ", myvarbridge)
-    if mydialbridge == "" then
-      mydialbridge = myvarbridge.."sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
-    else
-      mydialbridge = mydialbridge.."|" .. myvarbridge .. "sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
+      log("WS CALL dest num with prefix/suffix/strip : ", called_number)
+      log("WS CALL my variables bridge : ", myvarbridge)
+      if mydialbridge == "" then
+        mydialbridge = myvarbridge.."sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
+      else
+        mydialbridge = mydialbridge.."|" .. myvarbridge .. "sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
+      end
+      log("construction bridge : ", mydialbridge, "debug") 
     end
-    log("construction bridge : ", mydialbridge, "debug") 
+    log("BRIDGE EXECUTE:", mydialbridge)
+    execute("bridge", mydialbridge)
+
+   -- hangup
+    session:hangup()          
   end
-  log("BRIDGE EXECUTE:", mydialbridge, "debug")
-  execute("bridge", mydialbridge)
-  session:hangup()          
 end
 if dbh:connected() == true then
   log("DBH Connected : releasing","","debug")
