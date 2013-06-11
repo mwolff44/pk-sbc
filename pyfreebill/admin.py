@@ -16,6 +16,8 @@
 
 import os
 from django.contrib import admin 
+from django.db import models
+from django import forms
 from django.contrib import messages
 from django.contrib.contenttypes import generic
 from django.contrib.comments.models import Comment
@@ -23,6 +25,7 @@ from django.contrib.admin.options import IncorrectLookupParameters
 from django.contrib.admin.views.main import ERROR_FLAG
 from django.core import serializers
 from django.forms import ModelForm
+from django.forms.models import BaseInlineFormSet
 from django.template import Context, loader
 from django.core.files import File
 from django.conf.urls import patterns
@@ -34,6 +37,7 @@ from pyfreebill.models import Company, Person, Group, PhoneNumber, EmailAddress,
 from pyfreebill.forms import CDRSearchForm, CustomerRateCardsForm
 from pyfreebill.functions import cdr_record_common_fun, cdr_search_admin_form_fun
 from django.http import HttpResponse, HttpResponseRedirect
+from datetime import date
 
 APP_LABEL = _('CDR report')
 
@@ -192,8 +196,18 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
 
 # Provider Rates
 
+class ProviderRatesFormSet(BaseInlineFormSet):
+
+    def get_queryset(self):
+        qs = super(ProviderRatesFormSet, self).get_queryset()
+        return qs[:40]
+
 class ProviderRatesInline(admin.TabularInline):
     model = ProviderRates
+    formfield_overrides = {
+        models.CharField: {'widget': forms.TextInput(attrs={'size':'15'})},
+        }
+    formset = ProviderRatesFormSet
     max_count = 40
     extra = 0
 
@@ -201,9 +215,9 @@ class ProviderTariffAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'carrier', 'description', 'quality', 'reliability', 'date_start', 'date_end', 'enabled']
     ordering = ['name',]
     readonly_fields = ['id',]
-#    inlines = [
-#        ProviderRatesInline,
-#    ]
+    inlines = [
+        ProviderRatesInline,
+    ]
 
 class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ['provider_tariff', 'destination', 'digits', 'cost_rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'enabled', 'date_added', 'date_modified']
@@ -251,8 +265,14 @@ class LCRProvidersAdmin(admin.ModelAdmin):
 
 # Customer Rates
 
+class CustomerRatesFormSet(BaseInlineFormSet):
+    def get_queryset(self):
+        qs = super(CustomerRatesFormSet, self).get_queryset()
+        return qs[:40]
+
 class CustomerRatesInline(admin.TabularInline):
     model = CustomerRates
+    formset = CustomerRatesFormSet
     max_num = 40
     extra = 0
 
@@ -286,9 +306,9 @@ class RateCardAdmin(admin.ModelAdmin):
     ordering = ['name', 'enabled', 'lcrgroup']
     list_filter = ['enabled', 'lcrgroup']
     search_fields = ['description', '^name']
-#    inlines = [
-#        CustomerRatesInline,
-#    ]
+    inlines = [
+        CustomerRatesInline,
+    ]
 
 class CustomerRateCardsAdmin(admin.ModelAdmin):
     list_display = ['company', 'ratecard', 'tech_prefix', 'priority', 'description']
@@ -357,21 +377,22 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
       return False
 
     def queryset(self, request):
+        today = date.today()
         user = getattr(request, 'user', None)
         qs = super(CDRAdmin, self).queryset(request)
         if user.is_superuser:
-            return qs
+            return qs.filter(start_stamp__gte=today)
         else:
             usercompany = Person.objects.get(user=user)
-        return qs.filter(customer=usercompany.company)
+        return qs.filter(customer=usercompany.company).filter(start_stamp__gte=today)
 
-    def get_urls(self):
-        urls = super(CDRAdmin, self).get_urls()
-        my_urls = patterns('',
-            (r'^$', self.admin_site.admin_view(self.changelist_view)),
-            (r'^voip_daily_report/$', self.admin_site.admin_view(self.voip_daily_report)),
-        )
-        return my_urls + urls
+#    def get_urls(self):
+#        urls = super(CDRAdmin, self).get_urls()
+#        my_urls = patterns('',
+#            (r'^$', self.admin_site.admin_view(self.changelist_view)),
+#            (r'^voip_daily_report/$', self.admin_site.admin_view(self.voip_daily_report)),
+#        )
+#        return my_urls + urls
 
     def changelist_view(self, request, extra_context=None):
         opts = CDR._meta
@@ -439,60 +460,6 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
             'title': _('call report'),
         }
         return super(CDRAdmin, self).changelist_view(request, extra_context=ctx)
-
-    def voip_daily_report(self, request):
-        opts = CDR._meta
-        kwargs = {}
-        if request.method == 'POST':
-            form = CDRSearchForm(request.user, request.POST)
-            kwargs = cdr_record_common_fun(request)
-        else:
-            kwargs = cdr_record_common_fun(request)
-            tday = datetime.today()
-            form = CDRSearchForm(request.user, initial={"from_date": tday.strftime("%Y-%m-%d"),
-                                                         "to_date": tday.strftime("%Y-%m-%d")})
-            if len(kwargs) == 0:
-                kwargs['starting_date__gte'] = datetime(tday.year, tday.month, tday.day,
-                                                        0, 0, 0, 0)
-
-        select_data = {"starting_date": "SUBSTR(CAST(starting_date as CHAR(30)),1,10)"}
-        # Get Total Records from VoIPCall Report table for Daily Call Report
-        total_data = CDR.objects.extra(select=select_data)\
-            .values('starting_stamp')\
-            .filter(**kwargs)\
-            .annotate(Count('start_stamp'))\
-            .annotate(Sum('effective_duration'))\
-            .annotate(Avg('effective_duration'))\
-            .order_by('-start_stamp')
-
-        # Following code will count total voip calls, duration
-        if total_data:
-            max_duration = max([x['effective_duration__sum'] for x in total_data])
-            total_duration = sum([x['effective_duration__sum'] for x in total_data])
-            total_calls = sum([x['start_stamp__count'] for x in total_data])
-            total_avg_duration = (sum([x['effective_duration__avg']
-                    for x in total_data])) / total_calls
-        else:
-            max_duration = 0
-            total_duration = 0
-            total_calls = 0
-            total_avg_duration = 0
-
-        ctx = RequestContext(request, {
-            'form': form,
-            'total_data': total_data,
-            'total_duration': total_duration,
-            'total_calls': total_calls,
-            'total_avg_duration': total_avg_duration,
-            'max_duration': max_duration,
-            'opts': opts,
-            'model_name': opts.object_name.lower(),
-            'app_label': APP_LABEL,
-            'title': _('call aggregate report'),
-        })
-
-        return render_to_response('admin/pyfreebill/cdr/voip_report.html',
-               context_instance=ctx)
 
 class CarrierNormalizationRulesAdmin(admin.ModelAdmin):
     list_display = ('company', 'prefix', 'remove_prefix', 'add_prefix')
