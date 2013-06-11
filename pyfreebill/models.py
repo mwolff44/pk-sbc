@@ -483,7 +483,7 @@ class CustomerRateCards(models.Model):
     company = models.ForeignKey(Company, verbose_name=_(u"company"))
     ratecard = models.ForeignKey(RateCard, verbose_name=_(u"ratecard"))
     description = models.TextField(_(u'description'), blank=True)
-    tech_prefix = models.CharField(_(u"technical prefix"), blank=True, default='', max_length=15)
+    tech_prefix = models.CharField(_(u"technical prefix"), blank=True, default='', null=True, max_length=7)
     DEFAULT_PRIORITY_CHOICES = (
         (1, _(u'1')),
         (2, _(u'2')),

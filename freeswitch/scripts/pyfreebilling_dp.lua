@@ -261,6 +261,7 @@ if (session:ready() == true) then
     customer["add_prefix"]  = ""
   end
   channel["destination_number"] = string.gsub(channel["destination_number"], customer["remove_prefix"], customer["add_prefix"], 1)
+  set_variable("destination_number", channel["destination_number"])
    -- test destination number
   if string.match(channel["destination_number"],'^216[%d][%d][%d][%d][%d][%d][%d][%d]$') == nil and string.match(channel["destination_number"],'^216%d+') ~= nil then
     set_variable("proto_specific_hangup_cause", "PFB_DESTINATION_NUMBER_WRONG_FORMAT")
@@ -303,7 +304,7 @@ if (session:ready() == true) then
     if rateprio == 4 then
       break
     else
-      local query_rate_sql = "SELECT c.tech_prefix AS tech_prefix, c.ratecard_id AS ratecard_id, c.priority AS priority, c.discount AS discount, c.allow_negative_margin AS allow_negative_margin, rc.lcrgroup_id AS lcrgroup_id, r.destination AS destination, r.prefix AS prefix, lg.name AS lcrgoup, lg.lcrtype AS lcrtype, r.rate AS rate, r.block_min_duration AS block_min_duration, r.init_block AS init_block FROM customer_ratecards c INNER JOIN ratecard rc ON rc.id = c.ratecard_id AND c.company_id = '" .. channel["accountcode"] .. "' AND c.priority = '" .. rateprio .. "' INNER JOIN lcr_group lg ON lg.id = rc.lcrgroup_id INNER JOIN customer_rates r ON rc.id = r.ratecard_id WHERE rc.enabled = TRUE AND r.enabled = true AND now() > r.date_start AND now() < r.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(r.prefix,'%') ORDER BY LENGTH(r.prefix) desc LIMIT 1"
+      local query_rate_sql = "SELECT c.tech_prefix AS tech_prefix, c.ratecard_id AS ratecard_id, c.priority AS priority, c.discount AS discount, c.allow_negative_margin AS allow_negative_margin, rc.lcrgroup_id AS lcrgroup_id, r.destination AS destination, r.prefix AS prefix, lg.name AS lcrgoup, lg.lcrtype AS lcrtype, r.rate AS rate, r.block_min_duration AS block_min_duration, r.init_block AS init_block FROM customer_ratecards c INNER JOIN ratecard rc ON rc.id = c.ratecard_id AND c.company_id = '" .. channel["accountcode"] .. "' AND c.priority = '" .. rateprio .. "' INNER JOIN lcr_group lg ON lg.id = rc.lcrgroup_id INNER JOIN customer_rates r ON rc.id = r.ratecard_id WHERE rc.enabled = TRUE AND r.enabled = true AND now() > r.date_start AND now() < r.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(c.tech_prefix,r.prefix,'%') ORDER BY LENGTH(r.prefix) desc LIMIT 1"
       log("SQL: ", query_rate_sql, "debug")
       assert(dbh:query(query_rate_sql, function(row)
         for key, val in pairs(row) do
@@ -339,6 +340,16 @@ if (session:ready() == true) then
   else
     log("non blocked prefix : ", "OK!", "debug")
   end
+
+  -- Destination Number - remove tech prefix
+  if (rate["tech_prefix"] == "" or rate["tech_prefix"] == nil) then
+    log("No tech prefix : "," continue","debug")
+  else
+    log("tech prefix : "," remove it","debug")
+    channel["destination_number"] = string.gsub(channel["destination_number"], rate["tech_prefix"], "", 1)
+    set_variable("destination_number", channel["destination_number"])
+  end
+
 else
   if dbh:connected() == true then
     log("DBH Connected : releasing","","debug")
