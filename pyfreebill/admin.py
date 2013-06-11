@@ -30,7 +30,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ungettext
 from common.common_functions import getvar
 from import_export.admin import ImportExportMixin, ExportMixin
-from pyfreebill.models import Company, Person, Group, PhoneNumber, EmailAddress, InstantMessenger, WebSite, StreetAddress, SpecialDate, CompanyBalanceHistory, ProviderTariff, ProviderRates, LCRGroup, LCRProviders, RateCard, CustomerRates, CustomerRateCards, CustomerDirectory, AclLists, AclNodes, VoipSwitch, SipProfile, SofiaGateway, HangupCause, CDR, CarrierNormalizationRules, CustomerNormalizationRules, CarrierCIDNormalizationRules, CustomerCIDNormalizationRules, DailyStats
+from pyfreebill.models import Company, Person, Group, PhoneNumber, EmailAddress, InstantMessenger, WebSite, StreetAddress, SpecialDate, CompanyBalanceHistory, ProviderTariff, ProviderRates, LCRGroup, LCRProviders, RateCard, CustomerRates, CustomerRateCards, CustomerDirectory, AclLists, AclNodes, VoipSwitch, SipProfile, SofiaGateway, HangupCause, CDR, CarrierNormalizationRules, CustomerNormalizationRules, CarrierCIDNormalizationRules, CustomerCIDNormalizationRules, DestinationNumberRules, DailyStats
 from pyfreebill.forms import CDRSearchForm, CustomerRateCardsForm
 from pyfreebill.functions import cdr_record_common_fun, cdr_search_admin_form_fun
 from django.http import HttpResponse, HttpResponseRedirect
@@ -512,6 +512,10 @@ class CustomerCIDNormalizationRulesAdmin(admin.ModelAdmin):
     list_display = ('company', 'prefix', 'remove_prefix', 'add_prefix')
     ordering = ('company',)
 
+class DestinationNumberRulesAdmin(admin.ModelAdmin):
+    list_display = ('prefix', 'format_num', 'description')
+    ordering = ('prefix',)
+
 # STATS
 class DailyStatsAdmin(admin.ModelAdmin):
     list_display = ('date', 'customer', 'total_calls', 'success_calls', 'total_duration', 'total_sell', 'total_cost')
@@ -554,5 +558,6 @@ admin.site.register(CarrierNormalizationRules, CarrierNormalizationRulesAdmin)
 admin.site.register(CustomerNormalizationRules, CustomerNormalizationRulesAdmin)
 admin.site.register(CarrierCIDNormalizationRules, CarrierCIDNormalizationRulesAdmin)
 admin.site.register(CustomerCIDNormalizationRules, CustomerCIDNormalizationRulesAdmin)
+admin.site.register(DestinationNumberRules, DestinationNumberRulesAdmin)
 admin.site.register(DailyStats, DailyStatsAdmin)
 #admin.site.register()

@@ -505,6 +505,24 @@ class CustomerRateCards(models.Model):
         return u"%s %s %s" % (self.company, self.ratecard, self.tech_prefix)
 
 # NORMALIZATION
+
+class DestinationNumberRules(models.Model):
+    """ Destination Number Normalization Rules """
+    prefix = models.CharField(_(u'numeric prefix'), max_length=30)
+    description = models.TextField(_(u'description'), blank=True)
+    format_num = models.CharField(_(u"Rule format"), max_length=150, help_text=_(u"example for Tunisia : ^216[%d][%d][%d][%d][%d][%d][%d][%d]$"))
+    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+
+    class Meta:
+        db_table = 'destination_norm_rules'
+        ordering = ('prefix',)
+        verbose_name = _(u'Destination Number Normalization Rule')
+        verbose_name_plural = _(u'Destination Number Normalization Rules')
+
+    def __unicode__(self):
+        return u"%s -> %s " % (self.prefix, self.format_num)
+
 class CustomerNormalizationRules(models.Model):
     """ Customer Normalization Rules """
     company = models.ForeignKey(Company, verbose_name=_(u"customer"))

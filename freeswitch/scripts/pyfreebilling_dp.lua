@@ -201,7 +201,7 @@ if session:ready() then
   end
   customer = {}
   custok = 0
-  local query_cust_sql = "SELECT c.name AS name, c.prepaid AS prepaid, C.credit_limit AS credit_limit, c.customer_balance AS customer_balance, c.max_calls AS max_calls, cnr.prefix AS prefix, cnr.remove_prefix AS remove_prefix, cnr.add_prefix AS add_prefix , ccnr.remove_prefix AS ccnr_remove_prefix, ccnr.add_prefix AS ccnr_add_prefix FROM company c LEFT JOIN customer_norm_rules cnr ON cnr.company_id = c.id AND '" .. channel["destination_number"] .. "' LIKE concat(cnr.prefix,'%') LEFT JOIN customer_cid_norm_rules ccnr ON ccnr.company_id = c.id AND '" .. channel["caller_id_number"] .. "' LIKE concat(ccnr.prefix,'%')  WHERE c.id='"..channel["accountcode"].."' AND c.customer_enabled = TRUE"
+  local query_cust_sql = "SELECT c.name AS name, c.prepaid AS prepaid, C.credit_limit AS credit_limit, c.customer_balance AS customer_balance, c.max_calls AS max_calls, cnr.prefix AS prefix, cnr.remove_prefix AS remove_prefix, cnr.add_prefix AS add_prefix , ccnr.remove_prefix AS ccnr_remove_prefix, ccnr.add_prefix AS ccnr_add_prefix, dnr.format_num AS dnr_format_num FROM company c LEFT JOIN customer_norm_rules cnr ON cnr.company_id = c.id AND '" .. channel["destination_number"] .. "' LIKE concat(cnr.prefix,'%') LEFT JOIN customer_cid_norm_rules ccnr ON ccnr.company_id = c.id AND '" .. channel["caller_id_number"] .. "' LIKE concat(ccnr.prefix,'%') LEFT JOIN destination_norm_rules dnr ON '" .. channel["destination_number"] .. "' LIKE concat(dnr.prefix,'%') WHERE c.id='"..channel["accountcode"].."' AND c.customer_enabled = TRUE"
   log("SQL: ", query_cust_sql, "debug")
   assert(dbh:query(query_cust_sql, function(row)
     for key, val in pairs(row) do
@@ -262,14 +262,20 @@ if (session:ready() == true) then
   end
   channel["destination_number"] = string.gsub(channel["destination_number"], customer["remove_prefix"], customer["add_prefix"], 1)
   set_variable("destination_number", channel["destination_number"])
-   -- test destination number
-  if string.match(channel["destination_number"],'^216[%d][%d][%d][%d][%d][%d][%d][%d]$') == nil and string.match(channel["destination_number"],'^216%d+') ~= nil then
-    set_variable("proto_specific_hangup_cause", "PFB_DESTINATION_NUMBER_WRONG_FORMAT")
-    log("Destination number wrong format :","NOK!", "debug")
-    session:hangup("UNALLOCATED_NUMBER");
+
+   -- test format destination number
+  if customer["dnr_format_num"] == nil then
+    log("Not Destination Number format rule"," : continue","debug")
   else
-    log("Destination number well formated :","OK!")
+    if string.match(channel["destination_number"],customer["dnr_format_num"]) == nil then
+      set_variable("proto_specific_hangup_cause", "PFB_DESTINATION_NUMBER_WRONG_FORMAT")
+      log("Destination number wrong format :","NOK!", "debug")
+      session:hangup("UNALLOCATED_NUMBER");
+    else
+      log("Destination number well formated :","OK!")
+    end
   end
+
   -- CallerID normalization
   log("CallerID Norm - callerID num / rem_prefix / add_prefix : ", channel["caller_id_number"].." / "..customer["ccnr_remove_prefix"].." / "..customer["ccnr_add_prefix"], "debug")
   if (customer["ccnr_remove_prefix"] == "" or customer["ccnr_remove_prefix"] == nil) then
