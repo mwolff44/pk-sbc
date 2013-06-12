@@ -370,7 +370,7 @@ class ProviderTariff(models.Model):
 class ProviderRates(models.Model):
     """ Provider Rates Model """
     destination = models.CharField(_(u'destination'), blank=True, default='', null=True, max_length=128, db_index=True)
-    digits = models.CharField(_(u'numeric prefix'), max_length=10, db_index=True)
+    digits = models.CharField(_(u'numeric prefix'), max_length=30, db_index=True)
     cost_rate = models.DecimalField(_(u'Cost rate'), max_digits=11, decimal_places=5)
     block_min_duration = models.IntegerField(_(u'block min duration'), default=1)
     init_block = models.DecimalField(_(u'Init block rate'), max_digits=11, decimal_places=5, default=0)
@@ -458,7 +458,7 @@ class CustomerRates(models.Model):
     """ Customer Rates Model """
     ratecard = models.ForeignKey(RateCard, verbose_name=_(u"ratecard"))
     destination = models.CharField(_(u'destination'), blank=True, default='', null=True, max_length=128, db_index=True)
-    prefix = models.CharField(_(u'numeric prefix'), max_length=10, db_index=True)
+    prefix = models.CharField(_(u'numeric prefix'), max_length=30, db_index=True)
     rate = models.DecimalField(_(u'sell rate'), max_digits=11, decimal_places=5, help_text=_(u"to block the prefix, put -1"))
     block_min_duration = models.IntegerField(_(u'block min duration'), default=1)
     init_block = models.DecimalField(_(u'Init block rate'), max_digits=11, decimal_places=5, default=0)
