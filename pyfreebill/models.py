@@ -667,6 +667,7 @@ class VoipSwitch(models.Model):
 class SipProfile(models.Model):
     """ Sofia Sip profile """
     name = models.CharField(_(u"SIP profile name"), max_length=50, unique=True, help_text=_(u"E.g.: the name you want ..."))
+    user_agent = models.CharField(_(u"Uaser agent name"), max_length=50, default="pyfreebilling", help_text=_(u"E.g.: the user agent you want ... - take care with certain characters such as @ could cause others sip proxies reject yours messages as invalid ! "))
     ext_rtp_ip = models.CharField(_(u"external RTP IP"), max_length=100, default="auto", help_text=_(u"External/public IP address to bind to for RTP."))
     ext_sip_ip = models.CharField(_(u"external SIP IP"), max_length=100, default="auto", help_text=_(u"External/public IP address to bind to for SIP."))
     rtp_ip = models.CharField(_(u"RTP IP"), max_length=100, default="auto", help_text=_(u"Internal IP address to bind to for RTP."))

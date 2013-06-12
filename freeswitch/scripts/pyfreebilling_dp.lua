@@ -292,6 +292,8 @@ if (session:ready() == true) then
   end
   log("Customer CallerID : ", channel["caller_id_number"])
   set_variable("caller_id_number", channel["caller_id_number"])
+  set_variable("effective_caller_id_number", channel["caller_id_number"])
+  set_variable("effective_caller_id_name", channel["caller_id_name"])
 else
   if dbh:connected() == true then
     log("DBH Connected : releasing","","debug")
@@ -390,6 +392,7 @@ if (session:ready() == true) then
   lcr_gwsuffix = {}
   lcr_codec = {}
   lcr_gwname = {}
+  lcr_sipcidtype = {}
   lcr_lcrname = {}
   lcr_lcrtype = {}
   lcr_digits = {}
@@ -413,13 +416,14 @@ if (session:ready() == true) then
     negativemargin = " AND pr.cost_rate < "..tonumber(rate["rate"]).." "
   end
   log("rate_lcrgroup_id : ", rate["lcrgroup_id"], "debug")
-  local query_cost_sql = "SELECT * FROM (SELECT DISTINCT ON (pr.provider_tariff_id) s.channels AS channels, s.prefix AS gwprefix, s.suffix AS gwsuffix, s.codec AS codec, s.name AS gwname, s.id AS gwid, pr.destination AS destination, pr.digits AS digits, pr.cost_rate AS cost_rate, pr.block_min_duration AS block_min_duration, pr.init_block AS init_block, pt.carrier_id AS carrier_id, pt.lead_strip AS lead_strip, pt.tail_strip AS tail_strip, pt.prefix AS prefix, pt.suffix AS suffix, pt.quality AS quality, pt.reliability AS reliability FROM lcr_providers lp INNER JOIN provider_tariff pt ON pt.id = lp.provider_tariff_id AND pt.enabled = TRUE AND now() > pt.date_start AND now() < pt.date_end INNER JOIN sofia_gateway s ON s.company_id = pt.carrier_id AND s.enabled = TRUE INNER JOIN provider_rates pr ON pr.provider_tariff_id = pt.id AND pr.enabled = TRUE AND now() > pr.date_start AND now() < pr.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(pr.digits,'%')"..negativemargin.."WHERE lp.lcr_id = '" .. rate["lcrgroup_id"] .. "' ORDER BY pr.provider_tariff_id, LENGTH(pr.digits) DESC) T ORDER BY " .. ratefilter .. ""
+  local query_cost_sql = "SELECT * FROM (SELECT DISTINCT ON (pr.provider_tariff_id) s.sip_cid_type AS sip_cid_type, s.channels AS channels, s.prefix AS gwprefix, s.suffix AS gwsuffix, s.codec AS codec, s.name AS gwname, s.id AS gwid, pr.destination AS destination, pr.digits AS digits, pr.cost_rate AS cost_rate, pr.block_min_duration AS block_min_duration, pr.init_block AS init_block, pt.carrier_id AS carrier_id, pt.lead_strip AS lead_strip, pt.tail_strip AS tail_strip, pt.prefix AS prefix, pt.suffix AS suffix, pt.quality AS quality, pt.reliability AS reliability FROM lcr_providers lp INNER JOIN provider_tariff pt ON pt.id = lp.provider_tariff_id AND pt.enabled = TRUE AND now() > pt.date_start AND now() < pt.date_end INNER JOIN sofia_gateway s ON s.company_id = pt.carrier_id AND s.enabled = TRUE INNER JOIN provider_rates pr ON pr.provider_tariff_id = pt.id AND pr.enabled = TRUE AND now() > pr.date_start AND now() < pr.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(pr.digits,'%')"..negativemargin.."WHERE lp.lcr_id = '" .. rate["lcrgroup_id"] .. "' ORDER BY pr.provider_tariff_id, LENGTH(pr.digits) DESC) T ORDER BY " .. ratefilter .. ""
   assert(dbh:query(query_cost_sql, function(row)
     lcr_channels[lcrok] = tonumber(row.channels)
     lcr_gwprefix[lcrok] = row.gwprefix
     lcr_gwsuffix[lcrok] = row.gwsuffix
     lcr_codec[lcrok] = row.codec
     lcr_gwname[lcrok] = row.gwname
+    lcr_sipcidtype[lcrok] = row.sip_cid_type
     lcr_lcrname[lcrok] = rate["lcrgroup"]
     lcr_lcrtype[lcrok] = rate["lcrtype"]
     lcr_digits[lcrok] = tonumber(row.digits)
@@ -459,6 +463,9 @@ if (session:ready() == true) then
 ----------------------------------------------- 
   set_variable("effective_caller_id_number", channel["caller_id_number"])
   set_variable("effective_caller_id_name", channel["caller_id_name"])
+  set_variable("effective_callee_id_number", channel["destination_number"])
+  set_variable("effective_callee_id_name", "_undef_")
+
   set_variable("bypass_media", "false")
   set_variable("hangup_after_bridge", "true")
 --    execute("set", "continue_on_fail=1,2,3,6,25,34,38,41,42,44,47,63,66,403,480,488,500,501,503")
@@ -480,7 +487,7 @@ if (session:ready() == true) then
     log("WS CALL dest number:", channel["destination_number"])
     log("WS CALL gwprefix :", lcr_gwprefix[i])
     called_number = string.gsub(channel["destination_number"], lcr_lead_strip[i], lcr_gwprefix[i]..lcr_prefix[i], 1)
-    myvarbridge = "\[sell_destination="..rate["destination"]..",cost_destination="..lcr_destination[i]..",sell_rate="..tonumber(rate["rate"])..",sell_increment="..rate["block_min_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"].."\]"
+    myvarbridge = "\[sip_cid_type="..lcr_sipcidtype[i]..",sell_destination="..rate["destination"]..",cost_destination="..lcr_destination[i]..",sell_rate="..tonumber(rate["rate"])..",sell_increment="..rate["block_min_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"].."\]"
 --      myvarbridge = ""
     log("WS CALL dest num with prefix/suffix/strip : ", called_number)
     log("WS CALL my variables bridge : ", myvarbridge)

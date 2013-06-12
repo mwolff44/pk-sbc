@@ -29,6 +29,7 @@
     <param name='dtmf-type' value='rfc2833'/>
     <param name='disable-hold' value='true'/>
     <param name='disable-transfer' value='true'/>
+    <param name='sip-options-respond-503-on-busy' value='true'/>
   </global_settings>
 
   <profiles>
@@ -41,6 +42,7 @@
 
       <settings>
         <param name='dialplan' value='XML'/>
+        <param name='user-agent-string' value='{{ sipprofile.user_agent }}'/>
         <param name='ext-sip-ip' value='{{ sipprofile.ext_sip_ip }}'/>
         <param name='ext-rtp-ip' value='{{ sipprofile.ext_rtp_ip }}'/>
         <param name='rtp-ip' value='{{ sipprofile.rtp_ip }}'/>
@@ -64,6 +66,7 @@
         <param name='apply-inbound-acl' value='domains'/>
 <!--	<param name='local-network-acl' value='localnet.auto'/>-->
         <param name='inbound-late-negotiation' value='true'/>
+        <param name='pass-callee-id' value='false'/>
         <param name='manage-presence' value='false'/>
       </settings>
       
