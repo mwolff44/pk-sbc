@@ -709,6 +709,7 @@ class SofiaGateway(models.Model):
             " on."))
     company = models.ForeignKey(Company, verbose_name=_(u"company"))
     channels = models.PositiveIntegerField(_(u"channels number"), default=1, help_text=_(u"maximum simultaneous calls allowed for this gateway."))
+    enabled = models.BooleanField(_(u"Enabled"), default=True)
     prefix = models.CharField(_(u'prefix'), blank=True, default='', max_length=15)
     suffix = models.CharField(_(u'suffix'), blank=True, default='', max_length=15)
     codec = models.CharField(_(u'codec'), blank=True, default='', max_length=30)
@@ -897,10 +898,9 @@ class DimDate(models.Model):
     date = models.DateField()
     day = models.CharField(_(u'day'), max_length=2)
     day_of_week = models.CharField(_(u'day of the week'), max_length=30)
+    hour = models.CharField(_(u'hour'), max_length=2, null=True, blank=True)
     month = models.CharField(_(u'month'), max_length=2)
-    month_name = models.CharField(_(u'month name'), max_length=30)
     quarter = models.CharField(_(u'quarter'), max_length=2)
-    quarter_name = models.CharField(_(u'quarter name'), max_length=30)
     year = models.CharField(_(u'year'), max_length=4)
 
     class Meta:
@@ -915,16 +915,11 @@ class DimDate(models.Model):
 class DimCustomerHangucause(models.Model):
     """ Dimension Customer / Hangupcause Model """
     customer = models.ForeignKey(Company, verbose_name=_(u"customer"))
+    destination = models.CharField(_(u'destination'), max_length=250, null=True, blank=True)
     hangupcause = models.CharField(_(u'hangupcause'), max_length=100, null=True, blank=True)
+    sip_hangupcause = models.CharField(_(u'sip hangupcause'), max_length=100, null=True, blank=True)
     date = models.ForeignKey(DimDate, verbose_name=_(u"date"))
     total_calls = models.IntegerField(_(u"total calls"))
-    success_calls = models.IntegerField(_(u"success calls"))
-    total_duration = models.IntegerField(_(u"total duration"))
-    avg_duration = models.IntegerField(_(u"average duration"))
-    max_duration = models.IntegerField(_(u"max duration"))
-    min_duration = models.IntegerField(_(u"min duration"))
-    total_sell = models.DecimalField(_(u'total sell'), max_digits=12, decimal_places=2)
-    total_cost = models.DecimalField(_(u'total sell'), max_digits=12, decimal_places=2)
 
     class Meta:
         db_table = 'dim_customer_hangupcause'
@@ -938,16 +933,11 @@ class DimCustomerHangucause(models.Model):
 class DimProviderHangucause(models.Model):
     """ Dimension Provider / Hangupcause Model """
     provider = models.ForeignKey(Company, verbose_name=_(u"provider"))
+    destination = models.CharField(_(u'destination'), max_length=250, null=True, blank=True)
     hangupcause = models.CharField(_(u'hangupcause'), max_length=100, null=True, blank=True)
+    sip_hangupcause = models.CharField(_(u'sip hangupcause'), max_length=100, null=True, blank=True) 
     date = models.ForeignKey(DimDate, verbose_name=_(u"date"))
     total_calls = models.IntegerField(_(u"total calls"))
-    success_calls = models.IntegerField(_(u"success calls"))
-    total_duration = models.IntegerField(_(u"total duration"))
-    avg_duration = models.IntegerField(_(u"average duration"))
-    max_duration = models.IntegerField(_(u"max duration"))
-    min_duration = models.IntegerField(_(u"min duration"))
-    total_sell = models.DecimalField(_(u'total sell'), max_digits=12, decimal_places=2)
-    total_cost = models.DecimalField(_(u'total sell'), max_digits=12, decimal_places=2)
 
     class Meta:
         db_table = 'dim_provider_hangupcause'
@@ -1004,25 +994,3 @@ class DimProviderDestination(models.Model):
     def __unicode__(self):
         return u"%s -p: %s -d: %s" % (self.date, self.provider, self.destination)
 
-class DimHangupcauseDestination(models.Model):
-    """ Dimension Hangupcause / Destination Model """
-    hangupcause = models.CharField(_(u'hangupcause'), max_length=100, null=True, blank=True)
-    destination = models.CharField(_(u'destination'), max_length=250, null=True, blank=True)
-    date = models.ForeignKey(DimDate, verbose_name=_(u"date"))
-    total_calls = models.IntegerField(_(u"total calls"))
-    success_calls = models.IntegerField(_(u"success calls"))
-    total_duration = models.IntegerField(_(u"total duration"))
-    avg_duration = models.IntegerField(_(u"average duration"))
-    max_duration = models.IntegerField(_(u"max duration"))
-    min_duration = models.IntegerField(_(u"min duration"))
-    total_sell = models.DecimalField(_(u'total sell'), max_digits=12, decimal_places=2)
-    total_cost = models.DecimalField(_(u'total sell'), max_digits=12, decimal_places=2)
-
-    class Meta:
-        db_table = 'dim_hangupcause_destination'
-        ordering = ('date', 'hangupcause', 'destination')
-        verbose_name = _(u"Hangupcause destination stats")
-        verbose_name_plural = _(u"Hangupcause destination stats")
-
-    def __unicode__(self):
-        return u"%s -h: %s -d: %s" % (self.date, self.hangupcause, self.destination)
