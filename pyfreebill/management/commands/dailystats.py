@@ -37,23 +37,23 @@ class Command(BaseCommand):
                 qss1 = CDR.objects.all().values('lcr_carrier_id','cost_destination','hangup_cause','sip_hangup_cause').exclude(lcr_carrier_id__isnull=True).annotate(Count('id')).order_by('lcr_carrier_id','cost_destination','hangup_cause','sip_hangup_cause')
 
 # Stats sur les appels aboutits
-                qss2 = qs.exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING")
-
+                qss2 = qs.exclude(effective_duration__gt="0").filter(hangup_cause="NORMAL_CLEARING")
+                qss3 = qss2.values('customer','sell_destination').annotate(Avg('effective_duration'), Max('effective_duration'), Min('effective_duration'), Count('id'), Sum('total_sell'), Sum('total_cost')).order_by('customer','sell_destination')
 # Customers
 
 
 # Providers
-.values('lcr_carrier_id','cost_destination'.annotate(------).order_by('lcr_caller_id','sell_destination')
+#.values('lcr_carrier_id','cost_destination'.annotate(------).order_by('lcr_caller_id','sell_destination')
 
-    provider
-    destination
-    success_calls
-    total_duration
-    avg_duration
-    max_duration
-    min_duration
-    total_sell
-    total_cost
+#    provider
+#    destination
+#    success_calls
+#    total_duration
+#    avg_duration
+#    max_duration
+#    min_duration
+#    total_sell
+#    total_cost
 
 
 #                qss_sum_duration = qsstats.QuerySetStats(qs, 'start_stamp', aggregate=Sum('effective_duration'))
@@ -62,7 +62,7 @@ class Command(BaseCommand):
 #                qss_max_duration = qsstats.QuerySetStats(qs, 'start_stamp', aggregate=Max('effective_duration'))
 #                qss_success_calls = qsstats.QuerySetStats(qs, 'start_stamp')
                 today = datetime.date.today()
-                print 'daily stats : %s ' % (qss)
+                print 'daily stats : %s ' % (qss3)
                 pprint(connection.queries)   
             except CDR.DoesNotExist:
                 raise CommandError('stats does not exist')
