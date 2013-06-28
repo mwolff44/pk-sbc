@@ -896,7 +896,7 @@ class CDR(models.Model):
 
 class DimDate(models.Model):
     """ Date dimension """
-    date = models.DateField()
+    date = models.DateTimeField()
     day = models.CharField(_(u'day'), max_length=2)
     day_of_week = models.CharField(_(u'day of the week'), max_length=30)
     hour = models.CharField(_(u'hour'), max_length=2, null=True, blank=True)
@@ -913,12 +913,11 @@ class DimDate(models.Model):
     def __unicode__(self):
         return u"%s" % self.date
 
-class DimCustomerHangucause(models.Model):
+class DimCustomerHangupcause(models.Model):
     """ Dimension Customer / Hangupcause Model """
     customer = models.ForeignKey(Company, verbose_name=_(u"customer"))
     destination = models.CharField(_(u'destination'), max_length=250, null=True, blank=True)
     hangupcause = models.CharField(_(u'hangupcause'), max_length=100, null=True, blank=True)
-    sip_hangupcause = models.CharField(_(u'sip hangupcause'), max_length=100, null=True, blank=True)
     date = models.ForeignKey(DimDate, verbose_name=_(u"date"))
     total_calls = models.IntegerField(_(u"total calls"))
 
@@ -931,12 +930,28 @@ class DimCustomerHangucause(models.Model):
     def __unicode__(self):
         return u"%s -c: %s -h: %s" % (self.date, self.customer, self.hangupcause)
 
-class DimProviderHangucause(models.Model):
+class DimCustomerSipHangupcause(models.Model):
+    """ Dimension Customer / SIP Hangupcause Model """
+    customer = models.ForeignKey(Company, verbose_name=_(u"customer"))
+    destination = models.CharField(_(u'destination'), max_length=250, null=True, blank=True)
+    sip_hangupcause = models.CharField(_(u'sip hangupcause'), max_length=100, null=True, blank=True)
+    date = models.ForeignKey(DimDate, verbose_name=_(u"date"))
+    total_calls = models.IntegerField(_(u"total calls"))
+
+    class Meta:
+        db_table = 'dim_customer_sip_hangupcause'
+        ordering = ('date', 'customer', 'sip_hangupcause')
+        verbose_name = _(u"Customer SIP Hangupcause stats")
+        verbose_name_plural = _(u"Customer SIP Hangupcause stats")
+
+    def __unicode__(self):
+        return u"%s -c: %s -h: %s" % (self.date, self.customer, self.sip_hangupcause)
+
+class DimProviderHangupcause(models.Model):
     """ Dimension Provider / Hangupcause Model """
     provider = models.ForeignKey(Company, verbose_name=_(u"provider"))
     destination = models.CharField(_(u'destination'), max_length=250, null=True, blank=True)
     hangupcause = models.CharField(_(u'hangupcause'), max_length=100, null=True, blank=True)
-    sip_hangupcause = models.CharField(_(u'sip hangupcause'), max_length=100, null=True, blank=True) 
     date = models.ForeignKey(DimDate, verbose_name=_(u"date"))
     total_calls = models.IntegerField(_(u"total calls"))
 
@@ -948,6 +963,23 @@ class DimProviderHangucause(models.Model):
 
     def __unicode__(self):
         return u"%s -c: %s -h: %s" % (self.date, self.provider, self.hangupcause)
+
+class DimProviderSipHangupcause(models.Model):
+    """ Dimension Provider / SIP Hangupcause Model """
+    provider = models.ForeignKey(Company, verbose_name=_(u"provider"))
+    destination = models.CharField(_(u'destination'), max_length=250, null=True, blank=True)
+    sip_hangupcause = models.CharField(_(u'sip hangupcause'), max_length=100, null=True, blank=True)
+    date = models.ForeignKey(DimDate, verbose_name=_(u"date"))
+    total_calls = models.IntegerField(_(u"total calls"))
+
+    class Meta:
+        db_table = 'dim_provider_sip_hangupcause'
+        ordering = ('date', 'provider', 'sip_hangupcause')
+        verbose_name = _(u"Provider SIP Hangupcause stats")
+        verbose_name_plural = _(u"Provider SIP Hangupcause stats")
+
+    def __unicode__(self):
+        return u"%s -c: %s -h: %s" % (self.date, self.provider, self.sip_hangupcause)
 
 class DimCustomerDestination(models.Model):
     """ Dimension Customer / Destination Model """

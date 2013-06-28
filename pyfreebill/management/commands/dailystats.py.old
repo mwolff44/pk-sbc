@@ -6,7 +6,6 @@ from django.db import connection
 from pprint import pprint
 #import dse
 import math
-import decimal
 
 class Command(BaseCommand):
     args = '<date>'
@@ -17,7 +16,7 @@ class Command(BaseCommand):
             try:
 
 # date filter
-                today = datetime.datetime(2013, 06, 14, 00, 00, 00)
+                today = datetime.datetime(2013, 06, 12, 00, 00, 00)
                 yesterday = today - datetime.timedelta(days=1)
 
 # Query construction
@@ -30,12 +29,13 @@ class Command(BaseCommand):
                 qss_siphangup_unique_customer = qs_uuid_unique.values('customer','sell_destination','sip_hangup_cause').annotate(total_calls=Count('uuid', distinct = True)).order_by('customer','sell_destination')
 # Provider filter - take unique uuid with late start_stamp
 # DimProviderHangupCause
-                qss_hangup_unique_provider = qs_uuid_unique.values('lcr_carrier_id','cost_destination','hangup_cause').exclude(lcr_carrier_id__isnull=True).annotate(total_calls=Count('uuid', distinct = True)).order_by('lcr_carrier_id','cost_destination')
+                qss_hangup_unique_provider = qs_uuid_unique.values('lcr_carrier_id','cost_destination','hangup_cause').exclude(lcr_carrier_id__isnull=True).exclude(lcr_carrier_id="").annotate(total_calls=Count('uuid', distinct = True)).order_by('lcr_carrier_id','cost_destination')
 # DimProviderSipHangupCause
-                qss_siphangup_unique_provider = qs_uuid_unique.values('lcr_carrier_id','cost_destination','sip_hangup_cause').exclude(lcr_carrier_id__isnull=True).annotate(total_calls=Count('uuid', distinct = True)).order_by('lcr_carrier_id','cost_destination')
+                qss_siphangup_unique_provider = qs_uuid_unique.values('lcr_carrier_id','cost_destination','sip_hangup_cause').exclude(lcr_carrier_id__isnull=True).exclude(lcr_carrier_id="").annotate(total_calls=Count('uuid', distinct = True)).order_by('lcr_carrier_id','cost_destination')
                 print 'qss_siphangup_unique_provider %s : ' % qss_siphangup_unique_provider
 # Stats on successful calls 
                 qss2 = qs.filter(effective_duration__gt="0")
+                print 'qss2 %s : ' % qss2
 # Customers
 # DimCustomerDestination
                 qss_success_customer = qss2.extra(select={'destination': 'sell_destination'}).values('customer','destination').annotate(total_duration=Sum('effective_duration'), avg_duration=Avg('effective_duration'), max_duration=Max('effective_duration'), min_duration=Min('effective_duration'), success_calls=Count('id'), total_sell=Sum('total_sell'), total_cost=Sum('total_cost')).order_by('customer','sell_destination')
@@ -53,77 +53,20 @@ class Command(BaseCommand):
                         day_of_week = yesterday.isoweekday(),
                         hour = yesterday.hour,
                         month = yesterday.month,
-                        quarter = " ",
+                        quarter = "",
                         year = yesterday.year
                     ) 
                     workingdate.save()
-                    current_date = DimDate.objects.get(date=yesterday).id
 
 # DimCustomerHangupCause
-                    for item in qss_hangup_unique_customer:
-
-                        data_dchc = DimCustomerHangupcause(
-                            customer_id = item["customer"],
-                            destination = item["sell_destination"],
-                            hangupcause = item["hangup_cause"],
-                            date_id = current_date,
-                            total_calls = int(item["total_calls"])
-                        )
-                        data_dchc.save()
 
 # DimCustomerSipHangupCause
-                    for item in qss_siphangup_unique_customer:
-
-                        data_dcshc = DimCustomerSipHangupcause(
-                            customer_id = item["customer"],
-                            destination = item["sell_destination"],
-                            sip_hangupcause = item["sip_hangup_cause"],
-                            date_id = current_date,
-                            total_calls = int(item["total_calls"])
-                        )
-                        data_dcshc.save()
 
 # DimProviderHangupCause
-                    for item in qss_hangup_unique_provider:
-
-                        data_dphc = DimProviderHangupcause(
-                            provider_id = item["lcr_carrier_id"],
-                            destination = item["cost_destination"],
-                            hangupcause = item["hangup_cause"],
-                            date_id = current_date,
-                            total_calls = int(item["total_calls"])
-                        )
-                        data_dphc.save()
 
 # DimProviderSipHangupCause
-                    for item in qss_siphangup_unique_provider:
-
-                        data_dpshc = DimProviderSipHangupcause(
-                            provider_id = item["lcr_carrier_id"],
-                            destination = item["cost_destination"],
-                            sip_hangupcause = item["sip_hangup_cause"],
-                            date_id = current_date,
-                            total_calls = int(item["total_calls"])
-                        )
-                        data_dpshc.save()
 
 # DimCustomerDestination
-                    for item in qss_success_customer:
-
-                        data_dcd = DimCustomerDestination(
-                            customer_id=item["customer"],
-                            destination=item["destination"],
-                            date_id = current_date,
-                            total_calls = "0",
-                            success_calls = int(item["success_calls"]),
-                            total_duration=item["total_duration"],
-                            avg_duration=int(math.ceil(item["avg_duration"])),
-                            max_duration=int(math.ceil(item["max_duration"])),
-                            min_duration=int(math.ceil(item["min_duration"])),
-                            total_sell=item["total_sell"],
-                            total_cost=item["total_cost"]
-                        )
-                        data_dcd.save()
 
 # DimProviderDestination
                     for item in qss_success_provider:
@@ -131,22 +74,22 @@ class Command(BaseCommand):
                         data_dpd = DimProviderDestination(
                             provider_id=item["provider"],
                             destination=item["destination"],
-                            date_id = current_date,
+                            date_id = DimDate.objects.get(date=yesterday).id,
                             total_calls = "0",
-                            success_calls = int(item["success_calls"]),
-                            total_duration=item["total_duration"],
+                            success_calls = "0",
+                            total_duration=int(item["total_duration"]),
                             avg_duration=int(math.ceil(item["avg_duration"])),
                             max_duration=int(math.ceil(item["max_duration"])),
                             min_duration=int(math.ceil(item["min_duration"])),
                             total_sell=item["total_sell"],
                             total_cost=item["total_cost"]
                         )
-                        data_dpd.save()
+#                        data_dpd.save()
 
 
 
-#                print 'daily stats : all : %s   ' % (data)
-#                pprint(connection.queries)   
+                print 'daily stats : all : %s   ' % (data)
+                pprint(connection.queries)   
             except CDR.DoesNotExist:
                 raise CommandError('stats does not exist')
 

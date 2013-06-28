@@ -413,10 +413,10 @@ if (session:ready() == true) then
     negativemargin = " "
   else
     log("Negative margin forbidden","","info")
-    negativemargin = " AND pr.cost_rate < "..tonumber(rate["rate"]).." "
+    negativemargin = " WHERE T.cost_rate < "..tonumber(rate["rate"]).." "
   end
   log("rate_lcrgroup_id : ", rate["lcrgroup_id"], "debug")
-  local query_cost_sql = "SELECT * FROM (SELECT DISTINCT ON (pr.provider_tariff_id) s.sip_cid_type AS sip_cid_type, s.channels AS channels, s.prefix AS gwprefix, s.suffix AS gwsuffix, s.codec AS codec, s.name AS gwname, s.id AS gwid, pr.destination AS destination, pr.digits AS digits, pr.cost_rate AS cost_rate, pr.block_min_duration AS block_min_duration, pr.init_block AS init_block, pt.carrier_id AS carrier_id, pt.lead_strip AS lead_strip, pt.tail_strip AS tail_strip, pt.prefix AS prefix, pt.suffix AS suffix, pt.quality AS quality, pt.reliability AS reliability FROM lcr_providers lp INNER JOIN provider_tariff pt ON pt.id = lp.provider_tariff_id AND pt.enabled = TRUE AND now() > pt.date_start AND now() < pt.date_end INNER JOIN sofia_gateway s ON s.company_id = pt.carrier_id AND s.enabled = TRUE INNER JOIN provider_rates pr ON pr.provider_tariff_id = pt.id AND pr.enabled = TRUE AND now() > pr.date_start AND now() < pr.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(pr.digits,'%')"..negativemargin.."WHERE lp.lcr_id = '" .. rate["lcrgroup_id"] .. "' ORDER BY pr.provider_tariff_id, LENGTH(pr.digits) DESC) T ORDER BY " .. ratefilter .. ""
+  local query_cost_sql = "SELECT * FROM (SELECT DISTINCT ON (pr.provider_tariff_id) s.sip_cid_type AS sip_cid_type, s.channels AS channels, s.prefix AS gwprefix, s.suffix AS gwsuffix, s.codec AS codec, s.name AS gwname, s.id AS gwid, pr.destination AS destination, pr.digits AS digits, pr.cost_rate AS cost_rate, pr.block_min_duration AS block_min_duration, pr.init_block AS init_block, pt.carrier_id AS carrier_id, pt.lead_strip AS lead_strip, pt.tail_strip AS tail_strip, pt.prefix AS prefix, pt.suffix AS suffix, pt.quality AS quality, pt.reliability AS reliability FROM lcr_providers lp INNER JOIN provider_tariff pt ON pt.id = lp.provider_tariff_id AND pt.enabled = TRUE AND now() > pt.date_start AND now() < pt.date_end INNER JOIN sofia_gateway s ON s.company_id = pt.carrier_id AND s.enabled = TRUE INNER JOIN provider_rates pr ON pr.provider_tariff_id = pt.id AND pr.enabled = TRUE AND now() > pr.date_start AND now() < pr.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(pr.digits,'%') WHERE lp.lcr_id = '" .. rate["lcrgroup_id"] .. "' ORDER BY pr.provider_tariff_id, LENGTH(pr.digits) DESC) T"..negativemargin.."ORDER BY " .. ratefilter .. ""
   assert(dbh:query(query_cost_sql, function(row)
     lcr_channels[lcrok] = tonumber(row.channels)
     lcr_gwprefix[lcrok] = row.gwprefix
@@ -482,6 +482,7 @@ if (session:ready() == true) then
     if lcr_lead_strip[i] == "" then
       lcr_lead_strip[i]  = "^"
     end
+--    if lcr_cost_rate[lcrok]
     log("WS CALL strip:", lcr_lead_strip[i])
     log("WS CALL prefix:", lcr_prefix[i])
     log("WS CALL dest number:", channel["destination_number"])
