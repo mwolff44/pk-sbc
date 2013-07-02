@@ -318,6 +318,21 @@ class CustomerDirectory(models.Model):
     sip_port = models.PositiveIntegerField(_(u"SIP port"), default=5060)
     max_calls = models.PositiveIntegerField(_(u'max simultaneous calls'), default=1, help_text=_(u"maximum simultaneous calls allowed for this customer account."))
     log_auth_failures = models.BooleanField(_(u"log auth failures"), default=False, help_text=_(u"It true, log authentication failures. Required for Fail2ban."))
+    MULTIPLE_CODECS_CHOICES = (
+        ("PCMA,PCMU,G729", _(u"PCMA,PCMU,G729")),
+        ("PCMU,PCMA,G729", _(u"PCMU,PCMA,G729")),
+        ("G729,PCMA,PCMU", _(u"G729,PCMA,PCMU")),
+        ("G729,PCMU,PCMA", _(u"G729,PCMU,PCMA")),
+        ("PCMA,G729", _(u"PCMA,G729")),
+        ("PCMU,G729", _(u"PCMU,G729")),
+        ("G729,PCMA", _(u"G729,PCMA")),
+        ("G729,PCMU", _(u"G729,PCMU")),
+        ("G729", _(u"G729")),
+        ("PCMU", _(u"PCMU")),
+        ("PCMA", _(u"PCMA")),
+        ("ALL", _(u"ALL")),
+    )
+    codecs = models.CharField(_(u"Codecs"), max_length=100, default="ALL", choices=MULTIPLE_CODECS_CHOICES, help_text=_(u"Codecs allowed - beware about order. 1st has high priority "))
     MULTIPLE_REGISTRATIONS_CHOICES = (
         ("call-id", _(u"Call-id")), ("contact", _(u"Contact")),
         ("false", _(u"False")), ("true", _(u"True")))
@@ -679,8 +694,21 @@ class SipProfile(models.Model):
             "on this profile, i.e. challenge the other side for "
             "username/password information."))
     log_auth_failures = models.BooleanField(_(u"log auth failures"), default=False, help_text=_(u"It true, log authentication failures. Required for Fail2ban."))
-    inbound_codec_prefs = models.CharField(_(u"inbound codec prefs"), max_length=100, default="G729,PCMU,PCMA", help_text=_(u"Define allowed preferred codecs for inbound calls."))
-    outbound_codec_prefs = models.CharField(_(u"outbound codec prefs"), max_length=100, default="G729,PCMU,PCMA", help_text=_(u"Define allowed preferred codecs for outbound calls."))
+    MULTIPLE_CODEC_CHOICES = (
+        ("PCMA,PCMU,G729", _(u"PCMA,PCMU,G729")),
+        ("PCMU,PCMA,G729", _(u"PCMU,PCMA,G729")),
+        ("G729,PCMA,PCMU", _(u"G729,PCMA,PCMU")),
+        ("G729,PCMU,PCMA", _(u"G729,PCMU,PCMA")),
+        ("PCMA,G729", _(u"PCMA,G729")),
+        ("PCMU,G729", _(u"PCMU,G729")),
+        ("G729,PCMA", _(u"G729,PCMA")),
+        ("G729,PCMU", _(u"G729,PCMU")),
+        ("G729", _(u"G729")),
+        ("PCMU", _(u"PCMU")),
+        ("PCMA", _(u"PCMA")),
+    )
+    inbound_codec_prefs = models.CharField(_(u"inbound codec prefs"), max_length=100, choices=MULTIPLE_CODEC_CHOICES, default="G729,PCMU,PCMA", help_text=_(u"Define allowed preferred codecs for inbound calls."))
+    outbound_codec_prefs = models.CharField(_(u"outbound codec prefs"), max_length=100, choices=MULTIPLE_CODEC_CHOICES, default="G729,PCMU,PCMA", help_text=_(u"Define allowed preferred codecs for outbound calls."))
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
 

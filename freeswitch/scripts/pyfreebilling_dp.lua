@@ -160,7 +160,6 @@ if session:ready() then
   else 
     channel["sip_user_agent"] = "not set"
   end
-  channel["ep_codec_string"] = get_Variable("ep_codec_string")
 --  channel["FreeSWITCH-IPv4"] = get_Variable("FreeSWITCH-IPv4")
 --  channel["FreeSWITCH-Switchname"] = get_Variable("FreeSWITCH-Switchname")
   log("Get session variable :", "done", "debug")
@@ -172,6 +171,24 @@ if session:ready() then
   set_variable("init_block", "0.000000")
   set_variable("sell_increment", "0")
   set_variable("originating_leg_uuid", channel["uuid"])
+
+  channel["customer_codecs"] = get_Variable("customer_codecs")
+  if (channel["customer_codecs"] == "ALL" or channel["customer_codecs"] == nil or channel["customer_codecs"] == "") then
+    log("All client codecs", "", "debug")
+  else
+    log("specific customer codecs", "", "debug")
+    channel["ep_codec_string"] = get_Variable("ep_codec_string")
+    if ((string.find(channel["ep_codec_string"], 'G729') and string.find(channel["customer_codecs"], 'G729')) or (string.find(channel["ep_codec_string"], 'PCMA') and string.find(channel["customer_codecs"], 'PCMA')) or (string.find(channel["ep_codec_string"], 'PCMU') and string.find(channel["customer_codecs"], 'PCMU'))) then
+      log("codec leg A match with customer codec", "", "info")
+      execute("export", "nolocal:absolute_codec_string="..channel["customer_codecs"])
+    else
+      set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_CODEC_ERROR")
+      log("codec leg A mismatch with customer codec!","Exiting","info")
+      session:hangup("BEARERCAPABILITY_NOTAVAIL")
+      return
+    end
+  end
+
 end
 
 -----------------------------------------------
@@ -182,15 +199,21 @@ if session:ready() then
     dbh = freeswitch.Dbh("odbc://freeswitch")
     if dbh:connected() == false then
       set_variable("proto_specific_hangup_cause", "PFB_DB_ERROR")
-      log("Dbh : ", "Database error - Hangup call")
-      session:hangup("BEARERCAPABILITY_NOTAVAIL");
+      log("Dbh : ", "Database error - Hangup call", "ERROR")
+      session:hangup("BEARERCAPABILITY_NOTAVAIL")
+      return
     else
       log("Dbh : ", "Database connected")
     end
   else
     log("Customer not authorized")
-    set_variable("proto_specific_hangup_cause", "PFB_NOT_AUTH")
-    session:hangup("BEARERCAPABILITY_NOTAVAIL");
+    set_variable("proto_specific_hangup_cause", "PFB_NOT_AUTH", "INFO")
+    if dbh:connected() == true then
+      log("DBH Connected : releasing","","debug")
+      assert(dbh:release())
+    end
+    session:hangup("BEARERCAPABILITY_NOTAVAIL")
+    return
   end
 end
 -----------------------------------------------
@@ -214,7 +237,7 @@ if session:ready() then
   if custok == 0 then
     set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_NOT_FOUND")
     log("CUSTOMER NOT FOUND!","Exiting")
-    session:hangup("BEARERCAPABILITY_NOTAVAIL");
+    session:hangup("BEARERCAPABILITY_NOTAVAIL")
   end
   log("Prepaid / Balance / Credit limit : ".. customer["prepaid"] .." /  ".. tonumber(customer["customer_balance"]) .." / " .. tonumber(customer["credit_limit"]),"")
 else
@@ -239,7 +262,7 @@ if (session:ready() == true) then
     if tonumber(customer["customer_balance"]) < 0 then
       set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_PREPAID_NO_MONEY")
       log("CUSTOMER " .. customer["name"] .. " has no money... rejecting","")
-      session:hangup("BEARERCAPABILITY_NOTAVAIL");
+      session:hangup("BEARERCAPABILITY_NOTAVAIL")
     else
       log("balance : ","OK")
     end
@@ -271,7 +294,7 @@ if (session:ready() == true) then
     if string.match(channel["destination_number"],customer["dnr_format_num"]) == nil then
       set_variable("proto_specific_hangup_cause", "PFB_DESTINATION_NUMBER_WRONG_FORMAT")
       log("Destination number wrong format :","NOK!", "debug")
-      session:hangup("UNALLOCATED_NUMBER");
+      session:hangup("UNALLOCATED_NUMBER")
     else
       log("Destination number well formated :","OK!")
     end
@@ -329,7 +352,7 @@ if (session:ready() == true) then
   if rateok == 0 then
     set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER _RATE_NOT_FOUND")
     log("RATE NOT FOUND! : ", "Exiting")
-    session:hangup("BEARERCAPABILITY_NOTAVAIL");
+    session:hangup("BEARERCAPABILITY_NOTAVAIL")
   else
     rate["rate"] = tonumber(rate["rate"])*(1-tonumber(rate["discount"])/100)
     log("Rate", "OK")
@@ -345,7 +368,7 @@ if (session:ready() == true) then
   if rate["rate"] == -1 then
     log("Blocked prefix ! : ", "Exiting")
     set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_PREFIX_BLOCKED")
-    session:hangup("BEARERCAPABILITY_NOTAVAIL");
+    session:hangup("BEARERCAPABILITY_NOTAVAIL")
   else
     log("non blocked prefix : ", "OK!", "debug")
   end

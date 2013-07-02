@@ -23,8 +23,8 @@
     </variables>
     <groups>
       <group name="default">
-        {% if customerdirectorys %}<users>
-          {% for customerdirectory in customerdirectorys %}<user id="{{ customerdirectory.id }}"{% if customerdirectory.password %}{% else %}{% if customerdirectory.sip_ip %} cidr="{{ customerdirectory.sip_ip }}{% endif %}{% endif %}">
+        {% if customerdirectorys %}<users>{% for customerdirectory in customerdirectorys %}
+          <user id="{{ customerdirectory.id }}"{% if customerdirectory.password %}{% else %}{% if customerdirectory.sip_ip %} cidr="{{ customerdirectory.sip_ip }}{% endif %}{% endif %}">
             <params>
               {% if customerdirectory.password %}<param name="password" value="{{ customerdirectory.password }}"/>{% endif %}
             </params>
@@ -32,6 +32,7 @@
               <variable name="accountcode" value="{{ customerdirectory.company.id }}"/>
               <variable name="user_context" value="pyfreebill"/>
               <variable name='max_calls' value='{{ customerdirectory.max_calls }}'/>
+              <variable name='customer_codecs' value='{{ customerdirectory.codecs }}'/>
             </variables>
           </user>{% endfor %}
         </users>{% endif %}
