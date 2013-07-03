@@ -28,6 +28,7 @@ from country_dialcode.models import Country, Prefix
 from pyfreebill import fields
 import datetime, qsstats
 from django.db.models import Sum, Avg, Count, Max, Min
+from django_iban.fields import IBANField, SWIFTBICField
 import decimal
 import math
 
@@ -44,8 +45,11 @@ class Company(models.Model):
     web_site = GenericRelation(u'WebSite')
     street_address = GenericRelation(u'StreetAddress')
     note = GenericRelation(Comment, object_id_field='object_pk')
+    account_number = models.IntegerField(_(u"Account number"), blank=True, null=True)
     vat = models.BooleanField(_(u"VAT Applicable / Not applicable"), default=False, help_text=_(u"if checked, VAT is applicable."))
     vat_number = models.TextField(_(u"VAT number"), blank=True)
+    swift_bic = SWIFTBICField(_(u"SWIFT BIC bank account number"), blank=True, null=True)
+    iban = IBANField(_(u"IBAN bank account number"), blank=True, null=True)
     prepaid = models.BooleanField(_(u"Prepaid / Postpaid"), default=True, help_text=_(u"If checked, this account customer is prepaid."))
     credit_limit = models.DecimalField(_(u'credit limit'), max_digits=12, decimal_places=4, default=0, help_text=_(u"Credit limit for postpaid account."))
     customer_balance = models.DecimalField(_(u'customer balance'), max_digits=12, decimal_places=6, default=0, help_text=_(u"Actual customer balance."))
@@ -1021,7 +1025,7 @@ class DimCustomerDestination(models.Model):
     max_duration = models.IntegerField(_(u"max duration"))
     min_duration = models.IntegerField(_(u"min duration"))
     total_sell = models.DecimalField(_(u'total sell'), max_digits=12, decimal_places=2)
-    total_cost = models.DecimalField(_(u'total sell'), max_digits=12, decimal_places=2)
+    total_cost = models.DecimalField(_(u'total cost'), max_digits=12, decimal_places=2)
 
     class Meta:
         db_table = 'dim_customer_destination'
@@ -1044,7 +1048,7 @@ class DimProviderDestination(models.Model):
     max_duration = models.IntegerField(_(u"max duration"))
     min_duration = models.IntegerField(_(u"min duration"))
     total_sell = models.DecimalField(_(u'total sell'), max_digits=12, decimal_places=2)
-    total_cost = models.DecimalField(_(u'total sell'), max_digits=12, decimal_places=2)
+    total_cost = models.DecimalField(_(u'total cost'), max_digits=12, decimal_places=2)
 
     class Meta:
         db_table = 'dim_provider_destination'

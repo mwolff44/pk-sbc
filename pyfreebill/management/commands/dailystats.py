@@ -10,16 +10,35 @@ import decimal
 
 class Command(BaseCommand):
     args = '<date>'
-    help = 'calculate on daily basis stats'
+    help = 'calculate stats - lastday, for last day stats - live, for live stats - custom + options for specific stats - first = [2013, 06, 14, 00, 00, 00], last = [2013, 06, 18, 00, 00, 00] '
 
     def handle(self, *args, **options):
-        for day in args:
+        for var in args:
             try:
 
 # date filter
-                today = datetime.datetime(2013, 06, 14, 00, 00, 00)
-                yesterday = today - datetime.timedelta(days=1)
-
+# today = datetime.datetime(2013, 06, 14, 00, 00, 00)
+                if var == "lastday":
+                    dt = datetime.datetime.today()
+                    today = datetime.datetime(dt.year, dt.month, dt.day, 00, 00, 00)
+                    yesterday = today - datetime.timedelta(days=1)
+                elif var == "live":
+                    dt = datetime.datetime.today()
+                    today = datetime.datetime(dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second)
+                    yesterday = datetime.datetime(dt.year, dt.month, dt.day, 00, 00, 00)
+                elif var == "custom":
+                    for fd in first:
+                        try:
+                            today = datetime.datetime(fd[0], fd[1], fd[2], fd[3], fd[4], fd[5])
+                        except:
+                            return
+                    for ld in last:
+                        try:
+                            yesterday = datetime.datetime(fd[0], fd[1], fd[2], fd[3], fd[4], fd[5])
+                        except:
+                            return
+                else:
+                    return
 # Query construction
                 qs = CDR.objects.all().filter(start_stamp__gte=yesterday).filter(start_stamp__lt=today)
                 qs_uuid_unique = qs.order_by('-start_stamp')
@@ -33,7 +52,6 @@ class Command(BaseCommand):
                 qss_hangup_unique_provider = qs_uuid_unique.values('lcr_carrier_id','cost_destination','hangup_cause').exclude(lcr_carrier_id__isnull=True).annotate(total_calls=Count('uuid', distinct = True)).order_by('lcr_carrier_id','cost_destination')
 # DimProviderSipHangupCause
                 qss_siphangup_unique_provider = qs_uuid_unique.values('lcr_carrier_id','cost_destination','sip_hangup_cause').exclude(lcr_carrier_id__isnull=True).annotate(total_calls=Count('uuid', distinct = True)).order_by('lcr_carrier_id','cost_destination')
-                print 'qss_siphangup_unique_provider %s : ' % qss_siphangup_unique_provider
 # Stats on successful calls 
                 qss2 = qs.filter(effective_duration__gt="0")
 # Customers
@@ -143,9 +161,6 @@ class Command(BaseCommand):
                         )
                         data_dpd.save()
 
-
-
-#                print 'daily stats : all : %s   ' % (data)
 #                pprint(connection.queries)   
             except CDR.DoesNotExist:
                 raise CommandError('stats does not exist')

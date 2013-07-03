@@ -639,17 +639,30 @@ class DestinationNumberRulesAdmin(admin.ModelAdmin):
             return False
 
 # STATS
-#class DailyStatsAdmin(admin.ModelAdmin):
-#    list_display = ('date', 'customer', 'total_calls', 'success_calls', 'total_duration', 'total_sell', 'total_cost')
-#    read_onlyfields = ('date', 'customer', 'total_calls', 'success_calls', 'total_duration', 'total_sell', 'total_cost')
-#    list_filter = ('date', 'customer')
-#    ordering = ('-date', 'customer')
+class DimCustomerDestinationAdmin(admin.ModelAdmin):
+    list_display = ('date', 'customer', 'destination', 'total_calls', 'success_calls', 'total_duration', 'avg_duration', 'max_duration', 'min_duration', 'total_sell', 'total_cost')
+    read_onlyfields = ('date', 'customer', 'destination', 'total_calls', 'success_calls', 'total_duration', 'avg_duration', 'max_duration', 'min_duration', 'total_sell', 'total_cost')
+    list_filter = ('date', 'customer', 'destination')
+    ordering = ('-date', 'customer', 'destination')
 
-#    def has_add_permission(self, request, obj=None):
-#      return False
+    def has_add_permission(self, request, obj=None):
+      return False
 
-#    def has_delete_permission(self, request, obj=None):
-#      return False
+    def has_delete_permission(self, request, obj=None):
+      return False
+
+
+class DimProviderDestinationAdmin(admin.ModelAdmin):
+    list_display = ('date', 'provider', 'destination', 'total_calls', 'success_calls', 'total_duration', 'avg_duration', 'max_duration', 'min_duration', 'total_sell', 'total_cost')
+    read_onlyfields = ('date', 'provider', 'destination', 'total_calls', 'success_calls', 'total_duration', 'avg_duration', 'max_duration', 'min_duration', 'total_sell', 'total_cost')
+    list_filter = ('date', 'provider', 'destination')
+    ordering = ('-date', 'provider', 'destination')
+
+    def has_add_permission(self, request, obj=None):
+      return False
+
+    def has_delete_permission(self, request, obj=None):
+      return False
 
 
 #    admin.site.disable_action('delete_selected')
@@ -681,4 +694,10 @@ admin.site.register(CustomerNormalizationRules, CustomerNormalizationRulesAdmin)
 admin.site.register(CarrierCIDNormalizationRules, CarrierCIDNormalizationRulesAdmin)
 admin.site.register(CustomerCIDNormalizationRules, CustomerCIDNormalizationRulesAdmin)
 admin.site.register(DestinationNumberRules, DestinationNumberRulesAdmin)
+#admin.site.register(DimCustomerHangupcause, DimCustomerHangupcauseAdmin)
+#admin.site.register(DimCustomerSipHangupcause, DimCustomerSipHangupcauseAdmin)
+#admin.site.register(DimProviderHangupcause, DimProviderHangupcauseAdmin)
+#admin.site.register(DimProviderSipHangupcause, DimProviderSipHangupcauseAdmin)
+admin.site.register(DimCustomerDestination, DimCustomerDestinationAdmin)
+admin.site.register(DimProviderDestination, DimProviderDestinationAdmin)
 #admin.site.register()
