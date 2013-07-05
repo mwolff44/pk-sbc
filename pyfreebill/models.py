@@ -690,7 +690,7 @@ class SipProfile(models.Model):
     ext_rtp_ip = models.CharField(_(u"external RTP IP"), max_length=100, default="auto", help_text=_(u"External/public IP address to bind to for RTP."))
     ext_sip_ip = models.CharField(_(u"external SIP IP"), max_length=100, default="auto", help_text=_(u"External/public IP address to bind to for SIP."))
     rtp_ip = models.CharField(_(u"RTP IP"), max_length=100, default="auto", help_text=_(u"Internal IP address to bind to for RTP."))
-    sip_ip = models.CharField(_(u"SIP IP"), max_length=100, default="/32", help_text=_(u"Internal IP address to bind to for SIP."))
+    sip_ip = models.CharField(_(u"SIP IP"), max_length=100, default="auto", help_text=_(u"Internal IP address to bind to for SIP."))
     sip_port = models.PositiveIntegerField(_(u"SIP port"), default=5060)
     disable_transcoding = models.BooleanField(_(u"disable transcoding"), default=True, help_text=_(u"If true, you can not use transcoding."))
     accept_blind_reg = models.BooleanField(_(u"accept blind registration"), default=False, help_text=_(u"If true, anyone can register to server and will not be challenged for username/password information."))
@@ -749,7 +749,7 @@ class SofiaGateway(models.Model):
     username = models.CharField(_(u"username"), blank=True, default='', max_length=35)
     password = models.CharField(_(u"password"), blank=True, default='', max_length=35)
     register = models.BooleanField(_(u"register"), default=False)
-    proxy = models.CharField(_(u"proxy"), max_length=48,  help_text=_(u"IP if register is False."))
+    proxy = models.CharField(_(u"proxy"), max_length=48, default="/32", help_text=_(u"IP if register is False."))
     extension = models.CharField(_(u"extension number"), max_length=50, blank=True, default="", help_text=_(u"Extension for inbound calls. Same as username, if "
                     "blank."))
     realm = models.CharField(_(u"realm"), max_length=50, blank=True, default="", help_text=_(u"Authentication realm. Same as gateway name, if blank."))
