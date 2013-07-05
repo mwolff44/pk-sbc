@@ -296,7 +296,7 @@ class CompanyBalanceHistory(models.Model):
         ('customer', _(u"operation on customer account")),
         ('supplier', _(u"operation on supplier account")),
     )
-    operation_type = models.CharField(_(u"lcr type"), max_length=10, choices=OPERATION_TYPE_CHOICES, default='customer')
+    operation_type = models.CharField(_(u"operation type"), max_length=10, choices=OPERATION_TYPE_CHOICES, default='customer')
     reference = models.TextField(_(u'reference'), blank=True)
     description = models.TextField(_(u'description'), blank=True)
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True) 
