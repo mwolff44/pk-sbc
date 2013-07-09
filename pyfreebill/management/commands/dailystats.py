@@ -3,14 +3,16 @@ from pyfreebill.models import CDR, DimDate, DimCustomerHangupcause, DimCustomerS
 import datetime
 from django.db.models import Sum, Avg, Count, Max, Min
 from django.db import connection
+from django.utils import timezone
 from pprint import pprint
 #import dse
 import math
 import decimal
+import pytz
 
 class Command(BaseCommand):
     args = '<date>'
-    help = 'calculate stats - lastday, for last day stats - live, for live stats - custom + options for specific stats - first = [2013, 06, 14, 00, 00, 00], last = [2013, 06, 18, 00, 00, 00] '
+    help = 'calculate stats - lastday, for last day stats - past, for past stats - custom + options for specific stats - first = [2013, 06, 14, 00, 00, 00], last = [2013, 06, 18, 00, 00, 00] '
 
     def handle(self, *args, **options):
         for var in args:
@@ -18,23 +20,23 @@ class Command(BaseCommand):
 
 # date filter
 # today = datetime.datetime(2013, 06, 14, 00, 00, 00)
+                current_tz = pytz.utc
                 if var == "lastday":
-                    dt = datetime.datetime.today()
-                    today = datetime.datetime(dt.year, dt.month, dt.day, 00, 00, 00)
+                    dt = datetime.datetime.now()
+                    today = datetime.datetime(dt.year, dt.month, dt.day, 00, 00, 00).replace(tzinfo=current_tz)
                     yesterday = today - datetime.timedelta(days=1)
-                elif var == "live":
-                    dt = datetime.datetime.today()
-                    today = datetime.datetime(dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second)
-                    yesterday = datetime.datetime(dt.year, dt.month, dt.day, 00, 00, 00)
+                elif var == "past":
+                    today = datetime.datetime(2013, 7, 8, 00, 00, 00).replace(tzinfo=current_tz)
+                    yesterday = today - datetime.timedelta(days=1)
                 elif var == "custom":
                     for fd in first:
                         try:
-                            today = datetime.datetime(fd[0], fd[1], fd[2], fd[3], fd[4], fd[5])
+                            today = datetime.datetime(fd[0], fd[1], fd[2], fd[3], fd[4], fd[5]).replace(tzinfo=current_tz)
                         except:
                             return
                     for ld in last:
                         try:
-                            yesterday = datetime.datetime(fd[0], fd[1], fd[2], fd[3], fd[4], fd[5])
+                            yesterday = datetime.datetime(fd[0], fd[1], fd[2], fd[3], fd[4], fd[5]).replace(tzinfo=current_tz)
                         except:
                             return
                 else:
