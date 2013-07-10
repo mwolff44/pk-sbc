@@ -39,7 +39,7 @@ class Company(models.Model):
     name = models.CharField(_(u'name'), max_length=200, unique=True)
     nickname = models.CharField(_('nickname'), max_length=50, blank=True, null=True)
     slug = models.SlugField(_('slug'), max_length=50, unique=True)
-    about = models.TextField(_(u'about'), blank=True, null=True)
+    about = models.CharField(_(u'about'), max_length=250, blank=True, null=True)
     phone_number = GenericRelation(u'PhoneNumber')
     email_address = GenericRelation(u'EmailAddress')
     web_site = GenericRelation(u'WebSite')
@@ -47,7 +47,7 @@ class Company(models.Model):
     note = GenericRelation(Comment, object_id_field='object_pk')
     account_number = models.IntegerField(_(u"Account number"), blank=True, null=True)
     vat = models.BooleanField(_(u"VAT Applicable / Not applicable"), default=False, help_text=_(u"if checked, VAT is applicable."))
-    vat_number = models.TextField(_(u"VAT number"), blank=True)
+    vat_number = models.CharField(_(u"VAT number"), max_length=30, blank=True)
     swift_bic = SWIFTBICField(_(u"SWIFT BIC bank account number"), blank=True, null=True)
     iban = IBANField(_(u"IBAN bank account number"), blank=True, null=True)
     prepaid = models.BooleanField(_(u"Prepaid / Postpaid"), default=True, help_text=_(u"If checked, this account customer is prepaid."))
@@ -297,8 +297,8 @@ class CompanyBalanceHistory(models.Model):
         ('supplier', _(u"operation on supplier account")),
     )
     operation_type = models.CharField(_(u"operation type"), max_length=10, choices=OPERATION_TYPE_CHOICES, default='customer')
-    reference = models.TextField(_(u'reference'), blank=True)
-    description = models.TextField(_(u'description'), blank=True)
+    reference = models.CharField(_(u'public description'), max_length=255, blank=True)
+    description = models.CharField(_(u'internal description'), max_length=255, blank=True)
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True) 
     date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
 
@@ -853,6 +853,14 @@ class CDR(models.Model):
     def __unicode__(self):
         return u"%s" % self.uuid
 
+    def hangup_cause_colored(self):
+        if self.billsec == 0:
+            color = "red"
+        else:
+            color = "green"
+        return " <span style=color:%s>%s</span>" % (color, self.hangup_cause)
+    hangup_cause_colored.allow_tags = True
+
     @property
     def daily_total_answered_calls(self):
         return qsstats.QuerySetStats(self.objects.all().exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING"),'start_stamp', aggregate=Count('id')).this_day()
@@ -922,7 +930,7 @@ class CDR(models.Model):
     billsec_py = property(_get_billsec)
 
     def success_cdr(self):
-        return self.CDR.objects.exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING")
+        return self.CDR.objects.exclude(effective_duration="0")
 
 # STATS
 

@@ -25,65 +25,65 @@ class CustomMenu(Menu):
                 children=[
                     items.MenuItem(_('Companies'),
                         children=[
-                            items.MenuItem(_('List'), '/admin/pyfreebill/company/'),
-                            items.MenuItem(_('Balance history'), '/admin/pyfreebill/companybalancehistory/'),
-                            items.MenuItem(_('Customer SIP accounts'), '/admin/pyfreebill/customerdirectory/'),
-                            items.MenuItem(_('Provider gateways'), '/admin/pyfreebill/sofiagateway/'),
+                            items.MenuItem(_('List'), '/extranet/pyfreebill/company/'),
+                            items.MenuItem(_('Balance history'), '/extranet/pyfreebill/companybalancehistory/'),
+                            items.MenuItem(_('Customer SIP accounts'), '/extranet/pyfreebill/customerdirectory/'),
+                            items.MenuItem(_('Provider gateways'), '/extranet/pyfreebill/sofiagateway/'),
                         ]
                     ),
-                    items.MenuItem(_('Contacts'), '/admin/pyfreebill/person/'),
-                    items.MenuItem(_('Groups'), '/admin/pyfreebill/group/'),
+                    items.MenuItem(_('Contacts'), '/extranet/pyfreebill/person/'),
+                    items.MenuItem(_('Groups'), '/extranet/pyfreebill/group/'),
                 ]
             ),
             items.MenuItem(_('Rates'),
                 children=[
                     items.MenuItem(_('Sell rates'),
                         children=[
-                            items.MenuItem(_('Ratecards'), '/admin/pyfreebill/ratecard/'),
-                            items.MenuItem(_('Customer ratecards'), '/admin/pyfreebill/customerratecards/'),
-                            items.MenuItem(_('Rates'), '/admin/pyfreebill/customerrates/'),
+                            items.MenuItem(_('Ratecards'), '/extranet/pyfreebill/ratecard/'),
+                            items.MenuItem(_('Customer ratecards'), '/extranet/pyfreebill/customerratecards/'),
+                            items.MenuItem(_('Rates'), '/extranet/pyfreebill/customerrates/'),
                         ]
                     ),
-                    items.MenuItem(_('LCRs'), '/admin/pyfreebill/lcrgroup/'),
+                    items.MenuItem(_('LCRs'), '/extranet/pyfreebill/lcrgroup/'),
                     items.MenuItem(_('Provider rates'),
                         children=[
-                            items.MenuItem(_('Provider tariffs'), '/admin/pyfreebill/providertariff/'),
-                            items.MenuItem(_('Provider rates'), '/admin/pyfreebill/providerrates/'),
+                            items.MenuItem(_('Provider tariffs'), '/extranet/pyfreebill/providertariff/'),
+                            items.MenuItem(_('Provider rates'), '/extranet/pyfreebill/providerrates/'),
                         ]
                     ),
                 ]
             ),
             items.MenuItem(_('Reports'),
                 children=[
-                    items.MenuItem(_('CDRs'), '/admin/pyfreebill/cdr/',
+                    items.MenuItem(_('CDRs'), '/extranet/pyfreebill/cdr/',
                         children=[
-                            items.MenuItem(_('CDRs view'), '/admin/pyfreebill/cdr/'),
-                            items.MenuItem(_('Hangup Cause'), '/admin/pyfreebill/hangupcause/'),
+                            items.MenuItem(_('CDRs view'), '/extranet/pyfreebill/cdr/'),
+                            items.MenuItem(_('Hangup Cause'), '/extranet/pyfreebill/hangupcause/'),
                         ]
                     ),
-                    items.MenuItem(_('Reports'), '/admin/report/'),
+                    items.MenuItem(_('Reports'), '/extranet/report/'),
                 ]
             ),
             items.MenuItem(_('Admin'),
                 children=[
-                    items.MenuItem(_('Users'), '/admin/auth/',
+                    items.MenuItem(_('Users'), '/extranet/auth/',
                         children=[
-                            items.MenuItem(_('Groups'), '/admin/auth/group/'),
-                            items.MenuItem(_('Users'), '/admin/auth/user/'),
-                            items.MenuItem(_('Rates'), '/admin/pyfreebill/customerrates/'),
+                            items.MenuItem(_('Groups'), '/extranet/auth/group/'),
+                            items.MenuItem(_('Users'), '/extranet/auth/user/'),
+                            items.MenuItem(_('Rates'), '/extranet/pyfreebill/customerrates/'),
                         ]
                     ),
                     items.MenuItem(_('VoIP switches'),
                         children=[
-                            items.MenuItem(_('VoIP switches'), '/admin/pyfreebill/voipswitch/'),
-                            items.MenuItem(_('SIP profiles'), '/admin/pyfreebill/sipprofile/'),
-                            items.MenuItem(_('ACL'), '/admin/pyfreebill/acllists/'),
+                            items.MenuItem(_('VoIP switches'), '/extranet/pyfreebill/voipswitch/'),
+                            items.MenuItem(_('SIP profiles'), '/extranet/pyfreebill/sipprofile/'),
+                            items.MenuItem(_('ACL'), '/extranet/pyfreebill/acllists/'),
                         ]
                     ),
                     items.MenuItem(_('Logs'),
                         children=[
-                            items.MenuItem(_('Access logs'), '/admin/axes/accesslog/'),
-                            items.MenuItem(_('Access attemps'), '/admin/axes/accessattempt/'),
+                            items.MenuItem(_('Access logs'), '/extranet/axes/accesslog/'),
+                            items.MenuItem(_('Access attemps'), '/extranet/axes/accessattempt/'),
                         ]
                     ),
                 ]
