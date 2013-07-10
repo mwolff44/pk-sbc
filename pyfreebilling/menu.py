@@ -27,8 +27,19 @@ class CustomMenu(Menu):
                         children=[
                             items.MenuItem(_('List'), '/extranet/pyfreebill/company/'),
                             items.MenuItem(_('Balance history'), '/extranet/pyfreebill/companybalancehistory/'),
-                            items.MenuItem(_('Customer SIP accounts'), '/extranet/pyfreebill/customerdirectory/'),
-                            items.MenuItem(_('Provider gateways'), '/extranet/pyfreebill/sofiagateway/'),
+                            items.MenuItem(_('Add payment'), '/extranet/pyfreebill/companybalancehistory/add/'),
+                            items.MenuItem(_('customer management'),
+                                children=[
+                                    items.MenuItem(_('Customer SIP accounts'), '/extranet/pyfreebill/customerdirectory/'),
+                                    items.MenuItem(_('Destination number normalization rules'), '/extranet/pyfreebill/customernormalizationrules/'),
+                                    items.MenuItem(_('CallerID Normalization Rules'), '/extranet/pyfreebill/customercidnormalizationrules/'),
+                                ]
+                            ),
+                            items.MenuItem(_('provider management'),
+                                children=[
+                                    items.MenuItem(_('Provider gateways'), '/extranet/pyfreebill/sofiagateway/'),
+                                ]
+                            ),
                         ]
                     ),
                     items.MenuItem(_('Contacts'), '/extranet/pyfreebill/person/'),
@@ -77,6 +88,7 @@ class CustomMenu(Menu):
                         children=[
                             items.MenuItem(_('VoIP switches'), '/extranet/pyfreebill/voipswitch/'),
                             items.MenuItem(_('SIP profiles'), '/extranet/pyfreebill/sipprofile/'),
+                            items.MenuItem(_('Destination Number Normalization Rules'), '/extranet/pyfreebill/destinationnumberrules/'),
                             items.MenuItem(_('ACL'), '/extranet/pyfreebill/acllists/'),
                         ]
                     ),
@@ -84,6 +96,7 @@ class CustomMenu(Menu):
                         children=[
                             items.MenuItem(_('Access logs'), '/extranet/axes/accesslog/'),
                             items.MenuItem(_('Access attemps'), '/extranet/axes/accessattempt/'),
+                            items.MenuItem(_('Honeypot access attemps'), '/extranet/admin_honeypot/loginattempt/'),
                         ]
                     ),
                 ]
