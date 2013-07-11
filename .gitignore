@@ -8,7 +8,6 @@ pyfreebilling/settings.py
 
 # DIRECTORY
 #################
-templates/admin
 templatetags/
 media/
 custom_admin_tools/
