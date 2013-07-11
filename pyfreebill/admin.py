@@ -89,38 +89,38 @@ admin.site.add_action(sofiaupdate, _(u"generate sofia configuration file"))
 
 class EmailAddressInline(generic.GenericTabularInline):
     model = EmailAddress
-    extra = 0
+    extra = 1
 
 class PhoneNumberInline(generic.GenericTabularInline):
     model = PhoneNumber
-    extra = 0
+    extra = 1
 
 class InstantMessengerInline(generic.GenericTabularInline):
     model = InstantMessenger
-    extra = 0
+    extra = 1
 
 class WebSiteInline(generic.GenericTabularInline):
     model = WebSite
-    extra = 0
+    extra = 1
 
 class StreetAddressInline(generic.GenericStackedInline):
     model = StreetAddress
-    extra = 0
+    extra = 1
 
 class SpecialDateInline(generic.GenericStackedInline):
     model = SpecialDate
-    extra = 0
+    extra = 1
 
 class CommentInline(generic.GenericStackedInline):
     model = Comment
     ct_fk_field = 'object_pk'
-    extra = 0
+    extra = 1
 
 class CustomerRateCardsInline(admin.TabularInline):
     model = CustomerRateCards
     form = CustomerRateCardsForm
     max_num = 3
-    extra = 0
+    extra = 3
 
 class CompanyAdmin(admin.ModelAdmin):
     inlines = [
@@ -138,6 +138,18 @@ class CompanyAdmin(admin.ModelAdmin):
     search_fields = ['^name',]
     prepopulated_fields = {'slug': ('name',)}
     readonly_fields = ('customer_balance', 'supplier_balance')
+    fieldsets = (
+        ('General', {
+            'fields': (('name', 'nickname'), ('slug', 'about'), 'account_number', ('vat', 'vat_number'), ('swift_bic', 'iban'))
+        }),
+        ('Customer', {
+            'fields': ('customer_enabled', 'max_calls', ('prepaid', 'credit_limit', 'customer_balance'), 'billing_cycle')
+        }),
+        ('Provider', {
+            'fields': ('supplier_enabled', 'supplier_balance')
+        }),
+    )
+
 
     def has_add_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -150,6 +162,14 @@ class CompanyAdmin(admin.ModelAdmin):
             return True
         else:
             return False
+
+    def get_actions(self, request):
+        if request.user.is_superuser:
+            actions = super(CompanyAdmin, self).get_actions(request)
+            if 'delete_selected' in actions:
+                del actions['delete_selected']
+            return actions
+        return
 
     def changelist_view(self, request, extra_context=None):
         if request.user.is_superuser:
@@ -284,7 +304,7 @@ class ProviderRatesInline(admin.TabularInline):
         }
     formset = ProviderRatesFormSet
     max_count = 40
-    extra = 0
+    extra = 1
 
 class ProviderTariffAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'carrier', 'description', 'quality', 'reliability', 'date_start', 'date_end', 'enabled']
@@ -336,7 +356,7 @@ class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
 
 class LCRProvidersInline(admin.TabularInline):
     model = LCRProviders
-    extra = 0
+    extra = 3
 
 class LCRGroupAdmin(admin.ModelAdmin):
     list_display = ['name', 'description', 'lcrtype']
@@ -373,7 +393,7 @@ class CustomerRatesInline(admin.TabularInline):
     model = CustomerRates
     formset = CustomerRatesFormSet
     max_num = 40
-    extra = 0
+    extra = 1
 
 class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ['ratecard', 'destination', 'prefix', 'rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'enabled', 'date_added', 'date_modified']
@@ -526,12 +546,41 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
 #    list_filter = ['start_stamp', 'customer', 'gateway', 'lcr_carrier_id', 'ratecard_id', 'hangup_cause', 'sip_hangup_cause', 'sell_destination', 'cost_destination']
     search_fields = ['^prefix', '^destination_number', '^customer__name', '^cost_destination', '^start_stamp']
 #    readonly_fields =('customer_ip', 'customer', 'caller_id_number', 'destination_number', 'start_stamp', 'answered_stamp', 'end_stamp', 'duration', 'min_effective_duration', 'effective_duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'prefix', 'country','cost_rate', 'total_cost', 'total_cost_py', 'total_sell', 'total_sell_py', 'rate', 'init_block', 'block_min_duration', 'ratecard_id', 'lcr_group_id', 'uuid', 'bleg_uuid', 'chan_name', 'read_codec', 'write_codec', 'sip_user_agent', 'sip_rtp_rxstat', 'sip_rtp_txstat', 'switchname', 'switch_ipv4', 'hangup_disposition', 'effectiv_duration', 'sip_hangup_cause', 'sell_destination', 'cost_destination')
+    date_hierarchy = 'start_stamp'
+    fieldsets = (
+        ('General', {
+            'fields': ('customer', 'start_stamp', 'destination_number', ('min_effective_duration', 'billsec'), ('sell_destination', 'cost_destination'))
+        }),
+        ('Advanced date / duration infos', {
+            'classes': ('collapse',),
+            'fields': (('answered_stamp', 'end_stamp', 'duration', 'effectiv_duration'))
+        }),
+        ('Financial infos', {
+#            'classes': ('collapse',),
+            'fields': (('total_cost', 'cost_rate'), ('total_sell', 'rate'), ('init_block', 'block_min_duration'))
+        }),
+        ('LCR infos', {
+            'classes': ('collapse',),
+            'fields': ('prefix',('ratecard_id', 'lcr_group_id'), ('lcr_carrier_id', 'gateway'))
+        }),
+        ('Call detailed infos', {
+            'classes': ('collapse',),
+            'fields': ('caller_id_number' , ('hangup_cause', 'hangup_cause_q850', 'hangup_disposition', 'sip_hangup_cause'), ('read_codec', 'write_codec'), 'sip_user_agent', 'customer_ip', ('uuid', 'bleg_uuid', 'chan_name', 'country'))
+        }),
+    )
+
 
     def has_add_permission(self, request, obj=None):
       return False
 
     def has_delete_permission(self, request, obj=None):
       return False
+
+    def get_actions(self, request):
+        if request.user.is_superuser:
+            return
+        else:
+            return
 
     def changelist_view(self, request, extra_context=None):
         if request.user.is_superuser:

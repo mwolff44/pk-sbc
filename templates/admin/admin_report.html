@@ -1,0 +1,16 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n %}
+{% block title %} PyFreeBilling Reports {% endblock %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="/admin/">{% trans "Home" %}</a> &rsaquo;
+            {% trans ' Reports ' %}
+    </div>
+{% endblock %}
+
+{% block content %}
+TOTO :
+{% load render_table from django_tables2 %}
+{% render_table table %}
+{% endblock %}

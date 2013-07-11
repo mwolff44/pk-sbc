@@ -291,10 +291,10 @@ class CompanyBalanceHistory(models.Model):
     amount_debited = models.DecimalField(_(u'amount debited'), max_digits=12, decimal_places=4)
     amount_refund = models.DecimalField(_(u'amount refund'), max_digits=12, decimal_places=4)
     customer_balance = models.DecimalField(_(u'customer balance'), max_digits=12, decimal_places=4, default=0, help_text=_(u"Resulting customer balance."))
-    supplier_balance = models.DecimalField(_(u'supplier balance'), max_digits=12, decimal_places=4, default=0, help_text=_(u"Resulting supplier balance."))
+    supplier_balance = models.DecimalField(_(u'provider balance'), max_digits=12, decimal_places=4, default=0, help_text=_(u"Resulting provider balance."))
     OPERATION_TYPE_CHOICES = (
         ('customer', _(u"operation on customer account")),
-        ('supplier', _(u"operation on supplier account")),
+        ('provider', _(u"operation on provider account")),
     )
     operation_type = models.CharField(_(u"operation type"), max_length=10, choices=OPERATION_TYPE_CHOICES, default='customer')
     reference = models.CharField(_(u'public description'), max_length=255, blank=True)
@@ -316,9 +316,9 @@ class CustomerDirectory(models.Model):
     company = models.ForeignKey(Company, verbose_name=_(u"company"))
     password = models.CharField(_(u"password"), max_length=100, blank=True, help_text=_(u"It's recomended to use strong passwords for the endpoint."))
     description = models.TextField(_(u'description'), blank=True)
-    name = models.CharField(_(u"SIP name"), max_length=50, unique=True, help_text=_(u"E.g.: customer name gateway for example, etc..."))
+    name = models.CharField(_(u"SIP name"), max_length=50, unique=True, help_text=_(u"E.g.: customer SIP username, etc..."))
     rtp_ip = models.CharField(_(u"RTP IP CIDR"), max_length=100, default="auto", help_text=_(u"Internal IP address/mask to bind to for RTP. Format : CIDR. Ex. 192.168.1.0/32"))
-    sip_ip = models.CharField(_(u"SIP IP CIDR"), max_length=100, default="auto", help_text=_(u"Internal IP address/mask to bind to for SIP. Format : CIRD."))
+    sip_ip = models.CharField(_(u"SIP IP CIDR"), max_length=100, default="/32", help_text=_(u"Internal IP address/mask to bind to for SIP. Format : CIDR. Ex. 192.168.1.0/32"))
     sip_port = models.PositiveIntegerField(_(u"SIP port"), default=5060)
     max_calls = models.PositiveIntegerField(_(u'max simultaneous calls'), default=1, help_text=_(u"maximum simultaneous calls allowed for this customer account."))
     log_auth_failures = models.BooleanField(_(u"log auth failures"), default=False, help_text=_(u"It true, log authentication failures. Required for Fail2ban."))
@@ -460,7 +460,7 @@ class RateCard(models.Model):
     name = models.CharField(_(u'name'), max_length=128, unique=True)
     description = models.TextField(_(u'description'), blank=True)
     lcrgroup = models.ForeignKey(LCRGroup, verbose_name=_(u"lcr"))
-    enabled = models.BooleanField(_(u"Enabled / Disabled"), default=False)
+    enabled = models.BooleanField(_(u"Enabled / Disabled"), default=True)
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
 
@@ -563,7 +563,7 @@ class CustomerNormalizationRules(models.Model):
 
 class CarrierNormalizationRules(models.Model):
     """ Carrier Normalization Rules """
-    company = models.ForeignKey(Company, verbose_name=_(u"carrier"))
+    company = models.ForeignKey(Company, verbose_name=_(u"provider"))
     prefix = models.CharField(_(u'numeric prefix'), max_length=30)
     description = models.TextField(_(u'description'), blank=True)
     remove_prefix = models.CharField(_(u"remove prefix"), blank=True, default='', max_length=15)
@@ -574,8 +574,8 @@ class CarrierNormalizationRules(models.Model):
     class Meta:
         db_table = 'carrier_norm_rules'
         ordering = ('company', 'prefix')
-        verbose_name = _(u'Carrier Normalization Rule')
-        verbose_name_plural = _(u'Carrier Normalization Rules')
+        verbose_name = _(u'Provider Normalization Rule')
+        verbose_name_plural = _(u'Provider Normalization Rules')
 
     def __unicode__(self):
         return u"%s -> %s -%s +%s" % (self.company, self.prefix, self.remove_prefix, self.add_prefix)
@@ -601,7 +601,7 @@ class CustomerCIDNormalizationRules(models.Model):
 
 class CarrierCIDNormalizationRules(models.Model):
     """ Carrier Caller ID Number Normalization Rules """
-    company = models.ForeignKey(Company, verbose_name=_(u"carrier"))
+    company = models.ForeignKey(Company, verbose_name=_(u"provider"))
     prefix = models.CharField(_(u'numeric prefix'), max_length=30)
     description = models.TextField(_(u'description'), blank=True)
     remove_prefix = models.CharField(_(u"remove prefix"), blank=True, default='', max_length=15)
@@ -612,8 +612,8 @@ class CarrierCIDNormalizationRules(models.Model):
     class Meta:
         db_table = 'carrier_cid_norm_rules'
         ordering = ('company', )
-        verbose_name = _(u'Carrier CallerID Normalization Rule')
-        verbose_name_plural = _(u'Carrier CallerID Normalization Rules')
+        verbose_name = _(u'Provider CallerID Normalization Rule')
+        verbose_name_plural = _(u'Provider CallerID Normalization Rules')
 
     def __unicode__(self):
         return u"%s -> -%s +%s" % (self.company, self.remove_prefix, self.add_prefix)
@@ -740,7 +740,7 @@ class SofiaGateway(models.Model):
     name = models.CharField(_(u"name"), max_length=100, unique=True)
     sip_profile = models.ForeignKey('SipProfile', verbose_name=_(u"SIP profile"), help_text=_(u"Which Sip Profile communication with this gateway will take place"
             " on."))
-    company = models.ForeignKey(Company, verbose_name=_(u"company"))
+    company = models.ForeignKey(Company, verbose_name=_(u"Provider"))
     channels = models.PositiveIntegerField(_(u"channels number"), default=1, help_text=_(u"maximum simultaneous calls allowed for this gateway."))
     enabled = models.BooleanField(_(u"Enabled"), default=True)
     prefix = models.CharField(_(u'prefix'), blank=True, default='', max_length=15)
@@ -749,7 +749,7 @@ class SofiaGateway(models.Model):
     username = models.CharField(_(u"username"), blank=True, default='', max_length=35)
     password = models.CharField(_(u"password"), blank=True, default='', max_length=35)
     register = models.BooleanField(_(u"register"), default=False)
-    proxy = models.CharField(_(u"proxy"), max_length=48, default="/32", help_text=_(u"IP if register is False."))
+    proxy = models.CharField(_(u"proxy"), max_length=48, default="", help_text=_(u"IP if register is False."))
     extension = models.CharField(_(u"extension number"), max_length=50, blank=True, default="", help_text=_(u"Extension for inbound calls. Same as username, if "
                     "blank."))
     realm = models.CharField(_(u"realm"), max_length=50, blank=True, default="", help_text=_(u"Authentication realm. Same as gateway name, if blank."))
@@ -829,7 +829,7 @@ class CDR(models.Model):
     rate = models.DecimalField(_(u'sell rate'), max_digits=11, decimal_places=5, null=True)
     init_block = models.DecimalField(_(u'Init block rate'), max_digits=11, decimal_places=5, null=True)
     block_min_duration = models.IntegerField(_(u'block min duration'), null=True)
-    lcr_carrier_id = models.ForeignKey(Company, verbose_name=_(u"carrier"), null=True, related_name="carrier_related")
+    lcr_carrier_id = models.ForeignKey(Company, verbose_name=_(u"provider"), null=True, related_name="carrier_related")
     ratecard_id = models.ForeignKey(RateCard, null=True, verbose_name=_(u"ratecard"))
     lcr_group_id = models.ForeignKey(LCRGroup, null=True, verbose_name=_(u"lcr group"))
     sip_user_agent = models.CharField(_(u'sip user agent'), null=True, max_length=100)
