@@ -24,7 +24,7 @@ from django.contrib.comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.generic import GenericRelation
 from django.utils.translation import ugettext_lazy as _
-from country_dialcode.models import Country, Prefix
+#from country_dialcode.models import Country, Prefix
 from pyfreebill import fields
 import datetime, qsstats
 from django.db.models import Sum, Avg, Count, Max, Min

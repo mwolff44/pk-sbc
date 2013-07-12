@@ -31,4 +31,4 @@
             $(dependencies.join(',')).keyup(populate).change(populate).focus(populate);
         });
     };
-})(grp.jQuery);
+})(django.jQuery);

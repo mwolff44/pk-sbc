@@ -28,10 +28,11 @@ from django.forms import ModelForm
 from django.forms.models import BaseInlineFormSet
 from django.template import Context, loader
 from django.core.files import File
-from django.conf.urls import patterns
+from django.conf.urls import patterns, url
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ungettext
 from import_export.admin import ImportExportMixin, ExportMixin
+from import_export.formats import base_formats
 from pyfreebill.models import *
 from pyfreebill.forms import CustomerRateCardsForm
 from django.http import HttpResponse, HttpResponseRedirect
@@ -39,6 +40,10 @@ from datetime import date
 import datetime
 
 APP_LABEL = _('CDR report')
+
+DEFAULT_FORMATS = (
+            base_formats.CSV,
+            )
 
 def sofiaupdate(modeladmin, request, queryset):
     """ generate new sofia xml config file """
@@ -351,6 +356,13 @@ class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
         self.message_user(request, "%s successfully marked as disabled." % message_bit)
     make_disabled.short_description = _(u"mark selected items as disabled")
 
+    def get_import_formats(self):
+        format_csv = DEFAULT_FORMATS
+        return [f for f in format_csv if f().can_import()]
+
+    def get_export_formats(self):
+        format_csv = DEFAULT_FORMATS
+        return [f for f in format_csv if f().can_export()]
 
 # LCR
 
@@ -425,6 +437,14 @@ class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
             message_bit = "%s items were" % rows_updated
         self.message_user(request, "%s successfully marked as disabled." % message_bit)
     make_disabled.short_description = _(u"mark selected items as disabled")
+
+    def get_import_formats(self):
+        format_csv = DEFAULT_FORMATS
+        return [f for f in format_csv if f().can_import()]
+
+    def get_export_formats(self):
+        format_csv = DEFAULT_FORMATS
+        return [f for f in format_csv if f().can_export()]
 
 class RateCardAdmin(admin.ModelAdmin):
     list_display = ['name', 'description', 'lcrgroup', 'enabled']
@@ -540,12 +560,7 @@ class HangupCauseAdmin(ImportExportMixin, admin.ModelAdmin):
 
 # CDR
 class CDRAdmin(ExportMixin, admin.ModelAdmin):
-#    list_display = ('start_stamp', 'customer', 'sell_destination', 'destination_number', 'min_effective_duration', 'hangup_cause', 'gateway', 'lcr_carrier_id', 'cost_rate', 'rate', 'total_cost', 'total_sell', 'prefix', 'ratecard_id', 'lcr_group_id')
-#    _links = ('customer', 'gateway', 'lcr_carrier_id', 'ratecard_id', 'lcr_group_id')
-#    ordering = ['-start_stamp', 'customer', 'gateway']
-#    list_filter = ['start_stamp', 'customer', 'gateway', 'lcr_carrier_id', 'ratecard_id', 'hangup_cause', 'sip_hangup_cause', 'sell_destination', 'cost_destination']
     search_fields = ['^prefix', '^destination_number', '^customer__name', '^cost_destination', '^start_stamp']
-#    readonly_fields =('customer_ip', 'customer', 'caller_id_number', 'destination_number', 'start_stamp', 'answered_stamp', 'end_stamp', 'duration', 'min_effective_duration', 'effective_duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'prefix', 'country','cost_rate', 'total_cost', 'total_cost_py', 'total_sell', 'total_sell_py', 'rate', 'init_block', 'block_min_duration', 'ratecard_id', 'lcr_group_id', 'uuid', 'bleg_uuid', 'chan_name', 'read_codec', 'write_codec', 'sip_user_agent', 'sip_rtp_rxstat', 'sip_rtp_txstat', 'switchname', 'switch_ipv4', 'hangup_disposition', 'effectiv_duration', 'sip_hangup_cause', 'sell_destination', 'cost_destination')
     date_hierarchy = 'start_stamp'
     fieldsets = (
         ('General', {
@@ -569,9 +584,8 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
         }),
     )
 
-
     def has_add_permission(self, request, obj=None):
-      return False
+      return True
 
     def has_delete_permission(self, request, obj=None):
       return False
@@ -634,6 +648,10 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
         else:
             usercompany = Person.objects.get(user=user)
         return qs.filter(customer=usercompany.company).filter(start_stamp__gte=today).filter(effective_duration__gt="0")
+
+    def get_export_formats(self):
+        format_csv = DEFAULT_FORMATS
+        return [f for f in format_csv if f().can_export()]
 
 class CarrierNormalizationRulesAdmin(admin.ModelAdmin):
     list_display = ('company', 'prefix', 'remove_prefix', 'add_prefix')
