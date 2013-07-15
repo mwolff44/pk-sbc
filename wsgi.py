@@ -2,7 +2,7 @@ import os
 import sys
 import site
 
-DIRS = ['/usr/local/venv/trunk/lib/python2.7/site-packages']
+DIRS = ['/usr/local/venv/lib/python2.7/site-packages']
 
 for directory in DIRS:
   site.addsitedir(directory)

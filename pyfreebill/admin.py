@@ -35,6 +35,7 @@ from import_export.admin import ImportExportMixin, ExportMixin
 from import_export.formats import base_formats
 from pyfreebill.models import *
 from pyfreebill.forms import CustomerRateCardsForm
+from pyfreebill.resources import *
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import date
 import datetime
@@ -562,6 +563,8 @@ class HangupCauseAdmin(ImportExportMixin, admin.ModelAdmin):
 class CDRAdmin(ExportMixin, admin.ModelAdmin):
     search_fields = ['^prefix', '^destination_number', '^customer__name', '^cost_destination', '^start_stamp']
     date_hierarchy = 'start_stamp'
+    change_list_template = 'admin/pyfreebill/cdr/change_list.html'
+    resource_class = CDRResourceExtra
     fieldsets = (
         ('General', {
             'fields': ('customer', 'start_stamp', 'destination_number', ('min_effective_duration', 'billsec'), ('sell_destination', 'cost_destination'))
@@ -585,7 +588,7 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
     )
 
     def has_add_permission(self, request, obj=None):
-      return True
+      return False
 
     def has_delete_permission(self, request, obj=None):
       return False
