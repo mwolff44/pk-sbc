@@ -20,6 +20,7 @@ django-reusableapps==0.1.1
 psycopg2==2.5.1
 python-dateutil==1.5
 python-memcached==1.53
+pytz==2013b
 six==1.3.0
 switch2bill-common==2.8.1
 tablib==0.9.11
