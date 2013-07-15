@@ -33,7 +33,7 @@ class Command(BaseCommand):
 # Query construction and delete
                 qs_delete_cdr = CDR.objects.all().filter(start_stamp__lt=yesterday).filter(effective_duration="0").delete()
 
-                pprint(connection.queries)   
+#                pprint(connection.queries)   
             except CDR.DoesNotExist:
                 raise CommandError('cdr does not exist')
 

@@ -103,6 +103,7 @@ class CustomMenu(Menu):
                                 items.MenuItem(_('Access logs'), '/extranet/axes/accesslog/'),
                                 items.MenuItem(_('Access attemps'), '/extranet/axes/accessattempt/'),
                                 items.MenuItem(_('Honeypot access attemps'), '/extranet/admin_honeypot/loginattempt/'),
+                                items.MenuItem(_('Recurring tasks logs'), '/extranet/chroniker/log/'),
                             ]
                         ),
                     ]
