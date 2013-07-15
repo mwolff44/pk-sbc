@@ -1,114 +1,89 @@
 """
-This file was generated with the customdashboard management command and
-contains the class for the main dashboard.
+This file was generated with the customdashboard management command, it
+contains the two classes for the main dashboard and app index dashboard.
+You can customize these classes as you want.
 
 To activate your index dashboard add the following to your settings.py::
-    GRAPPELLI_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
+    ADMIN_TOOLS_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
+
+And to activate the app index dashboard::
+    ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomAppIndexDashboard'
 """
 
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 
-from grappelli.dashboard import modules, Dashboard
-from grappelli.dashboard.utils import get_admin_site_name
+from admin_tools.dashboard import modules, Dashboard, AppIndexDashboard
+from admin_tools.utils import get_admin_site_name
 
+from admin_tools_stats.modules import DashboardCharts, get_active_graph
 
 class CustomIndexDashboard(Dashboard):
     """
-    Custom index dashboard for www.
+    Custom index dashboard for pyfreebilling.
     """
-    
     def init_with_context(self, context):
         site_name = get_admin_site_name(context)
-        
-        # append a group for "Administration" & "Applications"
-        self.children.append(modules.Group(
-            _('Group: Administration & Applications'),
-            column=1,
-            collapsible=True,
-            children = [
-                modules.AppList(
-                    _('Administration'),
-                    column=1,
-                    collapsible=False,
-                    models=('django.contrib.*',),
-                ),
-                modules.AppList(
-                    _('Applications'),
-                    column=1,
-                    css_classes=('collapse closed',),
-                    exclude=('django.contrib.*',),
-                )
+        # append a link list module for "quick links"
+        self.children.append(modules.LinkList(
+            _('Quick links'),
+            layout='inline',
+            draggable=False,
+            deletable=False,
+            collapsible=False,
+            children=[
+                [_('Return to site'), '/'],
+                [_('Change password'),
+                 reverse('%s:password_change' % site_name)],
+                [_('Log out'), reverse('%s:logout' % site_name)],
             ]
         ))
-        
+
         # append an app list module for "Applications"
         self.children.append(modules.AppList(
-            _('AppList: Applications'),
-            collapsible=True,
-            column=1,
-            css_classes=('collapse closed',),
-            exclude=('django.contrib.*',),
+            _('Applications'),
+            exclude=('django.contrib.*', 'axes', 'admin_honeypot'),
         ))
-        
-        # append an app list module for "Administration"
-        self.children.append(modules.ModelList(
-            _('ModelList: Administration'),
-            column=1,
-            collapsible=False,
-            models=('django.contrib.*',),
-        ))
-        
-        # append another link list module for "support".
-        self.children.append(modules.LinkList(
-            _('Media Management'),
-            column=2,
-            children=[
-                {
-                    'title': _('FileBrowser'),
-                    'url': '/admin/filebrowser/browse/',
-                    'external': False,
-                },
-            ]
-        ))
-        
-        # append another link list module for "support".
-        self.children.append(modules.LinkList(
-            _('Support'),
-            column=2,
-            children=[
-                {
-                    'title': _('Django Documentation'),
-                    'url': 'http://docs.djangoproject.com/',
-                    'external': True,
-                },
-                {
-                    'title': _('Grappelli Documentation'),
-                    'url': 'http://packages.python.org/django-grappelli/',
-                    'external': True,
-                },
-                {
-                    'title': _('Grappelli Google-Code'),
-                    'url': 'http://code.google.com/p/django-grappelli/',
-                    'external': True,
-                },
-            ]
-        ))
-        
-        # append a feed module
-        self.children.append(modules.Feed(
-            _('Latest Django News'),
-            column=2,
-            feed_url='http://www.djangoproject.com/rss/weblog/',
-            limit=5
-        ))
-        
+
         # append a recent actions module
-        self.children.append(modules.RecentActions(
-            _('Recent Actions'),
-            limit=5,
-            collapsible=False,
-            column=3,
+        self.children.append(modules.RecentActions(_('Recent Actions'), 5))
+
+        # append another link list module for "support".
+        self.children.append(modules.LinkList(
+            _('PyFreeBilling Support'),
+            children=[
+                {
+                    'title': _('PyFreeBilling documentation'),
+                    'url': 'http://www.blog-des-telecoms.com/',
+                    'external': True,
+                },
+            ]
         ))
 
 
+class CustomAppIndexDashboard(AppIndexDashboard):
+    """
+    Custom app index dashboard for pyfreebilling.
+    """
+
+    # we disable title because its redundant with the model list module
+    title = ''
+
+    def __init__(self, *args, **kwargs):
+        AppIndexDashboard.__init__(self, *args, **kwargs)
+
+        # append a model list module and a recent actions module
+        self.children += [
+            modules.ModelList(self.app_title, self.models),
+            modules.RecentActions(
+                _('Recent Actions'),
+                include_list=self.get_app_content_types(),
+                limit=5
+            )
+        ]
+
+    def init_with_context(self, context):
+        """
+        Use this method if you need to access the request context.
+        """
+        return super(CustomAppIndexDashboard, self).init_with_context(context)

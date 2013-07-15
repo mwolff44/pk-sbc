@@ -669,6 +669,9 @@ class VoipSwitch(models.Model):
     """ VoipSwitch Profile """
     name = models.CharField(_(u"SIP profile name"), max_length=50, help_text=_(u"E.g.: external, internal, etc..."))
     ip = models.CharField(_(u"switch IP"), max_length=100, default="auto", help_text=_(u"Switch IP."))
+    esl_listen_ip =  models.CharField(_(u"event socket switch IP"), max_length=100, default="127.0.0.1", help_text=_(u"Event socket switch IP."))
+    esl_listen_port = models.PositiveIntegerField(_(u"event socket switch port"), default="8021", help_text=_(u"Event socket switch port."))
+    esl_password =  models.CharField(_(u"event socket switch password"), max_length=30, default="ClueCon", help_text=_(u"Event socket switch password."))
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
 
