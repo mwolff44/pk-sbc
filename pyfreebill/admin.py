@@ -612,6 +612,9 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
         }),
     )
 
+    class Media:
+        js = ("/media/javascript/list_filter_collapse.js",)
+
     def has_add_permission(self, request, obj=None):
       return False
 

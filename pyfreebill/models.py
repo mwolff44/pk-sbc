@@ -1072,4 +1072,3 @@ class DimProviderDestination(models.Model):
 
     def __unicode__(self):
         return u"%s -p: %s -d: %s" % (self.date, self.provider, self.destination)
-
