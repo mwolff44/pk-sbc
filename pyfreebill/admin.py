@@ -22,7 +22,7 @@ from django.contrib import messages
 from django.contrib.contenttypes import generic
 from django.contrib.comments.models import Comment
 from django.contrib.admin.options import IncorrectLookupParameters
-from django.contrib.admin.views.main import ERROR_FLAG
+from django.contrib.admin.views.main import ERROR_FLAG, ChangeList
 from django.core import serializers
 from django.forms import ModelForm
 from django.forms.models import BaseInlineFormSet
@@ -560,6 +560,31 @@ class HangupCauseAdmin(ImportExportMixin, admin.ModelAdmin):
             return False
 
 # CDR
+class TotalAveragesChangeList(ChangeList):
+
+    def get_min_duration(self, sec_duration):
+        if sec_duration:
+            min = int(sec_duration / 60)
+            sec = int(sec_duration % 60)
+        else:
+            min = 0
+            sec = 0
+        return "%02d:%02d" % (min, sec)
+
+    def get_results(self, *args, **kwargs):
+        super(TotalAveragesChangeList, self).get_results(*args, **kwargs)
+        q = self.result_list.aggregate(total_sell_sum=Sum('total_sell'), total_cost_sum=Sum('total_cost'), effective_duration_sum=Sum('effective_duration'), effective_duration_avg=Avg('effective_duration'))
+#        q_total_cost = self.result_list.aggregate(total_cost_sum=Sum('total_cost'))
+#        q_total_effective_duration = self.result_list.aggregate(effective_duration_sum=Sum('effective_duration'))
+#        q_avg_effective_duration = self.result_list.aggregate(effective_duration_avg=Avg('effective_duration'))
+        self.total_effective_duration = q['effective_duration_sum']
+        self.total_cost_total = q['total_cost_sum']
+        self.total_sell_total = q['total_sell_sum']
+        self.avg_effective_duration = q['effective_duration_avg']
+        self.margin = self.total_sell_total - self.total_cost_total
+        self.min_avg_effective_duration = self.get_min_duration(q['effective_duration_avg'])
+        self.min_total_effective_duration = self.get_min_duration(q['effective_duration_sum'])
+
 class CDRAdmin(ExportMixin, admin.ModelAdmin):
     search_fields = ['^prefix', '^destination_number', '^customer__name', '^cost_destination', '^start_stamp']
     date_hierarchy = 'start_stamp'
@@ -598,6 +623,9 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
             return
         else:
             return
+
+    def get_changelist(self, request, **kwargs):
+        return TotalAveragesChangeList
 
     def changelist_view(self, request, extra_context=None):
         if request.user.is_superuser:

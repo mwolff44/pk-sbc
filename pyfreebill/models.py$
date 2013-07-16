@@ -854,8 +854,8 @@ class CDR(models.Model):
         verbose_name_plural = _(u"CDRs")
 
     def __unicode__(self):
-        if self.start_time:
-            return self.start_time
+        if self.start_stamp:
+            return self.start_stamp
         else:
             return self.custom_alias_name
 
