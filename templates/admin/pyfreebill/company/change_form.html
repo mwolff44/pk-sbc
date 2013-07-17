@@ -1,0 +1,18 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_static admin_modify %}
+{% load admin_urls %}
+
+
+{% block object-tools %}
+{% if change %}{% if not is_popup %}
+  <ul class="object-tools">
+    {% block object-tools-items %}
+    <li><a href="../../cdr/?customer__id__exact={{ object_id }}" class="printlink">{% trans "Customer CDRs view" %}</a></li>
+    <li><a href="../../cdr/?lcr_carrier_id__id__exact={{ object_id }}" class="printlink">{% trans "Provider CDRs view" %}</a></li>
+    <li><a href="../../person/?company__id__exact={{ object_id }}" class="printlink">{% trans "Contacts" %}</a></li>
+    <li><a href="{% url opts|admin_urlname:'history' original.pk|admin_urlquote %}" class="historylink">{% trans "History" %}</a></li>
+    {% if has_absolute_url %}<li><a href="{% url 'admin:view_on_site' content_type_id original.pk %}" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
+    {% endblock %}
+  </ul>
+{% endif %}{% endif %}
+{% endblock %}

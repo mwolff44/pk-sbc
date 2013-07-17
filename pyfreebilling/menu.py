@@ -29,9 +29,22 @@ class CustomMenu(Menu):
                 items.Bookmarks(),
                 items.MenuItem(_('Companies'),
                     children=[
-                        items.MenuItem(_('Companies'),
+                        items.MenuItem(_('Companies'), '/extranet/pyfreebill/company/',
                             children=[
-                                items.MenuItem(_('List'), '/extranet/pyfreebill/company/'),
+                                items.MenuItem(_('List'), '/extranet/pyfreebill/company/',
+                                    children=[
+                                        items.MenuItem(_('All'), '/extranet/pyfreebill/company/'),
+                                        items.MenuItem(_('Customers'), '/extranet/pyfreebill/company/?customer_enabled__exact=1',
+                                            children=[
+                                                items.MenuItem(_('All'), '/extranet/pyfreebill/company/?customer_enabled__exact=1'),
+                                                items.MenuItem(_('Prepaid Account'), '/extranet/pyfreebill/company/?customer_enabled__exact=1&prepaid__exact=1'),
+                                                items.MenuItem(_('Postpaid account'), '/extranet/pyfreebill/company/?customer_enabled__exact=1&prepaid__exact=0'),
+                                            ]
+                                        ),
+                                        items.MenuItem(_('Providers'), '/extranet/pyfreebill/company/?supplier_enabled__exact=1'),
+                                        items.MenuItem(_('Add new company'), '/extranet/pyfreebill/company/add/'),
+                                    ]
+                                ),
                                 items.MenuItem(_('Balance history'), '/extranet/pyfreebill/companybalancehistory/'),
                                 items.MenuItem(_('Add payment'), '/extranet/pyfreebill/companybalancehistory/add/'),
                                 items.MenuItem(_('customer management'),
@@ -48,8 +61,18 @@ class CustomMenu(Menu):
                                 ),
                             ]
                         ),
-                        items.MenuItem(_('Contacts'), '/extranet/pyfreebill/person/'),
-                        items.MenuItem(_('Groups'), '/extranet/pyfreebill/group/'),
+                        items.MenuItem(_('Contacts'), '/extranet/pyfreebill/person/',
+                            children=[
+                                items.MenuItem(_('List'), '/extranet/pyfreebill/person/'),
+                                items.MenuItem(_('Add'), '/extranet/pyfreebill/person/add/'),
+                            ]
+                        ),
+                        items.MenuItem(_('Groups'), '/extranet/pyfreebill/group/',
+                            children=[
+                                items.MenuItem(_('List'), '/extranet/pyfreebill/group/'),
+                                items.MenuItem(_('Add'), '/extranet/pyfreebill/group/add/'),
+                            ]
+                        ),
                     ]
                 ),
                 items.MenuItem(_('Rates'),
@@ -75,6 +98,8 @@ class CustomMenu(Menu):
                         items.MenuItem(_('CDRs'), '/extranet/pyfreebill/cdr/',
                             children=[
                                 items.MenuItem(_('CDRs view'), '/extranet/pyfreebill/cdr/'),
+                                items.MenuItem(_('Successfull CDRs'), '/extranet/pyfreebill/cdr/?effective_duration__gt=0'),
+                                items.MenuItem(_('Failed CDRs'), '/extranet/pyfreebill/cdr/?effective_duration__exact=0'),
                                 items.MenuItem(_('Hangup Cause'), '/extranet/pyfreebill/hangupcause/'),
                             ]
                         ),

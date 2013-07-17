@@ -67,7 +67,7 @@
     <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
       {% block search %}{% search_form cl %}
 <div class="breadcrumbs">
-{% trans "Total Minutes" %} : {{ cl.min_total_effective_duration }} --- {% trans "Average Minutes" %} : {{ cl.min_avg_effective_duration }} --- {% trans "Total Sell" %} : {{ cl.total_sell_total }} --- {% trans "Total Cost" %} : {{ cl.total_cost_total }} --- {% trans "Margin" %} : {{ cl.margin }} 
+{% if request.user.is_superuser %}{% trans "Total Minutes" %} : {{ cl.min_total_effective_duration }} --- {% trans "Average Minutes" %} : {{ cl.min_avg_effective_duration }} --- {% trans "Total Sell" %} : {{ cl.total_sell_total }} --- {% trans "Total Cost" %} : {{ cl.total_cost_total }} --- {% trans "Margin" %} : {{ cl.margin }} {% endif %}
 </div>
 {% endblock %}
       {% block date_hierarchy %}{% date_hierarchy cl %}{% endblock %}

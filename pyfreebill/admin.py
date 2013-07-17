@@ -573,15 +573,25 @@ class TotalAveragesChangeList(ChangeList):
 
     def get_results(self, *args, **kwargs):
         super(TotalAveragesChangeList, self).get_results(*args, **kwargs)
-        q = self.result_list.aggregate(total_sell_sum=Sum('total_sell'), total_cost_sum=Sum('total_cost'), effective_duration_sum=Sum('effective_duration'), effective_duration_avg=Avg('effective_duration'))
-#        q_total_cost = self.result_list.aggregate(total_cost_sum=Sum('total_cost'))
-#        q_total_effective_duration = self.result_list.aggregate(effective_duration_sum=Sum('effective_duration'))
-#        q_avg_effective_duration = self.result_list.aggregate(effective_duration_avg=Avg('effective_duration'))
+        self.total_sell_total = 0
+        self.total_cost_total = 0
+        try:
+            q = self.result_list.aggregate(total_sell_sum=Sum('total_sell'), total_cost_sum=Sum('total_cost'), effective_duration_sum=Sum('effective_duration'), effective_duration_avg=Avg('effective_duration'))
+        except:
+            self.total_effective_duration = 0
+            self.total_cost_total = 0
+            self.total_sell_total = 0
+            self.avg_effective_duration = 0
+            self.margin = 0
+            return
         self.total_effective_duration = q['effective_duration_sum']
         self.total_cost_total = q['total_cost_sum']
         self.total_sell_total = q['total_sell_sum']
         self.avg_effective_duration = q['effective_duration_avg']
-        self.margin = self.total_sell_total - self.total_cost_total
+        try:
+            self.margin = self.total_sell_total - self.total_cost_total
+        except:
+            self.margin = 0
         self.min_avg_effective_duration = self.get_min_duration(q['effective_duration_avg'])
         self.min_total_effective_duration = self.get_min_duration(q['effective_duration_sum'])
 
