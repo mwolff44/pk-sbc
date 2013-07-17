@@ -313,7 +313,7 @@ class ProviderRatesInline(admin.TabularInline):
     extra = 1
 
 class ProviderTariffAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'carrier', 'description', 'quality', 'reliability', 'date_start', 'date_end', 'enabled']
+    list_display = ['id', 'name', 'carrier', 'prefix', 'description', 'quality', 'reliability', 'date_start', 'date_end', 'enabled']
     ordering = ['name',]
     readonly_fields = ['id',]
     inlines = [

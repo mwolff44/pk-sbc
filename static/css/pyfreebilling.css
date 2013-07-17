@@ -4,7 +4,7 @@
  */
 
 #header {
-    background: url(../images/pyfreebilling.png) 0 0 repeat-x;
+    background: url(../images/pyfreebilling-big.png) 0 0 repeat-x;
 }
 
 #header #branding h1 {
@@ -14,6 +14,9 @@
     background: transparent url(../images/pyfreebilling.png) 10px 5px no-repeat;
     height: 31px;
     width: 93px;
+    img {
+        max-height:100%;
+    }
 }
 
 div.breadcrumbs {
