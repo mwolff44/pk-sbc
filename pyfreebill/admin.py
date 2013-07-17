@@ -29,6 +29,8 @@ from django.forms.models import BaseInlineFormSet
 from django.template import Context, loader
 from django.core.files import File
 from django.conf.urls import patterns, url
+from django.contrib.admin.widgets import *
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ungettext
 from import_export.admin import ImportExportMixin, ExportMixin
@@ -305,9 +307,6 @@ class ProviderRatesFormSet(BaseInlineFormSet):
 
 class ProviderRatesInline(admin.TabularInline):
     model = ProviderRates
-    formfield_overrides = {
-        models.CharField: {'widget': forms.TextInput(attrs={'size':'15'})},
-        }
     formset = ProviderRatesFormSet
     max_count = 40
     extra = 1
@@ -647,13 +646,13 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
 
     def get_list_display(self, request):
         if request.user.is_superuser:
-            return ['start_stamp', 'customer', 'sell_destination', 'destination_number', 'min_effective_duration', 'hangup_cause_colored', 'gateway', 'lcr_carrier_id', 'cost_rate', 'rate', 'total_cost', 'total_sell', 'prefix', 'ratecard_id', 'lcr_group_id']
+            return ['start_stamp', 'customer', 'sell_destination', 'destination_number', 'min_effective_duration', 'hangup_cause_colored', 'lcr_carrier_id', 'cost_rate', 'rate', 'total_cost', 'total_sell', 'prefix', 'ratecard_id', 'lcr_group_id']
         else:
             return ['start_stamp', 'customer', 'customer_ip', 'sell_destination', 'destination_number', 'min_effective_duration', 'hangup_cause', 'rate', 'total_sell']
 
     def get_list_filter(self, request):
         if request.user.is_superuser:
-            return ['start_stamp', 'customer', 'gateway', 'lcr_carrier_id', 'ratecard_id', 'hangup_cause', 'sip_hangup_cause', 'sell_destination', 'cost_destination']
+            return ['start_stamp', 'customer', 'lcr_carrier_id', 'ratecard_id', 'hangup_cause', 'sip_hangup_cause', 'sell_destination', 'cost_destination']
         else:
             return ['start_stamp', 'sell_destination']
 
