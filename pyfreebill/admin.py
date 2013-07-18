@@ -21,6 +21,9 @@ from django import forms
 from django.contrib import messages
 from django.contrib.contenttypes import generic
 from django.contrib.comments.models import Comment
+from django.contrib.admin.models import LogEntry, ADDITION, CHANGE, DELETION
+from django.utils.html import escape
+from django.core.urlresolvers import reverse
 from django.contrib.admin.options import IncorrectLookupParameters
 from django.contrib.admin.views.main import ERROR_FLAG, ChangeList
 from django.core import serializers
@@ -752,7 +755,7 @@ class DestinationNumberRulesAdmin(admin.ModelAdmin):
 # STATS
 class DimCustomerDestinationAdmin(admin.ModelAdmin):
     list_display = ('date', 'customer', 'destination', 'total_calls', 'success_calls', 'total_duration', 'avg_duration', 'max_duration', 'min_duration', 'total_sell', 'total_cost')
-    read_onlyfields = ('date', 'customer', 'destination', 'total_calls', 'success_calls', 'total_duration', 'avg_duration', 'max_duration', 'min_duration', 'total_sell', 'total_cost')
+    readonly_fields = ('date', 'customer', 'destination', 'total_calls', 'success_calls', 'total_duration', 'avg_duration', 'max_duration', 'min_duration', 'total_sell', 'total_cost')
     list_filter = ('date', 'customer', 'destination')
     ordering = ('-date', 'customer', 'destination')
 
@@ -762,10 +765,9 @@ class DimCustomerDestinationAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
       return False
 
-
 class DimProviderDestinationAdmin(admin.ModelAdmin):
     list_display = ('date', 'provider', 'destination', 'total_calls', 'success_calls', 'total_duration', 'avg_duration', 'max_duration', 'min_duration', 'total_sell', 'total_cost')
-    read_onlyfields = ('date', 'provider', 'destination', 'total_calls', 'success_calls', 'total_duration', 'avg_duration', 'max_duration', 'min_duration', 'total_sell', 'total_cost')
+    readonly_fields = ('date', 'provider', 'destination', 'total_calls', 'success_calls', 'total_duration', 'avg_duration', 'max_duration', 'min_duration', 'total_sell', 'total_cost')
     list_filter = ('date', 'provider', 'destination')
     ordering = ('-date', 'provider', 'destination')
 
@@ -775,6 +777,62 @@ class DimProviderDestinationAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
       return False
 
+# Extranet logs
+class LogEntryAdmin(admin.ModelAdmin):
+    """ based on djangosnippets.org/snippets/2484/ """
+    date_hierarchy = 'action_time'
+    readonly_fields = LogEntry._meta.get_all_field_names()+ \
+                      ['object_link', 'action_description']
+    list_filter = [
+        'user',
+        'content_type',
+        'action_flag'
+    ]
+    search_fields = [
+        'object_repr',
+        'change_message'
+    ]
+    list_display = [
+        'action_time',
+        'user',
+        'content_type',
+        'object_link',
+        'action_flag',
+        'action_description',
+        'change_message',
+    ]
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_superuser and request.method != 'POST'
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def object_link(self, obj):
+        if obj.action_flag == DELETION:
+            link = escape(obj.object_repr)
+        else:
+            ct = obj.content_type
+            link = u'<a href="%s">%s</a>' % (
+                reverse('admin:%s_%s_change' % (ct.app_label, ct.model), args=[obj.object_id]),
+                escape(obj.object_repr),
+            )
+        return link
+    object_link.allow_tags = True
+    object_link.admin_order_field = 'object_repr'
+    object_link.short_description = u'object'
+
+    def action_description(self, obj):
+        action_names = {
+            ADDITION: 'Addition',
+            DELETION: 'Deletion',
+            CHANGE: 'Change',
+        }
+        return action_names[obj.action_flag]
+    action_description.short_description = 'Action'
 
 #    admin.site.disable_action('delete_selected')
 
@@ -811,4 +869,5 @@ admin.site.register(DestinationNumberRules, DestinationNumberRulesAdmin)
 #admin.site.register(DimProviderSipHangupcause, DimProviderSipHangupcauseAdmin)
 admin.site.register(DimCustomerDestination, DimCustomerDestinationAdmin)
 admin.site.register(DimProviderDestination, DimProviderDestinationAdmin)
+admin.site.register(LogEntry, LogEntryAdmin)
 #admin.site.register()
