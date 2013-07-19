@@ -1,0 +1,5 @@
+{% extends "admin_tools/dashboard/module.html" %}
+{% load chart_tags %}
+{% block module_content %}
+    {% bar_chart module.values module.captions module.chart_size %}
+{% endblock %}

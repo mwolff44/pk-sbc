@@ -770,6 +770,7 @@ class DimProviderDestinationAdmin(admin.ModelAdmin):
     readonly_fields = ('date', 'provider', 'destination', 'total_calls', 'success_calls', 'total_duration', 'avg_duration', 'max_duration', 'min_duration', 'total_sell', 'total_cost')
     list_filter = ('date', 'provider', 'destination')
     ordering = ('-date', 'provider', 'destination')
+#    list_display = ('get_day_stats',)
 
     def has_add_permission(self, request, obj=None):
       return False

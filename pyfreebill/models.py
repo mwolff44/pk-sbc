@@ -1073,5 +1073,17 @@ class DimProviderDestination(models.Model):
     def __unicode__(self):
         return u"%s -p: %s -d: %s" % (self.date, self.provider, self.destination)
 
-    def get_daily_providers_stats(self):
-        return        
+    def get_daily_providers_stats(self, today, delta, interval):
+        qs = self.model._default_manager.filter(date__lte = lastday)
+        qss = qsstats.QuerySetStats(qs, 'date')
+        lastday = today - datetime.timedelta(days=delta)
+        return qss.time_series(lastday, today, interval)
+
+    def get_current_week_daily_provider_stats(self, period, interval):
+        today = datetime.date.today()
+        return self.get_daily_providers_stats(today, period, interval)
+
+    def get_day_total_calls(self):
+        qs = DimProviderDestination.objects.all()
+        day_qs = qs.values('date').annotate(day_total_calls=Sum('total_calls'), day_success_calls=Sum('success_calls'), day_total_duration=Sum('total_duration'), day_total_sell=Sum('total_sell'), day_total_cost=Sum('total_cost')).order_by('date')
+        return [t[1] for t in day_qs]

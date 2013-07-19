@@ -1,28 +1,20 @@
-"""
-This file was generated with the customdashboard management command, it
-contains the two classes for the main dashboard and app index dashboard.
-You can customize these classes as you want.
-
-To activate your index dashboard add the following to your settings.py::
-    ADMIN_TOOLS_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
-
-And to activate the app index dashboard::
-    ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomAppIndexDashboard'
-"""
-
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
-
 from admin_tools.dashboard import modules, Dashboard, AppIndexDashboard
 from admin_tools.utils import get_admin_site_name
-
-from admin_tools_stats.modules import DashboardCharts, get_active_graph
+from django.conf import settings
+from pyfreebill.modules import SalesChart
 
 class CustomIndexDashboard(Dashboard):
     """
     Custom index dashboard for pyfreebilling.
     """
     def init_with_context(self, context):
+        request = context['request']
+
+        # we want a 3 columns layout
+        self.columns = 3
+
         site_name = get_admin_site_name(context)
         # append a link list module for "quick links"
         self.children.append(modules.LinkList(
@@ -44,9 +36,10 @@ class CustomIndexDashboard(Dashboard):
             _('Applications'),
             exclude=('django.contrib.*', 'axes', 'admin_honeypot'),
         ))
-
         # append a recent actions module
         self.children.append(modules.RecentActions(_('Recent Actions'), 5))
+
+#        self.children += [SalesChart('Sales', interval='days', days=30)]
 
         # append another link list module for "support".
         self.children.append(modules.LinkList(
@@ -87,3 +80,4 @@ class CustomAppIndexDashboard(AppIndexDashboard):
         Use this method if you need to access the request context.
         """
         return super(CustomAppIndexDashboard, self).init_with_context(context)
+
