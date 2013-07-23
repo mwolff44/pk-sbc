@@ -52,6 +52,10 @@ class Company(models.Model):
     iban = IBANField(_(u"IBAN bank account number"), blank=True, null=True)
     prepaid = models.BooleanField(_(u"Prepaid / Postpaid"), default=True, help_text=_(u"If checked, this account customer is prepaid."))
     credit_limit = models.DecimalField(_(u'credit limit'), max_digits=12, decimal_places=4, default=0, help_text=_(u"Credit limit for postpaid account."))
+    low_credit_alert = models.DecimalField(_(u'low credit level alert'), max_digits=12, decimal_places=4, default="10", help_text=_(u"Low credit limit alert."))
+    low_credit_alert_sent = models.BooleanField(_(u"low credit alert ON"), default=False)
+    account_blocked_alert_sent = models.BooleanField(_(u"Customer account blocked - low balance - ON"), default=False)
+    email_alert = models.EmailField(_('alert email address'), null=True)
     customer_balance = models.DecimalField(_(u'customer balance'), max_digits=12, decimal_places=6, default=0, help_text=_(u"Actual customer balance."))
     supplier_balance = models.DecimalField(_(u'supplier balance'), max_digits=12, decimal_places=6, default=0, help_text=_(u"Actual supplier balance."))
     max_calls = models.PositiveIntegerField(_(u'max simultaneous calls'), default=1, help_text=_(u"maximum simultaneous calls allowed for this customer account."))
@@ -854,8 +858,8 @@ class CDR(models.Model):
         verbose_name_plural = _(u"CDRs")
 
     def __unicode__(self):
-        if self.start_time:
-            return self.start_time
+        if self.start_stamp:
+            return self.start_stamp
         else:
             return self.custom_alias_name
 
