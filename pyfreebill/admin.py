@@ -156,6 +156,9 @@ class CompanyAdmin(admin.ModelAdmin):
         ('Customer', {
             'fields': ('customer_enabled', 'max_calls', ('prepaid', 'credit_limit', 'customer_balance'), 'billing_cycle')
         }),
+        ('Customer alerts', {
+            'fields': ('low_credit_alert', 'email_alert', ('low_credit_alert_sent', 'account_blocked_alert_sent'))
+        }),
         ('Provider', {
             'fields': ('supplier_enabled', 'supplier_balance')
         }),
@@ -204,7 +207,7 @@ class CompanyAdmin(admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         if request.user.is_superuser:
-            return ['customer_balance', 'supplier_balance']
+            return ['customer_balance', 'supplier_balance', 'low_credit_alert_sent', 'account_blocked_alert_sent']
         else:
             return ['name', 'prepaid', 'customer_enabled', 'customer_balance', 'vat_number', 'max_calls', 'billing_cycle']
 
@@ -217,6 +220,7 @@ class CompanyAdmin(admin.ModelAdmin):
             self.exclude.append('nickname')
             self.exclude.append('slug')
             self.exclude.append('about')
+
         return super(CompanyAdmin, self).get_form(request, obj, **kwargs)
 
     def queryset(self, request):

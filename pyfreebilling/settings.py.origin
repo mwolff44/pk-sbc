@@ -1,7 +1,7 @@
 import os
 # Django settings for pyfreebilling project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 SETTINGS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -16,10 +16,10 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'pyfreebilling',                      # Or path to database file if using sqlite3.
+        'NAME': 'pyfreebilling1',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'pyfreebilling',
-        'PASSWORD': 'mypassword',
+        'PASSWORD': 'password',
         'HOST': '127.0.0.1',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
@@ -29,7 +29,7 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [*]
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -136,13 +136,10 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-#    'admin_tools.menu',
-    'grappelli.dashboard',
-    'grappelli',
-#    'admin_tools',
-#    'admin_tools.theming',
-#    'admin_tools.menu',
-#    'admin_tools.dashboard',
+    'admin_tools',
+    'admin_tools.theming',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -152,17 +149,17 @@ INSTALLED_APPS = (
     'django.contrib.comments',
     'admin_honeypot',
 #    'djangosecure',
+    'django_iban',
     'chroniker',
+    'common',
     'clear_cache',
     'axes',
     'import_export',
     'pyfreebill',
     'qsstats',
-    'django_tables2',
+    'googlecharts',
     'django.contrib.admin',
     'south',
-    'django_countries',
-    'country_dialcode',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -224,12 +221,12 @@ COUNTRIES_FLAG_PATH = 'flags/%s.png'
 # DJANGO-ADMIN-TOOLS
 #-----------------------
 ADMIN_TOOLS_MENU = 'pyfreebilling.menu.CustomMenu'
+ADMIN_TOOLS_THEMING_CSS = 'css/pyfreebilling.css'
 #ADMIN_TOOLS_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
-#ADMIN_TTOLS_APP_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
+#ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 ADMINTOOLS_BOOTSTRAP_SITE_LINK = '/admin/'
-GRAPPELLI_ADMIN_TITLE = 'PyFreeBilling'
-GRAPPELLI_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
+ADMIN_TOOLS_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
 AUTOCOMPLETE_LIMIT = '10'
 
 # SECURING SITE ACCESS
@@ -242,8 +239,22 @@ SECURE_SSL_REDIRECT = False
 #SECURE_HSTS_SECONDS = 60
 #SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 86400
 #SESSION_COOKIE_SECURE = True
-#SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_HTTPONLY = True
 #CSRF_COOKIE_SECURE = True
 
 
+# EMAIL SETUP
+TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
+TEMPLATED_EMAIL_TEMPLATE_DIR = 'templated_email/'
+TEMPLATED_EMAIL_FILE_EXTENSION = 'email'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'my.smtp.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'myemail'
+EMAIL_HOST_PASSWORD = 'mypassword'
+EMAIL_USE_TLS = True
+#EMAIL_USE_SSL
