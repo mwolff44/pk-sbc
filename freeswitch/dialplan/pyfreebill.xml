@@ -34,6 +34,10 @@
       <condition field="${sip_authorized}" expression="^true$" break="never">
 	<anti-action application="respond" data="407"/>
       </condition>
+      <condition field="${acl(${network_addr} domains)}" expression="true" break="never">
+        <anti-action application="respond" data="407"/>
+      </condition>
+
     </extension>
 
     <extension name="outside_call" continue="true">

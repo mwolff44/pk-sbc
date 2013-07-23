@@ -154,6 +154,9 @@ if session:ready() then
   channel["session_id"] = get_Variable("session_id")
   channel["sip_from_user"] = get_Variable("sip_from_user")
   channel["sip_received_ip"] = get_Variable("sip_received_ip")
+  channel["sip_acl_authed_by"] = get_Variable("sip_acl_authed_by")
+  channel["sip_network_ip"] = get_Variable("sip_network_ip")
+  channel["auth_acl"] = get_Variable("auth_acl")
   channel["sip_user_agent"] = get_Variable("sip_user_agent")
   if channel["sip_user_agent"] then
     log("Sip_user_agent :", "is OK", "debug")

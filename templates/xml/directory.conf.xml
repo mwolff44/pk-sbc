@@ -30,6 +30,7 @@
             </params>
             <variables>
               <variable name="accountcode" value="{{ customerdirectory.company.id }}"/>
+              {% if customerdirectory.sip_ip %}<variable name="auth-acl" value="{{ customerdirectory.sip_ip }}"/>{% endif %}
               <variable name="user_context" value="pyfreebill"/>
               <variable name='max_calls' value='{{ customerdirectory.max_calls }}'/>
               <variable name='customer_codecs' value='{{ customerdirectory.codecs }}'/>
