@@ -13,7 +13,7 @@ class Command(BaseCommand):
 
                 if var == "balance":
                     #print "balance"
-                    qs = Company.objects.filter(customer_enabled=True)
+                    qs = Company.objects.filter(customer_enabled=True).exclude(email_alert__isnull=True).exclude(email_alert__exact='')
                     for c in qs:
                         #print "name %s - balance %s - email : %s "% (c.name, c.customer_balance, c.email_alert)
                         send_templated_mail(
@@ -28,7 +28,7 @@ class Command(BaseCommand):
                         )
                 elif var == "lowbalance":
                     print "lowbalance"
-                    qs = Company.objects.filter(customer_enabled=True)
+                    qs = Company.objects.filter(customer_enabled=True).exclude(email_alert__isnull=True).exclude(email_alert__exact='')
                     for c in qs:
                         """ CREDIT LIMIT ALERT """
                         print "name %s - balance %s - low_credit_alert : %s - low_credit_alert_sent : %s"% (c.name, c.customer_balance, c.low_credit_alert, c.low_credit_alert_sent)
