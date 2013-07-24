@@ -1,0 +1,14 @@
+{% block subject %}Your balance summary is {{balance}}{% endblock %}
+{% block plain %}
+  Dear {{company}},
+
+  Your account balance is :
+
+      Company : {{company}}
+      Balance : {{balance}}
+
+  {{signature}}
+
+Disclaimer
+The balance provided in this email is for information purposes only and may not reflect the exact actual billable traffic figures.
+{% endblock %}
