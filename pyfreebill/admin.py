@@ -273,7 +273,7 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
     list_display_links = ('company',)
     list_display = ('company', 'amount_debited', 'amount_refund', 'customer_balance', 'supplier_balance', 'operation_type', 'reference', 'date_modified')
     ordering = ('-date_modified', 'company')
-    readonly_fields = ('customer_balance', 'supplier_balance')
+#    readonly_fields = ('customer_balance', 'supplier_balance')
     search_fields = ['company', '^reference']
 
     def save_model(self, request, obj, form, change):
@@ -298,11 +298,41 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
         messages.success(request, "balance updated")
       obj.save()
 
+    fieldsets = (
+        ('General', {
+            'fields': ('company','operation_type')
+        }),  
+        ('Amount', {
+            'fields': ('amount_debited', 'amount_refund')
+        }),
+        ('Description', {
+            'fields': ('reference', 'description')
+        }),
+        ('Balances', { 
+            'fields': ('customer_balance', 'supplier_balance')                           
+        }),
+    )
+
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
             return True
         else:
             return False
+
+    def has_delete_permission(self, request, obj=None):
+      return False
+
+    def get_actions(self, request):
+        if request.user.is_superuser:
+            return
+        else:
+            return
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj: #This is the case when obj is already created i.e. it's an edit
+            return ['company', 'amount_debited', 'amount_refund', 'customer_balance', 'supplier_balance', 'operation_type']
+        else:
+            return ['customer_balance', 'supplier_balance']
 
 # Provider Rates
 
