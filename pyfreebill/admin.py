@@ -485,7 +485,7 @@ class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
         return [f for f in format_csv if f().can_export()]
 
 class RateCardAdmin(admin.ModelAdmin):
-    list_display = ['name', 'description', 'lcrgroup', 'enabled']
+    list_display = ['id', 'name', 'description', 'lcrgroup', 'enabled']
     ordering = ['name', 'enabled', 'lcrgroup']
     list_filter = ['enabled', 'lcrgroup']
     search_fields = ['description', '^name']
