@@ -9,6 +9,7 @@ def index(request):
 
 urlpatterns = patterns('',
     url(r'^extranet/report/$', 'pyfreebill.views.admin_report_view'),
+    url(r'^extranet/status/$', 'pyfreebill.views.admin_status_view'),
     url(r'^admin_tools/', include('admin_tools.urls')),
     url(r'^admin/', include('admin_honeypot.urls')),
     url(r'^extranet/', include(admin.site.urls)),

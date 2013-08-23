@@ -1,0 +1,22 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static admin_list %}
+{% load admin_urls %}
+{% load googlecharts %}
+
+{% block extrastyle %}{{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}" />
+{{ media.css }}
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+{{ media.js }}
+{% endblock %}
+
+{% block coltype %}flex{% endblock %}
+
+{% block content %}
+  <div id="content-main">
+<div id="out">version : {{ pfb_version }}</div>
+</div>
+{% endblock %}

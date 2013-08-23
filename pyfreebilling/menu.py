@@ -131,6 +131,7 @@ class CustomMenu(Menu):
                                 items.MenuItem(_('Recurring tasks logs'), '/extranet/chroniker/log/'),
                             ]
                         ),
+                        items.MenuItem(_('Status'), '/extranet/status/'),
                     ]
                 ),
             ]

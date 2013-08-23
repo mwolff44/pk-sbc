@@ -3,6 +3,7 @@ from dateutil.relativedelta import relativedelta
 from django.db.models import Sum, Avg
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from qsstats import QuerySetStats
 from pyfreebill.models import DimCustomerDestination
@@ -10,6 +11,13 @@ from pyfreebill.models import DimCustomerDestination
 def time_series(queryset, date_field, interval, func=None):
     qsstats = QuerySetStats(queryset, date_field, func)
     return qsstats.time_series(*interval)
+
+@staff_member_required
+def admin_status_view(request):
+    # print status page
+    pfb_version = settings.PFB_VERSION
+    return render_to_response('admin/admin_status.html', locals(),
+        context_instance=RequestContext(request))
 
 @staff_member_required
 def admin_report_view(request):
