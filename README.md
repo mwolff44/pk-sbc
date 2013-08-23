@@ -35,8 +35,9 @@ interface. A few of them are:
    - SIP authentication
    - Prepaid and/or postpaid
    - Realtime billing
-   - Prepaid / postpaid
    - Block calls on negative balance (prepaid) or balance under credit limit (postpaid)
+   - Email alerts
+   - Daily balance email to customer
    - Limit the maximum number of calls per customer and/or per gateway
    - Multiple contexts
    - Tons of media handling options
@@ -44,12 +45,13 @@ interface. A few of them are:
 
 - Provider add/modify/delete
    - Powerful LCR engine
-   - Costs for provider routes based on area code
+   - Routing based on area code
+   - Routing decision based on cost or quality
    - Limit max channels by each provider
 
 - Extensive call and financial reporting screens (TBD)
 
-- CDR export to PDF, CSV and Excel formats (TBD)
+- CDR export to CSV
 
 - Design for scalability
 
@@ -70,4 +72,4 @@ The project use freeswitch, PostgreSQL and Django.
 
 Name: Mathias WOLFF
 Email: website contact form
-Website: http://www.blog-des-telecoms.com // specific part has to be created
+Website: http://www.blog-des-telecoms.com // specific parts will be created
