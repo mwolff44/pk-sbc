@@ -16,31 +16,111 @@
 {% block coltype %}flex{% endblock %}
 
 {% block content %}
-  <div id="content-main">
-<div id="out"></div>
+  <div id="content-main">Nb CALLS
+<div id="out1"></div>
 </div>
+  <div id="content-main">SELL
+<div id="out2"></div>
+</div>
+  <div id="content-main">BUY
+<div id="out3"></div>
+</div>
+  <div id="content-main">MARGIN
+<div id="out4"></div>
+</div>
+
 {% googlecharts %}
     {# named data and options can be reused #}
-    {% data ts_success_calls "out_data" %}
+    {% data ts_success_calls "out1_data" %}
         {% col "string" "Date" %}"{{ val|date:"M j" }}"{% endcol %}
-        {% col "number" "Total Calls" %}{{ val|default_if_none:"0" }}{% endcol %}
+        {% col "number" "Nb Calls" %}{{ val|default_if_none:"0" }}{% endcol %}
     {% enddata %}
     {# you can also use global javascript variables here, #}
     {# and call functions #}
-	options = {
+        options = {
             backgroundColor: "#f9f9f9",
             colors: ["#09f"],
             gridlineColor: "#ddd",
             legend: "none",
             vAxis: {minValue: 0},
-            width: 300,
+            width: 400,
             height: 240
         };
-    {% options "out_options" %}
+    {% options "out1_options" %}
         kind: "LineChart",
         options: options
     {% endoptions %}
     {# chart is assembled from container, data and options #}
-    {% graph "out" "out_data" "out_options" %}
+    {% graph "out1" "out1_data" "out1_options" %}
+
+    {# named data and options can be reused #}
+    {% data ts_total_sell "out2_data" %}
+        {% col "string" "Date" %}"{{ val|date:"M j" }}"{% endcol %}
+        {% col "number" "Sell" %}{{ val|default_if_none:"0" }}{% endcol %}
+    {% enddata %}
+    {# you can also use global javascript variables here, #}
+    {# and call functions #}
+        options = {
+            backgroundColor: "#f9f9f9",
+            colors: ["#09f"],
+            gridlineColor: "#ddd",
+            legend: "none",
+            vAxis: {minValue: 0},
+            width: 400,
+            height: 240
+        };
+    {% options "out2_options" %}
+        kind: "LineChart",
+        options: options
+    {% endoptions %}
+    {# chart is assembled from container, data and options #}
+    {% graph "out2" "out2_data" "out2_options" %}
+
+    {# named data and options can be reused #}
+    {% data ts_total_cost "out3_data" %}                                                 
+        {% col "string" "Date" %}"{{ val|date:"M j" }}"{% endcol %}
+        {% col "number" "Buy" %}{{ val|default_if_none:"0" }}{% endcol %}
+    {% enddata %}
+    {# you can also use global javascript variables here, #}
+    {# and call functions #}
+        options = {
+            backgroundColor: "#f9f9f9",
+            colors: ["#09f"],
+            gridlineColor: "#ddd",
+            legend: "none",
+            vAxis: {minValue: 0},
+            width: 400,
+            height: 240
+        };
+    {% options "out3_options" %}
+        kind: "LineChart",
+        options: options
+    {% endoptions %}
+    {# chart is assembled from container, data and options #}
+    {% graph "out3" "out3_data" "out3_options" %}
+
+    {# named data and options can be reused #}
+    {% data ts_total_margin "out4_data" %}                                                 
+        {% col "string" "Date" %}"{{ val|date:"M j" }}"{% endcol %}
+        {% col "number" "Margin" %}{{ val|default_if_none:"0" }}{% endcol %}
+    {% enddata %}
+    {# you can also use global javascript variables here, #}
+    {# and call functions #}
+        options = {
+            backgroundColor: "#f9f9f9",
+            colors: ["#09f"],
+            gridlineColor: "#ddd",
+            legend: "none",
+            vAxis: {minValue: 0},
+            width: 400,
+            height: 240
+        };
+    {% options "out4_options" %}
+        kind: "LineChart",
+        options: options
+    {% endoptions %}
+    {# chart is assembled from container, data and options #}
+    {% graph "out4" "out4_data" "out4_options" %}
+
 {% endgooglecharts %}
 {% endblock %}

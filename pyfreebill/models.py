@@ -1054,6 +1054,14 @@ class DimCustomerDestination(models.Model):
     def __unicode__(self):
         return u"%s -c: %s -d: %s" % (self.date, self.customer, self.destination)
 
+    def _get_margin(self):
+        if self.total_sell and self.total_cost:
+            margin = self.total_sell - self.total_cost
+        else:
+            margin = 0    
+        return round(margin,2)
+    margin = property(_get_margin)
+
 class DimProviderDestination(models.Model):
     """ Dimension Provider / Destination Model """
     provider = models.ForeignKey(Company, verbose_name=_(u"provider"))

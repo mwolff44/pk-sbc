@@ -19,6 +19,20 @@ def admin_status_view(request):
     return render_to_response('admin/admin_status.html', locals(),
         context_instance=RequestContext(request))
 
+def _margin_series(sell_series, cost_series):
+    """
+    Substraction between sell time series to cost time series
+    """
+    sum = 0
+    l = []
+    for ((d, sell), (_, cost)) in zip(sell_series, cost_series):
+        if sell and cost:
+            sum += (sell - cost)
+        else:
+            sum += 0
+        l.append((d, sum))
+    return l
+
 @staff_member_required
 def admin_report_view(request):
     # view code
@@ -31,13 +45,14 @@ def admin_report_view(request):
 #    qss_total_cost = qsstats.QuerySetStats(qs, 'date__date', aggregate=Sum('total_cost'))
 
     today = datetime.date.today()
-    firstday = today - datetime.timedelta(days=60)
+    firstday = today - datetime.timedelta(days=7)
 
     ts_total_calls = time_series(qs, 'date__date', [firstday, today], func=Sum('total_calls'))
     ts_success_calls = time_series(qs, 'date__date', [firstday, today], func=Sum('success_calls'))
     ts_total_duration = time_series(qs, 'date__date', [firstday, today], func=Sum('total_duration'))
     ts_total_sell = time_series(qs, 'date__date', [firstday, today], func=Sum('total_sell'))
     ts_total_cost = time_series(qs, 'date__date', [firstday, today], func=Sum('total_cost'))
+    ts_total_margin = _margin_series(ts_total_sell, ts_total_cost)
 
     return render_to_response('admin/admin_report.html', locals(),
         context_instance=RequestContext(request))
