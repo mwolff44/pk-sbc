@@ -36,7 +36,8 @@ def _margin_series(sell_series, cost_series):
 @staff_member_required
 def admin_report_view(request):
     # view code
-    qs = DimCustomerDestination.objects.all()
+    qs_d = DimCustomerDestination.objects.all()
+    qs_h = DimCustomerHangupcause.objects.all()
 
 #    qss_total_calls = qsstats.QuerySetStats(qs, 'date__date', aggregate=Sum('total_calls'))
 #    qss_success_calls = qsstats.QuerySetStats(qs, 'date__date', aggregate=Sum('success_calls'))
@@ -47,11 +48,11 @@ def admin_report_view(request):
     today = datetime.date.today()
     firstday = today - datetime.timedelta(days=7)
 
-    ts_total_calls = time_series(qs, 'date__date', [firstday, today], func=Sum('total_calls'))
-    ts_success_calls = time_series(qs, 'date__date', [firstday, today], func=Sum('success_calls'))
-    ts_total_duration = time_series(qs, 'date__date', [firstday, today], func=Sum('total_duration'))
-    ts_total_sell = time_series(qs, 'date__date', [firstday, today], func=Sum('total_sell'))
-    ts_total_cost = time_series(qs, 'date__date', [firstday, today], func=Sum('total_cost'))
+    ts_total_calls = time_series(qs_h, 'date__date', [firstday, today], func=Sum('total_calls'))
+    ts_success_calls = time_series(qs_d, 'date__date', [firstday, today], func=Sum('success_calls'))
+    ts_total_duration = time_series(qs_d, 'date__date', [firstday, today], func=Sum('total_duration'))
+    ts_total_sell = time_series(qs_d, 'date__date', [firstday, today], func=Sum('total_sell'))
+    ts_total_cost = time_series(qs_d, 'date__date', [firstday, today], func=Sum('total_cost'))
     ts_total_margin = _margin_series(ts_total_sell, ts_total_cost)
 
     return render_to_response('admin/admin_report.html', locals(),
