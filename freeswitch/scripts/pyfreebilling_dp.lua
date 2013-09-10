@@ -519,7 +519,7 @@ if (session:ready() == true) then
     log("WS CALL dest num with prefix/suffix/strip : ", called_number)
     log("WS CALL my variables bridge : ", myvarbridge)
     if mydialbridge == "" then
-      mydialbridge = myvarbridge.."sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
+      mydialbridge = "{ignore_early_media=true}"..myvarbridge.."sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
     else
       mydialbridge = mydialbridge.."|" .. myvarbridge .. "sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
     end
