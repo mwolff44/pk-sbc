@@ -639,7 +639,7 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = CDRResourceExtra
     fieldsets = (
         ('General', {
-            'fields': ('customer', 'start_stamp', 'destination_number', ('min_effective_duration', 'billsec'), ('sell_destination', 'cost_destination'))
+            'fields': ('customer', 'start_stamp', 'destination_number', ('min_effective_duration', 'billsec'), ('sell_destination', 'cost_destination'), 'switchname')
         }),
         ('Advanced date / duration infos', {
             'classes': ('collapse',),
@@ -699,22 +699,23 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
 
     def get_list_filter(self, request):
         if request.user.is_superuser:
-            return ['start_stamp', 'customer', 'lcr_carrier_id', 'ratecard_id', 'hangup_cause', 'sip_hangup_cause', 'sell_destination', 'cost_destination']
+            return ['start_stamp', 'customer', 'lcr_carrier_id', 'ratecard_id', 'hangup_cause', 'sip_hangup_cause', 'sell_destination', 'cost_destination', 'switchname']
         else:
             return ['start_stamp', 'sell_destination']
 
     def get_readonly_fields(self, request, obj=None):
         if request.user.is_superuser:
-            return ['customer_ip', 'customer', 'caller_id_number', 'destination_number', 'start_stamp', 'answered_stamp', 'end_stamp', 'duration', 'min_effective_duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'prefix', 'country','cost_rate', 'total_cost', 'total_sell', 'rate', 'init_block', 'block_min_duration', 'ratecard_id', 'lcr_group_id', 'uuid', 'bleg_uuid', 'chan_name', 'read_codec', 'write_codec', 'sip_user_agent', 'hangup_disposition', 'effectiv_duration', 'sip_hangup_cause', 'sell_destination', 'cost_destination']
+            return ['customer_ip', 'customer', 'caller_id_number', 'destination_number', 'start_stamp', 'answered_stamp', 'end_stamp', 'duration', 'min_effective_duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'prefix', 'country','cost_rate', 'total_cost', 'total_sell', 'rate', 'init_block', 'block_min_duration', 'ratecard_id', 'lcr_group_id', 'uuid', 'bleg_uuid', 'chan_name', 'read_codec', 'write_codec', 'sip_user_agent', 'hangup_disposition', 'effectiv_duration', 'sip_hangup_cause', 'sell_destination', 'cost_destination', 'switchname']
         else:
             return ['start_stamp', 'customer', 'customer_ip', 'sell_destination', 'destination_number', 'min_effective_duration', 'hangup_cause', 'rate', 'total_sell']
 
     def get_form(self, request, obj=None, **kwargs):
-        self.exclude = ['effectiv_duration', 'effective_duration', 'sip_rtp_rxstat', 'sip_rtp_txstat', 'switchname', 'switch_ipv4']
+        self.exclude = ['effectiv_duration', 'effective_duration', 'sip_rtp_rxstat', 'sip_rtp_txstat', 'switch_ipv4']
         if not request.user.is_superuser:
             self.exclude.append('cost_rate')
             self.exclude.append('total_cost')
             self.exclude.append('gateway')
+            self.exclude.append('switchname')
             self.exclude.append('lcr_carrier_id')
             self.exclude.append('lcr_group_id')
             self.exclude.append('cost_destination')
