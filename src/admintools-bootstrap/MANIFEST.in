@@ -1,4 +1,0 @@
-include setup.py README.rst MANIFEST.in LICENSE
-recursive-include admintools_bootstrap/templates *
-recursive-include admintools_bootstrap/static *
-global-exclude *~
