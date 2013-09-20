@@ -55,7 +55,7 @@ class Company(models.Model):
     low_credit_alert = models.DecimalField(_(u'low credit level alert'), max_digits=12, decimal_places=4, default="10", help_text=_(u"Low credit limit alert."))
     low_credit_alert_sent = models.BooleanField(_(u"low credit alert ON"), default=False)
     account_blocked_alert_sent = models.BooleanField(_(u"Customer account blocked - low balance - ON"), default=False)
-    email_alert = models.EmailField(_('alert email address'), null=True)
+    email_alert = models.EmailField(_('alert email address'), blank=True, null=True)
     customer_balance = models.DecimalField(_(u'customer balance'), max_digits=12, decimal_places=6, default=0, help_text=_(u"Actual customer balance."))
     supplier_balance = models.DecimalField(_(u'supplier balance'), max_digits=12, decimal_places=6, default=0, help_text=_(u"Actual supplier balance."))
     max_calls = models.PositiveIntegerField(_(u'max simultaneous calls'), default=1, help_text=_(u"maximum simultaneous calls allowed for this customer account."))
