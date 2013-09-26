@@ -274,7 +274,7 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
     list_display = ('company', 'amount_debited', 'amount_refund', 'customer_balance', 'supplier_balance', 'operation_type', 'reference', 'date_modified')
     ordering = ('-date_modified', 'company')
 #    readonly_fields = ('customer_balance', 'supplier_balance')
-    search_fields = ['company', '^reference']
+    search_fields = ['^company__name', '^reference']
 
     def save_model(self, request, obj, form, change):
       if change:
