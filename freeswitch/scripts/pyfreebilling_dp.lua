@@ -504,6 +504,9 @@ if (session:ready() == true) then
 --    execute("nibblebill", "check")
   mydialbridge = ""
   myvarbridge = ""
+  
+-- currency start : if no rate setup error message - for that add special variable - and prevent executing failed bridge - new special message : PFB_PROVIDER_RATE_FOUND_BUT_NEGATIVE_MARGIN - if negative margin allow bridge, but alert message !!!
+-- start for boucle  
   for i=1,lcrok do
     if lcr_lead_strip[i] == "" then
       lcr_lead_strip[i]  = "^"
@@ -525,6 +528,8 @@ if (session:ready() == true) then
     end
     log("construction bridge : ", mydialbridge, "debug") 
   end
+-- end for boucle
+  
   log("BRIDGE EXECUTE:", mydialbridge, "debug")
   execute("bridge", mydialbridge)
   session:hangup()          
