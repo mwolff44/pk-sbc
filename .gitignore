@@ -4,7 +4,8 @@
 
 # SPECIFIC FILES
 #################
-pyfreebilling/settings.py
+pyfreebilling/local_settings.py
+freeswitch/scripts/myconfig.pm
 
 # DIRECTORY
 #################

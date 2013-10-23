@@ -10,23 +10,17 @@ use Text::CSV_XS;
 use POSIX;
 use Socket;
 use Sys::Hostname;
+use MyConfig qw($dsn $pg_user $pg_pwd);
 
 # set variables
 my $host = hostname();
-#my $addr = inet_ntoa(scalar(gethostbyname($name)) || 'localhost');
 my $addr = '';
-#my $pg_host = $ARGV[1]; 
-#my $pg_db = $ARGV[2]; 
-#my $pg_table = $ARGV[3]; 
-#my $pg_user = $ARGV[4]; 
-#my $pg_pwd = $ARGV[5];
 my $csv = Text::CSV_XS->new({ quote_char => '"', always_quote => 1 }) or die "Cannot use CSV: ".Text::CSV->error_diag ();
 
-#my $pg_host = localhost; 
-#my $pg_db = pyfreebilling1;
+# 
 my $pg_table = "cdr";
-my $pg_user = "pyfreebilling";
-my $pg_pwd = "password";
+# my $pg_user = "pyfreebilling";
+# my $pg_pwd = "password";
 
 # this commands HUPS fs, she creates new cdr.csv files, so we can load the old ones up
 my $command  = ("/usr/local/freeswitch/bin/fs_cli -x 'cdr_csv rotate'");
@@ -35,7 +29,7 @@ system($command) == 0 or die "$0: system cdr_csv rotate failed: $?";
 # Connect to database 
 #print "Connecting to database...\n\n"; 
 
-my $dsn="DBI:Pg:dbname=pyfreebilling1;host=localhost;port=5432";
+# my $dsn="DBI:Pg:dbname=pyfreebilling;host=localhost;port=5432";
 my $dbh=DBI->connect($dsn,$pg_user,$pg_pwd)or die "$0: Couldn't connect to database: " . DBI->errstr;
 
 # Copy Master.cv file
