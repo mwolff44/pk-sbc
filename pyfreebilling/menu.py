@@ -57,6 +57,7 @@ class CustomMenu(Menu):
                                 items.MenuItem(_('provider management'),
                                     children=[
                                         items.MenuItem(_('Provider gateways'), '/extranet/pyfreebill/sofiagateway/'),
+                                        items.MenuItem(_('CallerID Normalization Rules'), '/extranet/pyfreebill/carriercidnormalizationrules/'),
                                     ]
                                 ),
                             ]

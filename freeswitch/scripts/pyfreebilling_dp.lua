@@ -317,9 +317,6 @@ if (session:ready() == true) then
     channel["caller_id_number"] = string.gsub(channel["caller_id_number"], customer["ccnr_remove_prefix"], customer["ccnr_add_prefix"], 1)
   end
   log("Customer CallerID : ", channel["caller_id_number"])
-  set_variable("caller_id_number", channel["caller_id_number"])
-  set_variable("effective_caller_id_number", channel["caller_id_number"])
-  set_variable("effective_caller_id_name", channel["caller_id_name"])
 else
   if dbh:connected() == true then
     log("DBH Connected : releasing","","debug")
@@ -434,6 +431,8 @@ if (session:ready() == true) then
   lcr_quality = {}
   lcr_reliability = {}
   lcr_gwid = {}
+  lcr_remove_prefix = {}
+  lcr_add_prefix = {}
   if rate["allow_negative_margin"] == "1" then
     log("Negative margin allowed","","info")
     negativemargin = " "
@@ -442,7 +441,7 @@ if (session:ready() == true) then
     negativemargin = " WHERE T.cost_rate < "..tonumber(rate["rate"]).." "
   end
   log("rate_lcrgroup_id : ", rate["lcrgroup_id"], "debug")
-  local query_cost_sql = "SELECT * FROM (SELECT DISTINCT ON (pr.provider_tariff_id) s.sip_cid_type AS sip_cid_type, s.channels AS channels, s.prefix AS gwprefix, s.suffix AS gwsuffix, s.codec AS codec, s.name AS gwname, s.id AS gwid, pr.destination AS destination, pr.digits AS digits, pr.cost_rate AS cost_rate, pr.block_min_duration AS block_min_duration, pr.init_block AS init_block, pt.carrier_id AS carrier_id, pt.lead_strip AS lead_strip, pt.tail_strip AS tail_strip, pt.prefix AS prefix, pt.suffix AS suffix, pt.quality AS quality, pt.reliability AS reliability FROM lcr_providers lp INNER JOIN provider_tariff pt ON pt.id = lp.provider_tariff_id AND pt.enabled = TRUE AND now() > pt.date_start AND now() < pt.date_end INNER JOIN sofia_gateway s ON s.company_id = pt.carrier_id AND s.enabled = TRUE INNER JOIN provider_rates pr ON pr.provider_tariff_id = pt.id AND pr.enabled = TRUE AND now() > pr.date_start AND now() < pr.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(pr.digits,'%') WHERE lp.lcr_id = '" .. rate["lcrgroup_id"] .. "' ORDER BY pr.provider_tariff_id, LENGTH(pr.digits) DESC) T"..negativemargin.."ORDER BY " .. ratefilter .. ""
+  local query_cost_sql = "SELECT * FROM (SELECT DISTINCT ON (pr.provider_tariff_id) s.sip_cid_type AS sip_cid_type, s.channels AS channels, s.prefix AS gwprefix, s.suffix AS gwsuffix, s.codec AS codec, s.name AS gwname, s.id AS gwid, ccnr.remove_prefix, ccnr.add_prefix, pr.destination AS destination, pr.digits AS digits, pr.cost_rate AS cost_rate, pr.block_min_duration AS block_min_duration, pr.init_block AS init_block, pt.carrier_id AS carrier_id, pt.lead_strip AS lead_strip, pt.tail_strip AS tail_strip, pt.prefix AS prefix, pt.suffix AS suffix, pt.quality AS quality, pt.reliability AS reliability FROM lcr_providers lp INNER JOIN provider_tariff pt ON pt.id = lp.provider_tariff_id AND pt.enabled = TRUE AND now() > pt.date_start AND now() < pt.date_end INNER JOIN sofia_gateway s ON s.company_id = pt.carrier_id AND s.enabled = TRUE LEFT JOIN carrier_cid_norm_rules ccnr ON ccnr.company_id = pt.carrier_id INNER JOIN provider_rates pr ON pr.provider_tariff_id = pt.id AND pr.enabled = TRUE AND now() > pr.date_start AND now() < pr.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(pr.digits,'%') WHERE lp.lcr_id = '" .. rate["lcrgroup_id"] .. "' ORDER BY pr.provider_tariff_id, LENGTH(pr.digits) DESC) T"..negativemargin.."ORDER BY " .. ratefilter .. ""
   assert(dbh:query(query_cost_sql, function(row)
     lcr_channels[lcrok] = tonumber(row.channels)
     lcr_gwprefix[lcrok] = row.gwprefix
@@ -465,6 +464,8 @@ if (session:ready() == true) then
     lcr_quality[lcrok] = row.quality
     lcr_reliability[lcrok] = row.reliability
     lcr_gwid[lcrok] = row.gwid
+    lcr_remove_prefix[lcrok] = row.remove_prefix
+    lcr_add_prefix[lcrok] = row.add_prefix
     lcrok = lcrok + 1
   end))
   log("SQL: ", query_cost_sql, "debug")
@@ -487,7 +488,7 @@ if (session:ready() == true) then
 -----------------------------------------------
 --        BRIDGING
 ----------------------------------------------- 
-  set_variable("effective_caller_id_number", channel["caller_id_number"])
+--  set_variable("effective_caller_id_number", channel["caller_id_number"])
   set_variable("effective_caller_id_name", channel["caller_id_name"])
   set_variable("effective_callee_id_number", channel["destination_number"])
   set_variable("effective_callee_id_name", "_undef_")
@@ -517,7 +518,12 @@ if (session:ready() == true) then
     log("WS CALL dest number:", channel["destination_number"])
     log("WS CALL gwprefix :", lcr_gwprefix[i])
     called_number = string.gsub(channel["destination_number"], lcr_lead_strip[i], lcr_gwprefix[i]..lcr_prefix[i], 1)
-    myvarbridge = "\[sip_cid_type="..lcr_sipcidtype[i]..",sell_destination="..rate["destination"]..",cost_destination="..lcr_destination[i]..",sell_rate="..tonumber(rate["rate"])..",sell_increment="..rate["block_min_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"].."\]"
+    log("WS CALL CallerID strip prefix:", lcr_remove_prefix[i])
+    log("WS CALL CallerID number:", channel["caller_id_number"])
+    log("WS CALL CallerID add prefix :", lcr_add_prefix[i]) 
+    caller_id = string.gsub(channel["caller_id_number"], lcr_remove_prefix[i], lcr_add_prefix[i], 1)
+    log("WS CALL CallerID sent to provider: ", caller_id)
+    myvarbridge = "\[sip_from_uri=sip:"..caller_id..",origination_caller_id_number="..caller_id..",origination_caller_id_name="..caller_id..",sip_cid_type="..lcr_sipcidtype[i]..",sell_destination="..rate["destination"]..",cost_destination="..lcr_destination[i]..",sell_rate="..tonumber(rate["rate"])..",sell_increment="..rate["block_min_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"].."\]"
 --      myvarbridge = ""
     log("WS CALL dest num with prefix/suffix/strip : ", called_number)
     log("WS CALL my variables bridge : ", myvarbridge)
