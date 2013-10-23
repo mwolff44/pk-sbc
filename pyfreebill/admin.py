@@ -722,14 +722,15 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
         return super(CDRAdmin, self).get_form(request, obj, **kwargs)
 
     def queryset(self, request):
-        today = date.today()-datetime.timedelta(days=30)
+        today_c = date.today()-datetime.timedelta(days=30)
+        today_a = date.today()-datetime.timedelta(days=3)
         user = getattr(request, 'user', None)
         qs = super(CDRAdmin, self).queryset(request)
         if user.is_superuser:
-            return qs.filter(start_stamp__gte=today)
+            return qs.filter(start_stamp__gte=today_a)
         else:
             usercompany = Person.objects.get(user=user)
-        return qs.filter(customer=usercompany.company).filter(start_stamp__gte=today).filter(effective_duration__gt="0")
+        return qs.filter(customer=usercompany.company).filter(start_stamp__gte=today_c).filter(effective_duration__gt="0")
 
     def get_export_formats(self):
         format_csv = DEFAULT_FORMATS
