@@ -10,6 +10,7 @@ use Text::CSV_XS;
 use POSIX;
 use Socket;
 use Sys::Hostname;
+require "/usr/local/venv/pyfreebilling/freeswitch/script"
 use MyConfig qw($dsn $pg_user $pg_pwd);
 
 # set variables

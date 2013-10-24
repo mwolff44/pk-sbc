@@ -1,14 +1,6 @@
 import os
 # Django settings for pyfreebilling project.
-
-#-----#
-
-try:
-    from pyfreebilling.local_settings import *
-except ImportError:
-    pass
-
-#-----# 
+ 
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -277,3 +269,12 @@ SESSION_COOKIE_HTTPONLY = True
 #-- Nb days of CDR to show
 PFB_NB_ADMIN_CDR = 3
 PFB_NB_CUST_CDR = 30
+
+#-----#
+
+try:
+    from pyfreebilling.local_settings import *
+except ImportError:
+    pass
+
+#-----#
