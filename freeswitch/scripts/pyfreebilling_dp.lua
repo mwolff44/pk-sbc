@@ -41,12 +41,14 @@ end
 -----------------------------------------------
 -----------------------------------------------
 function log(name, logval, level, getvar)
-  local level = level or "info"
+  local level = "warning"
   local getvar = getvar or "0"
-  if getvar == "0" then
-    freeswitch.consoleLog(level, "------->" .. channel["uuid"] .. " - WS CALL " .. name .. ".....: " .. tostring(logval) .. "<-------------\n");
-  else
-    freeswitch.consoleLog(level, "-------> uuid is null - WS CALL " .. name .. ".....: " .. tostring(logval) .. "<-------------\n");
+  if channel["cli_debug"] == "True" then
+    if getvar == "0" then
+      freeswitch.consoleLog(level, "------->" .. channel["uuid"] .. " - WS CALL " .. name .. ".....: " .. tostring(logval) .. "<-------------\n")
+    else
+      freeswitch.consoleLog(level, "-------> uuid is null - WS CALL " .. name .. ".....: " .. tostring(logval) .. "<-------------\n")
+    end
   end
 end
 -----------------------------------------------
@@ -106,7 +108,23 @@ function set_privacy(privacy)
     set_variable("cid_type", "none")
     set_variable("sip_h_Privacy", "none")
   end
-end    
+end
+-----------------------------------------------
+-----------------------------------------------
+--        VOICEMAIL DETECTION
+-----------------------------------------------
+-----------------------------------------------
+function onInput(session, type, obj)
+    if type == "dtmf" and obj['digit'] == '1' and human_detected == false then
+        human_detected = true
+        return "break"
+    end
+
+    if type == "event" and voicemail_detected == false then
+        voicemail_detected = true
+        return "break"
+    end
+end
 -----------------------------------------------
 -----------------------------------------------
 function SessionHangupHook(s, status, arg)
@@ -142,6 +160,7 @@ end
 --session:setHangupHook("myHangupHook")
 channel = {}
 if session:ready() then
+  channel["cli_debug"] = get_Variable("cli_debug")
   channel["uuid"] = get_Variable("uuid")
   channel["context"] = get_Variable("context")
   channel["accountcode"] = get_Variable("accountcode")
@@ -158,6 +177,8 @@ if session:ready() then
   channel["sip_network_ip"] = get_Variable("sip_network_ip")
   channel["auth_acl"] = get_Variable("auth_acl")
   channel["sip_user_agent"] = get_Variable("sip_user_agent")
+  channel["vmd"] = get_Variable("vmd")
+  channel["fake_ring"] = get_Variable("fake_ring")
   if channel["sip_user_agent"] then
     log("Sip_user_agent :", "is OK", "debug")
   else 
@@ -194,6 +215,13 @@ if session:ready() then
 
 end
 
+-----------------------------------------------
+-- VoiceMail Detection variables
+-----------------------------------------------
+if channel["vmd"] == "True" then
+  local human_detected = false
+  local voicemail_detected = false
+end
 -----------------------------------------------
 --        DATABASE CONNECTION
 -----------------------------------------------
@@ -501,6 +529,19 @@ if (session:ready() == true) then
   execute("sched_hangup", "+3600 alloted_timeout")
   execute("set", "inherit_codec=true")
   execute("set", "disable_hold=true")
+  if channel["fake_ring"] == "True" then
+    execute("set", "ringback=%(2000,4000,440.0,480.0)")
+    execute("set", "instant_ringback=true")
+  end
+  
+  -----------------------------------------------
+  -- VoiceMail Detection Script
+  -----------------------------------------------
+  if channel["vmd"] == "True" then
+    session:setInputCallback("onInput")
+    session:execute("avmd","start")
+  end
+  ------------------------------------------------
 --    execute("export", "disable_q850_reason=true")
 --    execute("nibblebill", "check")
   mydialbridge = ""

@@ -318,13 +318,13 @@ class CompanyBalanceHistory(models.Model):
 class CustomerDirectory(models.Model):
     """ Customer Directory Model """
     company = models.ForeignKey(Company, verbose_name=_(u"company"))
-    password = models.CharField(_(u"password"), max_length=100, blank=True, help_text=_(u"It's recomended to use strong passwords for the endpoint."))
+    password = models.CharField(_(u"password"), max_length=100, blank=True, help_text=_(u"It's recommended to use strong passwords for the endpoint."))
     description = models.TextField(_(u'description'), blank=True)
     name = models.CharField(_(u"SIP name"), max_length=50, unique=True, help_text=_(u"E.g.: customer SIP username, etc..."))
     rtp_ip = models.CharField(_(u"RTP IP CIDR"), max_length=100, default="auto", help_text=_(u"Internal IP address/mask to bind to for RTP. Format : CIDR. Ex. 192.168.1.0/32"))
     sip_ip = models.CharField(_(u"SIP IP CIDR"), max_length=100, default="/32", help_text=_(u"Internal IP address/mask to bind to for SIP. Format : CIDR. Ex. 192.168.1.0/32"))
     sip_port = models.PositiveIntegerField(_(u"SIP port"), default=5060)
-    max_calls = models.PositiveIntegerField(_(u'max simultaneous calls'), default=1, help_text=_(u"maximum simultaneous calls allowed for this customer account."))
+    max_calls = models.PositiveIntegerField(_(u'max calls'), default=1, help_text=_(u"maximum simultaneous calls allowed for this customer account."))
     log_auth_failures = models.BooleanField(_(u"log auth failures"), default=False, help_text=_(u"It true, log authentication failures. Required for Fail2ban."))
     MULTIPLE_CODECS_CHOICES = (
         ("PCMA,PCMU,G729", _(u"PCMA,PCMU,G729")),
@@ -348,6 +348,9 @@ class CustomerDirectory(models.Model):
     outbound_caller_id_name = models.CharField(_(u"outbound CallerID name"), max_length=50, blank=True, help_text=_(u"Caller ID name sent to provider on outbound calls."))
     outbound_caller_id_number = models.CharField(_(u"outbound CallerID number"), max_length=80, blank=True, help_text=_(u"Caller ID number sent to provider on outbound calls."))
     enabled = models.BooleanField(_(u"Enabled / Disabled"), default=True)
+    fake_ring = models.BooleanField(_(u"Fake ring"), default=False, help_text=_(u"Fake ring : Enabled / Disabled - Send a fake ring to the caller."))
+    cli_debug = models.BooleanField(_(u"CLI debug"), default=False, help_text=_(u"CLI debug : Enabled / Disabled - Permit to see all debug messages on cli."))
+    vmd = models.BooleanField(_(u"Voicemail detection : Enabled / Disabled"), default=False, help_text=_(u"Be carefull with this option, as it takes a lot of ressources !."))
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
 
@@ -764,7 +767,7 @@ class SofiaGateway(models.Model):
     expire_seconds = models.PositiveIntegerField(_(u"expire seconds"), default=3600, null=True)
     retry_seconds = models.PositiveIntegerField(_(u"retry seconds"), default=30, null=True, help_text=_(u"How many seconds before a retry when a failure or timeout "
             "occurs"))
-    caller_id_in_from = models.BooleanField(_(u"caller ID in From field"), default=False, help_text=_(u"Use the callerid of an inbound call in the from field on "
+    caller_id_in_from = models.BooleanField(_(u"caller ID in From field"), default=True, help_text=_(u"Use the callerid of an inbound call in the from field on "
             "outbound calls via this gateway."))
     SIP_CID_TYPE_CHOICES = (
         ('none', _(u'none')),

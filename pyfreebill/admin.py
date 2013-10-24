@@ -513,7 +513,7 @@ class CustomerRateCardsAdmin(admin.ModelAdmin):
 
 # CustomerDirectory
 class CustomerDirectoryAdmin(admin.ModelAdmin):
-    list_display = ['company', 'name', 'password', 'rtp_ip', 'sip_ip', 'max_calls', 'enabled', 'description'] 
+    list_display = ['company', 'name', 'sip_ip', 'max_calls', 'enabled', 'fake_ring', 'cli_debug', 'description'] 
     ordering = ['company', 'enabled']
     list_filter = ['enabled',]
     search_filter = ['^sip_ip', '^company', '^name']

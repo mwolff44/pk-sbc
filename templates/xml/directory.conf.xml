@@ -33,6 +33,10 @@
               {% if customerdirectory.sip_ip %}<variable name="auth-acl" value="{{ customerdirectory.sip_ip }}"/>{% endif %}
               <variable name="user_context" value="pyfreebill"/>
               <variable name='max_calls' value='{{ customerdirectory.max_calls }}'/>
+              <variable name='outbound_caller_id_number' value='{{ customerdirectory.outbound_caller_id_number }}'/>
+              <variable name='fake_ring' value='{{ customerdirectory.fake_ring }}'/>
+              <variable name='cli_debug' value='{{ customerdirectory.cli_debug }}'/>
+              <variable name='vmd' value='{{ customerdirectory.vmd }}'/>
               <variable name='customer_codecs' value='{{ customerdirectory.codecs }}'/>
             </variables>
           </user>{% endfor %}
