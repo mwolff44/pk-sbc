@@ -722,8 +722,8 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
         return super(CDRAdmin, self).get_form(request, obj, **kwargs)
 
     def queryset(self, request):
-        today_c = date.today()-datetime.timedelta(days=30)
-        today_a = date.today()-datetime.timedelta(days=3)
+        today_c = date.today()-datetime.timedelta(days=settings.PFB_NB_CUST_CDR)
+        today_a = date.today()-datetime.timedelta(days=settings.PFB_NB_ADMIN_CDR)
         user = getattr(request, 'user', None)
         qs = super(CDRAdmin, self).queryset(request)
         if user.is_superuser:
