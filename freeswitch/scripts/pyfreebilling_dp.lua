@@ -420,13 +420,13 @@ end
 if (session:ready() == true) then
   log("LCR Type : ", rate["lcrtype"])
   if rate["lcrtype"] == "p" then
-    ratefilter = "cost_rate ASC"
+    ratefilter = "cost_rate ASC, random()"
     log("LCR Type : ", "Price")
   elseif rate["lcrtype"] == "q" then
-    ratefilter = "quality DESC"
+    ratefilter = "quality DESC, random()"
     log("LCR Type : ", "Quality")
   elseif rate["lcrtype"] == "r" then
-    ratefilter = "reliability DESC"
+    ratefilter = "reliability DESC, random()"
     log("LCR Type : ", "Reliability")
   elseif rate["lcrtype"] == "l" then
     ratefilter = "random()"
@@ -566,7 +566,7 @@ if (session:ready() == true) then
     log("WS CALL CallerID add prefix :", lcr_add_prefix[i]) 
     caller_id = string.gsub(channel["caller_id_number"], lcr_remove_prefix[i], lcr_add_prefix[i], 1)
     log("WS CALL CallerID sent to provider: ", caller_id)
-    myvarbridge = "\[sip_from_uri=sip:"..caller_id..",origination_caller_id_number="..caller_id..",origination_caller_id_name="..caller_id..",sip_cid_type="..lcr_sipcidtype[i]..",sell_destination="..rate["destination"]..",cost_destination="..lcr_destination[i]..",sell_rate="..tonumber(rate["rate"])..",sell_increment="..rate["block_min_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"].."\]"
+    myvarbridge = "\[sip_from_uri=sip:"..caller_id.."@${sip_from_host},origination_caller_id_number="..caller_id..",origination_caller_id_name="..caller_id..",sip_cid_type="..lcr_sipcidtype[i]..",sell_destination="..rate["destination"]..",cost_destination="..lcr_destination[i]..",sell_rate="..tonumber(rate["rate"])..",sell_increment="..rate["block_min_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"].."\]"
 --      myvarbridge = ""
     log("WS CALL dest num with prefix/suffix/strip : ", called_number)
     log("WS CALL my variables bridge : ", myvarbridge)
