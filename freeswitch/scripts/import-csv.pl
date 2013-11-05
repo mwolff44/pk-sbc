@@ -20,8 +20,8 @@ my $csv = Text::CSV_XS->new({ quote_char => '"', always_quote => 1 }) or die "Ca
 
 # 
 my $pg_table = "cdr";
-# my $pg_user = "pyfreebilling";
-# my $pg_pwd = "password";
+my $pg_user = "pyfreebilling";
+my $pg_pwd = "password";
 
 # this commands HUPS fs, she creates new cdr.csv files, so we can load the old ones up
 my $command  = ("/usr/local/freeswitch/bin/fs_cli -x 'cdr_csv rotate'");
@@ -30,7 +30,7 @@ system($command) == 0 or die "$0: system cdr_csv rotate failed: $?";
 # Connect to database 
 #print "Connecting to database...\n\n"; 
 
-# my $dsn="DBI:Pg:dbname=pyfreebilling;host=localhost;port=5432";
+my $dsn="DBI:Pg:dbname=pyfreebilling;host=localhost;port=5432";
 my $dbh=DBI->connect($dsn,$pg_user,$pg_pwd)or die "$0: Couldn't connect to database: " . DBI->errstr;
 
 # Copy Master.cv file

@@ -115,15 +115,19 @@ end
 -----------------------------------------------
 -----------------------------------------------
 function onInput(session, type, obj)
-    if type == "dtmf" and obj['digit'] == '1' and human_detected == false then
-        human_detected = true
-        return "break"
-    end
+  if type == "dtmf" and obj['digit'] == '1' and human_detected == false then
+    execute("avmd", "stop")
+    log("AVMD : ", "human detected", "debug")
+    return "break"
+  end
 
-    if type == "event" and voicemail_detected == false then
-        voicemail_detected = true
-        return "break"
-    end
+  if type == "event" and voicemail_detected == false then
+    execute("avmd", "stop")
+    log("AVMD : ", "voicemail detected", "debug")
+    execute("curl", "http://88.190.47.138:82/v4/lib/sip_repondeur.php?dest="..channel["destination_number"])
+    set_variable("proto_specific_hangup_cause", "PFB_VMD_DETECTED")
+    session:hangup("NORMAL_CLEARING")
+  end
 end
 -----------------------------------------------
 -----------------------------------------------
@@ -215,13 +219,6 @@ if session:ready() then
 
 end
 
------------------------------------------------
--- VoiceMail Detection variables
------------------------------------------------
-if channel["vmd"] == "True" then
-  local human_detected = false
-  local voicemail_detected = false
-end
 -----------------------------------------------
 --        DATABASE CONNECTION
 -----------------------------------------------
@@ -421,16 +418,19 @@ end
 --        SELECT LCR TYPE
 -----------------------------------------------
 if (session:ready() == true) then
-  log("LCR Type : ", rate["lcrtype"], "debug")
+  log("LCR Type : ", rate["lcrtype"])
   if rate["lcrtype"] == "p" then
     ratefilter = "cost_rate ASC"
-    log("LCR Type : ", "Price", "debug")
+    log("LCR Type : ", "Price")
   elseif rate["lcrtype"] == "q" then
     ratefilter = "quality DESC"
-    log("LCR Type : ", "Quality", "debug")
+    log("LCR Type : ", "Quality")
   elseif rate["lcrtype"] == "r" then
     ratefilter = "reliability DESC"
-    log("LCR Type : ", "Reliability", "debug")
+    log("LCR Type : ", "Reliability")
+  elseif rate["lcrtype"] == "l" then
+    ratefilter = "random()"
+    log("LCR Type : ", "LoadBalancing")  
   end
 -----------------------------------------------
 --        Get LCR / Gateway
@@ -533,15 +533,17 @@ if (session:ready() == true) then
     execute("set", "ringback=%(2000,4000,440.0,480.0)")
     execute("set", "instant_ringback=true")
   end
-  
-  -----------------------------------------------
-  -- VoiceMail Detection Script
-  -----------------------------------------------
+
+-----------------------------------------------
+-- VoiceMail Detection variables
+-----------------------------------------------
   if channel["vmd"] == "True" then
+    human_detected = false
+    voicemail_detected = false
     session:setInputCallback("onInput")
-    session:execute("avmd","start")
+    execute("set", "api_result=${sched_api(+5 none avmd "..channel["uuid"].." start)}")
   end
-  ------------------------------------------------
+
 --    execute("export", "disable_q850_reason=true")
 --    execute("nibblebill", "check")
   mydialbridge = ""

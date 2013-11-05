@@ -430,6 +430,7 @@ class LCRGroup(models.Model):
         ('p', _(u"lower price")),
         ('q', _(u"best quality")),
         ('r',_(u"best reliability")),
+        ('l',_(u"load balance")),
     )
     lcrtype = models.CharField(_(u"lcr type"), max_length=10, choices=LCR_TYPE_CHOICES, default='p')
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
