@@ -190,26 +190,21 @@ install Config::Vars`
 ********************************************************************************
 
 * download pyfreebilling sources :
-`git clone git@bitbucket.org:mwolff/pyfreebilling.git
-chown -R www-data:www-data pyfreebilling
-cd pyfreebilling
-pip install -r requirements.txt
-python manage.py syncdb
-python manage.py migrate
-python manage.py loaddata country_dialcode.json`
+`git clone git@bitbucket.org:mwolff/pyfreebilling.git`
+`chown -R www-data:www-data pyfreebilling`
+`cd pyfreebilling`
+`pip install -r requirements.txt`
+`python manage.py syncdb`
+`python manage.py migrate`
+`python manage.py loaddata country_dialcode.json`
 
 * copy some config files
-`cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/acl.conf.xml /usr/local/freeswitch/conf/autoload_configs/acl.conf.xml 
-
-cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/cdr_csv.conf.xml /usr/local/freeswitch/conf/autoload_configs/cdr_csv.conf.xml
-
-cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/modules.conf.xml /usr/local/freeswitch/conf/autoload_configs/modules.conf.xml
-
-cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/nibblebill.conf.xml /usr/local/freeswitch/conf/autoload_configs/nibblebill.conf.xml
-
-cp -av /usr/local/venv/pyfreebilling/freeswitch/dialplan/pyfreebill.xml /usr/local/freeswitch/conf/dialplan/pyfreebill.xml
-
-cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/freeswitch.xml /usr/local/freeswitch/conf/freeswitch.xml`
+`cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/acl.conf.xml /usr/local/freeswitch/conf/autoload_configs/acl.conf.xml`
+`cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/cdr_csv.conf.xml /usr/local/freeswitch/conf/autoload_configs/cdr_csv.conf.xml`
+`cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/modules.conf.xml /usr/local/freeswitch/conf/autoload_configs/modules.conf.xml`
+`cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/nibblebill.conf.xml /usr/local/freeswitch/conf/autoload_configs/nibblebill.conf.xml`
+`cp -av /usr/local/venv/pyfreebilling/freeswitch/dialplan/pyfreebill.xml /usr/local/freeswitch/conf/dialplan/pyfreebill.xml`
+`cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/freeswitch.xml /usr/local/freeswitch/conf/freeswitch.xml`
 
 * set good rights :
 `rm -f /usr/local/freeswitch/conf/directory/default/*
@@ -234,8 +229,8 @@ a2ensite 000-default
 /etc/init.d/apache2 restart`
 
 * set crontab
-`*/5 * * * * perl /usr/local/venv/pyfreebilling/freeswitch/scripts/import-csv.pl>> /var/log/cron.log 2>&1
-* * * * * /usr/local/venv/pyfreebilling/chroniker -e /usr/local/venv/bin/activate_this.py -p /usr/local/venv/pyfreebilling`
+`*/5 * * * * perl /usr/local/venv/pyfreebilling/freeswitch/scripts/import-csv.pl>> /var/log/cron.log 2>&1`
+`* * * * * /usr/local/venv/pyfreebilling/chroniker -e /usr/local/venv/bin/activate_this.py -p /usr/local/venv/pyfreebilling`
 
 * modify db password and somme settings in :
 ** `/usr/local/venv/pyfreebilling/pyfreebilling/local_settings.py`
