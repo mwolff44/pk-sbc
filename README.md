@@ -48,7 +48,7 @@ interface. A few of them are:
    - Powerful LCR engine
    - Routing based on area code
    - Routing decision based on quality, reliability, cost or load balancing (equal)
-   - Limit max channels by each provider
+   - Limit max channels by each provider gateway
 
 - Extensive call and financial reporting screens (TBD)
 
