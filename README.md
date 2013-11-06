@@ -65,7 +65,7 @@ interface. A few of them are:
 In order to run pyfreebilling, you need the following configured, secured  and 
 working Basic Operating System (Linux or BSD, but also windows).
 
-The project use freeswitch, PostgreSQL and Django.
+The project uses freeswitch, PostgreSQL and Django.
 
 ********************************************************************************
                              Contact Information
