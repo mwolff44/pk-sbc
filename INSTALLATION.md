@@ -199,11 +199,11 @@ install Config::Vars`
 `python manage.py loaddata country_dialcode.json`
 
 * copy some config files
-`cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/acl.conf.xml /usr/local/freeswitch/conf/autoload_configs/acl.conf.xml`
-`cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/cdr_csv.conf.xml /usr/local/freeswitch/conf/autoload_configs/cdr_csv.conf.xml`
-`cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/modules.conf.xml /usr/local/freeswitch/conf/autoload_configs/modules.conf.xml`
-`cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/nibblebill.conf.xml /usr/local/freeswitch/conf/autoload_configs/nibblebill.conf.xml`
-`cp -av /usr/local/venv/pyfreebilling/freeswitch/dialplan/pyfreebill.xml /usr/local/freeswitch/conf/dialplan/pyfreebill.xml`
+`cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/acl.conf.xml /usr/local/freeswitch/conf/autoload_configs/acl.conf.xml`  
+`cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/cdr_csv.conf.xml /usr/local/freeswitch/conf/autoload_configs/cdr_csv.conf.xml`  
+`cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/modules.conf.xml /usr/local/freeswitch/conf/autoload_configs/modules.conf.xml`  
+`cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/nibblebill.conf.xml /usr/local/freeswitch/conf/autoload_configs/nibblebill.conf.xml`  
+`cp -av /usr/local/venv/pyfreebilling/freeswitch/dialplan/pyfreebill.xml /usr/local/freeswitch/conf/dialplan/pyfreebill.xml`  
 `cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/freeswitch.xml /usr/local/freeswitch/conf/freeswitch.xml`
 
 * set good rights :
