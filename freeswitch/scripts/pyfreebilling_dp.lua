@@ -552,30 +552,32 @@ if (session:ready() == true) then
 -- currency start : if no rate setup error message - for that add special variable - and prevent executing failed bridge - new special message : PFB_PROVIDER_RATE_FOUND_BUT_NEGATIVE_MARGIN - if negative margin allow bridge, but alert message !!!
 -- start for boucle  
   for i=1,lcrok do
-    if lcr_lead_strip[i] == "" then
-      lcr_lead_strip[i]  = "^"
-    end
---    if lcr_cost_rate[lcrok]
-    log("WS CALL strip:", lcr_lead_strip[i])
-    log("WS CALL prefix:", lcr_prefix[i])
-    log("WS CALL dest number:", channel["destination_number"])
-    log("WS CALL gwprefix :", lcr_gwprefix[i])
-    called_number = string.gsub(channel["destination_number"], lcr_lead_strip[i], lcr_gwprefix[i]..lcr_prefix[i], 1)
-    log("WS CALL CallerID strip prefix:", lcr_remove_prefix[i])
-    log("WS CALL CallerID number:", channel["caller_id_number"])
-    log("WS CALL CallerID add prefix :", lcr_add_prefix[i]) 
-    caller_id = string.gsub(channel["caller_id_number"], lcr_remove_prefix[i], lcr_add_prefix[i], 1)
-    log("WS CALL CallerID sent to provider: ", caller_id)
-    myvarbridge = "\[sip_from_uri=sip:"..caller_id.."@${sip_from_host},origination_caller_id_number="..caller_id..",origination_caller_id_name="..caller_id..",sip_cid_type="..lcr_sipcidtype[i]..",sell_destination="..rate["destination"]..",cost_destination="..lcr_destination[i]..",sell_rate="..tonumber(rate["rate"])..",sell_increment="..rate["block_min_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"].."\]"
---      myvarbridge = ""
-    log("WS CALL dest num with prefix/suffix/strip : ", called_number)
-    log("WS CALL my variables bridge : ", myvarbridge)
-    if mydialbridge == "" then
-      mydialbridge = myvarbridge.."sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
-    else
-      mydialbridge = mydialbridge.."|" .. myvarbridge .. "sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
-    end
-    log("construction bridge : ", mydialbridge, "debug") 
+--    if (session:ready() == true) then
+      if lcr_lead_strip[i] == "" then
+        lcr_lead_strip[i]  = "^"
+      end
+      log("WS CALL strip:", lcr_lead_strip[i])
+      log("WS CALL prefix:", lcr_prefix[i])
+      log("WS CALL dest number:", channel["destination_number"])
+      log("WS CALL gwprefix :", lcr_gwprefix[i])
+      called_number = string.gsub(channel["destination_number"], lcr_lead_strip[i], lcr_gwprefix[i]..lcr_prefix[i], 1)
+      log("WS CALL CallerID strip prefix:", lcr_remove_prefix[i])
+      log("WS CALL CallerID number:", channel["caller_id_number"])
+      log("WS CALL CallerID add prefix :", lcr_add_prefix[i]) 
+      caller_id = string.gsub(channel["caller_id_number"], lcr_remove_prefix[i], lcr_add_prefix[i], 1)
+      log("WS CALL CallerID sent to provider: ", caller_id)
+      log("WS CALL dest num with prefix/suffix/strip : ", called_number)
+      myvarbridge = "\[execute_on_originate=limit hash outbound "..lcr_gwname[i].." "..lcr_channels[lcrok]..", sip_from_uri=sip:"..caller_id.."@${sip_from_host},origination_caller_id_number="..caller_id..",origination_caller_id_name="..caller_id..",sip_cid_type="..lcr_sipcidtype[i]..",sell_destination="..rate["destination"]..",cost_destination="..lcr_destination[i]..",sell_rate="..tonumber(rate["rate"])..",sell_increment="..rate["block_min_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"].."\]"
+      log("WS CALL my variables bridge : ", myvarbridge)
+      if mydialbridge == "" then
+        mydialbridge = myvarbridge.."sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
+      else
+        mydialbridge = mydialbridge.."|" .. myvarbridge .. "sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
+      end
+      log("construction bridge : ", mydialbridge, "debug") 
+-- set call limit
+      --execute("limit_execute", "hash outbound "..lcr_gwname[i].." "..lcr_channels[lcrok].." bridge "..mydialbridge)
+--    end
   end
 -- end for boucle
   
