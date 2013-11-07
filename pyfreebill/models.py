@@ -59,6 +59,7 @@ class Company(models.Model):
     customer_balance = models.DecimalField(_(u'customer balance'), max_digits=12, decimal_places=6, default=0, help_text=_(u"Actual customer balance."))
     supplier_balance = models.DecimalField(_(u'supplier balance'), max_digits=12, decimal_places=6, default=0, help_text=_(u"Actual supplier balance."))
     max_calls = models.PositiveIntegerField(_(u'max simultaneous calls'), default=1, help_text=_(u"maximum simultaneous calls allowed for this customer account."))
+    calls_per_second = models.PositiveIntegerField(_(u'max calls per second'), default=10, help_text=_(u"maximum calls per seconds allowed for this customer account."))
     BILLING_CYCLE_CHOICES = (
         ('w', _(u'weekly')),
         ('m', _(u'monthly')),
@@ -325,6 +326,7 @@ class CustomerDirectory(models.Model):
     sip_ip = models.CharField(_(u"SIP IP CIDR"), max_length=100, default="/32", help_text=_(u"Internal IP address/mask to bind to for SIP. Format : CIDR. Ex. 192.168.1.0/32"))
     sip_port = models.PositiveIntegerField(_(u"SIP port"), default=5060)
     max_calls = models.PositiveIntegerField(_(u'max calls'), default=1, help_text=_(u"maximum simultaneous calls allowed for this customer account."))
+    calls_per_second = models.PositiveIntegerField(_(u'max calls per second'), default=10, help_text=_(u"maximum calls per seconds allowed for this customer account."))
     log_auth_failures = models.BooleanField(_(u"log auth failures"), default=False, help_text=_(u"It true, log authentication failures. Required for Fail2ban."))
     MULTIPLE_CODECS_CHOICES = (
         ("PCMA,PCMU,G729", _(u"PCMA,PCMU,G729")),

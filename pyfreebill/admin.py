@@ -154,7 +154,7 @@ class CompanyAdmin(admin.ModelAdmin):
             'fields': (('name', 'nickname'), ('slug', 'about'), 'account_number', ('vat', 'vat_number'), ('swift_bic', 'iban'))
         }),
         ('Customer', {
-            'fields': ('customer_enabled', 'max_calls', ('prepaid', 'credit_limit', 'customer_balance'), 'billing_cycle')
+            'fields': ('customer_enabled', ('max_calls', 'calls_per_second'), ('prepaid', 'credit_limit', 'customer_balance'), 'billing_cycle')
         }),
         ('Customer alerts', {
             'fields': ('low_credit_alert', 'email_alert', ('low_credit_alert_sent', 'account_blocked_alert_sent'))
@@ -513,7 +513,7 @@ class CustomerRateCardsAdmin(admin.ModelAdmin):
 
 # CustomerDirectory
 class CustomerDirectoryAdmin(admin.ModelAdmin):
-    list_display = ['company', 'name', 'sip_ip', 'max_calls', 'enabled', 'fake_ring', 'cli_debug', 'description'] 
+    list_display = ['company', 'name', 'sip_ip', 'max_calls', 'calls_per_second', 'enabled', 'fake_ring', 'cli_debug', 'description'] 
     ordering = ['company', 'enabled']
     list_filter = ['enabled',]
     search_filter = ['^sip_ip', '^company', '^name']
