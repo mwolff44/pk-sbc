@@ -17,6 +17,7 @@
 
         Alias /static/ /usr/local/venv/pyfreebilling/static/
         Alias /media/ /usr/local/venv/pyfreebilling/media/
+        Alias /doc/ /usr/local/venv/pyfreebilling/doc/build/html/
 
         <Location "/static/">
                 Options -Indexes
