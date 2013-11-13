@@ -21,6 +21,7 @@ Table of contents
    license
    features
    installation
+   developer_doc
 
 Contact Information
 ===================
