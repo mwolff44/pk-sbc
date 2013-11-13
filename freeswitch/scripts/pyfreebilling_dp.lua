@@ -124,7 +124,7 @@ function onInput(session, type, obj)
   if type == "event" and voicemail_detected == false then
     execute("avmd", "stop")
     log("AVMD : ", "voicemail detected", "debug")
-    execute("curl", "http://88.190.47.138:82/v4/lib/sip_repondeur.php?dest="..channel["destination_number"])
+    execute("curl", "http://1.1.1.1/v4/lib/sip_repondeur.php?dest="..channel["destination_number"])
     set_variable("proto_specific_hangup_cause", "PFB_VMD_DETECTED")
     session:hangup("NORMAL_CLEARING")
   end
