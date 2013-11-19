@@ -13,8 +13,8 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
-from fabric.api import * from fabric.colors 
-import green, red
+from fabric.api import * 
+from fabric.colors import green, red
 
 def build_commit(warn_only=True):
 	"""
