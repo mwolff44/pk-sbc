@@ -21,7 +21,7 @@ import os
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-PFB_VERSION = 'v1.2beta'
+PFB_VERSION = 'v1.21beta'
 
 SETTINGS_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SETTINGS_DIR)
@@ -170,7 +170,7 @@ INSTALLED_APPS = (
 #    'djangosecure',
     'django_iban',
     'chroniker',
-#    'common',
+    'common',
     'clear_cache',
     'axes',
     'import_export',
@@ -212,6 +212,9 @@ LOGGING = {
         },
     }
 }
+
+# AUTH - DJANGO 1.6
+#AUTH_USER_MODEL = 'pyfreebill.CustomUser'
 
 # SECURITY - ADJUST YOURS PARAMETERS
 
@@ -289,7 +292,7 @@ PFB_NB_CUST_CDR = 30
 #-----#
 
 try:
-    from pyfreebilling.local_settings import *
+    from .local_settings import *
 except ImportError:
     pass
 
