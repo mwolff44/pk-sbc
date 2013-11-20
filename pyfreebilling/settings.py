@@ -170,7 +170,7 @@ INSTALLED_APPS = (
 #    'djangosecure',
     'django_iban',
     'chroniker',
-    'common',
+#    'common',
     'clear_cache',
     'axes',
     'import_export',
@@ -180,8 +180,8 @@ INSTALLED_APPS = (
 #    'django_tables2',
     'django.contrib.admin',
     'south',
-#    'django_countries',
-#    'country_dialcode',
+    'django_countries',
+    'country_dialcode',
 )
 
 # A sample logging configuration. The only tangible logging
