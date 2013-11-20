@@ -1,4 +1,3 @@
-# Create your tests here.
 # Copyright 2013 Mathias WOLFF
 # This file is part of pyfreebilling.
 #
@@ -15,4 +14,14 @@
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling. If not, see <http://www.gnu.org/licenses/>
 
-from django.test import TestCase
+from django.db import models
+from pyfreebill.apps.models import *
+
+class FreeswitchServer(models.Model):
+	serial = models.CharField(max_length=13)
+
+	class Meta:
+		app_label = 'freeswitch'
+
+	def __unicode__(self):
+		return self.serial
