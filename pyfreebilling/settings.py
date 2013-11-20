@@ -292,7 +292,7 @@ PFB_NB_CUST_CDR = 30
 #-----#
 
 try:
-    from pyfreebilling.local_settings import *
+    from .local_settings import *
 except ImportError:
     pass
 
