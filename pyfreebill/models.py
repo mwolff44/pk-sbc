@@ -35,8 +35,8 @@ import decimal
 import math
 
 # CustomUser -- Django 1.6
-class CustomUser(AbstractUser):
-   keyboard_shortcuts = models.BooleanField(default=True)
+# class CustomUser(AbstractUser):
+#    keyboard_shortcuts = models.BooleanField(default=True)
 
 # Finance
 
@@ -109,7 +109,7 @@ class Person(models.Model):
     title = models.CharField(_('title'), max_length=200, blank=True)
     company = models.ForeignKey(Company, blank=True, null=True)
     about = models.TextField(_('about'), blank=True)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, blank=True, null=True,verbose_name=_('user'))
+    #user = models.OneToOneField(settings.AUTH_USER_MODEL, blank=True, null=True,verbose_name=_('user'))
     phone_number = GenericRelation('PhoneNumber')
     email_address = GenericRelation('EmailAddress')
     instant_messenger = GenericRelation('InstantMessenger')

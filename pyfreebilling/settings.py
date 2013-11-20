@@ -214,7 +214,7 @@ LOGGING = {
 }
 
 # AUTH - DJANGO 1.6
-AUTH_USER_MODEL = 'pyfreebill.CustomUser'
+#AUTH_USER_MODEL = 'pyfreebill.CustomUser'
 
 # SECURITY - ADJUST YOURS PARAMETERS
 
