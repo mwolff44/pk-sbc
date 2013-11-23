@@ -13,130 +13,61 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling. If not, see <http://www.gnu.org/licenses/>
-# Source code from PyMunin
-# Modified by Mathias WOLFF
 
-import re
-import ESL 
+from ESL import *
+from switch import logger
+from switch.models import *
 
-# Default
-defaultESLport = 8021
-defaultESLsecret = 'ClueCon'
-conn_timeout = 5
-
-
-class FSinfo:
-    """Class that establishes connection to FreeSWITCH ESL Interface
-    to retrieve statistics on operation.
-
+def get_fs_connections():
     """
-
-    def __init__(self, host='127.0.0.1', port=defaultESLport, secret="ClueCon", 
-                 autoInit=True):
-        """Initialize connection to FreeSWITCH ESL Interface.
+    Get all available ESL connections.
+    """
+    logger.info("get_fs_connections()")
+    voipswitchs = VoipSwitch.objects.all()
+    if voipswitchs:
+        logger.info("%s voipswitch's config" % len(voipswitchs))
+    else:
+        logger.error("No voip switch config found! Unable to connect to freeswitch.")
         
-        @param host:     FreeSWITCH Host
-        @param port:     FreeSWITCH ESL Port
-        @param secret: FreeSWITCH ESL Secret
-        @param autoInit: If True connect to FreeSWITCH ESL Interface on 
-                         instantiation.
+    for vs in voipswitchs:
+        logger.info("creating ESL connection : %s / %s / %s" % (str(vs.esl_listen_ip), vs.esl_listen_port, vs.esl_password))
+        yield ESLconnection("%s" % vs.esl_listen_ip, "%s" % vs.esl_listen_port, "%s" % str(vs.esl_password))
 
-        """
-        # Set Connection Parameters
-        self._eslconn = None
-        self._eslhost = host or '127.0.0.1'
-        self._eslport = int(port or defaultESLport)
-        self._eslpass = secret or defaultESLsecret
-        
-        ESL.eslSetLogLevel(0)
-        if autoInit:
-            self._connect()
+    logger.info("get_fs_connections() done")
 
-    def __del__(self):
-        """Cleanup."""
-        if self._eslconn is not None:
-            del self._eslconn
+def fs_cmd(command):
+    """
+    Operations via ESL.
+    """
+    logger.info("fs_cmd: " + command)
 
-    def _connect(self):
-        """Connect to FreeSWITCH ESL Interface."""
+    for connection in get_fs_connections():
+    	logger.info("connection : %s" % connection)
+        if not connection.connected():
+            raise IOError("No connection to FreeSWITCH")
         try:
-            self._eslconn = ESL.ESLconnection(self._eslhost, 
-                                              str(self._eslport), 
-                                              self._eslpass)
-        except:
-            pass
-        if not self._eslconn.connected():
-            raise Exception(
-                "Connection to FreeSWITCH ESL Interface on host %s and port %d failed."
-                % (self._eslhost, self._eslport)
-                )
-    
-    def _execCmd(self, cmd, args):
-        """Execute command and return result body as list of lines.
-        
-            @param cmd:  Command string.
-            @param args: Command arguments string. 
-            @return:     Result dictionary.
-            
-        """
-        command = cmd + " " + args
-        print command
-        print command.encode('utf-8')
-        output = self._eslconn.sendRecv(command.encode('utf-8'))
-        body = output.getBody()
-        if body:
-            return body.splitlines()
-        return None
-    
-    def _execShowCmd(self, showcmd):
-        """Execute 'show' command and return result dictionary.
-        
-            @param cmd: Command string.
-            @return: Result dictionary.
-            
-        """
-        result = None
-        lines = self._execCmd("show", showcmd)
-        if lines and len(lines) >= 2 and lines[0] != '' and lines[0][0] != '-':
-            result = {}
-            result['keys'] = lines[0].split(',')
-            items = []
-            for line in lines[1:]:
-                if line == '':
-                    break
-                items.append(line.split(','))
-            result['items'] = items
-        return result
-    
-    def _execShowCountCmd(self, showcmd):
-        """Execute 'show' command and return result dictionary.
-        
-            @param cmd: Command string.
-            @return: Result dictionary.
-            
-        """
-        result = None
-        lines = self._execCmd("api show", showcmd + " count")
-        for line in lines:
-            mobj = re.match('\s*(\d+)\s+total', line)
-            if mobj:
-                return int(mobj.group(1))
-        return result
-
-    def getChannelCount(self):
-        """Get number of active channels from FreeSWITCH.
-        
-        @return: Integer or None.
-        
-        """
-        return self._execShowCountCmd("channels")
-        
-    def getReloadGateway(self):
-        """Reload sofia's gateway"""
-        result = None
-        return self._execCmd("bgapi", "reload mod_sofia")
+            connection.sendRecv(command.encode('utf-8'))
+        except Exception, e:
+            logger.info("fs_cmd error: " + str(e))
+            raise
+        logger.info("fs_cmd done")
+        return
+    raise ValueError("No EventSocket configured in FreeSwitch. "
+        "Cannot connect to FreeSWITCH over event socket")
 
         
-fs = FSinfo(host='127.0.0.1', port=defaultESLport, secret="ClueCon")
-print fs.getChannelCount()
-print fs.getReloadGateway()
+def getReloadACL():
+    """Reload ACL"""
+    fs_cmd("bgapi reloadacl")
+
+    
+def getReloadGateway(profile_name):
+    """Reload sofia's gateway"""
+    fs_cmd("bgapi sofia profile " + profile_name + " rescan reloadxml")
+    
+    
+def getRestartSofia(profile_name):
+    """Restart sofia profile"""
+    fs_cmd("bgapi sofia profile " + profile_name + " restart")
+
+

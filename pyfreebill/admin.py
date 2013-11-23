@@ -43,6 +43,7 @@ from pyfreebill.forms import CustomerRateCardsForm
 from pyfreebill.resources import *
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import date
+from switch import esl
 import datetime
 
 APP_LABEL = _('CDR report')
@@ -89,6 +90,13 @@ def directoryupdate(modeladmin, request, queryset):
         finally:
             f.close()
             messages.success(request, "customer sip config xml file update success")
+            try:
+             	fs = esl.getReloadACL()
+#             	print fs.getReloadACL()
+            except IOError:
+            	messages.error(request, "customer sip config xml file update failed. FS ACL update failed ! Try manually")
+            finally:
+            	messages.success(request, "FS reload success")
     except IOError:
         messages.error(request, "customer sip config xml file update failed. Can not create file !")
 directoryupdate.short_description = _(u"update customer sip config xml file")
