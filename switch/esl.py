@@ -13,8 +13,16 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling. If not, see <http://www.gnu.org/licenses/>
+# The Original Code is - WikiPBX web GUI front-end for FreeSWITCH
+# 
+# The Initial Developer of the Original Code is
+# Traun Leyden <tleyden@branchcut.com>
+# Portions created by the Initial Developer are Copyright (C)
+# the Initial Developer. All Rights Reserved.
+# 
+# Modified by Mathias WOLFF
 
-from ESL import *
+import ESL
 from switch import logger
 from switch.models import *
 
@@ -31,7 +39,7 @@ def get_fs_connections():
         
     for vs in voipswitchs:
         logger.info("creating ESL connection : %s / %s / %s" % (str(vs.esl_listen_ip), vs.esl_listen_port, vs.esl_password))
-        yield ESLconnection("%s" % vs.esl_listen_ip, "%s" % vs.esl_listen_port, "%s" % str(vs.esl_password))
+        yield ESL.ESLconnection(str(vs.esl_listen_ip), str(vs.esl_listen_port), str(vs.esl_password))
 
     logger.info("get_fs_connections() done")
 
