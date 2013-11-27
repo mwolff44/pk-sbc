@@ -6,13 +6,50 @@
 {% block object-tools %}
 {% if change %}{% if not is_popup %}
   <ul class="object-tools">
+  
     {% block object-tools-items %}
-    <li><a href="../../cdr/?customer__id__exact={{ object_id }}" class="printlink">{% trans "Customer CDRs view" %}</a></li>
-    <li><a href="../../cdr/?lcr_carrier_id__id__exact={{ object_id }}" class="printlink">{% trans "Provider CDRs view" %}</a></li>
-    <li><a href="../../person/?company__id__exact={{ object_id }}" class="printlink">{% trans "Contacts" %}</a></li>
-    <li><a href="{% url opts|admin_urlname:'history' original.pk|admin_urlquote %}" class="historylink">{% trans "History" %}</a></li>
-    {% if has_absolute_url %}<li><a href="{% url 'admin:view_on_site' content_type_id original.pk %}" class="viewsitelink">{% trans "View on site" %}</a></li>{% endif%}
+        <div class="span2">
+            <a href="history/" class="big-button">
+                <i class="database-item"></i> {% trans "History" %}
+            </a>
+        </div>
+        <div class="span2">
+            <a href="../../companybalancehistory/?company__id__exact={{ object_id }}" class="big-button">
+                <i class="dollar-item"></i> {% trans "Balance history" %}
+            </a>
+        </div>
+        <div class="span2">
+            <a href="../../customerdirectory/?company__id__exact={{ object_id }}" class="big-button">
+                <i class="phone-item"></i> {% trans "Customer SIP" %}
+            </a>
+        </div>
+
+        <div class="span2">
+            <a href="../../cdr/?customer__id__exact={{ object_id }}" class="big-button">
+                <i class="world-item"></i> {% trans "Customer CDRs" %}
+            </a>
+        </div>
+        <div class="span2">
+            <a href="../../sofiagateway/?company__id__exact={{ object_id }}" class="big-button">
+                <i class="satellite-item"></i> {% trans "Provider gateway" %}
+            </a>
+        </div>
+        <div class="span2">
+            <a href="../../cdr/?lcr_carrier_id__id__exact={{ object_id }}" class="big-button">
+                <i class="world-item"></i> {% trans "Provider CDRs" %}
+            </a>
+        </div>
+        <div class="span2">
+            <a href="../../person/?company__id__exact={{ object_id }}" class="big-button">
+                <i class="agent-item"></i> {% trans "Contacts" %}
+            </a>
+        </div>
+        <div class="span2">
+        
+        </div>    
+
     {% endblock %}
+  
   </ul>
 {% endif %}{% endif %}
 {% endblock %}

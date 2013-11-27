@@ -15,10 +15,11 @@
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
 from django import forms
+from django.forms import Textarea
 from django.utils.translation import ugettext_lazy as _
-from django.forms import ModelForm, Textarea
+from yawdadmin.widgets import AutoCompleteTextInput, Select2MultipleWidget, Select2Widget, SwitchWidget, BootstrapRadioRenderer
 from django.contrib.admin import widgets
-from pyfreebill.models import CustomerRateCards, CDR
+from pyfreebill.models import CustomerRateCards, CustomerRates, ProviderRates, ProviderTariff, RateCard, CustomerDirectory, CDR
 
 
 #voip_call_disposition_list = []
@@ -42,13 +43,114 @@ class CDRSearchForm(SearchForm):
             list = []
             list.append((0, _('all').upper()))
 
-class CustomerRateCardsForm(forms.ModelForm):
-    """ Used to resize text input in admin form """
-
+class CustomerDirectoryAdminForm(forms.ModelForm):
     class Meta:
-        model = CustomerRateCards
         widgets = {
-            'description': Textarea(attrs={'cols': 30, 'rows': 1}),
+            'log_auth_failures': SwitchWidget(attrs={'class': 'switch-small',
+                                            'data-on-label': 'YES',
+                                            'data-off-label': 'NO',
+                                            'data-on': 'success',
+                                            'data-off': 'danger'}),
+            'enabled': SwitchWidget(attrs={'class': 'switch-small',
+                                            'data-on-label': 'YES',
+                                            'data-off-label': 'NO',
+                                            'data-on': 'success',
+                                            'data-off': 'danger'}),
+            'fake_ring': SwitchWidget(attrs={'class': 'switch-small',
+                                            'data-on-label': 'ON',
+                                            'data-off-label': 'OFF',
+                                            'data-on': 'success',
+                                            'data-off': 'danger'}),
+            'cli_debug': SwitchWidget(attrs={'class': 'switch-small',
+                                            'data-on-label': 'ON',
+                                            'data-off-label': 'OFF',
+                                            'data-on': 'warning',
+                                            'data-off': 'info'}),
         }
 
+class RateCardAdminForm(forms.ModelForm):
+    class Meta:
+        widgets = {
+            'enabled': SwitchWidget(attrs={'class': 'switch-small',
+                                            'data-on-label': 'ON',
+                                            'data-off-label': 'OFF',
+                                            'data-on': 'success',
+                                            'data-off': 'danger'}),
+        }
 
+class ProviderTariffAdminForm(forms.ModelForm):
+    class Meta:
+        widgets = {
+            'enabled': SwitchWidget(attrs={'class': 'switch-small',
+                                            'data-on-label': 'ON',
+                                            'data-off-label': 'OFF',
+                                            'data-on': 'success',
+                                            'data-off': 'danger'}),
+        }
+
+class CustomerRateCardsAdminForm(forms.ModelForm):
+    class Meta:
+        widgets = {
+            'description': forms.TextInput(attrs={"class" : "input-medium"}), 
+            'allow_negative_margin': SwitchWidget(attrs={'class': 'switch-small',
+                                            'data-on-label': 'YES',
+                                            'data-off-label': 'NO',
+                                            'data-on': 'danger',
+                                            'data-off': 'success'}),
+        }
+
+class CustomerRatesAdminForm(forms.ModelForm):
+    class Meta:
+        widgets = {
+            'enabled': SwitchWidget(attrs={'class': 'switch-small',
+                                            'data-on-label': 'ON',
+                                            'data-off-label': 'OFF',
+                                            'data-on': 'success',
+                                            'data-off': 'danger'}),
+        }
+
+class ProviderRatesAdminForm(forms.ModelForm):
+    class Meta:
+        widgets = {
+            'enabled': SwitchWidget(attrs={'class': 'switch-small',
+                                            'data-on-label': 'ON',
+                                            'data-off-label': 'OFF',
+                                            'data-on': 'success',
+                                            'data-off': 'danger'}),
+        }
+        
+class CompanyAdminForm(forms.ModelForm):
+    class Meta:
+        widgets = {
+            'max_calls': forms.TextInput(attrs={"class" : "input-small"}),
+            'calls_per_second': forms.TextInput(attrs={"class" : "input-small"}),
+            'credit_limit': forms.TextInput(attrs={"class" : "input-small"}),
+            'vat': SwitchWidget(attrs={'class': 'switch-small',
+                                            'data-on-label': 'Yes',
+                                            'data-off-label': 'No',
+                                            'data-on': 'info',
+                                            'data-off': 'warning'}),
+            'prepaid': SwitchWidget(attrs={'class': 'switch-small',
+                                            'data-on': 'success',
+                                            'data-off': 'warning'}),
+            'low_credit_alert_sent': SwitchWidget(attrs={'class': 'switch-small',
+                                            'data-on-label': 'ON',
+                                            'data-off-label': 'OFF',
+                                            'data-on': 'danger',
+                                            'data-off': 'success'}),
+            'account_blocked_alert_sent': SwitchWidget(attrs={'class': 'switch-small',
+                                            'data-on-label': 'ON',
+                                            'data-off-label': 'OFF',
+                                            'data-on': 'danger',
+                                            'data-off': 'success'}),
+            'customer_enabled': SwitchWidget(attrs={'class': 'switch-small',
+                                            'data-on-label': 'ON',
+                                            'data-off-label': 'OFF',
+                                            'data-on': 'success',
+                                            'data-off': 'danger'}),
+            'supplier_enabled': SwitchWidget(attrs={'class': 'switch-small',
+                                            'data-on-label': 'ON',
+                                            'data-off-label': 'OFF',
+                                            'data-on': 'success',
+                                            'data-off': 'danger'}),
+        }

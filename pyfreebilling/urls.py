@@ -17,8 +17,21 @@
 from django.conf.urls import *
 from django.contrib import admin
 from django.http import HttpResponseRedirect
+from yawdadmin import admin_site
+from django.core.urlresolvers import reverse, reverse_lazy, resolve
 
 admin.autodiscover()
+admin_site._registry.update(admin.site._registry)
+# Custom menu
+def perms_func(request, item):
+        if not request.user.is_superuser and item['admin_url'].startswith('/private'):
+                return False
+        return True
+        
+# admin_site.register_top_menu_item('Custom menu', icon_class="icon-th",
+#         children=[{'name': 'Custom view 1', 'admin_url': resolve('/pyfreebill/company/3/'), 'order': 1, 'title_icon': 'icon-hand-left' },
+#                   {'name': 'Custom view 2', 'admin_url': resolve('/pyfreebill/company/1/'), 'order': 2, 'separator': True, 'title_icon': 'icon-hand-right' }],
+# perms=perms_func)
 
 def index(request):
     return HttpResponseRedirect('/extranet/')
@@ -26,8 +39,9 @@ def index(request):
 urlpatterns = patterns('',
     url(r'^extranet/report/$', 'pyfreebill.views.admin_report_view'),
     url(r'^extranet/status/$', 'pyfreebill.views.admin_status_view'),
-    url(r'^admin_tools/', include('admin_tools.urls')),
+#    url(r'^admin_tools/', include('admin_tools.urls')),
     url(r'^admin/', include('admin_honeypot.urls')),
-    url(r'^extranet/', include(admin.site.urls)),
+    url(r'^extranet/', include(admin_site.urls)),
+    url(r'^elfinder/', include('elfinder.urls')),
 #    url(r'^extranet/reporting/', include('reporting.urls')),
 )

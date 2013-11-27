@@ -537,7 +537,7 @@ class CustomerRateCards(models.Model):
         verbose_name_plural = _(u'Customer ratecards')
 
     def __unicode__(self):
-        return u"%s %s %s" % (self.company, self.ratecard, self.tech_prefix)
+        return u"%s - Priority: %s Desc: %s" % (self.ratecard, self.priority, self.description)
 
 # NORMALIZATION
 
