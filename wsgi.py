@@ -18,7 +18,7 @@ import os
 import sys
 import site
 
-DIRS = ['/usr/local/venv/lib/python2.7/site-packages', '/usr/src/freeswitch/libs/esl/python']
+DIRS = ['/usr/local/venv/lib/python2.7/site-packages']
 
 for directory in DIRS:
   site.addsitedir(directory)

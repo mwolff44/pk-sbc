@@ -25,6 +25,7 @@
 import ESL
 from switch import logger
 from switch.models import *
+from pyfreebill.models import SipProfile
 
 def get_fs_connections():
     """
@@ -69,9 +70,20 @@ def getReloadACL():
     fs_cmd("bgapi reloadacl")
 
     
-def getReloadGateway(profile_name):
+def getReloadGateway():
     """Reload sofia's gateway"""
-    fs_cmd("bgapi sofia profile " + profile_name + " rescan reloadxml")
+    logger.info("getRelaodGateway")
+    logger.info("get sofia profile")
+    sofia_profiles = SipProfile.objects.all()
+    if sofia_profiles:
+        logger.info("%s sofia profiles" % len(sofia_profiles))
+    else:
+        logger.error("No sofia profile found! Unable to reload.")
+        
+    for sp in sofia_profiles:
+        logger.info("Reload sofia profile : %s" % sp.name)
+        fs_cmd("bgapi sofia profile " + sp.name + " rescan reloadxml")
+    logger.info("getReloadGateway() done")
     
     
 def getRestartSofia(profile_name):
