@@ -19,7 +19,7 @@ from django.db.models import permalink
 from django.core.validators import EMPTY_VALUES
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractUser
-#from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.contrib.comments.models import Comment
@@ -109,7 +109,7 @@ class Person(models.Model):
     title = models.CharField(_('title'), max_length=200, blank=True)
     company = models.ForeignKey(Company, blank=True, null=True)
     about = models.TextField(_('about'), blank=True)
-    #user = models.OneToOneField(settings.AUTH_USER_MODEL, blank=True, null=True,verbose_name=_('user'))
+    user = models.OneToOneField(User, blank=True, null=True,verbose_name=_('user'))
     phone_number = GenericRelation('PhoneNumber')
     email_address = GenericRelation('EmailAddress')
     instant_messenger = GenericRelation('InstantMessenger')
@@ -683,7 +683,7 @@ class AclNodes(models.Model):
 
 class VoipSwitch(models.Model):
     """ VoipSwitch Profile """
-    name = models.CharField(_(u"SIP profile name"), max_length=50, help_text=_(u"E.g.: external, internal, etc..."))
+    name = models.CharField(_(u"Switch name"), max_length=50, help_text=_(u"Switch name"))
     ip = models.CharField(_(u"switch IP"), max_length=100, default="auto", help_text=_(u"Switch IP."))
     esl_listen_ip =  models.CharField(_(u"event socket switch IP"), max_length=100, default="127.0.0.1", help_text=_(u"Event socket switch IP."))
     esl_listen_port = models.PositiveIntegerField(_(u"event socket switch port"), default="8021", help_text=_(u"Event socket switch port."))

@@ -13,7 +13,8 @@
         CustomLog ${APACHE_LOG_DIR}/access.log combined
 
         WSGIScriptAlias / /usr/local/venv/pyfreebilling/wsgi.py
-        WSGIDaemonProcess lostquery display-name=lostquery user=www-data processes=2 threads=15
+        WSGIDaemonProcess lostquery display-name=lostquery user=www-data processes=10 threads=15
+        WSGIApplicationGroup %{GLOBAL}
 
         Alias /static/ /usr/local/venv/pyfreebilling/static/
         Alias /media/ /usr/local/venv/pyfreebilling/media/
