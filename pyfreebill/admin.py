@@ -871,6 +871,7 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
         today_a = date.today()-datetime.timedelta(days=settings.PFB_NB_ADMIN_CDR)
         user = getattr(request, 'user', None)
         qs = super(CDRAdmin, self).queryset(request)
+        # add .prefetch_related('content_type') for reduce queries
         if user.is_superuser:
             return qs.filter(start_stamp__gte=today_a)
         else:
