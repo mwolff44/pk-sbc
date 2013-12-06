@@ -444,7 +444,62 @@ Pyfreebilling installation
 	git clone git@bitbucket.org:mwolff/pyfreebilling.git
 	chown -R www-data:www-data pyfreebilling
 	cd pyfreebilling
-	pip install -r requirements.txt
+
+* create un new file in pyfreebilling directory called local_settings.py
+
+::
+
+    touch pyfreebilling/local_settings.py
+    
+* edit this new file, and put yours specific values
+
+::
+
+	# -*- coding: utf-8 -*-
+	from .settings import *
+	
+	DEBUG = False
+	
+	MANAGERS = ADMINS
+	
+	DATABASES = {
+	    'default': {
+	        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+	        'NAME': 'pyfreebilling',
+	        'USER': 'pyfreebilling',
+	        'PASSWORD': 'password',
+	        'HOST': '127.0.0.1',                      
+	        'PORT': '',                      # Set to empty string for default.
+	    }
+	}
+	
+	ALLOWED_HOSTS = ['*']
+	
+	TIME_ZONE = 'Europe/Paris'
+	
+	#-- Nb days of CDR to show
+	PFB_NB_ADMIN_CDR = 3
+	PFB_NB_CUST_CDR = 30
+	
+	# EMAIL SETUP
+	TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
+	TEMPLATED_EMAIL_TEMPLATE_DIR = 'templated_email/'
+	TEMPLATED_EMAIL_FILE_EXTENSION = 'email'
+	
+	EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+	EMAIL_HOST = ''
+	EMAIL_PORT = 587
+	EMAIL_HOST_USER = ''
+	EMAIL_HOST_PASSWORD = ''
+	#EMAIL_USE_TLS = True
+	EMAIL_USE_SSL = True
+	EMAIL_SIGNATURE = '’
+
+* and now, enter the following commands. At the step "syncdb", you will fave a prompt asking you to enter a username and a password. They are very important, as thez are the admin one !
+	
+::
+
+	pip install -r requirements/requirements.txt
 	python manage.py syncdb
 	python manage.py migrate
 	python manage.py
@@ -508,4 +563,9 @@ Pyfreebilling installation
 	/usr/local/venv/pyfreebilling/pyfreebilling/local_settings.py
 	/usr/local/venv/pyfreebilling/freeswitch/scripts/import-csv.pl
 
+Pyfreebilling login
+==========================
 
+ Got to the url http://my-ip/extranet and enter your username and password.
+ 
+ I recommend to setup a firewall restrincting access to web pages and your voip ports !

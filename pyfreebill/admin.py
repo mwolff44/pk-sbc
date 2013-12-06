@@ -28,7 +28,7 @@ from django.contrib.admin.options import IncorrectLookupParameters
 from django.contrib.admin.views.main import ERROR_FLAG, ChangeList
 from django.core import serializers
 from django.forms import ModelForm
-from django.forms.models import BaseInlineFormSet
+from django.forms.models import BaseInlineFormSet, inlineformset_factory
 from django.template import Context, loader
 from django.core.files import File
 from django.conf.urls import patterns, url
@@ -36,10 +36,12 @@ from django.contrib.admin.widgets import *
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ungettext
+from yawdadmin import admin_site
+from yawdadmin.admin import SortableModelAdmin, PopupInline, PopupModelAdmin
 from import_export.admin import ImportExportMixin, ExportMixin
 from import_export.formats import base_formats
 from pyfreebill.models import *
-from pyfreebill.forms import CustomerRateCardsForm
+from pyfreebill.forms import CustomerRateCardsAdminForm, CompanyAdminForm, CustomerRatesAdminForm, ProviderRatesAdminForm, ProviderTariffAdminForm, RateCardAdminForm, CustomerDirectoryAdminForm
 from pyfreebill.resources import *
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import date
@@ -120,38 +122,51 @@ admin.site.add_action(sofiaupdate, _(u"generate sofia configuration file"))
 
 class EmailAddressInline(generic.GenericTabularInline):
     model = EmailAddress
-    extra = 1
+    extra = 0
+    collapse = True
 
 class PhoneNumberInline(generic.GenericTabularInline):
     model = PhoneNumber
-    extra = 1
+    extra = 0
+    collapse = True
+    title_icon = 'fa-phone-square'
 
 class InstantMessengerInline(generic.GenericTabularInline):
     model = InstantMessenger
-    extra = 1
+    extra = 0
+    collapse = True
 
 class WebSiteInline(generic.GenericTabularInline):
     model = WebSite
-    extra = 1
+    extra = 0
+    collapse = True
 
 class StreetAddressInline(generic.GenericStackedInline):
     model = StreetAddress
-    extra = 1
+    extra = 0
+    collapse = True
+    modal = True
 
 class SpecialDateInline(generic.GenericStackedInline):
     model = SpecialDate
-    extra = 1
+    extra = 0
+    collapse = True
 
 class CommentInline(generic.GenericStackedInline):
     model = Comment
     ct_fk_field = 'object_pk'
-    extra = 1
+    extra = 0
+    collapse = True
 
-class CustomerRateCardsInline(admin.TabularInline):
+class CustomerRateCardsInline(admin.StackedInline):
     model = CustomerRateCards
-    form = CustomerRateCardsForm
+    description = 'select the Ratecards affected to customer account. Order is important !'
+    form = CustomerRateCardsAdminForm
     max_num = 3
-    extra = 3
+    extra = 0
+    modal = True
+    sortable = True
+    sortable_order_field = 'priority'
 
 class CompanyAdmin(admin.ModelAdmin):
     inlines = [
@@ -164,6 +179,9 @@ class CompanyAdmin(admin.ModelAdmin):
         SpecialDateInline,
         CommentInline,
     ]
+    form = CompanyAdminForm
+    affix = True
+    title_icon = 'fa-group'
 
 #    list_display = ('colored_name', 'prepaid', 'customer_balance', 'supplier_balance')
     search_fields = ['^name',]
@@ -171,20 +189,52 @@ class CompanyAdmin(admin.ModelAdmin):
     readonly_fields = ('customer_balance', 'supplier_balance')
     fieldsets = (
         ('General', {
-            'fields': (('name', 'nickname'), ('slug', 'about'), 'account_number', ('vat', 'vat_number'), ('swift_bic', 'iban'))
+            'fields': (('name', 'nickname'), ('slug', 'about'), 'account_number', ('vat', 'vat_number'), ('swift_bic', 'iban')),
+            'description': 'General company informations'
         }),
-        ('Customer', {
-            'fields': ('customer_enabled', ('max_calls', 'calls_per_second'), ('prepaid', 'credit_limit', 'customer_balance'), 'billing_cycle')
+        ('Customer settings', {
+            'fields': ('customer_enabled', ('max_calls', 'calls_per_second'), 'billing_cycle', ('prepaid', 'credit_limit'), 'customer_balance')
         }),
         ('Customer alerts', {
-            'fields': ('low_credit_alert', 'email_alert', ('low_credit_alert_sent', 'account_blocked_alert_sent'))
+            'fields': ('low_credit_alert', 'email_alert', 'low_credit_alert_sent', 'account_blocked_alert_sent'),
+            'classes': ('collapsed',),
+            'description': 'All the customer alert parameters'
         }),
-        ('Provider', {
-            'fields': ('supplier_enabled', 'supplier_balance')
+        ('Provider settings', {
+            'fields': ('supplier_enabled', 'supplier_balance'),
+            'classes': ('collapsed',),
+            'description': 'If this company is your provider, this is right place to manage its parameters'
         }),
     )
 
+    def get_customer_enabled_display(self, obj):
+        if obj.customer_enabled:
+            return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
+        return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
+    get_customer_enabled_display.short_description = 'Customer'
+    get_customer_enabled_display.admin_order_field = 'customer_enabled'
 
+    def get_supplier_enabled_display(self, obj):
+        if obj.supplier_enabled:
+            return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
+        return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
+    get_supplier_enabled_display.short_description = 'Provider'
+    get_supplier_enabled_display.admin_order_field = 'provider_enabled'
+    
+    def get_prepaid_display(self, obj):
+        if obj.prepaid:
+            return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
+        return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
+    get_prepaid_display.short_description = 'Prepaid'
+    get_prepaid_display.admin_order_field = 'prepaid' 
+    
+    def get_vat_display(self, obj):
+        if obj.vat:
+            return mark_safe('<span class="label label-info"><i class="icon-thumbs-up"></i> YES</span>')
+        return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
+    get_vat_display.short_description = 'VAT'
+    get_vat_display.admin_order_field = 'vat'        
+    
     def has_add_permission(self, request, obj=None):
         if request.user.is_superuser:
             return True
@@ -215,9 +265,9 @@ class CompanyAdmin(admin.ModelAdmin):
 
     def get_list_display(self, request):
         if request.user.is_superuser:
-            return ['colored_name', 'prepaid', 'vat', 'customer_enabled', 'customer_balance', 'supplier_enabled', 'supplier_balance']
+            return ['colored_name', 'get_prepaid_display', 'get_vat_display', 'get_customer_enabled_display', 'customer_balance', 'get_supplier_enabled_display', 'supplier_balance', 'balance_history']
         else:
-            return ['colored_name', 'prepaid', 'customer_enabled', 'customer_balance']
+            return ['colored_name', 'get_prepaid_display', 'get_customer_enabled_display', 'customer_balance']
 
     def get_list_filter(self, request):
         if request.user.is_superuser:
@@ -320,19 +370,22 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('General', {
-            'fields': ('company','operation_type')
+            'fields': ('company','operation_type', 'reference', 'description')
         }),  
         ('Amount', {
             'fields': ('amount_debited', 'amount_refund')
-        }),
-        ('Description', {
-            'fields': ('reference', 'description')
         }),
         ('Balances', { 
             'fields': ('customer_balance', 'supplier_balance')                           
         }),
     )
 
+    def get_list_filter(self, request):
+        if request.user.is_superuser:
+            return ['company', 'operation_type']
+        else:
+            return []
+            
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
             return True
@@ -369,12 +422,20 @@ class ProviderRatesInline(admin.TabularInline):
     extra = 1
 
 class ProviderTariffAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'carrier', 'prefix', 'description', 'quality', 'reliability', 'date_start', 'date_end', 'enabled']
+    list_display = ['id', 'name', 'carrier', 'prefix', 'description', 'quality', 'reliability', 'date_start', 'date_end', 'get_boolean_display', 'rates']
     ordering = ['name',]
     readonly_fields = ['id',]
-    inlines = [
-        ProviderRatesInline,
-    ]
+    form = ProviderTariffAdminForm
+#     inlines = [
+#         ProviderRatesInline,
+#     ]
+
+    def get_boolean_display(self, obj):
+        if obj.enabled:
+            return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
+        return mark_safe('<span class="label label-warning"><i class="icon-thumbs-down"></i> NO</span>')
+    get_boolean_display.short_description = 'Enabled'
+    get_boolean_display.admin_order_field = 'enabled'
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -383,11 +444,19 @@ class ProviderTariffAdmin(admin.ModelAdmin):
             return False
 
 class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ['provider_tariff', 'destination', 'digits', 'cost_rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'enabled', 'date_added', 'date_modified']
+    list_display = ['provider_tariff', 'destination', 'digits', 'cost_rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'get_boolean_display', 'date_added', 'date_modified']
     ordering = ['provider_tariff', 'digits']
     list_filter = ['provider_tariff', 'enabled', 'destination']
     search_fields = ['^digits', 'date_start', 'date_end', '^destination']
     actions = ['make_enabled', 'make_disabled']
+    form = ProviderRatesAdminForm
+    
+    def get_boolean_display(self, obj):
+        if obj.enabled:
+            return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
+        return mark_safe('<span class="label label-warning"><i class="icon-thumbs-down"></i> NO</span>')
+    get_boolean_display.short_description = 'Enabled'
+    get_boolean_display.admin_order_field = 'enabled'
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -425,7 +494,9 @@ class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
 
 class LCRProvidersInline(admin.TabularInline):
     model = LCRProviders
-    extra = 3
+#    formset = LCRProvidersFormSet
+#    fields = ('rates',)
+    extra = 0
 
 class LCRGroupAdmin(admin.ModelAdmin):
     list_display = ['name', 'description', 'lcrtype']
@@ -442,7 +513,7 @@ class LCRGroupAdmin(admin.ModelAdmin):
             return False
 
 class LCRProvidersAdmin(admin.ModelAdmin):
-    list_display = ['lcr', 'provider_tariff']
+    list_display = ['lcr', 'provider_tariff', 'rates']
     list_filter = ('lcr',)
 
     def has_change_permission(self, request, obj=None):
@@ -460,18 +531,26 @@ class CustomerRatesFormSet(BaseInlineFormSet):
 
 class CustomerRatesInline(admin.TabularInline):
     model = CustomerRates
-    formset = CustomerRatesFormSet
+    #formset = CustomerRatesFormSet
     max_num = 40
     extra = 1
 
 class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ['id', 'ratecard', 'destination', 'prefix', 'rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'enabled', 'date_added', 'date_modified']
+    list_display = ['id', 'ratecard', 'destination', 'prefix', 'rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'get_boolean_display', 'date_added', 'date_modified']
     ordering = ['ratecard', 'prefix']
     list_filter = ['ratecard', 'enabled', 'destination']
     search_fields = ['^prefix', 'date_start', 'date_end', '^destination']
     actions = ['make_enabled', 'make_disabled']
     readonly_fields = ['id',]
+    form = CustomerRatesAdminForm
 
+    def get_boolean_display(self, obj):
+        if obj.enabled:
+            return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
+        return mark_safe('<span class="label label-warning"><i class="icon-thumbs-down"></i> NO</span>')
+    get_boolean_display.short_description = 'Enabled'
+    get_boolean_display.admin_order_field = 'enabled'
+    
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
             return True
@@ -505,25 +584,35 @@ class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
         return [f for f in format_csv if f().can_export()]
 
 class RateCardAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'description', 'lcrgroup', 'enabled']
+    list_display = ['id', 'name', 'description', 'lcrgroup', 'lcr', 'get_boolean_display', 'rates']
     ordering = ['name', 'enabled', 'lcrgroup']
     list_filter = ['enabled', 'lcrgroup']
     search_fields = ['description', '^name']
-    inlines = [
-        CustomerRatesInline,
-    ]
+    form = RateCardAdminForm
+#     inlines = [
+#         CustomerRatesInline,
+#     ]
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
             return True
         else:
             return False
+            
+    def get_boolean_display(self, obj):
+        if obj.enabled:
+            return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
+        return mark_safe('<span class="label label-warning"><i class="icon-thumbs-down"></i> NO</span>')
+    get_boolean_display.short_description = 'Enabled'
+    get_boolean_display.admin_order_field = 'enabled'
 
-class CustomerRateCardsAdmin(admin.ModelAdmin):
+class CustomerRateCardsAdmin(SortableModelAdmin):
     list_display = ['company', 'ratecard', 'tech_prefix', 'priority', 'description']
     ordering = ['company',]
+    raw_id_fields = ('ratecard',)
     list_filter = ['ratecard', 'company']
     search_fields = ['^company__company',]
+    form = form = CustomerRateCardsAdminForm
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -533,11 +622,35 @@ class CustomerRateCardsAdmin(admin.ModelAdmin):
 
 # CustomerDirectory
 class CustomerDirectoryAdmin(admin.ModelAdmin):
-    list_display = ['company', 'name', 'sip_ip', 'max_calls', 'calls_per_second', 'enabled', 'fake_ring', 'cli_debug', 'description'] 
+    list_display = ['company', 'name', 'sip_ip', 'max_calls', 'calls_per_second', 'get_enabled_display', 'get_fake_ring_display', 'get_cli_debug_display'] 
     ordering = ['company', 'enabled']
     list_filter = ['enabled',]
     search_filter = ['^sip_ip', '^company', '^name']
+    exclude = ['vmd',]
+    form = CustomerDirectoryAdminForm
+    
+    
+    def get_enabled_display(self, obj):
+        if obj.enabled:
+            return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
+        return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
+    get_enabled_display.short_description = 'Enabled'
+    get_enabled_display.admin_order_field = 'enabled'   
 
+    def get_fake_ring_display(self, obj):
+        if obj.fake_ring:
+            return mark_safe('<span class="label label-info"><i class="icon-thumbs-up"></i> YES</span>')
+        return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
+    get_fake_ring_display.short_description = 'Fake ring'
+    get_fake_ring_display.admin_order_field = 'fake_ring' 
+    
+    def get_cli_debug_display(self, obj):
+        if obj.cli_debug:
+            return mark_safe('<span class="label label-warning"><i class="icon-thumbs-up"></i> YES</span>')
+        return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
+    get_cli_debug_display.short_description = 'cli_debug'
+    get_cli_debug_display.admin_order_field = 'cli_debug' 
+    
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
             return True
@@ -557,10 +670,24 @@ class VoipSwitchAdmin(admin.ModelAdmin):
 
 # SofiaGateway
 class SofiaGatewayAdmin(admin.ModelAdmin):
-    list_display = ['name', 'sip_profile', 'company', 'channels', 'proxy', 'enabled', 'register', 'date_added', 'date_modified']
+    list_display = ['name', 'sip_profile', 'company', 'channels', 'proxy', 'get_enabled_display', 'get_register_display', 'date_added', 'date_modified']
     ordering = ['company', 'name', 'proxy']
     list_filter = ['company', 'proxy', 'enabled', 'sip_profile']
     search_fields = ['^company__name', 'proxy']
+    
+    def get_enabled_display(self, obj):
+        if obj.enabled:
+            return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
+        return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
+    get_enabled_display.short_description = 'Enabled'
+    get_enabled_display.admin_order_field = 'enabled'
+
+    def get_register_display(self, obj):
+        if obj.register:
+            return mark_safe('<span class="label label-info"><i class="icon-thumbs-up"></i> ON</span>')
+        return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> OFF</span>')
+    get_register_display.short_description = 'Register'
+    get_register_display.admin_order_field = 'register'
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -653,9 +780,9 @@ class TotalAveragesChangeList(ChangeList):
         self.min_total_effective_duration = self.get_min_duration(q['effective_duration_sum'])
 
 class CDRAdmin(ExportMixin, admin.ModelAdmin):
-    search_fields = ['^prefix', '^destination_number', '^customer__name', '^cost_destination', '^start_stamp']
+    search_fields = ['^prefix', '^destination_number', '^customer__name', '^cost_destination', '^sell_destination']
     date_hierarchy = 'start_stamp'
-    change_list_template = 'admin/pyfreebill/cdr/change_list.html'
+    #change_list_template = 'admin/pyfreebill/cdr/change_list.html'
     resource_class = CDRResourceExtra
     fieldsets = (
         ('General', {
@@ -679,8 +806,8 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
         }),
     )
 
-    class Media:
-        js = ("/media/javascript/list_filter_collapse.js",)
+#     class Media:
+#         js = ("/media/javascript/list_filter_collapse.js",)
 
     def has_add_permission(self, request, obj=None):
       return False
@@ -713,13 +840,13 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
 
     def get_list_display(self, request):
         if request.user.is_superuser:
-            return ['start_stamp', 'customer', 'sell_destination', 'destination_number', 'min_effective_duration', 'hangup_cause_colored', 'lcr_carrier_id', 'cost_rate', 'rate', 'total_cost', 'total_sell', 'prefix', 'ratecard_id', 'lcr_group_id']
+            return ['start_stamp', 'customer', 'sell_destination', 'destination_number', 'min_effective_duration', 'hangup_cause_colored', 'lcr_carrier_id', 'cost_rate', 'rate', 'prefix', 'ratecard_id', 'lcr_group_id']
         else:
             return ['start_stamp', 'customer', 'customer_ip', 'sell_destination', 'destination_number', 'min_effective_duration', 'hangup_cause', 'rate', 'total_sell']
 
     def get_list_filter(self, request):
         if request.user.is_superuser:
-            return ['start_stamp', 'customer', 'lcr_carrier_id', 'ratecard_id', 'hangup_cause', 'sip_hangup_cause', 'sell_destination', 'cost_destination', 'switchname']
+            return ['start_stamp', 'customer', 'lcr_carrier_id', 'ratecard_id', 'switchname']
         else:
             return ['start_stamp', 'sell_destination']
 
@@ -746,6 +873,7 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
         today_a = date.today()-datetime.timedelta(days=settings.PFB_NB_ADMIN_CDR)
         user = getattr(request, 'user', None)
         qs = super(CDRAdmin, self).queryset(request)
+        # add .prefetch_related('content_type') for reduce queries
         if user.is_superuser:
             return qs.filter(start_stamp__gte=today_a)
         else:
@@ -896,35 +1024,36 @@ class LogEntryAdmin(admin.ModelAdmin):
 #----------------------------------------
 # register
 #----------------------------------------
-admin.site.register(Company, CompanyAdmin)
-admin.site.register(Person, PersonAdmin)
-admin.site.register(Group, GroupAdmin)
-admin.site.register(CompanyBalanceHistory, CompanyBalanceHistoryAdmin)
-admin.site.register(ProviderTariff, ProviderTariffAdmin)
-admin.site.register(ProviderRates, ProviderRatesAdmin)
-admin.site.register(LCRGroup, LCRGroupAdmin)
+admin_site.register(Company, CompanyAdmin)
+admin_site.register(Person, PersonAdmin)
+admin_site.register(Group, GroupAdmin)
+admin_site.register(CompanyBalanceHistory, CompanyBalanceHistoryAdmin)
+admin_site.register(ProviderTariff, ProviderTariffAdmin)
+admin_site.register(ProviderRates, ProviderRatesAdmin)
+admin_site.register(LCRGroup, LCRGroupAdmin)
 #admin.site.register(LCRProviders, LCRProvidersAdmin)
-admin.site.register(RateCard, RateCardAdmin)
-admin.site.register(CustomerRates, CustomerRatesAdmin)
-admin.site.register(CustomerRateCards, CustomerRateCardsAdmin)
-admin.site.register(CustomerDirectory, CustomerDirectoryAdmin)
-admin.site.register(AclLists, AclListsAdmin)
+admin_site.register(RateCard, RateCardAdmin)
+admin_site.register(CustomerRates, CustomerRatesAdmin)
+admin_site.register(CustomerRateCards, CustomerRateCardsAdmin)
+admin_site.register(CustomerDirectory, CustomerDirectoryAdmin)
+admin_site.register(AclLists, AclListsAdmin)
 #admin.site.register(AclNodes, AclNodesAdmin)
 #admin.site.register(VoipSwitch, VoipSwitchAdmin)
-admin.site.register(SipProfile, SipProfileAdmin)
-admin.site.register(SofiaGateway, SofiaGatewayAdmin)
+admin_site.register(SipProfile, SipProfileAdmin)
+admin_site.register(SofiaGateway, SofiaGatewayAdmin)
 #admin.site.register(HangupCause, HangupCauseAdmin)
-admin.site.register(CDR, CDRAdmin)
-admin.site.register(CarrierNormalizationRules, CarrierNormalizationRulesAdmin)
-admin.site.register(CustomerNormalizationRules, CustomerNormalizationRulesAdmin)
-admin.site.register(CarrierCIDNormalizationRules, CarrierCIDNormalizationRulesAdmin)
-admin.site.register(CustomerCIDNormalizationRules, CustomerCIDNormalizationRulesAdmin)
-admin.site.register(DestinationNumberRules, DestinationNumberRulesAdmin)
+admin_site.register(CDR, CDRAdmin)
+admin_site.register(CarrierNormalizationRules, CarrierNormalizationRulesAdmin)
+admin_site.register(CustomerNormalizationRules, CustomerNormalizationRulesAdmin)
+admin_site.register(CarrierCIDNormalizationRules, CarrierCIDNormalizationRulesAdmin)
+admin_site.register(CustomerCIDNormalizationRules, CustomerCIDNormalizationRulesAdmin)
+admin_site.register(DestinationNumberRules, DestinationNumberRulesAdmin)
 #admin.site.register(DimCustomerHangupcause, DimCustomerHangupcauseAdmin)
 #admin.site.register(DimCustomerSipHangupcause, DimCustomerSipHangupcauseAdmin)
 #admin.site.register(DimProviderHangupcause, DimProviderHangupcauseAdmin)
 #admin.site.register(DimProviderSipHangupcause, DimProviderSipHangupcauseAdmin)
-admin.site.register(DimCustomerDestination, DimCustomerDestinationAdmin)
-admin.site.register(DimProviderDestination, DimProviderDestinationAdmin)
-admin.site.register(LogEntry, LogEntryAdmin)
+admin_site.register(DimCustomerDestination, DimCustomerDestinationAdmin)
+admin_site.register(DimProviderDestination, DimProviderDestinationAdmin)
+admin_site.register(LogEntry, LogEntryAdmin)
 #admin.site.register()
+
