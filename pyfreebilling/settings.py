@@ -175,6 +175,7 @@ INSTALLED_APPS = (
     'axes',
     'import_export',
     'pyfreebill',
+    'switch',
     'qsstats',
     'googlecharts',
 #    'django_tables2',

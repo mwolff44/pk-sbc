@@ -43,6 +43,7 @@ from pyfreebill.forms import CustomerRateCardsForm
 from pyfreebill.resources import *
 from django.http import HttpResponse, HttpResponseRedirect
 from datetime import date
+from switch import esl
 import datetime
 
 APP_LABEL = _('CDR report')
@@ -65,8 +66,14 @@ def sofiaupdate(modeladmin, request, queryset):
         f = open('/usr/local/freeswitch/conf/autoload_configs/sofia.conf.xml', 'w')
         try:
             f.write(t.render(c))
-        finally:
             f.close()
+            try:
+              	fs = esl.getReloadGateway()
+              	messages.success(request, "FS successfully reload")
+            except IOError:
+             	messages.error(request, "customer sip config xml file update failed. FS ACL update failed ! Try manually")
+        finally:
+            #f.close()
             messages.success(request, "sofia config xml file update success")
     except IOError:
         messages.error(request, "sofia config xml file update failed. Can not create file !")
@@ -86,9 +93,22 @@ def directoryupdate(modeladmin, request, queryset):
         f = open('/usr/local/freeswitch/conf/directory/default.xml', 'w')
         try:
             f.write(t.render(c))
-        finally:
             f.close()
+            try:
+              	fs = esl.getReloadACL()
+              	messages.success(request, "FS successfully reload")
+            except IOError:
+             	messages.error(request, "customer sip config xml file update failed. FS ACL update failed ! Try manually")
+        finally:
+            #f.close()
             messages.success(request, "customer sip config xml file update success")
+#             try:
+#              	fs = esl.getReloadACL()
+# #             	print fs.getReloadACL()
+#             except IOError:
+#             	messages.error(request, "customer sip config xml file update failed. FS ACL update failed ! Try manually")
+#             finally:
+#             	messages.success(request, "FS reload success")
     except IOError:
         messages.error(request, "customer sip config xml file update failed. Can not create file !")
 directoryupdate.short_description = _(u"update customer sip config xml file")

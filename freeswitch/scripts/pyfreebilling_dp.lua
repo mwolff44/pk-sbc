@@ -375,7 +375,7 @@ if (session:ready() == true) then
   log("Customer rate - num of records", rateok, "debug")
   log("Customer rate OK:", rateok)
   if rateok == 0 then
-    set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER _RATE_NOT_FOUND")
+    set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_RATE_NOT_FOUND")
     log("RATE NOT FOUND! : ", "Exiting")
     session:hangup("BEARERCAPABILITY_NOTAVAIL")
   else
