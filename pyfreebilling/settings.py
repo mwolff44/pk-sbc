@@ -260,6 +260,7 @@ COUNTRIES_FLAG_PATH = 'flags/%s.png'
 ADMIN_SITE_NAME = 'PyFreeBilling'
 ADMIN_SITE_DESCRIPTION = 'Softswitch and billing application'
 #ADMIN_SITE_LOGO_HTML = '<div id="myproject-logo hidden-phone">Logo</div>'
+ADMIN_DISABLE_APP_INDEX = 'True'
 
 #-----------------------
 # DJANGO-ADMIN-TOOLS

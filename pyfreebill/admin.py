@@ -28,7 +28,7 @@ from django.contrib.admin.options import IncorrectLookupParameters
 from django.contrib.admin.views.main import ERROR_FLAG, ChangeList
 from django.core import serializers
 from django.forms import ModelForm
-from django.forms.models import BaseInlineFormSet
+from django.forms.models import BaseInlineFormSet, inlineformset_factory
 from django.template import Context, loader
 from django.core.files import File
 from django.conf.urls import patterns, url
@@ -265,7 +265,7 @@ class CompanyAdmin(admin.ModelAdmin):
 
     def get_list_display(self, request):
         if request.user.is_superuser:
-            return ['colored_name', 'get_prepaid_display', 'get_vat_display', 'get_customer_enabled_display', 'customer_balance', 'get_supplier_enabled_display', 'supplier_balance']
+            return ['colored_name', 'get_prepaid_display', 'get_vat_display', 'get_customer_enabled_display', 'customer_balance', 'get_supplier_enabled_display', 'supplier_balance', 'balance_history']
         else:
             return ['colored_name', 'get_prepaid_display', 'get_customer_enabled_display', 'customer_balance']
 
@@ -422,7 +422,7 @@ class ProviderRatesInline(admin.TabularInline):
     extra = 1
 
 class ProviderTariffAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'carrier', 'prefix', 'description', 'quality', 'reliability', 'date_start', 'date_end', 'get_boolean_display']
+    list_display = ['id', 'name', 'carrier', 'prefix', 'description', 'quality', 'reliability', 'date_start', 'date_end', 'get_boolean_display', 'rates']
     ordering = ['name',]
     readonly_fields = ['id',]
     form = ProviderTariffAdminForm
@@ -494,7 +494,9 @@ class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
 
 class LCRProvidersInline(admin.TabularInline):
     model = LCRProviders
-    extra = 3
+#    formset = LCRProvidersFormSet
+#    fields = ('rates',)
+    extra = 0
 
 class LCRGroupAdmin(admin.ModelAdmin):
     list_display = ['name', 'description', 'lcrtype']
@@ -511,7 +513,7 @@ class LCRGroupAdmin(admin.ModelAdmin):
             return False
 
 class LCRProvidersAdmin(admin.ModelAdmin):
-    list_display = ['lcr', 'provider_tariff']
+    list_display = ['lcr', 'provider_tariff', 'rates']
     list_filter = ('lcr',)
 
     def has_change_permission(self, request, obj=None):
@@ -582,7 +584,7 @@ class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
         return [f for f in format_csv if f().can_export()]
 
 class RateCardAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'description', 'lcrgroup', 'get_boolean_display']
+    list_display = ['id', 'name', 'description', 'lcrgroup', 'lcr', 'get_boolean_display', 'rates']
     ordering = ['name', 'enabled', 'lcrgroup']
     list_filter = ['enabled', 'lcrgroup']
     search_fields = ['description', '^name']
@@ -778,7 +780,7 @@ class TotalAveragesChangeList(ChangeList):
         self.min_total_effective_duration = self.get_min_duration(q['effective_duration_sum'])
 
 class CDRAdmin(ExportMixin, admin.ModelAdmin):
-    search_fields = ['^prefix', '^destination_number', '^customer__name', '^cost_destination', '^start_stamp']
+    search_fields = ['^prefix', '^destination_number', '^customer__name', '^cost_destination', '^sell_destination']
     date_hierarchy = 'start_stamp'
     #change_list_template = 'admin/pyfreebill/cdr/change_list.html'
     resource_class = CDRResourceExtra
@@ -844,7 +846,7 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
 
     def get_list_filter(self, request):
         if request.user.is_superuser:
-            return ['start_stamp', 'customer', 'lcr_carrier_id', 'ratecard_id', 'hangup_cause', 'sip_hangup_cause', 'sell_destination', 'cost_destination', 'switchname']
+            return ['start_stamp', 'customer', 'lcr_carrier_id', 'ratecard_id', 'switchname']
         else:
             return ['start_stamp', 'sell_destination']
 

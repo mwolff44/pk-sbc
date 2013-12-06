@@ -98,6 +98,7 @@ class CustomerRateCardsAdminForm(forms.ModelForm):
                                             'data-on': 'danger',
                                             'data-off': 'success'}),
         }
+        
 
 class CustomerRatesAdminForm(forms.ModelForm):
     class Meta:
