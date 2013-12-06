@@ -9,39 +9,34 @@
   
     {% block object-tools-items %}
         <div class="span2">
-            <a href="history/" class="big-button">
-                <i class="database-item"></i> {% trans "History" %}
+            <a href="history/">
+                <i class="database-item"></i><button class="btn btn-small btn-block btn-primary" type="button"> {% trans "History" %}</button>
             </a>
         </div>
         <div class="span2">
-            <a href="../../companybalancehistory/?company__id__exact={{ object_id }}" class="big-button">
-                <i class="dollar-item"></i> {% trans "Balance history" %}
+            <a href="../../companybalancehistory/?company__id__exact={{ object_id }}">
+                <i class="dollar-item"></i><button class="btn btn-small btn-block btn-info" type="button"> {% trans "Balance" %}</button>
             </a>
         </div>
         <div class="span2">
-            <a href="../../customerdirectory/?company__id__exact={{ object_id }}" class="big-button">
-                <i class="phone-item"></i> {% trans "Customer SIP" %}
+            <a href="../../customerdirectory/?company__id__exact={{ object_id }}">
+                <i class="phone-item"></i><button class="btn btn-small btn-block btn-success" type="button"> {% trans "Customer SIP" %}</button>
             </a>
         </div>
 
         <div class="span2">
-            <a href="../../cdr/?customer__id__exact={{ object_id }}" class="big-button">
-                <i class="world-item"></i> {% trans "Customer CDRs" %}
+            <a href="../../cdr/?customer__id__exact={{ object_id }}">
+                <i class="world-item"></i><button class="btn btn-small btn-block btn-warning" type="button"> {% trans "CDRs" %}</button>
             </a>
         </div>
         <div class="span2">
-            <a href="../../sofiagateway/?company__id__exact={{ object_id }}" class="big-button">
-                <i class="satellite-item"></i> {% trans "Provider gateway" %}
+            <a href="../../sofiagateway/?company__id__exact={{ object_id }}">
+                <i class="satellite-item"></i><button class="btn btn-small btn-block btn-danger" type="button"> {% trans "Gateway" %}</button>
             </a>
         </div>
         <div class="span2">
-            <a href="../../cdr/?lcr_carrier_id__id__exact={{ object_id }}" class="big-button">
-                <i class="world-item"></i> {% trans "Provider CDRs" %}
-            </a>
-        </div>
-        <div class="span2">
-            <a href="../../person/?company__id__exact={{ object_id }}" class="big-button">
-                <i class="agent-item"></i> {% trans "Contacts" %}
+            <a href="../../person/?company__id__exact={{ object_id }}">
+                <i class="agent-item"></i><button class="btn btn-small btn-block btn-inverse" type="button"> {% trans "Contacts" %}</button>
             </a>
         </div>
         <div class="span2">
