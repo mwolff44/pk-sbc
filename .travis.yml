@@ -3,8 +3,8 @@ python:
     - "2.7"
     - "3.3"
 install:
-    - (cd pyfreebilling; pip install -r requirements/requirements.txt)
-    - python manage.py syncdb
+    - pip install -r requirements/requirements.txt
+    - (cd pyfreebilling; python manage.py syncdb)
     - python manage.py migrate
 after_success:
   # Report coverage results to coveralls.io
