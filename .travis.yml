@@ -4,7 +4,7 @@ python:
     - "3.3"
 install:
     - pip install -r requirements/requirements.txt
-    - (cd pyfreebilling; python manage.py syncdb)
+    - python manage.py syncdb
     - python manage.py migrate
 after_success:
   # Report coverage results to coveralls.io
