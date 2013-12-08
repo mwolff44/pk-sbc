@@ -21,7 +21,7 @@ import os
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-PFB_VERSION = 'v1.21beta'
+PFB_VERSION = 'v1.23beta'
 
 SETTINGS_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SETTINGS_DIR)
@@ -101,6 +101,10 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+LOCALE_PATHS = (
+    os.path.join(PROJECT_DIR, 'messages'),
+)
+
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
@@ -114,9 +118,11 @@ SECRET_KEY = '&mr1sl68uoiwgbdb6ax$44-$(0=_c9^)s@!g1!v&wohgkgemx6'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-     'django.template.loaders.eggs.Loader',
+    ('django.template.loaders.cached.Loader', (
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+        'django.template.loaders.eggs.Loader',
+    )),
 )
 
 MIDDLEWARE_CLASSES = (
@@ -127,6 +133,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 #    'djangosecure.middleware.SecurityMiddleware',
     'axes.middleware.FailedLoginMiddleware',
+    # For django < 1.6
+    'yawdadmin.middleware.PopupMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -155,10 +163,12 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    'admin_tools',
-    'admin_tools.theming',
-    'admin_tools.menu',
-    'admin_tools.dashboard',
+    'translations',
+    'elfinder',
+    'pyfreebill',
+    'switch',
+    'yawdadmin',
+    'import_export',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -173,12 +183,8 @@ INSTALLED_APPS = (
     'common',
     'clear_cache',
     'axes',
-    'import_export',
-    'pyfreebill',
-    'switch',
     'qsstats',
-    'googlecharts',
-#    'django_tables2',
+    'chartjs',
     'django.contrib.admin',
     'south',
     'django_countries',
@@ -242,18 +248,23 @@ AXES_LOGIN_FAILURE_LIMIT = 5
 # COUNTRIES_FLAG_PATH = '<path relative to media root>flags/%s.png' Specify directory
 COUNTRIES_FLAG_PATH = 'flags/%s.png'
 
+# YAWD ADMIN SETTINGS
+ADMIN_SITE_NAME = 'PyFreeBilling'
+ADMIN_SITE_DESCRIPTION = 'Softswitch and billing application'
+#ADMIN_SITE_LOGO_HTML = '<div id="myproject-logo hidden-phone">Logo</div>'
+ADMIN_DISABLE_APP_INDEX = 'True'
 
 #-----------------------
 # DJANGO-ADMIN-TOOLS
 #-----------------------
-ADMIN_TOOLS_MENU = 'pyfreebilling.menu.CustomMenu'
-ADMIN_TOOLS_THEMING_CSS = 'css/pyfreebilling.css'
-#ADMIN_TOOLS_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
-#ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
-ADMIN_MEDIA_PREFIX = '/static/admin/'
-ADMINTOOLS_BOOTSTRAP_SITE_LINK = '/admin/'
-ADMIN_TOOLS_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
-AUTOCOMPLETE_LIMIT = '10'
+# ADMIN_TOOLS_MENU = 'pyfreebilling.menu.CustomMenu'
+# ADMIN_TOOLS_THEMING_CSS = 'css/pyfreebilling.css'
+# #ADMIN_TOOLS_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
+# #ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
+# ADMIN_MEDIA_PREFIX = '/static/admin/'
+# ADMINTOOLS_BOOTSTRAP_SITE_LINK = '/admin/'
+# ADMIN_TOOLS_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
+# AUTOCOMPLETE_LIMIT = '10'
 
 # SECURING SITE ACCESS
 ADMIN_HONEYPOT_EMAIL_ADMINS = False
