@@ -14,14 +14,17 @@
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
-from django.conf.urls import *
+from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.http import HttpResponseRedirect
 from yawdadmin import admin_site
+
+from pyfreebill.urls import urlpatterns as pyfreebill_url
 from django.core.urlresolvers import reverse, reverse_lazy, resolve
 
 admin.autodiscover()
 admin_site._registry.update(admin.site._registry)
+
 # Custom menu
 def perms_func(request, item):
         if not request.user.is_superuser and item['admin_url'].startswith('/private'):
@@ -94,15 +97,16 @@ admin_site.register_top_menu_item('7_Admin', icon_class="icon-wrench",
             ],
         perms=perms_func)
 
-def index(request):
-    return HttpResponseRedirect('/extranet/')
+# def index(request):
+#     return HttpResponseRedirect('/extranet/')
 
-urlpatterns = patterns('',
-    url(r'^extranet/report/$', 'pyfreebill.views.admin_report_view'),
-    url(r'^extranet/status/$', 'pyfreebill.views.admin_status_view'),
-#    url(r'^admin_tools/', include('admin_tools.urls')),
+urlpatterns += patterns('',
+#    url(r'^extranet/report/$', 'pyfreebill.views.admin_report_view'),
+#    url(r'^extranet/status/$', 'pyfreebill.views.admin_status_view'),
     url(r'^admin/', include('admin_honeypot.urls')),
     url(r'^extranet/', include(admin_site.urls)),
     url(r'^elfinder/', include('elfinder.urls')),
-#    url(r'^extranet/reporting/', include('reporting.urls')),
 )
+
+# Modules
+urlpatterns += pyfreebill_url
