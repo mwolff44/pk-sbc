@@ -100,7 +100,7 @@ class Company(models.Model):
     colored_name.allow_tags = True
 
     def balance_history(self):
-        html = '<span><a href="/extranet/pyfreebill/companybalancehistory/?company__id__exact={0}" class="btn btn-inverse btn-mini"><i class="icon-pushpin icon-spin"></i> Balance history </a></span>'
+        html = '<span><a href="/extranet/pyfreebill/companybalancehistory/?company__id__exact={0}" class="btn btn-inverse btn-mini">Balance history <i class="icon-plus-sign"></i></a></span>'
         return format_html(html, (self.id))
     balance_history.allow_tags = True
     balance_history.short_description = 'balance history'
@@ -408,7 +408,7 @@ class ProviderTariff(models.Model):
         return u"%s" % self.name
 
     def rates(self):
-        html = '<span><a href="/extranet/pyfreebill/providerrates/?provider_tariff__id__exact={0}" class="btn btn-inverse btn-mini"><i class="icon-pushpin icon-spin"></i> Rates</a></span>'
+        html = '<span><a href="/extranet/pyfreebill/providerrates/?provider_tariff__id__exact={0}" class="btn btn-inverse btn-mini">Rates <i class="icon-plus-sign"></i></a></span>'
         return format_html(html, (self.id))
     rates.allow_tags = True
     rates.short_description = 'rates'
@@ -482,7 +482,7 @@ class LCRProviders(models.Model):
         return u"%s - %s " % (self.lcr, self.provider_tariff)
 
     def rates(self):
-        html = '<span><a href="/extranet/pyfreebill/providerrates/?provider_tariff__id__exact={0}" class="btn btn-inverse btn-mini"><i class="icon-pushpin icon-spin"></i> Rates </a></span>'
+        html = '<span><a href="/extranet/pyfreebill/providerrates/?provider_tariff__id__exact={0}" class="btn btn-inverse btn-mini">Rates <i class="icon-plus-sign"></i></a></span>'
         return format_html(html, (self.provider_tariff))
     rates.allow_tags = True
     rates.short_description = 'rates'
@@ -508,13 +508,13 @@ class RateCard(models.Model):
         return u"%s" % self.name
         
     def rates(self):
-        html = '<span><a href="/extranet/pyfreebill/customerrates/?ratecard__id__exact={0}" class="btn btn-inverse btn-mini"><i class="icon-pushpin icon-spin"></i> Rates </a></span>'
+        html = '<span><a href="/extranet/pyfreebill/customerrates/?ratecard__id__exact={0}" class="btn btn-inverse btn-mini">Rates <i class="icon-plus-sign"></i></a></span>'
         return format_html(html, (self.id))
     rates.allow_tags = True
     rates.short_description = 'Rates'
     
     def lcr(self):
-        html = '<span><a href="/extranet/pyfreebill/lcrgroup/{0}/" class="btn btn-inverse btn-mini"><i class="icon-pushpin icon-spin"></i> LCR </a></span>'
+        html = '<span><a href="/extranet/pyfreebill/lcrgroup/{0}/" class="btn btn-inverse btn-mini">LCR <i class="icon-plus-sign"></i></a></span>'
         return format_html(html, (self.lcrgroup.pk))
     lcr.allow_tags = True
     lcr.short_description = 'lcr'

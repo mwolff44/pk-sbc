@@ -1,0 +1,12 @@
+language: python
+python:
+    - "2.7"
+    - "3.3"
+install:
+    - (cd demo; python pip install -r requirements/requirements.txt)
+    - python manage.py syncdb
+    - python manage.py migrate
+after_success:
+  # Report coverage results to coveralls.io
+  - pip install coveralls
+  - coveralls
