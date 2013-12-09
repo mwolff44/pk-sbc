@@ -6,7 +6,7 @@ install:
     - pip install -r requirements/requirements.txt
     - git clone https://github.com/yawd/yawd-admin
     - (cd yawd-admin; python setup.py install)
-    - (cd ..; python manage.py syncdb)
+    - (cd ../pyfreebilling; python manage.py syncdb)
     - python manage.py migrate
 after_success:
   # Report coverage results to coveralls.io
