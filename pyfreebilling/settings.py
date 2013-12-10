@@ -254,6 +254,12 @@ ADMIN_SITE_DESCRIPTION = 'Softswitch and billing application'
 #ADMIN_SITE_LOGO_HTML = '<div id="myproject-logo hidden-phone">Logo</div>'
 ADMIN_DISABLE_APP_INDEX = 'True'
 
+#----------
+# Chroniker
+#----------
+CHRONIKER_USE_PID = True
+CHRONIKER_SELECT_FOR_UPDATE = True
+CHRONIKER_CHECK_LOCK_FILE = True
 #-----------------------
 # DJANGO-ADMIN-TOOLS
 #-----------------------

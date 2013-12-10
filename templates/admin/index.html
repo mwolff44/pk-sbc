@@ -38,26 +38,7 @@
 
 {% block main-struct %}
 					<div id="content-main">
-<!--
-						<div class="row-fluid hidden-phone">
-							<div class="span12" id="chart_div">
-							
-        <h1>Some Line Charts loaded in Ajax!</h1>
 
-        <canvas id="myChart" width="500" height="400"></canvas>
-
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
-        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
-        <script type="text/javascript">
-            $.get('{% url "line_chart_json" %}', function(data) {
-                var ctx = $("#myChart").get(0).getContext("2d");
-                new Chart(ctx).Line(data);
-            });
-        </script>								
-								
-							</div>
-						</div>
--->
 						
 						{% if ga_data %}{% if not ga_data.error %}
 						<div class="row-fluid hidden-phone">

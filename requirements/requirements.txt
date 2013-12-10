@@ -5,7 +5,7 @@ django-admin-honeypot==0.2.5
 #django-yawdadmin
 django-axes
 django-cache-utils==0.7.2
-django-chroniker==0.3.11
+django-chroniker
 django-clear-cache==0.3
 django-countries==1.5
 django-country-dialcode==0.4.8
