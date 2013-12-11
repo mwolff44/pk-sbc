@@ -27,9 +27,12 @@ admin_site._registry.update(admin.site._registry)
 
 # Custom menu
 def perms_func(request, item):
-        if not request.user.is_superuser and item['admin_url'].startswith('/private'):
+        if not request.user.is_superuser and item['name'].startswith('Statistics'):
+                return False
+        elif not request.user.is_superuser and item['name'].startswith('Version'):
                 return False
         return True
+        
         
 admin_site.register_top_menu_item('1_Customers', icon_class="icon-user",
         children=[
@@ -102,7 +105,7 @@ admin_site.register_top_menu_item('7_Admin', icon_class="icon-wrench",
 
 urlpatterns = patterns('',
 #    url(r'^extranet/report/$', 'pyfreebill.views.admin_report_view'),
-#    url(r'^extranet/status/$', 'pyfreebill.views.admin_status_view'),
+    url(r'^extranet/status/$', 'pyfreebill.views.admin_status_view'),
     url(r'^admin/', include('admin_honeypot.urls')),
     url(r'^extranet/', include(admin_site.urls)),
     url(r'^elfinder/', include('elfinder.urls')),

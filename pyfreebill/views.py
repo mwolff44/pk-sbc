@@ -31,7 +31,7 @@ def time_series(queryset, date_field, interval, func=None):
     qsstats = QuerySetStats(queryset, date_field, func)
     return qsstats.time_series(*interval)
 
-@staff_member_required
+#@staff_member_required
 def admin_status_view(request):
     # print status page
     pfb_version = settings.PFB_VERSION
@@ -77,7 +77,7 @@ def admin_report_view(request):
     return render_to_response('admin/admin_report.html', locals(),
         context_instance=RequestContext(request))
 
-@staff_member_required
+#@staff_member_required
 class LineChartJSONView(BaseLineChartView):
     def get_labels(self):
         """Return 7 labels."""
