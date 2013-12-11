@@ -52,6 +52,8 @@ APP_LABEL = _('CDR report')
 
 DEFAULT_FORMATS = (
             base_formats.CSV,
+#            base_formats.XLS,
+#            base_formats.ODS,
             )
 
 def sofiaupdate(modeladmin, request, queryset):
@@ -183,7 +185,6 @@ class CompanyAdmin(admin.ModelAdmin):
     affix = True
     title_icon = 'fa-group'
 
-#    list_display = ('colored_name', 'prepaid', 'customer_balance', 'supplier_balance')
     search_fields = ['^name',]
     prepopulated_fields = {'slug': ('name',)}
     readonly_fields = ('customer_balance', 'supplier_balance')
@@ -257,7 +258,7 @@ class CompanyAdmin(admin.ModelAdmin):
 
     def changelist_view(self, request, extra_context=None):
         if request.user.is_superuser:
-            self.list_display_links = ['colored_name',]
+            self.list_display_links = ['name',]
             return super(CompanyAdmin, self).changelist_view(request, extra_context=None)
         else:
             self.list_display_links = ['None',]
@@ -265,15 +266,17 @@ class CompanyAdmin(admin.ModelAdmin):
 
     def get_list_display(self, request):
         if request.user.is_superuser:
-            return ['colored_name', 'get_prepaid_display', 'get_vat_display', 'get_customer_enabled_display', 'customer_balance', 'get_supplier_enabled_display', 'supplier_balance', 'balance_history']
+            return ('name', 'get_prepaid_display', 'get_vat_display', 'get_customer_enabled_display', 'customer_balance', 'get_supplier_enabled_display', 'supplier_balance', 'balance_history')
         else:
-            return ['colored_name', 'get_prepaid_display', 'get_customer_enabled_display', 'customer_balance']
+            return ('name', 'get_prepaid_display', 'get_customer_enabled_display', 'customer_balance')
 
-    def get_list_filter(self, request):
-        if request.user.is_superuser:
-            return ['prepaid', 'customer_enabled', 'supplier_enabled', 'vat']
-        else:
-            return []
+#     def get_list_filter(self, request):
+#         if request.user.is_superuser:
+#             #return ('name',)
+#             return ['prepaid', 'customer_enabled', 'supplier_enabled']
+#         else:
+#             return []
+
 
     def get_readonly_fields(self, request, obj=None):
         if request.user.is_superuser:
@@ -628,6 +631,7 @@ class CustomerDirectoryAdmin(admin.ModelAdmin):
     search_filter = ['^sip_ip', '^company', '^name']
     exclude = ['vmd',]
     form = CustomerDirectoryAdminForm
+    actions = [directoryupdate]
     
     
     def get_enabled_display(self, obj):
@@ -674,6 +678,7 @@ class SofiaGatewayAdmin(admin.ModelAdmin):
     ordering = ['company', 'name', 'proxy']
     list_filter = ['company', 'proxy', 'enabled', 'sip_profile']
     search_fields = ['^company__name', 'proxy']
+    actions = [sofiaupdate]
     
     def get_enabled_display(self, obj):
         if obj.enabled:
@@ -781,7 +786,8 @@ class TotalAveragesChangeList(ChangeList):
 
 class CDRAdmin(ExportMixin, admin.ModelAdmin):
     search_fields = ['^prefix', '^destination_number', '^customer__name', '^cost_destination', '^sell_destination']
-    date_hierarchy = 'start_stamp'
+    list_filter = ('start_stamp',)
+#    date_hierarchy = 'start_stamp'
     #change_list_template = 'admin/pyfreebill/cdr/change_list.html'
     resource_class = CDRResourceExtra
     fieldsets = (
@@ -821,8 +827,8 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
         else:
             return
 
-    def get_changelist(self, request, **kwargs):
-        return TotalAveragesChangeList
+#     def get_changelist(self, request, **kwargs):
+#         return TotalAveragesChangeList
 
     def changelist_view(self, request, extra_context=None):
         if request.user.is_superuser:
@@ -834,19 +840,19 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
 
     def get_ordering(self, request):
         if request.user.is_superuser:
-            return ['-start_stamp', 'customer', 'gateway']
+            return ['-start_stamp',]
         else:
-            return ['-start_stamp', 'customer']
+            return ['-start_stamp',]
 
     def get_list_display(self, request):
         if request.user.is_superuser:
-            return ['start_stamp', 'customer', 'sell_destination', 'destination_number', 'min_effective_duration', 'hangup_cause_colored', 'lcr_carrier_id', 'cost_rate', 'rate', 'prefix', 'ratecard_id', 'lcr_group_id']
+            return ['start_stamp', 'customer', 'sell_destination', 'destination_number', 'min_effective_duration', 'hangup_cause_colored', 'lcr_carrier_id', 'cost_rate', 'rate', 'prefix', 'ratecard_id', 'switchname']
         else:
             return ['start_stamp', 'customer', 'customer_ip', 'sell_destination', 'destination_number', 'min_effective_duration', 'hangup_cause', 'rate', 'total_sell']
 
     def get_list_filter(self, request):
         if request.user.is_superuser:
-            return ['start_stamp', 'customer', 'lcr_carrier_id', 'ratecard_id', 'switchname']
+            return ['start_stamp', 'customer', 'lcr_carrier_id', 'ratecard_id']
         else:
             return ['start_stamp', 'sell_destination']
 

@@ -21,7 +21,7 @@ import os
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-PFB_VERSION = 'v1.23beta'
+PFB_VERSION = 'v1.23'
 
 SETTINGS_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SETTINGS_DIR)
@@ -163,8 +163,8 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    'translations',
-    'elfinder',
+#    'translations',
+#    'elfinder',
     'pyfreebill',
     'switch',
     'yawdadmin',

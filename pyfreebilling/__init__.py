@@ -94,6 +94,6 @@ class CustomOptions(OptionSetAdmin):
 
 #register the OptionSetAdmin to the admin site
 #almost like we would do for a ModelAdmin
-admin_site.register_options(SocialOptions)
-admin_site.register_options(Coordonnees)
-admin_site.register_options(CustomOptions)
+#admin_site.register_options(SocialOptions)
+#admin_site.register_options(Coordonnees)
+#admin_site.register_options(CustomOptions)
