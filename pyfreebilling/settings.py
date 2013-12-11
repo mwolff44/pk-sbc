@@ -21,7 +21,7 @@ import os
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-PFB_VERSION = 'v1.23beta'
+PFB_VERSION = 'v1.23'
 
 SETTINGS_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SETTINGS_DIR)
@@ -163,8 +163,8 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    'translations',
-    'elfinder',
+#    'translations',
+#    'elfinder',
     'pyfreebill',
     'switch',
     'yawdadmin',
@@ -254,6 +254,12 @@ ADMIN_SITE_DESCRIPTION = 'Softswitch and billing application'
 #ADMIN_SITE_LOGO_HTML = '<div id="myproject-logo hidden-phone">Logo</div>'
 ADMIN_DISABLE_APP_INDEX = 'True'
 
+#----------
+# Chroniker
+#----------
+CHRONIKER_USE_PID = True
+CHRONIKER_SELECT_FOR_UPDATE = True
+CHRONIKER_CHECK_LOCK_FILE = True
 #-----------------------
 # DJANGO-ADMIN-TOOLS
 #-----------------------

@@ -791,7 +791,7 @@ class SofiaGateway(models.Model):
     name = models.CharField(_(u"name"), max_length=100, unique=True)
     sip_profile = models.ForeignKey('SipProfile', verbose_name=_(u"SIP profile"), help_text=_(u"Which Sip Profile communication with this gateway will take place"
             " on."))
-    company = models.ForeignKey(Company, verbose_name=_(u"Provider"))
+    company = models.ForeignKey(Company, verbose_name=_(u"Provider"), db_index=True)
     channels = models.PositiveIntegerField(_(u"channels number"), default=1, help_text=_(u"maximum simultaneous calls allowed for this gateway."))
     enabled = models.BooleanField(_(u"Enabled"), default=True)
     prefix = models.CharField(_(u'prefix'), blank=True, default='', max_length=15)

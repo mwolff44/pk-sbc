@@ -2,10 +2,11 @@ Django==1.5.5
 South
 argparse==1.2.1
 django-admin-honeypot==0.2.5
-#django-yawdadmin
+yawd-admin
 django-axes
+django-chartjs
 django-cache-utils==0.7.2
-django-chroniker==0.3.11
+django-chroniker
 django-clear-cache==0.3
 django-countries==1.5
 django-country-dialcode==0.4.8

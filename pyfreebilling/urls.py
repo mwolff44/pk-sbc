@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.http import HttpResponseRedirect
 from yawdadmin import admin_site
 
-from pyfreebill.urls import urlpatterns as pyfreebill_url
+#from pyfreebill.urls import urlpatterns as pyfreebill_url
 from django.core.urlresolvers import reverse, reverse_lazy, resolve
 
 admin.autodiscover()
@@ -27,9 +27,10 @@ admin_site._registry.update(admin.site._registry)
 
 # Custom menu
 def perms_func(request, item):
-        if not request.user.is_superuser and item['admin_url'].startswith('/private'):
+        if not request.user.is_superuser and item['name'].startswith('Statistics'):
                 return False
         return True
+        
         
 admin_site.register_top_menu_item('1_Customers', icon_class="icon-user",
         children=[
@@ -75,6 +76,7 @@ admin_site.register_top_menu_item('4_FreeSwitch', icon_class="icon-cogs",
 admin_site.register_top_menu_item('5_Finance', icon_class="icon-money",
         children=[
             {'name': 'Add payment', 'admin_url': '/extranet/pyfreebill/companybalancehistory/add/', 'order': 1, 'title_icon': 'icon-download-alt' },
+            {'name': 'History', 'admin_url': '/extranet/pyfreebill/companybalancehistory/', 'order': 2, 'title_icon': 'icon-money' },
             ],
         perms=perms_func)
 
@@ -100,13 +102,13 @@ admin_site.register_top_menu_item('7_Admin', icon_class="icon-wrench",
 # def index(request):
 #     return HttpResponseRedirect('/extranet/')
 
-urlpatterns += patterns('',
+urlpatterns = patterns('',
 #    url(r'^extranet/report/$', 'pyfreebill.views.admin_report_view'),
-#    url(r'^extranet/status/$', 'pyfreebill.views.admin_status_view'),
+    url(r'^extranet/status/$', 'pyfreebill.views.admin_status_view'),
     url(r'^admin/', include('admin_honeypot.urls')),
     url(r'^extranet/', include(admin_site.urls)),
-    url(r'^elfinder/', include('elfinder.urls')),
+#    url(r'^elfinder/', include('elfinder.urls')),
 )
 
 # Modules
-urlpatterns += pyfreebill_url
+#urlpatterns += pyfreebill_url

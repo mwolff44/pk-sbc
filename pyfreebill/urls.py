@@ -20,6 +20,6 @@ from django.views.generic import TemplateView
 
 from pyfreebill.views import *
 
-urlpatterns += patterns('pyfreebill.views',
-                       url(r'^line_chart/json/$', views.line_chart_json, name='line_chart_json'),
-                       )
+#urlpatterns = patterns('pyfreebill.views',
+#                       url(r'^line_chart/json/$', LineChartJSONView.as_view(), name='line_chart_json'),
+#                       )
