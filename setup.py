@@ -9,7 +9,7 @@ setup(name='pyfreebilling',
       author_email='mathiaswolff@mac.com',
       url='https://bitbucket.org/mwolff/pyfreebilling/',
       packages=find_packages(),
-      license='License :: GPL',
+      license='License :: GPL v3',
 
       # Enable django-setuptest
       test_suite='setuptest.setuptest.SetupTestSuite',

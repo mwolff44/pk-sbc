@@ -93,6 +93,14 @@ Freeswitch installation
     make
     make install
 
+* you need to compile esl for python
+
+::
+
+    cd libs/esl
+    make pymod
+    make pymod-install
+
 * create a freeswitch user and group as follow :
 
 ::
@@ -441,7 +449,7 @@ Pyfreebilling installation
 
 ::
 
-	git clone git@bitbucket.org:mwolff/pyfreebilling.git
+	git clone https://mwolff@bitbucket.org/mwolff/pyfreebilling.git
 	chown -R www-data:www-data pyfreebilling
 	cd pyfreebilling
 
@@ -517,6 +525,14 @@ Pyfreebilling installation
 	cp -av /usr/local/venv/pyfreebilling/freeswitch/dialplan/pyfreebill.xml /usr/local/freeswitch/conf/dialplan/pyfreebill.xml
 	cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/freeswitch.xml /usr/local/freeswitch/conf/freeswitch.xml
 
+
+* copy freeswitch esl binaries to your virtual env directory
+
+::
+
+    cd /usr/src/freeswitch
+    cp libs/esl/python/ESL.py /usr/local/venv/lib/python2.7/site-packages/
+    cp libs/esl/python/_ESL.so /usr/local/venv/lib/python2.7/site-packages/
 
 * set good rights :
 

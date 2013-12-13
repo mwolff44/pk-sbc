@@ -1,32 +1,33 @@
+# Copyright 2013 Mathias WOLFF
+# This file is part of pyfreebilling.
+# 
+# pyfreebilling is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# pyfreebilling is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
+
+#IMPORT SETTINGS
+#===============
+from settings import *
+
+# make tests faster
+# False : test will make the test database be created using syncdb
+SOUTH_TESTS_MIGRATE = False
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3'
     }
 }
 
-INSTALLED_APPS = (
-    'pyfreebill',
-    'switch',
-    'yawdadmin',
-    'import_export',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.comments',
-    'admin_honeypot',
-#    'djangosecure',
-    'django_iban',
-    'chroniker',
-    'common',
-    'clear_cache',
-    'axes',
-    'qsstats',
-    'chartjs',
-    'django.contrib.admin',
-    'south',
-    'django_countries',
-    'country_dialcode',
-)
+# INSTALLED_APPS += (
+#     '',
+# )
