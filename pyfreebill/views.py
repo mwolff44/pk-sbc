@@ -22,7 +22,7 @@ from django.template import RequestContext
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from qsstats import QuerySetStats
-from pyfreebill.models import DimCustomerDestination
+from pyfreebill.models import DimCustomerDestination, DimCustomerHangupcause
 from random import randint
 from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView

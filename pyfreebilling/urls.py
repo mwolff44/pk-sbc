@@ -103,7 +103,7 @@ admin_site.register_top_menu_item('7_Admin', icon_class="icon-wrench",
 #     return HttpResponseRedirect('/extranet/')
 
 urlpatterns = patterns('',
-#    url(r'^extranet/report/$', 'pyfreebill.views.admin_report_view'),
+    url(r'^extranet/report/$', 'pyfreebill.views.admin_report_view'),
     url(r'^extranet/status/$', 'pyfreebill.views.admin_status_view'),
     url(r'^admin/', include('admin_honeypot.urls')),
     url(r'^extranet/', include(admin_site.urls)),
