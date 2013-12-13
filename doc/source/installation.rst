@@ -99,7 +99,7 @@ Freeswitch installation
 
     cd libs/esl
     make pymod
-    makepymod-install
+    make pymod-install
 
 * create a freeswitch user and group as follow :
 
