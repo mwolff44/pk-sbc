@@ -1,6 +1,8 @@
 # FILES TYPES
 #################
 *.pyc
+*.sublime-project
+*.sublime-workspace
 
 # SPECIFIC FILES
 #################
