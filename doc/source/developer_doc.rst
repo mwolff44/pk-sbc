@@ -1,7 +1,6 @@
 Developer documentation
 =======================
 
-.. automodule:: pyfreebill
 
 pyfreebill
 ----------

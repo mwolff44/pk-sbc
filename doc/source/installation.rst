@@ -410,7 +410,7 @@ Web server install
 
    ::
 
-		apt-get install build-essential``
+		apt-get install build-essential
 
    * invoke the cpan command as a normal user
    
@@ -428,8 +428,8 @@ Web server install
       
    ::
       
-      make install
-      install Bundle::CPAN
+      cpan prompt> make install
+      cpan prompt> install Bundle::CPAN
 
 
    * Now all is set and you can install any perl module you want.
