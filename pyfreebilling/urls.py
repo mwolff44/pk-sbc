@@ -83,7 +83,7 @@ admin_site.register_top_menu_item('5_Finance', icon_class="icon-money",
 admin_site.register_top_menu_item('6_Report', icon_class="icon-dashboard",
         children=[
             {'name': 'CDR', 'admin_url': '/extranet/pyfreebill/cdr/', 'order': 1, 'title_icon': 'icon-phone' },
-            {'name': 'Customer stats', 'admin_url': '/extranet/pyfreebill/cdr/', 'order': 2, 'separator': True, 'title_icon': 'icon-dashboard' },
+            {'name': 'Customer stats', 'admin_url': '/extranet/report/', 'order': 2, 'separator': True, 'title_icon': 'icon-dashboard' },
             {'name': 'Provider stats', 'admin_url': '/extranet/pyfreebill/cdr/', 'order': 3, 'title_icon': 'icon-dashboard' },
             ],
         perms=perms_func)
@@ -104,6 +104,7 @@ admin_site.register_top_menu_item('7_Admin', icon_class="icon-wrench",
 
 urlpatterns = patterns('',
     url(r'^extranet/report/$', 'pyfreebill.views.admin_report_view'),
+    url(r'^extranet/live/$', 'pyfreebill.views.live_report_view'),
     url(r'^extranet/status/$', 'pyfreebill.views.admin_status_view'),
     url(r'^admin/', include('admin_honeypot.urls')),
     url(r'^extranet/', include(admin_site.urls)),
