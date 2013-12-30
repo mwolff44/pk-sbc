@@ -1,27 +1,27 @@
 # Copyright 2013 Mathias WOLFF
 # This file is part of pyfreebilling.
-# 
+#
 # pyfreebilling is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # pyfreebilling is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
 import os
 # Django settings for pyfreebilling project.
- 
+
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-PFB_VERSION = 'v1.23'
+PFB_VERSION = 'v1.24'
 
 SETTINGS_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SETTINGS_DIR)
@@ -34,13 +34,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'pyfreebilling',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'pyfreebilling',
         'USER': 'pyfreebilling',
         'PASSWORD': 'password',
-        'HOST': '127.0.0.1',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+        'HOST': '127.0.0.1',
+        'PORT': '',  # Set to empty string for default.
     }
 }
 
@@ -110,7 +109,6 @@ LOCALE_PATHS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -260,17 +258,6 @@ ADMIN_DISABLE_APP_INDEX = 'True'
 CHRONIKER_USE_PID = True
 CHRONIKER_SELECT_FOR_UPDATE = True
 CHRONIKER_CHECK_LOCK_FILE = True
-#-----------------------
-# DJANGO-ADMIN-TOOLS
-#-----------------------
-# ADMIN_TOOLS_MENU = 'pyfreebilling.menu.CustomMenu'
-# ADMIN_TOOLS_THEMING_CSS = 'css/pyfreebilling.css'
-# #ADMIN_TOOLS_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
-# #ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
-# ADMIN_MEDIA_PREFIX = '/static/admin/'
-# ADMINTOOLS_BOOTSTRAP_SITE_LINK = '/admin/'
-# ADMIN_TOOLS_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
-# AUTOCOMPLETE_LIMIT = '10'
 
 # SECURING SITE ACCESS
 ADMIN_HONEYPOT_EMAIL_ADMINS = False
@@ -292,7 +279,7 @@ SESSION_COOKIE_HTTPONLY = True
 # TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
 # TEMPLATED_EMAIL_TEMPLATE_DIR = 'templated_email/'
 # TEMPLATED_EMAIL_FILE_EXTENSION = 'email'
-# 
+#
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = ''
 # EMAIL_PORT = 587

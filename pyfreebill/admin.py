@@ -15,7 +15,7 @@
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
 import os
-from django.contrib import admin 
+from django.contrib import admin
 from django.db import models
 from django import forms
 from django.contrib import messages
@@ -38,7 +38,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ungettext
 from yawdadmin import admin_site
 from yawdadmin.admin import SortableModelAdmin, PopupInline, PopupModelAdmin
-from import_export.admin import ImportExportMixin, ExportMixin
+from import_export.admin import ImportExportMixin, ExportMixin, ImportMixin
 from import_export.formats import base_formats
 from pyfreebill.models import *
 from pyfreebill.forms import CustomerRateCardsAdminForm, CompanyAdminForm, CustomerRatesAdminForm, ProviderRatesAdminForm, ProviderTariffAdminForm, RateCardAdminForm, CustomerDirectoryAdminForm
@@ -405,7 +405,7 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
             return
 
     def get_readonly_fields(self, request, obj=None):
-        if obj: #This is the case when obj is already created i.e. it's an edit
+        if obj:  #This is the case when obj is already created i.e. it's an edit
             return ['company', 'amount_debited', 'amount_refund', 'customer_balance', 'supplier_balance', 'operation_type']
         else:
             return ['customer_balance', 'supplier_balance']
@@ -413,11 +413,22 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
 # CallerID prefix list
 
 
-class CalleridPrefixAdmin(admin.ModelAdmin):
+class CalleridPrefixAdmin(ImportMixin, admin.ModelAdmin):
     list_display = ['calleridprefixlist', 'prefix', 'date_added', 'date_modified']
     ordering = ('calleridprefixlist', 'prefix')
     list_filter = ('calleridprefixlist',)
     search_fields = ('^prefix',)
+    resource_class = CalleridPrefixResource
+
+    def has_change_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        else:
+            return False
+
+    def get_import_formats(self):
+        format_csv = DEFAULT_FORMATS
+        return [f for f in format_csv if f().can_import()]
 
 
 class CalleridPrefixListAdmin(admin.ModelAdmin):
@@ -425,6 +436,12 @@ class CalleridPrefixListAdmin(admin.ModelAdmin):
     ordering = ('name',)
     list_filter = ['name', ]
     search_fields = ('^name', 'description')
+
+    def has_change_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        else:
+            return False
 
 # Provider Rates
 
@@ -488,7 +505,7 @@ class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
 
     def make_enabled(self, request, queryset):
         rows_updated = queryset.update(enabled=True)
-        if rows_updated == 1 :    
+        if rows_updated == 1:
             message_bit = "1 item was"
         else:
             message_bit = "%s items were" % rows_updated
@@ -497,7 +514,7 @@ class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
 
     def make_disabled(self, request, queryset):
         rows_updated = queryset.update(enabled=False)
-        if rows_updated == 1 :
+        if rows_updated == 1:
             message_bit = "1 item was"
         else:
             message_bit = "%s items were" % rows_updated
@@ -605,6 +622,7 @@ class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
         format_csv = DEFAULT_FORMATS
         return [f for f in format_csv if f().can_export()]
 
+
 class RateCardAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'lcrgroup', 'lcr', 'get_boolean_display', 'rates', 'callerid_filter', 'callerid_list']
     ordering = ['name', 'enabled', 'lcrgroup']
@@ -628,6 +646,7 @@ class RateCardAdmin(admin.ModelAdmin):
     get_boolean_display.short_description = 'Enabled'
     get_boolean_display.admin_order_field = 'enabled'
 
+
 class CustomerRateCardsAdmin(SortableModelAdmin):
     list_display = ['company', 'ratecard', 'tech_prefix', 'priority', 'description']
     ordering = ['company',]
@@ -643,6 +662,8 @@ class CustomerRateCardsAdmin(SortableModelAdmin):
             return False
 
 # CustomerDirectory
+
+
 class CustomerDirectoryAdmin(admin.ModelAdmin):
     list_display = ['company', 'name', 'sip_ip', 'max_calls', 'calls_per_second', 'get_enabled_display', 'get_fake_ring_display', 'get_cli_debug_display'] 
     ordering = ['company', 'enabled']
@@ -658,14 +679,14 @@ class CustomerDirectoryAdmin(admin.ModelAdmin):
             return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
     get_enabled_display.short_description = 'Enabled'
-    get_enabled_display.admin_order_field = 'enabled'   
+    get_enabled_display.admin_order_field = 'enabled'
 
     def get_fake_ring_display(self, obj):
         if obj.fake_ring:
             return mark_safe('<span class="label label-info"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
     get_fake_ring_display.short_description = 'Fake ring'
-    get_fake_ring_display.admin_order_field = 'fake_ring' 
+    get_fake_ring_display.admin_order_field = 'fake_ring'
     
     def get_cli_debug_display(self, obj):
         if obj.cli_debug:
@@ -681,6 +702,8 @@ class CustomerDirectoryAdmin(admin.ModelAdmin):
             return False
 
 # VoipSwitch
+
+
 class VoipSwitchAdmin(admin.ModelAdmin):
     list_display = ['name', 'ip','date_added', 'date_modified']
     ordering = ['name',]
@@ -692,6 +715,8 @@ class VoipSwitchAdmin(admin.ModelAdmin):
             return False
 
 # SofiaGateway
+
+
 class SofiaGatewayAdmin(admin.ModelAdmin):
     list_display = ['name', 'sip_profile', 'company', 'channels', 'proxy', 'get_enabled_display', 'get_register_display', 'date_added', 'date_modified']
     ordering = ['company', 'name', 'proxy']
@@ -719,6 +744,7 @@ class SofiaGatewayAdmin(admin.ModelAdmin):
         else:
             return False
 
+
 class SipProfileAdmin(admin.ModelAdmin):
     list_display = ['name', 'ext_rtp_ip', 'ext_sip_ip', 'rtp_ip', 'sip_ip', 'sip_port', 'auth_calls', 'log_auth_failures']
     ordering = ['name',]
@@ -732,6 +758,8 @@ class SipProfileAdmin(admin.ModelAdmin):
             return False
 
 # AclLists
+
+
 class AclListsAdmin(admin.ModelAdmin):
     list_display = ('acl_name', 'default_policy')
     ordering = ['acl_name', 'default_policy']
@@ -744,6 +772,8 @@ class AclListsAdmin(admin.ModelAdmin):
             return False
 
 # AclNodes
+
+
 class AclNodesAdmin(admin.ModelAdmin):
     list_display = ('company', 'cidr', 'policy', 'list')
     ordering = ['company', 'policy', 'cidr']
