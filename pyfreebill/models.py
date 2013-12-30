@@ -1,16 +1,16 @@
 # Copyright 2013 Mathias WOLFF
 # This file is part of pyfreebilling.
-# 
+#
 # pyfreebilling is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # pyfreebilling is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
@@ -40,6 +40,7 @@ import math
 #    keyboard_shortcuts = models.BooleanField(default=True)
 
 # Finance
+
 
 class Company(models.Model):
     """Company model."""
@@ -77,7 +78,6 @@ class Company(models.Model):
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
 
-
     class Meta:
         db_table = 'company'
         ordering = ('name',)
@@ -105,6 +105,7 @@ class Company(models.Model):
     balance_history.allow_tags = True
     balance_history.short_description = 'balance history'
 
+
 class Person(models.Model):
     """Person model."""
     first_name = models.CharField(_('first name'), max_length=100)
@@ -116,7 +117,7 @@ class Person(models.Model):
     title = models.CharField(_('title'), max_length=200, blank=True)
     company = models.ForeignKey(Company, blank=True, null=True)
     about = models.TextField(_('about'), blank=True)
-    user = models.OneToOneField(User, blank=True, null=True,verbose_name=_('user'))
+    user = models.OneToOneField(User, blank=True, null=True, verbose_name=_('user'))
     phone_number = GenericRelation('PhoneNumber')
     email_address = GenericRelation('EmailAddress')
     instant_messenger = GenericRelation('InstantMessenger')
@@ -138,13 +139,14 @@ class Person(models.Model):
     def fullname(self):
         return u"%s %s" % (self.first_name, self.last_name)
 
+
 class Group(models.Model):
     """Group model."""
     name = models.CharField(_('name'), max_length=200, unique=True)
     slug = models.SlugField(_('slug'), max_length=50, unique=True)
     about = models.TextField(_('about'), blank=True)
-    people = models.ManyToManyField(Person, verbose_name='people', blank=True,null=True)
-    companies = models.ManyToManyField(Company, verbose_name='companies',blank=True, null=True)
+    people = models.ManyToManyField(Person, verbose_name='people', blank=True, null=True)
+    companies = models.ManyToManyField(Company, verbose_name='companies', blank=True, null=True)
     date_added = models.DateTimeField(_('date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_('date modified'), auto_now=True)
 
@@ -165,6 +167,7 @@ PHONE_LOCATION_CHOICES = (
     ('home', _('Home')),
     ('other', _('Other')),
 )
+
 
 class PhoneNumber(models.Model):
     """Phone Number model."""
@@ -192,6 +195,7 @@ LOCATION_CHOICES = (
     ('person', _('Personal')),
     ('other', _('Other'))
 )
+
 
 class EmailAddress(models.Model):
     content_type = models.ForeignKey(ContentType, limit_choices_to={'app_label': 'contacts'})
@@ -225,6 +229,7 @@ IM_SERVICE_CHOICES = (
     ('other', _('Other'))
 )
 
+
 class InstantMessenger(models.Model):
     content_type = models.ForeignKey(ContentType, limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
@@ -242,6 +247,7 @@ class InstantMessenger(models.Model):
         db_table = 'contacts_instant_messengers'
         verbose_name = 'instant messenger'
         verbose_name_plural = 'instant messengers'
+
 
 class WebSite(models.Model):
     content_type = models.ForeignKey(ContentType, limit_choices_to={'app_label': 'contacts'})
@@ -262,6 +268,7 @@ class WebSite(models.Model):
 
     def get_absolute_url(self):
         return u"%s?web_site=%s" % (self.content_object.get_absolute_url(), self.pk)
+
 
 class StreetAddress(models.Model):
     content_type = models.ForeignKey(ContentType, limit_choices_to={'app_label': 'contacts'})
@@ -284,9 +291,9 @@ class StreetAddress(models.Model):
         verbose_name = _('street address')
         verbose_name_plural = _('street addresses')
 
+
 class SpecialDate(models.Model):
-    content_type = models.ForeignKey(ContentType,
-    limit_choices_to={'app_label': 'contacts'})
+    content_type = models.ForeignKey(ContentType, limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
     occasion = models.TextField(_('occasion'), max_length=200)
@@ -303,6 +310,7 @@ class SpecialDate(models.Model):
         verbose_name = _('special date')
         verbose_name_plural = _('special dates')
 
+
 class CompanyBalanceHistory(models.Model):
     """ Company balance history Model """
     company = models.ForeignKey(Company, verbose_name=_(u"company"))
@@ -317,7 +325,7 @@ class CompanyBalanceHistory(models.Model):
     operation_type = models.CharField(_(u"operation type"), max_length=10, choices=OPERATION_TYPE_CHOICES, default='customer')
     reference = models.CharField(_(u'public description'), max_length=255, blank=True)
     description = models.CharField(_(u'internal description'), max_length=255, blank=True)
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True) 
+    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
 
     class Meta:
@@ -328,6 +336,7 @@ class CompanyBalanceHistory(models.Model):
 
     def __unicode__(self):
         return u"%s %s %s %s" % (self.company, self.amount_debited, self.amount_refund, self.operation_type)
+
 
 class CustomerDirectory(models.Model):
     """ Customer Directory Model """
@@ -378,7 +387,51 @@ class CustomerDirectory(models.Model):
     def __unicode__(self):
         return "%s (%s:%s)" % (self.name, self.sip_ip, self.sip_port)
 
+# Caller ID list
+
+
+class CalleridPrefixList(models.Model):
+    """ CallerID List """
+    name = models.CharField(_(u'name'), max_length=128, unique=True)
+    description = models.TextField(_(u'description'), blank=True)
+    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+
+    class Meta:
+        db_table = 'callerid_prefix_list'
+        ordering = ('name',)
+        verbose_name = _(u'CallerID prefix list')
+        verbose_name_plural = _(u'CallerID prefix lists')
+
+    def __unicode__(self):
+        return u"%s" % self.name
+
+    def prefix(self):
+        html = '<span><a href="/extranet/pyfreebill/calleridprefix/?calleridprefixlist__id__exact={0}" class="btn btn-inverse btn-mini">Prefix <i class="icon-plus-sign"></i></a></span>'
+        return format_html(html, (self.id))
+    prefix.allow_tags = True
+    prefix.short_description = 'prefix'
+
+
+class CalleridPrefix(models.Model):
+    """ Customer Rates Model """
+    calleridprefixlist = models.ForeignKey(CalleridPrefixList, verbose_name=_(u"callerid prefix list"))
+    prefix = models.CharField(_(u'numeric prefix'), max_length=30, db_index=True)
+    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+
+    class Meta:
+        db_table = 'caller_id_prefix'
+        ordering = ('calleridprefixlist', 'prefix')
+        unique_together = ("calleridprefixlist", "prefix")
+        verbose_name = _(u'Callerid prefix')
+        verbose_name_plural = _(u'Callerid prefix')
+
+    def __unicode__(self):
+        return u"%s" % self.prefix
+
 # Provider Rates
+
 
 class ProviderTariff(models.Model):
     """ Provider tariff """
@@ -389,6 +442,13 @@ class ProviderTariff(models.Model):
     prefix = models.CharField(_(u'prefix'), blank=True, default='', max_length=15)
     suffix = models.CharField(_(u'suffix'), blank=True, default='', max_length=15)
     description = models.TextField(_(u'description'), blank=True)
+    CALLERID_FILTER_CHOICES = (
+        ('1', _(u"No filter")),
+        ('2', _(u"Prefix authorized")),
+        ('3', _(u"Prefix prohibited")),
+    )
+    callerid_filter = models.CharField(_(u"CallerID Prefix filter"), max_length=2, choices=CALLERID_FILTER_CHOICES, default='1')
+    callerid_list = models.ForeignKey(CalleridPrefixList, verbose_name=_(u"CallerID prefix List"), blank=True, null=True)
     date_start = models.DateTimeField()
     date_end = models.DateTimeField()
     quality = models.IntegerField(_(u'quality'), blank=True, default='100', help_text=_(u"Alternate field to order by."))
@@ -404,7 +464,7 @@ class ProviderTariff(models.Model):
         verbose_name = _(u'provider tariff')
         verbose_name_plural = _(u'provider tariffs')
 
-    def __unicode__(self):  
+    def __unicode__(self):
         return u"%s" % self.name
 
     def rates(self):
@@ -432,9 +492,9 @@ class ProviderRates(models.Model):
         db_table = 'provider_rates'
         ordering = ('enabled', 'provider_tariff', 'digits')
         index_together = [
-            ["provider_tariff" ,"digits", "enabled"],
+            ["provider_tariff", "digits", "enabled"],
         ]
-        unique_together = ("digits","provider_tariff")
+        unique_together = ("digits", "provider_tariff")
         verbose_name = _(u'provider rate')
         verbose_name_plural = _(u'provider rates')
 
@@ -443,6 +503,7 @@ class ProviderRates(models.Model):
 
 # LCR
 
+
 class LCRGroup(models.Model):
     """ LCR group model """
     name = models.CharField(_(u"name"), max_length=128, unique=True)
@@ -450,8 +511,8 @@ class LCRGroup(models.Model):
     LCR_TYPE_CHOICES = (
         ('p', _(u"lower price")),
         ('q', _(u"best quality")),
-        ('r',_(u"best reliability")),
-        ('l',_(u"load balance")),
+        ('r', _(u"best reliability")),
+        ('l', _(u"load balance")),
     )
     lcrtype = models.CharField(_(u"lcr type"), max_length=10, choices=LCR_TYPE_CHOICES, default='p')
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
@@ -459,12 +520,13 @@ class LCRGroup(models.Model):
 
     class Meta:
         db_table = 'lcr_group'
-        ordering = ('name',) 
+        ordering = ('name',)
         verbose_name = _(u'LCR')
         verbose_name_plural = _(u'LCRs')
 
-    def __unicode__(self):   
+    def __unicode__(self):
         return u"%s %s " % (self.name, self.lcrtype)
+
 
 class LCRProviders(models.Model):
     """ LCR group model """
@@ -487,13 +549,22 @@ class LCRProviders(models.Model):
     rates.allow_tags = True
     rates.short_description = 'rates'
 
+
 # Ratecard
+
 
 class RateCard(models.Model):
     """ RateCard Model """
     name = models.CharField(_(u'name'), max_length=128, unique=True)
     description = models.TextField(_(u'description'), blank=True)
     lcrgroup = models.ForeignKey(LCRGroup, verbose_name=_(u"lcr"))
+    CALLERID_FILTER_CHOICES = (
+        ('1', _(u"No filter")),
+        ('2', _(u"Prefix authorized")),
+        ('3', _(u"Prefix prohibited")),
+    )
+    callerid_filter = models.CharField(_(u"CallerID Prefix filter"), max_length=2, choices=CALLERID_FILTER_CHOICES, default='1')
+    callerid_list = models.ForeignKey(CalleridPrefixList, verbose_name=_(u"CallerID prefix List"), blank=True, null=True)
     enabled = models.BooleanField(_(u"Enabled / Disabled"), default=True)
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
@@ -506,18 +577,19 @@ class RateCard(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.name
-        
+
     def rates(self):
         html = '<span><a href="/extranet/pyfreebill/customerrates/?ratecard__id__exact={0}" class="btn btn-inverse btn-mini">Rates <i class="icon-plus-sign"></i></a></span>'
         return format_html(html, (self.id))
     rates.allow_tags = True
     rates.short_description = 'Rates'
-    
+
     def lcr(self):
         html = '<span><a href="/extranet/pyfreebill/lcrgroup/{0}/" class="btn btn-inverse btn-mini">LCR <i class="icon-plus-sign"></i></a></span>'
         return format_html(html, (self.lcrgroup.pk))
     lcr.allow_tags = True
     lcr.short_description = 'lcr'
+
 
 class CustomerRates(models.Model):
     """ Customer Rates Model """
@@ -542,6 +614,7 @@ class CustomerRates(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.ratecard
+
 
 class CustomerRateCards(models.Model):
     """ Customer rates Cards Model """
@@ -570,8 +643,8 @@ class CustomerRateCards(models.Model):
         return u"%s - Priority: %s Desc: %s" % (self.ratecard, self.priority, self.description)
 
 
-
 # NORMALIZATION
+
 
 class DestinationNumberRules(models.Model):
     """ Destination Number Normalization Rules """
@@ -589,6 +662,7 @@ class DestinationNumberRules(models.Model):
 
     def __unicode__(self):
         return u"%s -> %s " % (self.prefix, self.format_num)
+
 
 class CustomerNormalizationRules(models.Model):
     """ Customer Normalization Rules """
@@ -609,6 +683,7 @@ class CustomerNormalizationRules(models.Model):
     def __unicode__(self):
         return u"%s -> %s -%s +%s" % (self.company, self.prefix, self.remove_prefix, self.add_prefix)
 
+
 class CarrierNormalizationRules(models.Model):
     """ Carrier Normalization Rules """
     company = models.ForeignKey(Company, verbose_name=_(u"provider"))
@@ -628,6 +703,7 @@ class CarrierNormalizationRules(models.Model):
     def __unicode__(self):
         return u"%s -> %s -%s +%s" % (self.company, self.prefix, self.remove_prefix, self.add_prefix)
 
+
 class CustomerCIDNormalizationRules(models.Model):
     """ Customer Caller ID Number Normalization Rules """
     company = models.ForeignKey(Company, verbose_name=_(u"customer"))
@@ -646,6 +722,7 @@ class CustomerCIDNormalizationRules(models.Model):
 
     def __unicode__(self):
         return u"%s -> -%s +%s" % (self.company, self.remove_prefix, self.add_prefix)
+
 
 class CarrierCIDNormalizationRules(models.Model):
     """ Carrier Caller ID Number Normalization Rules """
@@ -667,6 +744,7 @@ class CarrierCIDNormalizationRules(models.Model):
         return u"%s -> -%s +%s" % (self.company, self.remove_prefix, self.add_prefix)
 
 # ACL
+
 
 class AclLists(models.Model):
     """ ACL list model """
@@ -713,13 +791,14 @@ class AclNodes(models.Model):
 
 # VOIP SWITCH
 
+
 class VoipSwitch(models.Model):
     """ VoipSwitch Profile """
     name = models.CharField(_(u"Switch name"), max_length=50, help_text=_(u"Switch name"))
     ip = models.CharField(_(u"switch IP"), max_length=100, default="auto", help_text=_(u"Switch IP."))
-    esl_listen_ip =  models.CharField(_(u"event socket switch IP"), max_length=100, default="127.0.0.1", help_text=_(u"Event socket switch IP."))
+    esl_listen_ip = models.CharField(_(u"event socket switch IP"), max_length=100, default="127.0.0.1", help_text=_(u"Event socket switch IP."))
     esl_listen_port = models.PositiveIntegerField(_(u"event socket switch port"), default="8021", help_text=_(u"Event socket switch port."))
-    esl_password =  models.CharField(_(u"event socket switch password"), max_length=30, default="ClueCon", help_text=_(u"Event socket switch password."))
+    esl_password = models.CharField(_(u"event socket switch password"), max_length=30, default="ClueCon", help_text=_(u"Event socket switch password."))
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
 
@@ -732,7 +811,8 @@ class VoipSwitch(models.Model):
     def __unicode__(self):
         return u"%s (:%s)" % (self.name, self.ip)
 
-# SOFIA 
+# SOFIA
+
 
 class SipProfile(models.Model):
     """ Sofia Sip profile """
@@ -779,13 +859,14 @@ class SipProfile(models.Model):
 
     def get_gateways(self):
         """Get all gateways in the system assigned to this sip profile."""
-        retval = []  
+        retval = []
         accounts = Company.objects.filter(supplier_enabled=True)
         for account in accounts:
             for gateway in account.sofiagateway_set.all():
                 if gateway.sip_profile.id == self.id:
                     retval.append(gateway)
         return retval
+
 
 class SofiaGateway(models.Model):
     name = models.CharField(_(u"name"), max_length=100, unique=True)
@@ -801,8 +882,7 @@ class SofiaGateway(models.Model):
     password = models.CharField(_(u"password"), blank=True, default='', max_length=35)
     register = models.BooleanField(_(u"register"), default=False)
     proxy = models.CharField(_(u"proxy"), max_length=48, default="", help_text=_(u"IP if register is False."))
-    extension = models.CharField(_(u"extension number"), max_length=50, blank=True, default="", help_text=_(u"Extension for inbound calls. Same as username, if "
-                    "blank."))
+    extension = models.CharField(_(u"extension number"), max_length=50, blank=True, default="", help_text=_(u"Extension for inbound calls. Same as username, if blank."))
     realm = models.CharField(_(u"realm"), max_length=50, blank=True, default="", help_text=_(u"Authentication realm. Same as gateway name, if blank."))
     from_domain = models.CharField(_(u"from domain"), max_length=50, blank=True, default="", help_text=_(u"Domain to use in from field. Same as realm if blank."))
     expire_seconds = models.PositiveIntegerField(_(u"expire seconds"), default=3600, null=True)
@@ -831,6 +911,7 @@ class SofiaGateway(models.Model):
 
 # Hangup Cause
 
+
 class HangupCause(models.Model):
     """ Hangup Cause Model """
     code = models.PositiveIntegerField(_(u"Hangup code"), unique=True, help_text=_(u"ITU-T Q.850 Code."))
@@ -850,6 +931,7 @@ class HangupCause(models.Model):
         return u"[%s] %s" % (self.code, self.enumeration)
 
 # CDR
+
 
 class CDR(models.Model):
     """ CDR Model    """
@@ -893,8 +975,6 @@ class CDR(models.Model):
     sell_destination = models.CharField(_(u'sell destination'), blank=True, default='', null=True, max_length=128, db_index=True)
     cost_destination = models.CharField(_(u'cost destination'), blank=True, default='', null=True, max_length=128, db_index=True)
 
-
-
     class Meta:
         db_table = 'cdr'
         ordering = ('start_stamp', 'customer')
@@ -917,23 +997,23 @@ class CDR(models.Model):
 
     @property
     def daily_total_answered_calls(self):
-        return qsstats.QuerySetStats(self.objects.all().exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING"),'start_stamp', aggregate=Count('id')).this_day()
+        return qsstats.QuerySetStats(self.objects.all().exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING"), 'start_stamp', aggregate=Count('id')).this_day()
 
     @property
     def daily_total_calls(self):
-        return qsstats.QuerySetStats(self.objects.all(),'start_stamp', aggregate=Count('id')).this_day()
+        return qsstats.QuerySetStats(self.objects.all(), 'start_stamp', aggregate=Count('id')).this_day()
 
     @property
     def daily_total_effective_duration_calls(self):
-        return qsstats.QuerySetStats(self.objects.all().exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING"),'start_stamp', aggregate=Sum('effective_duration')).this_day()
+        return qsstats.QuerySetStats(self.objects.all().exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING"), 'start_stamp', aggregate=Sum('effective_duration')).this_day()
 
     @property
     def daily_total_sell_calls(self):
-        return qsstats.QuerySetStats(self.objects.all().exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING"),'start_stamp', aggregate=Sum('total_sell')).this_day()
+        return qsstats.QuerySetStats(self.objects.all().exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING"), 'start_stamp', aggregate=Sum('total_sell')).this_day()
 
     @property
     def daily_total_cost_calls(self):
-        return qsstats.QuerySetStats(self.objects.all().exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING"),'start_stamp', aggregate=Sum('total_cost')).this_day()
+        return qsstats.QuerySetStats(self.objects.all().exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING"), 'start_stamp', aggregate=Sum('total_cost')).this_day()
 
     def _get_min_effective_duration(self):
         if self.effective_duration:
@@ -952,8 +1032,8 @@ class CDR(models.Model):
         else:
             totalsell = 0.000000
         if self.init_block:
-            totalsell = decimal.Decimal(totalsell) + decimal.Decimal(self.init_block)           
-        return round(totalsell,6)
+            totalsell = decimal.Decimal(totalsell) + decimal.Decimal(self.init_block)
+        return round(totalsell, 6)
     total_sell_py = property(_get_total_sell)
 
     def _get_total_cost(self):
@@ -961,7 +1041,7 @@ class CDR(models.Model):
             totalcost = decimal.Decimal(self.effective_duration) * decimal.Decimal(self.cost_rate) / 60
         else:
             totalcost = 0.000000
-        return round(totalcost,6)
+        return round(totalcost, 6)
     total_cost_py = property(_get_total_cost)
 
     def _get_effective_duration(self):
@@ -988,6 +1068,7 @@ class CDR(models.Model):
 
 # STATS
 
+
 class DimDate(models.Model):
     """ Date dimension """
     date = models.DateTimeField()
@@ -1007,6 +1088,7 @@ class DimDate(models.Model):
     def __unicode__(self):
         return u"%s" % self.date
 
+
 class DimCustomerHangupcause(models.Model):
     """ Dimension Customer / Hangupcause Model """
     customer = models.ForeignKey(Company, verbose_name=_(u"customer"))
@@ -1023,6 +1105,7 @@ class DimCustomerHangupcause(models.Model):
 
     def __unicode__(self):
         return u"%s -c: %s -h: %s" % (self.date, self.customer, self.hangupcause)
+
 
 class DimCustomerSipHangupcause(models.Model):
     """ Dimension Customer / SIP Hangupcause Model """
@@ -1041,6 +1124,7 @@ class DimCustomerSipHangupcause(models.Model):
     def __unicode__(self):
         return u"%s -c: %s -h: %s" % (self.date, self.customer, self.sip_hangupcause)
 
+
 class DimProviderHangupcause(models.Model):
     """ Dimension Provider / Hangupcause Model """
     provider = models.ForeignKey(Company, verbose_name=_(u"provider"))
@@ -1058,6 +1142,7 @@ class DimProviderHangupcause(models.Model):
     def __unicode__(self):
         return u"%s -c: %s -h: %s" % (self.date, self.provider, self.hangupcause)
 
+
 class DimProviderSipHangupcause(models.Model):
     """ Dimension Provider / SIP Hangupcause Model """
     provider = models.ForeignKey(Company, verbose_name=_(u"provider"))
@@ -1074,6 +1159,7 @@ class DimProviderSipHangupcause(models.Model):
 
     def __unicode__(self):
         return u"%s -c: %s -h: %s" % (self.date, self.provider, self.sip_hangupcause)
+
 
 class DimCustomerDestination(models.Model):
     """ Dimension Customer / Destination Model """
@@ -1102,9 +1188,10 @@ class DimCustomerDestination(models.Model):
         if self.total_sell and self.total_cost:
             margin = self.total_sell - self.total_cost
         else:
-            margin = 0    
-        return round(margin,2)
+            margin = 0
+        return round(margin, 2)
     margin = property(_get_margin)
+
 
 class DimProviderDestination(models.Model):
     """ Dimension Provider / Destination Model """
@@ -1130,7 +1217,7 @@ class DimProviderDestination(models.Model):
         return u"%s -p: %s -d: %s" % (self.date, self.provider, self.destination)
 
     def get_daily_providers_stats(self, today, delta, interval):
-        qs = self.model._default_manager.filter(date__lte = lastday)
+        qs = self.model._default_manager.filter(date__lte=lastday)
         qss = qsstats.QuerySetStats(qs, 'date')
         lastday = today - datetime.timedelta(days=delta)
         return qss.time_series(lastday, today, interval)

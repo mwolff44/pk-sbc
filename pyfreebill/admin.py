@@ -410,7 +410,24 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
         else:
             return ['customer_balance', 'supplier_balance']
 
+# CallerID prefix list
+
+
+class CalleridPrefixAdmin(admin.ModelAdmin):
+    list_display = ['calleridprefixlist', 'prefix', 'date_added', 'date_modified']
+    ordering = ('calleridprefixlist', 'prefix')
+    list_filter = ('calleridprefixlist',)
+    search_fields = ('^prefix',)
+
+
+class CalleridPrefixListAdmin(admin.ModelAdmin):
+    list_display = ['name', 'description', 'prefix', 'date_added', 'date_modified']
+    ordering = ('name',)
+    list_filter = ['name', ]
+    search_fields = ('^name', 'description')
+
 # Provider Rates
+
 
 class ProviderRatesFormSet(BaseInlineFormSet):
 
@@ -418,14 +435,16 @@ class ProviderRatesFormSet(BaseInlineFormSet):
         qs = super(ProviderRatesFormSet, self).get_queryset()
         return qs[:40]
 
+
 class ProviderRatesInline(admin.TabularInline):
     model = ProviderRates
     formset = ProviderRatesFormSet
     max_count = 40
     extra = 1
 
+
 class ProviderTariffAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'carrier', 'prefix', 'description', 'quality', 'reliability', 'date_start', 'date_end', 'get_boolean_display', 'rates']
+    list_display = ['id', 'name', 'carrier', 'prefix', 'quality', 'reliability', 'callerid_filter', 'callerid_list', 'date_start', 'date_end', 'get_boolean_display', 'rates']
     ordering = ['name',]
     readonly_fields = ['id',]
     form = ProviderTariffAdminForm
@@ -587,7 +606,7 @@ class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
         return [f for f in format_csv if f().can_export()]
 
 class RateCardAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'description', 'lcrgroup', 'lcr', 'get_boolean_display', 'rates']
+    list_display = ['id', 'name', 'lcrgroup', 'lcr', 'get_boolean_display', 'rates', 'callerid_filter', 'callerid_list']
     ordering = ['name', 'enabled', 'lcrgroup']
     list_filter = ['enabled', 'lcrgroup']
     search_fields = ['description', '^name']
@@ -738,6 +757,8 @@ class AclNodesAdmin(admin.ModelAdmin):
             return False
 
 # Hangup Cause
+
+
 class HangupCauseAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ('id', 'code', 'enumeration', 'cause', 'description')
     search_fields = ('code', 'enumeration')
@@ -749,6 +770,8 @@ class HangupCauseAdmin(ImportExportMixin, admin.ModelAdmin):
             return False
 
 # CDR
+
+
 class TotalAveragesChangeList(ChangeList):
 
     def get_min_duration(self, sec_duration):
@@ -783,6 +806,7 @@ class TotalAveragesChangeList(ChangeList):
             self.margin = 0
         self.min_avg_effective_duration = self.get_min_duration(q['effective_duration_avg'])
         self.min_total_effective_duration = self.get_min_duration(q['effective_duration_sum'])
+
 
 class CDRAdmin(ExportMixin, admin.ModelAdmin):
     search_fields = ['^prefix', '^destination_number', '^customer__name', '^cost_destination', '^sell_destination']
@@ -1034,6 +1058,8 @@ admin_site.register(Company, CompanyAdmin)
 admin_site.register(Person, PersonAdmin)
 admin_site.register(Group, GroupAdmin)
 admin_site.register(CompanyBalanceHistory, CompanyBalanceHistoryAdmin)
+admin_site.register(CalleridPrefix, CalleridPrefixAdmin)
+admin_site.register(CalleridPrefixList, CalleridPrefixListAdmin)
 admin_site.register(ProviderTariff, ProviderTariffAdmin)
 admin_site.register(ProviderRates, ProviderRatesAdmin)
 admin_site.register(LCRGroup, LCRGroupAdmin)

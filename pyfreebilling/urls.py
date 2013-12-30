@@ -60,6 +60,7 @@ admin_site.register_top_menu_item('3_Routing', icon_class="icon-exchange",
         children=[
             {'name': 'LCR', 'admin_url': '/extranet/pyfreebill/lcrgroup/', 'order': 1, 'title_icon': 'icon-random' },
             {'name': 'Destination Number Normalization', 'admin_url': '/extranet/pyfreebill/destinationnumberrules/', 'order': 2, 'separator': True, 'title_icon': 'icon-medkit' },
+            {'name': 'CallerID prefix management', 'admin_url': '/extranet/pyfreebill/calleridprefixlist/', 'order': 3, 'separator': True, 'title_icon': 'icon-list' },
             ],
         perms=perms_func)
 
