@@ -161,8 +161,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-#    'translations',
-#    'elfinder',
+ #   'adminactions',
     'pyfreebill',
     'switch',
     'yawdadmin',

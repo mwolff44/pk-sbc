@@ -1,16 +1,16 @@
 # Copyright 2013 Mathias WOLFF
 # This file is part of pyfreebilling.
-# 
+#
 # pyfreebilling is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # pyfreebilling is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
@@ -19,11 +19,15 @@ from django.contrib import admin
 from django.http import HttpResponseRedirect
 from yawdadmin import admin_site
 
+#from adminactions import actions
+#import adminactions.urls
+
 #from pyfreebill.urls import urlpatterns as pyfreebill_url
 from django.core.urlresolvers import reverse, reverse_lazy, resolve
 
 admin.autodiscover()
 admin_site._registry.update(admin.site._registry)
+#actions.add_to_site(admin_site)
 
 # Custom menu
 def perms_func(request, item):
@@ -109,6 +113,7 @@ urlpatterns = patterns('',
     url(r'^extranet/status/$', 'pyfreebill.views.admin_status_view'),
     url(r'^admin/', include('admin_honeypot.urls')),
     url(r'^extranet/', include(admin_site.urls)),
+#    url(r'^adminactions/', include(adminactions.urls)),
 #    url(r'^elfinder/', include('elfinder.urls')),
 )
 

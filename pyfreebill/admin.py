@@ -227,14 +227,14 @@ class CompanyAdmin(admin.ModelAdmin):
             return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
     get_prepaid_display.short_description = 'Prepaid'
-    get_prepaid_display.admin_order_field = 'prepaid' 
+    get_prepaid_display.admin_order_field = 'prepaid'
     
     def get_vat_display(self, obj):
         if obj.vat:
             return mark_safe('<span class="label label-info"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
     get_vat_display.short_description = 'VAT'
-    get_vat_display.admin_order_field = 'vat'        
+    get_vat_display.admin_order_field = 'vat'
     
     def has_add_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -305,6 +305,7 @@ class CompanyAdmin(admin.ModelAdmin):
             usercompany = Person.objects.get(user=user)
         return qs.filter(name=usercompany.company)
 
+
 class PersonAdmin(admin.ModelAdmin):
     inlines = [
         PhoneNumberInline,
@@ -329,6 +330,7 @@ class PersonAdmin(admin.ModelAdmin):
         else:
             return False
 
+
 class GroupAdmin(admin.ModelAdmin):
     list_display_links = ('name',)
     list_display = ('name', 'date_modified')
@@ -350,26 +352,26 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
     search_fields = ['^company__name', '^reference']
 
     def save_model(self, request, obj, form, change):
-      if change:
-        messages.info(request, "No need to update balance")
-      else:
-        company = form.cleaned_data['company']
-        amount_debited = form.cleaned_data['amount_debited']
-        amount_refund = form.cleaned_data['amount_refund']
-        if form.cleaned_data['operation_type'] == "customer":
-            balance = Company.objects.get(pk=company.id)
-            balance.customer_balance = balance.customer_balance - amount_debited + amount_refund
-            balance.save()
-            obj.customer_balance = balance.customer_balance
-        elif form.cleaned_data['operation_type'] == "supplier":
-            balance = Company.objects.get(pk=company.id)
-            balance.supplier_balance = balance.supplier_balance - amount_debited + amount_refund
-            balance.save()
-            obj.supplier_balance = balance.supplier_balance
+        if change:
+            messages.info(request, "No need to update balance")
         else:
-            pass
-        messages.success(request, "balance updated")
-      obj.save()
+            company = form.cleaned_data['company']
+            amount_debited = form.cleaned_data['amount_debited']
+            amount_refund = form.cleaned_data['amount_refund']
+            if form.cleaned_data['operation_type'] == "customer":
+                balance = Company.objects.get(pk=company.id)
+                balance.customer_balance = balance.customer_balance - amount_debited + amount_refund
+                balance.save()
+                obj.customer_balance = balance.customer_balance
+            elif form.cleaned_data['operation_type'] == "supplier":
+                balance = Company.objects.get(pk=company.id)
+                balance.supplier_balance = balance.supplier_balance - amount_debited + amount_refund
+                balance.save()
+                obj.supplier_balance = balance.supplier_balance
+            else:
+                pass
+            messages.success(request, "balance updated")
+        obj.save()
 
     fieldsets = (
         ('General', {
@@ -379,7 +381,7 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
             'fields': ('amount_debited', 'amount_refund')
         }),
         ('Balances', { 
-            'fields': ('customer_balance', 'supplier_balance')                           
+            'fields': ('customer_balance', 'supplier_balance')
         }),
     )
 
@@ -396,7 +398,7 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
             return False
 
     def has_delete_permission(self, request, obj=None):
-      return False
+        return False
 
     def get_actions(self, request):
         if request.user.is_superuser:
@@ -1118,4 +1120,3 @@ admin_site.register(DimCustomerDestination, DimCustomerDestinationAdmin)
 admin_site.register(DimProviderDestination, DimProviderDestinationAdmin)
 admin_site.register(LogEntry, LogEntryAdmin)
 #admin.site.register()
-
