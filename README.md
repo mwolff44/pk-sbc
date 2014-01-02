@@ -74,3 +74,7 @@ The project uses freeswitch, PostgreSQL and Django.
 Name: Mathias WOLFF
 Email: website contact form
 Website: http://www.blog-des-telecoms.com // specific parts will be created
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mwolff44/pyfreebilling/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
