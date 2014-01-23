@@ -344,6 +344,7 @@ class GroupAdmin(admin.ModelAdmin):
         else:
             return False
 
+
 class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
     list_display_links = ('company',)
     list_display = ('company', 'amount_debited', 'amount_refund', 'customer_balance', 'supplier_balance', 'operation_type', 'reference', 'date_modified')
@@ -539,6 +540,7 @@ class LCRProvidersInline(admin.TabularInline):
 #    fields = ('rates',)
     extra = 0
 
+
 class LCRGroupAdmin(admin.ModelAdmin):
     list_display = ['name', 'description', 'lcrtype']
     ordering = ('name', 'lcrtype')
@@ -553,6 +555,7 @@ class LCRGroupAdmin(admin.ModelAdmin):
         else:
             return False
 
+
 class LCRProvidersAdmin(admin.ModelAdmin):
     list_display = ['lcr', 'provider_tariff', 'rates']
     list_filter = ('lcr',)
@@ -565,16 +568,19 @@ class LCRProvidersAdmin(admin.ModelAdmin):
 
 # Customer Rates
 
+
 class CustomerRatesFormSet(BaseInlineFormSet):
     def get_queryset(self):
         qs = super(CustomerRatesFormSet, self).get_queryset()
         return qs[:40]
+
 
 class CustomerRatesInline(admin.TabularInline):
     model = CustomerRates
     #formset = CustomerRatesFormSet
     max_num = 40
     extra = 1
+
 
 class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = ['id', 'ratecard', 'destination', 'prefix', 'rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'get_boolean_display', 'date_added', 'date_modified']
@@ -670,6 +676,7 @@ class CustomerDirectoryAdmin(admin.ModelAdmin):
     list_display = ['company', 'name', 'sip_ip', 'max_calls', 'calls_per_second', 'get_enabled_display', 'get_fake_ring_display', 'get_cli_debug_display'] 
     ordering = ['company', 'enabled']
     list_filter = ['enabled',]
+    #list_editable = ['max_calls', 'calls_per_second']
     search_filter = ['^sip_ip', '^company', '^name']
     exclude = ['vmd',]
     form = CustomerDirectoryAdminForm
@@ -695,7 +702,7 @@ class CustomerDirectoryAdmin(admin.ModelAdmin):
             return mark_safe('<span class="label label-warning"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
     get_cli_debug_display.short_description = 'cli_debug'
-    get_cli_debug_display.admin_order_field = 'cli_debug' 
+    get_cli_debug_display.admin_order_field = 'cli_debug'
     
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:

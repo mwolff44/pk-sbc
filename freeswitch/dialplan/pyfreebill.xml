@@ -39,7 +39,7 @@
       </condition>
 
     </extension>
-    
+
     <extension name="limit" continue="true">
         <condition>
           <action application="limit" data="hash inbound ${user_name} ${max_calls} ${calls_per_second}/1 !NORMAL_CIRCUIT_CONGESTION"/>

@@ -84,6 +84,7 @@
           <param name='register' value='{{ gateway.register }}'/>
           <param name='expire-seconds' value='{{ gateway.expire_seconds }}'/>
           <param name='retry-seconds' value='{{ gateway.retry_seconds }}'/>
+          <param name='context' value='public'/>
         </gateway>
        {% endfor %}
       </gateways>

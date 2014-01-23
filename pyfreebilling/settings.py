@@ -21,7 +21,7 @@ import os
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-PFB_VERSION = 'v1.24'
+PFB_VERSION = 'v1.29'
 
 SETTINGS_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SETTINGS_DIR)
@@ -163,6 +163,7 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
  #   'adminactions',
     'pyfreebill',
+    'did',
     'switch',
     'yawdadmin',
     'import_export',
@@ -184,6 +185,7 @@ INSTALLED_APPS = (
     'chartjs',
     'django.contrib.admin',
     'south',
+    'cities_light',
     'django_countries',
     'country_dialcode',
 )

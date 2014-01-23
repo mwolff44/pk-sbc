@@ -1,0 +1,9 @@
+<include>
+  <extension name="public_did">
+    <condition field="destination_number" expression="^(1111)$">
+      <action application="set" data="domain_name=$${domain}"/>
+      <!-- This example maps the DID 5551212 to ring 1000 in the default context -->
+      <action application="transfer" data="1000 XML default"/>
+    </condition>
+  </extension>
+</include>

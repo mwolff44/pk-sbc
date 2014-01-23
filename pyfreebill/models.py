@@ -34,6 +34,7 @@ from django.db.models import Sum, Avg, Count, Max, Min
 from django_iban.fields import IBANField, SWIFTBICField
 import decimal
 import math
+from django_countries.fields import CountryField
 
 # CustomUser -- Django 1.6
 # class CustomUser(AbstractUser):
@@ -278,7 +279,8 @@ class StreetAddress(models.Model):
     city = models.CharField(_('city'), max_length=200, blank=True)
     province = models.CharField(_('province'), max_length=200, blank=True)
     postal_code = models.CharField(_('postal code'), max_length=10, blank=True)
-    country = models.CharField(_('country'), max_length=100)
+    #country = models.CharField(_('country'), max_length=100)
+    country = CountryField(_('country'))
     location = models.CharField(_('location'), max_length=6, choices=LOCATION_CHOICES, default='work')
     date_added = models.DateTimeField(_('date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_('date modified'), auto_now=True)

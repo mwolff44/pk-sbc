@@ -14,11 +14,11 @@
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
-import os
+#import os
 from django.contrib import admin
-from switch.models import *
+from switch.models import VoipSwitch
 
-# VoipSwitch
+
 class VoipSwitchAdmin(admin.ModelAdmin):
     list_display = ('name', 'ip', 'esl_listen_ip', 'date_modified')
     readonly_fields = ('date_added', 'date_modified')
