@@ -15,11 +15,47 @@
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
 from django.contrib import admin
+from django.contrib import messages
+from django.template import Context, loader
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 
 from yawdadmin import admin_site
 
+from switch import esl
+
 from did.models import Did, ContractDid
+
+
+def didupdate(modeladmin, request, queryset):
+    """ generate new did xml config file """
+    try:
+        t = loader.get_template('xml/00_did.xml')
+    except IOError:
+        messages.error(request, """did config xml file update failed.
+            Can not load template file !""")
+    dids = Did.objects.all()
+    c = Context({"dids": dids, })
+    try:
+        f = open('/usr/local/freeswitch/conf/dialplan/public/00_did.xml', 'w')
+        try:
+            f.write(t.render(c))
+            f.close()
+            try:
+                esl.getReloadDialplan()
+                messages.success(request, "FS successfully reload")
+            except IOError:
+                messages.error(request, """DID config xml file update failed.
+                    FS update failed ! Try manually""")
+        finally:
+            #f.close()
+            messages.success(request, "DID config xml file update success")
+    except IOError:
+        messages.error(request, """DID config xml file update failed. Can not
+            create file !""")
+didupdate.short_description = _(u"update DID config xml file")
+
+admin.site.add_action(didupdate, _(u"generate DID configuration file"))
 
 
 class ContractDidInline(admin.StackedInline):
@@ -39,6 +75,7 @@ class DidAdmin(admin.ModelAdmin):
     search_fields = ('number',)
     save_on_top = True
     inlines = [ContractDidInline, ]
+    actions = [didupdate]
 
     def get_reserved(self, obj):
         if ContractDid.objects.get(did=obj):

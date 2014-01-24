@@ -1,9 +1,12 @@
 <include>
-  <extension name="{{ did.numeric_prefix }}">
-    <condition field="destination_number" expression="^({{ did.numeric_prefix }})$">
-      <action application="set" data="domain_name=$${domain}"/>
-      <!-- This example maps the DID 5551212 to ring 1000 in the default context -->
-      <action application="transfer" data="1000 XML default"/>
-    </condition>
-  </extension>
+	{% if dids %}{% for did in dids %}
+    <extension name="{{ did.number }}">
+        <condition field="destination_number" expression="^({{ did.number }})$">
+        <condition>
+            <action application="limit" data="hash did {{ did.number }} {{ did.max_channels }} !NORMAL_CIRCUIT_CONGESTION"/>
+            <action application="set" data="inside_call=true"/>
+            <action application="lua" data="/usr/local/venv/pyfreebilling/freeswitch/scripts/pfb_did.lua"/>
+        </condition>
+    </extension>
+    {% endfor %}{% endif %}
 </include>

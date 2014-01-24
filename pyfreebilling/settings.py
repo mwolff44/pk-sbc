@@ -161,9 +161,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
- #   'adminactions',
     'pyfreebill',
-    'did',
     'switch',
     'yawdadmin',
     'import_export',
@@ -175,7 +173,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.comments',
     'admin_honeypot',
-#    'djangosecure',
     'django_iban',
     'chroniker',
     'common',
@@ -188,6 +185,7 @@ INSTALLED_APPS = (
     'cities_light',
     'django_countries',
     'country_dialcode',
+    'did',
 )
 
 # A sample logging configuration. The only tangible logging

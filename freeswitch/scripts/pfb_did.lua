@@ -15,7 +15,7 @@
 --# along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
 -----------------------------------------------
---        WHOLESALE SCRIPT
+--        DID WHOLESALE SCRIPT
 -----------------------------------------------
 
 -----------------------------------------------
@@ -107,26 +107,6 @@ function set_privacy(privacy)
   else
     set_variable("cid_type", "none")
     set_variable("sip_h_Privacy", "none")
-  end
-end
------------------------------------------------
------------------------------------------------
---        VOICEMAIL DETECTION
------------------------------------------------
------------------------------------------------
-function onInput(session, type, obj)
-  if type == "dtmf" and obj['digit'] == '1' and human_detected == false then
-    execute("avmd", "stop")
-    log("AVMD : ", "human detected", "debug")
-    return "break"
-  end
-
-  if type == "event" and voicemail_detected == false then
-    execute("avmd", "stop")
-    log("AVMD : ", "voicemail detected", "debug")
-    execute("curl", "http://1.1.1.1/v4/lib/sip_repondeur.php?dest="..channel["destination_number"])
-    set_variable("proto_specific_hangup_cause", "PFB_VMD_DETECTED")
-    session:hangup("NORMAL_CLEARING")
   end
 end
 -----------------------------------------------
@@ -667,18 +647,6 @@ if (session:ready() == true) then
     execute("set", "instant_ringback=true")
   end
 
------------------------------------------------
--- VoiceMail Detection variables
------------------------------------------------
-  if channel["vmd"] == "True" then
-    human_detected = false
-    voicemail_detected = false
-    session:setInputCallback("onInput")
-    execute("set", "api_result=${sched_api(+5 none avmd "..channel["uuid"].." start)}")
-  end
-
---    execute("export", "disable_q850_reason=true")
---    execute("nibblebill", "check")
   mydialbridge = ""
   myvarbridge = ""
   
