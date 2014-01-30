@@ -30,6 +30,9 @@ class ContractDid(models.Model):
     customer = models.ForeignKey('pyfreebill.Company',
                                  verbose_name=_(u"company"),
                                  limit_choices_to={'customer_enabled': True})
+    plan = models.ForeignKey('did.CustomerRatesDid',
+                             verbose_name=_(u"rate plan"),
+                             limit_choices_to={'enabled': True})
     max_channels = models.PositiveIntegerField(_(u'max calls'),
                                                default=1,
                                                help_text=_(u"""maximum
@@ -53,4 +56,6 @@ class ContractDid(models.Model):
 
     def get_admin_url(self):
         return urlresolvers.reverse("admin:%s_%s_change" %
-            (self._meta.app_label, self._meta.module_name), args=(self.id,))
+                                    (self._meta.app_label,
+                                        self._meta.module_name),
+                                    args=(self.id,))

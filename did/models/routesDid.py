@@ -24,7 +24,7 @@ class RoutesDid(models.Model):
     """
     routing plan
     """
-    contract_did = models.ForeignKey('did.ContractDid', unique=True)
+    contract_did = models.ForeignKey('did.ContractDid')
     order = models.IntegerField(default=0)
     ROUTE_TYPE_CHOICES = (
         ('s', _(u'SIP Trunk')),
@@ -43,7 +43,8 @@ class RoutesDid(models.Model):
     number = models.CharField(_(u'destination number'),
                               max_length=30,
                               null=True,
-                              blank=True)
+                              blank=True,
+                              default='')
     description = models.TextField(_(u'description'),
                                    blank=True)
     date_added = models.DateTimeField(_(u'date added'),
@@ -55,6 +56,7 @@ class RoutesDid(models.Model):
         db_table = 'did_routes'
         app_label = 'did'
         ordering = ('contract_did', )
+        unique_together = ('contract_did', 'order')
         verbose_name = _(u'DID route')
         verbose_name_plural = _(u'DID routes')
 

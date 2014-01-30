@@ -8,14 +8,16 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        # Adding field 'SipProfile.apply_inbound_acl'
+        db.add_column('sip_profile', 'apply_inbound_acl',
+                      self.gf('django.db.models.fields.BooleanField')(default=True),
+                      keep_default=False)
 
-        # Changing field 'StreetAddress.country'
-        db.alter_column('contacts_street_addresses', 'country', self.gf('django_countries.fields.CountryField')(max_length=100))
 
     def backwards(self, orm):
+        # Deleting field 'SipProfile.apply_inbound_acl'
+        db.delete_column('sip_profile', 'apply_inbound_acl')
 
-        # Changing field 'StreetAddress.country'
-        db.alter_column('contacts_street_addresses', 'country', self.gf('django.db.models.fields.CharField')(max_length=100))
 
     models = {
         u'auth.group': {
@@ -507,6 +509,7 @@ class Migration(SchemaMigration):
         u'pyfreebill.sipprofile': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('sip_ip', 'sip_port'),)", 'object_name': 'SipProfile', 'db_table': "'sip_profile'"},
             'accept_blind_reg': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'apply_inbound_acl': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'auth_calls': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),

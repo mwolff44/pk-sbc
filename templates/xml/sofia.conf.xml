@@ -63,7 +63,7 @@
         <param name='auth-calls' value='{{ sipprofile.auth_calls }}'/>
         <param name='log-auth-failures' value='{{ sipprofile.log_auth_failures }}'/>
         <param name='context' value='public'/>
-        <param name='apply-inbound-acl' value='domains'/>
+        {% if sipprofile.apply_inbound_acl %}<param name='apply-inbound-acl' value='domains'/>{% endif %}
 <!--	<param name='local-network-acl' value='localnet.auto'/>-->
         <param name='inbound-late-negotiation' value='true'/>
         <param name='pass-callee-id' value='false'/>
@@ -80,6 +80,7 @@
           <param name='password' value='{{ gateway.password }}'/>
           <param name='caller-id-in-from' value='{{ gateway.caller_id_in_from}}'/>
           <param name='extension' value='{{ gateway.extension }}'/>
+          <!--<param name="extension" value="auto_to_user"/>-->
           <param name='proxy' value='{{ gateway.proxy }}'/>
           <param name='register' value='{{ gateway.register }}'/>
           <param name='expire-seconds' value='{{ gateway.expire_seconds }}'/>

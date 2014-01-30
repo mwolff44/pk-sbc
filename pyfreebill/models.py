@@ -478,11 +478,24 @@ class ProviderTariff(models.Model):
 
 class ProviderRates(models.Model):
     """ Provider Rates Model """
-    destination = models.CharField(_(u'destination'), blank=True, default='', null=True, max_length=128, db_index=True)
-    digits = models.CharField(_(u'numeric prefix'), max_length=30, db_index=True)
-    cost_rate = models.DecimalField(_(u'Cost rate'), max_digits=11, decimal_places=5)
-    block_min_duration = models.IntegerField(_(u'block min duration'), default=1)
-    init_block = models.DecimalField(_(u'Init block rate'), max_digits=11, decimal_places=5, default=0)
+    destination = models.CharField(_(u'destination'),
+                                   blank=True,
+                                   default='',
+                                   null=True,
+                                   max_length=128,
+                                   db_index=True)
+    digits = models.CharField(_(u'numeric prefix'),
+                              max_length=30,
+                              db_index=True)
+    cost_rate = models.DecimalField(_(u'Cost rate'),
+                                    max_digits=11,
+                                    decimal_places=5)
+    block_min_duration = models.IntegerField(_(u'block min duration'),
+                                             default=1)
+    init_block = models.DecimalField(_(u'Init block rate'),
+                                     max_digits=11,
+                                     decimal_places=5,
+                                     default=0)
     provider_tariff = models.ForeignKey(ProviderTariff)
     date_start = models.DateTimeField()
     date_end = models.DateTimeField()
@@ -501,7 +514,14 @@ class ProviderRates(models.Model):
         verbose_name_plural = _(u'provider rates')
 
     def __unicode__(self):
-        return u"%s %s %s " % (self.digits, self.cost_rate, self.provider_tariff)
+        return u"%s %s %s " % (self.digits,
+                               self.cost_rate,
+                               self.provider_tariff)
+
+    def set_bar(self, value):
+        self.bar = value
+    simple_import_methods = ('set_bar',)
+
 
 # LCR
 
@@ -826,8 +846,15 @@ class SipProfile(models.Model):
     sip_ip = models.CharField(_(u"SIP IP"), max_length=100, default="auto", help_text=_(u"Internal IP address to bind to for SIP."))
     sip_port = models.PositiveIntegerField(_(u"SIP port"), default=5060)
     disable_transcoding = models.BooleanField(_(u"disable transcoding"), default=True, help_text=_(u"If true, you can not use transcoding."))
-    accept_blind_reg = models.BooleanField(_(u"accept blind registration"), default=False, help_text=_(u"If true, anyone can register to server and will not be challenged for username/password information."))
-    auth_calls = models.BooleanField(_(u"authenticate calls"), default=True, help_text=_(u"If true, FreeeSWITCH will authorize all calls "
+    accept_blind_reg = models.BooleanField(_(u"accept blind registration"),
+                                           default=False,
+                                           help_text=_(u"If true, anyone can register to server and will not be challenged for username/password information."))
+    apply_inbound_acl = models.BooleanField(_(u"Apply an inbound ACL"),
+                                            default=True,
+                                            help_text=_(u"""If true, FS will apply the
+                                            default acl list : domains """))
+    auth_calls = models.BooleanField(_(u"authenticate calls"),
+                                     default=True, help_text=_(u"If true, FreeeSWITCH will authorize all calls "
             "on this profile, i.e. challenge the other side for "
             "username/password information."))
     log_auth_failures = models.BooleanField(_(u"log auth failures"), default=False, help_text=_(u"It true, log authentication failures. Required for Fail2ban."))

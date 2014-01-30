@@ -35,6 +35,9 @@ class Did(models.Model):
     provider = models.ForeignKey('pyfreebill.Company',
                                  verbose_name=_(u"company"),
                                  limit_choices_to={'supplier_enabled': True})
+    plan = models.ForeignKey('did.ProviderRatesDid',
+                             verbose_name=_(u"rate plan"),
+                             limit_choices_to={'enabled': True})
     max_channels = models.PositiveIntegerField(_(u'max calls'),
                                                default=1,
                                                help_text=_(u"""maximum

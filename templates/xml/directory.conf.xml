@@ -24,7 +24,7 @@
     <groups>
       <group name="default">
         {% if customerdirectorys %}<users>{% for customerdirectory in customerdirectorys %}
-          <user id="{{ customerdirectory.id }}"{% if customerdirectory.password %}{% else %}{% if customerdirectory.sip_ip %} cidr="{{ customerdirectory.sip_ip }}{% endif %}{% endif %}">
+          <user id="{{ customerdirectory.name }}"{% if customerdirectory.sip_ip %} cidr="{{ customerdirectory.sip_ip }}{% endif %}">
             <params>
               {% if customerdirectory.password %}<param name="password" value="{{ customerdirectory.password }}"/>{% endif %}
             </params>

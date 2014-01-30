@@ -186,6 +186,8 @@ INSTALLED_APPS = (
     'django_countries',
     'country_dialcode',
     'did',
+    #'simple_import',
+    #'massadmin',
 )
 
 # A sample logging configuration. The only tangible logging

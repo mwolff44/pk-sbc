@@ -11,7 +11,7 @@
 
 <!-- http://wiki.freeswitch.org/wiki/Dialplan_XML -->
 <include>
-  <context name="pyfreebill">
+  <context name="public">
 
     <extension name="unloop">
       <condition field="${unroll_loops}" expression="^true$"/>
@@ -24,33 +24,35 @@
 	to create any routing loops based on the conditions that it came from 
 	the outside of the switch.  
     -->
+
+
     <extension name="call_debug" continue="true">
       <condition field="${call_debug}" expression="^true$" break="never">
 	      <action application="info"/>
       </condition>
     </extension>
 
+    
+    <!--
+	You can place files in the public directory to get included.
+    -->
+    <X-PRE-PROCESS cmd="include" data="public/*.xml"/>
+    <!--
+	If you have made it this far lets challenge the caller and if they authenticate
+	lets try what they dialed in the default context. (commented out by default)
+    -->
+    <!--
     <extension name="check_auth" continue="true">
       <condition field="${sip_authorized}" expression="^true$" break="never">
-	      <anti-action application="respond" data="407"/>
-      </condition>
-      <condition field="${acl(${network_addr} domains)}" expression="true" break="never">
-        <anti-action application="respond" data="407"/>
+	<anti-action application="respond" data="407"/>
       </condition>
     </extension>
-
-    <extension name="limit" continue="true">
+    
+    <extension name="transfer_to_default">
       <condition>
-        <action application="limit" data="hash inbound ${user_name} ${max_calls} ${calls_per_second}/1 !NORMAL_CIRCUIT_CONGESTION"/>
+	<action application="transfer" data="${destination_number} XML default"/>
       </condition>
     </extension>
-
-    <extension name="outside_call" continue="true">
-      <condition>
-        <action application="set" data="outside_call=true"/>
-        <action application="lua" data="/usr/local/venv/pyfreebilling/freeswitch/scripts/pyfreebilling_dp.lua"/>
-      </condition>
-    </extension> 
-      
+    -->
   </context>
 </include>

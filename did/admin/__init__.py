@@ -16,3 +16,4 @@
 
 from .didAdmin import Did
 from .contractDidAdmin import ContractDid
+from .ratesDidAdmin import CustomerRatesDid, ProviderRatesDid

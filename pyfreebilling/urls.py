@@ -100,12 +100,10 @@ admin_site.register_top_menu_item('7_Admin', icon_class="icon-wrench",
             {'name': 'Access attempts', 'admin_url': '/extranet/axes/accessattempt/', 'order': 3, 'title_icon': 'icon-warning-sign' },
             {'name': 'Admin logs', 'admin_url': '/extranet/admin/logentry/', 'order': 4, 'separator': True, 'title_icon': 'icon-exclamation-sign' },
             {'name': 'Recurring task logs', 'admin_url': '/extranet/chroniker/log/', 'order': 5, 'title_icon': 'icon-puzzle-piece' },
-            {'name': 'Version', 'admin_url': '/extranet/status/', 'order': 6, 'separator': True, 'title_icon': 'icon-pushpin' },
+            {'name': 'Version', 'admin_url': '/extranet/status/', 'order': 6, 'separator': True, 'title_icon': 'icon-pushpin'},
             ],
         perms=perms_func)
 
-# def index(request):
-#     return HttpResponseRedirect('/extranet/')
 
 urlpatterns = patterns('',
     url(r'^extranet/report/$', 'pyfreebill.views.admin_report_view'),
@@ -113,9 +111,6 @@ urlpatterns = patterns('',
     url(r'^extranet/status/$', 'pyfreebill.views.admin_status_view'),
     url(r'^admin/', include('admin_honeypot.urls')),
     url(r'^extranet/', include(admin_site.urls)),
-#    url(r'^adminactions/', include(adminactions.urls)),
-#    url(r'^elfinder/', include('elfinder.urls')),
+    url(r'^extranet/simple_import/', include('simple_import.urls')),
+    url(r'^extranet/', include("massadmin.urls")),
 )
-
-# Modules
-#urlpatterns += pyfreebill_url
