@@ -19,6 +19,8 @@ from django.contrib.contenttypes import generic
 from yawdadmin import admin_site
 from yawdadmin.admin_options import OptionSetAdmin, SiteOption
 
+__version__ = '1.30beta'
+
 class SocialOptions(OptionSetAdmin):
 	optionset_label = 'socialoptions'
 	verbose_name = 'Social Options'

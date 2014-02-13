@@ -28,7 +28,8 @@ from django.contrib.contenttypes.generic import GenericRelation
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import format_html
 #from country_dialcode.models import Country, Prefix
-from pyfreebill import fields
+#from pyfreebill import fields
+from pyfreebill.validators import validate_cidr
 import datetime, qsstats
 from django.db.models import Sum, Avg, Count, Max, Min
 from django_iban.fields import IBANField, SWIFTBICField
@@ -394,9 +395,10 @@ class CustomerDirectory(models.Model):
                               default="auto",
                               help_text=_(u"""Internal IP address/mask to bind
                               to for RTP. Format : CIDR Ex. 192.168.1.0/32"""))
-    sip_ip = models.CharField(_(u"SIP IP CIDR"""),
+    sip_ip = models.CharField(_(u"SIP IP CIDR"),
                               max_length=100,
                               null=True,
+                              validators=[validate_cidr],
                               help_text=_(u"""Internal IP address/mask to bind
                               to for SIP. Format : CIDR. Ex. 192.168.1.0/32
                               """))

@@ -21,3 +21,4 @@ python-memcached==1.53
 pytz==2013b
 switch2bill-common==2.8.1
 wsgiref==0.1.2
+netaddr==0.7.10
