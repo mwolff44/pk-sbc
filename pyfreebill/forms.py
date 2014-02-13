@@ -66,6 +66,11 @@ class CustomerDirectoryAdminForm(forms.ModelForm):
                                             'data-off-label': 'OFF',
                                             'data-on': 'warning',
                                             'data-off': 'info'}),
+            'registration': SwitchWidget(attrs={'class': 'switch-medium',
+                                            'data-on-label': 'Registration',
+                                            'data-off-label': 'No: IP/CIDR',
+                                            'data-on': 'warning',
+                                            'data-off': 'info'}),
         }
 
 class RateCardAdminForm(forms.ModelForm):

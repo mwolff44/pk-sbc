@@ -183,6 +183,7 @@ class CompanyAdmin(admin.ModelAdmin):
     ]
     form = CompanyAdminForm
     affix = True
+    save_on_top = True
     title_icon = 'fa-group'
 
     search_fields = ['^name',]
@@ -673,7 +674,7 @@ class CustomerRateCardsAdmin(SortableModelAdmin):
 
 
 class CustomerDirectoryAdmin(admin.ModelAdmin):
-    list_display = ['company', 'name', 'sip_ip', 'max_calls', 'calls_per_second', 'get_enabled_display', 'get_fake_ring_display', 'get_cli_debug_display'] 
+    list_display = ['company', 'get_registration_display', 'name', 'sip_ip', 'max_calls', 'calls_per_second', 'get_enabled_display', 'get_fake_ring_display', 'get_cli_debug_display'] 
     ordering = ['company', 'enabled']
     list_filter = ['enabled',]
     #list_editable = ['max_calls', 'calls_per_second']
@@ -681,8 +682,43 @@ class CustomerDirectoryAdmin(admin.ModelAdmin):
     exclude = ['vmd',]
     form = CustomerDirectoryAdminForm
     actions = [directoryupdate]
+    save_on_top = True
+    affix = True
+    fieldsets = (
+        ('General', {
+            'fields': (('company', 'enabled'), ('name', 'registration'), 'max_calls', 'calls_per_second', 'codecs'),
+            'description': 'General sip account informations'
+        }),
+        ('Registration settings', {
+            'fields': (('password', 'multiple_registrations'), 'log_auth_failures'),
+            'classes': ('collapsed',),
+            'description': 'If registration, you must set a password'
+        }),
+        ('IP Settings', {
+            'fields': (('sip_ip', 'sip_port'), 'rtp_ip'),
+            'classes': ('collapsed',),
+            'description': 'If no registration, SIP IP CIDR is needed'
+        }),
+        ('Description', {
+            'fields': ('description',),
+            'classes': ('collapsed',),
+            'description': 'description informations'
+        }),
+        ('Advanced settings', {
+            'fields': (('outbound_caller_id_name', 'outbound_caller_id_number'), 'fake_ring', 'cli_debug'),
+            'classes': ('collapsed',),
+            'description': 'Advanced parameters'
+        }),
+    )
     
     
+    def get_registration_display(self, obj):
+        if obj.registration:
+            return mark_safe('<span class="label label-warning"><i class="icon-ok-sign"></i> Registration</span>')
+        return mark_safe('<span class="label label-info"><i class="icon-minus-sign"></i> IP Auth</span>')
+    get_registration_display.short_description = 'Registration'
+    get_registration_display.admin_order_field = 'registration'
+
     def get_enabled_display(self, obj):
         if obj.enabled:
             return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')

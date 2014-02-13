@@ -315,20 +315,44 @@ class SpecialDate(models.Model):
 
 class CompanyBalanceHistory(models.Model):
     """ Company balance history Model """
-    company = models.ForeignKey(Company, verbose_name=_(u"company"))
-    amount_debited = models.DecimalField(_(u'amount debited'), max_digits=12, decimal_places=4)
-    amount_refund = models.DecimalField(_(u'amount refund'), max_digits=12, decimal_places=4)
-    customer_balance = models.DecimalField(_(u'customer balance'), max_digits=12, decimal_places=4, default=0, help_text=_(u"Resulting customer balance."))
-    supplier_balance = models.DecimalField(_(u'provider balance'), max_digits=12, decimal_places=4, default=0, help_text=_(u"Resulting provider balance."))
+    company = models.ForeignKey(Company,
+                                verbose_name=_(u"company"))
+    amount_debited = models.DecimalField(_(u'amount debited'),
+                                         max_digits=12,
+                                         decimal_places=4)
+    amount_refund = models.DecimalField(_(u'amount refund'),
+                                        max_digits=12,
+                                        decimal_places=4)
+    customer_balance = models.DecimalField(_(u'customer balance'),
+                                           max_digits=12,
+                                           decimal_places=4,
+                                           default=0,
+                                           help_text=_(u"""Resulting customer
+                                           balance."""))
+    supplier_balance = models.DecimalField(_(u'provider balance'),
+                                           max_digits=12,
+                                           decimal_places=4,
+                                           default=0,
+                                           help_text=_(u"""Resulting provider
+                                           balance."""))
     OPERATION_TYPE_CHOICES = (
         ('customer', _(u"operation on customer account")),
         ('provider', _(u"operation on provider account")),
     )
-    operation_type = models.CharField(_(u"operation type"), max_length=10, choices=OPERATION_TYPE_CHOICES, default='customer')
-    reference = models.CharField(_(u'public description'), max_length=255, blank=True)
-    description = models.CharField(_(u'internal description'), max_length=255, blank=True)
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    operation_type = models.CharField(_(u"operation type"),
+                                      max_length=10,
+                                      choices=OPERATION_TYPE_CHOICES,
+                                      default='customer')
+    reference = models.CharField(_(u'public description'),
+                                 max_length=255,
+                                 blank=True)
+    description = models.CharField(_(u'internal description'),
+                                   max_length=255,
+                                   blank=True)
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'company_balance_history'
@@ -337,21 +361,62 @@ class CompanyBalanceHistory(models.Model):
         verbose_name_plural = _(u'Company balance history')
 
     def __unicode__(self):
-        return u"%s %s %s %s" % (self.company, self.amount_debited, self.amount_refund, self.operation_type)
+        return u"%s %s %s %s" % (self.company,
+                                 self.amount_debited,
+                                 self.amount_refund,
+                                 self.operation_type)
 
 
 class CustomerDirectory(models.Model):
     """ Customer Directory Model """
-    company = models.ForeignKey(Company, verbose_name=_(u"company"))
-    password = models.CharField(_(u"password"), max_length=100, blank=True, help_text=_(u"It's recommended to use strong passwords for the endpoint."))
-    description = models.TextField(_(u'description'), blank=True)
-    name = models.CharField(_(u"SIP name"), max_length=50, unique=True, help_text=_(u"E.g.: customer SIP username, etc..."))
-    rtp_ip = models.CharField(_(u"RTP IP CIDR"), max_length=100, default="auto", help_text=_(u"Internal IP address/mask to bind to for RTP. Format : CIDR. Ex. 192.168.1.0/32"))
-    sip_ip = models.CharField(_(u"SIP IP CIDR"), max_length=100, default="/32", help_text=_(u"Internal IP address/mask to bind to for SIP. Format : CIDR. Ex. 192.168.1.0/32"))
-    sip_port = models.PositiveIntegerField(_(u"SIP port"), default=5060)
-    max_calls = models.PositiveIntegerField(_(u'max calls'), default=1, help_text=_(u"maximum simultaneous calls allowed for this customer account."))
-    calls_per_second = models.PositiveIntegerField(_(u'max calls per second'), default=10, help_text=_(u"maximum calls per seconds allowed for this customer account."))
-    log_auth_failures = models.BooleanField(_(u"log auth failures"), default=False, help_text=_(u"It true, log authentication failures. Required for Fail2ban."))
+    company = models.ForeignKey(Company,
+                                verbose_name=_(u"company"))
+    registration = models.BooleanField(_(u"Registration"),
+                                       default=False,
+                                       help_text=_(u"""Is registration needed
+                                       for calling ? True, the phone needs to
+                                       register with correct username/password.
+                                       If false, you must specify a CIDR in SIP
+                                       IP CIDR !"""))
+    password = models.CharField(_(u"password"),
+                                max_length=100,
+                                blank=True,
+                                help_text=_(u"""It's recommended to use strong
+                                passwords for the endpoint."""))
+    description = models.TextField(_(u'description'),
+                                   blank=True)
+    name = models.CharField(_(u"SIP username"),
+                            max_length=50,
+                            unique=True,
+                            help_text=_(u"Ex.: customer SIP username, etc..."))
+    rtp_ip = models.CharField(_(u"RTP IP CIDR"),
+                              max_length=100,
+                              default="auto",
+                              help_text=_(u"""Internal IP address/mask to bind
+                              to for RTP. Format : CIDR Ex. 192.168.1.0/32"""))
+    sip_ip = models.CharField(_(u"SIP IP CIDR"""),
+                              max_length=100,
+                              null=True,
+                              help_text=_(u"""Internal IP address/mask to bind
+                              to for SIP. Format : CIDR. Ex. 192.168.1.0/32
+                              """))
+    sip_port = models.PositiveIntegerField(_(u"SIP port"),
+                                           default=5060)
+    max_calls = models.PositiveIntegerField(_(u'max calls'),
+                                            default=1,
+                                            help_text=_(u"""max simultaneous
+                                            calls allowed for this customer
+                                            account."""))
+    calls_per_second = models.PositiveIntegerField(_(u'max calls per second'),
+                                                   default=10,
+                                                   help_text=_(u"""maximum
+                                                   calls per second allowed for
+                                                   this customer account."""))
+    log_auth_failures = models.BooleanField(_(u"log auth failures"),
+                                            default=False,
+                                            help_text=_(u"""It true, the server
+                                            will log authentication failures.
+                                            Required for Fail2ban."""))
     MULTIPLE_CODECS_CHOICES = (
         ("PCMA,PCMU,G729", _(u"PCMA,PCMU,G729")),
         ("PCMU,PCMA,G729", _(u"PCMU,PCMA,G729")),
@@ -366,19 +431,55 @@ class CustomerDirectory(models.Model):
         ("PCMA", _(u"PCMA")),
         ("ALL", _(u"ALL")),
     )
-    codecs = models.CharField(_(u"Codecs"), max_length=100, default="ALL", choices=MULTIPLE_CODECS_CHOICES, help_text=_(u"Codecs allowed - beware about order. 1st has high priority "))
-    MULTIPLE_REGISTRATIONS_CHOICES = (
+    codecs = models.CharField(_(u"Codecs"),
+                              max_length=100,
+                              default="ALL",
+                              choices=MULTIPLE_CODECS_CHOICES,
+                              help_text=_(u"""Codecs allowed - beware about
+                              order, 1st has high priority """))
+    MULTIPLE_REG_CHOICES = (
         ("call-id", _(u"Call-id")), ("contact", _(u"Contact")),
         ("false", _(u"False")), ("true", _(u"True")))
-    multiple_registrations = models.CharField(_(u"multiple registrations"), max_length=100, default="false", choices=MULTIPLE_REGISTRATIONS_CHOICES, help_text=_(u"Used to allow to call one extension and ring several phones."))
-    outbound_caller_id_name = models.CharField(_(u"outbound CallerID name"), max_length=50, blank=True, help_text=_(u"Caller ID name sent to provider on outbound calls."))
-    outbound_caller_id_number = models.CharField(_(u"outbound CallerID number"), max_length=80, blank=True, help_text=_(u"Caller ID number sent to provider on outbound calls."))
-    enabled = models.BooleanField(_(u"Enabled / Disabled"), default=True)
-    fake_ring = models.BooleanField(_(u"Fake ring"), default=False, help_text=_(u"Fake ring : Enabled / Disabled - Send a fake ring to the caller."))
-    cli_debug = models.BooleanField(_(u"CLI debug"), default=False, help_text=_(u"CLI debug : Enabled / Disabled - Permit to see all debug messages on cli."))
-    vmd = models.BooleanField(_(u"Voicemail detection : Enabled / Disabled"), default=False, help_text=_(u"Be carefull with this option, as it takes a lot of ressources !."))
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    multiple_registrations = models.CharField(_(u"multiple registrations"),
+                                              max_length=100,
+                                              default="false",
+                                              choices=MULTIPLE_REG_CHOICES,
+                                              help_text=_(u"""Used to allow to
+                                              call one extension and ring
+                                              several phones."""))
+    outbound_caller_id_name = models.CharField(_(u"CallerID name"),
+                                               max_length=50,
+                                               blank=True,
+                                               help_text=_(u"""Caller ID name
+                                               sent to provider on outbound
+                                               calls."""))
+    outbound_caller_id_number = models.CharField(_(u"""CallerID
+                                                   num"""),
+                                                 max_length=80,
+                                                 blank=True,
+                                                 help_text=_(u"""Caller ID
+                                                 number sent to provider on
+                                                 outbound calls."""))
+    enabled = models.BooleanField(_(u"Enabled / Disabled"),
+                                  default=True)
+    fake_ring = models.BooleanField(_(u"Fake ring"),
+                                    default=False,
+                                    help_text=_(u"""Fake ring : Enabled /
+                                    Disabled - Send a fake ring to the
+                                    caller."""))
+    cli_debug = models.BooleanField(_(u"CLI debug"),
+                                    default=False,
+                                    help_text=_(u"""CLI debug : Enabled /
+                                    Disabled - Permit to see all debug
+                                    messages on cli."""))
+    vmd = models.BooleanField(_(u"Voicemail detection : Enabled / Disabled"),
+                              default=False,
+                              help_text=_(u"""Be carefull with this option, as
+                              it takes a lot of ressources !."""))
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'customer_directory'
@@ -839,7 +940,7 @@ class VoipSwitch(models.Model):
 class SipProfile(models.Model):
     """ Sofia Sip profile """
     name = models.CharField(_(u"SIP profile name"), max_length=50, unique=True, help_text=_(u"E.g.: the name you want ..."))
-    user_agent = models.CharField(_(u"Uaser agent name"), max_length=50, default="pyfreebilling", help_text=_(u"E.g.: the user agent you want ... - take care with certain characters such as @ could cause others sip proxies reject yours messages as invalid ! "))
+    user_agent = models.CharField(_(u"User agent name"), max_length=50, default="pyfreebilling", help_text=_(u"E.g.: the user agent you want ... - take care with certain characters such as @ could cause others sip proxies reject yours messages as invalid ! "))
     ext_rtp_ip = models.CharField(_(u"external RTP IP"), max_length=100, default="auto", help_text=_(u"External/public IP address to bind to for RTP."))
     ext_sip_ip = models.CharField(_(u"external SIP IP"), max_length=100, default="auto", help_text=_(u"External/public IP address to bind to for SIP."))
     rtp_ip = models.CharField(_(u"RTP IP"), max_length=100, default="auto", help_text=_(u"Internal IP address to bind to for RTP."))
@@ -848,7 +949,7 @@ class SipProfile(models.Model):
     disable_transcoding = models.BooleanField(_(u"disable transcoding"), default=True, help_text=_(u"If true, you can not use transcoding."))
     accept_blind_reg = models.BooleanField(_(u"accept blind registration"),
                                            default=False,
-                                           help_text=_(u"If true, anyone can register to server and will not be challenged for username/password information."))
+                                           help_text=_(u"If true, anyone can register to the server and will not be challenged for username/password information."))
     apply_inbound_acl = models.BooleanField(_(u"Apply an inbound ACL"),
                                             default=True,
                                             help_text=_(u"""If true, FS will apply the

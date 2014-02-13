@@ -43,6 +43,7 @@
       <settings>
         <param name='dialplan' value='XML'/>
         <param name='user-agent-string' value='{{ sipprofile.user_agent }}'/>
+        <param name='username' value='pyfreebilling' />
         <param name='ext-sip-ip' value='{{ sipprofile.ext_sip_ip }}'/>
         <param name='ext-rtp-ip' value='{{ sipprofile.ext_rtp_ip }}'/>
         <param name='rtp-ip' value='{{ sipprofile.rtp_ip }}'/>
