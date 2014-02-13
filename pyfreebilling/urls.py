@@ -60,7 +60,17 @@ admin_site.register_top_menu_item('2_Providers', icon_class="icon-group",
             ],
         perms=perms_func)
 
-admin_site.register_top_menu_item('3_Routing', icon_class="icon-exchange",
+admin_site.register_top_menu_item('3_Dids', icon_class="icon-headphones",
+        children=[
+            {'name': 'Dids list', 'admin_url': '/extranet/did/did', 'order': 1, 'title_icon': 'icon-list' },
+            {'name': 'Did Allocation', 'admin_url': '/extranet/did/contractdid', 'order': 2, 'separator': True, 'title_icon': 'icon-briefcase' },
+            {'name': 'Customer rates', 'admin_url': '/extranet/did/customerratesdid', 'order': 3, 'separator': True, 'title_icon': 'icon-money' },
+            {'name': 'Provider rates', 'admin_url': '/extranet/did/providerratesdid', 'order': 4, 'title_icon': 'icon-money' },
+            {'name': 'Statistics', 'admin_url': '/extranet/pyfreebill/cdr/', 'order': 5, 'separator': True, 'title_icon': 'icon-dashboard' },
+            ],
+        perms=perms_func)
+
+admin_site.register_top_menu_item('4_Routing', icon_class="icon-exchange",
         children=[
             {'name': 'LCR', 'admin_url': '/extranet/pyfreebill/lcrgroup/', 'order': 1, 'title_icon': 'icon-random' },
             {'name': 'Destination Number Normalization', 'admin_url': '/extranet/pyfreebill/destinationnumberrules/', 'order': 2, 'separator': True, 'title_icon': 'icon-medkit' },
@@ -68,7 +78,7 @@ admin_site.register_top_menu_item('3_Routing', icon_class="icon-exchange",
             ],
         perms=perms_func)
 
-admin_site.register_top_menu_item('4_FreeSwitch', icon_class="icon-cogs",
+admin_site.register_top_menu_item('5_Switchs', icon_class="icon-cogs",
         children=[
             {'name': 'Customer accounts', 'admin_url': '/extranet/pyfreebill/customerdirectory/', 'order': 1, 'title_icon': 'icon-list' },
             {'name': 'Provider gateways', 'admin_url': '/extranet/pyfreebill/sofiagateway/', 'order': 2, 'title_icon': 'icon-list' },
@@ -78,14 +88,14 @@ admin_site.register_top_menu_item('4_FreeSwitch', icon_class="icon-cogs",
             ],
         perms=perms_func)
 
-admin_site.register_top_menu_item('5_Finance', icon_class="icon-money",
+admin_site.register_top_menu_item('6_Finance', icon_class="icon-money",
         children=[
             {'name': 'Add payment', 'admin_url': '/extranet/pyfreebill/companybalancehistory/add/', 'order': 1, 'title_icon': 'icon-download-alt' },
             {'name': 'History', 'admin_url': '/extranet/pyfreebill/companybalancehistory/', 'order': 2, 'title_icon': 'icon-money' },
             ],
         perms=perms_func)
 
-admin_site.register_top_menu_item('6_Report', icon_class="icon-dashboard",
+admin_site.register_top_menu_item('7_Report', icon_class="icon-dashboard",
         children=[
             {'name': 'CDR', 'admin_url': '/extranet/pyfreebill/cdr/', 'order': 1, 'title_icon': 'icon-phone' },
             {'name': 'Customer stats', 'admin_url': '/extranet/report/', 'order': 2, 'separator': True, 'title_icon': 'icon-dashboard' },
@@ -93,7 +103,7 @@ admin_site.register_top_menu_item('6_Report', icon_class="icon-dashboard",
             ],
         perms=perms_func)
 
-admin_site.register_top_menu_item('7_Admin', icon_class="icon-wrench",
+admin_site.register_top_menu_item('8_Admin', icon_class="icon-wrench",
         children=[
             {'name': 'Users', 'admin_url': '/extranet/auth/user/', 'order': 1, 'title_icon': 'icon-user' },
             {'name': 'Access logs', 'admin_url': '/extranet/axes/accesslog/', 'order': 2, 'separator': True, 'title_icon': 'icon-key' },
