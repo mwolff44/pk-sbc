@@ -506,6 +506,17 @@ class CustomerDirectory(models.Model):
                 (self.sip_ip is None or self.sip_ip == '')):
             raise ValidationError("""You must specify a SIP IP CIDR if you do
                                   not want to use registration""")
+        if self.registration and self.password:
+            # in future use https://github.com/dstufft/django-passwords ?
+            MIN_LENGTH = 8
+            if len(self.password) < MIN_LENGTH:
+                raise ValidationError("""The password must be at least %d
+                                      characters long.""" % MIN_LENGTH)
+            first_isalpha = self.password[0].isalpha()
+            if all(c.isalpha() == first_isalpha for c in self.password):
+                raise ValidationError("""The new password must contain
+                                            at least one letter and at least
+                                            one digit""")
         if self.sip_ip:
             m = re.search('/32$', self.sip_ip)
             if m:
