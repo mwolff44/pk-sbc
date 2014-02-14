@@ -498,10 +498,12 @@ class CustomerDirectory(models.Model):
         return "%s (%s:%s)" % (self.name, self.sip_ip, self.sip_port)
 
     def clean(self):
-        if self.registration and (self.password is None or self.password == ''):
+        if (self.registration and
+                (self.password is None or self.password == '')):
             raise ValidationError("""You have to specify a password if you
                                   want to allow registration""")
-        if self.registration is False and (self.sip_ip is None or self.sip_ip == ''):
+        if (self.registration is False and
+                (self.sip_ip is None or self.sip_ip == '')):
             raise ValidationError("""You must specify a SIP IP CIDR if you do
                                   not want to use registration""")
         if self.sip_ip:

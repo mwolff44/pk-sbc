@@ -26,6 +26,8 @@ from chartjs.views.lines import BaseLineChartView
 import datetime, qsstats
 from django.db.models import Sum, Avg, Count, Max, Min
 
+from pyfreebilling import __version__
+
 
 def time_series(queryset, date_field, interval, func=None):
     qsstats = QuerySetStats(queryset, date_field, func)
@@ -35,9 +37,10 @@ def time_series(queryset, date_field, interval, func=None):
 #@staff_member_required
 def admin_status_view(request):
     # print status page
-    pfb_version = settings.PFB_VERSION
+    #pfb_version = settings.PFB_VERSION
+    pfb_version = __version__
     return render_to_response('admin/admin_status.html', locals(),
-        context_instance=RequestContext(request))
+                              context_instance=RequestContext(request))
 
 
 def _margin_series(sell_series, cost_series):
