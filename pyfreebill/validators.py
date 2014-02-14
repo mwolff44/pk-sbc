@@ -16,14 +16,21 @@
 
 from django.core.exceptions import ValidationError
 
-
 from netaddr import IPNetwork, AddrFormatError
+
+import re
 
 
 def validate_cidr(value):
     if value:
         try:
             cidr_val = IPNetwork(value)
-            return IPNetwork(cidr_val)
+            m = re.search('/32$', value)
+            if m:
+                return IPNetwork(cidr_val)
+            elif len(cidr_val) == 1:
+                return str(cidr_val) + str('/32')
+            else:
+                return IPNetwork(cidr_val)
         except (AddrFormatError, TypeError), e:
             raise ValidationError(str(e))

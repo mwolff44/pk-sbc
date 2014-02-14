@@ -37,6 +37,10 @@ import decimal
 import math
 from django_countries.fields import CountryField
 
+from netaddr import IPNetwork, AddrFormatError
+
+import re
+
 # CustomUser -- Django 1.6
 # class CustomUser(AbstractUser):
 #    keyboard_shortcuts = models.BooleanField(default=True)
@@ -398,6 +402,7 @@ class CustomerDirectory(models.Model):
     sip_ip = models.CharField(_(u"SIP IP CIDR"),
                               max_length=100,
                               null=True,
+                              blank=True,
                               validators=[validate_cidr],
                               help_text=_(u"""Internal IP address/mask to bind
                               to for SIP. Format : CIDR. Ex. 192.168.1.0/32
@@ -491,6 +496,20 @@ class CustomerDirectory(models.Model):
 
     def __unicode__(self):
         return "%s (%s:%s)" % (self.name, self.sip_ip, self.sip_port)
+
+    def clean(self):
+        if self.registration and (self.password is None or self.password == ''):
+            raise ValidationError("""You have to specify a password if you
+                                  want to allow registration""")
+        if self.registration is False and (self.sip_ip is None or self.sip_ip == ''):
+            raise ValidationError("""You must specify a SIP IP CIDR if you do
+                                  not want to use registration""")
+        if self.sip_ip:
+            m = re.search('/32$', self.sip_ip)
+            if m:
+                pass
+            elif len(IPNetwork(self.sip_ip)) == 1:
+                self.sip_ip = str(self.sip_ip) + str('/32')
 
 # Caller ID list
 
