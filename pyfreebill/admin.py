@@ -1,3 +1,4 @@
+# -*- coding: utf8 -*-
 # Copyright 2013 Mathias WOLFF
 # This file is part of pyfreebilling.
 #
@@ -589,7 +590,7 @@ class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
     list_filter = ['ratecard', 'enabled', 'destination']
     search_fields = ['^prefix', 'date_start', 'date_end', '^destination']
     actions = ['make_enabled', 'make_disabled']
-    readonly_fields = ['id',]
+    readonly_fields = ['id', ]
     form = CustomerRatesAdminForm
 
     def get_boolean_display(self, obj):
@@ -633,7 +634,14 @@ class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
 
 
 class RateCardAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'lcrgroup', 'lcr', 'get_boolean_display', 'rates', 'callerid_filter', 'callerid_list']
+    list_display = ['id',
+                    'name',
+                    'lcrgroup',
+                    'lcr',
+                    'get_boolean_display',
+                    'rates',
+                    'callerid_filter',
+                    'callerid_list']
     ordering = ['name', 'enabled', 'lcrgroup']
     list_filter = ['enabled', 'lcrgroup']
     search_fields = ['description', '^name']
@@ -657,11 +665,15 @@ class RateCardAdmin(admin.ModelAdmin):
 
 
 class CustomerRateCardsAdmin(SortableModelAdmin):
-    list_display = ['company', 'ratecard', 'tech_prefix', 'priority', 'description']
-    ordering = ['company',]
+    list_display = ['company',
+                    'ratecard',
+                    'tech_prefix',
+                    'priority',
+                    'description']
+    ordering = ['company', ]
     raw_id_fields = ('ratecard',)
     list_filter = ['ratecard', 'company']
-    search_fields = ['^company__company',]
+    search_fields = ['^company__company', ]
     form = form = CustomerRateCardsAdminForm
 
     def has_change_permission(self, request, obj=None):
@@ -674,12 +686,20 @@ class CustomerRateCardsAdmin(SortableModelAdmin):
 
 
 class CustomerDirectoryAdmin(admin.ModelAdmin):
-    list_display = ['company', 'get_registration_display', 'name', 'sip_ip', 'max_calls', 'calls_per_second', 'get_enabled_display', 'get_fake_ring_display', 'get_cli_debug_display'] 
+    list_display = ['company',
+                    'get_registration_display',
+                    'name',
+                    'sip_ip',
+                    'max_calls',
+                    'calls_per_second',
+                    'get_enabled_display',
+                    'get_fake_ring_display',
+                    'get_cli_debug_display'] 
     ordering = ['company', 'enabled']
-    list_filter = ['enabled',]
+    list_filter = ['enabled', ]
     #list_editable = ['max_calls', 'calls_per_second']
     search_filter = ['^sip_ip', '^company', '^name']
-    exclude = ['vmd',]
+    exclude = ['vmd', ]
     form = CustomerDirectoryAdminForm
     actions = [directoryupdate]
     save_on_top = True
@@ -710,8 +730,7 @@ class CustomerDirectoryAdmin(admin.ModelAdmin):
             'description': 'Advanced parameters'
         }),
     )
-    
-    
+
     def get_registration_display(self, obj):
         if obj.registration:
             return mark_safe('<span class="label label-warning"><i class="icon-ok-sign"></i> Registration</span>')
@@ -750,8 +769,11 @@ class CustomerDirectoryAdmin(admin.ModelAdmin):
 
 
 class VoipSwitchAdmin(admin.ModelAdmin):
-    list_display = ['name', 'ip','date_added', 'date_modified']
-    ordering = ['name',]
+    list_display = ['name',
+                    'ip',
+                    'date_added',
+                    'date_modified']
+    ordering = ['name', ]
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -763,10 +785,24 @@ class VoipSwitchAdmin(admin.ModelAdmin):
 
 
 class SofiaGatewayAdmin(admin.ModelAdmin):
-    list_display = ['name', 'sip_profile', 'company', 'channels', 'proxy', 'get_enabled_display', 'get_register_display', 'date_added', 'date_modified']
-    ordering = ['company', 'name', 'proxy']
-    list_filter = ['company', 'proxy', 'enabled', 'sip_profile']
-    search_fields = ['^company__name', 'proxy']
+    list_display = ['name',
+                    'sip_profile',
+                    'company',
+                    'channels',
+                    'proxy',
+                    'get_enabled_display',
+                    'get_register_display',
+                    'date_added',
+                    'date_modified']
+    ordering = ['company',
+                'name',
+                'proxy']
+    list_filter = ['company',
+                   'proxy',
+                   'enabled',
+                   'sip_profile']
+    search_fields = ['^company__name',
+                     'proxy']
     actions = [sofiaupdate]
     
     def get_enabled_display(self, obj):
@@ -791,10 +827,80 @@ class SofiaGatewayAdmin(admin.ModelAdmin):
 
 
 class SipProfileAdmin(admin.ModelAdmin):
-    list_display = ['name', 'ext_rtp_ip', 'ext_sip_ip', 'rtp_ip', 'sip_ip', 'sip_port', 'auth_calls', 'log_auth_failures']
-    ordering = ['name',]
-    list_filter = ['sip_port',]
-    search_fields = ['^name',]
+    list_display = ['name',
+                    'ext_sip_ip',
+                    'sip_ip',
+                    'sip_port',
+                    'auth_calls',
+                    'apply_inbound_acl',
+                    'disable_register',
+                    'log_auth_failures',
+                    'disable_transcoding',
+                    'date_modified']
+    ordering = ['name', ]
+    list_filter = ['sip_port', ]
+    search_fields = ['^name', ]
+    affix = True
+    fieldsets = (
+        ('Basic settings', {
+            'fields': (('name', 'sip_port'),
+                       ('sip_ip', 'rtp_ip'),
+                       ('ext_sip_ip', 'ext_rtp_ip')),
+            'description': 'General sip profile informations'
+        }),
+        # ('Media Related Options', {
+        #     'fields': (''),
+        #     'classes': ('collapsed',),
+        #     'description': 'Manage Media Related Options'
+        # }),
+        ('Codecs Related Options', {
+            'fields': ('disable_transcoding',
+                       ('inbound_codec_prefs', 'outbound_codec_prefs')),
+            'classes': ('collapsed',),
+            'description': 'Manage Codecs Related Options'
+        }),
+        ('NAT', {
+            'fields': ('aggressive_nat_detection',
+                       'NDLB_rec_in_nat_reg_c',
+                       'NDLB_force_rport',
+                       'NDLB_broken_auth_hash'),
+            'classes': ('collapsed',),
+            'description': 'NAT management'
+        }),
+        # ('DTMF', {
+        #     'fields': (''),
+        #     'classes': ('collapsed',),
+        #     'description': 'DTMF management'
+        # }),
+        ('SIP Related Options', {
+            'fields': (('enable_timer', 'session_timeout')),
+            'classes': ('collapsed',),
+            'description': 'Manage SIP Related Options'
+        }),
+        # ('RTP Related Options', {
+        #     'fields': (''),
+        #     'classes': ('collapsed',),
+        #     'description': 'Manage RTP Related Options'
+        # }),
+        ('Authentification Authorization', {
+            'fields': ('apply_inbound_acl',
+                       'auth_calls',
+                       'log_auth_failures'),
+            'classes': ('collapsed',),
+            'description': 'Authentification Authorization management'
+        }),
+        ('Registration', {
+            'fields': ('disable_register',
+                       'accept_blind_reg'),
+            'classes': ('collapsed',),
+            'description': 'Registration settings management'
+        }),
+        ('Others', {
+            'fields': ('user_agent',),
+            'classes': ('collapsed',),
+            'description': 'Others parameters'
+        }),
+    )
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:

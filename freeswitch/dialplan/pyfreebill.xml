@@ -34,9 +34,9 @@
       <condition field="${sip_authorized}" expression="^true$" break="never">
 	      <anti-action application="respond" data="407"/>
       </condition>
-      <condition field="${acl(${network_addr} domains)}" expression="true" break="never">
+<!--       <condition field="${acl(${network_addr} domains)}" expression="true" break="never">
         <anti-action application="respond" data="407"/>
-      </condition>
+      </condition> -->
     </extension>
 
     <extension name="limit" continue="true">

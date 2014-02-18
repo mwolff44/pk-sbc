@@ -53,6 +53,13 @@
         <param name='rtp-timeout-sec' value='300'/>
 	      <param name='rtp-hold-timeout-sec' value='1800'/>
         <param name='rtp-timer-name' value='soft'/>
+        <param name='aggressive-nat-detection' value='{{ sipprofile.aggressive_nat_detection }}'/>
+        <param name='NDLB-received-in-nat-reg-contact' value='{{ sipprofile.NDLB_rec_in_nat_reg_c }}'/>
+        {% if sipprofile.NDLB_force_rport %}<param name='NDLB-force-rport' value='{{ sipprofile.NDLB_force_rport }}'/>{% endif %}
+        <param name='NDLB-broken-auth-hash' value='{{ sipprofile.NDLB_broken_auth_hash }}'/>
+        <param name='enable-timer' value='{{ sipprofile.enable_timer }}'/>
+        <param name='session-timeout' value='{{ sipprofile.session_timeout }}'/>
+        <param name='apply-nat-acl' value='rfc1918'/>
         <param name='inbound-codec-prefs' value='{{ sipprofile.outbound_codec_prefs }}'/>
         <param name='outbound-codec-prefs' value='{{ sipprofile.outbound_codec_prefs }}'/>
 	      <param name='inbound-codec-negociation' value='greedy'/>
@@ -60,12 +67,11 @@
         <param name='debug' value='0'/>
         <param name='rfc2833-pt' value='101'/>
         <param name='dtmf-duration' value='100'/>
-<!--        <param name='accept-blind-reg' value='{{ sipprofile.accept_blind_reg_str }}'/>-->
+        <param name='disable-register' value='{{ sipprofile.disable_register }}'/>
         <param name='auth-calls' value='{{ sipprofile.auth_calls }}'/>
         <param name='log-auth-failures' value='{{ sipprofile.log_auth_failures }}'/>
         <param name='context' value='public'/>
         {% if sipprofile.apply_inbound_acl %}<param name='apply-inbound-acl' value='domains'/>{% endif %}
-<!--	<param name='local-network-acl' value='localnet.auto'/>-->
         <param name='inbound-late-negotiation' value='true'/>
         <param name='pass-callee-id' value='false'/>
         <param name='manage-presence' value='false'/>

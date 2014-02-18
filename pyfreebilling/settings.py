@@ -21,8 +21,6 @@ import os
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-PFB_VERSION = 'v1.30beta'
-
 SETTINGS_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SETTINGS_DIR)
 

@@ -78,7 +78,7 @@ admin_site.register_top_menu_item('4_Routing', icon_class="icon-exchange",
             ],
         perms=perms_func)
 
-admin_site.register_top_menu_item('5_Switchs', icon_class="icon-cogs",
+admin_site.register_top_menu_item('5_Switches', icon_class="icon-cogs",
         children=[
             {'name': 'Customer accounts', 'admin_url': '/extranet/pyfreebill/customerdirectory/', 'order': 1, 'title_icon': 'icon-list' },
             {'name': 'Provider gateways', 'admin_url': '/extranet/pyfreebill/sofiagateway/', 'order': 2, 'title_icon': 'icon-list' },

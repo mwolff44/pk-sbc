@@ -951,13 +951,31 @@ class AclNodes(models.Model):
 
 class VoipSwitch(models.Model):
     """ VoipSwitch Profile """
-    name = models.CharField(_(u"Switch name"), max_length=50, help_text=_(u"Switch name"))
-    ip = models.CharField(_(u"switch IP"), max_length=100, default="auto", help_text=_(u"Switch IP."))
-    esl_listen_ip = models.CharField(_(u"event socket switch IP"), max_length=100, default="127.0.0.1", help_text=_(u"Event socket switch IP."))
-    esl_listen_port = models.PositiveIntegerField(_(u"event socket switch port"), default="8021", help_text=_(u"Event socket switch port."))
-    esl_password = models.CharField(_(u"event socket switch password"), max_length=30, default="ClueCon", help_text=_(u"Event socket switch password."))
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    name = models.CharField(_(u"Switch name"),
+                            max_length=50,
+                            help_text=_(u"Switch name"))
+    ip = models.CharField(_(u"switch IP"),
+                          max_length=100,
+                          default="auto",
+                          help_text=_(u"Switch IP."))
+    esl_listen_ip = models.CharField(_(u"event socket switch IP"),
+                                     max_length=100,
+                                     default="127.0.0.1",
+                                     help_text=_(u"Event socket switch IP."))
+    esl_listen_port = models.PositiveIntegerField(_(u"""event socket switch
+                                                    port"""),
+                                                  default="8021",
+                                                  help_text=_(u"""Event socket
+                                                              switch port."""))
+    esl_password = models.CharField(_(u"event socket switch password"),
+                                    max_length=30,
+                                    default="ClueCon",
+                                    help_text=_(u"""Event socket switch
+                                                password."""))
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'voip_switch'
@@ -973,26 +991,79 @@ class VoipSwitch(models.Model):
 
 class SipProfile(models.Model):
     """ Sofia Sip profile """
-    name = models.CharField(_(u"SIP profile name"), max_length=50, unique=True, help_text=_(u"E.g.: the name you want ..."))
-    user_agent = models.CharField(_(u"User agent name"), max_length=50, default="pyfreebilling", help_text=_(u"E.g.: the user agent you want ... - take care with certain characters such as @ could cause others sip proxies reject yours messages as invalid ! "))
-    ext_rtp_ip = models.CharField(_(u"external RTP IP"), max_length=100, default="auto", help_text=_(u"External/public IP address to bind to for RTP."))
-    ext_sip_ip = models.CharField(_(u"external SIP IP"), max_length=100, default="auto", help_text=_(u"External/public IP address to bind to for SIP."))
-    rtp_ip = models.CharField(_(u"RTP IP"), max_length=100, default="auto", help_text=_(u"Internal IP address to bind to for RTP."))
-    sip_ip = models.CharField(_(u"SIP IP"), max_length=100, default="auto", help_text=_(u"Internal IP address to bind to for SIP."))
-    sip_port = models.PositiveIntegerField(_(u"SIP port"), default=5060)
-    disable_transcoding = models.BooleanField(_(u"disable transcoding"), default=True, help_text=_(u"If true, you can not use transcoding."))
+    name = models.CharField(_(u"SIP profile name"),
+                            max_length=50,
+                            unique=True,
+                            help_text=_(u"""E.g.: the name you want ..."""))
+    user_agent = models.CharField(_(u"User agent name"),
+                                  max_length=50,
+                                  default="pyfreebilling",
+                                  help_text=_(u"""E.g.: the user agent
+                                              you want ... - take care
+                                              with certain characters
+                                              such as @ could cause others sip
+                                              proxies reject yours messages as
+                                              invalid ! """))
+    ext_rtp_ip = models.CharField(_(u"external RTP IP"),
+                                  max_length=100,
+                                  default="auto",
+                                  help_text=_(u"""External/public IP
+                                    address to bind to for RTP."""))
+    ext_sip_ip = models.CharField(_(u"external SIP IP"),
+                                  max_length=100,
+                                  default="auto",
+                                  help_text=_(u"""External/public IP
+                                              address to bind to for
+                                              SIP."""))
+    rtp_ip = models.CharField(_(u"RTP IP"),
+                              max_length=100,
+                              default="auto",
+                              help_text=_(u"""Internal IP address to bind
+                                          to for RTP."""))
+    sip_ip = models.CharField(_(u"SIP IP"),
+                              max_length=100,
+                              default="auto",
+                              help_text=_(u"""Internal IP address to bind
+                                          to for SIP."""))
+    sip_port = models.PositiveIntegerField(_(u"SIP port"),
+                                           default=5060)
+    disable_transcoding = models.BooleanField(_(u"disable transcoding"),
+                                              default=True,
+                                              help_text=_(u"""If true, you
+                                                          can not use
+                                                          transcoding."""))
     accept_blind_reg = models.BooleanField(_(u"accept blind registration"),
                                            default=False,
-                                           help_text=_(u"If true, anyone can register to the server and will not be challenged for username/password information."))
+                                           help_text=_(u"""If true, anyone can
+                                                       register to the server
+                                                       and will not be
+                                                       challenged for
+                                                       username/password
+                                                       information."""))
+    disable_register = models.BooleanField(_(u"disable register"),
+                                           default=True,
+                                           help_text=_(u"""disable register
+                                                       which may be undesirable
+                                                       in a public switch """))
     apply_inbound_acl = models.BooleanField(_(u"Apply an inbound ACL"),
                                             default=True,
-                                            help_text=_(u"""If true, FS will apply the
-                                            default acl list : domains """))
+                                            help_text=_(u"""If true, FS will
+                                                      apply the default acl
+                                                      list : domains """))
     auth_calls = models.BooleanField(_(u"authenticate calls"),
-                                     default=True, help_text=_(u"If true, FreeeSWITCH will authorize all calls "
-            "on this profile, i.e. challenge the other side for "
-            "username/password information."))
-    log_auth_failures = models.BooleanField(_(u"log auth failures"), default=False, help_text=_(u"It true, log authentication failures. Required for Fail2ban."))
+                                     default=True,
+                                     help_text=_(u"""If true, FreeeSWITCH will
+                                                 authorize all calls on this
+                                                 profile, i.e. challenge the
+                                                 other side for
+                                                 username/password information.
+                                                 """))
+    log_auth_failures = models.BooleanField(_(u"log auth failures"),
+                                            default=False,
+                                            help_text=_(u"""It true, log
+                                                      authentication failures.
+                                                      Required for Fail2ban.
+                                                      """))
     MULTIPLE_CODEC_CHOICES = (
         ("PCMA,PCMU,G729", _(u"PCMA,PCMU,G729")),
         ("PCMU,PCMA,G729", _(u"PCMU,PCMA,G729")),
@@ -1006,10 +1077,112 @@ class SipProfile(models.Model):
         ("PCMU", _(u"PCMU")),
         ("PCMA", _(u"PCMA")),
     )
-    inbound_codec_prefs = models.CharField(_(u"inbound codec prefs"), max_length=100, choices=MULTIPLE_CODEC_CHOICES, default="G729,PCMU,PCMA", help_text=_(u"Define allowed preferred codecs for inbound calls."))
-    outbound_codec_prefs = models.CharField(_(u"outbound codec prefs"), max_length=100, choices=MULTIPLE_CODEC_CHOICES, default="G729,PCMU,PCMA", help_text=_(u"Define allowed preferred codecs for outbound calls."))
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    inbound_codec_prefs = models.CharField(_(u"inbound codec prefs"),
+                                           max_length=100,
+                                           choices=MULTIPLE_CODEC_CHOICES,
+                                           default="G729,PCMU,PCMA",
+                                           help_text=_(u"""Define allowed
+                                                       preferred codecs for
+                                                       inbound calls."""))
+    outbound_codec_prefs = models.CharField(_(u"outbound codec prefs"),
+                                            max_length=100,
+                                            choices=MULTIPLE_CODEC_CHOICES,
+                                            default="G729,PCMU,PCMA",
+                                            help_text=_(u"""Define allowed
+                                                        preferred codecs for
+                                                        outbound calls."""))
+    aggressive_nat_detection = models.BooleanField(_(u"""Agressive NAT
+                                                     detection"""),
+                                                   default=False,
+                                                   help_text=_(u"""This will
+                                                               enable NAT mode
+                                                               if the network
+                                                               IP/port from
+                                                               which therequest
+                                                               was received
+                                                               differs from the
+                                                               IP/Port
+                                                               combination in
+                                                               the SIP Via:
+                                                               header, or if
+                                                               the Via: header
+                                                               contains the
+                                                               received
+                                                               parameter"""))
+    NDLB_rec_in_nat_reg_c = models.BooleanField(_(u"""NDLB received
+                                                  in nat reg contact"""),
+                                                default=False,
+                                                help_text=_(u"""add a;received=
+                                                            "ip:port"
+                                                            to the contact when
+                                                            replying to
+                                                            register
+                                                            for nat handling
+                                                            """))
+    NDLB_FP_CHOICES = (
+        ("true", _(u"true")),
+        ("safe", _(u"safe")),
+    )
+    NDLB_force_rport = models.CharField(_(u"""NDLB Force rport"""),
+                                        max_length=10,
+                                        choices=NDLB_FP_CHOICES,
+                                        null=True,
+                                        blank=True,
+                                        default="Null",
+                                        help_text=_(u"""This will force
+                                                    FreeSWITCH to send
+                                                    SIP responses to the
+                                                    network port from
+                                                    which they were received.
+                                                    Use at your own risk!"""))
+    NDLB_broken_auth_hash = models.BooleanField(_(u"""NDLB broken auth hash
+                                                  """),
+                                                default=False,
+                                                help_text=_(u"""Used for when
+                                                            phones respond to a
+                                                            challenged ACK
+                                                            with method INVITE
+                                                            in the hash"""))
+    enable_timer = models.BooleanField(_(u"""Enable timer"""),
+                                       default=False,
+                                       help_text=_(u"""This enables or disables
+                                                   support for RFC 4028 SIP
+                                                   Session Timers"""))
+    session_timeout = models.PositiveIntegerField(_(u"""Session timeout"""),
+                                                  default=1800,
+                                                  help_text=_(u"""session
+                                                              timers for all
+                                                              call to expire
+                                                              after the
+                                                              specified seconds
+                                                              Then it will send
+                                                              another invite
+                                                              --re-invite. If
+                                                              not specified
+                                                              defaults to 30
+                                                              minutes. Some
+                                                              gateways may
+                                                              reject values
+                                                              less than 30
+                                                              minutes. This
+                                                              values refers to
+                                                              Session-Expires
+                                                              in RFC 4028 -The
+                                                              time at which
+                                                              an element will
+                                                              consider the
+                                                              session timed
+                                                              out, if no
+                                                              successful
+                                                              session refresh
+                                                              transaction
+                                                              occurs
+                                                              beforehand-
+                                                              """))
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'sip_profile'
