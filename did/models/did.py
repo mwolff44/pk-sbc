@@ -26,19 +26,19 @@ class Did(models.Model):
     """
     DID model
     """
-    number = models.CharField(_(u'numeric prefix'),
+    number = models.CharField(_(u'DID number'),
                               max_length=30,
                               db_index=True)
     city = models.ForeignKey('cities_light.City',
                              blank=True,
                              null=True)
     provider = models.ForeignKey('pyfreebill.Company',
-                                 verbose_name=_(u"company"),
+                                 verbose_name=_(u"Provider"),
                                  limit_choices_to={'supplier_enabled': True})
     plan = models.ForeignKey('did.ProviderRatesDid',
                              verbose_name=_(u"rate plan"),
                              limit_choices_to={'enabled': True})
-    max_channels = models.PositiveIntegerField(_(u'max calls'),
+    max_channels = models.PositiveIntegerField(_(u'Channels'),
                                                default=1,
                                                help_text=_(u"""maximum
                     simultaneous calls allowed for this did."""))

@@ -28,12 +28,12 @@ class ContractDid(models.Model):
     """
     did = models.ForeignKey('did.Did', unique=True)
     customer = models.ForeignKey('pyfreebill.Company',
-                                 verbose_name=_(u"company"),
+                                 verbose_name=_(u"Customer"),
                                  limit_choices_to={'customer_enabled': True})
     plan = models.ForeignKey('did.CustomerRatesDid',
                              verbose_name=_(u"rate plan"),
                              limit_choices_to={'enabled': True})
-    max_channels = models.PositiveIntegerField(_(u'max calls'),
+    max_channels = models.PositiveIntegerField(_(u'Channels'),
                                                default=1,
                                                help_text=_(u"""maximum
                     simultaneous calls allowed for this did."""))
@@ -48,8 +48,8 @@ class ContractDid(models.Model):
         db_table = 'did_contract'
         app_label = 'did'
         ordering = ('did', )
-        verbose_name = _(u'DID contract')
-        verbose_name_plural = _(u'DID contracts')
+        verbose_name = _(u'DID allocation')
+        verbose_name_plural = _(u'DID allocations')
 
     def __unicode__(self):
         return u"%s (:%s)" % (self.did, self.customer)

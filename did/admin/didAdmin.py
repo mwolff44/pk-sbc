@@ -66,14 +66,17 @@ class ContractDidInline(admin.StackedInline):
 
 
 class DidAdmin(admin.ModelAdmin):
-    list_display = ('get_reserved', 'number', 'city', 'provider',
-                    'max_channels', 'date_modified')
+    list_display = ('get_reserved',
+                    'number',
+                    'city',
+                    'provider',
+                    'max_channels',
+                    'date_modified')
     readonly_fields = ('date_added', 'date_modified')
     list_filter = ('provider',)
     list_display_links = ('number',)
     ordering = ('number',)
     search_fields = ('number',)
-    save_on_top = True
     inlines = [ContractDidInline, ]
     actions = [didupdate]
 
