@@ -706,16 +706,26 @@ class CustomerDirectoryAdmin(admin.ModelAdmin):
     affix = True
     fieldsets = (
         ('General', {
-            'fields': (('company', 'enabled'), ('name', 'registration'), 'max_calls', 'calls_per_second', 'codecs'),
+            'fields': (('company',
+                        'enabled'),
+                       ('name',
+                        'registration'),
+                       'max_calls',
+                       'calls_per_second',
+                       'codecs'),
             'description': 'General sip account informations'
         }),
         ('Registration settings', {
-            'fields': (('password', 'multiple_registrations'), 'log_auth_failures'),
+            'fields': (('password',
+                        'multiple_registrations'),
+                       'log_auth_failures'),
             'classes': ('collapsed',),
             'description': 'If registration, you must set a password'
         }),
         ('IP Settings', {
-            'fields': (('sip_ip', 'sip_port'), 'rtp_ip'),
+            'fields': (('sip_ip',
+                        'sip_port'),
+                       'rtp_ip'),
             'classes': ('collapsed',),
             'description': 'If no registration, SIP IP CIDR is needed'
         }),
@@ -725,7 +735,11 @@ class CustomerDirectoryAdmin(admin.ModelAdmin):
             'description': 'description informations'
         }),
         ('Advanced settings', {
-            'fields': (('outbound_caller_id_name', 'outbound_caller_id_number'), 'fake_ring', 'cli_debug'),
+            'fields': (('outbound_caller_id_name',
+                        'outbound_caller_id_number'),
+                       'ignore_early_media',
+                       'fake_ring',
+                       'cli_debug'),
             'classes': ('collapsed',),
             'description': 'Advanced parameters'
         }),

@@ -68,6 +68,7 @@
         <param name='rfc2833-pt' value='101'/>
         <param name='dtmf-duration' value='100'/>
         <param name='disable-register' value='{{ sipprofile.disable_register }}'/>
+        {% if not sipprofile.disable_register %}<param name='challenge-realm' value='auto_from'/>{% endif %}
         <param name='auth-calls' value='{{ sipprofile.auth_calls }}'/>
         <param name='log-auth-failures' value='{{ sipprofile.log_auth_failures }}'/>
         <param name='context' value='public'/>

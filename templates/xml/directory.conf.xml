@@ -40,6 +40,7 @@
               <variable name='cli_debug' value='{{ customerdirectory.cli_debug }}'/>
               <variable name='vmd' value='{{ customerdirectory.vmd }}'/>
               <variable name='customer_codecs' value='{{ customerdirectory.codecs }}'/>
+              <variable name='pfb_ignore_early_media' value='{{ customerdirectory.ignore_early_media }}'/>
             </variables>
           </user>{% endfor %}
         </users>{% endif %}

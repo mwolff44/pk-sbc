@@ -50,39 +50,93 @@ import re
 
 class Company(models.Model):
     """Company model."""
-    name = models.CharField(_(u'name'), max_length=200, unique=True)
-    nickname = models.CharField(_('nickname'), max_length=50, blank=True, null=True)
-    slug = models.SlugField(_('slug'), max_length=50, unique=True)
-    about = models.CharField(_(u'about'), max_length=250, blank=True, null=True)
+    name = models.CharField(_(u'name'),
+                            max_length=200,
+                            unique=True)
+    nickname = models.CharField(_('nickname'),
+                                max_length=50,
+                                blank=True,
+                                null=True)
+    slug = models.SlugField(_('slug'),
+                            max_length=50,
+                            unique=True)
+    about = models.CharField(_(u'about'),
+                             max_length=250,
+                             blank=True,
+                             null=True)
     phone_number = GenericRelation(u'PhoneNumber')
     email_address = GenericRelation(u'EmailAddress')
     web_site = GenericRelation(u'WebSite')
     street_address = GenericRelation(u'StreetAddress')
     note = GenericRelation(Comment, object_id_field='object_pk')
-    account_number = models.IntegerField(_(u"Account number"), blank=True, null=True)
-    vat = models.BooleanField(_(u"VAT Applicable / Not applicable"), default=False, help_text=_(u"if checked, VAT is applicable."))
-    vat_number = models.CharField(_(u"VAT number"), max_length=30, blank=True)
-    swift_bic = SWIFTBICField(_(u"SWIFT BIC bank account number"), blank=True, null=True)
-    iban = IBANField(_(u"IBAN bank account number"), blank=True, null=True)
-    prepaid = models.BooleanField(_(u"Prepaid / Postpaid"), default=True, help_text=_(u"If checked, this account customer is prepaid."))
-    credit_limit = models.DecimalField(_(u'credit limit'), max_digits=12, decimal_places=4, default=0, help_text=_(u"Credit limit for postpaid account."))
-    low_credit_alert = models.DecimalField(_(u'low credit level alert'), max_digits=12, decimal_places=4, default="10", help_text=_(u"Low credit limit alert."))
-    low_credit_alert_sent = models.BooleanField(_(u"low credit alert ON"), default=False)
-    account_blocked_alert_sent = models.BooleanField(_(u"Customer account blocked - low balance - ON"), default=False)
-    email_alert = models.EmailField(_('alert email address'), blank=True, null=True)
-    customer_balance = models.DecimalField(_(u'customer balance'), max_digits=12, decimal_places=6, default=0, help_text=_(u"Actual customer balance."))
-    supplier_balance = models.DecimalField(_(u'supplier balance'), max_digits=12, decimal_places=6, default=0, help_text=_(u"Actual supplier balance."))
-    max_calls = models.PositiveIntegerField(_(u'max simultaneous calls'), default=1, help_text=_(u"maximum simultaneous calls allowed for this customer account."))
-    calls_per_second = models.PositiveIntegerField(_(u'max calls per second'), default=10, help_text=_(u"maximum calls per seconds allowed for this customer account."))
+    account_number = models.IntegerField(_(u"Account number"),
+                                         blank=True,
+                                         null=True)
+    vat = models.BooleanField(_(u"VAT Applicable / Not applicable"),
+                              default=False,
+                              help_text=_(u"if checked, VAT is applicable."))
+    vat_number = models.CharField(_(u"VAT number"),
+                                  max_length=30,
+                                  blank=True)
+    swift_bic = SWIFTBICField(_(u"SWIFT BIC bank account number"),
+                              blank=True,
+                              null=True)
+    iban = IBANField(_(u"IBAN bank account number"),
+                     blank=True,
+                     null=True)
+    prepaid = models.BooleanField(_(u"Prepaid / Postpaid"),
+                                  default=True,
+                                  help_text=_(u"If checked, this account customer is prepaid."))
+    credit_limit = models.DecimalField(_(u'credit limit'),
+                                       max_digits=12,
+                                       decimal_places=4,
+                                       default=0,
+                                       help_text=_(u"Credit limit for postpaid account."))
+    low_credit_alert = models.DecimalField(_(u'low credit level alert'),
+                                           max_digits=12,
+                                           decimal_places=4,
+                                           default="10",
+                                           help_text=_(u"Low credit limit alert."))
+    low_credit_alert_sent = models.BooleanField(_(u"low credit alert ON"),
+                                                default=False)
+    account_blocked_alert_sent = models.BooleanField(_(u"Customer account blocked - low balance - ON"),
+                                                     default=False)
+    email_alert = models.EmailField(_('alert email address'),
+                                    blank=True,
+                                    null=True)
+    customer_balance = models.DecimalField(_(u'customer balance'),
+                                           max_digits=12,
+                                           decimal_places=6,
+                                           default=0,
+                                           help_text=_(u"Actual customer balance."))
+    supplier_balance = models.DecimalField(_(u'supplier balance'),
+                                           max_digits=12,
+                                           decimal_places=6,
+                                           default=0,
+                                           help_text=_(u"Actual supplier balance."))
+    max_calls = models.PositiveIntegerField(_(u'max simultaneous calls'),
+                                            default=1,
+                                            help_text=_(u"maximum simultaneous calls allowed for this customer account."))
+    calls_per_second = models.PositiveIntegerField(_(u'max calls per second'),
+                                                   default=10,
+                                                   help_text=_(u"maximum calls per seconds allowed for this customer account."))
     BILLING_CYCLE_CHOICES = (
         ('w', _(u'weekly')),
         ('m', _(u'monthly')),
     )
-    billing_cycle = models.CharField(_(u'billing cycle'), max_length=10, choices=BILLING_CYCLE_CHOICES, default='m', help_text=_(u"billinng cycle for invoice generation."))
-    customer_enabled = models.BooleanField(_(u"Customer Enabled / Disabled"), default=True)
-    supplier_enabled = models.BooleanField(_(u"Supplier Enabled / Disabled"), default=True)
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    billing_cycle = models.CharField(_(u'billing cycle'),
+                                     max_length=10,
+                                     choices=BILLING_CYCLE_CHOICES,
+                                     default='m',
+                                     help_text=_(u"billinng cycle for invoice generation."))
+    customer_enabled = models.BooleanField(_(u"Customer Enabled / Disabled"),
+                                           default=True)
+    supplier_enabled = models.BooleanField(_(u"Supplier Enabled / Disabled"),
+                                           default=True)
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'company'
@@ -114,23 +168,46 @@ class Company(models.Model):
 
 class Person(models.Model):
     """Person model."""
-    first_name = models.CharField(_('first name'), max_length=100)
-    last_name = models.CharField(_('last name'), max_length=200)
-    middle_name = models.CharField(_('middle name'), max_length=200, blank=True, null=True)
-    suffix = models.CharField(_('suffix'), max_length=50, blank=True, null=True)
-    nickname = models.CharField(_('nickname'), max_length=100, blank=True)
-    slug = models.SlugField(_('slug'), max_length=50, unique=True)
-    title = models.CharField(_('title'), max_length=200, blank=True)
-    company = models.ForeignKey(Company, blank=True, null=True)
-    about = models.TextField(_('about'), blank=True)
-    user = models.OneToOneField(User, blank=True, null=True, verbose_name=_('user'))
+    first_name = models.CharField(_('first name'),
+                                  max_length=100)
+    last_name = models.CharField(_('last name'),
+                                 max_length=200)
+    middle_name = models.CharField(_('middle name'),
+                                   max_length=200,
+                                   blank=True,
+                                   null=True)
+    suffix = models.CharField(_('suffix'),
+                              max_length=50,
+                              blank=True,
+                              null=True)
+    nickname = models.CharField(_('nickname'),
+                                max_length=100,
+                                blank=True)
+    slug = models.SlugField(_('slug'),
+                            max_length=50,
+                            unique=True)
+    title = models.CharField(_('title'),
+                             max_length=200,
+                             blank=True)
+    company = models.ForeignKey(Company,
+                                blank=True,
+                                null=True)
+    about = models.TextField(_('about'),
+                             blank=True)
+    user = models.OneToOneField(User,
+                                blank=True,
+                                null=True,
+                                verbose_name=_('user'))
     phone_number = GenericRelation('PhoneNumber')
     email_address = GenericRelation('EmailAddress')
     instant_messenger = GenericRelation('InstantMessenger')
     special_date = GenericRelation('SpecialDate')
-    note = GenericRelation(Comment, object_id_field='object_pk')
-    date_added = models.DateTimeField(_('date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_('date modified'), auto_now=True)
+    note = GenericRelation(Comment,
+                           object_id_field='object_pk')
+    date_added = models.DateTimeField(_('date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_('date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'contacts_people'
@@ -148,13 +225,26 @@ class Person(models.Model):
 
 class Group(models.Model):
     """Group model."""
-    name = models.CharField(_('name'), max_length=200, unique=True)
-    slug = models.SlugField(_('slug'), max_length=50, unique=True)
-    about = models.TextField(_('about'), blank=True)
-    people = models.ManyToManyField(Person, verbose_name='people', blank=True, null=True)
-    companies = models.ManyToManyField(Company, verbose_name='companies', blank=True, null=True)
-    date_added = models.DateTimeField(_('date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_('date modified'), auto_now=True)
+    name = models.CharField(_('name'),
+                            max_length=200,
+                            unique=True)
+    slug = models.SlugField(_('slug'),
+                            max_length=50,
+                            unique=True)
+    about = models.TextField(_('about'),
+                             blank=True)
+    people = models.ManyToManyField(Person,
+                                    verbose_name='people',
+                                    blank=True,
+                                    null=True)
+    companies = models.ManyToManyField(Company,
+                                       verbose_name='companies',
+                                       blank=True,
+                                       null=True)
+    date_added = models.DateTimeField(_('date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_('date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'contacts_groups'
@@ -177,13 +267,20 @@ PHONE_LOCATION_CHOICES = (
 
 class PhoneNumber(models.Model):
     """Phone Number model."""
-    content_type = models.ForeignKey(ContentType, limit_choices_to={'app_label': 'contacts'})
+    content_type = models.ForeignKey(ContentType,
+                                     limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
-    phone_number = models.CharField(_('number'), max_length=50)
-    location = models.CharField(_('location'), max_length=6, choices=PHONE_LOCATION_CHOICES, default='work')
-    date_added = models.DateTimeField(_('date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_('date modified'), auto_now=True)
+    phone_number = models.CharField(_('number'),
+                                    max_length=50)
+    location = models.CharField(_('location'),
+                                max_length=6,
+                                choices=PHONE_LOCATION_CHOICES,
+                                default='work')
+    date_added = models.DateTimeField(_('date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_('date modified'),
+                                         auto_now=True)
 
     def __unicode__(self):
         return u"%s (%s)" % (self.phone_number, self.location)
@@ -204,13 +301,19 @@ LOCATION_CHOICES = (
 
 
 class EmailAddress(models.Model):
-    content_type = models.ForeignKey(ContentType, limit_choices_to={'app_label': 'contacts'})
+    content_type = models.ForeignKey(ContentType,
+                                     limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
     email_address = models.EmailField(_('email address'))
-    location = models.CharField(_('location'), max_length=6, choices=LOCATION_CHOICES, default='work')
-    date_added = models.DateTimeField(_('date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_('date modified'), auto_now=True)
+    location = models.CharField(_('location'),
+                                max_length=6,
+                                choices=LOCATION_CHOICES,
+                                default='work')
+    date_added = models.DateTimeField(_('date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_('date modified'),
+                                         auto_now=True)
 
     def __unicode__(self):
         return u"%s (%s)" % (self.email_address, self.location)
@@ -237,14 +340,24 @@ IM_SERVICE_CHOICES = (
 
 
 class InstantMessenger(models.Model):
-    content_type = models.ForeignKey(ContentType, limit_choices_to={'app_label': 'contacts'})
+    content_type = models.ForeignKey(ContentType,
+                                     limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
-    im_account = models.CharField(_('im account'), max_length=100)
-    location = models.CharField(_('location'), max_length=6, choices=LOCATION_CHOICES, default='work')
-    service = models.CharField(_('service'), max_length=11, choices=IM_SERVICE_CHOICES, default='jabber')
-    date_added = models.DateTimeField(_('date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_('date modified'), auto_now=True)
+    im_account = models.CharField(_('im account'),
+                                  max_length=100)
+    location = models.CharField(_('location'),
+                                max_length=6,
+                                choices=LOCATION_CHOICES,
+                                default='work')
+    service = models.CharField(_('service'),
+                               max_length=11,
+                               choices=IM_SERVICE_CHOICES,
+                               default='jabber')
+    date_added = models.DateTimeField(_('date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_('date modified'),
+                                         auto_now=True)
 
     def __unicode__(self):
         return u"%s (%s)" % (self.im_account, self.location)
@@ -256,13 +369,19 @@ class InstantMessenger(models.Model):
 
 
 class WebSite(models.Model):
-    content_type = models.ForeignKey(ContentType, limit_choices_to={'app_label': 'contacts'})
+    content_type = models.ForeignKey(ContentType,
+                                     limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
     url = models.URLField(_('URL'))
-    location = models.CharField(_('location'), max_length=6, choices=LOCATION_CHOICES, default='work')
-    date_added = models.DateTimeField(_('date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_('date modified'), auto_now=True)
+    location = models.CharField(_('location'),
+                                max_length=6,
+                                choices=LOCATION_CHOICES,
+                                default='work')
+    date_added = models.DateTimeField(_('date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_('date modified'),
+                                         auto_now=True)
 
     def __unicode__(self):
         return u"%s (%s)" % (self.url, self.location)
@@ -277,18 +396,30 @@ class WebSite(models.Model):
 
 
 class StreetAddress(models.Model):
-    content_type = models.ForeignKey(ContentType, limit_choices_to={'app_label': 'contacts'})
+    content_type = models.ForeignKey(ContentType,
+                                     limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
-    street = models.TextField(_('street'), blank=True)
-    city = models.CharField(_('city'), max_length=200, blank=True)
-    province = models.CharField(_('province'), max_length=200, blank=True)
-    postal_code = models.CharField(_('postal code'), max_length=10, blank=True)
-    #country = models.CharField(_('country'), max_length=100)
+    street = models.TextField(_('street'),
+                              blank=True)
+    city = models.CharField(_('city'),
+                            max_length=200,
+                            blank=True)
+    province = models.CharField(_('province'),
+                                max_length=200,
+                                blank=True)
+    postal_code = models.CharField(_('postal code'),
+                                   max_length=10,
+                                   blank=True)
     country = CountryField(_('country'))
-    location = models.CharField(_('location'), max_length=6, choices=LOCATION_CHOICES, default='work')
-    date_added = models.DateTimeField(_('date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_('date modified'), auto_now=True)
+    location = models.CharField(_('location'),
+                                max_length=6,
+                                choices=LOCATION_CHOICES,
+                                default='work')
+    date_added = models.DateTimeField(_('date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_('date modified'),
+                                         auto_now=True)
 
     def __unicode__(self):
         return u"%s (%s)" % (self.city, self.location)
@@ -300,14 +431,19 @@ class StreetAddress(models.Model):
 
 
 class SpecialDate(models.Model):
-    content_type = models.ForeignKey(ContentType, limit_choices_to={'app_label': 'contacts'})
+    content_type = models.ForeignKey(ContentType,
+                                     limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
-    occasion = models.TextField(_('occasion'), max_length=200)
+    occasion = models.TextField(_('occasion'),
+                                max_length=200)
     date = models.DateField(_('date'))
-    every_year = models.BooleanField(_('every year'), default=True)
-    date_added = models.DateTimeField(_('date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_('date modified'), auto_now=True)
+    every_year = models.BooleanField(_('every year'),
+                                     default=True)
+    date_added = models.DateTimeField(_('date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_('date modified'),
+                                         auto_now=True)
 
     def __unicode__(self):
         return u"%s: %s" % (self.occasion, self.date)
@@ -445,8 +581,10 @@ class CustomerDirectory(models.Model):
                               help_text=_(u"""Codecs allowed - beware about
                               order, 1st has high priority """))
     MULTIPLE_REG_CHOICES = (
-        ("call-id", _(u"Call-id")), ("contact", _(u"Contact")),
-        ("false", _(u"False")), ("true", _(u"True")))
+        ("call-id", _(u"Call-id")),
+        ("contact", _(u"Contact")),
+        ("false", _(u"False")),
+        ("true", _(u"True")))
     multiple_registrations = models.CharField(_(u"multiple registrations"),
                                               max_length=100,
                                               default="false",
@@ -467,6 +605,26 @@ class CustomerDirectory(models.Model):
                                                  help_text=_(u"""Caller ID
                                                  number sent to provider on
                                                  outbound calls."""))
+    IEM_CHOICES = (
+        ("false", _(u"false")),
+        ("true", _(u"true")),
+        ("ring_ready", _(u"ring_ready")))
+    ignore_early_media = models.CharField(_(u"Ignore early media"),
+                                          max_length=20,
+                                          default="false",
+                                          choices=IEM_CHOICES,
+                                          help_text=_(u"""Controls if the call
+                                                      returns on early media
+                                                      or not. Default is false.
+                                                      Setting the value to
+                                                      "ring_ready" will work
+                                                      the same as
+                                                      ignore_early_media=true
+                                                      but also send a SIP 180
+                                                      to the inbound leg when
+                                                      the first SIP 183 is
+                                                      caught.
+                                                      """))
     enabled = models.BooleanField(_(u"Enabled / Disabled"),
                                   default=True)
     fake_ring = models.BooleanField(_(u"Fake ring"),
