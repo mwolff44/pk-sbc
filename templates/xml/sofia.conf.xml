@@ -62,7 +62,7 @@
         <param name='apply-nat-acl' value='rfc1918'/>
         <param name='inbound-codec-prefs' value='{{ sipprofile.outbound_codec_prefs }}'/>
         <param name='outbound-codec-prefs' value='{{ sipprofile.outbound_codec_prefs }}'/>
-	      <param name='inbound-codec-negociation' value='greedy'/>
+	      <param name='inbound-codec-negotiation' value='greedy'/>
         <param name='disable-transcoding' value='{{ sipprofile.disable_transcoding }}'/>
         <param name='debug' value='0'/>
         <param name='rfc2833-pt' value='101'/>
