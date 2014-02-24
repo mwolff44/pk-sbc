@@ -24,11 +24,10 @@ import os
 sys.path.append(os.path.abspath('../src/'))
 
 # Set up the Django settings/environment
+sys.path.insert(0, os.path.abspath('../../'))
+from .pyfreebilling import settings
 from django.core.management import setup_environ
-from pyfreebilling import settings
-
 setup_environ(settings)
-
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
