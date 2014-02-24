@@ -17,6 +17,5 @@
 
 from __future__ import absolute_import
 from .did import Did
-from .contractDid import ContractDid
 from .routesDid import RoutesDid
 from .ratesDid import ProviderRatesDid, CustomerRatesDid

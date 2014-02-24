@@ -17,14 +17,12 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from .contractDid import ContractDid
-
 
 class RoutesDid(models.Model):
     """
     routing plan
     """
-    contract_did = models.ForeignKey('did.ContractDid')
+    contract_did = models.ForeignKey('did.Did')
     order = models.IntegerField(default=0)
     ROUTE_TYPE_CHOICES = (
         ('s', _(u'SIP Trunk')),

@@ -15,5 +15,4 @@
 # along with pyfreebilling. If not, see <http://www.gnu.org/licenses/>
 
 from .didAdmin import Did
-from .contractDidAdmin import ContractDid
 from .ratesDidAdmin import CustomerRatesDid, ProviderRatesDid

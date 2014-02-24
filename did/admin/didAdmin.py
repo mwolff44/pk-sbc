@@ -24,7 +24,7 @@ from yawdadmin import admin_site
 
 from switch import esl
 
-from did.models import Did, ContractDid
+from did.models import Did, RoutesDid
 
 
 def didupdate(modeladmin, request, queryset):
@@ -58,38 +58,42 @@ didupdate.short_description = _(u"update DID config xml file")
 admin.site.add_action(didupdate, _(u"generate DID configuration file"))
 
 
-class ContractDidInline(admin.StackedInline):
-    description = 'Did affectation'
-    model = ContractDid
+class RoutesDidInline(admin.StackedInline):
+    #form = RoutesDidForm
+    description = 'Did routes'
+    model = RoutesDid
+    modal = True
     extra = 0
     collapse = False
 
 
 class DidAdmin(admin.ModelAdmin):
-    list_display = ('get_reserved',
-                    'number',
+    list_display = ('number',
                     'city',
                     'provider',
-                    'max_channels',
+                    'prov_max_channels',
+                    'customer',
                     'date_modified')
-    readonly_fields = ('date_added', 'date_modified')
-    list_filter = ('provider',)
+    readonly_fields = ('date_added',
+                       'date_modified')
+    list_filter = ('provider',
+                   'customer')
     list_display_links = ('number',)
     ordering = ('number',)
     search_fields = ('number',)
-    inlines = [ContractDidInline, ]
+    inlines = [RoutesDidInline, ]
     actions = [didupdate]
 
-    def get_reserved(self, obj):
-        if ContractDid.objects.get(did=obj):
-            return mark_safe("""<span class="label label-success">
-                                <i class="icon-thumbs-up">
-                                </i> Reserved</span>""")
-        return mark_safe("""<span class="label label-danger">
-                            <i class="icon-thumbs-down">
-                            </i> NO</span>""")
-    get_reserved.short_description = 'Reserved'
-    get_reserved.admin_order_field = 'reserved'
+    # def get_reserved(self, obj):
+    #     if ContractDid.objects.get(did=obj):
+    #         return mark_safe("""<span class="label label-success">
+    #                             <i class="icon-thumbs-up">
+    #                             </i> Reserved</span>""")
+    #     return mark_safe("""<span class="label label-danger">
+    #                         <i class="icon-thumbs-down">
+    #                         </i> NO</span>""")
+    # get_reserved.short_description = 'Reserved'
+    # get_reserved.admin_order_field = 'reserved'
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:

@@ -33,14 +33,30 @@ class Did(models.Model):
                              blank=True,
                              null=True)
     provider = models.ForeignKey('pyfreebill.Company',
+                                 related_name='didprovider',
                                  verbose_name=_(u"Provider"),
                                  limit_choices_to={'supplier_enabled': True})
-    plan = models.ForeignKey('did.ProviderRatesDid',
-                             verbose_name=_(u"rate plan"),
-                             limit_choices_to={'enabled': True})
-    max_channels = models.PositiveIntegerField(_(u'Channels'),
-                                               default=1,
-                                               help_text=_(u"""maximum
+    prov_plan = models.ForeignKey('did.ProviderRatesDid',
+                                  verbose_name=_(u"provider rate plan"),
+                                  limit_choices_to={'enabled': True})
+    prov_max_channels = models.PositiveIntegerField(_(u'provider channels'),
+                                                    default=1,
+                                                    help_text=_(u"""maximum
+                    simultaneous calls allowed for this did."""))
+    customer = models.ForeignKey('pyfreebill.Company',
+                                 related_name='didcustomer',
+                                 verbose_name=_(u"Customer"),
+                                 null=True,
+                                 blank=True,
+                                 limit_choices_to={'customer_enabled': True})
+    cust_plan = models.ForeignKey('did.CustomerRatesDid',
+                                  verbose_name=_(u"customer rate plan"),
+                                  null=True,
+                                  blank=True,
+                                  limit_choices_to={'enabled': True})
+    cust_max_channels = models.PositiveIntegerField(_(u'customer channels'),
+                                                    default=1,
+                                                    help_text=_(u"""maximum
                     simultaneous calls allowed for this did."""))
     description = models.TextField(_(u'description'),
                                    blank=True)

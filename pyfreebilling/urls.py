@@ -60,15 +60,27 @@ admin_site.register_top_menu_item('2_Providers', icon_class="icon-group",
             ],
         perms=perms_func)
 
-admin_site.register_top_menu_item('3_DID', icon_class="icon-headphones",
-        children=[
-            {'name': 'DID list', 'admin_url': '/extranet/did/did', 'order': 1, 'title_icon': 'icon-list' },
-            {'name': 'DID Allocation', 'admin_url': '/extranet/did/contractdid', 'order': 2, 'separator': True, 'title_icon': 'icon-briefcase' },
-            {'name': 'Customer rates', 'admin_url': '/extranet/did/customerratesdid', 'order': 3, 'separator': True, 'title_icon': 'icon-money' },
-            {'name': 'Provider rates', 'admin_url': '/extranet/did/providerratesdid', 'order': 4, 'title_icon': 'icon-money' },
-            {'name': 'Statistics', 'admin_url': '/extranet/pyfreebill/cdr/', 'order': 5, 'separator': True, 'title_icon': 'icon-dashboard' },
-            ],
-        perms=perms_func)
+admin_site.register_top_menu_item('3_DID',
+                                  icon_class="icon-headphones",
+                                  children=[{'name': 'DID list',
+                                             'admin_url': '/extranet/did/did',
+                                             'order': 1,
+                                             'title_icon': 'icon-list'},
+                                            {'name': 'Customer rates',
+                                             'admin_url': '/extranet/did/customerratesdid',
+                                             'order': 3,
+                                             'separator': True,
+                                             'title_icon': 'icon-money'},
+                                            {'name': 'Provider rates',
+                                             'admin_url': '/extranet/did/providerratesdid',
+                                             'order': 4,
+                                             'title_icon': 'icon-money'},
+                                            {'name': 'Statistics',
+                                             'admin_url': '/extranet/pyfreebill/cdr/',
+                                             'order': 5,
+                                             'separator': True,
+                                             'title_icon': 'icon-dashboard'}, ],
+                                  perms=perms_func)
 
 admin_site.register_top_menu_item('4_Routing', icon_class="icon-exchange",
         children=[
