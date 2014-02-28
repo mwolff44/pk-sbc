@@ -319,11 +319,17 @@ class PersonAdmin(admin.ModelAdmin):
         CommentInline,
         ]
 
-    list_display_links = ('first_name', 'last_name',)
-    list_display = ('first_name', 'last_name', 'company',)
-    list_filter = ('company',)
-    ordering = ('last_name', 'first_name')
-    search_fields = ['^first_name', '^last_name', '^company__name']
+    list_display_links = ('first_name',
+                          'last_name')
+    list_display = ('first_name',
+                    'last_name',
+                    'company')
+    list_filter = ('company', )
+    ordering = ('last_name',
+                'first_name')
+    search_fields = ['^first_name',
+                     '^last_name',
+                     '^company__name']
     prepopulated_fields = {'slug': ('first_name', 'last_name')}
 
     def has_change_permission(self, request, obj=None):
@@ -334,10 +340,13 @@ class PersonAdmin(admin.ModelAdmin):
 
 
 class GroupAdmin(admin.ModelAdmin):
-    list_display_links = ('name',)
-    list_display = ('name', 'date_modified')
-    ordering = ('-date_modified', 'name',)
-    search_fields = ['^name', '^about',]
+    list_display_links = ('name', )
+    list_display = ('name',
+                    'date_modified')
+    ordering = ('-date_modified',
+                'name')
+    search_fields = ['^name',
+                     '^about']
     prepopulated_fields = {'slug': ('name',)}
 
     def has_change_permission(self, request, obj=None):
@@ -348,11 +357,19 @@ class GroupAdmin(admin.ModelAdmin):
 
 
 class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
-    list_display_links = ('company',)
-    list_display = ('company', 'amount_debited', 'amount_refund', 'customer_balance', 'supplier_balance', 'operation_type', 'reference', 'date_modified')
-    ordering = ('-date_modified', 'company')
-#    readonly_fields = ('customer_balance', 'supplier_balance')
-    search_fields = ['^company__name', '^reference']
+    list_display_links = ('company', )
+    list_display = ('company',
+                    'amount_debited',
+                    'amount_refund',
+                    'customer_balance',
+                    'supplier_balance',
+                    'operation_type',
+                    'reference',
+                    'date_modified')
+    ordering = ('-date_modified',
+                'company')
+    search_fields = ['^company__name',
+                     '^reference']
 
     def save_model(self, request, obj, form, change):
         if change:
@@ -378,14 +395,16 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('General', {
-            'fields': ('company','operation_type', 'reference', 'description')
-        }),  
+            'fields': ('company',
+                       'operation_type',
+                       'reference',
+                       'description')}),
         ('Amount', {
-            'fields': ('amount_debited', 'amount_refund')
-        }),
-        ('Balances', { 
-            'fields': ('customer_balance', 'supplier_balance')
-        }),
+            'fields': ('amount_debited',
+                       'amount_refund')}),
+        ('Balances', {
+            'fields': ('customer_balance',
+                       'supplier_balance')}),
     )
 
     def get_list_filter(self, request):
@@ -419,10 +438,14 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
 
 
 class CalleridPrefixAdmin(ImportMixin, admin.ModelAdmin):
-    list_display = ['calleridprefixlist', 'prefix', 'date_added', 'date_modified']
-    ordering = ('calleridprefixlist', 'prefix')
-    list_filter = ('calleridprefixlist',)
-    search_fields = ('^prefix',)
+    list_display = ['calleridprefixlist',
+                    'prefix',
+                    'date_added',
+                    'date_modified']
+    ordering = ('calleridprefixlist',
+                'prefix')
+    list_filter = ('calleridprefixlist', )
+    search_fields = ('^prefix', )
     resource_class = CalleridPrefixResource
 
     def has_change_permission(self, request, obj=None):
@@ -437,10 +460,15 @@ class CalleridPrefixAdmin(ImportMixin, admin.ModelAdmin):
 
 
 class CalleridPrefixListAdmin(admin.ModelAdmin):
-    list_display = ['name', 'description', 'prefix', 'date_added', 'date_modified']
-    ordering = ('name',)
+    list_display = ['name',
+                    'description',
+                    'prefix',
+                    'date_added',
+                    'date_modified']
+    ordering = ('name', )
     list_filter = ['name', ]
-    search_fields = ('^name', 'description')
+    search_fields = ('^name',
+                     'description')
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -466,13 +494,21 @@ class ProviderRatesInline(admin.TabularInline):
 
 
 class ProviderTariffAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'carrier', 'prefix', 'quality', 'reliability', 'callerid_filter', 'callerid_list', 'date_start', 'date_end', 'get_boolean_display', 'rates']
-    ordering = ['name',]
-    readonly_fields = ['id',]
+    list_display = ['id',
+                    'name',
+                    'carrier',
+                    'prefix',
+                    'quality',
+                    'reliability',
+                    'callerid_filter',
+                    'callerid_list',
+                    'date_start',
+                    'date_end',
+                    'get_boolean_display',
+                    'rates']
+    ordering = ['name', ]
+    readonly_fields = ['id', ]
     form = ProviderTariffAdminForm
-#     inlines = [
-#         ProviderRatesInline,
-#     ]
 
     def get_boolean_display(self, obj):
         if obj.enabled:
@@ -487,12 +523,30 @@ class ProviderTariffAdmin(admin.ModelAdmin):
         else:
             return False
 
+
 class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ['provider_tariff', 'destination', 'digits', 'cost_rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'get_boolean_display', 'date_added', 'date_modified']
-    ordering = ['provider_tariff', 'digits']
-    list_filter = ['provider_tariff', 'enabled', 'destination']
-    search_fields = ['^digits', 'date_start', 'date_end', '^destination']
-    actions = ['make_enabled', 'make_disabled']
+    list_display = ['provider_tariff',
+                    'destination',
+                    'digits',
+                    'cost_rate',
+                    'block_min_duration',
+                    'init_block',
+                    'date_start',
+                    'date_end',
+                    'get_boolean_display',
+                    'date_added',
+                    'date_modified']
+    ordering = ['provider_tariff',
+                'digits']
+    list_filter = ['provider_tariff',
+                   'enabled',
+                   'destination']
+    search_fields = ['^digits',
+                     'date_start',
+                     'date_end',
+                     '^destination']
+    actions = ['make_enabled',
+               'make_disabled']
     form = ProviderRatesAdminForm
     
     def get_boolean_display(self, obj):

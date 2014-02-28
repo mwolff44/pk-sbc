@@ -687,10 +687,15 @@ class CustomerDirectory(models.Model):
 
 class CalleridPrefixList(models.Model):
     """ CallerID List """
-    name = models.CharField(_(u'name'), max_length=128, unique=True)
-    description = models.TextField(_(u'description'), blank=True)
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    name = models.CharField(_(u'name'),
+                            max_length=128,
+                            unique=True)
+    description = models.TextField(_(u'description'),
+                                   blank=True)
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'callerid_prefix_list'
@@ -710,10 +715,15 @@ class CalleridPrefixList(models.Model):
 
 class CalleridPrefix(models.Model):
     """ Customer Rates Model """
-    calleridprefixlist = models.ForeignKey(CalleridPrefixList, verbose_name=_(u"callerid prefix list"))
-    prefix = models.CharField(_(u'numeric prefix'), max_length=30, db_index=True)
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    calleridprefixlist = models.ForeignKey(CalleridPrefixList,
+                                           verbose_name=_(u"callerid prefix list"))
+    prefix = models.CharField(_(u'numeric prefix'),
+                              max_length=30,
+                              db_index=True)
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'caller_id_prefix'
@@ -730,34 +740,71 @@ class CalleridPrefix(models.Model):
 
 class ProviderTariff(models.Model):
     """ Provider tariff """
-    name = models.CharField(_(u"name"), max_length=128)
-    carrier = models.ForeignKey(Company)
-    lead_strip = models.CharField(_(u'lead strip'), blank=True, default='', max_length=15)
-    tail_strip = models.CharField(_(u'tail strip'), blank=True, default='', max_length=15)
-    prefix = models.CharField(_(u'prefix'), blank=True, default='', max_length=15)
-    suffix = models.CharField(_(u'suffix'), blank=True, default='', max_length=15)
-    description = models.TextField(_(u'description'), blank=True)
+    name = models.CharField(_(u"name"),
+                            max_length=128)
+    carrier = models.ForeignKey(Company,
+                                verbose_name=_(u"Provider"),
+                                limit_choices_to={'supplier_enabled': True})
+    lead_strip = models.CharField(_(u'lead strip'),
+                                  blank=True,
+                                  default='',
+                                  max_length=15)
+    tail_strip = models.CharField(_(u'tail strip'),
+                                  blank=True,
+                                  default='',
+                                  max_length=15)
+    prefix = models.CharField(_(u'prefix'),
+                              blank=True,
+                              default='',
+                              max_length=15)
+    suffix = models.CharField(_(u'suffix'),
+                              blank=True,
+                              default='',
+                              max_length=15)
+    description = models.TextField(_(u'description'),
+                                   blank=True)
     CALLERID_FILTER_CHOICES = (
         ('1', _(u"No filter")),
         ('2', _(u"Prefix authorized")),
         ('3', _(u"Prefix prohibited")),
     )
-    callerid_filter = models.CharField(_(u"CallerID Prefix filter"), max_length=2, choices=CALLERID_FILTER_CHOICES, default='1')
-    callerid_list = models.ForeignKey(CalleridPrefixList, verbose_name=_(u"CallerID prefix List"), blank=True, null=True)
+    callerid_filter = models.CharField(_(u"CallerID Prefix filter"),
+                                       max_length=2,
+                                       choices=CALLERID_FILTER_CHOICES,
+                                       default='1')
+    callerid_list = models.ForeignKey(CalleridPrefixList,
+                                      verbose_name=_(u"CallerID prefix List"),
+                                      blank=True,
+                                      null=True)
     date_start = models.DateTimeField()
     date_end = models.DateTimeField()
-    quality = models.IntegerField(_(u'quality'), blank=True, default='100', help_text=_(u"Alternate field to order by."))
-    reliability = models.IntegerField(_(u'reliability'), blank=True, default='100', help_text=_(u"Alternate field to order by."))
-    cid = models.CharField(_(u'cid'), blank=True, default='', max_length=25, help_text=_(u"Regex to modify CallerID number."))
-    enabled = models.BooleanField(_(u"Enabled / Disabled"), default=True)
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    quality = models.IntegerField(_(u'quality'),
+                                  blank=True,
+                                  default='100',
+                                  help_text=_(u"Order by quality."))
+    reliability = models.IntegerField(_(u'reliability'),
+                                      blank=True,
+                                      default='100',
+                                      help_text=_(u"Order by reliability."))
+    cid = models.CharField(_(u'cid'),
+                           blank=True,
+                           default='',
+                           max_length=25,
+                           help_text=_(u"Regex to modify CallerID number."))
+    enabled = models.BooleanField(_(u"Enabled / Disabled"),
+                                  default=True)
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'provider_tariff'
-        ordering = ('enabled', 'quality', 'reliability')
-        verbose_name = _(u'provider tariff')
-        verbose_name_plural = _(u'provider tariffs')
+        ordering = ('enabled',
+                    'quality',
+                    'reliability')
+        verbose_name = _(u'provider ratecard')
+        verbose_name_plural = _(u'provider ratecards')
 
     def __unicode__(self):
         return u"%s" % self.name
@@ -821,17 +868,25 @@ class ProviderRates(models.Model):
 
 class LCRGroup(models.Model):
     """ LCR group model """
-    name = models.CharField(_(u"name"), max_length=128, unique=True)
-    description = models.TextField(_(u'description'), blank=True)
+    name = models.CharField(_(u"name"),
+                            max_length=128,
+                            unique=True)
+    description = models.TextField(_(u'description'),
+                                   blank=True)
     LCR_TYPE_CHOICES = (
         ('p', _(u"lower price")),
         ('q', _(u"best quality")),
         ('r', _(u"best reliability")),
         ('l', _(u"load balance")),
     )
-    lcrtype = models.CharField(_(u"lcr type"), max_length=10, choices=LCR_TYPE_CHOICES, default='p')
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    lcrtype = models.CharField(_(u"lcr type"),
+                               max_length=10,
+                               choices=LCR_TYPE_CHOICES,
+                               default='p')
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'lcr_group'
@@ -845,10 +900,14 @@ class LCRGroup(models.Model):
 
 class LCRProviders(models.Model):
     """ LCR group model """
-    lcr = models.ForeignKey(LCRGroup, verbose_name=_(u"LCR"))
-    provider_tariff = models.ForeignKey(ProviderTariff, verbose_name=_(u"Provider tariff"))
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    lcr = models.ForeignKey(LCRGroup,
+                            verbose_name=_(u"LCR"))
+    provider_tariff = models.ForeignKey(ProviderTariff,
+                                        verbose_name=_(u"Provider tariff"))
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'lcr_providers'
@@ -870,25 +929,38 @@ class LCRProviders(models.Model):
 
 class RateCard(models.Model):
     """ RateCard Model """
-    name = models.CharField(_(u'name'), max_length=128, unique=True)
-    description = models.TextField(_(u'description'), blank=True)
-    lcrgroup = models.ForeignKey(LCRGroup, verbose_name=_(u"lcr"))
+    name = models.CharField(_(u'name'),
+                            max_length=128,
+                            unique=True)
+    description = models.TextField(_(u'description'),
+                                   blank=True)
+    lcrgroup = models.ForeignKey(LCRGroup,
+                                 verbose_name=_(u"lcr"))
     CALLERID_FILTER_CHOICES = (
         ('1', _(u"No filter")),
         ('2', _(u"Prefix authorized")),
         ('3', _(u"Prefix prohibited")),
     )
-    callerid_filter = models.CharField(_(u"CallerID Prefix filter"), max_length=2, choices=CALLERID_FILTER_CHOICES, default='1')
-    callerid_list = models.ForeignKey(CalleridPrefixList, verbose_name=_(u"CallerID prefix List"), blank=True, null=True)
-    enabled = models.BooleanField(_(u"Enabled / Disabled"), default=True)
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    callerid_filter = models.CharField(_(u"CallerID Prefix filter"),
+                                       max_length=2,
+                                       choices=CALLERID_FILTER_CHOICES,
+                                       default='1')
+    callerid_list = models.ForeignKey(CalleridPrefixList,
+                                      verbose_name=_(u"CallerID prefix List"),
+                                      blank=True,
+                                      null=True)
+    enabled = models.BooleanField(_(u"Enabled / Disabled"),
+                                  default=True)
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'ratecard'
         ordering = ('name', 'enabled')
-        verbose_name = _(u'RateCard')
-        verbose_name_plural = _(u'RateCards')
+        verbose_name = _(u'Customer ratecard')
+        verbose_name_plural = _(u'Customer ratecards')
 
     def __unicode__(self):
         return u"%s" % self.name
@@ -908,17 +980,35 @@ class RateCard(models.Model):
 
 class CustomerRates(models.Model):
     """ Customer Rates Model """
-    ratecard = models.ForeignKey(RateCard, verbose_name=_(u"ratecard"))
-    destination = models.CharField(_(u'destination'), blank=True, default='', null=True, max_length=128, db_index=True)
-    prefix = models.CharField(_(u'numeric prefix'), max_length=30, db_index=True)
-    rate = models.DecimalField(_(u'sell rate'), max_digits=11, decimal_places=5, help_text=_(u"to block the prefix, put -1"))
-    block_min_duration = models.IntegerField(_(u'block min duration'), default=1)
-    init_block = models.DecimalField(_(u'Init block rate'), max_digits=11, decimal_places=5, default=0)
+    ratecard = models.ForeignKey(RateCard,
+                                 verbose_name=_(u"ratecard"))
+    destination = models.CharField(_(u'destination'),
+                                   blank=True,
+                                   default='',
+                                   null=True,
+                                   max_length=128,
+                                   db_index=True)
+    prefix = models.CharField(_(u'numeric prefix'),
+                              max_length=30,
+                              db_index=True)
+    rate = models.DecimalField(_(u'sell rate'),
+                               max_digits=11,
+                               decimal_places=5,
+                               help_text=_(u"to block the prefix, put -1"))
+    block_min_duration = models.IntegerField(_(u'block min duration'),
+                                             default=1)
+    init_block = models.DecimalField(_(u'Init block rate'),
+                                     max_digits=11,
+                                     decimal_places=5,
+                                     default=0)
     date_start = models.DateTimeField()
     date_end = models.DateTimeField()
-    enabled = models.BooleanField(_(u"Enabled"), default=True)
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    enabled = models.BooleanField(_(u"Enabled"),
+                                  default=True)
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'customer_rates'
@@ -933,29 +1023,52 @@ class CustomerRates(models.Model):
 
 class CustomerRateCards(models.Model):
     """ Customer rates Cards Model """
-    company = models.ForeignKey(Company, verbose_name=_(u"company"))
-    ratecard = models.ForeignKey(RateCard, verbose_name=_(u"ratecard"))
-    description = models.TextField(_(u'description'), blank=True)
-    tech_prefix = models.CharField(_(u"technical prefix"), blank=True, default='', null=True, max_length=7)
+    company = models.ForeignKey(Company,
+                                verbose_name=_(u"company"))
+    ratecard = models.ForeignKey(RateCard,
+                                 verbose_name=_(u"ratecard"))
+    description = models.TextField(_(u'description'),
+                                   blank=True)
+    tech_prefix = models.CharField(_(u"technical prefix"),
+                                   blank=True,
+                                   default='',
+                                   null=True,
+                                   max_length=7)
     DEFAULT_PRIORITY_CHOICES = (
         (1, _(u'1')),
         (2, _(u'2')),
         (3, _(u'3')),
     )
-    priority = models.IntegerField(_(u'priority'), choices=DEFAULT_PRIORITY_CHOICES, help_text=_(u"Priority order, 1 is the higher priority and 3 the lower one. Correct values are : 1, 2 or 3 !."))
-    discount = models.DecimalField(_(u'discount'), max_digits=3, decimal_places=2, default=0, help_text=_(u"ratecard discount. For 10% discount, enter 10 !"))
-    allow_negative_margin = models.BooleanField(_(u"Allow calls with negative margin"), default=False)
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    priority = models.IntegerField(_(u'priority'),
+                                   choices=DEFAULT_PRIORITY_CHOICES,
+                                   help_text=_(u"""Priority order, 1 is the
+                                               higher priority and 3 the
+                                               lower one. Correct values
+                                               are : 1, 2 or 3 !."""))
+    discount = models.DecimalField(_(u'discount'),
+                                   max_digits=3,
+                                   decimal_places=2,
+                                   default=0,
+                                   help_text=_(u"""ratecard discount. For
+                                               10% discount, enter 10 !"""))
+    allow_negative_margin = models.BooleanField(_(u"""Allow calls with
+                                                  negative margin"""),
+                                                default=False)
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'customer_ratecards'
         ordering = ('company', 'priority', 'ratecard')
-        verbose_name = _(u'Customer Ratecard')
-        verbose_name_plural = _(u'Customer ratecards')
+        verbose_name = _(u'Customer Ratecard Allocation')
+        verbose_name_plural = _(u'Customer ratecard Allocations')
 
     def __unicode__(self):
-        return u"%s - Priority: %s Desc: %s" % (self.ratecard, self.priority, self.description)
+        return u"%s - Priority: %s Desc: %s" % (self.ratecard,
+                                                self.priority,
+                                                self.description)
 
 
 # NORMALIZATION
