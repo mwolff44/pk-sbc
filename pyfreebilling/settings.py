@@ -183,6 +183,7 @@ INSTALLED_APPS = (
     'cities_light',
     'django_countries',
     'country_dialcode',
+    'database_size',
     'did',
     #'simple_import',
     #'massadmin',

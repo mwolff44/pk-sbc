@@ -200,15 +200,15 @@ if session:ready() then
   didok = 1
   local query_did_sql = [[SELECT 
       d.provider_id AS provider, 
-      dc.customer_id AS customer,
+      d.customer_id AS customer,
       crd.rate AS customer_rate,
       crd.block_min_duration AS customer_block_min_duration,
       crd.interval_duration AS customer_interval_duration,
-      dc.plan_id AS customer_plan,
+      d.cust_plan_id AS customer_plan,
       prd.rate AS provider_rate,
       prd.block_min_duration AS provider_block_min_duration,
       prd.interval_duration AS provider_interval_duration,
-      d.plan_id AS provider_plan,
+      d.prov_plan_id AS provider_plan,
       dr.order AS order,
       dr.type AS type,
       dr.trunk_id AS trunk_id,
@@ -219,19 +219,17 @@ if session:ready() then
       p.name AS provider_name,
       p.supplier_balance AS provider_balance,
       cd.name AS trunk
-      FROM did d 
-      INNER JOIN did_contract dc 
-        ON dc.did_id = d.id  
+      FROM did d  
       INNER JOIN customer_rates_did crd 
-        ON crd.id = dc.plan_id 
+        ON crd.id = d.cust_plan_id 
           AND crd.enabled = TRUE 
       INNER JOIN provider_rates_did prd 
-        ON prd.id = d.plan_id
+        ON prd.id = d.prov_plan_id
           AND prd.enabled = TRUE
       INNER JOIN did_routes dr
-        ON dr.contract_did_id = dc.id
+        ON dr.contract_did_id = d.id
       INNER JOIN company c
-        ON c.id = dc.customer_id
+        ON c.id = d.customer_id
           AND c.customer_enabled = TRUE
       INNER JOIN company p
         ON p.id = d.provider_id
