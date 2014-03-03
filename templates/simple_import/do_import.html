@@ -1,0 +1,55 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static admin_list %}
+{% load admin_urls %}
+
+{% block extrastyle %}{{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}" />
+{{ media.css }}
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+{{ media.js }}
+{% endblock %}
+
+{% block coltype %}flex{% endblock %}
+
+{% block content %}
+  <div id="content-main">
+
+<h1>Import Results</h1>
+
+{% if success_undo %}
+    <p>
+        Import was undone. This is now a simulation, you can run the import again.
+    </p>
+{% endif %}
+
+{% if create_count %}
+    Created: {{ create_count }} <br/>
+{% endif %}
+{% if update_count %}
+    Updated: {{ update_count }} <br/>
+{% endif %}
+
+{% if fail_count %}
+    Failed: {{ fail_count }} <br/>
+    <a href="{{ MEDIA_URL }}{{ import_log.error_file }}">Download failed records</a>
+{% endif %}
+
+
+{% if commit %}
+    {% if import_log.import_type == "N" %}
+        <p>
+            It's possible to undo Create only reports. <a href="?commit=False&undo=True">Click here to undo.</a>
+            If you imported properties that created other records, we can not guarentee those records will be removed.
+        </p>
+    {% endif %}
+{% else %}
+    <p>
+        This was only a simulation. <a href="?commit=True&undo=False">Click here to run the import.</a>
+    </p>
+{% endif %}
+
+  </div>
+{% endblock %}

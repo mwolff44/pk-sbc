@@ -22,8 +22,13 @@ from did.models import CustomerRatesDid, ProviderRatesDid
 
 
 class CustomerRatesDidAdmin(admin.ModelAdmin):
-    list_display = ('name', 'enabled', 'rate',
-                    'block_min_duration', 'interval_duration', 'date_modified')
+    list_display = ('id',
+                    'name',
+                    'enabled',
+                    'rate',
+                    'block_min_duration',
+                    'interval_duration',
+                    'date_modified')
     readonly_fields = ('date_added', 'date_modified')
     list_display_links = ('name',)
     ordering = ('name',)
@@ -38,8 +43,14 @@ class CustomerRatesDidAdmin(admin.ModelAdmin):
 
 
 class ProviderRatesDidAdmin(admin.ModelAdmin):
-    list_display = ('name', 'provider', 'enabled', 'rate',
-                    'block_min_duration', 'interval_duration', 'date_modified')
+    list_display = ('id',
+                    'name',
+                    'provider',
+                    'enabled',
+                    'rate',
+                    'block_min_duration',
+                    'interval_duration',
+                    'date_modified')
     readonly_fields = ('date_added', 'date_modified')
     list_filter = ('provider',)
     list_display_links = ('name',)

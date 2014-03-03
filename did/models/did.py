@@ -28,7 +28,8 @@ class Did(models.Model):
     """
     number = models.CharField(_(u'DID number'),
                               max_length=30,
-                              db_index=True)
+                              db_index=True,
+                              unique=True)
     city = models.ForeignKey('cities_light.City',
                              blank=True,
                              null=True)
@@ -56,6 +57,8 @@ class Did(models.Model):
                                   limit_choices_to={'enabled': True})
     cust_max_channels = models.PositiveIntegerField(_(u'customer channels'),
                                                     default=1,
+                                                    null=True,
+                                                    blank=True,
                                                     help_text=_(u"""maximum
                     simultaneous calls allowed for this did."""))
     description = models.TextField(_(u'description'),

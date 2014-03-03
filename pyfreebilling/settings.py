@@ -185,7 +185,7 @@ INSTALLED_APPS = (
     'country_dialcode',
     'database_size',
     'did',
-    #'simple_import',
+    'simple_import',
     #'massadmin',
 )
 

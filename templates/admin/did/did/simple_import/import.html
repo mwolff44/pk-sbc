@@ -1,0 +1,25 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static admin_list %}
+{% load admin_urls %}
+
+{% block content_title %}
+  <header class="page-header" id="page-header">
+	<h1>{% if adminform.model_admin.title_icon %}<i class="{{adminform.model_admin.title_icon}} title-icon"></i>{% endif %}{% trans "Did import wizard" %}</h1>
+  </header>{% endblock %}
+
+{% block breadcrumbs_last %}
+{% trans "Import" %}
+{% endblock %}
+
+{% block coltype %}flex{% endblock %}
+
+{% block content %}
+
+    <form enctype="multipart/form-data" action="" method="post">{% csrf_token %}
+        {{ form.as_table }}
+      <div class="row-fluid submits submit-row">
+        <input type="submit" class="default btn btn-success" name="confirm" value="{% trans "Next step" %}">
+      </div>
+    </form>
+
+{% endblock %}
