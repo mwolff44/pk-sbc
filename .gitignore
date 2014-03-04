@@ -19,3 +19,6 @@ custom_admin_tools/
 *~
 .gitignore
 manage.py
+pyfreebilling.sublime-project
+pyfreebilling.sublime-workspace
+sftp-config.json
