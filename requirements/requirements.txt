@@ -22,3 +22,5 @@ pytz==2013b
 switch2bill-common==2.8.1
 wsgiref==0.1.2
 netaddr==0.7.10
+django-database-size==0.2.1
+django-simple-import==1.9
