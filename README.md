@@ -18,6 +18,14 @@ pyfreebilling is an open source wholesale billing platform for FreeSWITCH.
 pyfreebilling is developed under python, LUA and PostgreSQL as the database layer.
 
 ********************************************************************************
+
+Stable version
+[![Requirements Status](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements.png?branch=master)](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements/?branch=master)
+
+Dev version
+[![Requirements Status](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements.png?branch=develop)](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements/?branch=develop)
+
+********************************************************************************
                              License
 ********************************************************************************
 

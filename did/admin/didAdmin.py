@@ -22,12 +22,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from yawdadmin import admin_site
 
-from import_export.admin import ImportMixin
-
 from switch import esl
 
 from did.models import Did, RoutesDid
-from did.resources import DidResource
 
 
 def didupdate(modeladmin, request, queryset):
@@ -70,7 +67,7 @@ class RoutesDidInline(admin.StackedInline):
     collapse = False
 
 
-class DidAdmin(ImportMixin, admin.ModelAdmin):
+class DidAdmin(admin.ModelAdmin):
     list_display = ('number',
                     'city',
                     'provider',
@@ -85,7 +82,6 @@ class DidAdmin(ImportMixin, admin.ModelAdmin):
     list_display_links = ('number',)
     ordering = ('number',)
     search_fields = ('number',)
-    resource_class = DidResource
     inlines = [RoutesDidInline, ]
     actions = [didupdate]
 
