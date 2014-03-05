@@ -19,7 +19,7 @@ pyfreebilling is developed under python, LUA and PostgreSQL as the database laye
 
 ********************************************************************************
 
-(https://www.codeship.io/projects/45c99cd0-86b5-0131-49f1-3e77f06cd138/status)
+![CodeShip Status](https://www.codeship.io/projects/45c99cd0-86b5-0131-49f1-3e77f06cd138/status)
 
 Stable version
 [![Requirements Status](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements.png?branch=master)](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements/?branch=master)
