@@ -51,48 +51,53 @@ import datetime
 
 APP_LABEL = _('CDR report')
 
-DEFAULT_FORMATS = (
-            base_formats.CSV,
-#            base_formats.XLS,
-#            base_formats.ODS,
-            )
+DEFAULT_FORMATS = (base_formats.CSV, )
+
 
 def sofiaupdate(modeladmin, request, queryset):
     """ generate new sofia xml config file """
     try:
         t = loader.get_template('xml/sofia.conf.xml')
     except IOError:
-        messages.error(request, "sofia config xml file update failed. Can not load template file !")
+        messages.error(request,
+                       """sofia config xml file update failed. Can not load
+                       template file !""")
     sipprofiles = SipProfile.objects.all()
     accounts = Company.objects.filter(supplier_enabled=True)
     c = Context({"sipprofiles": sipprofiles, "accounts": accounts})
     try:
         pwd = os.path.dirname(__file__)
-        f = open('/usr/local/freeswitch/conf/autoload_configs/sofia.conf.xml', 'w')
+        f = open('/usr/local/freeswitch/conf/autoload_configs/sofia.conf.xml',
+                 'w')
         try:
             f.write(t.render(c))
             f.close()
             try:
-              	fs = esl.getReloadGateway()
-              	messages.success(request, "FS successfully reload")
+                fs = esl.getReloadGateway()
+                messages.success(request, "FS successfully reload")
             except IOError:
-             	messages.error(request, "customer sip config xml file update failed. FS ACL update failed ! Try manually")
+                messages.error(request, """customer sip config xml file update
+                    failed. FS ACL update failed ! Try manually -- %s""" % fs)
         finally:
             #f.close()
             messages.success(request, "sofia config xml file update success")
     except IOError:
-        messages.error(request, "sofia config xml file update failed. Can not create file !")
+        messages.error(request, """sofia config xml file update failed. Can
+            not create file !""")
 sofiaupdate.short_description = _(u"update sofia config xml file")
+
 
 def directoryupdate(modeladmin, request, queryset):
     """ generate new directory xml config file """
     try:
         t = loader.get_template('xml/directory.conf.xml')
     except IOError:
-        messages.error(request, "customer sip config xml file update failed. Can not load template file !")
+        messages.error(request, """customer sip config xml file update failed.
+            Can not load template file !""")
     customerdirectorys = CustomerDirectory.objects.filter(company__customer_enabled__exact=True, enabled=True)
     accounts = Company.objects.filter(customer_enabled=True)
-    c = Context({"customerdirectorys": customerdirectorys, "accounts": accounts})
+    c = Context({"customerdirectorys": customerdirectorys,
+                 "accounts": accounts})
     try:
         pwd = os.path.dirname(__file__)
         f = open('/usr/local/freeswitch/conf/directory/default.xml', 'w')
@@ -100,33 +105,64 @@ def directoryupdate(modeladmin, request, queryset):
             f.write(t.render(c))
             f.close()
             try:
-              	fs = esl.getReloadACL()
-              	messages.success(request, "FS successfully reload")
+                fs = esl.getReloadACL()
+                messages.success(request, "FS successfully reload")
             except IOError:
-             	messages.error(request, "customer sip config xml file update failed. FS ACL update failed ! Try manually")
+                messages.error(request, """customer sip config xml file update
+                    failed. FS ACL update failed ! Try manually - %s""" % fs)
         finally:
             #f.close()
-            messages.success(request, "customer sip config xml file update success")
-#             try:
-#              	fs = esl.getReloadACL()
-# #             	print fs.getReloadACL()
-#             except IOError:
-#             	messages.error(request, "customer sip config xml file update failed. FS ACL update failed ! Try manually")
-#             finally:
-#             	messages.success(request, "FS reload success")
+            messages.success(request, """customer sip config xml file update
+                success""")
     except IOError:
-        messages.error(request, "customer sip config xml file update failed. Can not create file !")
+        messages.error(request, """customer sip config xml file update failed.
+            Can not create file !""")
 directoryupdate.short_description = _(u"update customer sip config xml file")
 
-admin.site.add_action(directoryupdate, _(u"generate customer sip configuration file"))
+
+def aclupdate(modeladmin, request, queryset):
+    """ generate new ACL xml config file """
+    try:
+        t = loader.get_template('xml/acl.conf.xml')
+    except IOError:
+        messages.error(request, """ACL config xml file update failed. Can
+            not load template file !""")
+    acllists = AclLists.objects.all()
+    aclnodes = AclNodes.objects.all()
+    c = Context({"acllists": acllists, "aclnodes": aclnodes})
+    try:
+        pwd = os.path.dirname(__file__)
+        f = open('/usr/local/freeswitch/conf/autoload_configs/acl.conf.xml',
+                 'w')
+        try:
+            f.write(t.render(c))
+            f.close()
+            try:
+                fs = esl.getReloadACL()
+                messages.success(request, "FS successfully reload")
+            except IOError:
+                messages.error(request, """ACL config xml file update failed.
+                    FS ACL update failed ! Try manually--- %s""" % fs)
+        finally:
+            messages.success(request, "ACL config xml file update success")
+    except IOError:
+        messages.error(request, """ACL xml file update failed. Can not
+            create file !""")
+aclupdate.short_description = _(u"update ACL config xml file")
+
+admin.site.add_action(directoryupdate, _(u"""generate customer sip
+    configuration file"""))
 admin.site.add_action(sofiaupdate, _(u"generate sofia configuration file"))
+admin.site.add_action(aclupdate, _(u"generate acl configuration file"))
 
 # Company - Contatcs
+
 
 class EmailAddressInline(generic.GenericTabularInline):
     model = EmailAddress
     extra = 0
     collapse = True
+
 
 class PhoneNumberInline(generic.GenericTabularInline):
     model = PhoneNumber
@@ -134,15 +170,18 @@ class PhoneNumberInline(generic.GenericTabularInline):
     collapse = True
     title_icon = 'fa-phone-square'
 
+
 class InstantMessengerInline(generic.GenericTabularInline):
     model = InstantMessenger
     extra = 0
     collapse = True
 
+
 class WebSiteInline(generic.GenericTabularInline):
     model = WebSite
     extra = 0
     collapse = True
+
 
 class StreetAddressInline(generic.GenericStackedInline):
     model = StreetAddress
@@ -150,16 +189,19 @@ class StreetAddressInline(generic.GenericStackedInline):
     collapse = True
     modal = True
 
+
 class SpecialDateInline(generic.GenericStackedInline):
     model = SpecialDate
     extra = 0
     collapse = True
+
 
 class CommentInline(generic.GenericStackedInline):
     model = Comment
     ct_fk_field = 'object_pk'
     extra = 0
     collapse = True
+
 
 class CustomerRateCardsInline(admin.StackedInline):
     model = CustomerRateCards
@@ -170,6 +212,7 @@ class CustomerRateCardsInline(admin.StackedInline):
     modal = True
     sortable = True
     sortable_order_field = 'priority'
+
 
 class CompanyAdmin(admin.ModelAdmin):
     inlines = [
@@ -187,24 +230,36 @@ class CompanyAdmin(admin.ModelAdmin):
     save_on_top = True
     title_icon = 'fa-group'
 
-    search_fields = ['^name',]
+    search_fields = ['^name', ]
     prepopulated_fields = {'slug': ('name',)}
     readonly_fields = ('customer_balance', 'supplier_balance')
     fieldsets = (
         ('General', {
-            'fields': (('name', 'nickname'), ('slug', 'about'), 'account_number', ('vat', 'vat_number'), ('swift_bic', 'iban')),
+            'fields': (('name', 'nickname'),
+                       ('slug', 'about'),
+                       'account_number',
+                       ('vat', 'vat_number'),
+                       ('swift_bic', 'iban')),
             'description': 'General company informations'
         }),
         ('Customer settings', {
-            'fields': ('customer_enabled', ('max_calls', 'calls_per_second'), 'billing_cycle', ('prepaid', 'credit_limit'), 'customer_balance')
+            'fields': ('customer_enabled',
+                       ('max_calls', 'calls_per_second'),
+                       'billing_cycle',
+                       ('prepaid', 'credit_limit'),
+                       'customer_balance')
         }),
         ('Customer alerts', {
-            'fields': ('low_credit_alert', 'email_alert', 'low_credit_alert_sent', 'account_blocked_alert_sent'),
+            'fields': ('low_credit_alert',
+                       'email_alert',
+                       'low_credit_alert_sent',
+                       'account_blocked_alert_sent'),
             'classes': ('collapsed',),
             'description': 'All the customer alert parameters'
         }),
         ('Provider settings', {
-            'fields': ('supplier_enabled', 'supplier_balance'),
+            'fields': ('supplier_enabled',
+                       'supplier_balance'),
             'classes': ('collapsed',),
             'description': 'If this company is your provider, this is right place to manage its parameters'
         }),
@@ -260,17 +315,27 @@ class CompanyAdmin(admin.ModelAdmin):
 
     def changelist_view(self, request, extra_context=None):
         if request.user.is_superuser:
-            self.list_display_links = ['name',]
+            self.list_display_links = ['name', ]
             return super(CompanyAdmin, self).changelist_view(request, extra_context=None)
         else:
-            self.list_display_links = ['None',]
+            self.list_display_links = ['None', ]
             return super(CompanyAdmin, self).changelist_view(request, extra_context=None)
 
     def get_list_display(self, request):
         if request.user.is_superuser:
-            return ('name', 'get_prepaid_display', 'get_vat_display', 'get_customer_enabled_display', 'customer_balance', 'get_supplier_enabled_display', 'supplier_balance', 'balance_history')
+            return ('name',
+                    'get_prepaid_display',
+                    'get_vat_display',
+                    'get_customer_enabled_display',
+                    'customer_balance',
+                    'get_supplier_enabled_display',
+                    'supplier_balance',
+                    'balance_history')
         else:
-            return ('name', 'get_prepaid_display', 'get_customer_enabled_display', 'customer_balance')
+            return ('name',
+                    'get_prepaid_display',
+                    'get_customer_enabled_display',
+                    'customer_balance')
 
 #     def get_list_filter(self, request):
 #         if request.user.is_superuser:
@@ -279,12 +344,20 @@ class CompanyAdmin(admin.ModelAdmin):
 #         else:
 #             return []
 
-
     def get_readonly_fields(self, request, obj=None):
         if request.user.is_superuser:
-            return ['customer_balance', 'supplier_balance', 'low_credit_alert_sent', 'account_blocked_alert_sent']
+            return ['customer_balance',
+                    'supplier_balance',
+                    'low_credit_alert_sent',
+                    'account_blocked_alert_sent']
         else:
-            return ['name', 'prepaid', 'customer_enabled', 'customer_balance', 'vat_number', 'max_calls', 'billing_cycle']
+            return ['name',
+                    'prepaid',
+                    'customer_enabled',
+                    'customer_balance',
+                    'vat_number',
+                    'max_calls',
+                    'billing_cycle']
 
     def get_form(self, request, obj=None, **kwargs):
         self.exclude = []
@@ -317,7 +390,7 @@ class PersonAdmin(admin.ModelAdmin):
         StreetAddressInline,
         SpecialDateInline,
         CommentInline,
-        ]
+    ]
 
     list_display_links = ('first_name',
                           'last_name')
@@ -429,8 +502,13 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
             return
 
     def get_readonly_fields(self, request, obj=None):
-        if obj:  #This is the case when obj is already created i.e. it's an edit
-            return ['company', 'amount_debited', 'amount_refund', 'customer_balance', 'supplier_balance', 'operation_type']
+        if obj:  # This is the case when obj is already created. it's an edit
+            return ['company',
+                    'amount_debited',
+                    'amount_refund',
+                    'customer_balance',
+                    'supplier_balance',
+                    'operation_type']
         else:
             return ['customer_balance', 'supplier_balance']
 
@@ -590,6 +668,7 @@ class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
 
 # LCR
 
+
 class LCRProvidersInline(admin.TabularInline):
     model = LCRProviders
 #    formset = LCRProvidersFormSet
@@ -639,10 +718,27 @@ class CustomerRatesInline(admin.TabularInline):
 
 
 class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ['id', 'ratecard', 'destination', 'prefix', 'rate', 'block_min_duration', 'init_block', 'date_start', 'date_end', 'get_boolean_display', 'date_added', 'date_modified']
-    ordering = ['ratecard', 'prefix']
-    list_filter = ['ratecard', 'enabled', 'destination']
-    search_fields = ['^prefix', 'date_start', 'date_end', '^destination']
+    list_display = ['id',
+                    'ratecard',
+                    'destination',
+                    'prefix',
+                    'rate',
+                    'block_min_duration',
+                    'init_block',
+                    'date_start',
+                    'date_end',
+                    'get_boolean_display',
+                    'date_added',
+                    'date_modified']
+    ordering = ['ratecard',
+                'prefix']
+    list_filter = ['ratecard',
+                   'enabled',
+                   'destination']
+    search_fields = ['^prefix',
+                     'date_start',
+                     'date_end',
+                     '^destination']
     actions = ['make_enabled', 'make_disabled']
     readonly_fields = ['id', ]
     form = CustomerRatesAdminForm
@@ -662,20 +758,22 @@ class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
 
     def make_enabled(self, request, queryset):
         rows_updated = queryset.update(enabled=True)
-        if rows_updated == 1 :
+        if rows_updated == 1:
             message_bit = "1 item was"
         else:
             message_bit = "%s items were" % rows_updated
-        self.message_user(request, "%s successfully marked as enabled." % message_bit)
+        self.message_user(request,
+                          "%s successfully marked as enabled." % message_bit)
     make_enabled.short_description = _(u"mark selected items as enabled")
 
     def make_disabled(self, request, queryset):
         rows_updated = queryset.update(enabled=False)
-        if rows_updated == 1 :
+        if rows_updated == 1:
             message_bit = "1 item was"
         else:
             message_bit = "%s items were" % rows_updated
-        self.message_user(request, "%s successfully marked as disabled." % message_bit)
+        self.message_user(request,
+                          "%s successfully marked as disabled." % message_bit)
     make_disabled.short_description = _(u"mark selected items as disabled")
 
     def get_import_formats(self):
@@ -748,7 +846,7 @@ class CustomerDirectoryAdmin(admin.ModelAdmin):
                     'calls_per_second',
                     'get_enabled_display',
                     'get_fake_ring_display',
-                    'get_cli_debug_display'] 
+                    'get_cli_debug_display']
     ordering = ['company', 'enabled']
     list_filter = ['enabled', ]
     #list_editable = ['max_calls', 'calls_per_second']
@@ -979,10 +1077,15 @@ class SipProfileAdmin(admin.ModelAdmin):
 # AclLists
 
 
+class AclNodesAdminInline(admin.ModelAdmin):
+    list_display = ('company', 'cidr', 'policy', 'list')
+
+
 class AclListsAdmin(admin.ModelAdmin):
     list_display = ('acl_name', 'default_policy')
     ordering = ['acl_name', 'default_policy']
-    list_filter = ['default_policy',]
+    list_filter = ['default_policy', ]
+    inlines = [AclNodesAdminInline, ]
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -997,7 +1100,7 @@ class AclNodesAdmin(admin.ModelAdmin):
     list_display = ('company', 'cidr', 'policy', 'list')
     ordering = ['company', 'policy', 'cidr']
     list_filter = ['company', 'list']
-    search_fields = ['cidr',]
+    search_fields = ['cidr', ]
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -1037,7 +1140,10 @@ class TotalAveragesChangeList(ChangeList):
         self.total_sell_total = 0
         self.total_cost_total = 0
         try:
-            q = self.result_list.aggregate(total_sell_sum=Sum('total_sell'), total_cost_sum=Sum('total_cost'), effective_duration_sum=Sum('effective_duration'), effective_duration_avg=Avg('effective_duration'))
+            q = self.result_list.aggregate(total_sell_sum=Sum('total_sell'),
+                                           total_cost_sum=Sum('total_cost'),
+                                           effective_duration_sum=Sum('effective_duration'),
+                                           effective_duration_avg=Avg('effective_duration'))
         except:
             self.total_effective_duration = 0
             self.total_cost_total = 0
@@ -1058,41 +1164,61 @@ class TotalAveragesChangeList(ChangeList):
 
 
 class CDRAdmin(ExportMixin, admin.ModelAdmin):
-    search_fields = ['^prefix', '^destination_number', '^customer__name', '^cost_destination', '^sell_destination']
+    search_fields = ['^prefix',
+                     '^destination_number',
+                     '^customer__name',
+                     '^cost_destination',
+                     '^sell_destination']
     list_filter = ('start_stamp',)
 #    date_hierarchy = 'start_stamp'
     #change_list_template = 'admin/pyfreebill/cdr/change_list.html'
     resource_class = CDRResourceExtra
     fieldsets = (
         ('General', {
-            'fields': ('customer', 'start_stamp', 'destination_number', ('min_effective_duration', 'billsec'), ('sell_destination', 'cost_destination'), 'switchname')
+            'fields': ('customer',
+                       'start_stamp',
+                       'destination_number',
+                       ('min_effective_duration', 'billsec'),
+                       ('sell_destination', 'cost_destination'),
+                       'switchname')
         }),
         ('Advanced date / duration infos', {
             'classes': ('collapse',),
-            'fields': (('answered_stamp', 'end_stamp', 'duration', 'effectiv_duration'))
+            'fields': (('answered_stamp',
+                        'end_stamp',
+                        'duration',
+                        'effectiv_duration'))
         }),
         ('Financial infos', {
-#            'classes': ('collapse',),
-            'fields': (('total_cost', 'cost_rate'), ('total_sell', 'rate'), ('init_block', 'block_min_duration'))
+            'fields': (('total_cost', 'cost_rate'),
+                       ('total_sell', 'rate'),
+                       ('init_block', 'block_min_duration'))
         }),
         ('LCR infos', {
             'classes': ('collapse',),
-            'fields': ('prefix',('ratecard_id', 'lcr_group_id'), ('lcr_carrier_id', 'gateway'))
+            'fields': ('prefix',
+                       ('ratecard_id', 'lcr_group_id'),
+                       ('lcr_carrier_id', 'gateway'))
         }),
         ('Call detailed infos', {
             'classes': ('collapse',),
-            'fields': ('caller_id_number' , ('hangup_cause', 'hangup_cause_q850', 'hangup_disposition', 'sip_hangup_cause'), ('read_codec', 'write_codec'), 'sip_user_agent', 'customer_ip', ('uuid', 'bleg_uuid', 'chan_name', 'country'))
+            'fields': ('caller_id_number',
+                       ('hangup_cause',
+                        'hangup_cause_q850',
+                        'hangup_disposition',
+                        'sip_hangup_cause'),
+                       ('read_codec', 'write_codec'),
+                       'sip_user_agent',
+                       'customer_ip',
+                       ('uuid', 'bleg_uuid', 'chan_name', 'country'))
         }),
     )
 
-#     class Media:
-#         js = ("/media/javascript/list_filter_collapse.js",)
-
     def has_add_permission(self, request, obj=None):
-      return False
+        return False
 
     def has_delete_permission(self, request, obj=None):
-      return False
+        return False
 
     def get_actions(self, request):
         if request.user.is_superuser:
@@ -1105,23 +1231,44 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
 
     def changelist_view(self, request, extra_context=None):
         if request.user.is_superuser:
-            self.list_display_links = ['start_stamp',]
-            return super(CDRAdmin, self).changelist_view(request, extra_context=None)
+            self.list_display_links = ['start_stamp', ]
+            return super(CDRAdmin, self).changelist_view(request,
+                                                         extra_context=None)
         else:
-            self.list_display_links = ['None',]
-            return super(CDRAdmin, self).changelist_view(request, extra_context=None)
+            self.list_display_links = ['None', ]
+            return super(CDRAdmin, self).changelist_view(request,
+                                                         extra_context=None)
 
     def get_ordering(self, request):
         if request.user.is_superuser:
-            return ['-start_stamp',]
+            return ['-start_stamp', ]
         else:
-            return ['-start_stamp',]
+            return ['-start_stamp', ]
 
     def get_list_display(self, request):
         if request.user.is_superuser:
-            return ['start_stamp', 'customer', 'sell_destination', 'destination_number', 'min_effective_duration', 'hangup_cause_colored', 'lcr_carrier_id', 'cost_rate', 'rate', 'prefix', 'ratecard_id', 'switchname']
+            return ['start_stamp',
+                    'customer',
+                    'sell_destination',
+                    'destination_number',
+                    'min_effective_duration',
+                    'hangup_cause_colored',
+                    'lcr_carrier_id',
+                    'cost_rate',
+                    'rate',
+                    'prefix',
+                    'ratecard_id',
+                    'switchname']
         else:
-            return ['start_stamp', 'customer', 'customer_ip', 'sell_destination', 'destination_number', 'min_effective_duration', 'hangup_cause', 'rate', 'total_sell']
+            return ['start_stamp',
+                    'customer',
+                    'customer_ip',
+                    'sell_destination',
+                    'destination_number',
+                    'min_effective_duration',
+                    'hangup_cause',
+                    'rate',
+                    'total_sell']
 
     def get_list_filter(self, request):
         if request.user.is_superuser:
@@ -1131,12 +1278,59 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         if request.user.is_superuser:
-            return ['customer_ip', 'customer', 'caller_id_number', 'destination_number', 'start_stamp', 'answered_stamp', 'end_stamp', 'duration', 'min_effective_duration', 'billsec', 'hangup_cause', 'hangup_cause_q850', 'gateway', 'lcr_carrier_id', 'prefix', 'country','cost_rate', 'total_cost', 'total_sell', 'rate', 'init_block', 'block_min_duration', 'ratecard_id', 'lcr_group_id', 'uuid', 'bleg_uuid', 'chan_name', 'read_codec', 'write_codec', 'sip_user_agent', 'hangup_disposition', 'effectiv_duration', 'sip_hangup_cause', 'sell_destination', 'cost_destination', 'switchname']
+            return ['customer_ip',
+                    'customer',
+                    'caller_id_number',
+                    'destination_number',
+                    'start_stamp',
+                    'answered_stamp',
+                    'end_stamp',
+                    'duration',
+                    'min_effective_duration',
+                    'billsec',
+                    'hangup_cause',
+                    'hangup_cause_q850',
+                    'gateway',
+                    'lcr_carrier_id',
+                    'prefix',
+                    'country',
+                    'cost_rate',
+                    'total_cost',
+                    'total_sell',
+                    'rate',
+                    'init_block',
+                    'block_min_duration',
+                    'ratecard_id',
+                    'lcr_group_id',
+                    'uuid',
+                    'bleg_uuid',
+                    'chan_name',
+                    'read_codec',
+                    'write_codec',
+                    'sip_user_agent',
+                    'hangup_disposition',
+                    'effectiv_duration',
+                    'sip_hangup_cause',
+                    'sell_destination',
+                    'cost_destination',
+                    'switchname']
         else:
-            return ['start_stamp', 'customer', 'customer_ip', 'sell_destination', 'destination_number', 'min_effective_duration', 'hangup_cause', 'rate', 'total_sell']
+            return ['start_stamp',
+                    'customer',
+                    'customer_ip',
+                    'sell_destination',
+                    'destination_number',
+                    'min_effective_duration',
+                    'hangup_cause',
+                    'rate',
+                    'total_sell']
 
     def get_form(self, request, obj=None, **kwargs):
-        self.exclude = ['effectiv_duration', 'effective_duration', 'sip_rtp_rxstat', 'sip_rtp_txstat', 'switch_ipv4']
+        self.exclude = ['effectiv_duration',
+                        'effective_duration',
+                        'sip_rtp_rxstat',
+                        'sip_rtp_txstat',
+                        'switch_ipv4']
         if not request.user.is_superuser:
             self.exclude.append('cost_rate')
             self.exclude.append('total_cost')
@@ -1148,8 +1342,8 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
         return super(CDRAdmin, self).get_form(request, obj, **kwargs)
 
     def queryset(self, request):
-        today_c = date.today()-datetime.timedelta(days=settings.PFB_NB_CUST_CDR)
-        today_a = date.today()-datetime.timedelta(days=settings.PFB_NB_ADMIN_CDR)
+        today_c = date.today() - datetime.timedelta(days=settings.PFB_NB_CUST_CDR)
+        today_a = date.today() - datetime.timedelta(days=settings.PFB_NB_ADMIN_CDR)
         user = getattr(request, 'user', None)
         qs = super(CDRAdmin, self).queryset(request)
         # add .prefetch_related('content_type') for reduce queries
@@ -1163,6 +1357,7 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
         format_csv = DEFAULT_FORMATS
         return [f for f in format_csv if f().can_export()]
 
+
 class CarrierNormalizationRulesAdmin(admin.ModelAdmin):
     list_display = ('company', 'prefix', 'remove_prefix', 'add_prefix')
     ordering = ('company', 'prefix')
@@ -1173,6 +1368,7 @@ class CarrierNormalizationRulesAdmin(admin.ModelAdmin):
             return True
         else:
             return False
+
 
 class CustomerNormalizationRulesAdmin(admin.ModelAdmin):
     list_display = ('company', 'prefix', 'remove_prefix', 'add_prefix')
@@ -1185,6 +1381,7 @@ class CustomerNormalizationRulesAdmin(admin.ModelAdmin):
         else:
             return False
 
+
 class CarrierCIDNormalizationRulesAdmin(admin.ModelAdmin):
     list_display = ('company', 'prefix', 'remove_prefix', 'add_prefix')
     ordering = ('company',)
@@ -1194,6 +1391,7 @@ class CarrierCIDNormalizationRulesAdmin(admin.ModelAdmin):
             return True
         else:
             return False
+
 
 class CustomerCIDNormalizationRulesAdmin(admin.ModelAdmin):
     list_display = ('company', 'prefix', 'remove_prefix', 'add_prefix')
@@ -1205,6 +1403,7 @@ class CustomerCIDNormalizationRulesAdmin(admin.ModelAdmin):
         else:
             return False
 
+
 class DestinationNumberRulesAdmin(admin.ModelAdmin):
     list_display = ('prefix', 'format_num', 'description')
     ordering = ('prefix',)
@@ -1215,7 +1414,7 @@ class DestinationNumberRulesAdmin(admin.ModelAdmin):
         else:
             return False
 
-# STATS
+
 class DimCustomerDestinationAdmin(admin.ModelAdmin):
     list_display = ('date', 'customer', 'destination', 'total_calls', 'success_calls', 'total_duration', 'avg_duration', 'max_duration', 'min_duration', 'total_sell', 'total_cost')
     readonly_fields = ('date', 'customer', 'destination', 'total_calls', 'success_calls', 'total_duration', 'avg_duration', 'max_duration', 'min_duration', 'total_sell', 'total_cost')
@@ -1223,10 +1422,11 @@ class DimCustomerDestinationAdmin(admin.ModelAdmin):
     ordering = ('-date', 'customer', 'destination')
 
     def has_add_permission(self, request, obj=None):
-      return False
+        return False
 
     def has_delete_permission(self, request, obj=None):
-      return False
+        return False
+
 
 class DimProviderDestinationAdmin(admin.ModelAdmin):
     list_display = ('date', 'provider', 'destination', 'total_calls', 'success_calls', 'total_duration', 'avg_duration', 'max_duration', 'min_duration', 'total_sell', 'total_cost')
@@ -1236,17 +1436,17 @@ class DimProviderDestinationAdmin(admin.ModelAdmin):
 #    list_display = ('get_day_stats',)
 
     def has_add_permission(self, request, obj=None):
-      return False
+        return False
 
     def has_delete_permission(self, request, obj=None):
-      return False
+        return False
 
-# Extranet logs
+
 class LogEntryAdmin(admin.ModelAdmin):
     """ based on djangosnippets.org/snippets/2484/ """
     date_hierarchy = 'action_time'
-    readonly_fields = LogEntry._meta.get_all_field_names()+ \
-                      ['object_link', 'action_description']
+    readonly_fields = LogEntry._meta.get_all_field_names() + \
+        ['object_link', 'action_description']
     list_filter = [
         'user',
         'content_type',
@@ -1325,9 +1525,12 @@ admin_site.register(SofiaGateway, SofiaGatewayAdmin)
 #admin.site.register(HangupCause, HangupCauseAdmin)
 admin_site.register(CDR, CDRAdmin)
 admin_site.register(CarrierNormalizationRules, CarrierNormalizationRulesAdmin)
-admin_site.register(CustomerNormalizationRules, CustomerNormalizationRulesAdmin)
-admin_site.register(CarrierCIDNormalizationRules, CarrierCIDNormalizationRulesAdmin)
-admin_site.register(CustomerCIDNormalizationRules, CustomerCIDNormalizationRulesAdmin)
+admin_site.register(CustomerNormalizationRules,
+                    CustomerNormalizationRulesAdmin)
+admin_site.register(CarrierCIDNormalizationRules,
+                    CarrierCIDNormalizationRulesAdmin)
+admin_site.register(CustomerCIDNormalizationRules,
+                    CustomerCIDNormalizationRulesAdmin)
 admin_site.register(DestinationNumberRules, DestinationNumberRulesAdmin)
 #admin.site.register(DimCustomerHangupcause, DimCustomerHangupcauseAdmin)
 #admin.site.register(DimCustomerSipHangupcause, DimCustomerSipHangupcauseAdmin)
@@ -1336,4 +1539,4 @@ admin_site.register(DestinationNumberRules, DestinationNumberRulesAdmin)
 admin_site.register(DimCustomerDestination, DimCustomerDestinationAdmin)
 admin_site.register(DimProviderDestination, DimProviderDestinationAdmin)
 admin_site.register(LogEntry, LogEntryAdmin)
-#admin.site.register()
+

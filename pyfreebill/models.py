@@ -1076,11 +1076,19 @@ class CustomerRateCards(models.Model):
 
 class DestinationNumberRules(models.Model):
     """ Destination Number Normalization Rules """
-    prefix = models.CharField(_(u'numeric prefix'), max_length=30)
-    description = models.TextField(_(u'description'), blank=True)
-    format_num = models.CharField(_(u"Rule format"), max_length=150, help_text=_(u"example for Tunisia : ^216[%d][%d][%d][%d][%d][%d][%d][%d]$"))
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    prefix = models.CharField(_(u'numeric prefix'),
+                              max_length=30)
+    description = models.TextField(_(u'description'),
+                                   blank=True)
+    format_num = models.CharField(_(u"Rule format"),
+                                  max_length=150,
+                                  help_text=_(u"""example for Tunisia :
+                                      ^216[%d][%d][%d][%d][%d][%d][%d][%d]
+                                      $"""))
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'destination_norm_rules'
@@ -1094,13 +1102,24 @@ class DestinationNumberRules(models.Model):
 
 class CustomerNormalizationRules(models.Model):
     """ Customer Normalization Rules """
-    company = models.ForeignKey(Company, verbose_name=_(u"customer"))
-    prefix = models.CharField(_(u'numeric prefix'), max_length=30)
-    description = models.TextField(_(u'description'), blank=True)
-    remove_prefix = models.CharField(_(u"remove prefix"), blank=True, default='', max_length=15)
-    add_prefix = models.CharField(_(u"add prefix"), blank=True, default='', max_length=15)
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    company = models.ForeignKey(Company,
+                                verbose_name=_(u"customer"))
+    prefix = models.CharField(_(u'numeric prefix'),
+                              max_length=30)
+    description = models.TextField(_(u'description'),
+                                   blank=True)
+    remove_prefix = models.CharField(_(u"remove prefix"),
+                                     blank=True,
+                                     default='',
+                                     max_length=15)
+    add_prefix = models.CharField(_(u"add prefix"),
+                                  blank=True,
+                                  default='',
+                                  max_length=15)
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'customer_norm_rules'
@@ -1109,18 +1128,32 @@ class CustomerNormalizationRules(models.Model):
         verbose_name_plural = _(u'Customer Normalization Rules')
 
     def __unicode__(self):
-        return u"%s -> %s -%s +%s" % (self.company, self.prefix, self.remove_prefix, self.add_prefix)
+        return u"%s -> %s -%s +%s" % (self.company,
+                                      self.prefix,
+                                      self.remove_prefix,
+                                      self.add_prefix)
 
 
 class CarrierNormalizationRules(models.Model):
     """ Carrier Normalization Rules """
-    company = models.ForeignKey(Company, verbose_name=_(u"provider"))
-    prefix = models.CharField(_(u'numeric prefix'), max_length=30)
-    description = models.TextField(_(u'description'), blank=True)
-    remove_prefix = models.CharField(_(u"remove prefix"), blank=True, default='', max_length=15)
-    add_prefix = models.CharField(_(u"add prefix"), blank=True, default='', max_length=15)
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    company = models.ForeignKey(Company,
+                                verbose_name=_(u"provider"))
+    prefix = models.CharField(_(u'numeric prefix'),
+                              max_length=30)
+    description = models.TextField(_(u'description'),
+                                   blank=True)
+    remove_prefix = models.CharField(_(u"remove prefix"),
+                                     blank=True,
+                                     default='',
+                                     max_length=15)
+    add_prefix = models.CharField(_(u"add prefix"),
+                                  blank=True,
+                                  default='',
+                                  max_length=15)
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'carrier_norm_rules'
@@ -1129,18 +1162,32 @@ class CarrierNormalizationRules(models.Model):
         verbose_name_plural = _(u'Provider Normalization Rules')
 
     def __unicode__(self):
-        return u"%s -> %s -%s +%s" % (self.company, self.prefix, self.remove_prefix, self.add_prefix)
+        return u"%s -> %s -%s +%s" % (self.company,
+                                      self.prefix,
+                                      self.remove_prefix,
+                                      self.add_prefix)
 
 
 class CustomerCIDNormalizationRules(models.Model):
     """ Customer Caller ID Number Normalization Rules """
-    company = models.ForeignKey(Company, verbose_name=_(u"customer"))
-    prefix = models.CharField(_(u'numeric prefix'), max_length=30)
-    description = models.TextField(_(u'description'), blank=True)
-    remove_prefix = models.CharField(_(u"remove prefix"), blank=True, default='', max_length=15)
-    add_prefix = models.CharField(_(u"add prefix"), blank=True, default='', max_length=15)
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    company = models.ForeignKey(Company,
+                                verbose_name=_(u"customer"))
+    prefix = models.CharField(_(u'numeric prefix'),
+                              max_length=30)
+    description = models.TextField(_(u'description'),
+                                   blank=True)
+    remove_prefix = models.CharField(_(u"remove prefix"),
+                                     blank=True,
+                                     default='',
+                                     max_length=15)
+    add_prefix = models.CharField(_(u"add prefix"),
+                                  blank=True,
+                                  default='',
+                                  max_length=15)
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'customer_cid_norm_rules'
@@ -1149,18 +1196,31 @@ class CustomerCIDNormalizationRules(models.Model):
         verbose_name_plural = _(u'Customer CallerID Normalization Rules')
 
     def __unicode__(self):
-        return u"%s -> -%s +%s" % (self.company, self.remove_prefix, self.add_prefix)
+        return u"%s -> -%s +%s" % (self.company,
+                                   self.remove_prefix,
+                                   self.add_prefix)
 
 
 class CarrierCIDNormalizationRules(models.Model):
     """ Carrier Caller ID Number Normalization Rules """
-    company = models.ForeignKey(Company, verbose_name=_(u"provider"))
-    prefix = models.CharField(_(u'numeric prefix'), max_length=30)
-    description = models.TextField(_(u'description'), blank=True)
-    remove_prefix = models.CharField(_(u"remove prefix"), blank=True, default='', max_length=15)
-    add_prefix = models.CharField(_(u"add prefix"), blank=True, default='', max_length=15)
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    company = models.ForeignKey(Company,
+                                verbose_name=_(u"provider"))
+    prefix = models.CharField(_(u'numeric prefix'),
+                              max_length=30)
+    description = models.TextField(_(u'description'),
+                                   blank=True)
+    remove_prefix = models.CharField(_(u"remove prefix"),
+                                     blank=True,
+                                     default='',
+                                     max_length=15)
+    add_prefix = models.CharField(_(u"add prefix"),
+                                  blank=True,
+                                  default='',
+                                  max_length=15)
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'carrier_cid_norm_rules'
@@ -1169,21 +1229,29 @@ class CarrierCIDNormalizationRules(models.Model):
         verbose_name_plural = _(u'Provider CallerID Normalization Rules')
 
     def __unicode__(self):
-        return u"%s -> -%s +%s" % (self.company, self.remove_prefix, self.add_prefix)
+        return u"%s -> -%s +%s" % (self.company,
+                                   self.remove_prefix,
+                                   self.add_prefix)
 
 # ACL
 
 
 class AclLists(models.Model):
     """ ACL list model """
-    acl_name = models.CharField(_(u'name'), max_length=128)
+    acl_name = models.CharField(_(u'name'),
+                                max_length=128)
     DEFAULT_POLICY_CHOICES = (
         ('deny', _(u'deny')),
         ('allow', _(u'allow')),
     )
-    default_policy = models.CharField(_(u'default policy'), max_length=10, choices=DEFAULT_POLICY_CHOICES, default='deny')
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    default_policy = models.CharField(_(u'default policy'),
+                                      max_length=10,
+                                      choices=DEFAULT_POLICY_CHOICES,
+                                      default='deny')
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'acl_lists'
@@ -1197,16 +1265,25 @@ class AclLists(models.Model):
 
 class AclNodes(models.Model):
     """ ACL NODES model """
-    company = models.ForeignKey(Company, verbose_name=_(u"company"))
-    cidr = models.CharField(_(u"ip/cidr Address"), max_length=100, help_text=_(u"Customer IP or cidr address."))
+    company = models.ForeignKey(Company,
+                                verbose_name=_(u"company"))
+    cidr = models.CharField(_(u"ip/cidr Address"),
+                            max_length=100,
+                            help_text=_(u"Customer IP or cidr address."))
     POLICY_CHOICES = (
         ('deny', _('deny')),
         ('allow', _('allow')),
     )
-    policy = models.CharField(_(u"policy"), max_length=10, choices=POLICY_CHOICES, default='allow')
-    list = models.ForeignKey(AclLists, verbose_name=_(u"acl list"))
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    policy = models.CharField(_(u"policy"),
+                              max_length=10,
+                              choices=POLICY_CHOICES,
+                              default='allow')
+    acllist = models.ForeignKey(AclLists,
+                                verbose_name=_(u"acl list"))
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'acl_nodes'
@@ -1477,36 +1554,100 @@ class SipProfile(models.Model):
 
 
 class SofiaGateway(models.Model):
-    name = models.CharField(_(u"name"), max_length=100, unique=True)
-    sip_profile = models.ForeignKey('SipProfile', verbose_name=_(u"SIP profile"), help_text=_(u"Which Sip Profile communication with this gateway will take place"
-            " on."))
-    company = models.ForeignKey(Company, verbose_name=_(u"Provider"), db_index=True)
-    channels = models.PositiveIntegerField(_(u"channels number"), default=1, help_text=_(u"maximum simultaneous calls allowed for this gateway."))
-    enabled = models.BooleanField(_(u"Enabled"), default=True)
-    prefix = models.CharField(_(u'prefix'), blank=True, default='', max_length=15)
-    suffix = models.CharField(_(u'suffix'), blank=True, default='', max_length=15)
-    codec = models.CharField(_(u'codec'), blank=True, default='', max_length=30)
-    username = models.CharField(_(u"username"), blank=True, default='', max_length=35)
-    password = models.CharField(_(u"password"), blank=True, default='', max_length=35)
-    register = models.BooleanField(_(u"register"), default=False)
-    proxy = models.CharField(_(u"proxy"), max_length=48, default="", help_text=_(u"IP if register is False."))
-    extension = models.CharField(_(u"extension number"), max_length=50, blank=True, default="", help_text=_(u"Extension for inbound calls. Same as username, if blank."))
-    realm = models.CharField(_(u"realm"), max_length=50, blank=True, default="", help_text=_(u"Authentication realm. Same as gateway name, if blank."))
-    from_domain = models.CharField(_(u"from domain"), max_length=50, blank=True, default="", help_text=_(u"Domain to use in from field. Same as realm if blank."))
-    expire_seconds = models.PositiveIntegerField(_(u"expire seconds"), default=3600, null=True)
-    retry_seconds = models.PositiveIntegerField(_(u"retry seconds"), default=30, null=True, help_text=_(u"How many seconds before a retry when a failure or timeout "
-            "occurs"))
-    caller_id_in_from = models.BooleanField(_(u"caller ID in From field"), default=True, help_text=_(u"Use the callerid of an inbound call in the from field on "
-            "outbound calls via this gateway."))
+    name = models.CharField(_(u"name"),
+                            max_length=100,
+                            unique=True)
+    sip_profile = models.ForeignKey('SipProfile',
+                                    verbose_name=_(u"SIP profile"),
+                                    help_text=_(u"""Which Sip Profile
+                                        communication with this gateway will
+                                        take place on."""))
+    company = models.ForeignKey(Company,
+                                verbose_name=_(u"Provider"),
+                                db_index=True)
+    channels = models.PositiveIntegerField(_(u"channels number"),
+                                           default=1,
+                                           help_text=_(u"""maximum simultaneous
+                                               calls allowed for this gateway.
+                                               """))
+    enabled = models.BooleanField(_(u"Enabled"),
+                                  default=True)
+    prefix = models.CharField(_(u'prefix'),
+                              blank=True,
+                              default='',
+                              max_length=15)
+    suffix = models.CharField(_(u'suffix'),
+                              blank=True,
+                              default='',
+                              max_length=15)
+    codec = models.CharField(_(u'codec'),
+                             blank=True,
+                             default='',
+                             max_length=30)
+    username = models.CharField(_(u"username"),
+                                blank=True,
+                                default='',
+                                max_length=35)
+    password = models.CharField(_(u"password"),
+                                blank=True,
+                                default='',
+                                max_length=35)
+    register = models.BooleanField(_(u"register"),
+                                   default=False)
+    proxy = models.CharField(_(u"proxy"),
+                             max_length=48,
+                             default="",
+                             help_text=_(u"IP if register is False."))
+    extension = models.CharField(_(u"extension number"),
+                                 max_length=50,
+                                 blank=True,
+                                 default="",
+                                 help_text=_(u"""Extension for inbound calls.
+                                     Same as username, if blank."""))
+    realm = models.CharField(_(u"realm"),
+                             max_length=50,
+                             blank=True,
+                             default="",
+                             help_text=_(u"""Authentication realm. Same as
+                                 gateway name, if blank."""))
+    from_domain = models.CharField(_(u"from domain"),
+                                   max_length=50,
+                                   blank=True,
+                                   default="",
+                                   help_text=_(u"""Domain to use in from field.
+                                       Same as realm if blank."""))
+    expire_seconds = models.PositiveIntegerField(_(u"expire seconds"),
+                                                 default=3600,
+                                                 null=True)
+    retry_seconds = models.PositiveIntegerField(_(u"retry seconds"),
+                                                default=30,
+                                                null=True,
+                                                help_text=_(u"""How many
+                                                    seconds before a retry when
+                                                    a failure or timeout occurs
+                                                    """))
+    caller_id_in_from = models.BooleanField(_(u"caller ID in From field"),
+                                            default=True,
+                                            help_text=_(u"""Use the callerid of
+                                                an inbound call in the from
+                                                field on outbound calls via
+                                                this gateway."""))
     SIP_CID_TYPE_CHOICES = (
         ('none', _(u'none')),
         ('default', _(u'default')),
         ('pid', _(u'pid')),
         ('rpid', _(u'rpid')),
     )
-    sip_cid_type = models.CharField(_(u'SIP CID type'), max_length=10, choices=SIP_CID_TYPE_CHOICES, default='rpid', help_text=_(u"Modify callerID in SDP Headers."))
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    sip_cid_type = models.CharField(_(u'SIP CID type'),
+                                    max_length=10,
+                                    choices=SIP_CID_TYPE_CHOICES,
+                                    default='rpid',
+                                    help_text=_(u"""Modify callerID in SDP
+                                        Headers."""))
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'sofia_gateway'
@@ -1522,12 +1663,25 @@ class SofiaGateway(models.Model):
 
 class HangupCause(models.Model):
     """ Hangup Cause Model """
-    code = models.PositiveIntegerField(_(u"Hangup code"), unique=True, help_text=_(u"ITU-T Q.850 Code."))
-    enumeration = models.CharField(_(u"enumeration"), max_length=100, null=True, blank=True, help_text=_(u"enumeration."))
-    cause = models.CharField(_(u"cause"), max_length=100, null=True, blank=True, help_text=_(u"Cause."))
-    description = models.TextField(_(u'description'), blank=True)
-    date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
+    code = models.PositiveIntegerField(_(u"Hangup code"),
+                                       unique=True,
+                                       help_text=_(u"ITU-T Q.850 Code."))
+    enumeration = models.CharField(_(u"enumeration"),
+                                   max_length=100,
+                                   null=True,
+                                   blank=True,
+                                   help_text=_(u"enumeration."))
+    cause = models.CharField(_(u"cause"),
+                             max_length=100,
+                             null=True,
+                             blank=True,
+                             help_text=_(u"Cause."))
+    description = models.TextField(_(u'description'),
+                                   blank=True)
+    date_added = models.DateTimeField(_(u'date added'),
+                                      auto_now_add=True)
+    date_modified = models.DateTimeField(_(u'date modified'),
+                                         auto_now=True)
 
     class Meta:
         db_table = 'hangup_cause'
