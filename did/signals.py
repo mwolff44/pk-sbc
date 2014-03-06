@@ -17,18 +17,23 @@ from django.db.models.signals import post_save
 from django.contrib import messages
 from django.template import Context, loader
 from django.utils.translation import ugettext_lazy as _
+from django.dispatch import receiver
 
 from switch import esl
 
 from did.models import Did
 
 
-def update_did(sender, instance, **kwargs):
+@receiver(post_save, sender=Did)
+def update_did(sender, instance, signal, created, **kwargs):
     """ generate new did xml config file """
+    if kwargs.get('raw', False):
+        return False
+    request = kwargs.get("request")
     try:
         t = loader.get_template('xml/00_did.xml')
     except IOError:
-        messages.error(_(u"""did config xml file update failed.
+        messages.error(request, _(u"""did config xml file update failed.
             Can not load template file !"""))
     dids = Did.objects.all()
     c = Context({"dids": dids, })
@@ -45,10 +50,10 @@ def update_did(sender, instance, **kwargs):
                     FS update failed ! Try manually"""))
         finally:
             #f.close()
-            messages.success(_(u"DID config xml file update success"))
+            messages.success(request, _(u"DID config xml file update success"))
     except IOError:
         messages.error(_(u"""DID config xml file update failed. Can not
             create file !"""))
 
 
-post_save.connect(update_did, sender=Did)
+# post_save.connect(update_did, sender=Did)

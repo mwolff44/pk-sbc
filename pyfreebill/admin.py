@@ -15,39 +15,35 @@
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
-import os
 from django.contrib import admin
-from django.db import models
-from django import forms
 from django.contrib import messages
 from django.contrib.contenttypes import generic
 from django.contrib.comments.models import Comment
 from django.contrib.admin.models import LogEntry, ADDITION, CHANGE, DELETION
 from django.utils.html import escape
 from django.core.urlresolvers import reverse
-from django.contrib.admin.options import IncorrectLookupParameters
-from django.contrib.admin.views.main import ERROR_FLAG, ChangeList
-from django.core import serializers
-from django.forms import ModelForm
-from django.forms.models import BaseInlineFormSet, inlineformset_factory
+from django.contrib.admin.views.main import ChangeList
+from django.forms.models import BaseInlineFormSet
 from django.template import Context, loader
-from django.core.files import File
-from django.conf.urls import patterns, url
-from django.contrib.admin.widgets import *
+from django.utils.safestring import mark_safe
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import ungettext
+
+from datetime import date
+import datetime
+
 from yawdadmin import admin_site
-from yawdadmin.admin import SortableModelAdmin, PopupInline, PopupModelAdmin
+from yawdadmin.admin import SortableModelAdmin
+
 from import_export.admin import ImportExportMixin, ExportMixin, ImportMixin
 from import_export.formats import base_formats
+
+from switch import esl
+
 from pyfreebill.models import *
 from pyfreebill.forms import CustomerRateCardsAdminForm, CompanyAdminForm, CustomerRatesAdminForm, ProviderRatesAdminForm, ProviderTariffAdminForm, RateCardAdminForm, CustomerDirectoryAdminForm
-from pyfreebill.resources import *
-from django.http import HttpResponse, HttpResponseRedirect
-from datetime import date
-from switch import esl
-import datetime
+from pyfreebill.resources import CDRResourceExtra, CalleridPrefixResource
+
 
 APP_LABEL = _('CDR report')
 
@@ -66,7 +62,6 @@ def sofiaupdate(modeladmin, request, queryset):
     accounts = Company.objects.filter(supplier_enabled=True)
     c = Context({"sipprofiles": sipprofiles, "accounts": accounts})
     try:
-        pwd = os.path.dirname(__file__)
         f = open('/usr/local/freeswitch/conf/autoload_configs/sofia.conf.xml',
                  'w')
         try:
@@ -99,7 +94,6 @@ def directoryupdate(modeladmin, request, queryset):
     c = Context({"customerdirectorys": customerdirectorys,
                  "accounts": accounts})
     try:
-        pwd = os.path.dirname(__file__)
         f = open('/usr/local/freeswitch/conf/directory/default.xml', 'w')
         try:
             f.write(t.render(c))
@@ -131,7 +125,6 @@ def aclupdate(modeladmin, request, queryset):
     aclnodes = AclNodes.objects.all()
     c = Context({"acllists": acllists, "aclnodes": aclnodes})
     try:
-        pwd = os.path.dirname(__file__)
         f = open('/usr/local/freeswitch/conf/autoload_configs/acl.conf.xml',
                  'w')
         try:
@@ -1517,7 +1510,7 @@ admin_site.register(RateCard, RateCardAdmin)
 admin_site.register(CustomerRates, CustomerRatesAdmin)
 admin_site.register(CustomerRateCards, CustomerRateCardsAdmin)
 admin_site.register(CustomerDirectory, CustomerDirectoryAdmin)
-admin_site.register(AclLists, AclListsAdmin)
+#admin_site.register(AclLists, AclListsAdmin)
 #admin.site.register(AclNodes, AclNodesAdmin)
 #admin.site.register(VoipSwitch, VoipSwitchAdmin)
 admin_site.register(SipProfile, SipProfileAdmin)
@@ -1539,4 +1532,3 @@ admin_site.register(DestinationNumberRules, DestinationNumberRulesAdmin)
 admin_site.register(DimCustomerDestination, DimCustomerDestinationAdmin)
 admin_site.register(DimProviderDestination, DimProviderDestinationAdmin)
 admin_site.register(LogEntry, LogEntryAdmin)
-
