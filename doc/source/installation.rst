@@ -505,8 +505,8 @@ Pyfreebilling installation
 	pip install -r requirements/requirements.txt
 	python manage.py syncdb
 	python manage.py migrate
-	python manage.py
-	loaddata country_dialcode.json
+	python manage.py loaddata country_dialcode.json
+	python manage.py collectstatic
 
 
 * copy some config files :

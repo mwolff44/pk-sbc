@@ -681,6 +681,7 @@ class CustomerDirectory(models.Model):
                 pass
             elif len(IPNetwork(self.sip_ip)) == 1:
                 self.sip_ip = str(self.sip_ip) + str('/32')
+                # add name check no space ...
 
 # Caller ID list
 
