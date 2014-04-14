@@ -16,7 +16,7 @@
     <extension name="unloop">
       <condition field="${unroll_loops}" expression="^true$"/>
       <condition field="${sip_looped_call}" expression="^true$">
-	<action application="deflect" data="${destination_number}"/>
+	      <action application="deflect" data="${destination_number}"/>
       </condition>
     </extension>
     <!--
@@ -26,24 +26,23 @@
     -->
     <extension name="call_debug" continue="true">
       <condition field="${call_debug}" expression="^true$" break="never">
-	<action application="info"/>
+	      <action application="info"/>
       </condition>
     </extension>
 
     <extension name="check_auth" continue="true">
       <condition field="${sip_authorized}" expression="^true$" break="never">
-	<anti-action application="respond" data="407"/>
+	      <anti-action application="respond" data="407"/>
       </condition>
-      <condition field="${acl(${network_addr} domains)}" expression="true" break="never">
+<!--       <condition field="${acl(${network_addr} domains)}" expression="true" break="never">
         <anti-action application="respond" data="407"/>
-      </condition>
-
+      </condition> -->
     </extension>
-    
+
     <extension name="limit" continue="true">
-        <condition>
-          <action application="limit" data="hash inbound ${user_name} ${max_calls} ${calls_per_second}/1 !NORMAL_CIRCUIT_CONGESTION"/>
-        </condition>
+      <condition>
+        <action application="limit" data="hash inbound ${user_name} ${max_calls} ${calls_per_second}/1 !NORMAL_CIRCUIT_CONGESTION"/>
+      </condition>
     </extension>
 
     <extension name="outside_call" continue="true">
@@ -51,6 +50,7 @@
         <action application="set" data="outside_call=true"/>
         <action application="lua" data="/usr/local/venv/pyfreebilling/freeswitch/scripts/pyfreebilling_dp.lua"/>
       </condition>
-    </extension>    
+    </extension> 
+      
   </context>
 </include>

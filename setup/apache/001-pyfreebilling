@@ -29,3 +29,5 @@
                 Allow from all
         </Directory>
 </VirtualHost>
+
+#WSGIPythonPath /usr/src/wikipbx:/usr/src/django:/usr/src/freeswitch/libs/esl/python

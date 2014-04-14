@@ -1,42 +1,47 @@
 # Copyright 2013 Mathias WOLFF
 # This file is part of pyfreebilling.
-# 
+#
 # pyfreebilling is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # pyfreebilling is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
-import datetime
-from dateutil.relativedelta import relativedelta
 from django.db.models import Sum, Avg
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from qsstats import QuerySetStats
-from pyfreebill.models import DimCustomerDestination
-from random import randint
+from pyfreebill.models import DimCustomerDestination, DimCustomerHangupcause, CDR
 from django.views.generic import TemplateView
 from chartjs.views.lines import BaseLineChartView
+import datetime, qsstats
+from django.db.models import Sum, Avg, Count, Max, Min
+
+from pyfreebilling import __version__
+
 
 def time_series(queryset, date_field, interval, func=None):
     qsstats = QuerySetStats(queryset, date_field, func)
     return qsstats.time_series(*interval)
 
+
 #@staff_member_required
 def admin_status_view(request):
     # print status page
-    pfb_version = settings.PFB_VERSION
+    #pfb_version = settings.PFB_VERSION
+    pfb_version = __version__
     return render_to_response('admin/admin_status.html', locals(),
-        context_instance=RequestContext(request))
+                              context_instance=RequestContext(request))
+
 
 def _margin_series(sell_series, cost_series):
     """
@@ -51,6 +56,38 @@ def _margin_series(sell_series, cost_series):
             sum += 0
         l.append((d, sum))
     return l
+
+
+@staff_member_required
+def live_report_view(request):
+    """ live stats calculated from cdr """
+    qs = CDR.objects.all().filter(effective_duration__gt="0")
+#.filter(lcr_carrier_id="20").filter(customer="12")
+# sixtocom = 20 _ Lvoip = 11
+
+    qss_sell = qsstats.QuerySetStats(qs, 'start_stamp', 
+        aggregate=Sum('total_sell'))
+    qss_sum_duration = qsstats.QuerySetStats(qs, 'start_stamp', 
+        aggregate=Sum('effective_duration'))
+    qss_avg_duration = qsstats.QuerySetStats(qs, 'start_stamp', 
+        aggregate=Avg('effective_duration'))
+    qss_max_duration = qsstats.QuerySetStats(qs, 'start_stamp', 
+        aggregate=Max('effective_duration'))
+
+    today = datetime.date.today() - datetime.timedelta(days=60)
+    seven_days_ago = today - datetime.timedelta(days=30)
+    time_series = qss_sell.time_series(seven_days_ago, today)
+    #time_series1 = qss_sell.time_series(last_days_ago, today)
+    # print '----------------------------------'
+    # print 'weeky stats delta : day :  - Total sell : %s' % [t[1] for t in time_series]
+    # print '------------DAILY-----------------'
+    # print 'daily stats keyyo : Sum : %s - Avg : %s - Max : %s - Total sell : %s' % (qss_sum_duration.this_day(), qss_avg_duration.this_day(), qss_max_duration.this_day(), qss_sell.this_day())
+    # print '------------MONTHLY---------------'
+    # print 'monthly stats keyyo : Sum : %s - Avg : %s - Max : %s - Total sell : %s' % (qss_sum_duration.this_month(), qss_avg_duration.this_month(), qss_max_duration.this_month(), qss_sell.this_month())
+
+    return render_to_response('admin/live_report.html', locals(),
+            context_instance=RequestContext(request))
+ 
 
 @staff_member_required
 def admin_report_view(request):
@@ -76,6 +113,7 @@ def admin_report_view(request):
 
     return render_to_response('admin/admin_report.html', locals(),
         context_instance=RequestContext(request))
+
 
 #@staff_member_required
 class LineChartJSONView(BaseLineChartView):

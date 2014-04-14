@@ -31,7 +31,7 @@
 -----------------------------------------------
 function myHangupHook(s, status, arg)
   obCause = session:hangupCause()
-  log("Hangup cause :", obCause)
+  log("Hangup cause : ", obCause)
   exit()
 end
 
@@ -165,6 +165,7 @@ end
 channel = {}
 if session:ready() then
   channel["cli_debug"] = get_Variable("cli_debug")
+  channel["ignore_early_media"] = get_Variable("pfb_ignore_early_media")
   channel["uuid"] = get_Variable("uuid")
   channel["context"] = get_Variable("context")
   channel["accountcode"] = get_Variable("accountcode")
@@ -184,7 +185,7 @@ if session:ready() then
   channel["vmd"] = get_Variable("vmd")
   channel["fake_ring"] = get_Variable("fake_ring")
   if channel["sip_user_agent"] then
-    log("Sip_user_agent :", "is OK", "debug")
+    log("sip_user_agent :", "is OK", "debug")
   else 
     channel["sip_user_agent"] = "not set"
   end
@@ -253,7 +254,30 @@ if session:ready() then
   end
   customer = {}
   custok = 0
-  local query_cust_sql = "SELECT c.name AS name, c.prepaid AS prepaid, C.credit_limit AS credit_limit, c.customer_balance AS customer_balance, c.max_calls AS max_calls, cnr.prefix AS prefix, cnr.remove_prefix AS remove_prefix, cnr.add_prefix AS add_prefix , ccnr.remove_prefix AS ccnr_remove_prefix, ccnr.add_prefix AS ccnr_add_prefix, dnr.format_num AS dnr_format_num FROM company c LEFT JOIN customer_norm_rules cnr ON cnr.company_id = c.id AND '" .. channel["destination_number"] .. "' LIKE concat(cnr.prefix,'%') LEFT JOIN customer_cid_norm_rules ccnr ON ccnr.company_id = c.id AND '" .. channel["caller_id_number"] .. "' LIKE concat(ccnr.prefix,'%') LEFT JOIN destination_norm_rules dnr ON '" .. channel["destination_number"] .. "' LIKE concat(dnr.prefix,'%') WHERE c.id='"..channel["accountcode"].."' AND c.customer_enabled = TRUE"
+  local query_cust_sql = [[SELECT 
+      c.name AS name, 
+      c.prepaid AS prepaid, 
+      c.credit_limit AS credit_limit, 
+      c.customer_balance AS customer_balance, 
+      c.max_calls AS max_calls, 
+      cnr.prefix AS prefix, 
+      cnr.remove_prefix AS remove_prefix, 
+      cnr.add_prefix AS add_prefix , 
+      ccnr.remove_prefix AS ccnr_remove_prefix, 
+      ccnr.add_prefix AS ccnr_add_prefix, 
+      dnr.format_num AS dnr_format_num 
+      FROM company c 
+      LEFT JOIN customer_norm_rules cnr 
+      ON cnr.company_id = c.id 
+          AND ']] .. channel["destination_number"] .. [[' LIKE concat(cnr.prefix,'%') 
+      LEFT JOIN customer_cid_norm_rules ccnr 
+      ON ccnr.company_id = c.id 
+          AND ']] .. channel["caller_id_number"] .. [[' LIKE concat(ccnr.prefix,'%') 
+      LEFT JOIN destination_norm_rules dnr 
+      ON ']] .. channel["destination_number"] .. [[' LIKE concat(dnr.prefix,'%')
+      WHERE c.id=']] .. channel["accountcode"] .. [[' 
+          AND c.customer_enabled = TRUE]]
+
   log("SQL: ", query_cust_sql, "debug")
   assert(dbh:query(query_cust_sql, function(row)
     for key, val in pairs(row) do
@@ -361,19 +385,73 @@ if (session:ready() == true) then
     if rateprio == 4 then
       break
     else
-      local query_rate_sql = "SELECT c.tech_prefix AS tech_prefix, c.ratecard_id AS ratecard_id, c.priority AS priority, c.discount AS discount, c.allow_negative_margin AS allow_negative_margin, rc.lcrgroup_id AS lcrgroup_id, r.destination AS destination, r.prefix AS prefix, lg.name AS lcrgoup, lg.lcrtype AS lcrtype, r.rate AS rate, r.block_min_duration AS block_min_duration, r.init_block AS init_block FROM customer_ratecards c INNER JOIN ratecard rc ON rc.id = c.ratecard_id AND c.company_id = '" .. channel["accountcode"] .. "' AND c.priority = '" .. rateprio .. "' INNER JOIN lcr_group lg ON lg.id = rc.lcrgroup_id INNER JOIN customer_rates r ON rc.id = r.ratecard_id WHERE rc.enabled = TRUE AND r.enabled = true AND now() > r.date_start AND now() < r.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(c.tech_prefix,r.prefix,'%') ORDER BY LENGTH(r.prefix) desc LIMIT 1"
+      local query_rate_sql = [[SELECT
+          c.tech_prefix AS tech_prefix, 
+          c.ratecard_id AS ratecard_id, 
+          c.priority AS priority, 
+          c.discount AS discount, 
+          c.allow_negative_margin AS allow_negative_margin, 
+          rc.lcrgroup_id AS lcrgroup_id, 
+          rc.callerid_filter AS callerid_filter, 
+          r.destination AS destination, 
+          r.prefix AS prefix, 
+          r.rate AS rate, 
+          r.block_min_duration AS block_min_duration, 
+          r.init_block AS init_block,
+          lg.name AS lcrgoup, 
+          lg.lcrtype AS lcrtype,
+          cip.prefix AS cip_prefix
+          FROM customer_ratecards c 
+          INNER JOIN ratecard rc 
+            ON rc.id = c.ratecard_id 
+              AND c.company_id = ']] .. channel["accountcode"] .. [[' 
+              AND c.priority = ']] .. rateprio .. [[' 
+          INNER JOIN lcr_group lg 
+            ON lg.id = rc.lcrgroup_id 
+          LEFT JOIN caller_id_prefix cip 
+            ON cip.calleridprefixlist_id = rc.callerid_list_id
+              AND ']] .. channel["caller_id_number"] .. [[' LIKE concat(cip.prefix,'%') 
+          INNER JOIN customer_rates r 
+            ON rc.id = r.ratecard_id 
+          WHERE rc.enabled = TRUE 
+            AND r.enabled = true 
+            AND now() > r.date_start 
+            AND now() < r.date_end 
+            AND ']] .. channel["destination_number"] .. [[' LIKE concat(c.tech_prefix,r.prefix,'%')
+          ORDER BY LENGTH(r.prefix) desc LIMIT 1]]
+
       log("SQL: ", query_rate_sql, "debug")
       assert(dbh:query(query_rate_sql, function(row)
         for key, val in pairs(row) do
           rate[key] = val
         end
-        rateok = 1
+        log("Callerid filter value", rate["callerid_filter"] .. " / " .. rate["cip_prefix"])
+        if rate["callerid_filter"] == "1" then
+          log("CallerID filter : ", "OFF")
+          rateok = 1
+        elseif rate["callerid_filter"] == "2" then
+          if rate["cip_prefix"] == "" then
+            log("CallerID filter : ", "prefix authorized not in list - NOK")
+            rateok = 0
+          else
+            log("CallerID filter : ", "prefix authorized in list - OK")
+            rateok = 1
+          end
+        elseif rate["callerid_filter"] == "3" then
+          if rate["cip_prefix"] == "" then
+            log("CallerID filter : ", "prefix prohibited not in list - OK")
+            rateok = 1
+          else
+            log("CallerID filter : ", "prefix prohibited in list - NOK")
+            rateok = 0
+          end
+        end
       end))
       rateprio = rateprio + 1
     end
   end
   log("Customer rate - num of records", rateok, "debug")
-  log("Customer rate OK:", rateok)
+  log("Customer rate OK: ", rateok)
   if rateok == 0 then
     set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_RATE_NOT_FOUND")
     log("RATE NOT FOUND! : ", "Exiting")
@@ -469,7 +547,63 @@ if (session:ready() == true) then
     negativemargin = " WHERE T.cost_rate < "..tonumber(rate["rate"]).." "
   end
   log("rate_lcrgroup_id : ", rate["lcrgroup_id"], "debug")
-  local query_cost_sql = "SELECT T.destination AS destination, T.digits AS digits, T.cost_rate AS cost_rate, T.block_min_duration AS block_min_duration, T.init_block AS init_block, T.carrier_id AS carrier_id, T.lead_strip AS lead_strip, T.tail_strip AS tail_strip, T.prefix AS prefix, T.suffix AS suffix, T.quality AS quality, T.reliability AS reliability, s.sip_cid_type AS sip_cid_type, s.channels AS channels, s.prefix AS gwprefix, s.suffix AS gwsuffix, s.codec AS codec, s.name AS gwname, s.id AS gwid, ccnr.remove_prefix, ccnr.add_prefix FROM (SELECT DISTINCT ON (pr.provider_tariff_id) pr.destination AS destination, pr.digits AS digits, pr.cost_rate AS cost_rate, pr.block_min_duration AS block_min_duration, pr.init_block AS init_block, pt.carrier_id AS carrier_id, pt.lead_strip AS lead_strip, pt.tail_strip AS tail_strip, pt.prefix AS prefix, pt.suffix AS suffix, pt.quality AS quality, pt.reliability AS reliability FROM lcr_providers lp INNER JOIN provider_tariff pt ON pt.id = lp.provider_tariff_id AND pt.enabled = TRUE AND now() > pt.date_start AND now() < pt.date_end INNER JOIN provider_rates pr ON pr.provider_tariff_id = pt.id AND pr.enabled = TRUE AND now() > pr.date_start AND now() < pr.date_end AND '" .. channel["destination_number"] .. "' LIKE concat(pr.digits,'%') WHERE lp.lcr_id = '" .. rate["lcrgroup_id"] .. "' ORDER BY pr.provider_tariff_id, LENGTH(pr.digits) DESC) T INNER JOIN sofia_gateway s ON s.company_id = T.carrier_id AND s.enabled = TRUE LEFT JOIN carrier_cid_norm_rules ccnr ON ccnr.company_id = T.carrier_id"..negativemargin.."ORDER BY " .. ratefilter .. ""
+  local query_cost_sql = [[SELECT 
+      T.destination AS destination, 
+      T.digits AS digits, 
+      T.cost_rate AS cost_rate, 
+      T.block_min_duration AS block_min_duration, 
+      T.init_block AS init_block, 
+      T.carrier_id AS carrier_id, 
+      T.lead_strip AS lead_strip, 
+      T.tail_strip AS tail_strip, 
+      T.prefix AS prefix, 
+      T.suffix AS suffix, 
+      T.quality AS quality, 
+      T.reliability AS reliability, 
+      s.sip_cid_type AS sip_cid_type, 
+      s.channels AS channels, 
+      s.prefix AS gwprefix, 
+      s.suffix AS gwsuffix, 
+      s.codec AS codec, 
+      s.name AS gwname, 
+      s.id AS gwid, 
+      ccnr.remove_prefix, 
+      ccnr.add_prefix 
+      FROM 
+        (SELECT DISTINCT ON (pr.provider_tariff_id) 
+          pr.destination AS destination, 
+          pr.digits AS digits, 
+          pr.cost_rate AS cost_rate, 
+          pr.block_min_duration AS block_min_duration, 
+          pr.init_block AS init_block, 
+          pt.carrier_id AS carrier_id, 
+          pt.lead_strip AS lead_strip, 
+          pt.tail_strip AS tail_strip, 
+          pt.prefix AS prefix, 
+          pt.suffix AS suffix, 
+          pt.quality AS quality, 
+          pt.reliability AS reliability 
+          FROM lcr_providers lp 
+          INNER JOIN provider_tariff pt 
+            ON pt.id = lp.provider_tariff_id 
+              AND pt.enabled = TRUE 
+              AND now() > pt.date_start 
+              AND now() < pt.date_end 
+          INNER JOIN provider_rates pr 
+            ON pr.provider_tariff_id = pt.id 
+              AND pr.enabled = TRUE 
+              AND now() > pr.date_start 
+              AND now() < pr.date_end 
+              AND ']] .. channel["destination_number"] .. [[' LIKE concat(pr.digits,'%') 
+          WHERE lp.lcr_id = ']] .. rate["lcrgroup_id"] .. [[' 
+          ORDER BY pr.provider_tariff_id, LENGTH(pr.digits) DESC
+        ) T 
+      INNER JOIN sofia_gateway s 
+        ON s.company_id = T.carrier_id 
+          AND s.enabled = TRUE 
+      LEFT JOIN carrier_cid_norm_rules ccnr 
+        ON ccnr.company_id = T.carrier_id]] .. negativemargin .. [[ORDER BY ]] .. ratefilter
+
   assert(dbh:query(query_cost_sql, function(row)
     lcr_channels[lcrok] = tonumber(row.channels)
     lcr_gwprefix[lcrok] = row.gwprefix
@@ -523,8 +657,8 @@ if (session:ready() == true) then
 
   set_variable("bypass_media", "false")
   set_variable("hangup_after_bridge", "true")
---    execute("set", "continue_on_fail=1,2,3,6,25,34,38,41,42,44,47,63,66,403,480,488,500,501,503")
-  execute("set", "continue_on_fail=true")
+  execute("set", "continue_on_fail=1,2,3,6,25,34,38,41,42,44,47,63,66,403,480,488,500,501,502,503")
+--  execute("set", "continue_on_fail=true")
   execute("set", "bypass_media=false")
   execute("sched_hangup", "+3600 alloted_timeout")
   execute("set", "inherit_codec=true")
@@ -570,9 +704,10 @@ if (session:ready() == true) then
       myvarbridge = "\[execute_on_post_originate=limit hash outbound "..lcr_gwname[i].." "..lcr_channels[i].." !NORMAL_TEMPORARY_FAILURE, sip_from_uri=sip:"..caller_id.."@${sip_from_host},origination_caller_id_number="..caller_id..",origination_caller_id_name="..caller_id..",sip_cid_type="..lcr_sipcidtype[i]..",sell_destination="..rate["destination"]..",cost_destination="..lcr_destination[i]..",sell_rate="..tonumber(rate["rate"])..",sell_increment="..rate["block_min_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"].."\]"
       log("WS CALL my variables bridge : ", myvarbridge)
       if mydialbridge == "" then
-        mydialbridge = myvarbridge.."sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
+        mydialbridge = "{ignore_early_media=" .. channel["ignore_early_media"] .. "}" .. myvarbridge .. "sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
+        --mydialbridge = myvarbridge .. "sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
       else
-        mydialbridge = mydialbridge.."|" .. myvarbridge .. "sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
+        mydialbridge = mydialbridge .. "|" .. myvarbridge .. "sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number
       end
       log("construction bridge : ", mydialbridge, "debug") 
 -- set call limit

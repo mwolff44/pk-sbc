@@ -1,0 +1,1112 @@
+[
+{
+    "pk": 1, 
+    "model": "pyfreebill.company", 
+    "fields": {
+        "email_alert": "", 
+        "billing_cycle": "m", 
+        "date_added": "2014-02-18T07:41:41.495Z", 
+        "vat_number": "", 
+        "low_credit_alert": "10.0000", 
+        "low_credit_alert_sent": false, 
+        "supplier_balance": "0.000000", 
+        "calls_per_second": 10, 
+        "customer_balance": "0.000000", 
+        "vat": false, 
+        "prepaid": true, 
+        "supplier_enabled": true, 
+        "iban": "", 
+        "max_calls": 1, 
+        "nickname": "", 
+        "account_blocked_alert_sent": false, 
+        "about": "", 
+        "credit_limit": "0.0000", 
+        "name": "MyProvider", 
+        "date_modified": "2014-02-18T07:41:41.495Z", 
+        "slug": "myprovider", 
+        "swift_bic": "", 
+        "account_number": null, 
+        "customer_enabled": false
+    }
+},
+{
+    "pk": 2, 
+    "model": "pyfreebill.company", 
+    "fields": {
+        "email_alert": "", 
+        "billing_cycle": "m", 
+        "date_added": "2014-02-18T07:45:22.288Z", 
+        "vat_number": "", 
+        "low_credit_alert": "10.0000", 
+        "low_credit_alert_sent": false, 
+        "supplier_balance": "0.000000", 
+        "calls_per_second": 10, 
+        "customer_balance": "10.000000", 
+        "vat": false, 
+        "prepaid": true, 
+        "supplier_enabled": true, 
+        "iban": "", 
+        "max_calls": 1, 
+        "nickname": "", 
+        "account_blocked_alert_sent": false, 
+        "about": "", 
+        "credit_limit": "0.0000", 
+        "name": "MyCustomer", 
+        "date_modified": "2014-02-18T07:45:51.149Z", 
+        "slug": "mycustomer", 
+        "swift_bic": "", 
+        "account_number": null, 
+        "customer_enabled": true
+    }
+},
+{
+    "pk": 1, 
+    "model": "pyfreebill.companybalancehistory", 
+    "fields": {
+        "description": "", 
+        "reference": "Initial payment for testing", 
+        "date_modified": "2014-02-18T07:45:51.311Z", 
+        "company": 2, 
+        "supplier_balance": "0.0000", 
+        "amount_refund": "10.0000", 
+        "amount_debited": "0.0000", 
+        "date_added": "2014-02-18T07:45:51.311Z", 
+        "operation_type": "customer", 
+        "customer_balance": "10.0000"
+    }
+},
+{
+    "pk": 1, 
+    "model": "pyfreebill.customerdirectory", 
+    "fields": {
+        "date_modified": "2014-02-18T07:56:49.082Z", 
+        "outbound_caller_id_number": "", 
+        "sip_port": 5060, 
+        "cli_debug": false, 
+        "description": "", 
+        "date_added": "2014-02-18T07:56:49.082Z", 
+        "fake_ring": false, 
+        "enabled": true, 
+        "sip_ip": "10.10.10.10/32", 
+        "outbound_caller_id_name": "", 
+        "rtp_ip": "auto", 
+        "vmd": false, 
+        "multiple_registrations": "false", 
+        "calls_per_second": 10, 
+        "codecs": "ALL", 
+        "max_calls": 1, 
+        "log_auth_failures": false, 
+        "password": "", 
+        "company": 2, 
+        "name": "MySIPAccount"
+    }
+},
+{
+    "pk": 1, 
+    "model": "pyfreebill.providertariff", 
+    "fields": {
+        "date_modified": "2014-02-18T07:43:05.173Z", 
+        "date_start": "2014-02-18T07:42:57Z", 
+        "suffix": "", 
+        "cid": "", 
+        "description": "", 
+        "lead_strip": "", 
+        "enabled": true, 
+        "tail_strip": "", 
+        "prefix": "", 
+        "carrier": 1, 
+        "reliability": 100, 
+        "date_added": "2014-02-18T07:43:05.173Z", 
+        "quality": 100, 
+        "date_end": "2024-02-18T07:42:59Z", 
+        "name": "MyProviderTarif"
+    }
+},
+{
+    "pk": 1, 
+    "model": "pyfreebill.providerrates", 
+    "fields": {
+        "digits": "33", 
+        "init_block": "0.00000", 
+        "date_start": "2014-02-18T07:44:06Z", 
+        "date_modified": "2014-02-18T07:44:12.581Z", 
+        "date_end": "2024-02-18T07:44:08Z", 
+        "destination": "MyRate", 
+        "enabled": true, 
+        "cost_rate": "0.05000", 
+        "provider_tariff": 1, 
+        "date_added": "2014-02-18T07:44:12.581Z", 
+        "block_min_duration": 1
+    }
+},
+{
+    "pk": 1, 
+    "model": "pyfreebill.lcrgroup", 
+    "fields": {
+        "lcrtype": "p", 
+        "date_added": "2014-02-18T07:43:08.676Z", 
+        "date_modified": "2014-02-18T07:43:08.676Z", 
+        "name": "MyLCR", 
+        "description": ""
+    }
+},
+{
+    "pk": 1, 
+    "model": "pyfreebill.lcrproviders", 
+    "fields": {
+        "date_added": "2014-02-18T07:43:08.677Z", 
+        "date_modified": "2014-02-18T07:43:08.677Z", 
+        "lcr": 1, 
+        "provider_tariff": 1
+    }
+},
+{
+    "pk": 1, 
+    "model": "pyfreebill.ratecard", 
+    "fields": {
+        "name": "MyRatecard", 
+        "date_modified": "2014-02-18T07:43:10.546Z", 
+        "lcrgroup": 1, 
+        "enabled": true, 
+        "date_added": "2014-02-18T07:43:10.546Z", 
+        "description": ""
+    }
+},
+{
+    "pk": 1, 
+    "model": "pyfreebill.customerrates", 
+    "fields": {
+        "init_block": "0.00000", 
+        "date_start": "2014-02-18T07:43:39Z", 
+        "date_modified": "2014-02-18T07:43:49.099Z", 
+        "date_end": "2024-02-18T07:43:41Z", 
+        "destination": "MyRate", 
+        "enabled": true, 
+        "rate": "0.10000", 
+        "block_min_duration": 1, 
+        "ratecard": 1, 
+        "prefix": "33", 
+        "date_added": "2014-02-18T07:43:49.099Z"
+    }
+},
+{
+    "pk": 1, 
+    "model": "pyfreebill.customerratecards", 
+    "fields": {
+        "tech_prefix": "", 
+        "description": "Important : you need to select a position", 
+        "date_modified": "2014-02-18T07:45:22.289Z", 
+        "company": 2, 
+        "allow_negative_margin": false, 
+        "ratecard": 1, 
+        "discount": "0.00", 
+        "date_added": "2014-02-18T07:45:22.289Z", 
+        "priority": 1
+    }
+},
+{
+    "pk": 2, 
+    "model": "pyfreebill.sipprofile", 
+    "fields": {
+        "sip_port": 5060, 
+        "name": "internal", 
+        "disable_transcoding": true, 
+        "date_modified": "2014-02-18T07:41:02.486Z", 
+        "ext_rtp_ip": "auto", 
+        "sip_ip": "auto", 
+        "rtp_ip": "auto", 
+        "inbound_codec_prefs": "G729,PCMU,PCMA", 
+        "accept_blind_reg": false, 
+        "user_agent": "pyfreebilling", 
+        "outbound_codec_prefs": "G729,PCMU,PCMA", 
+        "date_added": "2014-02-18T07:41:02.486Z", 
+        "ext_sip_ip": "auto", 
+        "log_auth_failures": true, 
+        "auth_calls": true
+    }
+},
+{
+    "pk": 3, 
+    "model": "pyfreebill.sipprofile", 
+    "fields": {
+        "sip_port": 5080, 
+        "name": "external", 
+        "disable_transcoding": true, 
+        "date_modified": "2014-02-18T07:41:15.989Z", 
+        "ext_rtp_ip": "auto", 
+        "sip_ip": "auto", 
+        "rtp_ip": "auto", 
+        "inbound_codec_prefs": "G729,PCMU,PCMA", 
+        "accept_blind_reg": false, 
+        "user_agent": "pyfreebilling", 
+        "outbound_codec_prefs": "G729,PCMU,PCMA", 
+        "date_added": "2014-02-18T07:41:15.989Z", 
+        "ext_sip_ip": "auto", 
+        "log_auth_failures": false, 
+        "auth_calls": false
+    }
+},
+{
+    "pk": 1, 
+    "model": "pyfreebill.sofiagateway", 
+    "fields": {
+        "username": "", 
+        "expire_seconds": 3600, 
+        "caller_id_in_from": true, 
+        "realm": "", 
+        "name": "MyGateway", 
+        "extension": "", 
+        "date_modified": "2014-02-18T07:42:04.195Z", 
+        "from_domain": "", 
+        "sip_profile": 3, 
+        "company": 1, 
+        "register": false, 
+        "enabled": true, 
+        "channels": 1, 
+        "retry_seconds": 30, 
+        "prefix": "", 
+        "codec": "", 
+        "proxy": "1.1.1.1", 
+        "date_added": "2014-02-18T07:42:04.195Z", 
+        "password": "", 
+        "sip_cid_type": "rpid", 
+        "suffix": ""
+    }
+},
+{
+    "pk": 1, 
+    "model": "switch.voipswitch", 
+    "fields": {
+        "name": "MySwich", 
+        "date_modified": "2014-02-18T07:44:28.978Z", 
+        "ip": "auto", 
+        "esl_listen_ip": "127.0.0.1", 
+        "esl_listen_port": 8021, 
+        "esl_password": "ClueCon", 
+        "date_added": "2014-02-18T07:44:28.978Z"
+    }
+},
+{
+    "pk": 1, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "company", 
+        "name": "Company", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 2, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "person", 
+        "name": "person", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 3, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "group", 
+        "name": "group", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 4, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "phonenumber", 
+        "name": "phone number", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 5, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "emailaddress", 
+        "name": "email address", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 6, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "instantmessenger", 
+        "name": "instant messenger", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 7, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "website", 
+        "name": "web site", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 8, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "streetaddress", 
+        "name": "street address", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 9, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "specialdate", 
+        "name": "special date", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 10, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "companybalancehistory", 
+        "name": "Company balance history", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 11, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "customerdirectory", 
+        "name": "Customer sip account", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 12, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "providertariff", 
+        "name": "provider tariff", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 13, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "providerrates", 
+        "name": "provider rate", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 14, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "lcrgroup", 
+        "name": "LCR", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 15, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "lcrproviders", 
+        "name": "LCR provider", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 16, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "ratecard", 
+        "name": "RateCard", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 17, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "customerrates", 
+        "name": "customer rate", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 18, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "customerratecards", 
+        "name": "Customer Ratecard", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 19, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "destinationnumberrules", 
+        "name": "Destination Number Normalization Rule", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 20, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "customernormalizationrules", 
+        "name": "Customer Normalization Rule", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 21, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "carriernormalizationrules", 
+        "name": "Provider Normalization Rule", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 22, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "customercidnormalizationrules", 
+        "name": "Customer CallerID Normalization Rule", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 23, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "carriercidnormalizationrules", 
+        "name": "Provider CallerID Normalization Rule", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 24, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "acllists", 
+        "name": "ACL list", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 25, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "aclnodes", 
+        "name": "ACL node", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 26, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "voipswitch", 
+        "name": "VoIP Switch", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 27, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "sipprofile", 
+        "name": "SIP profile", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 28, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "sofiagateway", 
+        "name": "Sofia gateway", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 29, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "hangupcause", 
+        "name": "hangupcause", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 30, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "cdr", 
+        "name": "CDR", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 31, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "dimdate", 
+        "name": "date dimension", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 32, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "dimcustomerhangupcause", 
+        "name": "Customer Hangupcause stats", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 33, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "dimcustomersiphangupcause", 
+        "name": "Customer SIP Hangupcause stats", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 34, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "dimproviderhangupcause", 
+        "name": "Provider Hangupcause stats", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 35, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "dimprovidersiphangupcause", 
+        "name": "Provider SIP Hangupcause stats", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 36, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "dimcustomerdestination", 
+        "name": "Customer destination stats", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 37, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "dimproviderdestination", 
+        "name": "Provider destination stats", 
+        "app_label": "pyfreebill"
+    }
+},
+{
+    "pk": 38, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "voipswitch", 
+        "name": "VoIP Switch", 
+        "app_label": "switch"
+    }
+},
+{
+    "pk": 39, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "appoption", 
+        "name": "app option", 
+        "app_label": "yawdadmin"
+    }
+},
+{
+    "pk": 40, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "permission", 
+        "name": "permission", 
+        "app_label": "auth"
+    }
+},
+{
+    "pk": 41, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "group", 
+        "name": "group", 
+        "app_label": "auth"
+    }
+},
+{
+    "pk": 42, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "user", 
+        "name": "user", 
+        "app_label": "auth"
+    }
+},
+{
+    "pk": 43, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "contenttype", 
+        "name": "content type", 
+        "app_label": "contenttypes"
+    }
+},
+{
+    "pk": 44, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "session", 
+        "name": "session", 
+        "app_label": "sessions"
+    }
+},
+{
+    "pk": 45, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "site", 
+        "name": "site", 
+        "app_label": "sites"
+    }
+},
+{
+    "pk": 46, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "comment", 
+        "name": "comment", 
+        "app_label": "comments"
+    }
+},
+{
+    "pk": 47, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "commentflag", 
+        "name": "comment flag", 
+        "app_label": "comments"
+    }
+},
+{
+    "pk": 48, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "loginattempt", 
+        "name": "login attempt", 
+        "app_label": "admin_honeypot"
+    }
+},
+{
+    "pk": 49, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "jobdependency", 
+        "name": "job dependency", 
+        "app_label": "chroniker"
+    }
+},
+{
+    "pk": 50, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "job", 
+        "name": "job", 
+        "app_label": "chroniker"
+    }
+},
+{
+    "pk": 51, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "log", 
+        "name": "log", 
+        "app_label": "chroniker"
+    }
+},
+{
+    "pk": 52, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "monitor", 
+        "name": "monitor", 
+        "app_label": "chroniker"
+    }
+},
+{
+    "pk": 53, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "accessattempt", 
+        "name": "access attempt", 
+        "app_label": "axes"
+    }
+},
+{
+    "pk": 54, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "accesslog", 
+        "name": "access log", 
+        "app_label": "axes"
+    }
+},
+{
+    "pk": 55, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "logentry", 
+        "name": "log entry", 
+        "app_label": "admin"
+    }
+},
+{
+    "pk": 56, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "migrationhistory", 
+        "name": "migration history", 
+        "app_label": "south"
+    }
+},
+{
+    "pk": 57, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "country", 
+        "name": "country", 
+        "app_label": "country_dialcode"
+    }
+},
+{
+    "pk": 58, 
+    "model": "contenttypes.contenttype", 
+    "fields": {
+        "model": "prefix", 
+        "name": "prefix", 
+        "app_label": "country_dialcode"
+    }
+},
+{
+    "pk": "ikl1y4rkzugm9y81tzijkjzizw1xe80o", 
+    "model": "sessions.session", 
+    "fields": {
+        "expire_date": "2014-02-18T20:30:51.458Z", 
+        "session_data": "YjYxYmRlYmNiZTBmN2IwNGRkZjkxNzAxNzZmNTJmNGI0ZDlmOGQwNDqAAn1xAShVEl9hdXRoX3VzZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHEDVQ1fYXV0aF91c2VyX2lkcQRLAXUu"
+    }
+},
+{
+    "pk": "km8rlghxeys9q5rwnoogspl4gttm3b7e", 
+    "model": "sessions.session", 
+    "fields": {
+        "expire_date": "2014-02-19T07:17:12.602Z", 
+        "session_data": "YjYxYmRlYmNiZTBmN2IwNGRkZjkxNzAxNzZmNTJmNGI0ZDlmOGQwNDqAAn1xAShVEl9hdXRoX3VzZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHEDVQ1fYXV0aF91c2VyX2lkcQRLAXUu"
+    }
+},
+{
+    "pk": "qwelw95rkwnrjxg3r755gk4rghghays3", 
+    "model": "sessions.session", 
+    "fields": {
+        "expire_date": "2014-02-18T20:05:10.482Z", 
+        "session_data": "YjYxYmRlYmNiZTBmN2IwNGRkZjkxNzAxNzZmNTJmNGI0ZDlmOGQwNDqAAn1xAShVEl9hdXRoX3VzZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHEDVQ1fYXV0aF91c2VyX2lkcQRLAXUu"
+    }
+},
+{
+    "pk": 1, 
+    "model": "sites.site", 
+    "fields": {
+        "domain": "example.com", 
+        "name": "example.com"
+    }
+},
+{
+    "pk": 1, 
+    "model": "axes.accessattempt", 
+    "fields": {
+        "username": "admin", 
+        "http_accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", 
+        "get_data": "", 
+        "attempt_time": "2014-02-17T20:05:10.469Z", 
+        "post_data": "username=admin\ncsrfmiddlewaretoken=xZ41Kiz5dEe3pMpLrbJFecf7ZSFZ7RVu\nthis_is_the_login_form=1\nnext=/extranet/", 
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.73.11 (KHTML, like Gecko) Version/7.0.1 Safari/537.73.11", 
+        "failures_since_start": 0, 
+        "ip_address": "88.160.56.160", 
+        "trusted": true, 
+        "path_info": "/extranet/"
+    }
+},
+{
+    "pk": 2, 
+    "model": "axes.accessattempt", 
+    "fields": {
+        "username": "admin", 
+        "http_accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", 
+        "get_data": "", 
+        "attempt_time": "2014-02-17T20:30:51.441Z", 
+        "post_data": "username=admin\ncsrfmiddlewaretoken=esTSj2VJGUoq6GaDMFyekHWmKiBMSF8m\nthis_is_the_login_form=1\nnext=/extranet/", 
+        "user_agent": "Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131030 Firefox/17.0 Iceweasel/17.0.10", 
+        "failures_since_start": 0, 
+        "ip_address": "82.12.140.189", 
+        "trusted": true, 
+        "path_info": "/extranet/"
+    }
+},
+{
+    "pk": 1, 
+    "model": "axes.accesslog", 
+    "fields": {
+        "username": "admin", 
+        "http_accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", 
+        "attempt_time": "2014-02-17T20:05:10.455Z", 
+        "logout_time": null, 
+        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.73.11 (KHTML, like Gecko) Version/7.0.1 Safari/537.73.11", 
+        "ip_address": "88.160.56.160", 
+        "trusted": true, 
+        "path_info": "/extranet/"
+    }
+},
+{
+    "pk": 2, 
+    "model": "axes.accesslog", 
+    "fields": {
+        "username": "admin", 
+        "http_accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", 
+        "attempt_time": "2014-02-17T20:30:51.419Z", 
+        "logout_time": null, 
+        "user_agent": "Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131030 Firefox/17.0 Iceweasel/17.0.10", 
+        "ip_address": "82.12.140.189", 
+        "trusted": true, 
+        "path_info": "/extranet/"
+    }
+},
+{
+    "pk": 3, 
+    "model": "axes.accesslog", 
+    "fields": {
+        "username": "admin", 
+        "http_accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", 
+        "attempt_time": "2014-02-18T07:17:12.576Z", 
+        "logout_time": null, 
+        "user_agent": "Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20131030 Firefox/17.0 Iceweasel/17.0.10", 
+        "ip_address": "82.12.140.189", 
+        "trusted": true, 
+        "path_info": "/extranet/"
+    }
+},
+{
+    "pk": 1, 
+    "model": "admin.logentry", 
+    "fields": {
+        "action_flag": 1, 
+        "action_time": "2014-02-18T07:20:16.445Z", 
+        "object_repr": "outbound (auto:5060)", 
+        "object_id": "1", 
+        "change_message": "", 
+        "user": 1, 
+        "content_type": 27
+    }
+},
+{
+    "pk": 2, 
+    "model": "admin.logentry", 
+    "fields": {
+        "action_flag": 3, 
+        "action_time": "2014-02-18T07:40:44.079Z", 
+        "object_repr": "outbound (auto:5060)", 
+        "object_id": "1", 
+        "change_message": "", 
+        "user": 1, 
+        "content_type": 27
+    }
+},
+{
+    "pk": 3, 
+    "model": "admin.logentry", 
+    "fields": {
+        "action_flag": 1, 
+        "action_time": "2014-02-18T07:41:02.488Z", 
+        "object_repr": "internal (auto:5060)", 
+        "object_id": "2", 
+        "change_message": "", 
+        "user": 1, 
+        "content_type": 27
+    }
+},
+{
+    "pk": 4, 
+    "model": "admin.logentry", 
+    "fields": {
+        "action_flag": 1, 
+        "action_time": "2014-02-18T07:41:15.989Z", 
+        "object_repr": "external (auto:5080)", 
+        "object_id": "3", 
+        "change_message": "", 
+        "user": 1, 
+        "content_type": 27
+    }
+},
+{
+    "pk": 5, 
+    "model": "admin.logentry", 
+    "fields": {
+        "action_flag": 1, 
+        "action_time": "2014-02-18T07:41:41.498Z", 
+        "object_repr": "MyProvider", 
+        "object_id": "1", 
+        "change_message": "", 
+        "user": 1, 
+        "content_type": 1
+    }
+},
+{
+    "pk": 6, 
+    "model": "admin.logentry", 
+    "fields": {
+        "action_flag": 1, 
+        "action_time": "2014-02-18T07:42:04.197Z", 
+        "object_repr": "MyGateway", 
+        "object_id": "1", 
+        "change_message": "", 
+        "user": 1, 
+        "content_type": 28
+    }
+},
+{
+    "pk": 7, 
+    "model": "admin.logentry", 
+    "fields": {
+        "action_flag": 1, 
+        "action_time": "2014-02-18T07:43:05.178Z", 
+        "object_repr": "MyProviderTarif", 
+        "object_id": "1", 
+        "change_message": "", 
+        "user": 1, 
+        "content_type": 12
+    }
+},
+{
+    "pk": 8, 
+    "model": "admin.logentry", 
+    "fields": {
+        "action_flag": 1, 
+        "action_time": "2014-02-18T07:43:08.678Z", 
+        "object_repr": "MyLCR p ", 
+        "object_id": "1", 
+        "change_message": "", 
+        "user": 1, 
+        "content_type": 14
+    }
+},
+{
+    "pk": 9, 
+    "model": "admin.logentry", 
+    "fields": {
+        "action_flag": 1, 
+        "action_time": "2014-02-18T07:43:10.547Z", 
+        "object_repr": "MyRatecard", 
+        "object_id": "1", 
+        "change_message": "", 
+        "user": 1, 
+        "content_type": 16
+    }
+},
+{
+    "pk": 10, 
+    "model": "admin.logentry", 
+    "fields": {
+        "action_flag": 1, 
+        "action_time": "2014-02-18T07:43:49.123Z", 
+        "object_repr": "MyRatecard", 
+        "object_id": "1", 
+        "change_message": "", 
+        "user": 1, 
+        "content_type": 17
+    }
+},
+{
+    "pk": 11, 
+    "model": "admin.logentry", 
+    "fields": {
+        "action_flag": 1, 
+        "action_time": "2014-02-18T07:44:12.593Z", 
+        "object_repr": "33 0.05 MyProviderTarif ", 
+        "object_id": "1", 
+        "change_message": "", 
+        "user": 1, 
+        "content_type": 13
+    }
+},
+{
+    "pk": 12, 
+    "model": "admin.logentry", 
+    "fields": {
+        "action_flag": 1, 
+        "action_time": "2014-02-18T07:44:29.082Z", 
+        "object_repr": "MySwich (:auto)", 
+        "object_id": "1", 
+        "change_message": "", 
+        "user": 1, 
+        "content_type": 38
+    }
+},
+{
+    "pk": 13, 
+    "model": "admin.logentry", 
+    "fields": {
+        "action_flag": 1, 
+        "action_time": "2014-02-18T07:45:22.459Z", 
+        "object_repr": "MyCustomer", 
+        "object_id": "2", 
+        "change_message": "", 
+        "user": 1, 
+        "content_type": 1
+    }
+},
+{
+    "pk": 14, 
+    "model": "admin.logentry", 
+    "fields": {
+        "action_flag": 1, 
+        "action_time": "2014-02-18T07:45:51.319Z", 
+        "object_repr": "MyCustomer 0 10 customer", 
+        "object_id": "1", 
+        "change_message": "", 
+        "user": 1, 
+        "content_type": 10
+    }
+},
+{
+    "pk": 15, 
+    "model": "admin.logentry", 
+    "fields": {
+        "action_flag": 1, 
+        "action_time": "2014-02-18T07:56:49.093Z", 
+        "object_repr": "MySIPAccount (10.10.10.10/32:5060)", 
+        "object_id": "1", 
+        "change_message": "", 
+        "user": 1, 
+        "content_type": 11
+    }
+}
+]

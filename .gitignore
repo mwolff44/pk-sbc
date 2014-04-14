@@ -1,11 +1,14 @@
 # FILES TYPES
 #################
 *.pyc
+*.sublime-project
+*.sublime-workspace
 
 # SPECIFIC FILES
 #################
 pyfreebilling/local_settings.py
 freeswitch/scripts/myconfig.pm
+sftp-config.json
 
 # DIRECTORY
 #################

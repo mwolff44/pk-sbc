@@ -18,10 +18,16 @@ Table of contents
    :maxdepth: 3
    
    introduction
+   changelog
    license
    features
    installation
-   developer_doc
+   developer
+
+Support
+=======
+
+For free support, please use bitbucket issue tools.
 
 Contact Information
 ===================

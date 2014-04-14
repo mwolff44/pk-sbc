@@ -27,6 +27,9 @@ First, you need to install these packages
 ::
 
     apt-get install git-core build-essential autoconf automake libtool libncurses5 libncurses5-dev gawk libjpeg-dev zlib1g-dev pkg-config libssl-dev libpq-dev unixodbc-dev odbc-postgresql postgresql postgresql-client libpq-dev libxml2-dev libxslt-dev ntp ntpdate
+    apt-get install libapache2-mod-wsgi apache2 gcc python-setuptools python-pip libjpeg62 libjpeg62-dev libdbd-pg-perl libtext-csv-perl
+	apt-get install python-psycopg2
+	apt-get install python-dev
 
 Freeswitch installation
 =======================
@@ -149,7 +152,7 @@ Freeswitch installation
 	SCRIPTNAME=/etc/init.d/$NAME
 	 
 	FS_USER=freeswitch
-	FS_GROUP=freeswitch
+	FS_GROUP=daemon
 	 
 	# Exit if the package is not installed
 	[ -x "$DAEMON" ] || exit 0
@@ -345,7 +348,7 @@ Postgresql configuration
 
     createdb -O pyfreebilling -E UTF8 pyfreebilling
 
-* set odbc parameters; you need to edit /etc/odbc.ini
+* set odbc parameters; you need to edit /etc/odbc.ini. Do not forget to specify your postgres password !
 
 ::
 
@@ -380,14 +383,6 @@ Postgresql configuration
 Web server install
 ==================
 
-* install some packages :
-
-::
-
-	apt-get install libapache2-mod-wsgi apache2 gcc python-setuptools python-pip libjpeg62 libjpeg62-dev libdbd-pg-perl libtext-csv-perl
-	apt-get install python-psycopg2
-	apt-get install python-dev
-
 
 * install python virtualenv
 
@@ -410,12 +405,12 @@ Web server install
 
    ::
 
-		apt-get install build-essential``
+		apt-get install build-essential
 
-   * invoke the cpan command as a normal user
+   * invoke the cpan command as a normal user :
    
    ::
-   
+
       $cpan
       But once you hit on enter for “cpan” to execute, you be asked of
       some few questions. To make it simple for yourself, answer “no”
@@ -428,8 +423,8 @@ Web server install
       
    ::
       
-      make install
-      install Bundle::CPAN
+      cpan prompt> make install
+      cpan prompt> install Bundle::CPAN
 
 
    * Now all is set and you can install any perl module you want.
@@ -510,8 +505,8 @@ Pyfreebilling installation
 	pip install -r requirements/requirements.txt
 	python manage.py syncdb
 	python manage.py migrate
-	python manage.py
-	loaddata country_dialcode.json
+	python manage.py loaddata country_dialcode.json
+	python manage.py collectstatic
 
 
 * copy some config files :
@@ -523,6 +518,7 @@ Pyfreebilling installation
 	cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/modules.conf.xml /usr/local/freeswitch/conf/autoload_configs/modules.conf.xml
 	cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/nibblebill.conf.xml /usr/local/freeswitch/conf/autoload_configs/nibblebill.conf.xml
 	cp -av /usr/local/venv/pyfreebilling/freeswitch/dialplan/pyfreebill.xml /usr/local/freeswitch/conf/dialplan/pyfreebill.xml
+	cp -av /usr/local/venv/pyfreebilling/freeswitch/dialplan/public/00_did.xml /usr/local/freeswitch/conf/dialplan/public/00_did.xml
 	cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/freeswitch.xml /usr/local/freeswitch/conf/freeswitch.xml
 
 
@@ -540,14 +536,17 @@ Pyfreebilling installation
 
 	rm -f /usr/local/freeswitch/conf/directory/default/*
 	chown -R freeswitch:freeswitch freeswitch/scripts/
-	chown freeswitch:www-data -R /usr/local/freeswitch/
 	chmod 2750 /usr/local/freeswitch
 	chmod 2750 /usr/local/freeswitch/conf/
 	chmod 2750 /usr/local/freeswitch/conf/autoload_configs/
 	chmod 2750 /usr/local/freeswitch/conf/directory/
+	chmod 2750 /usr/local/freeswitch/conf/dialplan/
+	chmod 2750 /usr/local/freeswitch/conf/dialplan/public/
 	chmod 770 /usr/local/freeswitch/conf/directory/default.xml
 	chmod 770 /usr/local/freeswitch/conf/autoload_configs/sofia.conf.xml
-	create mkdir /tmp/cdr-csv/
+	chmod 770 /usr/local/freeswitch/conf/dialplan/public/00_did.xml
+	chown freeswitch:www-data -R /usr/local/freeswitch/
+	mkdir /tmp/cdr-csv/
 	chmod 777 -R /tmp/cdr-csv
 	touch /tmp/cdr-csv/Master.csv
 	chmod 600 /tmp/cdr-csv/Master.csv
@@ -568,7 +567,7 @@ Pyfreebilling installation
 
 ::
 
-    */5 * * * * perl /usr/local/venv/pyfreebilling/freeswitch/scripts/import-csv.pl>> /var/log/cron.log 2>&1   
+    */1 * * * * perl /usr/local/venv/pyfreebilling/freeswitch/scripts/import-csv.pl>> /var/log/cron.log 2>&1   
     * * * * * /usr/local/venv/pyfreebilling/chroniker -e /usr/local/venv/bin/activate_this.py -p /usr/local/venv/pyfreebilling
 
 

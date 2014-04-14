@@ -1,27 +1,25 @@
 # Copyright 2013 Mathias WOLFF
 # This file is part of pyfreebilling.
-# 
+#
 # pyfreebilling is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # pyfreebilling is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
 import os
 # Django settings for pyfreebilling project.
- 
+
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
-
-PFB_VERSION = 'v1.23'
 
 SETTINGS_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(SETTINGS_DIR)
@@ -34,13 +32,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'pyfreebilling',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'pyfreebilling',
         'USER': 'pyfreebilling',
         'PASSWORD': 'password',
-        'HOST': '127.0.0.1',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+        'HOST': '127.0.0.1',
+        'PORT': '',  # Set to empty string for default.
     }
 }
 
@@ -110,7 +107,6 @@ LOCALE_PATHS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -163,8 +159,6 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-#    'translations',
-#    'elfinder',
     'pyfreebill',
     'switch',
     'yawdadmin',
@@ -177,7 +171,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.comments',
     'admin_honeypot',
-#    'djangosecure',
     'django_iban',
     'chroniker',
     'common',
@@ -187,8 +180,13 @@ INSTALLED_APPS = (
     'chartjs',
     'django.contrib.admin',
     'south',
+    'cities_light',
     'django_countries',
     'country_dialcode',
+    'database_size',
+    'did',
+    'simple_import',
+    #'massadmin',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -260,17 +258,6 @@ ADMIN_DISABLE_APP_INDEX = 'True'
 CHRONIKER_USE_PID = True
 CHRONIKER_SELECT_FOR_UPDATE = True
 CHRONIKER_CHECK_LOCK_FILE = True
-#-----------------------
-# DJANGO-ADMIN-TOOLS
-#-----------------------
-# ADMIN_TOOLS_MENU = 'pyfreebilling.menu.CustomMenu'
-# ADMIN_TOOLS_THEMING_CSS = 'css/pyfreebilling.css'
-# #ADMIN_TOOLS_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
-# #ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
-# ADMIN_MEDIA_PREFIX = '/static/admin/'
-# ADMINTOOLS_BOOTSTRAP_SITE_LINK = '/admin/'
-# ADMIN_TOOLS_INDEX_DASHBOARD = 'pyfreebilling.dashboard.CustomIndexDashboard'
-# AUTOCOMPLETE_LIMIT = '10'
 
 # SECURING SITE ACCESS
 ADMIN_HONEYPOT_EMAIL_ADMINS = False
@@ -292,7 +279,7 @@ SESSION_COOKIE_HTTPONLY = True
 # TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
 # TEMPLATED_EMAIL_TEMPLATE_DIR = 'templated_email/'
 # TEMPLATED_EMAIL_FILE_EXTENSION = 'email'
-# 
+#
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = ''
 # EMAIL_PORT = 587
@@ -315,3 +302,12 @@ except ImportError:
     pass
 
 #-----#
+
+#-----
+#-- Upload settings
+FILE_UPLOAD_MAX_UPLOAD_SIZE = 10*1024*1024 #10MB
+FILE_UPLOAD_MAX_MEMORY_SIZE= 10*1024*1024
+FILE_UPLOAD_TEMP_DIR = '/tmp'
+#FILE_UPLOAD_PERMISSIONS = 0644
+#FILE_UPLOAD_DIRECTORY_PERMISSIONS
+#FILE_UPLOAD_HANDLERS

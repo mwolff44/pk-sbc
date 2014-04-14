@@ -24,11 +24,10 @@ import os
 sys.path.append(os.path.abspath('../src/'))
 
 # Set up the Django settings/environment
+sys.path.insert(0, os.path.abspath('../../'))
+from .pyfreebilling import settings
 from django.core.management import setup_environ
-from pyfreebilling import settings
-
 setup_environ(settings)
-
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -114,7 +113,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'sphinxdoc'
+html_theme = 'default'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
