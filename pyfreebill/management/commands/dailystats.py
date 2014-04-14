@@ -42,7 +42,7 @@ class Command(BaseCommand):
                     today = datetime.datetime(dt.year, dt.month, dt.day, 00, 00, 00).replace(tzinfo=current_tz)
                     yesterday = today - datetime.timedelta(days=1)
                 elif var == "past":
-                    today = datetime.datetime(2013, 7, 8, 00, 00, 00).replace(tzinfo=current_tz)
+                    today = datetime.datetime(2014, 04, 15, 00, 00, 00).replace(tzinfo=current_tz)
                     yesterday = today - datetime.timedelta(days=1)
                 elif var == "custom":
                     for fd in first:
@@ -59,6 +59,7 @@ class Command(BaseCommand):
                     return
 # Query construction
                 qs = CDR.objects.all().filter(start_stamp__gte=yesterday).filter(start_stamp__lt=today)
+                #exclude(sell_destination='did')
                 qs_uuid_unique = qs.order_by('-start_stamp')
 # Customer filter - take unique uuid with late start_stamp
 # DimCustomerHangupCause

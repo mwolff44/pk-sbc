@@ -518,6 +518,7 @@ Pyfreebilling installation
 	cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/modules.conf.xml /usr/local/freeswitch/conf/autoload_configs/modules.conf.xml
 	cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/autoload_configs/nibblebill.conf.xml /usr/local/freeswitch/conf/autoload_configs/nibblebill.conf.xml
 	cp -av /usr/local/venv/pyfreebilling/freeswitch/dialplan/pyfreebill.xml /usr/local/freeswitch/conf/dialplan/pyfreebill.xml
+	cp -av /usr/local/venv/pyfreebilling/freeswitch/dialplan/public/00_did.xml /usr/local/freeswitch/conf/dialplan/public/00_did.xml
 	cp -av /usr/local/venv/pyfreebilling/freeswitch/conf/freeswitch.xml /usr/local/freeswitch/conf/freeswitch.xml
 
 
@@ -535,13 +536,16 @@ Pyfreebilling installation
 
 	rm -f /usr/local/freeswitch/conf/directory/default/*
 	chown -R freeswitch:freeswitch freeswitch/scripts/
-	chown freeswitch:www-data -R /usr/local/freeswitch/
 	chmod 2750 /usr/local/freeswitch
 	chmod 2750 /usr/local/freeswitch/conf/
 	chmod 2750 /usr/local/freeswitch/conf/autoload_configs/
 	chmod 2750 /usr/local/freeswitch/conf/directory/
+	chmod 2750 /usr/local/freeswitch/conf/dialplan/
+	chmod 2750 /usr/local/freeswitch/conf/dialplan/public/
 	chmod 770 /usr/local/freeswitch/conf/directory/default.xml
 	chmod 770 /usr/local/freeswitch/conf/autoload_configs/sofia.conf.xml
+	chmod 770 /usr/local/freeswitch/conf/dialplan/public/00_did.xml
+	chown freeswitch:www-data -R /usr/local/freeswitch/
 	mkdir /tmp/cdr-csv/
 	chmod 777 -R /tmp/cdr-csv
 	touch /tmp/cdr-csv/Master.csv
@@ -563,7 +567,7 @@ Pyfreebilling installation
 
 ::
 
-    */5 * * * * perl /usr/local/venv/pyfreebilling/freeswitch/scripts/import-csv.pl>> /var/log/cron.log 2>&1   
+    */1 * * * * perl /usr/local/venv/pyfreebilling/freeswitch/scripts/import-csv.pl>> /var/log/cron.log 2>&1   
     * * * * * /usr/local/venv/pyfreebilling/chroniker -e /usr/local/venv/bin/activate_this.py -p /usr/local/venv/pyfreebilling
 
 

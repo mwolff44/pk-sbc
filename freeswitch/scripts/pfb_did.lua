@@ -327,12 +327,12 @@ if (session:ready() == true) then
   
 -- start for boucle  
   for i=1,didok do
-      --myvarbridge = "\[execute_on_post_originate=limit hash outbound "..did[i]["trunk"].." "..lcr_channels[i].." !NORMAL_TEMPORARY_FAILURE, sip_from_uri=sip:"..caller_id.."@${sip_from_host},origination_caller_id_number="..caller_id..",origination_caller_id_name="..caller_id..",sip_cid_type="..lcr_sipcidtype[i]..",sell_destination="..rate["destination"]..",cost_destination="..lcr_destination[i]..",sell_rate="..tonumber(rate["rate"])..",sell_increment="..rate["block_min_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"].."\]"
+      myvarbridge = "\[sell_destination=did,cost_destination=did,sell_rate="..tonumber(did[1]["customer_rate"])..",sell_increment="..did[1]["customer_interval_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(did[1]["customer_rate"])..",nibble_account="..did[1]["customer"]..",nibble_increment="..did[1]["customer_interval_duration"]..",customer="..did[1]["customer"]..",gateway="..did[i]["trunk_id"]..",cost_rate="..tonumber(did[i]["provider_rate"])..",prefix=did,init_block="..did[i]["provider_interval_duration"]..",block_min_duration="..did[i]["provider_block_min_duration"]..",lcr_carrier_id="..did[i]["provider"]..",ratecard_id="..did[1]["customer_plan"]..",lcr_group_id=0\]"
       log("WS CALL my variables bridge : ", myvarbridge)
       if mydialbridge == "" then
-        mydialbridge = "sofia/internal/" .. did[i]["trunk"] .. "%$${domain}"
+        mydialbridge = myvarbridge .. "sofia/internal/" .. did[i]["trunk"] .. "%$${domain}"
       else
-        mydialbridge = mydialbridge.."|" .. "sofia/internal/" .. did[i]["trunk"]
+        mydialbridge = mydialbridge.."|" .. myvarbridge .. "sofia/internal/" .. did[i]["trunk"]
       end
       log("construction bridge : ", mydialbridge, "debug") 
   end
