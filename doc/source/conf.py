@@ -24,10 +24,10 @@ import os
 sys.path.append(os.path.abspath('../src/'))
 
 # Set up the Django settings/environment
-sys.path.insert(0, os.path.abspath('../../'))
-from .pyfreebilling import settings
-from django.core.management import setup_environ
-setup_environ(settings)
+#sys.path.insert(0, os.path.abspath('../../'))
+#from .pyfreebilling import settings
+#from django.core.management import setup_environ
+#setup_environ(settings)
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -37,12 +37,12 @@ setup_environ(settings)
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.doctest',
-    'sphinx.ext.todo',
-    'sphinx.ext.coverage',
-    'sphinx.ext.ifconfig',
-    'sphinx.ext.viewcode',
+#    'sphinx.ext.autodoc',
+#    'sphinx.ext.doctest',
+#    'sphinx.ext.todo',
+#    'sphinx.ext.coverage',
+#    'sphinx.ext.ifconfig',
+#    'sphinx.ext.viewcode',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
