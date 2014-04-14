@@ -34,12 +34,6 @@ Contact Information
 
 Name: Mathias WOLFF 
 Email: website contact form Website:
-http://www.blog-des-telecoms.com
+http://www.pyfreebilling.com
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
