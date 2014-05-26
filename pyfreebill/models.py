@@ -19,7 +19,6 @@ from django.db.models import permalink
 from django.core.validators import EMPTY_VALUES
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.contrib.comments.models import Comment
@@ -194,7 +193,7 @@ class Person(models.Model):
                                 null=True)
     about = models.TextField(_('about'),
                              blank=True)
-    user = models.OneToOneField(User,
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 blank=True,
                                 null=True,
                                 verbose_name=_('user'))
