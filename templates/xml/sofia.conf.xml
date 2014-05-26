@@ -83,6 +83,7 @@
        {% for gateway in sipprofile.get_gateways %}
         <gateway name='{{ gateway.name }}'>
           <param name='username' value='{{ gateway.username }}'/>
+          <param name='from-user' value='{{ gateway.username }}'/>
           <param name='realm' value='{{ gateway.realm }}'/>
           <param name='from-domain' value='{{ gateway.from_domain }}'/>
           <param name='password' value='{{ gateway.password }}'/>
