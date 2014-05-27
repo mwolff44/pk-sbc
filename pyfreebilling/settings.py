@@ -186,6 +186,7 @@ INSTALLED_APPS = (
     'database_size',
     'did',
     'simple_import',
+    'sysmon',
     #'massadmin',
 )
 
