@@ -1,64 +1,73 @@
 {% extends "admin/base_site.html" %}
-{% load i18n admin_static admin_list %}
-{% load admin_urls %}
-
-{% block extrastyle %}{{ block.super }}
-  <link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}" />
-{{ media.css }}
-{% endblock %}
+{% load i18n %}
 
 {% block extrahead %}
 {{ block.super }}
-{{ media.js }}
+<!--[if IE]><script language="javascript" type="text/javascript" src="{{ STATIC_URL }}request/js/excanvas.min.js"></script><![endif]-->
+<script type="text/javascript" src="{{ STATIC_URL }}request/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}request/js/jquery.flot.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}request/js/jquery.relatize_date.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}request/js/request.js"></script>
+
+<script type="text/javascript">
+function loadTrafficGraph(days) {
+    if (days == undefined) {
+        path = "traffic.json";
+    } else {
+        path = "traffic.json?days=" + days;
+    }
+    
+    $.getJSON(path, function(data) {
+        trafficGraph($("#trafficgraph"), data);
+    });
+}
+
+$(document).ready(function(){
+    loadTrafficGraph();
+});
+</script>
 {% endblock %}
 
-{% block coltype %}flex{% endblock %}
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <a href="../">{% trans "Stats" %}</a> &rsaquo;
+        {% trans "Stats" %}
+    </div>
+{% endblock %}
 
 {% block content %}
-<div class="row-fluid show-grid">
-  <div class="span12">
-    <div class="results">
-
-      <table cellspacing="O" id="result_list" class="table table-bordered table-striped">
-        <thead>
-          <tr class="grey-degrade">
-            {# each column name #}
-            <th scope="col" class="sortable">
-              <span class="text">
-                {# add column title and link if you want #}
-                Name
-              </span>
-              <span class="sortoptions">
-{# add sorting url and icons here #}
-              </span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {# each row pair and impair are differents #}
-          <tr class="row1">
-            <th>
-              blabla
-            </th>
-            <td>
-              z
-            </td>
-          </tr>
-          <tr class="row2">
-            s
-          </tr>
-        </tbody>
-        <tr>
-          {% for t in time_series %}
-            <td> 
-              <div id="content-main">{{ t.0|date:"M j, D" }}
-                <div>{{ t.1|floatformat:2 }}</div>
-              </div>
-            </td>
-          {% endfor %}
-        </tr>
-      </table>
+<div style="width:920px;">
+    <div class="module" style="clear: both;">
+        <table style="width: 100%;">
+            <caption>{% trans "Sell graph" %} ( <a href="javascript:loadTrafficGraph(7);">{% trans "Week" %}</a> | <a href="javascript:loadTrafficGraph(30);">{% trans "Month" %}</a> | <a href="javascript:loadTrafficGraph(365);">{% trans "Year" %}</a> )</caption>
+        </table>
+        
+        <div style="padding: 15px;">
+            <div id="trafficgraph" style="width: 900px; height: 250px;"></div>
+        </div>
     </div>
-  </div>
+    
+      <div class="module" style="float: left; width: 450px; {% cycle 'clear: both;' 'margin-left: 16px;' %}">
+        <table summary="{{ verbose_name }}" style="width: 100%;">
+          <caption>{{ verbose_name }}</caption>
+              <tr>
+                  <td>&nbsp;</td>
+                  <th>{% trans "Today" %}</th>
+                  <th>{% trans "This week" %}</th>
+                  <th>{% trans "This month" %}</th>
+                  <th>{% trans "This year" %}</th>
+              <tr>
+    
+              <tr>
+                  <th>{{ sell_today }}</th>
+                  <th>{% trans "This week" %}</th>
+                  <th>{% trans "This month" %}</th>
+                  <th>{% trans "This year" %}</th>
+              </tr>
+
+
+        </table>
+      </div>
+
 </div>
 {% endblock %}

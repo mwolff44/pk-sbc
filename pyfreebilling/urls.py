@@ -19,10 +19,12 @@ from django.contrib import admin
 
 from yawdadmin import admin_site
 
+from model_report import report
 
 admin.autodiscover()
 admin_site._registry.update(admin.site._registry)
 
+report.autodiscover()
 
 # Custom menu
 def perms_func(request, item):
@@ -218,6 +220,11 @@ admin_site.register_top_menu_item('8_Admin',
                                              'admin_url': '/extranet/axes/accessattempt/',
                                              'order': 3,
                                              'title_icon': 'icon-warning-sign'},
+                                             {'name': 'Visitors stats',
+                                             'admin_url': '/extranet/request/request/overview/',
+                                             'order': 4,
+                                             'separator': True,
+                                             'title_icon': 'icon-exclamation-sign'},
                                             {'name': 'Admin logs',
                                              'admin_url': '/extranet/admin/logentry/',
                                              'order': 4,
@@ -259,5 +266,7 @@ urlpatterns = patterns('',
                            include('simple_import.urls')),
                        url(r'^extranet/',
                            include(admin_site.urls)),
+                       url(r'report/',
+                           include('model_report.urls')),
                        url(r'^extranet/',
                            include("massadmin.urls")), )

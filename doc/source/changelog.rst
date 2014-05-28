@@ -11,6 +11,7 @@ New features
 * Sofia Gateway : add new chooce lists for selecting codecs
 * Add sip profile DTMF options (pass-rfc2833)
 * Add new rtp_rewrite_timestamps sofia profile option
+* Visitors and web interface use stats
 
 Modifications
 -------------

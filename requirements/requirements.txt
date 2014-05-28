@@ -12,7 +12,7 @@ django-clear-cache==0.3
 django-countries==2.1.2
 django-country-dialcode==0.5.1
 django-google-charts==0.1.1
-django-iban==0.2.7
+django-iban==0.2.8
 django-import-export==0.2.2
 django-jsonfield==0.9.12
 django-qsstats-magic==0.7.2
@@ -26,3 +26,5 @@ switch2bill-common==2.8.5
 wsgiref==0.1.2
 django-database-size==0.3.0
 django-mass-edit==1.5.1
+django-request==1.0.1
+django-model-report==0.2.1

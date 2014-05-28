@@ -67,6 +67,8 @@ def live_report_view(request):
 
     qss_sell = qsstats.QuerySetStats(qs, 'start_stamp', 
         aggregate=Sum('total_sell'))
+    qss_cost = qsstats.QuerySetStats(qs, 'start_stamp', 
+        aggregate=Sum('total_cost'))
     qss_sum_duration = qsstats.QuerySetStats(qs, 'start_stamp', 
         aggregate=Sum('effective_duration'))
     qss_avg_duration = qsstats.QuerySetStats(qs, 'start_stamp', 
@@ -74,9 +76,11 @@ def live_report_view(request):
     qss_max_duration = qsstats.QuerySetStats(qs, 'start_stamp', 
         aggregate=Max('effective_duration'))
 
-    today = datetime.date.today() - datetime.timedelta(days=60)
-    seven_days_ago = today - datetime.timedelta(days=30)
-    time_series = qss_sell.time_series(seven_days_ago, today)
+    today = datetime.date.today() - datetime.timedelta(days=0)
+    seven_days_ago = today - datetime.timedelta(days=7)
+    seven_sell = qss_sell.time_series(seven_days_ago, today)
+    seven_cost = qss_sell.time_series(seven_days_ago, today)
+    seven_duration = qss_sum_duration.time_series(seven_days_ago, today)
     #time_series1 = qss_sell.time_series(last_days_ago, today)
     # print '----------------------------------'
     # print 'weeky stats delta : day :  - Total sell : %s' % [t[1] for t in time_series]
