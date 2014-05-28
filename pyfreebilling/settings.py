@@ -186,6 +186,7 @@ INSTALLED_APPS = (
     'database_size',
     'did',
     'simple_import',
+    'sysmon',
     #'massadmin',
 )
 
@@ -220,6 +221,7 @@ LOGGING = {
 
 # AUTH - DJANGO 1.6
 #AUTH_USER_MODEL = 'pyfreebill.CustomUser'
+AUTH_USER_MODEL = 'auth.User'
 
 # SECURITY - ADJUST YOURS PARAMETERS
 
@@ -251,6 +253,14 @@ ADMIN_SITE_NAME = 'PyFreeBilling'
 ADMIN_SITE_DESCRIPTION = 'Softswitch and billing application'
 #ADMIN_SITE_LOGO_HTML = '<div id="myproject-logo hidden-phone">Logo</div>'
 ADMIN_DISABLE_APP_INDEX = 'True'
+
+
+#----------
+# django-cities-light
+#----------
+SOUTH_MIGRATION_MODULES = {
+    'cities_light': 'cities_light.south_migrations',
+}
 
 #----------
 # Chroniker

@@ -154,6 +154,42 @@ function hangup_call(code, phrase, cause)
 end
 -----------------------------------------------
 -----------------------------------------------
+function codec_test(type)
+  local codecs = { "G729", "PCMA", "PCMU" }
+  local codec_status = "NOK"
+  log("customer codec test", "--start--", "info")
+  for key, value in ipairs(codecs) do
+    log("codecs_customer: ", channel["customer_codecs"], "info")
+    log("codec value test: ", value, "debug")
+    if string.find(channel["customer_codecs"], string.format("%s", value)) then
+      if string.find(channel["ep_codec_string"], string.format("%s", value)) then
+        log("codec leg A match with customer codec: ", value, "info")
+        codec_status = "OK"
+        log("codec status: ", codec_status, "info")
+      else
+        log("codec leg A mismatch with customer codec: ", value,"info")
+        channel["customer_codecs"] = string.gsub(channel["customer_codecs"], string.format("%s%s", ",", value), "", 1)
+        channel["customer_codecs"] = string.gsub(channel["customer_codecs"], string.format("%s%s", value, ","), "", 1)
+        channel["customer_codecs"] = string.gsub(channel["customer_codecs"], string.format("%s", value), "", 1)
+        log("New customer codec list available : ", channel["customer_codecs"], "info")
+      end
+    else
+      log("codec not available for this sip account: ", value, "info")
+    end
+  end
+  if codec_status == "OK" then
+    log("codec leg A match with customer codec", "", "info")
+    log("codec available : ", channel["customer_codecs"], "info")
+    execute("export", "nolocal:absolute_codec_string="..channel["customer_codecs"])
+  else
+    set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_CODEC_ERROR")
+    log("codec leg A mismatch with customer codec! ","Exiting","info")
+    session:hangup("BEARERCAPABILITY_NOTAVAIL")
+    return
+  end
+end
+-----------------------------------------------
+-----------------------------------------------
 --        SCRIPT START
 -----------------------------------------------
 -----------------------------------------------
@@ -201,22 +237,34 @@ if session:ready() then
   set_variable("sell_increment", "0")
   set_variable("originating_leg_uuid", channel["uuid"])
 
+-----------------------------------------------
+--        CODECS
+-----------------------------------------------
+
   channel["customer_codecs"] = get_Variable("customer_codecs")
+  channel["ep_codec_string"] = get_Variable("ep_codec_string")
   if (channel["customer_codecs"] == "ALL" or channel["customer_codecs"] == nil or channel["customer_codecs"] == "") then
     log("All client codecs", "", "debug")
   else
     log("specific customer codecs", "", "debug")
-    channel["ep_codec_string"] = get_Variable("ep_codec_string")
-    if ((string.find(channel["ep_codec_string"], 'G729') and string.find(channel["customer_codecs"], 'G729')) or (string.find(channel["ep_codec_string"], 'PCMA') and string.find(channel["customer_codecs"], 'PCMA')) or (string.find(channel["ep_codec_string"], 'PCMU') and string.find(channel["customer_codecs"], 'PCMU'))) then
-      log("codec leg A match with customer codec", "", "info")
-      execute("export", "nolocal:absolute_codec_string="..channel["customer_codecs"])
-    else
-      set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_CODEC_ERROR")
-      log("codec leg A mismatch with customer codec!","Exiting","info")
-      session:hangup("BEARERCAPABILITY_NOTAVAIL")
-      return
-    end
+    codec_test("customer")
   end
+
+  -- if (channel["customer_codecs"] == "ALL" or channel["customer_codecs"] == nil or channel["customer_codecs"] == "") then
+  --   log("All client codecs", "", "debug")
+  -- else
+  --   log("specific customer codecs", "", "debug")
+  --   channel["ep_codec_string"] = get_Variable("ep_codec_string")
+  --   if ((string.find(channel["ep_codec_string"], 'G729') and string.find(channel["customer_codecs"], 'G729')) or (string.find(channel["ep_codec_string"], 'PCMA') and string.find(channel["customer_codecs"], 'PCMA')) or (string.find(channel["ep_codec_string"], 'PCMU') and string.find(channel["customer_codecs"], 'PCMU'))) then
+  --     log("codec leg A match with customer codec", "", "info")
+  --     execute("export", "nolocal:absolute_codec_string="..channel["customer_codecs"])
+  --   else
+  --     set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_CODEC_ERROR")
+  --     log("codec leg A mismatch with customer codec!","Exiting","info")
+  --     session:hangup("BEARERCAPABILITY_NOTAVAIL")
+  --     return
+  --   end
+  -- end
 
 end
 
@@ -701,6 +749,24 @@ if (session:ready() == true) then
       caller_id = string.gsub(channel["caller_id_number"], lcr_remove_prefix[i], lcr_add_prefix[i], 1)
       log("WS CALL CallerID sent to provider: ", caller_id)
       log("WS CALL dest num with prefix/suffix/strip : ", called_number)
+      -- map cutomer codec and gateway codec
+      --channel["customer_codecs"] -- lcr_codec[lcrok]
+      -- if (lcr_codec[lcrok] == "ALL" or lcr_codec[lcrok] == nil or lcr_codec[lcrok] == "") then
+      --   log("All gateway codecs", "", "debug")
+      -- else
+      --   log("specific gateway codecs", "", "debug")
+      --   channel["ep_codec_string"] = get_Variable("ep_codec_string")
+      --   if ((string.find(channel["ep_codec_string"], 'G729') and string.find(channel["customer_codecs"], 'G729')) or (string.find(channel["ep_codec_string"], 'PCMA') and string.find(channel["customer_codecs"], 'PCMA')) or (string.find(channel["ep_codec_string"], 'PCMU') and string.find(channel["customer_codecs"], 'PCMU'))) then
+      --     log("codec leg A match with customer codec", "", "info")
+      --     execute("export", "nolocal:absolute_codec_string="..channel["customer_codecs"])
+      --   else
+      --     set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_CODEC_ERROR")
+      --     log("codec leg A mismatch with customer codec!","Exiting","info")
+      --     session:hangup("BEARERCAPABILITY_NOTAVAIL")
+      --     return
+      --   end
+      -- end
+
       myvarbridge = "\[execute_on_post_originate=limit hash outbound "..lcr_gwname[i].." "..lcr_channels[i].." !NORMAL_TEMPORARY_FAILURE, sip_from_uri=sip:"..caller_id.."@${sip_from_host},origination_caller_id_number="..caller_id..",origination_caller_id_name="..caller_id..",sip_cid_type="..lcr_sipcidtype[i]..",sell_destination="..rate["destination"]..",cost_destination="..lcr_destination[i]..",sell_rate="..tonumber(rate["rate"])..",sell_increment="..rate["block_min_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"].."\]"
       log("WS CALL my variables bridge : ", myvarbridge)
       if mydialbridge == "" then

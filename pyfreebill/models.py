@@ -19,7 +19,6 @@ from django.db.models import permalink
 from django.core.validators import EMPTY_VALUES
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.contrib.comments.models import Comment
@@ -194,7 +193,7 @@ class Person(models.Model):
                                 null=True)
     about = models.TextField(_('about'),
                              blank=True)
-    user = models.OneToOneField(User,
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 blank=True,
                                 null=True,
                                 verbose_name=_('user'))
@@ -569,6 +568,8 @@ class CustomerDirectory(models.Model):
         ("PCMU,G729", _(u"PCMU,G729")),
         ("G729,PCMA", _(u"G729,PCMA")),
         ("G729,PCMU", _(u"G729,PCMU")),
+        ("PCMA,PCMU", _(u"PCMA,PCMU")),
+        ("PCMU,PCMA", _(u"PCMU,PCMA")),
         ("G729", _(u"G729")),
         ("PCMU", _(u"PCMU")),
         ("PCMA", _(u"PCMA")),
@@ -1413,7 +1414,7 @@ class SipProfile(models.Model):
                                                       authentication failures.
                                                       Required for Fail2ban.
                                                       """))
-    MULTIPLE_CODEC_CHOICES = (
+    MULTIPLE_CODECS_CHOICES = (
         ("PCMA,PCMU,G729", _(u"PCMA,PCMU,G729")),
         ("PCMU,PCMA,G729", _(u"PCMU,PCMA,G729")),
         ("G729,PCMA,PCMU", _(u"G729,PCMA,PCMU")),
@@ -1422,20 +1423,23 @@ class SipProfile(models.Model):
         ("PCMU,G729", _(u"PCMU,G729")),
         ("G729,PCMA", _(u"G729,PCMA")),
         ("G729,PCMU", _(u"G729,PCMU")),
+        ("PCMA,PCMU", _(u"PCMA,PCMU")),
+        ("PCMU,PCMA", _(u"PCMU,PCMA")),
         ("G729", _(u"G729")),
         ("PCMU", _(u"PCMU")),
         ("PCMA", _(u"PCMA")),
+        ("ALL", _(u"ALL")),
     )
     inbound_codec_prefs = models.CharField(_(u"inbound codec prefs"),
                                            max_length=100,
-                                           choices=MULTIPLE_CODEC_CHOICES,
+                                           choices=MULTIPLE_CODECS_CHOICES,
                                            default="G729,PCMU,PCMA",
                                            help_text=_(u"""Define allowed
                                                        preferred codecs for
                                                        inbound calls."""))
     outbound_codec_prefs = models.CharField(_(u"outbound codec prefs"),
                                             max_length=100,
-                                            choices=MULTIPLE_CODEC_CHOICES,
+                                            choices=MULTIPLE_CODECS_CHOICES,
                                             default="G729,PCMU,PCMA",
                                             help_text=_(u"""Define allowed
                                                         preferred codecs for
@@ -1528,6 +1532,14 @@ class SipProfile(models.Model):
                                                               occurs
                                                               beforehand-
                                                               """))
+    rtp_rewrite_timestamps = models.BooleanField(_(u"""RTP rewrite timestamps"""),
+                                       default=False,
+                                       help_text=_(u"""If you don't want to pass
+                                           through timestampes from 1 RTP call
+                                           to another"""))
+    pass_rfc2833 = models.BooleanField(_(u"""pass rfc2833"""),
+                                       default=False,
+                                       help_text=_(u"""pass rfc2833"""))
     date_added = models.DateTimeField(_(u'date added'),
                                       auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'),
@@ -1581,10 +1593,28 @@ class SofiaGateway(models.Model):
                               blank=True,
                               default='',
                               max_length=15)
-    codec = models.CharField(_(u'codec'),
-                             blank=True,
-                             default='',
-                             max_length=30)
+    MULTIPLE_CODECS_CHOICES = (
+        ("PCMA,PCMU,G729", _(u"PCMA,PCMU,G729")),
+        ("PCMU,PCMA,G729", _(u"PCMU,PCMA,G729")),
+        ("G729,PCMA,PCMU", _(u"G729,PCMA,PCMU")),
+        ("G729,PCMU,PCMA", _(u"G729,PCMU,PCMA")),
+        ("PCMA,G729", _(u"PCMA,G729")),
+        ("PCMU,G729", _(u"PCMU,G729")),
+        ("G729,PCMA", _(u"G729,PCMA")),
+        ("G729,PCMU", _(u"G729,PCMU")),
+        ("PCMA,PCMU", _(u"PCMA,PCMU")),
+        ("PCMU,PCMA", _(u"PCMU,PCMA")),
+        ("G729", _(u"G729")),
+        ("PCMU", _(u"PCMU")),
+        ("PCMA", _(u"PCMA")),
+        ("ALL", _(u"ALL")),
+    )
+    codec = models.CharField(_(u"Codecs"),
+                              max_length=30,
+                              default="ALL",
+                              choices=MULTIPLE_CODECS_CHOICES,
+                              help_text=_(u"""Codecs allowed - beware about
+                              order, 1st has high priority """))
     username = models.CharField(_(u"username"),
                                 blank=True,
                                 default='',

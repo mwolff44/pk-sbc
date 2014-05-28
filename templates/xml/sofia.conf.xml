@@ -74,6 +74,8 @@
         <param name='context' value='public'/>
         {% if sipprofile.apply_inbound_acl %}<param name='apply-inbound-acl' value='domains'/>{% endif %}
         <param name='inbound-late-negotiation' value='true'/>
+        {% if sipprofile.rtp_rewrite_timestamps %}<param name="rtp-rewrite-timestamps" value='true'/>{% endif %}
+        {% if sipprofile.pass_rfc2833 %}<param name="pass-rfc2833" value="true"/>{% endif %}
         <param name='pass-callee-id' value='false'/>
         <param name='manage-presence' value='false'/>
       </settings>

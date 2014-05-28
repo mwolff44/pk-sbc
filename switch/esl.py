@@ -60,11 +60,13 @@ def fs_cmd(command):
         if not connection.connected():
             raise IOError("No connection to FreeSWITCH")
         try:
-            connection.sendRecv(command.encode('utf-8'))
+            esl = connection.sendRecv(command.encode('utf-8'))
+            # afficher une reponse --- dans le cas du reload dans une modale
         except Exception, e:
             logger.info("fs_cmd error: " + str(e))
             raise
         logger.info("fs_cmd done")
+        print esl.getBody()
         return
     raise ValueError("""No EventSocket configured in FreeSwitch.
         Cannot connect to FreeSWITCH over event socket""")
@@ -99,3 +101,9 @@ def getReloadGateway():
 def getRestartSofia(profile_name):
     """Restart sofia profile"""
     fs_cmd("bgapi sofia profile " + profile_name + " restart")
+
+def getSofiaStatus():
+    """Get Sofia status"""
+    logger.info("getSofiaStatus")
+    logger.info("get Sofia status")
+    fs_cmd("api sofia status")
