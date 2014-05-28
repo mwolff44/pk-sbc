@@ -1532,6 +1532,14 @@ class SipProfile(models.Model):
                                                               occurs
                                                               beforehand-
                                                               """))
+    rtp_rewrite_timestamps = models.BooleanField(_(u"""RTP rewrite timestamps"""),
+                                       default=False,
+                                       help_text=_(u"""If you don't want to pass
+                                           through timestampes from 1 RTP call
+                                           to another"""))
+    pass_rfc2833 = models.BooleanField(_(u"""pass rfc2833"""),
+                                       default=False,
+                                       help_text=_(u"""pass rfc2833"""))
     date_added = models.DateTimeField(_(u'date added'),
                                       auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'),

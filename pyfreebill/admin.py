@@ -1026,21 +1026,21 @@ class SipProfileAdmin(admin.ModelAdmin):
             'classes': ('collapsed',),
             'description': 'NAT management'
         }),
-        # ('DTMF', {
-        #     'fields': (''),
-        #     'classes': ('collapsed',),
-        #     'description': 'DTMF management'
-        # }),
+        ('DTMF Related options', {
+            'fields': ('pass_rfc2833',),
+            'classes': ('collapsed',),
+            'description': 'DTMF management'
+        }),
         ('SIP Related Options', {
             'fields': (('enable_timer', 'session_timeout')),
             'classes': ('collapsed',),
             'description': 'Manage SIP Related Options'
         }),
-        # ('RTP Related Options', {
-        #     'fields': (''),
-        #     'classes': ('collapsed',),
-        #     'description': 'Manage RTP Related Options'
-        # }),
+        ('RTP Related Options', {
+            'fields': ('rtp_rewrite_timestamps',),
+            'classes': ('collapsed',),
+            'description': 'Manage RTP Related Options'
+        }),
         ('Authentification Authorization', {
             'fields': ('apply_inbound_acl',
                        'auth_calls',
