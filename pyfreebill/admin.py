@@ -1164,7 +1164,7 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
                      '^sell_destination']
     list_filter = ('start_stamp',)
 #    date_hierarchy = 'start_stamp'
-    #change_list_template = 'admin/pyfreebill/cdr/change_list.html'
+    change_list_template = 'admin/pyfreebill/cdr/change_list.html'
     resource_class = CDRResourceExtra
     fieldsets = (
         ('General', {
@@ -1219,8 +1219,8 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
         else:
             return
 
-#     def get_changelist(self, request, **kwargs):
-#         return TotalAveragesChangeList
+    def get_changelist(self, request, **kwargs):
+        return TotalAveragesChangeList
 
     def changelist_view(self, request, extra_context=None):
         if request.user.is_superuser:

@@ -12,6 +12,7 @@ New features
 * Add sip profile DTMF options (pass-rfc2833)
 * Add new rtp_rewrite_timestamps sofia profile option
 * Visitors and web interface use stats
+* Admin CDR panel : show minutes / sell / cost / margin of selection
 
 Modifications
 -------------
