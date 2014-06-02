@@ -59,7 +59,23 @@
                 {% if request.user.is_superuser %}
                 <div class="span12">
                 	<div id="content-main">
-                	{% trans "Total Minutes" %} : {{ cl.min_total_effective_duration }} --- {% trans "Average Minutes" %} : {{ cl.min_avg_effective_duration }} --- {% trans "Total Sell" %} : {{ cl.total_sell_total }} --- {% trans "Total Cost" %} : {{ cl.total_cost_total }} --- {% trans "Margin" %} : {{ cl.margin }}
+                		<div class="span2">
+                		</div>
+                		<div class="span2">
+                	      {% trans "Total Minutes" %} : {{ cl.min_total_effective_duration }}
+                        </div>
+                        <div class="span2">
+                          {% trans "Average Minutes" %} : {{ cl.min_avg_effective_duration }}
+                        </div>
+                        <div class="span2">
+                          {% trans "Total Sell" %} : {{ cl.total_sell_total }}
+                        </div>
+                        <div class="span2">
+                          {% trans "Total Cost" %} : {{ cl.total_cost_total }}
+                        </div>
+                        <div class="span2">
+                          {% trans "Margin" %} : {{ cl.margin }}
+                        </div>
                     </div>
                 </div>{% endif %}
 
