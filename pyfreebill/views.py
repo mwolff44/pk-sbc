@@ -14,27 +14,32 @@
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
-from django.db.models import Sum, Avg
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
-from qsstats import QuerySetStats
-from pyfreebill.models import DimCustomerDestination, DimCustomerHangupcause, CDR
-from django.views.generic import TemplateView
-from chartjs.views.lines import BaseLineChartView
-import datetime, qsstats
 from django.db.models import Sum, Avg, Count, Max, Min
+from django.views.generic import TemplateView
+
+from qsstats import QuerySetStats
+import time
+import datetime, qsstats
+import json
+
 
 from pyfreebilling import __version__
 
+from pyfreebill.utils import round_value, getvar, return_query_string
+from pyfreebill.forms import CDRSearchForm
+from pyfreebill.models import DimCustomerDestination, DimCustomerHangupcause, CDR, Company
 
 def time_series(queryset, date_field, interval, func=None):
     qsstats = QuerySetStats(queryset, date_field, func)
     return qsstats.time_series(*interval)
 
 
-#@staff_member_required
+@staff_member_required
 def admin_status_view(request):
     # print status page
     #pfb_version = settings.PFB_VERSION
@@ -60,38 +65,289 @@ def _margin_series(sell_series, cost_series):
 
 @staff_member_required
 def live_report_view(request):
-    """ live stats calculated from cdr """
-    qs = CDR.objects.all().filter(effective_duration__gt="0")
-#.filter(lcr_carrier_id="20").filter(customer="12")
-# sixtocom = 20 _ Lvoip = 11
+    """ selecting cdr and live stats calculated from selection """
 
-    qss_sell = qsstats.QuerySetStats(qs, 'start_stamp', 
-        aggregate=Sum('total_sell'))
-    qss_cost = qsstats.QuerySetStats(qs, 'start_stamp', 
-        aggregate=Sum('total_cost'))
-    qss_sum_duration = qsstats.QuerySetStats(qs, 'start_stamp', 
-        aggregate=Sum('effective_duration'))
-    qss_avg_duration = qsstats.QuerySetStats(qs, 'start_stamp', 
-        aggregate=Avg('effective_duration'))
-    qss_max_duration = qsstats.QuerySetStats(qs, 'start_stamp', 
-        aggregate=Max('effective_duration'))
+    form = CDRSearchForm(request.user, request.POST or None)
 
-    today = datetime.date.today() - datetime.timedelta(days=0)
-    seven_days_ago = today - datetime.timedelta(days=7)
-    seven_sell = qss_sell.time_series(seven_days_ago, today)
-    seven_cost = qss_sell.time_series(seven_days_ago, today)
-    seven_duration = qss_sum_duration.time_series(seven_days_ago, today)
-    #time_series1 = qss_sell.time_series(last_days_ago, today)
-    # print '----------------------------------'
-    # print 'weeky stats delta : day :  - Total sell : %s' % [t[1] for t in time_series]
-    # print '------------DAILY-----------------'
-    # print 'daily stats keyyo : Sum : %s - Avg : %s - Max : %s - Total sell : %s' % (qss_sum_duration.this_day(), qss_avg_duration.this_day(), qss_max_duration.this_day(), qss_sell.this_day())
-    # print '------------MONTHLY---------------'
-    # print 'monthly stats keyyo : Sum : %s - Avg : %s - Max : %s - Total sell : %s' % (qss_sum_duration.this_month(), qss_avg_duration.this_month(), qss_max_duration.this_month(), qss_sell.this_month())
+    if request.method == 'POST':
+
+        if form.is_valid():
+            query_string = ''
+            query_answer = ''
+
+            from_date = getvar(request, 'from_date_0')
+            print from_date
+            if from_date:
+                formated_date = datetime.datetime.strptime(str(from_date), '%Y-%m-%d')
+                date_string = 'start_stamp__gte=' + str(formated_date)
+                query_string = return_query_string(query_string, date_string)
+
+
+            # if start_date:
+            #     date_string = 'starting_stamp__gte=' + start_date
+            #     query_string = return_query_string(query_string, date_string)
+
+            # if end_date:
+            #     date_string = 'starting_stamp__lte=' + end_date
+            #     query_string = return_query_string(query_string, date_string)
+
+            customer_id = getvar(request, 'customer_id')
+            if customer_id and customer_id != '0':
+                customer_string = 'customer__id__exact=' + str(customer_id)
+                query_string = return_query_string(query_string, customer_string)
+
+            provider_id = getvar(request, 'provider_id')
+            if provider_id and provider_id != '0':
+                provider_string = 'lcr_carrier_id__id__exact=' + str(provider_id)
+                query_string = return_query_string(query_string, provider_string)
+
+            ratecard_id = getvar(request, 'ratecard_id')
+            if ratecard_id and ratecard_id != '0':
+                ratecard_string = 'ratecard_id__id__exact=' + str(ratecard_id)
+                query_string = return_query_string(query_string, ratecard_string)
+
+            lcr_id = getvar(request, 'lcr_id')
+            if lcr_id and lcr_id != '0':
+                lcr_string = 'lcr_group_id__id__exact=' + str(lcr_id)
+                query_string = return_query_string(query_string, lcr_string)
+
+            dest_num = getvar(request, 'dest_num')
+            if dest_num:
+                dstnum_string = 'destination_number__startswith=' + str(dest_num)
+                query_string = return_query_string(query_string, dstnum_string)
+
+            if query_string:
+                query_answer = '/extranet/pyfreebill/cdr/?' + str(query_string)
+            else:
+                query_answer = '/extranet/pyfreebill/cdr/'
+
+            return HttpResponseRedirect(query_answer)
+    else:
+        form = CDRSearchForm(request.user)
+
+    request.session['msg'] = ''
+    request.session['error_msg'] = ''
 
     return render_to_response('admin/live_report.html', locals(),
             context_instance=RequestContext(request))
+
+
+class ChartData(object):
+    @classmethod
+    def get_stats_revenue(cls):
+        data = []
+        data1 = {'key': [], 'values': [], 'color': '#2ca02c'}
+        data2 = {'key': [], 'values': []}
+        data3 = {'key': [], 'area': 'true', 'values': [], 'color': '#ff7f0e'}
+        data4 = {'key': [], 'area': 'true', 'values': [], 'color': '#7777ff'}
+
+        values_sell = []
+        values_cost = []
+        values_duration = []
+        margin = []
+        values_margin = []
+
+        qs = CDR.objects.filter(effective_duration__gt="0")
+        qs_d = DimCustomerDestination.objects.all()
+        qs_h = DimCustomerHangupcause.objects.all()
+        qss_sell = qsstats.QuerySetStats(qs, 'start_stamp', 
+            aggregate=Sum('total_sell'))
+        qss_cost = qsstats.QuerySetStats(qs, 'start_stamp', 
+            aggregate=Sum('total_cost'))
+        qss_sum_duration = qsstats.QuerySetStats(qs, 'start_stamp', 
+            aggregate=Sum('effective_duration'))
+        today = datetime.date.today() - datetime.timedelta(days=0)
+        firstday = today - datetime.timedelta(days=90)
+        # stats_sell = qss_sell.time_series(seven_days_ago, today)
+        # stats_cost = qss_sell.time_series(seven_days_ago, today)
+        # stats_duration = qss_sum_duration.time_series(seven_days_ago, today)
+
+        ts_total_calls = time_series(qs_h, 'date__date', [firstday, today], func=Sum('total_calls'))
+        ts_success_calls = time_series(qs_d, 'date__date', [firstday, today], func=Sum('success_calls'))
+        stats_duration = time_series(qs_d, 'date__date', [firstday, today], func=Sum('total_duration'))
+        stats_sell = time_series(qs_d, 'date__date', [firstday, today], func=Sum('total_sell'))
+        stats_cost = time_series(qs_d, 'date__date', [firstday, today], func=Sum('total_cost'))
+
+
+        for i in range(len(stats_sell)):
+            values_sell.append([int(time.mktime(stats_sell[i][0].timetuple()) * 1000),
+                    round_value(stats_sell[i][1])])
+
+        data1['key'].append("Revenue")
+        data1['values'] = values_sell
+        data.append(data1)
+
+        for i in range(len(stats_sell)):
+            temp_data = [
+                int(time.mktime(stats_sell[i][0].timetuple()) * 1000),
+                    #round_value(stats_sell[i][1])
+                    # round_value(stats_cost[i][1]),
+                    int(round_value(stats_duration[i][1]))
+                ]
+            values_duration.append(temp_data)
+
+        data2['values'] = values_duration
+        #data2['bar'].append('true')
+        data2['key'].append("Duration")
+        #data.append(data2)
+
+        for i in range(len(stats_sell)):
+            values_cost.append([int(time.mktime(stats_cost[i][0].timetuple()) * 1000),
+                    round_value(stats_cost[i][1])])
+
+        data3['key'].append("Cost")
+        data3['values'] = values_cost
+        data.append(data3)
+
+        for i in range(len(stats_sell)):
+            if stats_sell[i][1]:
+                if stats_cost[i][1]:
+                    margin.append(stats_sell[i][1] - stats_cost[i][1])
+                else:
+                    margin.append(stats_sell[i][1])
+            else:
+                if stats_cost[i][1]:
+                    margin.append(0 - stats_cost[i][1])
+                else:
+                    margin.append(0)
+            values_margin.append([int(time.mktime(stats_cost[i][0].timetuple()) * 1000),
+                    round_value(margin[i])])
+
+        data4['key'].append("Margin")
+        data4['values'] = values_margin
+        data.append(data4)
+
+        #data = [{"values": [[1400281200000, 3.36], [1400367600000, 0.03], [1400454000000, 30.15], [1400540400000, 34.57], [1400626800000, 30.73], [1400713200000, 32.12], [1400799600000, 60.69], [1400886000000, 3.61], [1400972400000, 0.05], [1401058800000, 68.54], [1401145200000, 339.0], [1401231600000, 130.58], [1401318000000, 17.12], [1401404400000, 133.52], [1401490800000, 111.67], [1401577200000, 0.02], [1401663600000, 640.63], [1401750000000, 565.65], [1401836400000, 646.74], [1401922800000, 639.96], [1402009200000, 798.42], [1402095600000, 493.09], [1402182000000, 65.13], [1402268400000, 380.07], [1402354800000, 17.01], [1402441200000, 388.32], [1402527600000, 0], [1402614000000, 0], [1402700400000, 0], [1402786800000, 0], [1402873200000, 0]], "bar": ["true"], "key": ["Revenue"]}, {"values": [[1400281200000, 25562], [1400367600000, 65], [1400454000000, 232339], [1400540400000, 225068], [1400626800000, 225401], [1400713200000, 198695], [1400799600000, 257652], [1400886000000, 14543], [1400972400000, 92], [1401058800000, 295177], [1401145200000, 980922], [1401231600000, 467542], [1401318000000, 70453], [1401404400000, 369460], [1401490800000, 307402], [1401577200000, 84], [1401663600000, 1814630], [1401750000000, 1578658], [1401836400000, 1799965], [1401922800000, 2344407], [1402009200000, 2540328], [1402095600000, 1345970], [1402182000000, 21832], [1402268400000, 1010094], [1402354800000, 66511], [1402441200000, 1078292], [1402527600000, 0], [1402614000000, 0], [1402700400000, 0], [1402786800000, 0], [1402873200000, 0]], "key": ["Duration"]}]
+
+        return data 
+
+    @classmethod
+    def get_stats_volume(cls):
+        data = []
+        data1 = {'key': [], 'values': [], 'bar': 'true', 'color': '#2ca02c'}
+        data2 = {'key': [], 'values': []}
+
+        values_duration = []
+        values_total_calls = []
+        values_success_calls = []
+
+        qs_d = DimCustomerDestination.objects.all()
+        qs_h = DimCustomerHangupcause.objects.all()
+
+        today = datetime.date.today() - datetime.timedelta(days=0)
+        firstday = today - datetime.timedelta(days=90)
+
+
+        ts_total_calls = time_series(qs_h, 'date__date', [firstday, today], func=Sum('total_calls'))
+        ts_success_calls = time_series(qs_d, 'date__date', [firstday, today], func=Sum('success_calls'))
+        stats_duration = time_series(qs_d, 'date__date', [firstday, today], func=Sum('total_duration'))
+
+
+        for i in range(len(stats_duration)):
+            temp_data = [
+                int(time.mktime(stats_duration[i][0].timetuple()) * 1000),
+                    int(round_value(ts_total_calls[i][1]))]
+                
+            values_total_calls.append(temp_data)
+
+        data1['key'].append("Total calls")
+        data1['values'] = values_total_calls
+        data.append(data1)
+
+        for i in range(len(stats_duration)):
+            temp_data = [
+                int(time.mktime(stats_duration[i][0].timetuple()) * 1000),
+                    int(round_value(ts_success_calls[i][1]))]
+                
+            values_success_calls.append(temp_data)
+
+        data2['values'] = values_success_calls
+        #data2['bar'].append('true')
+        data2['key'].append("Success calls")
+        data.append(data2)
+
+        return data
+
+    @classmethod
+    def get_stats_minute(cls):
+        data = []
+        data1 = {'key': [], 'values': []}
+        data2 = {'key': [], 'bar': 'true', 'values': []}
+
+        values_duration = []
+        values_acd = []
+        acd = []
+
+        qs_d = DimCustomerDestination.objects.all()
+        qs_h = DimCustomerHangupcause.objects.all()
+
+        today = datetime.date.today() - datetime.timedelta(days=0)
+        firstday = today - datetime.timedelta(days=90)
+
+        ts_success_calls = time_series(qs_d, 'date__date', [firstday, today], func=Sum('success_calls'))
+        stats_duration = time_series(qs_d, 'date__date', [firstday, today], func=Sum('total_duration'))
+
+
+        for i in range(len(stats_duration)):
+            if stats_duration[i][1]:
+                acd.append(stats_duration[i][1]/ts_success_calls[i][1])
+            else:
+                acd.append(0)
+            temp_data = [
+                int(time.mktime(stats_duration[i][0].timetuple()) * 1000),
+                    acd[i]]
+                
+            values_acd.append(temp_data)
+
+        data1['key'].append("ACD in seconds")
+        data1['values'] = values_acd
+        data.append(data1)
+
+        for i in range(len(stats_duration)):
+            temp_data = [
+                int(time.mktime(stats_duration[i][0].timetuple()) * 1000),
+                    int(round_value(stats_duration[i][1]) / 60)]
+                
+            values_duration.append(temp_data)
+
+        data2['values'] = values_duration
+        #data2['bar'].append('true')
+        data2['key'].append("Volume in minutes")
+        data.append(data2)
+
+        return data 
+
+
+@staff_member_required
+def chart_stats_general_json(request):
+    data = []
+    params = request.GET
+    name = params.get('name', '')
+    if name == 'revenue':
+        data = ChartData.get_stats_revenue()
+    elif name == 'volume':
+        data = ChartData.get_stats_volume()
+    elif name == 'minute':
+        data = ChartData.get_stats_minute()
+
+    return HttpResponse(json.dumps(data), content_type='application/json')
+
+
  
+@staff_member_required
+def general_stats(request):
+    company_list = Company.objects.all()
+    #filter(customer_enabled=True)
+    datas['companies'] = company_list
+    return render_to_response('snippets/general_stats.html',
+            context_instance=RequestContext(request, datas))
+
+@staff_member_required
+def companies_list():
+    company_list = Company.objects.all()
+    #filter(customer_enabled=True)
+    return {'companies' : company_list}
+
 
 @staff_member_required
 def admin_report_view(request):
@@ -117,21 +373,3 @@ def admin_report_view(request):
 
     return render_to_response('admin/admin_report.html', locals(),
         context_instance=RequestContext(request))
-
-
-#@staff_member_required
-class LineChartJSONView(BaseLineChartView):
-    def get_labels(self):
-        """Return 7 labels."""
-        return ["January", "February", "March", "April", "May", "June", "July"]
-
-    def get_data(self):
-        """Return 3 dataset to plot."""
-
-        return [[75, 44, 92, 11, 44, 95, 35],
-                [41, 92, 18, 3, 73, 87, 92],
-                [87, 21, 94, 3, 90, 13, 65]]
-
-
-line_chart = TemplateView.as_view(template_name='line_chart.html')
-line_chart_json = LineChartJSONView.as_view()

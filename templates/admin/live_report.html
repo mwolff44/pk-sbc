@@ -1,73 +1,49 @@
 {% extends "admin/base_site.html" %}
-{% load i18n %}
+{% load i18n admin_static admin_list %}
 
 {% block extrahead %}
-{{ block.super }}
-<!--[if IE]><script language="javascript" type="text/javascript" src="{{ STATIC_URL }}request/js/excanvas.min.js"></script><![endif]-->
-<script type="text/javascript" src="{{ STATIC_URL }}request/js/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}request/js/jquery.flot.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}request/js/jquery.relatize_date.js"></script>
-<script type="text/javascript" src="{{ STATIC_URL }}request/js/request.js"></script>
-
-<script type="text/javascript">
-function loadTrafficGraph(days) {
-    if (days == undefined) {
-        path = "traffic.json";
-    } else {
-        path = "traffic.json?days=" + days;
-    }
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     
-    $.getJSON(path, function(data) {
-        trafficGraph($("#trafficgraph"), data);
-    });
-}
+    {{ form.media }}
+{{ block.super }}
 
-$(document).ready(function(){
-    loadTrafficGraph();
-});
-</script>
 {% endblock %}
 
 {% block breadcrumbs %}
     <div class="breadcrumbs">
-        <a href="../">{% trans "Stats" %}</a> &rsaquo;
-        {% trans "Stats" %}
+        <a href="../">{% trans "CDR selection form" %}</a> &rsaquo;
+        {% trans "Form" %}
     </div>
 {% endblock %}
 
+{% block content_title %}{% if title %}<h1>{% trans "Select" %}</h1>{% endif %}{% endblock %}
+
 {% block content %}
-<div style="width:920px;">
-    <div class="module" style="clear: both;">
-        <table style="width: 100%;">
-            <caption>{% trans "Sell graph" %} ( <a href="javascript:loadTrafficGraph(7);">{% trans "Week" %}</a> | <a href="javascript:loadTrafficGraph(30);">{% trans "Month" %}</a> | <a href="javascript:loadTrafficGraph(365);">{% trans "Year" %}</a> )</caption>
-        </table>
-        
-        <div style="padding: 15px;">
-            <div id="trafficgraph" style="width: 900px; height: 250px;"></div>
+    <div id="content-main">
+      <div class="row-fluid">
+        <div class="span12">
+          {% if cl.formset.errors %}
+            <p class="errornote">
+              {% blocktrans count cl.formset.errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
+            </p>
+            {{ cl.formset.non_form_errors }}
+          {% endif %}
+
+          {% block custom-search %}
+            <form method="POST" action="." enctype="multipart/form-data">{% csrf_token %}
+              <table class="actions">
+              <caption>{% trans "search option"|title %}</caption>
+                {{ form.as_table }}
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="submit" value="{% trans "search"|title %}" class="l-1" />&nbsp;
+                      <a class="button l-1" href="../voip_daily_report/">{% trans "reset"|title %}</a>
+                    </td>
+                  </tr>
+              </table>
+            </form>
+          {% endblock %}
         </div>
-    </div>
-    
-      <div class="module" style="float: left; width: 450px; {% cycle 'clear: both;' 'margin-left: 16px;' %}">
-        <table summary="{{ verbose_name }}" style="width: 100%;">
-          <caption>{{ verbose_name }}</caption>
-              <tr>
-                  <td>&nbsp;</td>
-                  <th>{% trans "Today" %}</th>
-                  <th>{% trans "This week" %}</th>
-                  <th>{% trans "This month" %}</th>
-                  <th>{% trans "This year" %}</th>
-              <tr>
-    
-              <tr>
-                  <th>{{ sell_today }}</th>
-                  <th>{% trans "This week" %}</th>
-                  <th>{% trans "This month" %}</th>
-                  <th>{% trans "This year" %}</th>
-              </tr>
-
-
-        </table>
       </div>
-
-</div>
+    </div>
 {% endblock %}

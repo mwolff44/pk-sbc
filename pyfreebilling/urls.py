@@ -19,12 +19,12 @@ from django.contrib import admin
 
 from yawdadmin import admin_site
 
-from model_report import report
+
+from pyfreebill.views import chart_stats_general_json
 
 admin.autodiscover()
 admin_site._registry.update(admin.site._registry)
 
-report.autodiscover()
 
 # Custom menu
 def perms_func(request, item):
@@ -254,7 +254,7 @@ admin_site.register_top_menu_item('8_Admin',
 urlpatterns = patterns('',
                        url(r'^extranet/report/$',
                            'pyfreebill.views.admin_report_view'),
-                       url(r'^extranet/live/$',
+                       url(r'^extranet/cdrform/$',
                            'pyfreebill.views.live_report_view'),
                        url(r'^extranet/status/$',
                            'pyfreebill.views.admin_status_view'),
@@ -266,7 +266,8 @@ urlpatterns = patterns('',
                            include('simple_import.urls')),
                        url(r'^extranet/',
                            include(admin_site.urls)),
-                       url(r'report/',
-                           include('model_report.urls')),
+                       url(regex=r'^chart_stats_general_json/$',
+                           view=chart_stats_general_json,
+                           name='chart_stats_general_json',),
                        url(r'^extranet/',
                            include("massadmin.urls")), )

@@ -12,7 +12,9 @@ New features
 * Add sip profile DTMF options (pass-rfc2833)
 * Add new rtp_rewrite_timestamps sofia profile option
 * Visitors and web interface use stats
-* Admin CDR panel : show minutes / sell / cost / margin of selection
+* Admin CDR panel : show minutes / sell / cost / margin corresponding to selection
+* New dashboard : revenue / cost / minutes / calls stats
+* documentation update for installation of 1.4 freeswitch version
 
 Modifications
 -------------
@@ -25,6 +27,7 @@ Bug corrections
 ---------------
 
 * Add new codec options in Customer sip accounts and sip profiles : G711u&G711a and G711a&G711u
+* Destination number is checked before LUA
 
 
 Version 1.3

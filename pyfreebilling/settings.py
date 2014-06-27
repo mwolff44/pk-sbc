@@ -178,7 +178,6 @@ INSTALLED_APPS = (
     'clear_cache',
     'axes',
     'qsstats',
-    'chartjs',
     'django.contrib.admin',
     'south',
     'cities_light',
@@ -189,7 +188,7 @@ INSTALLED_APPS = (
     'simple_import',
     'sysmon',
     'request',
-    'model_report',
+    'datetimewidget',
     #'massadmin',
 )
 
