@@ -62,19 +62,19 @@
                 		<div class="span2">
                 		</div>
                 		<div class="span2">
-                	      {% trans "Total Minutes" %} : {{ cl.min_total_effective_duration }}
+                	        <span class="label label-inverse">{% trans "Total Minutes" %}</span> : <span class="label label-default">{{ cl.min_total_effective_duration }}</span>
                         </div>
                         <div class="span2">
-                          {% trans "Average Minutes" %} : {{ cl.min_avg_effective_duration }}
+                        	<span class="label label-inverse">{% trans "Average Minutes" %}</span> : <span class="label label-default">{{ cl.min_avg_effective_duration }}</span>
                         </div>
                         <div class="span2">
-                          {% trans "Total Sell" %} : {{ cl.total_sell_total }}
+                        	<span class="label label-inverse">{% trans "Total Sell" %}</span> : <span class="label label-success">{{ cl.total_sell_total|floatformat:2 }}</span>
                         </div>
                         <div class="span2">
-                          {% trans "Total Cost" %} : {{ cl.total_cost_total }}
+                        	<span class="label label-inverse">{% trans "Total Cost" %}</span> : <span class="label label-important">{{ cl.total_cost_total|floatformat:2 }}</span>
                         </div>
                         <div class="span2">
-                          {% trans "Margin" %} : {{ cl.margin }}
+                        	<span class="label label-inverse">{% trans "Margin" %}</span> : <span class="label label-default">{{ cl.margin|floatformat:2 }}</span>
                         </div>
                     </div>
                 </div>{% endif %}
