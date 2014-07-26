@@ -25,10 +25,17 @@ from pyfreebill.models import Company, RateCard, LCRGroup
 
 class CDRSearchForm(forms.Form):
     """VoIP call Report Search Parameters"""
+    dateTimeOptions = {
+        'format': 'yyyy-dd-mm hh:ii',
+        'todayBtn': 'true',
+        'usetz': 'true',
+        'usel10n': 'true',
+        'usei18n': 'true'
+    }
     from_date = forms.CharField(label=_('From'), required=False, max_length=20,
-        widget=DateTimeWidget(options={"format": "yyyy-dd-mm hh:ii"}))
+        widget=DateTimeWidget(options=dateTimeOptions))
     to_date = forms.CharField(label=_('To'), required=False, max_length=20,
-        widget=DateTimeWidget(options={"format": "yyyy-dd-mm hh:ii"}))
+        widget=DateTimeWidget(options=dateTimeOptions))
     customer_id = forms.ChoiceField(label=_('Customer'), required=False)
     provider_id = forms.ChoiceField(label=_('Provider'), required=False)
     ratecard_id = forms.ChoiceField(label=_('Customer Ratecard'), required=False)

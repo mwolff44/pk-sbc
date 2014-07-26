@@ -16,6 +16,7 @@
 
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.http import request
 
 from yawdadmin import admin_site
 
@@ -191,19 +192,20 @@ admin_site.register_top_menu_item('6_Finance',
 admin_site.register_top_menu_item('7_Report',
                                   icon_class="icon-dashboard",
                                   children=[{'name': 'CDR',
-                                             'admin_url': '/extranet/pyfreebill/cdr/',
+                                             'admin_url': '/extranet/cdrform/',
                                              'order': 1,
                                              'title_icon': 'icon-phone'},
                                             {'name': 'Customer stat',
-                                             'admin_url': '/extranet/report/',
+                                             'admin_url': '/extranet/pyfreebill/cdr/',
                                              'order': 2,
                                              'separator': True,
                                              'title_icon': 'icon-dashboard'},
                                             {'name': 'Provider stats',
-                                             'admin_url': '/extranet/pyfreebill/cdr/',
+                                             'admin_url': '/extranet/cdrform/',
                                              'order': 3,
                                              'title_icon': 'icon-dashboard'}, ],
                                   perms=perms_func)
+
 
 admin_site.register_top_menu_item('8_Admin',
                                   icon_class="icon-wrench",

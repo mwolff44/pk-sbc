@@ -21,11 +21,14 @@ from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum, Avg, Count, Max, Min
 from django.views.generic import TemplateView
+from django.utils import timezone
+from django.contrib.auth.decorators import user_passes_test
 
 from qsstats import QuerySetStats
 import time
 import datetime, qsstats
 import json
+import pytz
 
 
 from pyfreebilling import __version__
@@ -63,6 +66,7 @@ def _margin_series(sell_series, cost_series):
     return l
 
 
+@user_passes_test(lambda u: u.is_superuser)
 @staff_member_required
 def live_report_view(request):
     """ selecting cdr and live stats calculated from selection """
@@ -75,21 +79,32 @@ def live_report_view(request):
             query_string = ''
             query_answer = ''
 
+            tzname = settings.TIME_ZONE
+            offset = datetime.datetime.now(pytz.timezone(tzname)).strftime('%z')
+
             from_date = getvar(request, 'from_date_0')
-            print from_date
             if from_date:
-                formated_date = datetime.datetime.strptime(str(from_date), '%Y-%m-%d')
+                formated_date = from_date[0:4] + '-' + from_date[8:10] + '-' + from_date[5:7] + '+' + from_date[11:13] + '%3A' + from_date[14:16] + '%3A00'
+                if offset[0] == '+':
+                    formated_date = formated_date + '%2B'
+                else:
+                    formated_date = formated_date + '%2D'
+                formated_date = formated_date + offset[1:3] + '%3A' + offset[3:5]
                 date_string = 'start_stamp__gte=' + str(formated_date)
                 query_string = return_query_string(query_string, date_string)
+                #import pdb; pdb.set_trace()
 
+            to_date = getvar(request, 'to_date_0')
+            if to_date:
+                formated_date = to_date[0:4] + '-' + to_date[8:10] + '-' + to_date[5:7] + '+' + to_date[11:13] + '%3A' + to_date[14:16] + '%3A00'
+                if offset[0] == '+':
+                    formated_date = formated_date + '%2B'
+                else:
+                    formated_date = formated_date + '%2D'
+                formated_date = formated_date + offset[1:3] + '%3A' + offset[3:5]
+                date_string = 'start_stamp__lt=' + str(formated_date)
+                query_string = return_query_string(query_string, date_string)
 
-            # if start_date:
-            #     date_string = 'starting_stamp__gte=' + start_date
-            #     query_string = return_query_string(query_string, date_string)
-
-            # if end_date:
-            #     date_string = 'starting_stamp__lte=' + end_date
-            #     query_string = return_query_string(query_string, date_string)
 
             customer_id = getvar(request, 'customer_id')
             if customer_id and customer_id != '0':
@@ -333,7 +348,7 @@ def chart_stats_general_json(request):
     return HttpResponse(json.dumps(data), content_type='application/json')
 
 
- 
+@user_passes_test(lambda u: u.is_superuser) 
 @staff_member_required
 def general_stats(request):
     company_list = Company.objects.all()
@@ -349,6 +364,7 @@ def companies_list():
     return {'companies' : company_list}
 
 
+@user_passes_test(lambda u: u.is_superuser)
 @staff_member_required
 def admin_report_view(request):
     # view code
