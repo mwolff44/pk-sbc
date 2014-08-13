@@ -126,6 +126,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'request.middleware.RequestMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 #    'djangosecure.middleware.SecurityMiddleware',
     'axes.middleware.FailedLoginMiddleware',
@@ -177,7 +178,6 @@ INSTALLED_APPS = (
     'clear_cache',
     'axes',
     'qsstats',
-    'chartjs',
     'django.contrib.admin',
     'south',
     'cities_light',
@@ -187,6 +187,8 @@ INSTALLED_APPS = (
     'did',
     'simple_import',
     'sysmon',
+    'request',
+    'datetimewidget',
     #'massadmin',
 )
 

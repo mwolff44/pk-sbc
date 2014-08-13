@@ -14,42 +14,68 @@
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
-import reporting
+
 from django.db.models import Sum, Avg, Count
+
 from pyfreebill.models import CDR
 
-class CDRReport(reporting.Report):
+from model_report.report import reports, ReportAdmin
+from model_report.utils import (usd_format, avg_column, sum_column, count_column)
+
+
+class CDRReport(ReportAdmin):
+    title = 'CDR stats'
     model = CDR
-    verbose_name = 'CDR stats'
-    annotate = (
-        ('id', Count, 'Nb Calls'),
-        ('effective_duration', Sum),
-        ('effective_duration', Avg),
-        ('billsec', Sum),
-        ('total_cost', Sum),
-        ('total_sell', Sum),
-    )
-    aggregate = (
-        ('id', Count, 'Nb Calls'),
-        ('effective_duration', Sum),
-        ('effective_duration', Avg),
-        ('billsec', Sum),
-        ('total_cost', Sum),
-        ('total_sell', Sum),
-    )
-    group_by = [
+    fields = [
         'customer__name',
-        ('customer__name', 'sell_destination'),
-        'sell_destination',
-        'lcr_carrier_id__name',
-        ('lcr_carrier_id__name', 'cost_destination'),
-        'cost_destination',
-    ]
-    list_filter = [
-        'sell_destination',
-        'lcr_carrier_id__name',
-    ]
+        'effective_duration',
+        'total_sell',
+        'total_cost']
+    list_order_by = ('customer__name',)
+    list_group_by = ('customer__name',)
+    list_filter = ('start_stamp',)
+    type = 'report'
+    group_totals = {
+        'total_sell': sum_column,
+        'total_cost': sum_column,
+        'effective_duration': sum_column,
+    }
+    report_totals = {
+        'total_sell': sum_column,
+        'total_cost': sum_column,
+        'effective_duration': sum_column,
+    }
 
-    date_hierarchy = 'start_stamp'
+    # verbose_name = 'CDR stats'
+    # annotate = (
+    #     ('id', Count, 'Nb Calls'),
+    #     ('effective_duration', Sum),
+    #     ('effective_duration', Avg),
+    #     ('billsec', Sum),
+    #     ('total_cost', Sum),
+    #     ('total_sell', Sum),
+    # )
+    # aggregate = (
+    #     ('id', Count, 'Nb Calls'),
+    #     ('effective_duration', Sum),
+    #     ('effective_duration', Avg),
+    #     ('billsec', Sum),
+    #     ('total_cost', Sum),
+    #     ('total_sell', Sum),
+    # )
+    # group_by = [
+    #     'customer__name',
+    #     ('customer__name', 'sell_destination'),
+    #     'sell_destination',
+    #     'lcr_carrier_id__name',
+    #     ('lcr_carrier_id__name', 'cost_destination'),
+    #     'cost_destination',
+    # ]
+    # list_filter = [
+    #     'sell_destination',
+    #     'lcr_carrier_id__name',
+    # ]
 
-reporting.register('CDR', CDRReport)
+    # date_hierarchy = 'start_stamp'
+
+reports.register('CDR-report', CDRReport)

@@ -16,9 +16,12 @@
 
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.http import request
 
 from yawdadmin import admin_site
 
+
+from pyfreebill.views import chart_stats_general_json
 
 admin.autodiscover()
 admin_site._registry.update(admin.site._registry)
@@ -189,19 +192,20 @@ admin_site.register_top_menu_item('6_Finance',
 admin_site.register_top_menu_item('7_Report',
                                   icon_class="icon-dashboard",
                                   children=[{'name': 'CDR',
-                                             'admin_url': '/extranet/pyfreebill/cdr/',
+                                             'admin_url': '/extranet/cdrform/',
                                              'order': 1,
                                              'title_icon': 'icon-phone'},
                                             {'name': 'Customer stat',
-                                             'admin_url': '/extranet/report/',
+                                             'admin_url': '/extranet/pyfreebill/cdr/',
                                              'order': 2,
                                              'separator': True,
                                              'title_icon': 'icon-dashboard'},
                                             {'name': 'Provider stats',
-                                             'admin_url': '/extranet/pyfreebill/cdr/',
+                                             'admin_url': '/extranet/cdrform/',
                                              'order': 3,
                                              'title_icon': 'icon-dashboard'}, ],
                                   perms=perms_func)
+
 
 admin_site.register_top_menu_item('8_Admin',
                                   icon_class="icon-wrench",
@@ -218,6 +222,11 @@ admin_site.register_top_menu_item('8_Admin',
                                              'admin_url': '/extranet/axes/accessattempt/',
                                              'order': 3,
                                              'title_icon': 'icon-warning-sign'},
+                                             {'name': 'Visitors stats',
+                                             'admin_url': '/extranet/request/request/overview/',
+                                             'order': 4,
+                                             'separator': True,
+                                             'title_icon': 'icon-exclamation-sign'},
                                             {'name': 'Admin logs',
                                              'admin_url': '/extranet/admin/logentry/',
                                              'order': 4,
@@ -247,7 +256,7 @@ admin_site.register_top_menu_item('8_Admin',
 urlpatterns = patterns('',
                        url(r'^extranet/report/$',
                            'pyfreebill.views.admin_report_view'),
-                       url(r'^extranet/live/$',
+                       url(r'^extranet/cdrform/$',
                            'pyfreebill.views.live_report_view'),
                        url(r'^extranet/status/$',
                            'pyfreebill.views.admin_status_view'),
@@ -259,5 +268,8 @@ urlpatterns = patterns('',
                            include('simple_import.urls')),
                        url(r'^extranet/',
                            include(admin_site.urls)),
+                       url(regex=r'^chart_stats_general_json/$',
+                           view=chart_stats_general_json,
+                           name='chart_stats_general_json',),
                        url(r'^extranet/',
                            include("massadmin.urls")), )

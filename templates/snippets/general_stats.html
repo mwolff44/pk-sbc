@@ -1,0 +1,9 @@
+{% if companies %}
+	<ul>
+		{% for company in companies %}
+			<li>{{ company.name }}</li>
+		{% endfor %}
+	</ul>
+{% else %}
+	<strong>There are no categories present.</strong>
+{% endif %}

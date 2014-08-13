@@ -1,0 +1,46 @@
+<table>
+  <tr>
+    <td>  
+      <div id="content-main">Nb TOTAL CALLS
+        <div id="out1"></div>
+      </div>
+    </td>
+    <td>
+      <div id="content-main">Nb SUCCESS CALLS
+        <div id="out1a"></div>
+      </div>
+    </td>
+    <td>
+      <div id="content-main">TOTAL DURATION
+        <div id="out1b"></div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <div id="content-main">SELL
+        <div id="out2"></div>
+      </div>
+    </td>
+    <td>
+      <div id="content-main">BUY
+        <div id="out3"></div>
+      </div>
+    </td>
+    <td>
+      <div id="content-main">MARGIN
+        <div id="out4"></div>
+      </div>
+    </td>
+  </tr>
+</table>
+
+{% if ts_total_calls %}
+    <ul>
+        {% for t in ts_total_calls %}
+            <li>{{ t }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <strong>There are no categories present.</strong>
+{% endif %}

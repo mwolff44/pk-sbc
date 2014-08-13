@@ -16,27 +16,80 @@
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+
 from yawdadmin.widgets import SwitchWidget
-#from django.contrib.admin import widgets
-#from pyfreebill.models import CustomerRateCards, CustomerRates, ProviderRates, ProviderTariff, RateCard, CustomerDirectory, CDR
 
+from datetimewidget.widgets import DateTimeWidget
 
-class SearchForm(forms.Form):
-    """General Search Form with From & To date para."""
-    from_date = forms.CharField(label=_('from'), required=False,
-                                max_length=10)
-    to_date = forms.CharField(label=_('to'), required=False, max_length=10)
+from pyfreebill.models import Company, RateCard, LCRGroup
 
-
-class CDRSearchForm(SearchForm):
+class CDRSearchForm(forms.Form):
     """VoIP call Report Search Parameters"""
+    dateTimeOptions = {
+        'format': 'yyyy-dd-mm hh:ii',
+        'todayBtn': 'true',
+        'usetz': 'true',
+        'usel10n': 'true',
+        'usei18n': 'true'
+    }
+    from_date = forms.CharField(label=_('From'), required=False, max_length=20,
+        widget=DateTimeWidget(options=dateTimeOptions))
+    to_date = forms.CharField(label=_('To'), required=False, max_length=20,
+        widget=DateTimeWidget(options=dateTimeOptions))
+    customer_id = forms.ChoiceField(label=_('Customer'), required=False)
+    provider_id = forms.ChoiceField(label=_('Provider'), required=False)
+    ratecard_id = forms.ChoiceField(label=_('Customer Ratecard'), required=False)
+    lcr_id = forms.ChoiceField(label=_('LCR Group'), required=False)
+    dest_num = forms.IntegerField(label=_('Destination Number'), required=False,
+        help_text=_('Enter the full number or the first part'))
 
     def __init__(self, user, *args, **kwargs):
         super(CDRSearchForm, self).__init__(*args, **kwargs)
-        # To get user's campaign list which are attached with voipcall
-        if user:
-            list = []
-            list.append((0, _('all').upper()))
+        # Customer list
+        cust_list = []
+        cust_list.append((0, _('all').upper()))
+        customer_list = Company.objects.values_list('id', 'name')\
+                    .filter(customer_enabled='true')\
+                    .order_by('name')
+
+        for i in customer_list:
+            cust_list.append((i[0], i[1]))
+
+        self.fields['customer_id'].choices = cust_list
+
+        # Provider list
+        prov_list = []
+        prov_list.append((0, _('all').upper()))
+        provider_list = Company.objects.values_list('id', 'name')\
+                    .filter(supplier_enabled='true')\
+                    .order_by('name')
+
+        for i in provider_list:
+            prov_list.append((i[0], i[1]))
+
+        self.fields['provider_id'].choices = prov_list
+
+        # Customer Ratecard list
+        cratec_list = []
+        cratec_list.append((0, _('all').upper()))
+        cratecard_list = RateCard.objects.values_list('id', 'name')\
+                    .order_by('name')
+
+        for i in cratecard_list:
+            cratec_list.append((i[0], i[1]))
+
+        self.fields['ratecard_id'].choices = cratec_list
+
+        # LCR Group list
+        lcrg_list = []
+        lcrg_list.append((0, _('all').upper()))
+        lcrgroup_list = LCRGroup.objects.values_list('id', 'name')\
+                    .order_by('name')
+
+        for i in lcrgroup_list:
+            lcrg_list.append((i[0], i[1]))
+
+        self.fields['lcr_id'].choices = lcrg_list
 
 
 class CustomerDirectoryAdminForm(forms.ModelForm):
