@@ -162,6 +162,7 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
     'pyfreebill',
     'switch',
+    'customerportal',
     'yawdadmin',
     'import_export',
     'django.contrib.auth',
