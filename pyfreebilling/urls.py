@@ -23,6 +23,9 @@ from yawdadmin import admin_site
 
 from pyfreebill.views import chart_stats_general_json
 
+from customerportal.urls import urlpatterns as customerportal_url
+
+
 admin.autodiscover()
 admin_site._registry.update(admin.site._registry)
 
@@ -253,7 +256,10 @@ admin_site.register_top_menu_item('8_Admin',
                                   perms=perms_func)
 
 
-urlpatterns = patterns('',
+# Modules
+urlpatterns = customerportal_url
+
+urlpatterns += patterns('',
                        url(r'^extranet/report/$',
                            'pyfreebill.views.admin_report_view'),
                        url(r'^extranet/cdrform/$',

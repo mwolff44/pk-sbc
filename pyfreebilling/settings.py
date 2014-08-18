@@ -189,6 +189,7 @@ INSTALLED_APPS = (
     'sysmon',
     'request',
     'datetimewidget',
+    'bootstrap3',
     #'massadmin',
 )
 

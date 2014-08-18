@@ -1,0 +1,22 @@
+{% extends 'customer/base.html' %}
+
+{% load bootstrap3 %}
+
+{% block title %}PyFreeBilling Customer Portal{% endblock %}
+
+{% block content %}
+<div class="container">
+	<form action="{% url 'django.contrib.auth.views.login' %}" method="post" class="form-signin" role="form">
+		<h2 class="form-signin-heading">Please sign in</h2>
+		{% csrf_token %}
+		<input type="hidden" name="next" value="{{ next|urlencode }}" class="form-control" required/>
+		{% bootstrap_form form %}
+
+		{% buttons %}
+			<button type="submit" class="btn btn-primary btn-lg btn-block">Sign In</button>
+		{% endbuttons %}
+       
+	</form>
+</div>
+
+{% endblock %}

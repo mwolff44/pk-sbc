@@ -44,11 +44,11 @@ Freeswitch installation
 
 ::
 
-    git clone -b v1.2.stable git://git.freeswitch.org/freeswitch.git
+    git clone -b v1.2 https://stash.freeswitch.org/scm/fs/freeswitch.git
 
     OR
 
-    git clone -b v1.4 git://git.freeswitch.org/freeswitch.git
+    git clone -b v1.4 https://stash.freeswitch.org/scm/fs/freeswitch.git
 
 * after, boostrap, configure, make and install freeswitch
 
@@ -56,7 +56,7 @@ Freeswitch installation
 
     cd freeswitch
     ./bootstrap.sh -j
-    ./configure
+    
 
 * edit modules.conf suiting your needs. You will find below the minimum
    modules to install :
@@ -97,6 +97,7 @@ Freeswitch installation
 
 ::
 
+    ./configure
     make
     make install
 
@@ -120,7 +121,8 @@ Freeswitch installation
 ::
 
     chown -R freeswitch:daemon /usr/local/freeswitch/
-    chmod -R o-rwx /usr/local/freeswitch/
+    chmod -R ug=rwX,o= /usr/local/freeswitch/
+    chmod -R u=rwx,g=rx /usr/local/freeswitch/bin/*
 
 * and now, we need to create the init script to start and stop
    freeswitch :

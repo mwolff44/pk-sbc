@@ -15,7 +15,7 @@ django-iban==0.2.8
 django-import-export==0.2.2
 django-jsonfield==0.9.12
 django-qsstats-magic==0.7.2
-django-simple-import==1.11
+django-simple-import==1.15
 django-templated-email==0.4.9
 netaddr==0.7.11
 psycopg2==2.5.3
@@ -27,4 +27,7 @@ django-database-size==0.3.0
 django-mass-edit==1.5.1
 django-request==1.0.1
 django-model-report==0.2.1
-django-datetime-widget-0.6
+django-datetime-widget==0.6
+django-bootstrap3==4.10.0
+django-braces==1.4.0
+django-system-monitor==0.5

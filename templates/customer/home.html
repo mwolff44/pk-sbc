@@ -1,0 +1,56 @@
+{% extends 'customer/base.html' %}
+{% block title %}PyFreeBilling Customer Portal{% endblock %}
+
+{% block content %}
+
+
+      <div class="row">
+        <div class="col-md-4">
+        	<div class="panel panel-default">
+	          <div class="panel-heading">
+	          	<h3 class="panel-title">Account Summary</h3>
+	          </div>
+	          <div class="panel-body">
+	          <h5>{{ company.name }}</h5>
+	          
+				{% if company.street_address.all %}
+					<div id="contant_addresses">
+						<strong>Street Addresses</strong>
+						<ul class="link_list">
+						{% for address in company.street_address.all %}
+							<li class="adr">
+							<span class="street-address">{{ address.street }}</span><br>
+							<span class="locality">{{ address.city }}</span>, <span class="region">{{ address.postal_code }}</span><br>
+							<span class="postal-code">{{ address.province }}</span> <span class="country-name">{{ address.country }}</span>
+							<span class="alt">(<span class="type">{{ address.get_location_display }}</span>)</span>
+							</li>
+						{% endfor %}
+						</ul>
+					</div>
+				{% endif %}
+			  </div>
+			</div>
+
+        </div>
+
+        <div class="col-md-4">
+        	<div class="panel panel-default">
+	          <div class="panel-heading">
+	          	<h3 class="panel-title">Financial Summary</h3>
+	          </div>
+	          <div class="panel-body">
+	        	<p><strong> Account status : </strong> {% if company.customer_enabled %} <button type="button" class="btn btn-success btn-xs">Active</button> {% else %} <button type="button" class="btn btn-danger btn-xs">Suspended</button> {% endif %}</p>
+				<p><strong> Payment type   : </strong>{% if company.prepaid %} <button type="button" class="btn btn-default btn-xs">Prepaid</button> {% else %} <button type="button" class="btn btn-default btn-xs">Postpaid</button> {% endif %}</p>
+				<p><strong> Balance        : </strong><button type="button" class="btn btn-default btn-xs"> {{ company.customer_balance|floatformat:2 }} </button></p>
+			  </div>
+			</div>
+        </div>
+
+        <div class="col-md-4">
+          <h2>Heading</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
+          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+        </div>
+      </div>
+
+{% endblock %}
