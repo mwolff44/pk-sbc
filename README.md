@@ -76,8 +76,10 @@ The project uses freeswitch, PostgreSQL and Django.
 ********************************************************************************
 
 Name: Mathias WOLFF
+
 Email: website contact form
-Website: http://www.pyfreebilling.com // specific parts will be created
+
+Website: http://www.pyfreebilling.com
 
 ********************************************************************************
                              Requirements status
