@@ -6,17 +6,29 @@
 
 {% block content %}
 <div class="container">
-	<form action="{% url 'django.contrib.auth.views.login' %}" method="post" class="form-signin" role="form">
-		<h2 class="form-signin-heading">Please sign in</h2>
-		{% csrf_token %}
-		<input type="hidden" name="next" value="{{ next|urlencode }}" class="form-control" required/>
-		{% bootstrap_form form %}
+	<div class="row">
+        <div class="col-md-4">
+			<form action="{% url 'django.contrib.auth.views.login' %}" method="post" class="form-signin" role="form">
+				<h2 class="form-signin-heading">Please sign in</h2>
+				{% csrf_token %}
+				<input type="hidden" name="next" value="{{ next|urlencode }}" class="form-control" required/>
+				{% bootstrap_form form %}
 
-		{% buttons %}
-			<button type="submit" class="btn btn-primary btn-lg btn-block">Sign In</button>
-		{% endbuttons %}
-       
-	</form>
+				{% buttons %}
+					<button type="submit" class="btn btn-primary btn-lg btn-block">Sign In</button>
+				{% endbuttons %}
+		       
+			</form>
+		</div>
+	</div>
+	<div class="row">
+        <div class="col-md-4">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+    </div>
 </div>
 
 {% endblock %}
