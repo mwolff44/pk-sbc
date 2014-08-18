@@ -19,13 +19,7 @@ pyfreebilling is developed under python, LUA and PostgreSQL as the database laye
 
 ********************************************************************************
 
-![CodeShip Status](https://www.codeship.io/projects/45c99cd0-86b5-0131-49f1-3e77f06cd138/status)
-
-Stable version
-[![Requirements Status](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements.png?branch=master)](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements/?branch=master)
-
-Dev version
-[![Requirements Status](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements.png?branch=develop)](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements/?branch=develop)
+Documentation : http://pyfreebilling.readthedocs.org/
 
 ********************************************************************************
                              License
@@ -83,4 +77,14 @@ The project uses freeswitch, PostgreSQL and Django.
 
 Name: Mathias WOLFF
 Email: website contact form
-Website: http://www.blog-des-telecoms.com // specific parts will be created
+Website: http://www.pyfreebilling.com // specific parts will be created
+
+********************************************************************************
+                             Requirements status
+********************************************************************************
+
+Stable version
+[![Requirements Status](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements.png?branch=master)](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements/?branch=master)
+
+Dev version
+[![Requirements Status](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements.png?branch=develop)](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements/?branch=develop)
