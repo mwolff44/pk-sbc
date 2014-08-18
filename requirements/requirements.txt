@@ -1,5 +1,5 @@
 Django==1.6.5
-South==0.8.4
+South==1.0
 argparse==1.2.1
 django-admin-honeypot==0.3.0
 yawd-admin==0.7.0
