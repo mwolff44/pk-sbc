@@ -1,14 +1,18 @@
 {% extends 'customer/base.html' %}
 
-{% load bootstrap3 %}
+{% block bootstrap3_title %}PyFreeBilling : Customer Portal Login Page{% endblock %}
 
-{% block title %}PyFreeBilling Customer Portal{% endblock %}
+{% load bootstrap3 %}{% load i18n yawdadmin_tags %}
+
+{% block title %}{% endblock %}
+
+
 
 {% block content %}
 <div class="container">
 	<div class="row">
-        <div class="col-md-4">
-			<form action="{% url 'django.contrib.auth.views.login' %}" method="post" class="form-signin" role="form">
+        <div class="box">
+			<form action="{% url 'django.contrib.auth.views.login' %}" method="post" class="form-signin pull-left" role="form">
 				<h2 class="form-signin-heading">Please sign in</h2>
 				{% csrf_token %}
 				<input type="hidden" name="next" value="{{ next|urlencode }}" class="form-control" required/>
@@ -21,14 +25,7 @@
 			</form>
 		</div>
 	</div>
-	<div class="row">
-        <div class="col-md-4">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-        </div>
-    </div>
-</div>
 
+</div>
+<script type="text/javascript">document.getElementById('id_username').focus();</script>
 {% endblock %}
