@@ -16,11 +16,14 @@
 
 from django.conf.urls import patterns, include, url
 
-from customerportal.views import HomePageCustView, ProfileCustView
+from customerportal.views import HomePageCustView, ProfileCustView, BalanceHistoryCustView, CdrReportCustView, SipAccountCustView
 
 
 urlpatterns = patterns('',
                        url(r'^$', HomePageCustView.as_view(), name='home'),
+                       url(r'^sip_account/$', SipAccountCustView.as_view(), name='sip_account'),
+                       url(r'^balance/$', BalanceHistoryCustView.as_view(), name='balance_history'),
+                       url(r'^cdr_report/$', CdrReportCustView.as_view(), name='cdr_report'),
                        url(r'^accounts/login/$', 'django.contrib.auth.views.login',
                            {'template_name': 'customer/login.html'}),
                        url(r'^accounts/logout/$', 'django.contrib.auth.views.logout_then_login'),
