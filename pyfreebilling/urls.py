@@ -21,7 +21,7 @@ from django.http import request
 from yawdadmin import admin_site
 
 
-from pyfreebill.views import chart_stats_general_json
+from pyfreebill.views import chart_stats_general_json, FsDirectoryUpdateView, FsSofiaUpdateView
 
 from customerportal.urls import urlpatterns as customerportal_url
 
@@ -277,10 +277,16 @@ urlpatterns += patterns('',
                            include('admin_honeypot.urls')),
                        url(r'^extranet/simple_import/',
                            include('simple_import.urls')),
+                       url(r'^extranet/FsDirectoryUpdate/',
+                           'pyfreebill.views.FsDirectoryUpdateView',
+                           name='fs_directory_update'),
+                       url(r'^extranet/FsSofiaUpdate/',
+                           'pyfreebill.views.FsSofiaUpdateView',
+                           name='fs_sofia_update'),
                        url(r'^extranet/',
                            include(admin_site.urls)),
                        url(regex=r'^chart_stats_general_json/$',
                            view=chart_stats_general_json,
-                           name='chart_stats_general_json',),
+                           name='chart_stats_general_json'),
                        url(r'^extranet/',
                            include("massadmin.urls")), )

@@ -391,6 +391,13 @@ Web server install
 ==================
 
 
+* securing apache
+
+::
+
+    sudo a2enmod ssl
+    sudo make-ssl-cert /usr/share/ssl-cert/ssleay.cnf /etc/ssl/private/localhost.pem (or use others methods or certificats)
+
 * install python virtualenv
 
 ::

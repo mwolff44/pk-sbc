@@ -8,6 +8,9 @@ New features
 ------------
 
 * New customer portal
+* HTTPS access only
+* Reload Fs config via button in admin panel
+* Currency management
 * Database size monitoring - new panel (in admin menu)
 * Sofia Gateway : add new chooce lists for selecting codecs
 * Add sip profile DTMF options (pass-rfc2833)

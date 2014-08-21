@@ -15,13 +15,14 @@
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
 from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.template import RequestContext, Context, loader
 from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum, Avg, Count, Max, Min
 from django.views.generic import TemplateView
 from django.utils import timezone
+from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 
 from qsstats import QuerySetStats
@@ -30,12 +31,83 @@ import datetime, qsstats
 import json
 import pytz
 
+from switch import esl
 
 from pyfreebilling import __version__
 
 from pyfreebill.utils import round_value, getvar, return_query_string
 from pyfreebill.forms import CDRSearchForm
-from pyfreebill.models import DimCustomerDestination, DimCustomerHangupcause, CDR, Company
+from pyfreebill.models import DimCustomerDestination, DimCustomerHangupcause, CDR, Company, CustomerDirectory, SipProfile
+
+
+@staff_member_required
+def FsDirectoryUpdateView(request):
+    messages.info(request, """Reloading FS""")
+    try:
+        t = loader.get_template('xml/directory.conf.xml')
+    except IOError:
+        messages.error(request, """customer sip config xml file update failed.
+            Can not load template file !""")
+    customerdirectorys = CustomerDirectory.objects.filter(company__customer_enabled__exact=True, enabled=True)
+    accounts = Company.objects.filter(customer_enabled=True)
+    c = Context({"customerdirectorys": customerdirectorys,
+                 "accounts": accounts})
+    try:
+        f = open('/usr/local/freeswitch/conf/directory/default.xml', 'w')
+        try:
+            f.write(t.render(c))
+            f.close()
+            try:
+                fs = esl.getReloadACL()
+                messages.success(request, "FS successfully reload")
+            except IOError:
+                messages.error(request, """customer sip config xml file update
+                    failed. FS ACL update failed ! Try manually - %s""" % fs)
+        finally:
+            #f.close()
+            messages.success(request, """customer sip config xml file update
+                success""")
+    except IOError:
+        messages.error(request, """customer sip config xml file update failed.
+            Can not create file !""")
+    pfb_version = __version__
+    return render_to_response('admin/admin_status.html', locals(),
+                              context_instance=RequestContext(request))
+
+
+def FsSofiaUpdateView(request):
+    """ generate new sofia xml config file """
+    try:
+        t = loader.get_template('xml/sofia.conf.xml')
+    except IOError:
+        messages.error(request,
+                       """sofia config xml file update failed. Can not load
+                       template file !""")
+    sipprofiles = SipProfile.objects.all()
+    accounts = Company.objects.filter(supplier_enabled=True)
+    c = Context({"sipprofiles": sipprofiles, "accounts": accounts})
+    try:
+        f = open('/usr/local/freeswitch/conf/autoload_configs/sofia.conf.xml',
+                 'w')
+        try:
+            f.write(t.render(c))
+            f.close()
+            try:
+                fs = esl.getReloadGateway()
+                messages.success(request, "FS successfully reload")
+            except IOError:
+                messages.error(request, """customer sip config xml file update
+                    failed. FS ACL update failed ! Try manually -- %s""" % fs)
+        finally:
+            #f.close()
+            messages.success(request, "sofia config xml file update success")
+    except IOError:
+        messages.error(request, """sofia config xml file update failed. Can
+            not create file !""")
+    pfb_version = __version__
+    return render_to_response('admin/admin_status.html', locals(),
+                              context_instance=RequestContext(request))
+
 
 def time_series(queryset, date_field, interval, func=None):
     qsstats = QuerySetStats(queryset, date_field, func)
