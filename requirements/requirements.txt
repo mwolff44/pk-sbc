@@ -28,6 +28,7 @@ django-mass-edit==2.2
 django-request==1.0.1
 django-model-report==0.2.1
 django-datetime-widget==0.9
-django-bootstrap3==4.10.1
+django-bootstrap3==4.11.0
 django-braces==1.4.0
 django-system-monitor==0.5
+django-money-rates==0.3.1

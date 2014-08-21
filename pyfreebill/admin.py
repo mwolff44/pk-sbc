@@ -240,7 +240,7 @@ class CompanyAdmin(admin.ModelAdmin):
                        ('max_calls', 'calls_per_second'),
                        'billing_cycle',
                        ('prepaid', 'credit_limit'),
-                       'customer_balance')
+                       ('customer_balance', 'cb_currency')),
         }),
         ('Customer alerts', {
             'fields': ('low_credit_alert',
@@ -321,6 +321,7 @@ class CompanyAdmin(admin.ModelAdmin):
                     'get_vat_display',
                     'get_customer_enabled_display',
                     'customer_balance',
+                    'cb_currency',
                     'get_supplier_enabled_display',
                     'supplier_balance',
                     'balance_history')
@@ -568,11 +569,10 @@ class ProviderTariffAdmin(admin.ModelAdmin):
     list_display = ['id',
                     'name',
                     'carrier',
+                    'currency',
                     'prefix',
                     'quality',
                     'reliability',
-                    'callerid_filter',
-                    'callerid_list',
                     'date_start',
                     'date_end',
                     'get_boolean_display',
@@ -781,6 +781,7 @@ class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
 class RateCardAdmin(admin.ModelAdmin):
     list_display = ['id',
                     'name',
+                    'currency',
                     'lcrgroup',
                     'lcr',
                     'get_boolean_display',

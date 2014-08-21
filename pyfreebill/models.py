@@ -15,7 +15,7 @@
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
 from django.db import models
-from django.db.models import permalink
+from django.db.models import permalink, Sum, Avg, Count, Max, Min
 from django.core.validators import EMPTY_VALUES
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractUser
@@ -26,19 +26,24 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.generic import GenericRelation
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import format_html
-#from country_dialcode.models import Country, Prefix
-#from pyfreebill import fields
-from pyfreebill.validators import validate_cidr
+
 import datetime, qsstats
-from django.db.models import Sum, Avg, Count, Max, Min
+
 from django_iban.fields import IBANField, SWIFTBICField
+
 import decimal
+
 import math
+
 from django_countries.fields import CountryField
 
 from netaddr import IPNetwork, AddrFormatError
 
 import re
+
+from currencies.models import Currency
+
+from pyfreebill.validators import validate_cidr
 
 # CustomUser -- Django 1.6
 # class CustomUser(AbstractUser):
@@ -108,6 +113,8 @@ class Company(models.Model):
                                            decimal_places=6,
                                            default=0,
                                            help_text=_(u"Actual customer balance."))
+    cb_currency = models.ForeignKey(Currency,
+                                verbose_name=_(u"Currency"))
     supplier_balance = models.DecimalField(_(u'supplier balance'),
                                            max_digits=12,
                                            decimal_places=6,
@@ -747,6 +754,8 @@ class ProviderTariff(models.Model):
     carrier = models.ForeignKey(Company,
                                 verbose_name=_(u"Provider"),
                                 limit_choices_to={'supplier_enabled': True})
+    currency = models.ForeignKey(Currency,
+                                verbose_name=_(u"Currency"))
     lead_strip = models.CharField(_(u'lead strip'),
                                   blank=True,
                                   default='',
@@ -936,6 +945,8 @@ class RateCard(models.Model):
                             unique=True)
     description = models.TextField(_(u'description'),
                                    blank=True)
+    currency = models.ForeignKey(Currency,
+                                verbose_name=_(u"Currency"))
     lcrgroup = models.ForeignKey(LCRGroup,
                                  verbose_name=_(u"lcr"))
     CALLERID_FILTER_CHOICES = (

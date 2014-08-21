@@ -488,8 +488,12 @@ Pyfreebilling installation
 	}
 	
 	ALLOWED_HOSTS = ['*']
+
+	SECRET_KEY = 'securitykeymustbechanged'  # very important - put your key for security - any string
 	
 	TIME_ZONE = 'Europe/Paris'
+
+	OPENEXCHANGERATES_APP_ID = "Your API Key"
 	
 	#-- Nb days of CDR to show
 	PFB_NB_ADMIN_CDR = 3
@@ -514,9 +518,11 @@ Pyfreebilling installation
 ::
 
 	pip install -r requirements/requirements.txt
-	python manage.py syncdb
+	python manage.py syncdb (IMPORTANT : enter your username and password)
 	python manage.py migrate
 	python manage.py loaddata country_dialcode.json
+	python manage.py initcurrencies
+	python manage.py updatecurrencies (if you have set your Openexchange API key)
 	python manage.py collectstatic (answer 'yes')
 
 

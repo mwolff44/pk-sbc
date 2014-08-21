@@ -189,6 +189,11 @@ admin_site.register_top_menu_item('6_Finance',
                                             {'name': 'History',
                                              'admin_url': '/extranet/pyfreebill/companybalancehistory/',
                                              'order': 2,
+                                             'title_icon': 'icon-money'},
+                                             {'name': 'Currency Management',
+                                             'admin_url': '/extranet/currencies/currency/',
+                                             'order': 3,
+                                             'separator': True,
                                              'title_icon': 'icon-money'}, ],
                                   perms=perms_func)
 
