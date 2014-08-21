@@ -54,7 +54,7 @@
 	          	<ul class="list-group">
 	          		<li class="list-group-item">
 	          			<span class="badge">
-	          				{{ company.customer_balance|floatformat:2 }}
+	          				{{ company.customer_balance|floatformat:2 }} {{ company.cb_currency }}
 	          			</span>
 	          			Balance
 	          		</li>
@@ -67,19 +67,19 @@
 	<thead>
 		<tr>
 			<th>Date</th>
-			<th>Amount refund</th>
-			<th>Amount debited</th>
-			<th>Resulting balance</th>
+			<th class="text-right">Amount refund</th>
+			<th class="text-right">Amount debited</th>
+			<th class="text-right">Resulting balance</th>
 			<th>Comment</th>
 		</tr>
 	</thead>
 	<tbody>
 	{% for b in CustomerBalance %}
 		<tr>
-			<td>{{ b.date_modified }}</td>
-			<td>{{ b.amount_refund }}</td>
-			<td>{{ b.amount_debited }}</td>
-			<td>{{ b.customer_balance }}</td>
+			<td>{{ b.date_modified|date:"D d M Y" }}</td>
+			<td class="text-right">{{ b.amount_refund|floatformat:2 }} {{ company.cb_currency }}</td>
+			<td class="text-right">{{ b.amount_debited|floatformat:2 }} {{ company.cb_currency }}</td>
+			<td class="text-right">{{ b.customer_balance|floatformat:2 }} {{ company.cb_currency }}</td>
 			<td>{{ b.reference }}</td>
 		</tr>
 	{% endfor %}
