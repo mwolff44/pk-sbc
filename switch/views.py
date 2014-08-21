@@ -15,6 +15,20 @@
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling. If not, see <http://www.gnu.org/licenses/>
 
-from django.shortcuts import render
+from django.shortcuts import render_to_response
+from django.template import RequestContext, Context
+from django.contrib.admin.views.decorators import staff_member_required
 
-# Create your views here.
+from switch import esl
+
+from pyfreebilling import __version__
+
+@staff_member_required
+def fs_status_view(request):
+    fs_status = esl.getFsStatus()
+    sofia_status = esl.getSofiaStatus().replace("\t", u'\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0')
+    fs_calls = esl.getFsCalls()
+    fs_bcalls = esl.getFsBCalls()
+
+    return render_to_response('admin/fs_status.html', locals(),
+        context_instance=RequestContext(request))

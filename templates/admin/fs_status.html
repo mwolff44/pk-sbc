@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_static admin_list %}
+{% load admin_urls %}
+
+{% block extrastyle %}{{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}" />
+{{ media.css }}
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+{{ media.js }}
+{% endblock %}
+
+{% block coltype %}flex{% endblock %}
+
+{% block content %}
+<div id="content-main">
+	<div>
+		<H4>FreeSwitch Status</h4>
+		<div id="out">{{ fs_status|linebreaksbr }}</div>
+	</div>
+	<div>
+		<H4>Sofia Status</h4>
+		<div id="out">{{ sofia_status|linebreaksbr }}</div>
+	</div>
+
+</div>
+{% endblock %}

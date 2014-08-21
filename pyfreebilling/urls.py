@@ -23,6 +23,7 @@ from yawdadmin import admin_site
 
 from pyfreebill.views import chart_stats_general_json, FsDirectoryUpdateView, FsSofiaUpdateView
 
+
 from customerportal.urls import urlpatterns as customerportal_url
 
 
@@ -267,6 +268,8 @@ urlpatterns = customerportal_url
 urlpatterns += patterns('',
                        url(r'^extranet/report/$',
                            'pyfreebill.views.admin_report_view'),
+                       url(r'^extranet/FsServer/$',
+                           'switch.views.fs_status_view'),
                        url(r'^extranet/cdrform/$',
                            'pyfreebill.views.live_report_view'),
                        url(r'^extranet/status/$',

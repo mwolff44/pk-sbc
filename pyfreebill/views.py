@@ -93,7 +93,7 @@ def FsSofiaUpdateView(request):
             f.write(t.render(c))
             f.close()
             try:
-                fs = esl.getReloadGateway()
+                fs = esl.getReloadGateway(request)
                 messages.success(request, "FS successfully reload")
             except IOError:
                 messages.error(request, """customer sip config xml file update
