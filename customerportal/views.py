@@ -49,14 +49,14 @@ class HomePageCustView(LoginRequiredMixin, TemplateView):
         if context['company'].account_blocked_alert_sent:
         	messages.danger(self.request, 'ALERT : Account blocked - no remaining credit - Please make an urgent payment')
 
-
-        # integrer dernier flux financier - page historique
         # integrer panneau contact et stats
-        # pages recherche cdr - liste cdr
-        # integrer money
         # integrer facture
         # integrer prestation
         return context
+
+
+class StatsCustView(LoginRequiredMixin, TemplateView):
+	template_name = 'customer/stats.html'
 
 
 class SipAccountCustView(LoginRequiredMixin, ListView):

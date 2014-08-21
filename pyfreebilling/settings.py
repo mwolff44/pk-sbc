@@ -128,12 +128,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'request.middleware.RequestMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-#    'djangosecure.middleware.SecurityMiddleware',
+    'djangosecure.middleware.SecurityMiddleware',
     'axes.middleware.FailedLoginMiddleware',
     # For django < 1.6
     'yawdadmin.middleware.PopupMiddleware',
     # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -193,6 +193,7 @@ INSTALLED_APPS = (
     'bootstrap3',
     'djmoney_rates',
     'currencies',
+    'djangosecure',
     #'massadmin',
 )
 
@@ -278,16 +279,19 @@ CHRONIKER_CHECK_LOCK_FILE = True
 # SECURING SITE ACCESS
 ADMIN_HONEYPOT_EMAIL_ADMINS = False
 
-SECURE_SSL_REDIRECT = False
-#SECURE_BROWSER_XSS_FILTER = True
-#SECURE_FRAME_DENY = True
-#SECURE_CONTENT_TYPE_NOSNIFF = True
-#SECURE_HSTS_SECONDS = 60
-#SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#----------
+# Django Secure
+#----------
+SECURE_SSL_REDIRECT = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_FRAME_DENY = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_HSTS_SECONDS = 60
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 86400
-#SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
 #CSRF_COOKIE_SECURE = True
 
