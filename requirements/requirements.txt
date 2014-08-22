@@ -32,3 +32,5 @@ django-bootstrap3==4.11.0
 django-braces==1.4.0
 django-system-monitor==0.5
 django-money-rates==0.3.1
+netifaces==0.10.4
+psutil==2.1.1
