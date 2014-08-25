@@ -8,16 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        # Adding field 'Company.cb_currency'
+        db.add_column('company', 'cb_currency',
+                      self.gf('django.db.models.fields.related.ForeignKey')(default=46, to=orm['currencies.Currency']),
+                      keep_default=False)
 
-        # Changing field 'Company.cb_currency'
-        """ NoThing """
-        
 
     def backwards(self, orm):
-
-        # Changing field 'Company.cb_currency'
-        """No """
-        
+        # Deleting field 'Company.cb_currency'
+        db.delete_column('company', 'cb_currency_id')  
 
     models = {
         u'auth.group': {
