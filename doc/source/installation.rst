@@ -527,8 +527,8 @@ Pyfreebilling installation
 	python manage.py migrate
 	python manage.py loaddata country_dialcode.json
 	python manage.py loaddata switch 0001_fixtures.json
-	python manage.py loaddata pyfreebill 0001_initial_SipProfile.json
-	python manage.py loaddata pyfreebill 0001_initial_ReccurentTasks.json
+	python manage.py loaddata 0001_initial_SipProfile.json
+	python manage.py loaddata 0001_initial_ReccurentTasks.json
 	python manage.py updatecurrencies (if you have set your Openexchange API key)
 	python manage.py collectstatic (answer 'yes')
 
