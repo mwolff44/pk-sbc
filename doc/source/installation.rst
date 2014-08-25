@@ -26,10 +26,7 @@ First, you need to install these packages
 
 ::
 
-    apt-get install git-core build-essential autoconf automake libtool libncurses5 libncurses5-dev gawk libjpeg-dev zlib1g-dev pkg-config libssl-dev libpq-dev unixodbc-dev odbc-postgresql postgresql postgresql-client libpq-dev libxml2-dev libxslt-dev ntp ntpdate
-    apt-get install libapache2-mod-wsgi apache2 gcc python-setuptools python-pip libjpeg62 libjpeg62-dev libdbd-pg-perl libtext-csv-perl sqlite3 libsqlite3-dev libcurl4-openssl-dev libpcre3-dev libspeex-dev libspeexdsp-dev libldns-dev libedit-dev libmemcached-dev
-	apt-get install python-psycopg2
-	apt-get install python-dev
+    apt-get install git-core build-essential autoconf automake libtool libncurses5 libncurses5-dev gawk libjpeg-dev zlib1g-dev pkg-config libssl-dev libpq-dev unixodbc-dev odbc-postgresql postgresql postgresql-client libpq-dev libxml2-dev libxslt-dev ntp ntpdate libapache2-mod-wsgi apache2 gcc python-setuptools python-pip libjpeg62 libjpeg62-dev libdbd-pg-perl libtext-csv-perl sqlite3 libsqlite3-dev libcurl4-openssl-dev libpcre3-dev libspeex-dev libspeexdsp-dev libldns-dev libedit-dev libmemcached-dev python-psycopg2 python-dev
 
 Freeswitch installation
 =======================
@@ -122,7 +119,7 @@ Freeswitch installation
 
     chown -R freeswitch:daemon /usr/local/freeswitch/
     chmod -R ug=rwX,o= /usr/local/freeswitch/
-    chmod -R u=rwx,g=rx /usr/local/freeswitch/bin/*
+    chmod -R u=rwx,g=rx /usr/local/freeswitch/bin/
 
 * and now, we need to create the init script to start and stop
    freeswitch :
@@ -355,7 +352,7 @@ Postgresql configuration
     createdb -O pyfreebilling -E UTF8 pyfreebilling
     exit
 
-* set odbc parameters; you need to edit /etc/odbc.ini. Do not forget to specify your postgres password !
+* set odbc parameters; you need to create and edit /etc/odbc.ini file. Do not forget to specify your postgres password !
 
 ::
 
@@ -373,7 +370,7 @@ Postgresql configuration
     Debug = 0   
     CommLog = 0
 
-* edit /etc/odbcinst.ini
+* edit /etc/odbcinst.ini (delete all entries and add these ones)
 
 ::
 

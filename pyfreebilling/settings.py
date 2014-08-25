@@ -191,7 +191,6 @@ INSTALLED_APPS = (
     'request',
     'datetimewidget',
     'bootstrap3',
-    'djmoney_rates',
     'currencies',
     'djangosecure',
     #'massadmin',
