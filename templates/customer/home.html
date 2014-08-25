@@ -5,6 +5,7 @@
 {% block content %}
 
 	<div class="row">
+		{% if company %}
         <div class="col-md-4">
         	<div class="panel panel-default">
 	          <div class="panel-heading">
@@ -76,6 +77,6 @@
 
 		<div class="col-md-4">
 		</div>
-      
+        {% endif %}
 
 {% endblock %}

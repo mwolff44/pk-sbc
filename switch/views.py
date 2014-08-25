@@ -17,6 +17,7 @@
 # coding=UTF-8
 from django.shortcuts import render_to_response
 from django.template import RequestContext, Context
+from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponse
 
@@ -38,10 +39,42 @@ from pyfreebilling import __version__
 
 @staff_member_required
 def fs_status_view(request):
-    fs_status = esl.getFsStatus()
-    sofia_status = esl.getSofiaStatus().replace("\t", u'\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0')
-    fs_calls = esl.getFsCalls()
-    fs_bcalls = esl.getFsBCalls()
+    try:
+        fs_status = esl.getFsStatus()
+    except IOError:
+        messages.error(request, """FS does not respond !""")
+    try:
+        sofia_status = esl.getSofiaStatus().replace("\t", u'\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0')
+    except IOError:
+        messages.error(request, """FS does not respond !""")
+    try:
+        fs_calls = esl.getFsCalls()
+    except IOError:
+        messages.error(request, """FS does not respond !""")
+    try:
+        fs_bcalls = esl.getFsBCalls()
+    except IOError:
+        messages.error(request, """FS does not respond !""")
+
+    return render_to_response('admin/fs_status.html', locals(),
+        context_instance=RequestContext(request))
+
+@staff_member_required
+def fs_registry_view(request):
+    try:
+        fs_status = esl.getFsRegistration()
+    except IOError:
+        messages.error(request, """FS does not respond !""")
+
+    return render_to_response('admin/fs_status.html', locals(),
+        context_instance=RequestContext(request))
+
+@staff_member_required
+def fs_bcalls_view(request):
+    try:
+        fs_status = esl.getFsBCalls()
+    except IOError:
+        messages.error(request, """FS does not respond !""")
 
     return render_to_response('admin/fs_status.html', locals(),
         context_instance=RequestContext(request))

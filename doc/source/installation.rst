@@ -602,9 +602,20 @@ Pyfreebilling installation
 	/usr/local/venv/pyfreebilling/pyfreebilling/local_settings.py
 	/usr/local/venv/pyfreebilling/freeswitch/scripts/import-csv.pl
 
+
+* restart FreeSwitch :
+
+::
+
+    sudo /etc/init.d/freeswitch restart
+
+
+
 Pyfreebilling login
 ==========================
 
- Got to the url http://my-ip/extranet and enter your username and password.
+ Got to the url https://my-ip/extranet and enter your username and password.
+
+ The customer portal url is : https://my-ip
  
  I recommend to setup a firewall restrincting access to web pages and your voip ports !

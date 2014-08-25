@@ -36,18 +36,32 @@ from pyfreebill.models import Company, Person, CompanyBalanceHistory, CDR, Custo
 from customerportal.forms import CDRSearchForm
 
 
+class Template404View(TemplateView):
+    template_name = 'customer/404.html'
+
+
+class Template500View(TemplateView):
+    template_name = 'customer/500.html'
+
+
 class HomePageCustView(LoginRequiredMixin, TemplateView):
     template_name = 'customer/home.html'
 
     def get_context_data(self, **kwargs):
         context = super(HomePageCustView, self).get_context_data(**kwargs)
         messages.info(self.request, 'Wellcome')
-        usercompany = get_object_or_404(Person, user=self.request.user)
-        context['company'] = get_object_or_404(Company, name=usercompany.company)
-        if context['company'].low_credit_alert > context['company'].customer_balance:
-        	messages.warning(self.request, 'ALERT : Low balance (credit alert level : %s)' % context['company'].low_credit_alert)
-        if context['company'].account_blocked_alert_sent:
-        	messages.danger(self.request, 'ALERT : Account blocked - no remaining credit - Please make an urgent payment')
+        try:
+            usercompany = Person.objects.get(user=self.request.user)
+            try:
+                context['company'] = Company.objects.get(name=usercompany.company)
+                if context['company'].low_credit_alert > context['company'].customer_balance:
+                    messages.warning(self.request, 'ALERT : Low balance (credit alert level : %s)' % context['company'].low_credit_alert)
+                if context['company'].account_blocked_alert_sent:
+                    messages.danger(self.request, 'ALERT : Account blocked - no remaining credit - Please make an urgent payment')
+            except Company.DoesNotExist:
+                pass
+        except Person.DoesNotExist:
+            messages.error(self.request, """This user is not linked to a customer !""")
 
         # integrer panneau contact et stats
         # integrer facture
@@ -66,9 +80,14 @@ class SipAccountCustView(LoginRequiredMixin, ListView):
     model = CustomerDirectory
 
     def get_queryset(self):
-        self.usercompany = get_object_or_404(Person, user=self.request.user)
-        self.company = get_object_or_404(Company, name=self.usercompany.company)
-        return CustomerDirectory.objects.filter(company=self.company.pk).order_by('id')
+        qs = super(SipAccountCustView, self).get_queryset()
+        try:
+            self.usercompany = Person.objects.get(user=self.request.user)
+            self.company = get_object_or_404(Company, name=self.usercompany.company)
+            return CustomerDirectory.objects.filter(company=self.company.pk).order_by('id')
+        except Person.DoesNotExist:
+            messages.error(self.request, """This user is not linked to a customer !""")
+        return qs.none()
 
 
 class CdrReportCustView(LoginRequiredMixin, FormMixin, ListView):
@@ -117,29 +136,40 @@ class CdrReportCustView(LoginRequiredMixin, FormMixin, ListView):
 
         # test if get succes or not
         if start_d['status'] or end_d['status'] or dest_num:
-            self.usercompany = get_object_or_404(Person, user=self.request.user)
-            self.company = get_object_or_404(Company, name=self.usercompany.company)
-            qs.filter(customer=self.company.pk).order_by('-start_stamp').exclude(effective_duration="0")
-            return qs
+            try:
+                self.usercompany = Person.objects.get(user=self.request.user)
+                self.company = get_object_or_404(Company, name=self.usercompany.company)
+                qs.filter(customer=self.company.pk).order_by('-start_stamp').exclude(effective_duration="0")
+                return qs
+            except Person.DoesNotExist:
+                messages.error(self.request, """This user is not linked to a customer !""")
         return qs.none()
 
 
 class BalanceHistoryCustView(LoginRequiredMixin, ListView):
     template_name = 'customer/balance.html'
-    #model = CompanyBalanceHistory
+    model = CompanyBalanceHistory
     context_object_name = 'CustomerBalance'
     paginate_by = 10
 
     def get_queryset(self):
-        self.usercompany = get_object_or_404(Person, user=self.request.user)
-        self.company = get_object_or_404(Company, name=self.usercompany.company)
-        return CompanyBalanceHistory.objects.filter(company=self.company.pk).filter(operation_type='customer').order_by('-date_modified')
+        qs = super(BalanceHistoryCustView, self).get_queryset()
+        try:
+            self.usercompany = Person.objects.get(user=self.request.user)
+            self.company = get_object_or_404(Company, name=self.usercompany.company)
+            return CompanyBalanceHistory.objects.filter(company=self.company.pk).filter(operation_type='customer').order_by('-date_modified')
+        except Person.DoesNotExist:
+            messages.error(self.request, """This user is not linked to a customer !""")
+        return qs.none()
 
     def get_context_data(self, **kwargs):
         context = super(BalanceHistoryCustView, self).get_context_data(**kwargs)
-        #usercompany = get_object_or_404(Person, user=self.request.user)
-        #context['company'] = get_object_or_404(Company, name=usercompany.company)
-        context['company'] = self.company
+        try:
+            self.usercompany = Person.objects.get(user=self.request.user)
+            context['company'] = get_object_or_404(Company, name=self.usercompany.company)
+            return context
+        except Person.DoesNotExist:
+            messages.error(self.request, """This user is not linked to a customer !""")
         return context
 
 

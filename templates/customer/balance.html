@@ -6,7 +6,7 @@
 
 {% block content %}
 
-
+{% if company %}
         <div class="col-md-4">
         	<div class="panel panel-default">
 	          <div class="panel-heading">
@@ -89,5 +89,5 @@
 <div class="pagination pagination-centered">
 	{% bootstrap_pagination page_obj url="/balance?page=1" size="small" %}
 </div>
-
+{% endif %}
 {% endblock %}

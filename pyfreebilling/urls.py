@@ -14,22 +14,28 @@
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, include, url, handler404, handler500
 from django.contrib import admin
 from django.http import request
+from django.views.generic.base import TemplateView
 
 from yawdadmin import admin_site
 
+from pyfreebilling.settings import DEBUG
 
 from pyfreebill.views import chart_stats_general_json, FsDirectoryUpdateView, FsSofiaUpdateView
 
 
 from customerportal.urls import urlpatterns as customerportal_url
+from customerportal.views import Template404View, Template500View
 
 
 admin.autodiscover()
 admin_site._registry.update(admin.site._registry)
 
+
+handler404 = Template404View.as_view()
+handler500 = Template500View.as_view()
 
 # Custom menu
 def perms_func(request, item):
@@ -166,17 +172,25 @@ admin_site.register_top_menu_item('5_Switches',
                                              'order': 2,
                                              'title_icon': 'icon-list'},
                                             {'name': 'Freeswitch status',
-                                             'admin_url': '/extranet/pyfreebill/sofiagateway/',
+                                             'admin_url': '/extranet/FsServer/',
                                              'order': 3,
                                              'separator': True,
                                              'title_icon': 'icon-user-md'},
+                                            {'name': 'Registration status',
+                                             'admin_url': '/extranet/FsServerRegistry/',
+                                             'order': 4,
+                                             'title_icon': 'icon-user-md'},
+                                            {'name': 'Bridged Calls',
+                                             'admin_url': '/extranet/FsServerBCalls/',
+                                             'order': 5,
+                                             'title_icon': 'icon-user-md'},
                                             {'name': 'Freeswitch list',
                                              'admin_url': '/extranet/switch/voipswitch/',
-                                             'order': 4,
+                                             'order': 6,
                                              'title_icon': 'icon-list'},
                                             {'name': 'Sofia profiles',
                                              'admin_url': '/extranet/pyfreebill/sipprofile/',
-                                             'order': 5,
+                                             'order': 7,
                                              'separator': True,
                                              'title_icon': 'icon-cogs'}, ],
                                   perms=perms_func)
@@ -266,11 +280,21 @@ admin_site.register_top_menu_item('8_Admin',
 # Modules
 urlpatterns = customerportal_url
 
+if DEBUG:
+    urlpatterns += patterns('',
+        (r'^500/$', TemplateView.as_view(template_name="customer/500.html")),
+        (r'^404/$', TemplateView.as_view(template_name="customer/404.html")),
+    )
+
 urlpatterns += patterns('',
                        url(r'^extranet/report/$',
                            'pyfreebill.views.admin_report_view'),
                        url(r'^extranet/FsServer/$',
                            'switch.views.fs_status_view'),
+                       url(r'^extranet/FsServerRegistry/$',
+                           'switch.views.fs_registry_view'),
+                       url(r'^extranet/FsServerBCalls/$',
+                           'switch.views.fs_bcalls_view'),
                        url(r'^extranet/cdrform/$',
                            'pyfreebill.views.live_report_view'),
                        url(r'^extranet/status/$',
