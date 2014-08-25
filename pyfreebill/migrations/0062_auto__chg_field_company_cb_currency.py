@@ -10,11 +10,13 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
 
         # Changing field 'Company.cb_currency'
+        """ NoThing """
         
 
     def backwards(self, orm):
 
         # Changing field 'Company.cb_currency'
+        """No """
         
 
     models = {
