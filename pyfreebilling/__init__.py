@@ -19,7 +19,7 @@
 
 from django.utils.version import get_git_changeset
 
-VERSION = (1, 4, 0, 'beta', 5)
+VERSION = (1, 4, 0, 'rc', 1)
 
 
 def get_version(version=None):
