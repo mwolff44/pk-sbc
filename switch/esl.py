@@ -21,6 +21,8 @@
 # the Initial Developer. All Rights Reserved.
 #
 # Modified by Mathias WOLFF
+# coding=utf-8
+
 from django.contrib import messages
 
 import ESL
@@ -143,6 +145,6 @@ def getFsBCalls():
 
 def getFsRegistration():
     """ Get registration list"""
-    # A ajouter dans admin de pyfreebill pour voir via l'interface les user enregistrés : si sip:username@ est présent donc enregistre
+    # A ajouter dans admin de pyfreebill pour voir via l'interface les user enregistres : si sip:username@ est present donc enregistre
     logger.info("get registration")
     return fs_cmd("api show registrations")
