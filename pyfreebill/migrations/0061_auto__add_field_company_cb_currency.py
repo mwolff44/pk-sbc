@@ -10,7 +10,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         # Adding field 'Company.cb_currency'
         db.add_column('company', 'cb_currency',
-                      self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['djmoney_rates.Rate']),
+                      self.gf('django.db.models.fields.related.ForeignKey')(default=46, to=orm['currencies.Currency']),
                       keep_default=False)
 
 

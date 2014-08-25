@@ -12,7 +12,7 @@ New features
 * Reload Fs config via button in admin panel
 * Currency management
 * Database size monitoring - new panel (in admin menu)
-* Sofia Gateway : add new chooce lists for selecting codecs
+* Sofia Gateway : add new choose lists for selecting codecs
 * Add sip profile DTMF options (pass-rfc2833)
 * Add new rtp_rewrite_timestamps sofia profile option
 * Visitors and web interface use stats

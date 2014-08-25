@@ -10,12 +10,12 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
 
         # Changing field 'Company.cb_currency'
-        db.alter_column('company', 'cb_currency_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['currencies.Currency']))
+        
 
     def backwards(self, orm):
 
         # Changing field 'Company.cb_currency'
-        db.alter_column('company', 'cb_currency_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['djmoney_rates.Rate']))
+        
 
     models = {
         u'auth.group': {

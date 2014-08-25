@@ -518,7 +518,7 @@ Pyfreebilling installation
 	EMAIL_HOST_PASSWORD = ''
 	#EMAIL_USE_TLS = True
 	EMAIL_USE_SSL = True
-	EMAIL_SIGNATURE = '’
+	EMAIL_SIGNATURE = '' 
 
 * and now, enter the following commands without sudo (IMPORTANT). At the step "syncdb", you will fave a prompt asking you to enter a username and a password. They are very important, as thez are the admin one !
 	
