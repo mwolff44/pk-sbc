@@ -3,7 +3,11 @@
 {% block bootstrap3_title %}PyFreeBilling : Customer Portal Home Page{% endblock %}
 
 {% block content %}
-
+    <div class="row">
+    	{% if request.user.is_superuser %}
+			<a href="extranet/" class="btn btn-danger btn-lg btn-block">Admin interface : click here</a>
+		{% endif %}<br>
+    </div>
 	<div class="row">
 		{% if company %}
         <div class="col-md-4">
