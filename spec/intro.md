@@ -2,6 +2,28 @@
 
 ## SECURITY
 
+### Honeypot
+
+#### Introduction
+Provide a fake admin login screen to log and notify admins of attempted unauthorized access.
+
+#### Dependencies
+Nothing !
+
+#### Settings
+If you want admins to be notified by email, you must add in your local_settings.py files these lines :
+
+    ADMIN_HONEYPOT_EMAIL_ADMINS = True
+    
+The default settings is False.
+
+#### Screenshots
+
+#### To Be implemented
+Automatically blocked IP.
+
+For dev, take a look at : admin_honeypot.signals.honeypot()
+
 ### Country blocker
 
 #### Introduction
@@ -63,3 +85,5 @@ Like others security settings, they are not available in web interface. You have
 * local_ip_user_country : The Country that all local IP users will be assigned
 
 * maxmind_license_key : The license key for the Maxmind service. A value is required if maxmind_enabled is True and maxmind_local_db_enabled is False. This gets sent over as the 'l' parameter in the payload to the https://geoip.maxmind.com/a service.
+
+#### Screenshots
