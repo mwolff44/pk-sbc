@@ -15,7 +15,7 @@ django-iban==0.2.8
 django-import-export==0.2.3
 django-jsonfield==0.9.13
 django-qsstats-magic==0.7.2
-django-simple-import==1.15
+django-simple-import==1.16
 django-templated-email==0.4.9
 netaddr==0.7.12
 psycopg2==2.5.3
