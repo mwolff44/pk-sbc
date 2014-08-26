@@ -32,6 +32,7 @@ Bug corrections
 
 * Add new codec options in Customer sip accounts and sip profiles : G711u&G711a and G711a&G711u
 * Destination number is checked before LUA
+* Recurrent tasks working with new chronicler version
 
 
 Version 1.3
