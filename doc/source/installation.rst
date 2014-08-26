@@ -26,7 +26,7 @@ First, you need to install these packages
 
 ::
 
-    apt-get install git-core build-essential autoconf automake libtool libncurses5 libncurses5-dev gawk libjpeg-dev zlib1g-dev pkg-config libssl-dev libpq-dev unixodbc-dev odbc-postgresql postgresql postgresql-client libpq-dev libxml2-dev libxslt-dev ntp ntpdate libapache2-mod-wsgi apache2 gcc python-setuptools python-pip libjpeg62 libjpeg62-dev libdbd-pg-perl libtext-csv-perl sqlite3 libsqlite3-dev libcurl4-openssl-dev libpcre3-dev libspeex-dev libspeexdsp-dev libldns-dev libedit-dev libmemcached-dev python-psycopg2 python-dev
+    apt-get install git-core build-essential autoconf automake libtool libncurses5 libncurses5-dev gawk libjpeg-dev zlib1g-dev pkg-config libssl-dev libpq-dev unixodbc-dev odbc-postgresql postgresql postgresql-client libpq-dev libxml2-dev libxslt-dev ntp ntpdate libapache2-mod-wsgi apache2 gcc python-setuptools python-pip libjpeg62 libjpeg62-dev libdbd-pg-perl libtext-csv-perl sqlite3 libsqlite3-dev libcurl4-openssl-dev libpcre3-dev libspeex-dev libspeexdsp-dev libldns-dev libedit-dev libmemcached-dev python-psycopg2 python-dev libgeoip-dev
 
 Freeswitch installation
 =======================
@@ -529,6 +529,7 @@ Pyfreebilling installation
 	python manage.py loaddata switch 0001_fixtures.json
 	python manage.py loaddata 0001_initial_SipProfile.json
 	python manage.py loaddata 0001_initial_ReccurentTasks.json
+	python manage.py loaddata country.json
 	python manage.py updatecurrencies (if you have set your Openexchange API key)
 	python manage.py collectstatic (answer 'yes')
 

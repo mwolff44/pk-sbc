@@ -193,6 +193,8 @@ INSTALLED_APPS = (
     'bootstrap3',
     'currencies',
     'djangosecure',
+    'country_block',
+#    'raven.contrib.django.raven_compat',
     #'massadmin',
 )
 

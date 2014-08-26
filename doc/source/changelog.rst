@@ -19,6 +19,7 @@ New features
 * Admin CDR panel : show minutes / sell / cost / margin corresponding to selection
 * New dashboard : revenue / cost / minutes / calls stats
 * documentation update for installation of 1.4 freeswitch version
+* web country blocker based on visitor's ip. Databases : freegeoip.net and/or maxmind
 
 Modifications
 -------------
