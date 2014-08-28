@@ -1,6 +1,30 @@
-# SPECIFICATIONS
+# DOCUMENTATION
 
-## SECURITY
+## Introduction
+The puprose of this document is to describe how to use PyFreeBilling.
+
+### What is PyFreeBilling
+PyFreeBilling is an Open Source billing and routing plateform for FreeSwitch.
+
+### Who is this software design for
+PyFreeBilling is designed for high performance and scalability. It is suitable for redential, business and wholesale VoIP providers.
+
+## PyFreeBilling installation
+The up to date documentation is hosted in [PyFreeBiiling ReadTheDocs](http://pyfreebilling.readthedocs.org/en/latest/).
+
+## Upgrading PyFreeBilling
+Just use the upgrade script :
+
+	cd /usr/local/venv
+	source bin/activate
+	cd pyfreebilling
+	fab.py upgrade -v version_number
+	
+You need to replace version_number by the right number.
+
+## Initial Set-Up
+
+## Security
 
 ### Honeypot
 

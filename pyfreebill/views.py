@@ -25,6 +25,8 @@ from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 
+from django_tables2   import RequestConfig
+
 from qsstats import QuerySetStats
 import time
 import datetime, qsstats
@@ -38,6 +40,70 @@ from pyfreebilling import __version__
 from pyfreebill.utils import round_value, getvar, return_query_string
 from pyfreebill.forms import CDRSearchForm
 from pyfreebill.models import DimCustomerDestination, DimCustomerHangupcause, CDR, Company, CustomerDirectory, SipProfile
+from pyfreebill.tables import TopSellTable
+
+
+@staff_member_required
+def customers_stats_view(request):
+    # set start_date and end_date
+    # default yesterday stats
+    qs = DimCustomerDestination.objects.all()
+
+    current_tz = pytz.utc
+    dt = datetime.datetime.now()
+    end_date = datetime.datetime(dt.year, dt.month, dt.day, 00, 00, 00).replace(tzinfo=current_tz)
+    end_date = datetime.date(2014, 8, 28)
+    start_date = end_date - datetime.timedelta(days=1)
+    qs_orderby = '-total_sell'
+
+    # Get the q GET parameter
+    # date from and to and check value
+    start_d = {'y': [], 'm': [], 'd': [], 'h': [], 'min': [], 'status': True}
+    end_d = {'y': [], 'm': [], 'd': [], 'h': [], 'min': [],'status': True}
+    li = ['y', 'm', 'd', 'h', 'min']
+    for i in li:
+        start_d[str(i)] = request.GET.get("from_" + str(i))
+        if start_d[str(i)] and start_d[str(i)].isnumeric():
+            start_d[str(i)] = int(start_d[str(i)])
+        else:
+            start_d['status'] = False
+        end_d[str(i)] = request.GET.get("to_" + str(i))
+        if end_d[str(i)] and end_d[str(i)].isnumeric():
+            end_d[str(i)] = int(end_d[str(i)])
+        else:
+            end_d['status'] = False
+    # dest num
+    dest_num = request.GET.get("dest_num")
+    company = request.GET.get("company")
+    if start_d['status']:
+        start_date = datetime.datetime(start_d['y'], start_d['m'], start_d['d'], start_d['h'], start_d['min'])
+    if end_d['status']:
+        end_date = datetime.datetime(end_d['y'], end_d['m'], end_d['d'], end_d['h'], end_d['min'])
+    if start_date and end_date:
+        qs = qs.filter(date__date__range=(start_date, end_date))
+
+    if dest_num:
+        qs = qs.filter(destination__startswith=dest_num)
+
+    if company:
+        qs = qs.filter(customer__name__contains=company)
+
+    stats_table = qs.values('customer__name', 'customer__cb_currency__code').\
+                        annotate(total_sell=Sum('total_sell')).\
+                        annotate(success_calls=Sum('success_calls')).\
+                        annotate(total_calls=Sum('total_calls')).\
+                        annotate(total_cost=Sum('total_cost')).\
+                        annotate(total_duration=Sum('total_duration')).\
+                        annotate(max_duration=Max('max_duration')).\
+                        annotate(min_duration=Min('min_duration')).\
+                        annotate(avg_duration=Min('avg_duration')).\
+                        order_by('-total_sell')
+    
+    table = TopSellTable(stats_table)
+    RequestConfig(request, paginate={"per_page": 25}).configure(table)
+    #import pdb; pdb.set_trace()
+    return render_to_response('admin/customers_stats.html', locals(),
+                              context_instance=RequestContext(request))
 
 
 @staff_member_required
@@ -311,8 +377,8 @@ class ChartData(object):
     @classmethod
     def get_stats_volume(cls):
         data = []
-        data1 = {'key': [], 'values': [], 'bar': 'true', 'color': '#2ca02c'}
-        data2 = {'key': [], 'values': []}
+        data1 = {'key': [], 'values': []} # , 'color': '#2ca02c'
+        data2 = {'key': [], 'values': [], 'bar': 'true'}
 
         values_duration = []
         values_total_calls = []
