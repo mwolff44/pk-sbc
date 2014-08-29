@@ -240,7 +240,7 @@ class CompanyAdmin(admin.ModelAdmin):
                        ('max_calls', 'calls_per_second'),
                        'billing_cycle',
                        ('prepaid', 'credit_limit'),
-                       'customer_balance')
+                       ('customer_balance', 'cb_currency')),
         }),
         ('Customer alerts', {
             'fields': ('low_credit_alert',
@@ -321,6 +321,7 @@ class CompanyAdmin(admin.ModelAdmin):
                     'get_vat_display',
                     'get_customer_enabled_display',
                     'customer_balance',
+                    'cb_currency',
                     'get_supplier_enabled_display',
                     'supplier_balance',
                     'balance_history')
@@ -568,11 +569,10 @@ class ProviderTariffAdmin(admin.ModelAdmin):
     list_display = ['id',
                     'name',
                     'carrier',
+                    'currency',
                     'prefix',
                     'quality',
                     'reliability',
-                    'callerid_filter',
-                    'callerid_list',
                     'date_start',
                     'date_end',
                     'get_boolean_display',
@@ -781,6 +781,7 @@ class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
 class RateCardAdmin(admin.ModelAdmin):
     list_display = ['id',
                     'name',
+                    'currency',
                     'lcrgroup',
                     'lcr',
                     'get_boolean_display',
@@ -1026,21 +1027,21 @@ class SipProfileAdmin(admin.ModelAdmin):
             'classes': ('collapsed',),
             'description': 'NAT management'
         }),
-        # ('DTMF', {
-        #     'fields': (''),
-        #     'classes': ('collapsed',),
-        #     'description': 'DTMF management'
-        # }),
+        ('DTMF Related options', {
+            'fields': ('pass_rfc2833',),
+            'classes': ('collapsed',),
+            'description': 'DTMF management'
+        }),
         ('SIP Related Options', {
             'fields': (('enable_timer', 'session_timeout')),
             'classes': ('collapsed',),
             'description': 'Manage SIP Related Options'
         }),
-        # ('RTP Related Options', {
-        #     'fields': (''),
-        #     'classes': ('collapsed',),
-        #     'description': 'Manage RTP Related Options'
-        # }),
+        ('RTP Related Options', {
+            'fields': ('rtp_rewrite_timestamps',),
+            'classes': ('collapsed',),
+            'description': 'Manage RTP Related Options'
+        }),
         ('Authentification Authorization', {
             'fields': ('apply_inbound_acl',
                        'auth_calls',
@@ -1164,7 +1165,7 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
                      '^sell_destination']
     list_filter = ('start_stamp',)
 #    date_hierarchy = 'start_stamp'
-    #change_list_template = 'admin/pyfreebill/cdr/change_list.html'
+    change_list_template = 'admin/pyfreebill/cdr/change_list.html'
     resource_class = CDRResourceExtra
     fieldsets = (
         ('General', {
@@ -1219,8 +1220,8 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
         else:
             return
 
-#     def get_changelist(self, request, **kwargs):
-#         return TotalAveragesChangeList
+    def get_changelist(self, request, **kwargs):
+        return TotalAveragesChangeList
 
     def changelist_view(self, request, extra_context=None):
         if request.user.is_superuser:

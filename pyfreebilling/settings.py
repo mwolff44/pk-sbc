@@ -126,13 +126,14 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'request.middleware.RequestMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-#    'djangosecure.middleware.SecurityMiddleware',
+    'djangosecure.middleware.SecurityMiddleware',
     'axes.middleware.FailedLoginMiddleware',
     # For django < 1.6
     'yawdadmin.middleware.PopupMiddleware',
     # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -161,6 +162,7 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
     'pyfreebill',
     'switch',
+    'customerportal',
     'yawdadmin',
     'import_export',
     'django.contrib.auth',
@@ -177,7 +179,6 @@ INSTALLED_APPS = (
     'clear_cache',
     'axes',
     'qsstats',
-    'chartjs',
     'django.contrib.admin',
     'south',
     'cities_light',
@@ -186,6 +187,16 @@ INSTALLED_APPS = (
     'database_size',
     'did',
     'simple_import',
+    'sysmon',
+    'request',
+    'datetimewidget',
+    'bootstrap3',
+    'currencies',
+    'djangosecure',
+    'country_block',
+    'django_tables2',
+    'bootstrap_toolkit',
+#    'raven.contrib.django.raven_compat',
     #'massadmin',
 )
 
@@ -220,6 +231,7 @@ LOGGING = {
 
 # AUTH - DJANGO 1.6
 #AUTH_USER_MODEL = 'pyfreebill.CustomUser'
+AUTH_USER_MODEL = 'auth.User'
 
 # SECURITY - ADJUST YOURS PARAMETERS
 
@@ -252,26 +264,37 @@ ADMIN_SITE_DESCRIPTION = 'Softswitch and billing application'
 #ADMIN_SITE_LOGO_HTML = '<div id="myproject-logo hidden-phone">Logo</div>'
 ADMIN_DISABLE_APP_INDEX = 'True'
 
+
+#----------
+# django-cities-light
+#----------
+SOUTH_MIGRATION_MODULES = {
+    'cities_light': 'cities_light.south_migrations',
+}
+
 #----------
 # Chroniker
 #----------
-CHRONIKER_USE_PID = True
-CHRONIKER_SELECT_FOR_UPDATE = True
-CHRONIKER_CHECK_LOCK_FILE = True
+CHRONIKER_USE_PID = False
+CHRONIKER_SELECT_FOR_UPDATE = False
+CHRONIKER_CHECK_LOCK_FILE = False
 
 # SECURING SITE ACCESS
 ADMIN_HONEYPOT_EMAIL_ADMINS = False
 
-SECURE_SSL_REDIRECT = False
-#SECURE_BROWSER_XSS_FILTER = True
-#SECURE_FRAME_DENY = True
-#SECURE_CONTENT_TYPE_NOSNIFF = True
-#SECURE_HSTS_SECONDS = 60
-#SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#----------
+# Django Secure
+#----------
+SECURE_SSL_REDIRECT = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_FRAME_DENY = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_HSTS_SECONDS = 60
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 86400
-#SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
 #CSRF_COOKIE_SECURE = True
 

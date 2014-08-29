@@ -46,7 +46,7 @@
     </extension>
 
     <extension name="outside_call" continue="true">
-      <condition>
+      <condition field="destination_number" expression="^(\d+)$">
         <action application="set" data="outside_call=true"/>
         <action application="lua" data="/usr/local/venv/pyfreebilling/freeswitch/scripts/pyfreebilling_dp.lua"/>
       </condition>

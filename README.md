@@ -18,14 +18,10 @@ pyfreebilling is an open source wholesale billing platform for FreeSWITCH.
 pyfreebilling is developed under python, LUA and PostgreSQL as the database layer.
 
 ********************************************************************************
+                             Documentation
+********************************************************************************
 
-![CodeShip Status](https://www.codeship.io/projects/45c99cd0-86b5-0131-49f1-3e77f06cd138/status)
-
-Stable version
-[![Requirements Status](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements.png?branch=master)](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements/?branch=master)
-
-Dev version
-[![Requirements Status](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements.png?branch=develop)](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements/?branch=develop)
+Please visit : http://pyfreebilling.readthedocs.org/
 
 ********************************************************************************
                              License
@@ -82,9 +78,25 @@ The project uses freeswitch, PostgreSQL and Django.
 ********************************************************************************
 
 Name: Mathias WOLFF
+
 Email: website contact form
+<<<<<<< HEAD
 Website: http://www.pyfreebilling.com
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mwolff44/pyfreebilling/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
+=======
+
+Website: http://www.pyfreebilling.com
+
+********************************************************************************
+                             Requirements status
+********************************************************************************
+
+Stable version
+[![Requirements Status](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements.png?branch=master)](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements/?branch=master)
+
+Dev version
+[![Requirements Status](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements.png?branch=develop)](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements/?branch=develop)
+>>>>>>> develop

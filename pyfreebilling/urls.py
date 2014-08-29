@@ -14,15 +14,28 @@
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, include, url, handler404, handler500
 from django.contrib import admin
+from django.http import request
+from django.views.generic.base import TemplateView
 
 from yawdadmin import admin_site
+
+from pyfreebilling.settings import DEBUG
+
+from pyfreebill.views import chart_stats_general_json, FsDirectoryUpdateView, FsSofiaUpdateView
+
+
+from customerportal.urls import urlpatterns as customerportal_url
+from customerportal.views import Template404View, Template500View
 
 
 admin.autodiscover()
 admin_site._registry.update(admin.site._registry)
 
+
+handler404 = Template404View.as_view()
+handler500 = Template500View.as_view()
 
 # Custom menu
 def perms_func(request, item):
@@ -60,10 +73,14 @@ admin_site.register_top_menu_item('1_Customers',
                                              'admin_url': '/extranet/pyfreebill/customercidnormalizationrules/',
                                              'order': 5,
                                              'title_icon': 'icon-medkit'},
-                                            {'name': 'Statistics',
-                                             'admin_url': '/extranet/pyfreebill/cdr/',
+                                            {'name': 'Customer statistics',
+                                             'admin_url': '/extranet/customers_stats/',
                                              'order': 6,
                                              'separator': True,
+                                             'title_icon': 'icon-dashboard'},
+                                             {'name': 'Destination statistics',
+                                             'admin_url': '/extranet/destination_customers_stats/',
+                                             'order': 6,
                                              'title_icon': 'icon-dashboard'}, ],
                                   perms=perms_func)
 
@@ -96,10 +113,14 @@ admin_site.register_top_menu_item('2_Providers',
                                              'admin_url': '/extranet/pyfreebill/carriercidnormalizationrules/',
                                              'order': 6,
                                              'title_icon': 'icon-medkit'},
-                                            {'name': 'Statistics',
-                                             'admin_url': '/extranet/pyfreebill/cdr/',
+                                            {'name': 'Provider statistics',
+                                             'admin_url': '/extranet/providers_stats/',
                                              'order': 7,
                                              'separator': True,
+                                             'title_icon': 'icon-dashboard'},
+                                             {'name': 'Destination statistics',
+                                             'admin_url': '/extranet/destination_providers_stats/',
+                                             'order': 8,
                                              'title_icon': 'icon-dashboard'}, ],
                                   perms=perms_func)
 
@@ -159,17 +180,25 @@ admin_site.register_top_menu_item('5_Switches',
                                              'order': 2,
                                              'title_icon': 'icon-list'},
                                             {'name': 'Freeswitch status',
-                                             'admin_url': '/extranet/pyfreebill/sofiagateway/',
+                                             'admin_url': '/extranet/FsServer/',
                                              'order': 3,
                                              'separator': True,
                                              'title_icon': 'icon-user-md'},
+                                            {'name': 'Registration status',
+                                             'admin_url': '/extranet/FsServerRegistry/',
+                                             'order': 4,
+                                             'title_icon': 'icon-user-md'},
+                                            {'name': 'Bridged Calls',
+                                             'admin_url': '/extranet/FsServerBCalls/',
+                                             'order': 5,
+                                             'title_icon': 'icon-user-md'},
                                             {'name': 'Freeswitch list',
                                              'admin_url': '/extranet/switch/voipswitch/',
-                                             'order': 4,
+                                             'order': 6,
                                              'title_icon': 'icon-list'},
                                             {'name': 'Sofia profiles',
                                              'admin_url': '/extranet/pyfreebill/sipprofile/',
-                                             'order': 5,
+                                             'order': 7,
                                              'separator': True,
                                              'title_icon': 'icon-cogs'}, ],
                                   perms=perms_func)
@@ -183,25 +212,32 @@ admin_site.register_top_menu_item('6_Finance',
                                             {'name': 'History',
                                              'admin_url': '/extranet/pyfreebill/companybalancehistory/',
                                              'order': 2,
+                                             'title_icon': 'icon-money'},
+                                             {'name': 'Currency Management',
+                                             'admin_url': '/extranet/currencies/currency/',
+                                             'order': 3,
+                                             'separator': True,
                                              'title_icon': 'icon-money'}, ],
                                   perms=perms_func)
 
 admin_site.register_top_menu_item('7_Report',
                                   icon_class="icon-dashboard",
                                   children=[{'name': 'CDR',
-                                             'admin_url': '/extranet/pyfreebill/cdr/',
+                                             'admin_url': '/extranet/cdrform/',
                                              'order': 1,
                                              'title_icon': 'icon-phone'},
-                                            {'name': 'Customer stat',
-                                             'admin_url': '/extranet/report/',
+                                            {'name': 'Server status',
+                                             'admin_url': '/extranet/ServerStatus/',
                                              'order': 2,
                                              'separator': True,
                                              'title_icon': 'icon-dashboard'},
-                                            {'name': 'Provider stats',
-                                             'admin_url': '/extranet/pyfreebill/cdr/',
+                                             {'name': 'FreeSwitch status',
+                                             'admin_url': '/extranet/FsServer/',
                                              'order': 3,
+                                             'separator': True,
                                              'title_icon': 'icon-dashboard'}, ],
                                   perms=perms_func)
+
 
 admin_site.register_top_menu_item('8_Admin',
                                   icon_class="icon-wrench",
@@ -218,41 +254,92 @@ admin_site.register_top_menu_item('8_Admin',
                                              'admin_url': '/extranet/axes/accessattempt/',
                                              'order': 3,
                                              'title_icon': 'icon-warning-sign'},
+                                             {'name': 'Honeypot logs',
+                                             'admin_url': '/extranet/admin_honeypot/loginattempt/',
+                                             'order': 4,
+                                             'separator': True,
+                                             'title_icon': 'icon-warning-sign'},
+                                             {'name': 'Visitors stats',
+                                             'admin_url': '/extranet/request/request/overview/',
+                                             'order': 5,
+                                             'separator': True,
+                                             'title_icon': 'icon-exclamation-sign'},
                                             {'name': 'Admin logs',
                                              'admin_url': '/extranet/admin/logentry/',
-                                             'order': 4,
+                                             'order': 6,
                                              'separator': True,
                                              'title_icon': 'icon-exclamation-sign'},
                                             {'name': 'Recurring task logs',
                                              'admin_url': '/extranet/chroniker/log/',
-                                             'order': 5,
+                                             'order': 7,
                                              'title_icon': 'icon-puzzle-piece'},
                                              {'name': 'Import logs',
                                              'admin_url': '/extranet/simple_import/importlog/',
-                                             'order': 6,
+                                             'order': 8,
                                              'title_icon': 'icon-download-alt'},
+                                            {'name': 'Database size',
+                                             'admin_url': '/extranet/database_size/table/',
+                                             'order': 9,
+                                             'separator': True,
+                                             'title_icon': 'icon-pushpin'},
                                             {'name': 'Version',
                                              'admin_url': '/extranet/status/',
-                                             'order': 7,
+                                             'order': 10,
                                              'separator': True,
                                              'title_icon': 'icon-pushpin'}, ],
                                   perms=perms_func)
 
 
-urlpatterns = patterns('',
+# Modules
+urlpatterns = customerportal_url
+
+if DEBUG:
+    urlpatterns += patterns('',
+        (r'^500/$', TemplateView.as_view(template_name="customer/500.html")),
+        (r'^404/$', TemplateView.as_view(template_name="customer/404.html")),
+    )
+
+urlpatterns += patterns('',
                        url(r'^extranet/report/$',
                            'pyfreebill.views.admin_report_view'),
-                       url(r'^extranet/live/$',
+                       url(r'^extranet/FsServer/$',
+                           'switch.views.fs_status_view'),
+                       url(r'^extranet/FsServerRegistry/$',
+                           'switch.views.fs_registry_view'),
+                       url(r'^extranet/FsServerBCalls/$',
+                           'switch.views.fs_bcalls_view'),
+                       url(r'^extranet/cdrform/$',
                            'pyfreebill.views.live_report_view'),
                        url(r'^extranet/status/$',
                            'pyfreebill.views.admin_status_view'),
+                       url(r'^extranet/list_models/$',
+                           'pyfreebill.views.admin_listmodels_view'),
+                       url(r'^extranet/customers_stats/$',
+                           'pyfreebill.views.customers_stats_view', name='customers_stats'),
+                       url(r'^extranet/destination_customers_stats/$',
+                           'pyfreebill.views.destination_customers_stats_view', name='dest_customers_stats'),
+                       url(r'^extranet/providers_stats/$',
+                           'pyfreebill.views.providers_stats_view', name='providers_stats'),
+                       url(r'^extranet/destination_providers_stats/$',
+                           'pyfreebill.views.destination_providers_stats_view', name='dest_providers_stats'),
+                       url(r'^extranet/ServerStatus/$',
+                           'switch.views.server_status_view'),
                        url(r'^extranet/did/wizard_import/$',
                            'did.views.start_import',),
                        url(r'^admin/',
                            include('admin_honeypot.urls')),
                        url(r'^extranet/simple_import/',
                            include('simple_import.urls')),
+                       url(r'^extranet/FsDirectoryUpdate/',
+                           'pyfreebill.views.FsDirectoryUpdateView',
+                           name='fs_directory_update'),
+                       url(r'^extranet/FsSofiaUpdate/',
+                           'pyfreebill.views.FsSofiaUpdateView',
+                           name='fs_sofia_update'),
                        url(r'^extranet/',
                            include(admin_site.urls)),
+                       url(regex=r'^chart_stats_general_json/$',
+                           view=chart_stats_general_json,
+                           name='chart_stats_general_json'),
                        url(r'^extranet/',
                            include("massadmin.urls")), )

@@ -1,4 +1,6 @@
-<VirtualHost *:80>
+<VirtualHost *:443>
+        SSLEngine On
+        SSLCertificateFile /etc/ssl/private/localhost.pem
         ServerAdmin webmaster@localhost
 
         DocumentRoot /usr/local/venv/pyfreebilling

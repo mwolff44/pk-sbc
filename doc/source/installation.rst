@@ -26,10 +26,7 @@ First, you need to install these packages
 
 ::
 
-    apt-get install git-core build-essential autoconf automake libtool libncurses5 libncurses5-dev gawk libjpeg-dev zlib1g-dev pkg-config libssl-dev libpq-dev unixodbc-dev odbc-postgresql postgresql postgresql-client libpq-dev libxml2-dev libxslt-dev ntp ntpdate
-    apt-get install libapache2-mod-wsgi apache2 gcc python-setuptools python-pip libjpeg62 libjpeg62-dev libdbd-pg-perl libtext-csv-perl
-	apt-get install python-psycopg2
-	apt-get install python-dev
+    apt-get install git-core build-essential autoconf automake libtool libncurses5 libncurses5-dev gawk libjpeg-dev zlib1g-dev pkg-config libssl-dev libpq-dev unixodbc-dev odbc-postgresql postgresql postgresql-client libpq-dev libxml2-dev libxslt-dev ntp ntpdate libapache2-mod-wsgi apache2 gcc python-setuptools python-pip libjpeg62 libjpeg62-dev libdbd-pg-perl libtext-csv-perl sqlite3 libsqlite3-dev libcurl4-openssl-dev libpcre3-dev libspeex-dev libspeexdsp-dev libldns-dev libedit-dev libmemcached-dev python-psycopg2 python-dev libgeoip-dev
 
 Freeswitch installation
 =======================
@@ -44,7 +41,11 @@ Freeswitch installation
 
 ::
 
-    git clone -b v1.2.stable git://git.freeswitch.org/freeswitch.git
+    git clone -b v1.2 https://stash.freeswitch.org/scm/fs/freeswitch.git
+
+    OR
+
+    git clone -b v1.4 https://stash.freeswitch.org/scm/fs/freeswitch.git
 
 * after, boostrap, configure, make and install freeswitch
 
@@ -52,7 +53,7 @@ Freeswitch installation
 
     cd freeswitch
     ./bootstrap.sh -j
-    ./configure
+    
 
 * edit modules.conf suiting your needs. You will find below the minimum
    modules to install :
@@ -93,6 +94,7 @@ Freeswitch installation
 
 ::
 
+    ./configure
     make
     make install
 
@@ -116,7 +118,8 @@ Freeswitch installation
 ::
 
     chown -R freeswitch:daemon /usr/local/freeswitch/
-    chmod -R o-rwx /usr/local/freeswitch/
+    chmod -R ug=rwX,o= /usr/local/freeswitch/
+    chmod -R u=rwx,g=rx /usr/local/freeswitch/bin/
 
 * and now, we need to create the init script to start and stop
    freeswitch :
@@ -347,8 +350,9 @@ Postgresql configuration
 ::
 
     createdb -O pyfreebilling -E UTF8 pyfreebilling
+    exit
 
-* set odbc parameters; you need to edit /etc/odbc.ini. Do not forget to specify your postgres password !
+* set odbc parameters; you need to create and edit /etc/odbc.ini file. Do not forget to specify your postgres password !
 
 ::
 
@@ -366,7 +370,7 @@ Postgresql configuration
     Debug = 0   
     CommLog = 0
 
-* edit /etc/odbcinst.ini
+* edit /etc/odbcinst.ini (delete all entries and add these ones)
 
 ::
 
@@ -384,13 +388,21 @@ Web server install
 ==================
 
 
+* securing apache
+
+::
+
+    sudo a2enmod ssl
+    sudo make-ssl-cert /usr/share/ssl-cert/ssleay.cnf /etc/ssl/private/localhost.pem (or use others methods or certificats)
+
 * install python virtualenv
 
 ::
 
 	pip install virtualenv
 	cd /usr/local
-	virtualenv venv --no-site-packages (IMPORTANT : no sudo !!!)
+	virtualenv venv --no-site-packages
+	chown -R myuser:mysuser venv (replace myuser by your current user, perhaps root - better other one)
 
 * activate it :
 
@@ -416,6 +428,8 @@ Web server install
       some few questions. To make it simple for yourself, answer “no”
       for the first question so that the latter ones will be done for
       you automatically.
+
+      -> ANSWER YES
       
    
    * Once the above is done, you will be present with the cpan prompt.
@@ -435,6 +449,7 @@ Web server install
       cpan prompt>  install Carp
       cpan prompt>  install Filter::Simple
       cpan prompt>  install Config::Vars
+      cpan prompt>  exit
       
 
 Pyfreebilling installation
@@ -477,8 +492,12 @@ Pyfreebilling installation
 	}
 	
 	ALLOWED_HOSTS = ['*']
+
+	SECRET_KEY = 'securitykeymustbechanged'  # very important - put your key for security - any string
 	
 	TIME_ZONE = 'Europe/Paris'
+
+	OPENEXCHANGERATES_APP_ID = "Your API Key"
 	
 	#-- Nb days of CDR to show
 	PFB_NB_ADMIN_CDR = 3
@@ -496,17 +515,23 @@ Pyfreebilling installation
 	EMAIL_HOST_PASSWORD = ''
 	#EMAIL_USE_TLS = True
 	EMAIL_USE_SSL = True
-	EMAIL_SIGNATURE = '’
+	EMAIL_SIGNATURE = '' 
 
-* and now, enter the following commands. At the step "syncdb", you will fave a prompt asking you to enter a username and a password. They are very important, as thez are the admin one !
+* and now, enter the following commands without sudo (IMPORTANT). At the step "syncdb", you will fave a prompt asking you to enter a username and a password. They are very important, as thez are the admin one !
 	
 ::
 
 	pip install -r requirements/requirements.txt
-	python manage.py syncdb
+	python manage.py syncdb (IMPORTANT : enter your username and password)
+	python manage.py initcurrencies
 	python manage.py migrate
 	python manage.py loaddata country_dialcode.json
-	python manage.py collectstatic
+	python manage.py loaddata switch 0001_fixtures.json
+	python manage.py loaddata 0001_initial_SipProfile.json
+	python manage.py loaddata 0001_initial_ReccurentTasks.json
+	python manage.py loaddata country.json
+	python manage.py updatecurrencies (if you have set your Openexchange API key)
+	python manage.py collectstatic (answer 'yes')
 
 
 * copy some config files :
@@ -535,7 +560,7 @@ Pyfreebilling installation
 ::
 
 	rm -f /usr/local/freeswitch/conf/directory/default/*
-	chown -R freeswitch:freeswitch freeswitch/scripts/
+	chown -R freeswitch:freeswitch /usr/local/venv/pyfreebilling/freeswitch/scripts/
 	chmod 2750 /usr/local/freeswitch
 	chmod 2750 /usr/local/freeswitch/conf/
 	chmod 2750 /usr/local/freeswitch/conf/autoload_configs/
@@ -558,7 +583,7 @@ Pyfreebilling installation
 
 ::
 
-	cp apache/001-pyfreebilling /etc/apache2/sites-enabled/000-default
+	cp /usr/local/venv/pyfreebilling/setup/apache/001-pyfreebilling /etc/apache2/sites-enabled/000-default
 	a2ensite 000-default
 	/etc/init.d/apache2 restart
 
@@ -568,7 +593,7 @@ Pyfreebilling installation
 ::
 
     */1 * * * * perl /usr/local/venv/pyfreebilling/freeswitch/scripts/import-csv.pl>> /var/log/cron.log 2>&1   
-    * * * * * /usr/local/venv/pyfreebilling/chroniker -e /usr/local/venv/bin/activate_this.py -p /usr/local/venv/pyfreebilling
+    * * * * * /usr/local/venv/bin/chroniker -e /usr/local/venv/bin/activate_this.py -p /usr/local/venv/pyfreebilling
 
 
 * modify db password and somme settings in :
@@ -578,9 +603,20 @@ Pyfreebilling installation
 	/usr/local/venv/pyfreebilling/pyfreebilling/local_settings.py
 	/usr/local/venv/pyfreebilling/freeswitch/scripts/import-csv.pl
 
+
+* restart FreeSwitch :
+
+::
+
+    sudo /etc/init.d/freeswitch restart
+
+
+
 Pyfreebilling login
 ==========================
 
- Got to the url http://my-ip/extranet and enter your username and password.
+ Got to the url https://my-ip/extranet and enter your username and password.
+
+ The customer portal url is : https://my-ip
  
  I recommend to setup a firewall restrincting access to web pages and your voip ports !

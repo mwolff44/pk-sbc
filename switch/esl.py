@@ -21,11 +21,16 @@
 # the Initial Developer. All Rights Reserved.
 #
 # Modified by Mathias WOLFF
+# coding=utf-8
+
+from django.contrib import messages
 
 import ESL
+
+from pyfreebill.models import SipProfile
+
 from switch import logger
 from switch.models import *
-from pyfreebill.models import SipProfile
 
 
 def get_fs_connections():
@@ -33,6 +38,7 @@ def get_fs_connections():
     Get all available ESL connections.
     """
     logger.info("get_fs_connections()")
+    
     voipswitchs = VoipSwitch.objects.all()
     if voipswitchs:
         logger.info("%s voipswitch's config" % len(voipswitchs))
@@ -60,12 +66,15 @@ def fs_cmd(command):
         if not connection.connected():
             raise IOError("No connection to FreeSWITCH")
         try:
-            connection.sendRecv(command.encode('utf-8'))
+            esl = connection.sendRecv(command.encode('utf-8'))
+            # afficher une reponse --- dans le cas du reload dans une modale
         except Exception, e:
             logger.info("fs_cmd error: " + str(e))
             raise
         logger.info("fs_cmd done")
-        return
+        print esl.getBody()
+        return esl.getBody()
+
     raise ValueError("""No EventSocket configured in FreeSwitch.
         Cannot connect to FreeSWITCH over event socket""")
 
@@ -80,22 +89,62 @@ def getReloadDialplan():
     fs_cmd("bgapi reloadxml reloadacl")
 
 
-def getReloadGateway():
+def getReloadGateway(request):
     """Reload sofia's gateway"""
     logger.info("getRelaodGateway")
     logger.info("get sofia profile")
     sofia_profiles = SipProfile.objects.all()
     if sofia_profiles:
         logger.info("%s sofia profiles" % len(sofia_profiles))
+        messages.info(request, """Get sofia profile : %s sofia profiles""" % len(sofia_profiles))
     else:
         logger.error("No sofia profile found! Unable to reload.")
+        messages.error(request, """Get sofia profile : No sofia profile found! Unable to reload.""")
 
     for sp in sofia_profiles:
         logger.info("Reload sofia profile : %s" % sp.name)
-        fs_cmd("bgapi sofia profile " + sp.name + " rescan reloadxml")
+        messages.info(request, """Reload sofia profile : %s""" % sp.name)
+        fs = fs_cmd("bgapi sofia profile " + sp.name + " rescan reloadxml")
+        #messages.info(request, "%s" % fs)
     logger.info("getReloadGateway() done")
 
 
 def getRestartSofia(profile_name):
     """Restart sofia profile"""
     fs_cmd("bgapi sofia profile " + profile_name + " restart")
+
+def getSofiaStatus():
+    """Get Sofia status"""
+    logger.info("get Sofia status")
+    return fs_cmd("api sofia status")
+
+def getFsStatus():
+    """Get FS Status"""
+    logger.info("get fs status")
+    return fs_cmd("api status")
+
+def getFsCodec():
+    """Get FS codec list"""
+    logger.info("get fs codec list")
+    return fs_cmd("api show codec")
+
+def getFsCalls():
+    """Get FS Nb Calls"""
+    logger.info("get fs calls")
+    return fs_cmd("api show calls")
+
+def getFsChannels():
+    """Get FS Nb Channels"""
+    logger.info("get fs channels")
+    return fs_cmd("api show channels")
+
+def getFsBCalls():
+    """Get FS Bridged Calls"""
+    logger.info("get fs calls")
+    return fs_cmd("api show bridged_calls")
+
+def getFsRegistration():
+    """ Get registration list"""
+    # A ajouter dans admin de pyfreebill pour voir via l'interface les user enregistres : si sip:username@ est present donc enregistre
+    logger.info("get registration")
+    return fs_cmd("api show registrations")

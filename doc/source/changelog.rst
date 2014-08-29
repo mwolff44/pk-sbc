@@ -1,6 +1,41 @@
 Changelog
 *********
 
+Version 1.4
+============
+
+New features
+------------
+
+* New customer portal
+* HTTPS access only
+* Reload Fs config via button in admin panel
+* Currency management
+* Database size monitoring - new panel (in admin menu)
+* Sofia Gateway : add new choose lists for selecting codecs
+* Add sip profile DTMF options (pass-rfc2833)
+* Add new rtp_rewrite_timestamps sofia profile option
+* Visitors and web interface use stats
+* Admin CDR panel : show minutes / sell / cost / margin corresponding to selection
+* New dashboard : revenue / cost / minutes / calls stats
+* documentation update for installation of 1.4 freeswitch version
+* web country blocker based on visitor's ip. Databases : freegeoip.net and/or maxmind
+
+Modifications
+-------------
+
+* Django 1.6 migration
+* All dependencies are up to date
+* Optimisation of customer sip parameter and customer sip UA codecs selection
+
+Bug corrections
+---------------
+
+* Add new codec options in Customer sip accounts and sip profiles : G711u&G711a and G711a&G711u
+* Destination number is checked before LUA
+* Recurrent tasks working with new chronicler version
+
+
 Version 1.3
 ============
 

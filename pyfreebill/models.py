@@ -15,11 +15,10 @@
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
 from django.db import models
-from django.db.models import permalink
+from django.db.models import permalink, Sum, Avg, Count, Max, Min
 from django.core.validators import EMPTY_VALUES
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.contrib.comments.models import Comment
@@ -27,19 +26,24 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.generic import GenericRelation
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import format_html
-#from country_dialcode.models import Country, Prefix
-#from pyfreebill import fields
-from pyfreebill.validators import validate_cidr
+
 import datetime, qsstats
-from django.db.models import Sum, Avg, Count, Max, Min
+
 from django_iban.fields import IBANField, SWIFTBICField
+
 import decimal
+
 import math
+
 from django_countries.fields import CountryField
 
 from netaddr import IPNetwork, AddrFormatError
 
 import re
+
+from currencies.models import Currency
+
+from pyfreebill.validators import validate_cidr
 
 # CustomUser -- Django 1.6
 # class CustomUser(AbstractUser):
@@ -109,6 +113,8 @@ class Company(models.Model):
                                            decimal_places=6,
                                            default=0,
                                            help_text=_(u"Actual customer balance."))
+    cb_currency = models.ForeignKey(Currency,
+                                verbose_name=_(u"Currency"))
     supplier_balance = models.DecimalField(_(u'supplier balance'),
                                            max_digits=12,
                                            decimal_places=6,
@@ -194,7 +200,7 @@ class Person(models.Model):
                                 null=True)
     about = models.TextField(_('about'),
                              blank=True)
-    user = models.OneToOneField(User,
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 blank=True,
                                 null=True,
                                 verbose_name=_('user'))
@@ -569,6 +575,8 @@ class CustomerDirectory(models.Model):
         ("PCMU,G729", _(u"PCMU,G729")),
         ("G729,PCMA", _(u"G729,PCMA")),
         ("G729,PCMU", _(u"G729,PCMU")),
+        ("PCMA,PCMU", _(u"PCMA,PCMU")),
+        ("PCMU,PCMA", _(u"PCMU,PCMA")),
         ("G729", _(u"G729")),
         ("PCMU", _(u"PCMU")),
         ("PCMA", _(u"PCMA")),
@@ -746,6 +754,8 @@ class ProviderTariff(models.Model):
     carrier = models.ForeignKey(Company,
                                 verbose_name=_(u"Provider"),
                                 limit_choices_to={'supplier_enabled': True})
+    currency = models.ForeignKey(Currency,
+                                verbose_name=_(u"Currency"))
     lead_strip = models.CharField(_(u'lead strip'),
                                   blank=True,
                                   default='',
@@ -935,6 +945,8 @@ class RateCard(models.Model):
                             unique=True)
     description = models.TextField(_(u'description'),
                                    blank=True)
+    currency = models.ForeignKey(Currency,
+                                verbose_name=_(u"Currency"))
     lcrgroup = models.ForeignKey(LCRGroup,
                                  verbose_name=_(u"lcr"))
     CALLERID_FILTER_CHOICES = (
@@ -1413,7 +1425,7 @@ class SipProfile(models.Model):
                                                       authentication failures.
                                                       Required for Fail2ban.
                                                       """))
-    MULTIPLE_CODEC_CHOICES = (
+    MULTIPLE_CODECS_CHOICES = (
         ("PCMA,PCMU,G729", _(u"PCMA,PCMU,G729")),
         ("PCMU,PCMA,G729", _(u"PCMU,PCMA,G729")),
         ("G729,PCMA,PCMU", _(u"G729,PCMA,PCMU")),
@@ -1422,20 +1434,23 @@ class SipProfile(models.Model):
         ("PCMU,G729", _(u"PCMU,G729")),
         ("G729,PCMA", _(u"G729,PCMA")),
         ("G729,PCMU", _(u"G729,PCMU")),
+        ("PCMA,PCMU", _(u"PCMA,PCMU")),
+        ("PCMU,PCMA", _(u"PCMU,PCMA")),
         ("G729", _(u"G729")),
         ("PCMU", _(u"PCMU")),
         ("PCMA", _(u"PCMA")),
+        ("ALL", _(u"ALL")),
     )
     inbound_codec_prefs = models.CharField(_(u"inbound codec prefs"),
                                            max_length=100,
-                                           choices=MULTIPLE_CODEC_CHOICES,
+                                           choices=MULTIPLE_CODECS_CHOICES,
                                            default="G729,PCMU,PCMA",
                                            help_text=_(u"""Define allowed
                                                        preferred codecs for
                                                        inbound calls."""))
     outbound_codec_prefs = models.CharField(_(u"outbound codec prefs"),
                                             max_length=100,
-                                            choices=MULTIPLE_CODEC_CHOICES,
+                                            choices=MULTIPLE_CODECS_CHOICES,
                                             default="G729,PCMU,PCMA",
                                             help_text=_(u"""Define allowed
                                                         preferred codecs for
@@ -1528,6 +1543,14 @@ class SipProfile(models.Model):
                                                               occurs
                                                               beforehand-
                                                               """))
+    rtp_rewrite_timestamps = models.BooleanField(_(u"""RTP rewrite timestamps"""),
+                                       default=False,
+                                       help_text=_(u"""If you don't want to pass
+                                           through timestampes from 1 RTP call
+                                           to another"""))
+    pass_rfc2833 = models.BooleanField(_(u"""pass rfc2833"""),
+                                       default=False,
+                                       help_text=_(u"""pass rfc2833"""))
     date_added = models.DateTimeField(_(u'date added'),
                                       auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'),
@@ -1581,10 +1604,28 @@ class SofiaGateway(models.Model):
                               blank=True,
                               default='',
                               max_length=15)
-    codec = models.CharField(_(u'codec'),
-                             blank=True,
-                             default='',
-                             max_length=30)
+    MULTIPLE_CODECS_CHOICES = (
+        ("PCMA,PCMU,G729", _(u"PCMA,PCMU,G729")),
+        ("PCMU,PCMA,G729", _(u"PCMU,PCMA,G729")),
+        ("G729,PCMA,PCMU", _(u"G729,PCMA,PCMU")),
+        ("G729,PCMU,PCMA", _(u"G729,PCMU,PCMA")),
+        ("PCMA,G729", _(u"PCMA,G729")),
+        ("PCMU,G729", _(u"PCMU,G729")),
+        ("G729,PCMA", _(u"G729,PCMA")),
+        ("G729,PCMU", _(u"G729,PCMU")),
+        ("PCMA,PCMU", _(u"PCMA,PCMU")),
+        ("PCMU,PCMA", _(u"PCMU,PCMA")),
+        ("G729", _(u"G729")),
+        ("PCMU", _(u"PCMU")),
+        ("PCMA", _(u"PCMA")),
+        ("ALL", _(u"ALL")),
+    )
+    codec = models.CharField(_(u"Codecs"),
+                              max_length=30,
+                              default="ALL",
+                              choices=MULTIPLE_CODECS_CHOICES,
+                              help_text=_(u"""Codecs allowed - beware about
+                              order, 1st has high priority """))
     username = models.CharField(_(u"username"),
                                 blank=True,
                                 default='',
@@ -1929,12 +1970,12 @@ class DimCustomerDestination(models.Model):
     customer = models.ForeignKey(Company, verbose_name=_(u"customer"))
     destination = models.CharField(_(u'destination'), max_length=250, null=True, blank=True)
     date = models.ForeignKey(DimDate, verbose_name=_(u"date"))
-    total_calls = models.IntegerField(_(u"total calls"))
-    success_calls = models.IntegerField(_(u"success calls"))
-    total_duration = models.IntegerField(_(u"total duration"))
-    avg_duration = models.IntegerField(_(u"average duration"))
-    max_duration = models.IntegerField(_(u"max duration"))
-    min_duration = models.IntegerField(_(u"min duration"))
+    total_calls = models.IntegerField(_(u"total calls"), default=0)
+    success_calls = models.IntegerField(_(u"success calls"), default=0)
+    total_duration = models.IntegerField(_(u"total duration"), default=0)
+    avg_duration = models.IntegerField(_(u"average duration"), default=0)
+    max_duration = models.IntegerField(_(u"max duration"), default=0)
+    min_duration = models.IntegerField(_(u"min duration"), default=0)
     total_sell = models.DecimalField(_(u'total sell'), max_digits=12, decimal_places=2)
     total_cost = models.DecimalField(_(u'total cost'), max_digits=12, decimal_places=2)
 
@@ -1961,12 +2002,12 @@ class DimProviderDestination(models.Model):
     provider = models.ForeignKey(Company, verbose_name=_(u"provider"))
     destination = models.CharField(_(u'destination'), max_length=250, null=True, blank=True)
     date = models.ForeignKey(DimDate, verbose_name=_(u"date"))
-    total_calls = models.IntegerField(_(u"total calls"))
-    success_calls = models.IntegerField(_(u"success calls"))
-    total_duration = models.IntegerField(_(u"total duration"))
-    avg_duration = models.IntegerField(_(u"average duration"))
-    max_duration = models.IntegerField(_(u"max duration"))
-    min_duration = models.IntegerField(_(u"min duration"))
+    total_calls = models.IntegerField(_(u"total calls"), default=0)
+    success_calls = models.IntegerField(_(u"success calls"), default=0)
+    total_duration = models.IntegerField(_(u"total duration"), default=0)
+    avg_duration = models.IntegerField(_(u"average duration"), default=0)
+    max_duration = models.IntegerField(_(u"max duration"), default=0)
+    min_duration = models.IntegerField(_(u"min duration"), default=0)
     total_sell = models.DecimalField(_(u'total sell'), max_digits=12, decimal_places=2)
     total_cost = models.DecimalField(_(u'total cost'), max_digits=12, decimal_places=2)
 

@@ -1,0 +1,84 @@
+{% extends 'customer/base.html' %}
+
+{% load bootstrap3 %}
+
+{% block bootstrap3_title %}PyFreeBilling : Customer Portal Balance History{% endblock %}
+
+{% block content %}
+
+
+        <div class="col-md-4">
+        	<div class="panel panel-default">
+	          <div class="panel-heading">
+	          	<h3 class="panel-title">IP Authentification</h3>
+	          </div>
+	          <div class="panel-body">
+	          	<ul class="list-group">
+	          		<li class="list-group-item">
+	          			You only need to specify our switch ip address in your system. To get it, please contact support.
+	          		</li>
+	          	</ul>
+			  </div>
+			</div>
+		</div>
+
+        <div class="col-md-4">
+        	<div class="panel panel-default">
+	          <div class="panel-heading">
+	          	<h3 class="panel-title">Registration</h3>
+	          </div>
+	          <div class="panel-body">
+	          	<ul class="list-group">
+	          		<li class="list-group-item">
+	          			Your system needs to register with correct username/password. If you lost your password, please contact support.
+	          		</li>
+	          	</ul>
+			  </div>
+			</div>
+		</div>
+
+        <div class="col-md-4">
+        	<div class="panel panel-default">
+	          <div class="panel-heading">
+	          	<h3 class="panel-title">Misc</h3>
+	          </div>
+	          <div class="panel-body">
+	          	<ul class="list-group">
+	          		<li class="list-group-item">
+	          			If you need to modify limits, adding, modifying or deleting a sip account, please contact support team.
+	          		</li>
+	          	</ul>
+			  </div>
+			</div>
+		</div>
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>SIP auth type</th>
+			<th>Username</th>
+			<th>SIP IP</th>
+			<th>Max calls</th>
+			<th>Calls/sec</th>
+			<th>Enabled</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for b in sipaccount %}
+		<tr>
+			<td>{% if b.registration %}Registration{% else %}IP Auth{% endif %}</td>
+			<td>{{ b.name }}</td>
+			<td>{{ b.sip_ip }}</td>
+			<td>{{ b.max_calls }}</td>
+			<td>{{ b.calls_per_second }}</td>
+			<td>{% if b.enabled %}<button type="button" class="btn btn-success btn-xs">Enabled</button>{% else %}<button type="button" class="btn btn-danger btn-xs">Disabled</button>{% endif %}</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+<div class="pagination pagination-centered">
+	{% bootstrap_pagination page_obj url="/balance?page=1" size="small" %}
+</div>
+
+{% endblock %}

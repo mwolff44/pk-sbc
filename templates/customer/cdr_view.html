@@ -1,0 +1,293 @@
+{% extends 'customer/base.html' %}
+
+{% load bootstrap3 %}
+
+{% block bootstrap3_title %}PyFreeBilling : Customer Portal Balance History{% endblock %}
+
+{% block content %}
+
+
+	<div class="row">
+        <div class="box">
+			<form action="{% url 'cdr_report' %}" method="GET" class="form-horizontal" role="form">
+				<h3 class="form-signin-heading">CDR search : </h3>
+				
+				<div class="form-group">
+					<label for="from_date" class="col-xs-2 control-label">From date (Y/M/D h:m)</label>
+					<div class="col-xs-2">
+            			<select name="from_y" class="form-control" placeholder="year">
+            				<option selected disabled>year</option>
+				  			<option>2013</option>
+				  			<option>2014</option>
+				  			<option>2015</option>
+						  	<option>2016</option>
+						</select>
+        			</div>
+        			<div class="col-xs-2">
+            			<select name="from_m" class="form-control" placeholder="month">
+            				<option selected disabled>month</option>
+				  			<option>1</option>
+				  			<option>2</option>
+				  			<option>3</option>
+						  	<option>4</option>
+						  	<option>5</option>
+						  	<option>6</option>
+						  	<option>7</option>
+						  	<option>8</option>
+						  	<option>9</option>
+						  	<option>10</option>
+						  	<option>11</option>
+						  	<option>12</option>
+						</select>
+        			</div>
+        			<div class="col-xs-2">
+            			<select name="from_d" class="form-control" placeholder="day">
+            				<option selected disabled>day</option>
+				  			<option>1</option>
+				  			<option>2</option>
+				  			<option>3</option>
+						  	<option>4</option>
+						  	<option>5</option>
+						  	<option>6</option>
+						  	<option>7</option>
+						  	<option>8</option>
+						  	<option>9</option>
+						  	<option>10</option>
+						  	<option>11</option>
+						  	<option>12</option>
+						  	<option>13</option>
+						  	<option>14</option>
+						  	<option>15</option>
+						  	<option>16</option>
+						  	<option>17</option>
+						  	<option>18</option>
+						  	<option>19</option>
+						  	<option>20</option>
+						  	<option>21</option>
+						  	<option>22</option>
+						  	<option>23</option>
+						  	<option>24</option>
+						  	<option>25</option>
+						  	<option>26</option>
+						  	<option>27</option>
+						  	<option>28</option>
+						  	<option>29</option>
+						  	<option>30</option>
+						  	<option>31</option>
+						</select>
+        			</div>
+        			<div class="col-xs-2">
+            			<select name="from_h" class="form-control" placeholder="hour">
+            				<option>00</option>
+				  			<option>01</option>
+				  			<option>02</option>
+				  			<option>03</option>
+						  	<option>04</option>
+						  	<option>05</option>
+						  	<option>06</option>
+						  	<option>07</option>
+						  	<option>08</option>
+						  	<option>09</option>
+						  	<option>10</option>
+						  	<option>11</option>
+						  	<option>12</option>
+						  	<option>13</option>
+						  	<option>14</option>
+						  	<option>15</option>
+						  	<option>16</option>
+						  	<option>17</option>
+						  	<option>18</option>
+						  	<option>19</option>
+						  	<option>20</option>
+						  	<option>21</option>
+						  	<option>22</option>
+						  	<option>23</option>
+						  	<option>24</option>
+						</select>
+        			</div>
+        			<div class="col-xs-2">
+            			<select name="from_min" class="form-control" placeholder="min">
+				  			<option>00</option>
+				  			<option>05</option>
+				  			<option>10</option>
+						  	<option>15</option>
+						  	<option>20</option>
+						  	<option>25</option>
+						  	<option>30</option>
+						  	<option>35</option>
+						  	<option>40</option>
+						  	<option>45</option>
+						  	<option>50</option>
+						  	<option>55</option>
+						</select>
+        			</div>
+				</div>
+
+				<div class="form-group">
+					<label for="to_date" class="col-xs-2 control-label">To date (Y/M/D h:m)</label>
+					<div class="col-xs-2">
+            			<select name="to_y" class="form-control" placeholder="year">
+            				<option selected disabled>year</option>
+				  			<option>2013</option>
+				  			<option>2014</option>
+				  			<option>2015</option>
+						  	<option>2016</option>
+						</select>
+        			</div>
+        			<div class="col-xs-2">
+            			<select name="to_m" class="form-control" placeholder="month">
+            				<option selected disabled>month</option>
+				  			<option>1</option>
+				  			<option>2</option>
+				  			<option>3</option>
+						  	<option>4</option>
+						  	<option>5</option>
+						  	<option>6</option>
+						  	<option>7</option>
+						  	<option>8</option>
+						  	<option>9</option>
+						  	<option>10</option>
+						  	<option>11</option>
+						  	<option>12</option>
+						</select>
+        			</div>
+        			<div class="col-xs-2">
+            			<select name="to_d" class="form-control" placeholder="day">
+            				<option selected disabled>day</option>
+				  			<option>1</option>
+				  			<option>2</option>
+				  			<option>3</option>
+						  	<option>4</option>
+						  	<option>5</option>
+						  	<option>6</option>
+						  	<option>7</option>
+						  	<option>8</option>
+						  	<option>9</option>
+						  	<option>10</option>
+						  	<option>11</option>
+						  	<option>12</option>
+						  	<option>13</option>
+						  	<option>14</option>
+						  	<option>15</option>
+						  	<option>16</option>
+						  	<option>17</option>
+						  	<option>18</option>
+						  	<option>19</option>
+						  	<option>20</option>
+						  	<option>21</option>
+						  	<option>22</option>
+						  	<option>23</option>
+						  	<option>24</option>
+						  	<option>25</option>
+						  	<option>26</option>
+						  	<option>27</option>
+						  	<option>28</option>
+						  	<option>29</option>
+						  	<option>30</option>
+						  	<option>31</option>
+						</select>
+        			</div>
+        			<div class="col-xs-2">
+            			<select name="to_h" class="form-control" placeholder="hour">
+            				<option>00</option>
+				  			<option>01</option>
+				  			<option>02</option>
+				  			<option>03</option>
+						  	<option>04</option>
+						  	<option>05</option>
+						  	<option>06</option>
+						  	<option>07</option>
+						  	<option>08</option>
+						  	<option>09</option>
+						  	<option>10</option>
+						  	<option>11</option>
+						  	<option>12</option>
+						  	<option>13</option>
+						  	<option>14</option>
+						  	<option>15</option>
+						  	<option>16</option>
+						  	<option>17</option>
+						  	<option>18</option>
+						  	<option>19</option>
+						  	<option>20</option>
+						  	<option>21</option>
+						  	<option>22</option>
+						  	<option>23</option>
+						  	<option>24</option>
+						</select>
+        			</div>
+        			<div class="col-xs-2">
+            			<select name="to_min" class="required form-control" placeholder="min">
+				  			<option>00</option>
+				  			<option>05</option>
+				  			<option>10</option>
+						  	<option>15</option>
+						  	<option>20</option>
+						  	<option>25</option>
+						  	<option>30</option>
+						  	<option>35</option>
+						  	<option>40</option>
+						  	<option>45</option>
+						  	<option>50</option>
+						  	<option>55</option>
+						</select>
+        			</div>
+				</div>
+				<div class="form-group">
+					<label for="dest_num" class="col-xs-2 control-label">Dest. number</label>
+					<div class="col-xs-4">
+            			<input type="tel" name="dest_num" class="form-control">
+        			</div>
+        		</div>
+
+				{% buttons %}
+					<button type="submit" class="btn btn-primary btn-block">Search</button>
+				{% endbuttons %}
+		       
+			</form>
+		</div>
+	</div>
+
+
+
+
+
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th>Destination number</th>
+			<th>Duration</th>
+			<th>Prefix</th>
+			<th>Destination</th>
+			<th>Rate</th>
+			<th>Amount</th>
+			<th>Codec</th>
+			<th>SIP_UA IP</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for cdr in Cdr %}
+		<tr>
+			<td>{{ cdr.start_stamp }}</td>
+			<td>{{ cdr.destination_number }}</td>
+			<td>{{ cdr.min_effective_duration }}</td>
+			<td>{{ cdr.prefix }}</td>
+			<td>{{ cdr.sell_destination }}</td>
+			<td>{{ cdr.rate }}</td>
+			<td>{{ cdr.total_sell_py }}</td>
+			<td>{{ cdr.read_codec }}/{{ cdr.write_codec }}</td>
+			<td>{{ cdr.customer_ip }}</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+<div class="pagination pagination-centered">
+	{% if cdr %}
+	{% bootstrap_pagination page_obj url="/cdr_report?page=1" size="small" %}
+	{% endif %}
+</div>
+
+{% endblock %}

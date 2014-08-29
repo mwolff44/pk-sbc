@@ -148,6 +148,11 @@ class CustomMenu(Menu):
                                 items.MenuItem(_('Recurring tasks logs'), '/extranet/chroniker/log/'),
                             ]
                         ),
+                        items.MenuItem(_('Databases'),
+                            children=[
+                                items.MenuItem(_('Database size'), '/extranet/database_size/table/'),
+                            ]
+                        ),
                         items.MenuItem(_('Status'), '/extranet/status/'),
                     ]
                 ),
