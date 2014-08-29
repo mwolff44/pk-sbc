@@ -58,9 +58,9 @@ def customers_stats_view(request):
 
     # Get the q GET parameter
     # date from and to and check value
-    start_d = {'y': [], 'm': [], 'd': [], 'h': [], 'min': [], 'status': True}
-    end_d = {'y': [], 'm': [], 'd': [], 'h': [], 'min': [],'status': True}
-    li = ['y', 'm', 'd', 'h', 'min']
+    start_d = {'y': [], 'm': [], 'd': [], 'status': True}
+    end_d = {'y': [], 'm': [], 'min': [],'status': True}
+    li = ['y', 'm', 'd']
     for i in li:
         start_d[str(i)] = request.GET.get("from_" + str(i))
         if start_d[str(i)] and start_d[str(i)].isnumeric():
@@ -76,9 +76,9 @@ def customers_stats_view(request):
     dest_num = request.GET.get("dest_num")
     company = request.GET.get("company")
     if start_d['status']:
-        start_date = datetime.datetime(start_d['y'], start_d['m'], start_d['d'], start_d['h'], start_d['min'])
+        start_date = datetime.datetime(start_d['y'], start_d['m'], start_d['d'], 00, 00)
     if end_d['status']:
-        end_date = datetime.datetime(end_d['y'], end_d['m'], end_d['d'], end_d['h'], end_d['min'])
+        end_date = datetime.datetime(end_d['y'], end_d['m'], end_d['d'], 00, 00)
     if start_date and end_date:
         qs = qs.filter(date__date__range=(start_date, end_date))
 
@@ -100,7 +100,7 @@ def customers_stats_view(request):
                         order_by('-total_sell')
     
     table = TopSellTable(stats_table)
-    RequestConfig(request, paginate={"per_page": 25}).configure(table)
+    RequestConfig(request, paginate={"per_page": 20}).configure(table)
     #import pdb; pdb.set_trace()
     return render_to_response('admin/customers_stats.html', locals(),
                               context_instance=RequestContext(request))

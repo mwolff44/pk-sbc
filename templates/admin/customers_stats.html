@@ -90,54 +90,7 @@
 						  	<option>31</option>
 						</select>
         			</div>
-        			<div class="span1">
-            			<select name="from_h" class="input-small" placeholder="hour">
-            				<option>00</option>
-				  			<option>01</option>
-				  			<option>02</option>
-				  			<option>03</option>
-						  	<option>04</option>
-						  	<option>05</option>
-						  	<option>06</option>
-						  	<option>07</option>
-						  	<option>08</option>
-						  	<option>09</option>
-						  	<option>10</option>
-						  	<option>11</option>
-						  	<option>12</option>
-						  	<option>13</option>
-						  	<option>14</option>
-						  	<option>15</option>
-						  	<option>16</option>
-						  	<option>17</option>
-						  	<option>18</option>
-						  	<option>19</option>
-						  	<option>20</option>
-						  	<option>21</option>
-						  	<option>22</option>
-						  	<option>23</option>
-						  	<option>24</option>
-						</select>
-        			</div>
-        			<div class="span1">
-            			<select name="from_min" class="input-small" placeholder="min">
-				  			<option>00</option>
-				  			<option>05</option>
-				  			<option>10</option>
-						  	<option>15</option>
-						  	<option>20</option>
-						  	<option>25</option>
-						  	<option>30</option>
-						  	<option>35</option>
-						  	<option>40</option>
-						  	<option>45</option>
-						  	<option>50</option>
-						  	<option>55</option>
-						</select>
-        			</div>
-				</div>
 
-				<div class="control-group">
 					<label for="to_date" class="span2 control-label">To date (Y/M/D h:m)</label>
 					<div class="span1">
             			<select name="to_y" class="input-small" placeholder="year">
@@ -201,76 +154,30 @@
 						  	<option>31</option>
 						</select>
         			</div>
-        			<div class="span1">
-            			<select name="to_h" class="input-small" placeholder="hour">
-            				<option>00</option>
-				  			<option>01</option>
-				  			<option>02</option>
-				  			<option>03</option>
-						  	<option>04</option>
-						  	<option>05</option>
-						  	<option>06</option>
-						  	<option>07</option>
-						  	<option>08</option>
-						  	<option>09</option>
-						  	<option>10</option>
-						  	<option>11</option>
-						  	<option>12</option>
-						  	<option>13</option>
-						  	<option>14</option>
-						  	<option>15</option>
-						  	<option>16</option>
-						  	<option>17</option>
-						  	<option>18</option>
-						  	<option>19</option>
-						  	<option>20</option>
-						  	<option>21</option>
-						  	<option>22</option>
-						  	<option>23</option>
-						  	<option>24</option>
-						</select>
-        			</div>
-        			<div class="span1">
-            			<select name="to_min" class="required input-small" placeholder="min">
-				  			<option>00</option>
-				  			<option>05</option>
-				  			<option>10</option>
-						  	<option>15</option>
-						  	<option>20</option>
-						  	<option>25</option>
-						  	<option>30</option>
-						  	<option>35</option>
-						  	<option>40</option>
-						  	<option>45</option>
-						  	<option>50</option>
-						  	<option>55</option>
-						</select>
-        			</div>
 				</div>
 				<div class="control-group">
 					<label for="company" class="span2 control-label">Company</label>
 					<div class="span4">
             			<input type="company" name="company" class="form-control">
         			</div>
-
 					<label for="dest_num" class="span2 control-label">Destination</label>
-					<div class="span4">
+						<div class="span4">
             			<input type="dest_num" name="dest_num" class="form-control">
         			</div>
         		</div>
-				
-					<button type="submit" class="btn btn-primary btn-block">Search</button>
-			
+				<div class="text-center">
+					<button type="submit" class="btn btn-primary">Search</button>
+				</div>
 		       
 			</form>
 		</div>
 	</div>
 	
-	<div><center><h3>Stats : 
-		{% if start_date %} From date : {{ start_date }} -{% endif %}
-		{% if end_date %}To date : {{ end_date }} -{% endif %}
-		{% if company %}Company : {{ company }} -{% endif %}
-		{% if dest_num %}Destination : {{ dest_num }} -{% endif %}</h3></center>
+	<div><center><h3>- Stats  
+		{% if start_date %} From <i class="text-info">{{ start_date|date:"D d M Y" }}</i> {% endif %}
+		{% if end_date %}To <i class="text-info">{{ end_date|date:"D d M Y" }}</i> --{% endif %}
+		Company : <i class="text-info">{% if company %}{{ company }} {% else %}ALL{% endif %}</i> --
+		Destination : <i class="text-info">{% if dest_num %}{{ dest_num }} {% else %}ALL{% endif %}</i> -</h3></center>
 	</div>
 
     <div id="out"> 
