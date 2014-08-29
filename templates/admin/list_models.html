@@ -1,55 +1,24 @@
-{% extends "admin/base_site.html" %}{% load i18n yawdadmin_filters %}
-{% load dashboard_tags %}
+{% extends "admin/base_site.html" %}
+{% load admin_static %}
+{% load i18n yawdadmin_filters %}
+{% load admin_urls %}
 
-{% block extrahead %}
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/nv.d3.css">
+{% block extrastyle %}{{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}" />
+{{ media.css }}
 {% endblock %}
 
-{% block bodyclass %}dashboard{% endblock %}
+{% block extrahead %}
+{{ block.super }}
+{{ media.js }}
+{% endblock %}
 
-{% block breadcrumbs %}
-			<ul class="breadcrumb">
-				<li class="active"><i class="icon-home"></i> {% trans 'Home' %}</li>
-			</ul>{% endblock %}
+{% block coltype %}flex{% endblock %}
 
-{% block main-struct %}
-	<div id="content-main">
+{% block content %}
+  <div id="content-main">
 
-		<div class="row-fluid">
-			<div class="span12">
-				<div class="well well-open">
-		<h3 class="filter-title">Dashboard</h3>
-
-	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-	<script src="{{ STATIC_URL }}js/d3.v3.js" charset="utf-8"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/nv.d3.min.js"></script>
-	<script type="text/javascript">
-		var jsonUrlrevenue = '{% url 'chart_stats_general_json' %}?name=revenue';
-		var jsonUrlvolume = '{% url 'chart_stats_general_json' %}?name=volume';
-		var jsonUrlminute = '{% url 'chart_stats_general_json' %}?name=minute';
-	</script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/pfb.graphs.js"></script>
-
-<style>
-#chart_revenue svg {
-  height: 400px;
-}
-#chart_volume svg {
-  height: 250px;
-}
-#chart_minute svg {
-  height: 250px;
-}
-</style>
-
-<div id="chart_revenue"><svg></svg></div>
-<div id="chart_volume"><svg></svg></div>
-<div id="chart_minute"><svg></svg></div>
-
-			</div></div>
-		</div>
-
-		{% if app_list and user.username == 'mwolff' %}
+{% if app_list %}
 			{% with sep=app_list|length|divide:2 %}
 				<div class="row-fluid">
 					<div class="span6">
@@ -129,27 +98,9 @@
 					</div>
 				</div>
 			{% endwith %}
+		{% else %}
+			<p class="alert">{% trans "You don't have permission to edit anything." %}</p>
 		{% endif %}
-	</div>
-{% endblock %}
 
-{% block sidebar %}
-	<div class="well well-open">
-		<h3 class="filter-title">{% trans 'Recent Actions' %}</h3>
-		<ul class="nav nav-list">
-			<li class="nav-header">{% filter utfupper %}{% trans 'My Actions' %}{% endfilter %}</li>{% load log %}{% get_admin_log 10 as admin_log for_user user %}{% if not admin_log %}
-			<li>
-				<p class="tip">{% trans 'No history yet' %}</p>
-			</li>{% else %}{% for entry in admin_log %}
-			<li>{% if not entry.is_deletion and entry.get_admin_url %}
-				<a class="log-link" href="{{ entry.get_admin_url }}">{% endif %}
-					<i class="icon-{% if entry.is_addition %}plus{% elif entry.is_change %}edit{% elif entry.is_deletion %}remove{% endif %}"></i> {{ entry.object_repr }}{% if not entry.is_deletion and entry.get_admin_url %}
-				</a>{% endif %}<br/>{% if entry.content_type %}
-				<span class="mini quiet">{% with entryname=entry.content_type.name|capfirst|escape %}{% trans entryname %}{% endwith %}</span>{% else %}
-				<span class="mini quiet">{% trans 'Unknown content' %}</span>{% endif %}
-				<span class="mini">{{entry.action_time|date:"d N, H:i"}}</span>
-			</li>{% endfor %}{% endif %}
-		</ul>
-	</div>
-
+</div>
 {% endblock %}

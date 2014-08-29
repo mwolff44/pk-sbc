@@ -194,6 +194,8 @@ INSTALLED_APPS = (
     'currencies',
     'djangosecure',
     'country_block',
+    'django_tables2',
+    'bootstrap_toolkit',
 #    'raven.contrib.django.raven_compat',
     #'massadmin',
 )
