@@ -35,7 +35,7 @@ psutil==2.1.1
 psycopg2==2.5.3
 python-memcached==1.53
 raven>=3
-requests==2.3.0
+requests==2.4.0
 pytz>=2014.4
 switch2bill-common==2.8.5
 wsgiref==0.1.2
