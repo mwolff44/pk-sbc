@@ -23,11 +23,19 @@
   <div id="content-main">
 	<div class="container">
 		<div class="row">
+			{% if vue == "customer" %}
 			<form action="{% url 'customers_stats' %}" method="GET" class="form-horizontal" role="form">
+			{% elif vue == "provider" %}
+			<form action="{% url 'providers_stats' %}" method="GET" class="form-horizontal" role="form">
+			{% elif vue == "dest_customer" %}
+			<form action="{% url 'dest_customers_stats' %}" method="GET" class="form-horizontal" role="form">
+			{% elif vue == "dest_provider" %}
+			<form action="{% url 'dest_providers_stats' %}" method="GET" class="form-horizontal" role="form">
+			{% endif %}
 				<h3 class="form-signin-heading">Stats selection : </h3>
 				
 				<div class="control-group">
-					<label for="from_date" class="span2 control-label">From date (Y/M/D h:m)</label>
+					<label for="from_date" class="span2 control-label">From date (Y/M/D h:m) :</label>
 					<div class="span1">
             			<select name="from_y" class="input-small" placeholder="year">
             				<option selected disabled>year</option>
@@ -91,7 +99,7 @@
 						</select>
         			</div>
 
-					<label for="to_date" class="span2 control-label">To date (Y/M/D h:m)</label>
+					<label for="to_date" class="span2 control-label">To date (Y/M/D h:m) :</label>
 					<div class="span1">
             			<select name="to_y" class="input-small" placeholder="year">
             				<option selected disabled>year</option>
@@ -156,17 +164,23 @@
         			</div>
 				</div>
 				<div class="control-group">
-					<label for="company" class="span2 control-label">Company</label>
+					{% if vue == "customer" or vue == "dest_customer" %}
+					<label for="company" class="span2 control-label">Customer :</label>
+					{% elif vue == "provider" or vue == "dest_provider" %}
+					<label for="company" class="span2 control-label">Provider :</label>
+					{% endif %}
 					<div class="span4">
-            			<input type="company" name="company" class="form-control">
+            			<input type="company" name="company" class="form-control"></input>
+            			<i class="help icon-question-sign" data-content="The filter will search company names that contain your entry" data-original-title="Help text :"></i>
         			</div>
-					<label for="dest_num" class="span2 control-label">Destination</label>
-						<div class="span4">
-            			<input type="dest_num" name="dest_num" class="form-control">
+					<label for="dest_num" class="span2 control-label">Destination :</label>
+					<div class="span4">
+            			<input type="dest_num" name="dest_num" class="form-control"></input>
+            			<i class="help icon-question-sign" data-content="The filter will search destinations that contain your entry" data-original-title="Help text :"></i>
         			</div>
         		</div>
 				<div class="text-center">
-					<button type="submit" class="btn btn-primary">Search</button>
+					<button type="submit" class="btn btn-primary">Search ... </button>
 				</div>
 		       
 			</form>
@@ -240,6 +254,11 @@
 {% endif %}
 
     </div>
+    <script>
+(function($){
+$('.help').popover({trigger: 'click', html: true});
+})(yawdadmin.jQuery)
+</script>
 </div>
 
 

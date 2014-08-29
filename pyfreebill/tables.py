@@ -15,18 +15,20 @@
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
 from django.utils.translation import ugettext_lazy as _
+from django.utils.safestring import mark_safe
 
 import django_tables2 as tables
+from django_tables2.utils import Accessor as A
 
 from decimal import Decimal
 
 
-class TopSellTable(tables.Table):
-    customer__name = tables.Column(verbose_name=u'Customer')
+class TopTableMixin(tables.Table):
+    #customer__name = tables.Column(verbose_name=u'Customer')
     total_sell = tables.Column(
-        verbose_name=u'Sell', attrs={"td":{"class": "text-align: right"}})
+        verbose_name=u'Sell', attrs={"td": {"class": "text-align: right"}})
     total_cost = tables.Column(verbose_name=u'Margin')
-    customer__cb_currency__code = tables.Column(verbose_name=u'Currency')
+    #customer__cb_currency__code = tables.Column(verbose_name=u'Currency')
     success_calls = tables.Column(verbose_name=u'Nb Succes Calls')
     total_calls = tables.Column(verbose_name=u'Nb Calls')
     total_duration = tables.Column()
@@ -35,7 +37,7 @@ class TopSellTable(tables.Table):
     min_duration = tables.Column(verbose_name=u'ASR')
 
     def __init__(self, *args, **kwargs):
-        super(TopSellTable, self).__init__(*args, **kwargs)
+        super(TopTableMixin, self).__init__(*args, **kwargs)
 
     def render_total_cost(self, value, record):
         if record['total_sell'] and value:
@@ -74,6 +76,72 @@ class TopSellTable(tables.Table):
         else:
             return 'N/A'
 
+
+class TopCustTable(TopTableMixin, tables.Table):
+
+    """ Customers stats table """
+    customer__name = tables.Column(verbose_name=u'Customer')
+    customer__cb_currency__code = tables.Column(verbose_name=u'Currency')
+
+    def render_customer__name(self, value):
+        """ add a link to destination detail """
+        return mark_safe("<a href='/extranet/destination_customers_stats/?company=%s'>%s</a>" % (value, value))
+
     class Meta:
         # bootstrap 2 template from : https://gist.github.com/dyve/5458209
         attrs = {"class": "bootstrap-tables2"}
+        sequence = (
+            "customer__name", "total_sell", "total_cost", "customer__cb_currency__code",
+            "total_calls", "success_calls", "min_duration", "total_duration", "avg_duration", "max_duration")
+
+
+class TopDestCustTable(TopTableMixin, tables.Table):
+
+    """ Destinations stats table """
+    destination = tables.Column(verbose_name=u'Destination')
+
+    def render_destination(self, value):
+        """ add a link to destination detail """
+        return mark_safe("<a href='/extranet/customers_stats/?destination=%s'>%s</a>" % (value, value))
+
+    class Meta:
+        # bootstrap 2 template from : https://gist.github.com/dyve/5458209
+        attrs = {"class": "bootstrap-tables2"}
+        sequence = (
+            "destination", "total_sell", "total_cost",
+            "total_calls", "success_calls", "min_duration", "total_duration", "avg_duration", "max_duration")
+
+
+class TopDestProvTable(TopTableMixin, tables.Table):
+
+    """ Destinations stats table """
+    destination = tables.Column(verbose_name=u'Destination')
+
+    def render_destination(self, value):
+        """ add a link to destination detail """
+        return mark_safe("<a href='/extranet/providers_stats/?destination=%s'>%s</a>" % (value, value))
+
+    class Meta:
+        # bootstrap 2 template from : https://gist.github.com/dyve/5458209
+        attrs = {"class": "bootstrap-tables2"}
+        sequence = (
+            "destination", "total_sell", "total_cost",
+            "total_calls", "success_calls", "min_duration", "total_duration", "avg_duration", "max_duration")
+
+
+class TopProvTable(TopTableMixin, tables.Table):
+
+    """ Providers stats table """
+    provider__name = tables.Column(verbose_name=u'Provider')
+    provider__cb_currency__code = tables.Column(verbose_name=u'Currency')
+
+    def render_provider__name(self, value):
+        """ add a link to destination detail """
+        return mark_safe("<a href='/extranet/destination_providers_stats/?company=%s'>%s</a>" % (value, value))
+
+    class Meta:
+        # bootstrap 2 template from : https://gist.github.com/dyve/5458209
+        attrs = {"class": "bootstrap-tables2"}
+        sequence = (
+            "provider__name", "total_sell", "total_cost", "provider__cb_currency__code",
+            "total_calls", "success_calls", "min_duration", "total_duration", "avg_duration", "max_duration")
