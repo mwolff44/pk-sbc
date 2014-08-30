@@ -11,6 +11,7 @@ django-chroniker==0.6.7
 django-cities-light==2.4.2
 django-clear-cache==0.3
 django-countries==2.1.2
+django-country-blocker==1.1.12
 django-country-dialcode==0.5.1
 django-currencies==0.3.2
 django-database-size==0.3.0
