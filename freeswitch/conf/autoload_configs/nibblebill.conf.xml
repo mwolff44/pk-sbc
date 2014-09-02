@@ -33,12 +33,9 @@
     <param name="global_heartbeat" value="off"/>
 
     <!-- By default, warn a caller when their balance is at $5.00. You can set this to a negative number. -->
-    <param name="lowbal_amt" value="-5"/>
+    <param name="lowbal_amt" value="-1000"/>
     <param name="lowbal_action" value="play ding"/>
 
-    <!-- By default, terminate a caller when their balance hits $0.00. You can set this to a negative number. -->
-    <param name="nobal_amt" value="0"/>
-    <param name="nobal_action" value="hangup"/>
 
     <!-- If a call goes beyond a certain dollar amount, flag or terminate it -->
     <param name="percall_max_amt" value="100"/>
