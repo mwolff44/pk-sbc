@@ -19,7 +19,7 @@ Bug corrections
 
 * Postpaid : a negative credit limit value no longer blocks call process
 * Admin : CDR export button is now visible in CDR panel
-* 
+* Admin : Database size view now correct
 
 Version 1.4
 ============
