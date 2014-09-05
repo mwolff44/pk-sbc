@@ -1,6 +1,26 @@
 Changelog
 *********
 
+Version 1.4.1
+=============
+
+New features
+------------
+
+* Add G722 codec
+  
+Security
+--------
+
+* Validation of django 1.6.7 (dependencies update)
+
+Bug corrections
+---------------
+
+* Postpaid : a negative credit limit value no longer blocks call process
+* Admin : CDR export button is now visible in CDR panel
+* 
+
 Version 1.4
 ============
 

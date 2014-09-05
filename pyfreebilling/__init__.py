@@ -20,7 +20,7 @@
 from django.utils.version import get_git_changeset
 
 
-VERSION = (1, 4, 0, 'final', 1)
+VERSION = (1, 4, 1, 'final', 0)
 
 
 def get_version(version=None):
