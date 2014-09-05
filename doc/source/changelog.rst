@@ -8,6 +8,7 @@ New features
 ------------
 
 * Add G722 codec
+* Admin stats enhancements
   
 Security
 --------

@@ -197,6 +197,7 @@ INSTALLED_APPS = (
     'django_tables2',
     'bootstrap_toolkit',
     'bootstrap_pagination',
+    'mathfilters',
 #    'raven.contrib.django.raven_compat',
     #'massadmin',
 )
