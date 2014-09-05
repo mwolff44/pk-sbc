@@ -58,9 +58,15 @@
 				
                 {% if request.user.is_superuser %}
                 <div class="span12">
-                	<div id="content-main">
-                		<div class="span2">
-                		</div>
+                	
+
+						{% block object-tools-items %}
+						<div class="span2">
+							<a href="export/{{ cl.get_query_string }}" class="big-button">
+								<i class="processing-02-item"></i> {% trans 'Export' %}
+							</a>
+						</div>{% endblock %}
+
                 		<div class="span2">
                 	        <span class="label label-inverse">{% trans "Total Minutes" %}</span> : <span class="label label-default">{{ cl.min_total_effective_duration }}</span>
                         </div>
@@ -76,15 +82,10 @@
                         <div class="span2">
                         	<span class="label label-inverse">{% trans "Margin" %}</span> : <span class="label label-default">{{ cl.margin|floatformat:2 }}</span>
                         </div>
-                    </div>
+                    
                 </div>{% endif %}
 
-				{% block object-tools-items %}{% if has_add_permission %}
-				<div class="span2">
-					<a href="add/{% if is_popup %}?_popup=1{% endif %}" class="big-button">
-						<i class="add-item"></i> {% trans 'Add' %}
-					</a>
-				</div>{% endif %}{% endblock %}
+				
 			</div>{% endblock %}
 
 {% block content %}
