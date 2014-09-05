@@ -40,9 +40,9 @@ class TopTableMixin(tables.Table):
         super(TopTableMixin, self).__init__(*args, **kwargs)
 
     def render_total_cost(self, value, record):
-        if record['total_sell'] and value:
+        if record['total_sell'] and record['total_cost']:
             return '%.2f' % \
-                int(record['total_sell'] - value)
+                float(record['total_sell'] - record['total_cost'])
         else:
             return '0'
 

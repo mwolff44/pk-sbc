@@ -196,6 +196,8 @@ INSTALLED_APPS = (
     'country_block',
     'django_tables2',
     'bootstrap_toolkit',
+    'bootstrap_pagination',
+    'mathfilters',
 #    'raven.contrib.django.raven_compat',
     #'massadmin',
 )
