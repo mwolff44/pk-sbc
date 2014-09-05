@@ -1,13 +1,21 @@
 Changelog
 *********
 
+Version 1.4.2
+=============
+
+New features
+------------
+
+* Customer panel traduction (French, Spanish)
+* Add G722 Codec
+
 Version 1.4.1
 =============
 
 New features
 ------------
 
-* Add G722 codec
 * Admin stats enhancements
   
 Security

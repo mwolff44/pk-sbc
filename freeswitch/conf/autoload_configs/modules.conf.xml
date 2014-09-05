@@ -42,6 +42,7 @@
     <!-- Codec Interfaces -->
     <load module="mod_g723_1"/>
     <load module="mod_g729"/>
+    <load module="mod_g722"/>
     <load module="mod_amr"/>
 
     <!-- File Format Interfaces -->
