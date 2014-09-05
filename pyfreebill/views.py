@@ -98,12 +98,12 @@ def global_stats_view(request, vue):
             qs = qs.filter(provider__name__contains=company)
 
     if vue == 'customer':
-        qs = qs.values('customer__name', 'customer__cb_currency__code')
+        qs1 = qs.values('customer__name', 'customer__cb_currency__code')
     if vue == 'dest_customer' or vue == 'dest_provider':
-        qs = qs.values('destination')
+        qs1 = qs.values('destination')
     if vue == 'provider':
-        qs = qs.values('provider__name', 'provider__cb_currency__code')
-    stats_table = qs.\
+        qs1 = qs.values('provider__name', 'provider__cb_currency__code')
+    stats_table = qs1.\
         annotate(total_sell=Sum('total_sell')).\
         annotate(success_calls=Sum('success_calls')).\
         annotate(total_calls=Sum('total_calls')).\
@@ -113,6 +113,15 @@ def global_stats_view(request, vue):
         annotate(min_duration=Min('min_duration')).\
         annotate(avg_duration=Min('avg_duration')).\
         order_by('-total_sell')
+    total_table = qs.\
+        aggregate(total_sell=Sum('total_sell'),
+            success_calls=Sum('success_calls'),\
+            total_calls=Sum('total_calls'),\
+            total_cost=Sum('total_cost'),\
+            total_duration=Sum('total_duration'),\
+            max_duration=Max('max_duration'),\
+            min_duration=Min('min_duration'),\
+            avg_duration=Min('avg_duration'))
 
     if vue == 'customer':
         table = TopCustTable(stats_table)
@@ -122,7 +131,7 @@ def global_stats_view(request, vue):
         table = TopProvTable(stats_table)
     if vue == 'dest_provider':
         table = TopDestProvTable(stats_table)
-    RequestConfig(request, paginate={"per_page": 20}).configure(table)
+    RequestConfig(request, paginate={"per_page": 100}).configure(table)
     #import pdb; pdb.set_trace()
     return render_to_response('admin/customers_stats.html', locals(),
                               context_instance=RequestContext(request))
