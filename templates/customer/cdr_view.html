@@ -1,6 +1,6 @@
 {% extends 'customer/base.html' %}
 
-{% load bootstrap3 %}
+{% load bootstrap3 i18n bootstrap_pagination %}
 
 {% block bootstrap3_title %}PyFreeBilling : Customer Portal Balance History{% endblock %}
 
@@ -282,10 +282,8 @@
 	</tbody>
 </table>
 
-<div class="pagination pagination-centered">
-	{% if cdr %}
-	{% bootstrap_pagination page_obj url="/cdr_report?page=1" size="small" %}
-	{% endif %}
-</div>
 
+<div class="pagination pagination-centered">
+	{% bootstrap_paginate page_obj range=15 show_prev_next="false" show_first_last="true" size="small" %}
+</div>
 {% endblock %}

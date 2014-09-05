@@ -94,14 +94,20 @@ class CdrReportCustView(LoginRequiredMixin, FormMixin, ListView):
     template_name = 'customer/cdr_view.html'
     context_object_name = 'Cdr'
 #    form_class = CDRSearchForm
-    paginate_by = 20
+    paginate_by = 30
     model = CDR
 
     def get_queryset(self):
         qs = super(CdrReportCustView, self).get_queryset()
+        try:
+            self.usercompany = Person.objects.get(user=self.request.user)
+            self.company = get_object_or_404(Company, name=self.usercompany.company)
+            qs = qs.filter(customer=self.company.pk).exclude(effective_duration="0").order_by('-start_stamp')
+        except Person.DoesNotExist:
+            messages.error(self.request, """This user is not linked to a customer !""")
 
         # set start_date and end_date
-        end_date = datetime.date.today() - datetime.timedelta(days=0)
+        end_date = datetime.date.today() + datetime.timedelta(days=1)
         start_date = end_date - datetime.timedelta(days=30)
 
         #First print
@@ -136,13 +142,7 @@ class CdrReportCustView(LoginRequiredMixin, FormMixin, ListView):
 
         # test if get succes or not
         if start_d['status'] or end_d['status'] or dest_num:
-            try:
-                self.usercompany = Person.objects.get(user=self.request.user)
-                self.company = get_object_or_404(Company, name=self.usercompany.company)
-                qs.filter(customer=self.company.pk).order_by('-start_stamp').exclude(effective_duration="0")
-                return qs
-            except Person.DoesNotExist:
-                messages.error(self.request, """This user is not linked to a customer !""")
+            return qs
         return qs.none()
 
 
