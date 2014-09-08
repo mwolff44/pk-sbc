@@ -1,11 +1,12 @@
 {% extends 'customer/base.html' %}
+{% load i18n %}
 
-{% block bootstrap3_title %}PyFreeBilling : Customer Portal Home Page{% endblock %}
+{% block bootstrap3_title %}{% trans "PyFreeBilling : Customer Portal Home Page" %}{% endblock %}
 
 {% block content %}
     <div class="row">
     	{% if request.user.is_superuser %}
-			<a href="extranet/" class="btn btn-danger btn-lg btn-block">Admin interface : click here</a>
+			<a href="extranet/" class="btn btn-danger btn-lg btn-block">{% trans "Admin interface : click here" %}</a>
 		{% endif %}<br>
     </div>
 	<div class="row">
@@ -13,7 +14,7 @@
         <div class="col-md-4">
         	<div class="panel panel-default">
 	          <div class="panel-heading">
-	          	<h3 class="panel-title">Account Summary</h3>
+	          	<h3 class="panel-title">{% trans "Account Summary" %}</h3>
 	          </div>
 	          <div class="panel-body">
 	          	<ul class="list-group">
@@ -24,7 +25,7 @@
 	          	<ul class="list-group">
 	          		<li class="list-group-item">	          
 					{% if company.street_address.all %}
-						Street Addresses :
+						{% trans "Street Addresses" %} :
 						<ul class="link_list">
 						{% for address in company.street_address.all %}
 							<li class="adr">
@@ -46,25 +47,25 @@
         <div class="col-md-4">
         	<div class="panel panel-default">
 	          <div class="panel-heading">
-	          	<h3 class="panel-title">Financial Summary</h3>
+	          	<h3 class="panel-title">{% trans "Financial Summary" %}</h3>
 	          </div>
 	          <div class="panel-body">
 	          	<ul class="list-group">
 	          		<li class="list-group-item">
 	          			{% if company.customer_enabled %}
-	          				<span class="badge">Active</span>
+	          				<span class="badge">{% trans "Active" %}</span>
 	          			{% else %} 
-	          				<span class="badge alert-warning">Suspended</span>
+	          				<span class="badge alert-warning">{% trans "Suspended" %}</span>
 	          			{% endif %}
-	          			Account status
+	          			{% trans "Account status" %}
 	          		</li>
 	          	</ul>
 	          	<ul class="list-group">
 	          		<li class="list-group-item">
 	          			<span class="badge">
-	          				{% if company.prepaid %} Prepaid {% else %} Postpaid {% endif %}
+	          				{% if company.prepaid %} {% trans "Prepaid" %} {% else %} {% trans "Postpaid" %} {% endif %}
 	          			</span>
-	          			Payment type
+	          			{% trans "Payment type" %}
 	          		</li>
 	          	</ul>
 	          	<ul class="list-group">
@@ -72,7 +73,7 @@
 	          			<span class="badge">
 	          				{{ company.customer_balance|floatformat:2 }} {{ company.cb_currency }}
 	          			</span>
-	          			Balance
+	          			{% trans "Balance" %}
 	          		</li>
 	          	</ul>
 			  </div>

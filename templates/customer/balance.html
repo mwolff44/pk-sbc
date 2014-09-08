@@ -1,8 +1,8 @@
 {% extends 'customer/base.html' %}
 
-{% load bootstrap3 %}
+{% load bootstrap3 %}{% load i18n %}
 
-{% block bootstrap3_title %}PyFreeBilling : Customer Portal Balance History{% endblock %}
+{% block bootstrap3_title %}{% trans "PyFreeBilling : Customer Portal Balance History" %}{% endblock %}
 
 {% block content %}
 
@@ -10,17 +10,17 @@
         <div class="col-md-4">
         	<div class="panel panel-default">
 	          <div class="panel-heading">
-	          	<h3 class="panel-title">Financial Summary</h3>
+	          	<h3 class="panel-title">{% trans "Financial Summary" %}</h3>
 	          </div>
 	          <div class="panel-body">
 	          	<ul class="list-group">
 	          		<li class="list-group-item">
 	          			{% if company.customer_enabled %}
-	          				<span class="badge">Active</span>
+	          				<span class="badge">{% trans "Active" %}</span>
 	          			{% else %} 
-	          				<span class="badge alert-warning">Suspended</span>
+	          				<span class="badge alert-warning">{% trans "Suspended" %}</span>
 	          			{% endif %}
-	          			Account status
+	          			{% trans "Account status" %}
 	          		</li>
 	          	</ul>
 			  </div>
@@ -36,9 +36,9 @@
 	          	<ul class="list-group">
 	          		<li class="list-group-item">
 	          			<span class="badge">
-	          				{% if company.prepaid %} Prepaid {% else %} Postpaid {% endif %}
+	          				{% if company.prepaid %} {% trans "Prepaid" %} {% else %} {% trans "Postpaid" %} {% endif %}
 	          			</span>
-	          			Payment type
+	          			{% trans "Payment type" %}
 	          		</li>
 	          	</ul>
 			  </div>
@@ -56,7 +56,7 @@
 	          			<span class="badge">
 	          				{{ company.customer_balance|floatformat:2 }} {{ company.cb_currency }}
 	          			</span>
-	          			Balance
+	          			{% trans "Balance" %}
 	          		</li>
 	          	</ul>
 			  </div>
@@ -66,11 +66,11 @@
 <table class="table table-hover">
 	<thead>
 		<tr>
-			<th>Date</th>
-			<th class="text-right">Amount refund</th>
-			<th class="text-right">Amount debited</th>
-			<th class="text-right">Resulting balance</th>
-			<th>Comment</th>
+			<th>{% trans "Date" %}</th>
+			<th class="text-right">{% trans "Amount refund" %}</th>
+			<th class="text-right">{% trans "Amount debited" %}</th>
+			<th class="text-right">{% trans "Resulting balance" %}</th>
+			<th>{% trans "Comment" %}</th>
 		</tr>
 	</thead>
 	<tbody>

@@ -1,8 +1,8 @@
 {% extends 'customer/base.html' %}
 
-{% load bootstrap3 i18n bootstrap_pagination %}
+{% load bootstrap3 bootstrap_pagination %}{% load i18n %}
 
-{% block bootstrap3_title %}PyFreeBilling : Customer Portal Balance History{% endblock %}
+{% block bootstrap3_title %}{% trans "PyFreeBilling : Customer Portal Balance History" %}{% endblock %}
 
 {% block content %}
 
@@ -10,13 +10,13 @@
 	<div class="row">
         <div class="box">
 			<form action="{% url 'cdr_report' %}" method="GET" class="form-horizontal" role="form">
-				<h3 class="form-signin-heading">CDR search : </h3>
+				<h3 class="form-signin-heading">{% trans "CDR search" %} : </h3>
 				
 				<div class="form-group">
-					<label for="from_date" class="col-xs-2 control-label">From date (Y/M/D h:m)</label>
+					<label for="from_date" class="col-xs-2 control-label">{% trans "From date" %} (Y/M/D h:m)</label>
 					<div class="col-xs-2">
             			<select name="from_y" class="form-control" placeholder="year">
-            				<option selected disabled>year</option>
+            				<option selected disabled>{% trans "year" %}</option>
 				  			<option>2013</option>
 				  			<option>2014</option>
 				  			<option>2015</option>
@@ -25,7 +25,7 @@
         			</div>
         			<div class="col-xs-2">
             			<select name="from_m" class="form-control" placeholder="month">
-            				<option selected disabled>month</option>
+            				<option selected disabled>{% trans "month" %}</option>
 				  			<option>1</option>
 				  			<option>2</option>
 				  			<option>3</option>
@@ -42,7 +42,7 @@
         			</div>
         			<div class="col-xs-2">
             			<select name="from_d" class="form-control" placeholder="day">
-            				<option selected disabled>day</option>
+            				<option selected disabled>{% trans "day" %}</option>
 				  			<option>1</option>
 				  			<option>2</option>
 				  			<option>3</option>
@@ -123,10 +123,10 @@
 				</div>
 
 				<div class="form-group">
-					<label for="to_date" class="col-xs-2 control-label">To date (Y/M/D h:m)</label>
+					<label for="to_date" class="col-xs-2 control-label">{% trans "To date" %} (Y/M/D h:m)</label>
 					<div class="col-xs-2">
             			<select name="to_y" class="form-control" placeholder="year">
-            				<option selected disabled>year</option>
+            				<option selected disabled>{% trans "year" %}</option>
 				  			<option>2013</option>
 				  			<option>2014</option>
 				  			<option>2015</option>
@@ -135,7 +135,7 @@
         			</div>
         			<div class="col-xs-2">
             			<select name="to_m" class="form-control" placeholder="month">
-            				<option selected disabled>month</option>
+            				<option selected disabled>{% trans "month" %}</option>
 				  			<option>1</option>
 				  			<option>2</option>
 				  			<option>3</option>
@@ -152,7 +152,7 @@
         			</div>
         			<div class="col-xs-2">
             			<select name="to_d" class="form-control" placeholder="day">
-            				<option selected disabled>day</option>
+            				<option selected disabled>{% trans "day" %}</option>
 				  			<option>1</option>
 				  			<option>2</option>
 				  			<option>3</option>
@@ -232,14 +232,14 @@
         			</div>
 				</div>
 				<div class="form-group">
-					<label for="dest_num" class="col-xs-2 control-label">Dest. number</label>
+					<label for="dest_num" class="col-xs-2 control-label">{% trans "Dest. number" %}</label>
 					<div class="col-xs-4">
             			<input type="tel" name="dest_num" class="form-control">
         			</div>
         		</div>
 
 				{% buttons %}
-					<button type="submit" class="btn btn-primary btn-block">Search</button>
+					<button type="submit" class="btn btn-primary btn-block">{% trans "Search" %}</button>
 				{% endbuttons %}
 		       
 			</form>
@@ -254,15 +254,15 @@
 <table class="table table-hover">
 	<thead>
 		<tr>
-			<th>Date</th>
-			<th>Destination number</th>
-			<th>Duration</th>
-			<th>Prefix</th>
-			<th>Destination</th>
-			<th>Rate</th>
-			<th>Amount</th>
-			<th>Codec</th>
-			<th>SIP_UA IP</th>
+			<th>{% trans "Date" %}</th>
+			<th>{% trans "Destination number" %}</th>
+			<th>{% trans "Duration" %}</th>
+			<th>{% trans "Prefix" %}</th>
+			<th>{% trans "Destination" %}</th>
+			<th>{% trans "Rate" %}</th>
+			<th>{% trans "Amount" %}</th>
+			<th>{% trans "Codec" %}</th>
+			<th>{% trans "SIP_UA IP" %}</th>
 		</tr>
 	</thead>
 	<tbody>

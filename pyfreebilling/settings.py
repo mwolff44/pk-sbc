@@ -99,7 +99,7 @@ STATICFILES_DIRS = (
 )
 
 LOCALE_PATHS = (
-    os.path.join(PROJECT_DIR, 'messages'),
+    os.path.join(PROJECT_DIR, 'locale'),
 )
 
 # List of finder classes that know how to find static files in

@@ -42,8 +42,10 @@
     <!-- Codec Interfaces -->
     <load module="mod_g723_1"/>
     <load module="mod_g729"/>
-    <load module="mod_g722"/>
     <load module="mod_amr"/>
+    <load module="mod_spandsp"/>
+    <load module="mod_amrwb"/>
+    <load module="mod_siren"/>
 
     <!-- File Format Interfaces -->
     <load module="mod_sndfile"/>

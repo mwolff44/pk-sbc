@@ -24,6 +24,7 @@ from django.views.generic import TemplateView
 from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
+from django.utils.translation import ugettext_lazy as _
 
 from django_tables2 import RequestConfig
 
