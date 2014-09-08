@@ -1,6 +1,14 @@
 Changelog
 *********
 
+Version 1.4.3
+=============
+
+New features
+------------
+
+* Bd backup every day (in backups directory and FTP)
+
 Version 1.4.2
 =============
 
