@@ -28,5 +28,5 @@ urlpatterns = patterns('',
                        url(r'^accounts/login/$', 'django.contrib.auth.views.login',
                            {'template_name': 'customer/login.html'}),
                        url(r'^accounts/logout/$', 'django.contrib.auth.views.logout_then_login'),
-                       url(r'^accounts/login/$', HomePageCustView.as_view(), name='user_profile'),
+                       url(r'^$', HomePageCustView.as_view(), name='user_profile'),
                        url(r'^accounts/profile/$', HomePageCustView.as_view(), name='user_profile'), )

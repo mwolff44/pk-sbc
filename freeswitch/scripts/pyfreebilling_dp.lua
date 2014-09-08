@@ -155,7 +155,7 @@ end
 -----------------------------------------------
 -----------------------------------------------
 function codec_test(type)
-  local codecs = { "G729", "PCMA", "PCMU" }
+  local codecs = { "G729", "PCMA", "PCMU", "G722" }
   local codec_status = "NOK"
   log("customer codec test", "--start--", "info")
   for key, value in ipairs(codecs) do
@@ -243,6 +243,12 @@ if session:ready() then
 
   channel["customer_codecs"] = get_Variable("customer_codecs")
   channel["ep_codec_string"] = get_Variable("ep_codec_string")
+  if channel["ep_codec_string"] == nil then
+    set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_CODEC_ERROR")
+    log("codec leg A provides no codec! ","Exiting","info")
+    session:hangup("BEARERCAPABILITY_NOTAVAIL")
+    return
+  end
   if (channel["customer_codecs"] == "ALL" or channel["customer_codecs"] == nil or channel["customer_codecs"] == "") then
     log("All client codecs", "", "debug")
   else

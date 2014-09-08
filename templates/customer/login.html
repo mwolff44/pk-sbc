@@ -1,8 +1,7 @@
 {% extends 'customer/base.html' %}
-
-{% block bootstrap3_title %}PyFreeBilling : Customer Portal Login Page{% endblock %}
-
 {% load bootstrap3 %}{% load i18n yawdadmin_tags %}
+
+{% block bootstrap3_title %}{% trans "PyFreeBilling : Customer Portal Login Page" %}{% endblock %}
 
 {% block title %}{% endblock %}
 
@@ -13,13 +12,13 @@
 	<div class="row">
         <div class="box">
 			<form action="{% url 'django.contrib.auth.views.login' %}" method="post" class="form-signin pull-left" role="form">
-				<h2 class="form-signin-heading">Please sign in</h2>
+				<h2 class="form-signin-heading">{% trans "Please sign in" %}</h2>
 				{% csrf_token %}
 				<input type="hidden" name="next" value="{{ next|urlencode }}" class="form-control" required/>
 				{% bootstrap_form form %}
 
 				{% buttons %}
-					<button type="submit" class="btn btn-primary btn-lg btn-block">Sign In</button>
+					<button type="submit" class="btn btn-primary btn-lg btn-block">{% trans "Sign In" %}</button>
 				{% endbuttons %}
 		       
 			</form>
