@@ -244,9 +244,9 @@
 	          		{% if vue == 'customer' or vue == 'provider' %}<td><b>N/A</b></td>{% endif %}
 	          		<td><b>{{ total_table.total_calls }}</b></td>
 	          		<td><b>{{ total_table.success_calls }}</b></td>
-	          		<td><b>{{ total_table.success_calls|mul:100|intdiv:total_table.total_calls }}%</b></td>
+	          		<td><b>{% if total_table.total_calls %}{{ total_table.success_calls|mul:100|intdiv:total_table.total_calls }}%{% else %}N/A{% endif %}</b></td>
 	          		<td><b>{{ total_table.total_duration|intdiv:60 }} min</b></td>
-	          		<td><b>{{ total_table.total_duration|intdiv:total_table.success_calls }} sec</b></td>
+	          		<td><b>{% if total_table.total_calls %}{{ total_table.total_duration|intdiv:total_table.success_calls }} sec{% else %}N/A{% endif %}</b></td>
 	          		<td><b>N/A</b></td>
 	          		</b>
 				</tr>

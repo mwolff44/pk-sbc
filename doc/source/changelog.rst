@@ -1,13 +1,28 @@
 Changelog
 *********
 
+Version 1.4.2
+=============
+
+New features
+------------
+
+* Customer panel traduction (French)
+* Add G722 Codec
+
+
+Bug corrections
+---------------
+
+* Admin : stats : div per 0 error
+* Test if customer UA has available codec recognised by FS
+
 Version 1.4.1
 =============
 
 New features
 ------------
 
-* Add G722 codec
 * Admin stats enhancements
   
 Security

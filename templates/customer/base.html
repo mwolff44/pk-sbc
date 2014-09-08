@@ -1,4 +1,5 @@
 {% extends 'customer/bootstrap3.html' %}
+{% load i18n %}
 {% load url from future %}
 {% load bootstrap3 %}
 
@@ -15,19 +16,19 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/">PyFreeBilling : Customer portal</a>
+				<a class="navbar-brand" href="/">{% trans "PyFreeBilling : Customer portal" %}</a>
 			</div>
 			{% if user.is_authenticated %}
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="{% url 'home' %}">Home</a></li>
-						<li><a href="{% url 'sip_account' %}">SIP Accounts</a></li>
-						<li><a href="{% url 'balance_history' %}">Balance history</a></li>
+						<li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+						<li><a href="{% url 'sip_account' %}">{% trans "SIP Accounts" %}</a></li>
+						<li><a href="{% url 'balance_history' %}">{% trans "Balance history" %}</a></li>
 						<li><a href="{% url 'stats' %}"></a></li>
-						<li><a href="{% url 'cdr_report' %}">CDR Report</a></li>
-						<li><a href="{% url 'user_profile' %}">Logged in as {{ user.username }}</a></li>
-						<li><a href="{% url 'django.contrib.auth.views.logout_then_login' %}"><i class="icon-off"></i>Log out</a></li>
+						<li><a href="{% url 'cdr_report' %}">{% trans "CDR Report" %}</a></li>
+						<li><a href="{% url 'user_profile' %}">{% trans "Logged in as" %} {{ user.username }}</a></li>
+						<li><a href="{% url 'django.contrib.auth.views.logout_then_login' %}"><i class="icon-off"></i>{% trans "Log out" %}</a></li>
 					</ul>
 				</div><!--/.navbar-collapse -->
 			</div>

@@ -73,6 +73,9 @@ Freeswitch installation
    applications/mod_nibblebill
    codecs/mod_amr
    codecs/mod_g723_1
+   codecs/mod_spandsp
+   codecs/mod_siren
+   codecs/mod_amrwb
    codecs/mod_g729
    dialplans/mod_dialplan_xml
    endpoints/mod_loopback

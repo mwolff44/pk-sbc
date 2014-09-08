@@ -26,6 +26,7 @@ from django.views.generic.edit import FormMixin
 from django.contrib import messages
 from django.contrib.auth.views import login
 from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext_lazy as _
 
 from braces.views import LoginRequiredMixin
 
@@ -49,19 +50,19 @@ class HomePageCustView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomePageCustView, self).get_context_data(**kwargs)
-        messages.info(self.request, 'Wellcome')
+        messages.info(self.request, _(u'Wellcome'))
         try:
             usercompany = Person.objects.get(user=self.request.user)
             try:
                 context['company'] = Company.objects.get(name=usercompany.company)
                 if context['company'].low_credit_alert > context['company'].customer_balance:
-                    messages.warning(self.request, 'ALERT : Low balance (credit alert level : %s)' % context['company'].low_credit_alert)
+                    messages.warning(self.request, _(u'ALERT : Low balance (credit alert level : %s)') % context['company'].low_credit_alert)
                 if context['company'].account_blocked_alert_sent:
-                    messages.danger(self.request, 'ALERT : Account blocked - no remaining credit - Please make an urgent payment')
+                    messages.danger(self.request, _(u'ALERT : Account blocked - no remaining credit - Please make an urgent payment'))
             except Company.DoesNotExist:
                 pass
         except Person.DoesNotExist:
-            messages.error(self.request, """This user is not linked to a customer !""")
+            messages.error(self.request, _(u"""This user is not linked to a customer !"""))
 
         # integrer panneau contact et stats
         # integrer facture
@@ -86,7 +87,7 @@ class SipAccountCustView(LoginRequiredMixin, ListView):
             self.company = get_object_or_404(Company, name=self.usercompany.company)
             return CustomerDirectory.objects.filter(company=self.company.pk).order_by('id')
         except Person.DoesNotExist:
-            messages.error(self.request, """This user is not linked to a customer !""")
+            messages.error(self.request, _(u"""This user is not linked to a customer !"""))
         return qs.none()
 
 
@@ -104,7 +105,7 @@ class CdrReportCustView(LoginRequiredMixin, FormMixin, ListView):
             self.company = get_object_or_404(Company, name=self.usercompany.company)
             qs = qs.filter(customer=self.company.pk).exclude(effective_duration="0").order_by('-start_stamp')
         except Person.DoesNotExist:
-            messages.error(self.request, """This user is not linked to a customer !""")
+            messages.error(self.request, _(u"""This user is not linked to a customer !"""))
 
         # set start_date and end_date
         end_date = datetime.date.today() + datetime.timedelta(days=1)
@@ -159,7 +160,7 @@ class BalanceHistoryCustView(LoginRequiredMixin, ListView):
             self.company = get_object_or_404(Company, name=self.usercompany.company)
             return CompanyBalanceHistory.objects.filter(company=self.company.pk).filter(operation_type='customer').order_by('-date_modified')
         except Person.DoesNotExist:
-            messages.error(self.request, """This user is not linked to a customer !""")
+            messages.error(self.request, _(u"""This user is not linked to a customer !"""))
         return qs.none()
 
     def get_context_data(self, **kwargs):
@@ -169,7 +170,7 @@ class BalanceHistoryCustView(LoginRequiredMixin, ListView):
             context['company'] = get_object_or_404(Company, name=self.usercompany.company)
             return context
         except Person.DoesNotExist:
-            messages.error(self.request, """This user is not linked to a customer !""")
+            messages.error(self.request, _(u"""This user is not linked to a customer !"""))
         return context
 
 
