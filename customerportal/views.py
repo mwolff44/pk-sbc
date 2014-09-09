@@ -20,30 +20,106 @@ from __future__ import unicode_literals
 from django.core.files.storage import default_storage
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models.fields.files import FieldFile
-from django.views.generic import FormView, ListView
+from django.views.generic import FormView, ListView, View
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormMixin
 from django.contrib import messages
 from django.contrib.auth.views import login
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _
 
 from braces.views import LoginRequiredMixin
 
+from djqscsv import render_to_csv_response
+
 import datetime
+import calendar
+
+from dateutil.relativedelta import relativedelta
 
 from pyfreebill.models import Company, Person, CompanyBalanceHistory, CDR, CustomerDirectory
 
 from customerportal.forms import CDRSearchForm
 
 
-class Template404View(TemplateView):
+@login_required
+def csv_view(request, *args, **kwargs):
+    day = kwargs['day']
+    month = kwargs['month']
+    daymonth = None
+
+    qs = CDR.objects.values('customer__name',
+        'caller_id_number',
+        'destination_number',
+        'start_stamp',
+        'billsec',
+        'prefix',
+        'sell_destination',
+        'rate',
+        'init_block',
+        'block_min_duration',
+        'total_sell',
+        'customer_ip',
+        'sip_user_agent'
+    )
+
+    try:
+        usercompany = Person.objects.get(user=request.user)
+        company = get_object_or_404(Company, name=usercompany.company)
+        qs = qs.filter(customer=company.pk).exclude(effective_duration="0").order_by('-start_stamp')
+    except Person.DoesNotExist:
+            messages.error(request, _(u"""This user is not linked to a customer !"""))
+
+    if day and int(day) < 8 and int(day) > 0:
+        day = int(day)
+        start_date = datetime.date.today() - datetime.timedelta(days=int(day))
+        end_date = start_date + datetime.timedelta(days=1)
+        daymonth = 'OK'
+
+    if month and int(month) < 4 and int(month) > 0:
+        month = int(month)
+        dm = datetime.date.today()
+        start_date = datetime.date(dm.year, dm.month, 1) - relativedelta(months=int(month))
+        end_date = start_date + relativedelta(months=1)
+        end_date = end_date - datetime.timedelta(days=1)
+        daymonth = 'OK'
+
+    if daymonth:
+        qs = qs.filter(start_stamp__range=(start_date, end_date))
+    else:
+        qs.none()
+    # import pdb; pdb.set_trace()
+    return render_to_csv_response(qs,
+        append_datestamp=True,
+        field_header_map={'customer__name': 'Customer'})
+
+
+class Template404View(LoginRequiredMixin, TemplateView):
     template_name = 'customer/404.html'
 
 
-class Template500View(TemplateView):
+class Template500View(LoginRequiredMixin, TemplateView):
     template_name = 'customer/500.html'
 
+class ListExportCustView(LoginRequiredMixin, TemplateView):
+    template_name = 'customer/report.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ListExportCustView, self).get_context_data(**kwargs)
+        context['day_1'] = datetime.date.today() - datetime.timedelta(days=1)
+        context['day_2'] = datetime.date.today() - datetime.timedelta(days=2)
+        context['day_3'] = datetime.date.today() - datetime.timedelta(days=3)
+        context['day_4'] = datetime.date.today() - datetime.timedelta(days=4)
+        context['day_5'] = datetime.date.today() - datetime.timedelta(days=5)
+        context['day_6'] = datetime.date.today() - datetime.timedelta(days=6)
+        context['day_7'] = datetime.date.today() - datetime.timedelta(days=7)
+        dm = datetime.date.today()
+        context['month_1'] = datetime.date(dm.year, dm.month, 1)- relativedelta(months=1)
+        context['month_2'] = datetime.date(dm.year, dm.month, 1)- relativedelta(months=2)
+        context['month_3'] = datetime.date(dm.year, dm.month, 1)- relativedelta(months=3)
+        return context
 
 class HomePageCustView(LoginRequiredMixin, TemplateView):
     template_name = 'customer/home.html'

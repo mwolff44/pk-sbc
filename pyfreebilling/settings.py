@@ -343,7 +343,7 @@ FILE_UPLOAD_TEMP_DIR = '/tmp'
 DBBACKUP_SERVER_NAME = 'pyfreebilling'
 # DBBACKUP_CLEANUP_KEEP = 10
 FORCE_ENGINE = 'postgres'
-DBBACKUP_POSTGRESQL_BACKUP_COMMANDS = None
+#DBBACKUP_POSTGRESQL_BACKUP_COMMANDS = 'pg_dump --username=pyfreebilling --host=localhost pyfreebilling'
 DBBACKUP_BACKUP_DIRECTORY = 'backups'
 DBBACKUP_SERVER_NAME = 'pyfreebilling'
 DBBACKUP_SEND_EMAIL = True

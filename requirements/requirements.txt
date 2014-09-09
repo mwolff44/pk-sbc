@@ -23,6 +23,7 @@ django-iban==0.2.8
 django-import-export==0.2.3
 django-jsonfield==0.9.13
 django-qsstats-magic==0.7.2
+django-queryset-csv==0.2.9
 django-mass-edit==2.2
 django-mathfilters==0.3.0
 django-model-report==0.2.1
