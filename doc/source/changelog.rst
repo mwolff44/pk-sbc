@@ -14,7 +14,7 @@ New features
 Bug corrections
 ---------------
 
-* fix javascript issues with new firefox version
+* fix javascript issues with new firefox version (need delete static before update)
 
 
 Version 1.4.2
