@@ -1,6 +1,22 @@
 Changelog
 *********
 
+Version 1.4.3
+=============
+
+New features
+------------
+
+* Bd backup every day (in backups directory and FTP)
+* Customer panel : new xport CDR panel
+
+
+Bug corrections
+---------------
+
+* fix javascript issues with new firefox version (need delete static before update)
+
+
 Version 1.4.2
 =============
 

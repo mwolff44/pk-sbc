@@ -198,6 +198,7 @@ INSTALLED_APPS = (
     'bootstrap_toolkit',
     'bootstrap_pagination',
     'mathfilters',
+    'dbbackup',
 #    'raven.contrib.django.raven_compat',
     #'massadmin',
 )
@@ -234,6 +235,7 @@ LOGGING = {
 # AUTH - DJANGO 1.6
 #AUTH_USER_MODEL = 'pyfreebill.CustomUser'
 AUTH_USER_MODEL = 'auth.User'
+
 
 # SECURITY - ADJUST YOURS PARAMETERS
 
@@ -336,3 +338,20 @@ FILE_UPLOAD_TEMP_DIR = '/tmp'
 #FILE_UPLOAD_PERMISSIONS = 0644
 #FILE_UPLOAD_DIRECTORY_PERMISSIONS
 #FILE_UPLOAD_HANDLERS
+
+#-- dbbackup settings
+DBBACKUP_SERVER_NAME = 'pyfreebilling'
+# DBBACKUP_CLEANUP_KEEP = 10
+FORCE_ENGINE = 'postgres'
+#DBBACKUP_POSTGRESQL_BACKUP_COMMANDS = 'pg_dump --username=pyfreebilling --host=localhost pyfreebilling'
+DBBACKUP_BACKUP_DIRECTORY = 'backups'
+DBBACKUP_SERVER_NAME = 'pyfreebilling'
+DBBACKUP_SEND_EMAIL = True
+DBBACKUP_GPG_ALWAYS_TRUST = False
+DBBACKUP_GPG_RECIPIENT = None
+#- FTP
+#DBBACKUP_STORAGE = 'dbbackup.storage.ftp_storage'
+#DBBACKUP_FTP_HOST = 'ftp.host'
+#DBBACKUP_FTP_USER = 'user, blank if anonymous'
+#DBBACKUP_FTP_PASSWORD = 'password, can be blank'
+#DBBACKUP_FTP_PATH = 'path, blank for default'
