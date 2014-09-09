@@ -203,8 +203,8 @@ class CustomerRateCardsInline(admin.StackedInline):
     max_num = 3
     extra = 0
     modal = True
-    sortable = True
-    sortable_order_field = 'priority'
+    # sortable = True
+    # sortable_order_field = 'priority'
 
 
 class CompanyAdmin(admin.ModelAdmin):
