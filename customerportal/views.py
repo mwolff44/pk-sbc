@@ -134,7 +134,7 @@ class HomePageCustView(LoginRequiredMixin, TemplateView):
                 if context['company'].low_credit_alert > context['company'].customer_balance:
                     messages.warning(self.request, _(u'ALERT : Low balance (credit alert level : %s)') % context['company'].low_credit_alert)
                 if context['company'].account_blocked_alert_sent:
-                    messages.danger(self.request, _(u'ALERT : Account blocked - no remaining credit - Please make an urgent payment'))
+                    messages.error(self.request, _(u'ALERT : Account blocked - no remaining credit - Please make an urgent payment'))
             except Company.DoesNotExist:
                 pass
         except Person.DoesNotExist:

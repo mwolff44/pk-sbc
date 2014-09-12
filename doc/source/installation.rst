@@ -586,7 +586,7 @@ Pyfreebilling installation
 
 ::
 
-	cp /usr/local/venv/pyfreebilling/setup/apache/001-pyfreebilling /etc/apache2/sites-enabled/000-default
+	cp /usr/local/venv/pyfreebilling/setup/apache/001-pyfreebilling /etc/apache2/sites-enabled/000-default.conf
 	a2ensite 000-default
 	/etc/init.d/apache2 restart
 
