@@ -327,12 +327,12 @@ if (session:ready() == true) then
   
 -- start for boucle  
   for i=1,didok do
-      myvarbridge = "\[sell_destination=did,cost_destination=did,sell_rate="..tonumber(did[1]["customer_rate"])..",sell_increment="..did[1]["customer_interval_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(did[1]["customer_rate"])..",nibble_account="..did[1]["customer"]..",nibble_increment="..did[1]["customer_interval_duration"]..",customer="..did[1]["customer"]..",gateway="..did[i]["trunk_id"]..",cost_rate="..tonumber(did[i]["provider_rate"])..",prefix=did,init_block="..did[i]["provider_interval_duration"]..",block_min_duration="..did[i]["provider_block_min_duration"]..",lcr_carrier_id="..did[i]["provider"]..",ratecard_id="..did[1]["customer_plan"]..",lcr_group_id=0\]"
+      myvarbridge = "sell_destination=did,cost_destination=did,sell_rate="..tonumber(did[1]["customer_rate"])..",sell_increment="..did[1]["customer_interval_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(did[1]["customer_rate"])..",nibble_account="..did[1]["customer"]..",nibble_increment="..did[1]["customer_interval_duration"]..",customer="..did[1]["customer"]..",gateway="..did[i]["trunk_id"]..",cost_rate="..tonumber(did[i]["provider_rate"])..",prefix=did,init_block="..did[i]["provider_interval_duration"]..",block_min_duration="..did[i]["provider_block_min_duration"]..",lcr_carrier_id="..did[i]["provider"]..",ratecard_id="..did[1]["customer_plan"]..",lcr_group_id=0"
       log("WS CALL my variables bridge : ", myvarbridge)
       if mydialbridge == "" then
-        mydialbridge = myvarbridge .. "sofia/internal/" .. did[i]["trunk"] .. "%$${domain}"
+        mydialbridge = "[" .. myvarbridge .. "]sofia/internal/" .. did[i]["trunk"] .. "%$${domain}"
       else
-        mydialbridge = mydialbridge.."|" .. myvarbridge .. "sofia/internal/" .. did[i]["trunk"]
+        mydialbridge = mydialbridge.."|[" .. myvarbridge .. "]sofia/internal/" .. did[i]["trunk"]
       end
       log("construction bridge : ", mydialbridge, "debug") 
   end
