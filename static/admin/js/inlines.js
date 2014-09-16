@@ -22,7 +22,8 @@
     var updateElementIndex = function(el, prefix, ndx) {
       var id_regex = new RegExp("(" + prefix + "-(\\d+|__prefix__))");
       var replacement = prefix + "-" + ndx;
-      if ($(el).attr("for")) {
+      var jel = $(el);
+      if (jel.attr("for")) {
         $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
       }
       if (el.id) {
@@ -31,10 +32,69 @@
       if (el.name) {
         el.name = el.name.replace(id_regex, replacement);
       }
+      var modal = jel.find('.modal');
+      if (modal.length) {
+        modal.attr('id', 'modal-wrapper-'+replacement);
+        jel.find('.inline-modal').attr('href', '#modal-wrapper-'+replacement);
+      }
     };
     var totalForms = $("#id_" + options.prefix + "-TOTAL_FORMS").attr("autocomplete", "off");
     var nextIndex = parseInt(totalForms.val(), 10);
     var maxForms = $("#id_" + options.prefix + "-MAX_NUM_FORMS").attr("autocomplete", "off");
+    
+    // add delete buttons to all rows that don't have a delete checkbox 
+  $(this).each(function() {
+    if (!$(this).find("[name=" + $(this).attr("id") + "-id]").val()) {
+       var row = $(this);
+       if (row.is("tr")) {
+            // If the forms are laid out in table rows, insert
+            // the remove button into the last table cell:
+            row.children(":last").append('<div><i class="admin-inline-icon icon-trash"></i>&#xa0;<a class="' + options.deleteCssClass +'" href="javascript:void(0)">' + options.deleteText + "</a></div>");
+          } else if (row.is("ul") || row.is("ol")) {
+            // If they're laid out as an ordered/unordered list,
+            // insert an <li> after the last list item:
+            row.append('<li><a class="' + options.deleteCssClass +'" href="javascript:void(0)">' + options.deleteText + "</a></li>");
+          } else {
+            // Otherwise, just insert the remove button as the
+            // last child element of the form's container:
+            var modal = row.closest('.inline-related-modal');
+            var extra_class = (modal.length) ? '' : ' icon-white'; 
+            row.children(":first").append('<span class="inline-edit"><i class="admin-inline-icon icon-trash'+extra_class+'"></i>&#xa0;<a class="' + options.deleteCssClass + '" href="javascript:void(0)">' + options.deleteText + "</a></span>");
+          }
+          // The delete button of each row triggers a bunch of other things
+            $(this).find("a." + options.deleteCssClass).click(function(e) {
+              e.preventDefault();
+              // Remove the parent form containing this button:
+              var row = $(this).parents("." + options.formCssClass);
+              row.remove();
+              nextIndex -= 1;
+              // If a post-delete callback was provided, call it with the deleted form:
+              if (options.removed) {
+                options.removed(row);
+              }
+              // Update the TOTAL_FORMS form count.
+              var forms = $("." + options.formCssClass);
+              $("#id_" + options.prefix + "-TOTAL_FORMS").val(forms.length);
+              // Show add button again once we drop below max
+              if ((maxForms.val() === '') || (maxForms.val()-forms.length) > 0) {
+                addButton.parent().show();
+              }
+              // Also, update names and ids for all remaining form controls
+              // so they remain in sequence:
+              for (var i=0, formCount=forms.length; i<formCount; i++)
+              {
+                updateElementIndex($(forms).get(i), options.prefix, i);
+                $(forms.get(i)).find("*").each(function() {
+                  updateElementIndex(this, options.prefix, i);
+                });
+              }
+            }); 
+    } 
+  }); 
+    
+    
+    
+    
     // only show the add button if we are allowed to add more items,
         // note that max_num = None translates to a blank string.
     var showAddButton = maxForms.val() === '' || (maxForms.val()-totalForms.val()) > 0;
@@ -43,15 +103,15 @@
     });
     if ($this.length && showAddButton) {
       var addButton;
-      if ($this.attr("tagName") == "TR") {
+      if ($this.prop("tagName") == "TR") {
         // If forms are laid out as table rows, insert the
         // "add" button in a new table row:
         var numCols = this.eq(-1).children().length;
-        $parent.append('<tr class="' + options.addCssClass + '"><td colspan="' + numCols + '"><a href="javascript:void(0)">' + options.addText + "</a></tr>");
+        $parent.append('<tr class="' + options.addCssClass + '"><td colspan="' + numCols + '"><i class="icon-plus admin-inline-icon"></i>&#xa0;<a href="javascript:void(0)">' + options.addText + "</a></tr>");
         addButton = $parent.find("tr:last a");
       } else {
         // Otherwise, insert it immediately after the last form:
-        $this.filter(":last").after('<div class="' + options.addCssClass + '"><a href="javascript:void(0)">' + options.addText + "</a></div>");
+        $this.filter(":last").after('<div class="' + options.addCssClass + '"><i class="icon-plus  admin-inline-icon"></i>&#xa0;<a href="javascript:void(0)">' + options.addText + "</a></div>");
         addButton = $this.filter(":last").next().find("a");
       }
       addButton.click(function(e) {
@@ -59,22 +119,26 @@
         var totalForms = $("#id_" + options.prefix + "-TOTAL_FORMS");
         var template = $("#" + options.prefix + "-empty");
         var row = template.clone(true);
+        //handle possible select2 widgets
+        var select2_cont = row.find('.select2-container');
+        if (select2_cont.length) {
+          select2_cont.remove();
+          var select2_offscreen = row.find('.select2-offscreen');
+          if (select2_offscreen.data('options-callback'))
+            select2_offscreen.select2(window[select2_offscreen.data('options-callback')]());
+          else
+            select2_offscreen.select2();
+        }
         row.removeClass(options.emptyCssClass)
           .addClass(options.formCssClass)
           .attr("id", options.prefix + "-" + nextIndex);
-        if (row.is("tr")) {
-          // If the forms are laid out in table rows, insert
-          // the remove button into the last table cell:
-          row.children(":last").append('<div><a class="' + options.deleteCssClass +'" href="javascript:void(0)">' + options.deleteText + "</a></div>");
-        } else if (row.is("ul") || row.is("ol")) {
-          // If they're laid out as an ordered/unordered list,
-          // insert an <li> after the last list item:
-          row.append('<li><a class="' + options.deleteCssClass +'" href="javascript:void(0)">' + options.deleteText + "</a></li>");
-        } else {
-          // Otherwise, just insert the remove button as the
-          // last child element of the form's container:
-          row.children(":first").append('<span><a class="' + options.deleteCssClass + '" href="javascript:void(0)">' + options.deleteText + "</a></span>");
+        var modal = row.find("#modal-wrapper-"+options.prefix + "-empty");
+        if (modal.length) {
+          var modal_id = "modal-wrapper-"+options.prefix + "-" + nextIndex;
+          modal.attr("id", modal_id);
+          row.find('a.inline-modal').attr("href", "#" + modal_id);
         }
+        
         row.find("*").each(function() {
           updateElementIndex(this, options.prefix, totalForms.val());
         });
@@ -87,34 +151,6 @@
         if ((maxForms.val() !== '') && (maxForms.val()-totalForms.val()) <= 0) {
           addButton.parent().hide();
         }
-        // The delete button of each row triggers a bunch of other things
-        row.find("a." + options.deleteCssClass).click(function(e) {
-          e.preventDefault();
-          // Remove the parent form containing this button:
-          var row = $(this).parents("." + options.formCssClass);
-          row.remove();
-          nextIndex -= 1;
-          // If a post-delete callback was provided, call it with the deleted form:
-          if (options.removed) {
-            options.removed(row);
-          }
-          // Update the TOTAL_FORMS form count.
-          var forms = $("." + options.formCssClass);
-          $("#id_" + options.prefix + "-TOTAL_FORMS").val(forms.length);
-          // Show add button again once we drop below max
-          if ((maxForms.val() === '') || (maxForms.val()-forms.length) > 0) {
-            addButton.parent().show();
-          }
-          // Also, update names and ids for all remaining form controls
-          // so they remain in sequence:
-          for (var i=0, formCount=forms.length; i<formCount; i++)
-          {
-            updateElementIndex($(forms).get(i), options.prefix, i);
-            $(forms.get(i)).find("*").each(function() {
-              updateElementIndex(this, options.prefix, i);
-            });
-          }
-        });
         // If a post-add callback was supplied, call it with the added form:
         if (options.added) {
           options.added(row);
@@ -269,4 +305,4 @@
 
     return $rows;
   };
-})(django.jQuery);
+})(yawdadmin.jQuery);

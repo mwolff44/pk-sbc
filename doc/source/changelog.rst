@@ -17,6 +17,7 @@ Bug corrections
 * fix javascript issues with new firefox version (need delete static before update)
 * fix alert message in customer panel when account is blocked due to low balance.
 * LUA excaping error in DID
+* Fix js bug in inlines (impact LCR and customer view)
 
 
 Version 1.4.2
