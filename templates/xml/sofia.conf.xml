@@ -24,6 +24,7 @@
     <param name='debug-presence' value='0'/>
     <param name='accept-blind-reg' value='false'/>
     <param name='sip-trace' value='no'/>
+    <param name="tracelevel" value="error"/>
     <param name='sip-capture' value='no'/>
     <param name='auth-calls' value='true'/>
     <param name='dtmf-type' value='rfc2833'/>

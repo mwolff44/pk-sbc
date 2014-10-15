@@ -1,5 +1,6 @@
 <VirtualHost *:443>
         SSLEngine On
+        SSLProtocol All -SSLv2 -SSLv3
         SSLCertificateFile /etc/ssl/private/localhost.pem
         ServerAdmin webmaster@localhost
 

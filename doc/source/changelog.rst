@@ -1,6 +1,33 @@
 Changelog
 *********
 
+Version 1.5.0 (Not yet released)
+=============
+
+New features
+------------
+
+* New CDR import script (PERL packages are no longer needed)
+* Recurring services
+* Invoicing
+
+
+Bug corrections
+---------------
+
+* N/A
+
+
+Version 1.4.4
+=============
+
+Modifications
+------------
+
+* Apache template : disable sslv2 and sslv3 (POODLE - CVE-2014-0224)
+* Sofia new option : tracelevel with default value "error" (if you need more debug, in cli : sofia tracelevel debug)
+
+
 Version 1.4.3
 =============
 
@@ -36,6 +63,7 @@ Bug corrections
 * Admin : stats : div per 0 error
 * Test if customer UA has available codec recognised by FS
 
+
 Version 1.4.1
 =============
 
@@ -43,11 +71,13 @@ New features
 ------------
 
 * Admin stats enhancements
+
   
 Security
 --------
 
 * Validation of django 1.6.7 (dependencies update)
+
 
 Bug corrections
 ---------------
@@ -55,6 +85,7 @@ Bug corrections
 * Postpaid : a negative credit limit value no longer blocks call process
 * Admin : CDR export button is now visible in CDR panel
 * Admin : Database size view now correct
+
 
 Version 1.4
 ============
