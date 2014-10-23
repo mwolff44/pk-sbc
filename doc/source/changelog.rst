@@ -18,6 +18,15 @@ Bug corrections
 * N/A
 
 
+Version 1.4.5
+=============
+
+Modifications
+------------
+
+* Correct javascript issues
+
+
 Version 1.4.4
 =============
 
