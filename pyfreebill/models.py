@@ -27,7 +27,9 @@ from django.contrib.contenttypes.generic import GenericRelation
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import format_html
 
-import datetime, qsstats
+import datetime
+import qsstats
+import vatnumber
 
 from django_iban.fields import IBANField, SWIFTBICField
 
@@ -50,7 +52,11 @@ from pyfreebill.validators import validate_cidr
 #    keyboard_shortcuts = models.BooleanField(default=True)
 
 # Finance
+from django.core.exceptions import ValidationError
 
+def check_vat(value):
+    if value != "" and not vatnumber.check_vat(value):
+        raise ValidationError(u"%s is not a valid VAT number" % value)
 
 class Company(models.Model):
     """Company model."""
@@ -81,7 +87,13 @@ class Company(models.Model):
                               help_text=_(u"if checked, VAT is applicable."))
     vat_number = models.CharField(_(u"VAT number"),
                                   max_length=30,
-                                  blank=True)
+                                  blank=True,
+                                  validators=[check_vat])
+    vat_number_validated = models.BooleanField(_(u"VAT Vies Validated."),
+                                               default=False,
+                                               help_text=_(u"If on, it means that VAT is "
+                                                           u"validated through <a target='_blank' "
+                                                           u"href='http://ec.europa.eu/taxation_customs/vies/vatRequest.html'>Vies</a>."))
     swift_bic = SWIFTBICField(_(u"SWIFT BIC bank account number"),
                               blank=True,
                               null=True)
@@ -149,6 +161,17 @@ class Company(models.Model):
         ordering = ('name',)
         verbose_name = _(u"Company")
         verbose_name_plural = _(u"Companies")
+
+    def save(self, *args, **kwargs):
+        if self.vat_number:
+            try:
+                self.vat_number_validated = vatnumber.check_vies(self.vat_number)
+            except:
+                self.vat_number_validated = False
+        else:
+            self.vat_number_validated = False
+
+        super(Company, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return u"%s" % self.name
