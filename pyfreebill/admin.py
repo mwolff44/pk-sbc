@@ -232,6 +232,7 @@ class CompanyAdmin(admin.ModelAdmin):
                        ('slug', 'about'),
                        'account_number',
                        ('vat', 'vat_number'),
+                       'vat_number_validated',
                        ('swift_bic', 'iban')),
             'description': 'General company informations'
         }),
@@ -285,7 +286,14 @@ class CompanyAdmin(admin.ModelAdmin):
         return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
     get_vat_display.short_description = 'VAT'
     get_vat_display.admin_order_field = 'vat'
-    
+
+    def get_vat_number_validated_display(self, obj):
+        if obj.vat_number_validated:
+            return mark_safe('<span class="label label-info"><i class="icon-thumbs-up"></i> YES</span>')
+        return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
+    get_vat_number_validated_display.short_description = 'VIES'
+    get_vat_number_validated_display.admin_order_field = 'vies'
+
     def has_add_permission(self, request, obj=None):
         if request.user.is_superuser:
             return True
@@ -319,6 +327,7 @@ class CompanyAdmin(admin.ModelAdmin):
             return ('name',
                     'get_prepaid_display',
                     'get_vat_display',
+                    'get_vat_number_validated_display',
                     'get_customer_enabled_display',
                     'customer_balance',
                     'cb_currency',

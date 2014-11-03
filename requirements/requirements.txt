@@ -45,3 +45,4 @@ pytz>=2014.4
 switch2bill-common==2.8.5
 wsgiref==0.1.2
 yawd-admin==0.7.0
+vatnumber>=1.2
