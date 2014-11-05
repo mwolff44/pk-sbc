@@ -225,7 +225,7 @@ class CompanyAdmin(admin.ModelAdmin):
 
     search_fields = ['^name', ]
     prepopulated_fields = {'slug': ('name',)}
-    readonly_fields = ('customer_balance', 'supplier_balance')
+    readonly_fields = ('customer_balance', 'supplier_balance', 'vat_number_validated')
     fieldsets = (
         ('General', {
             'fields': (('name', 'nickname'),

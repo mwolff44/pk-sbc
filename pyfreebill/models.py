@@ -162,6 +162,13 @@ class Company(models.Model):
         verbose_name = _(u"Company")
         verbose_name_plural = _(u"Companies")
 
+    def clean(self):
+        if self.vat_number:
+            try:
+                vatnumber.check_vies(self.vat_number)
+            except Exception, e:
+                raise ValidationError("""Wrong VAT number - validation made throw VIES services. %s""") % e
+
     def save(self, *args, **kwargs):
         if self.vat_number:
             try:
