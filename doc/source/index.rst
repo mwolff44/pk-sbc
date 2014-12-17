@@ -22,6 +22,7 @@ Table of contents
    license
    features
    installation
+   migration
    developer
 
 Support

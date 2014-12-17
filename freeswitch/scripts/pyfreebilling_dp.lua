@@ -162,7 +162,7 @@ function codec_test(type)
     log("codecs_customer: ", channel["customer_codecs"], "info")
     log("codec value test: ", value, "debug")
     if string.find(channel["customer_codecs"], string.format("%s", value)) then
-      if string.find(channel["ep_codec_string"], string.format("%s", value)) then
+      if string.find(string.upper(channel["ep_codec_string"]), string.format("%s", value)) then
         log("codec leg A match with customer codec: ", value, "info")
         codec_status = "OK"
         log("codec status: ", codec_status, "info")

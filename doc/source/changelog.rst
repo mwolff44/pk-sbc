@@ -18,6 +18,15 @@ Bug corrections
 * N/A
 
 
+Version 1.4.6
+=============
+
+Bug correction
+------------
+
+* Resolve a codec error when using Eyebeam as sip client.
+
+
 Version 1.4.5
 =============
 
