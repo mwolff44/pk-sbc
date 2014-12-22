@@ -7,23 +7,15 @@ Version 1.5.0 (Not yet released)
 New features
 ------------
 
-* Recurring services (balance not updated now)
-* Email, phone number, account fields validation
-* Customer panel : add logo
-* Customer panel : customer can change the password
-* Customer panel : you can use your own css file
-* Add settings : company name, contact details, bank accounts ...
-* Django 1.6.8
-* Improved import cdr script
-* Provider balance updated during cdr import process
+* New CDR import script (PERL packages are no longer needed)
+* Recurring services
+* Invoicing
 
 
 Bug corrections
 ---------------
 
-* Import cdr DID now working
-* Reload existing gateways
-* Minor bugs in did
+* N/A
 
 
 Version 1.4.6
