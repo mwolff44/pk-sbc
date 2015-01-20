@@ -462,7 +462,7 @@ Pyfreebilling installation
 
 ::
 
-	git clone https://mwolff@bitbucket.org/mwolff/pyfreebilling.git
+	git clone https://github.com/mwolff44/pyfreebilling.git
 	chown -R www-data:www-data pyfreebilling
 	cd pyfreebilling
 
