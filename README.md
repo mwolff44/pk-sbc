@@ -1,4 +1,6 @@
 
+![logo](http://www.pyfreebilling.com/wp-content/uploads/2014/12/PyfreeBilling-logo-small.png)
+
 ### Table of content
 
 - About pyfreebilling
@@ -78,8 +80,11 @@ Email: _website contact form_
 
 Website: [http://www.pyfreebilling.com](http://www.pyfreebilling.com)
 
-### Requirements status
+### Screenshots
 
-Stable version
-[![Requirements Status](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements.png?branch=master)](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements/?branch=master)
+![Customer panel]](http://www.pyfreebilling.com/wp-content/uploads/2014/12/pfb-th-sanstone-inv.png)
+![Admin interface](http://www.pyfreebilling.com/wp-content/uploads/2014/03/pyfreebilling-customer-rates2.png)
+
+And many more ... [PyFreeBilling gallery](http://www.pyfreebilling.com/portfolio/)
+
 
