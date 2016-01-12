@@ -1,4 +1,4 @@
-Django==1.6.10
+Django==1.6.11
 South>=1.0
 argparse==1.2.1
 django-admin-honeypot==0.3.0
@@ -40,7 +40,7 @@ psutil>=2.1.1
 psycopg2==2.5.4
 python-memcached==1.53
 raven>=3
-requests==2.4.0
+requests>=2.4.0
 pytz>=2014.4
 suds>=0.4
 switch2bill-common==2.8.5

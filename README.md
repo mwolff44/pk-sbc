@@ -1,6 +1,5 @@
-********************************************************************************
-                             Table of content
-********************************************************************************
+
+### Table of content
 
 - About pyfreebilling
 - License
@@ -9,29 +8,25 @@
 - Installation
 - Contact information
 
-********************************************************************************
-                             What is pyfreebilling
-********************************************************************************
+### What is pyfreebilling
 
-pyfreebilling is an open source wholesale billing platform for FreeSWITCH. 
+*pyfreebilling* is an *open source wholesale billing platform* for *FreeSWITCH* . 
 
 pyfreebilling is developed under python, LUA and PostgreSQL as the database layer.
 
-********************************************************************************
-                             Documentation
-********************************************************************************
+### Documentation
 
-Please visit : http://pyfreebilling.readthedocs.org/
 
-********************************************************************************
-                             License
-********************************************************************************
+Please visit : [http://pyfreebilling.readthedocs.org/](http://pyfreebilling.readthedocs.org/)
+
+### License
+
 
 pyfreebilling is under GPLv3 license. You can read it in COPYING file.
 
-********************************************************************************
-                             Features
-********************************************************************************
+[![GPLv3 License](http://img.shields.io/badge/license-GPLv3-blue.svg?style=flat-square)](http://www.fsf.org)
+
+### Features
 
 There are a some features supported. Most of them are configurable via the web
 interface. A few of them are:
@@ -53,6 +48,7 @@ interface. A few of them are:
 - Provider add/modify/delete
    - Powerful LCR engine
    - Routing based on area code
+   - CLI Routing
    - Routing decision based on quality, reliability, cost or load balancing (equal)
    - Limit max channels by each provider gateway
 
@@ -60,36 +56,30 @@ interface. A few of them are:
 
 - CDR export to CSV
 
+- Customer panel
+
 - Design for scalability
 
 ... and much more :)
 
-********************************************************************************
-                             Prerequisites
-********************************************************************************
+### Prerequisites
 
 In order to run pyfreebilling, you need the following configured, secured  and 
 working Basic Operating System (Linux or BSD, but also windows).
 
 The project uses freeswitch, PostgreSQL and Django.
 
-********************************************************************************
-                             Contact Information
-********************************************************************************
+### Contact Information
 
-Name: Mathias WOLFF
+Name: _Mathias WOLFF_
 
-Email: website contact form
+Email: _website contact form_
 
 
-Website: http://www.pyfreebilling.com
+Website: [http://www.pyfreebilling.com](http://www.pyfreebilling.com)
 
-********************************************************************************
-                             Requirements status
-********************************************************************************
+### Requirements status
 
 Stable version
 [![Requirements Status](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements.png?branch=master)](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements/?branch=master)
 
-Dev version
-[![Requirements Status](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements.png?branch=develop)](https://requires.io/bitbucket/mwolff/pyfreebilling/requirements/?branch=develop)
