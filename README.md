@@ -87,4 +87,8 @@ Website: [http://www.pyfreebilling.com](http://www.pyfreebilling.com)
 
 And many more ... [PyFreeBilling gallery](http://www.pyfreebilling.com/portfolio/)
 
+### Donation
 
+If you want to support my developments you are welcome to buy me a cup of coffee :)
+
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SWGM9B2YW5VGA" target="_blank">PayPal donation link</a>
