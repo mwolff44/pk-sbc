@@ -1,5 +1,5 @@
 
-![logo](http://www.pyfreebilling.com/wp-content/uploads/2014/12/PyfreeBilling-logo-small.png)
+![logo](http://www.pyfreebilling.com/wp-content/uploads/2014/12/PyFreeBilling-logo-small.png)
 
 ### Table of content
 
@@ -82,7 +82,7 @@ Website: [http://www.pyfreebilling.com](http://www.pyfreebilling.com)
 
 ### Screenshots
 
-![Customer panel]](http://www.pyfreebilling.com/wp-content/uploads/2014/12/pfb-th-sanstone-inv.png)
+![Customer panel](http://www.pyfreebilling.com/wp-content/uploads/2014/12/pfb-th-sanstone-inv.png)
 ![Admin interface](http://www.pyfreebilling.com/wp-content/uploads/2014/03/pyfreebilling-customer-rates2.png)
 
 And many more ... [PyFreeBilling gallery](http://www.pyfreebilling.com/portfolio/)
