@@ -1,4 +1,4 @@
-# Copyright 2013 Mathias WOLFF
+# Copyright 2013-2016 Mathias WOLFF
 # This file is part of pyfreebilling.
 # 
 # pyfreebilling is free software: you can redistribute it and/or modify
