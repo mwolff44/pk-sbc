@@ -46,4 +46,5 @@ suds>=0.4
 switch2bill-common==2.8.5
 vatnumber>=1.2
 wsgiref==0.1.2
+oauth2client==1.4.12
 yawd-admin==0.7.0
