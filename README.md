@@ -93,5 +93,5 @@ If you want to support my developments you are welcome to buy me a cup of coffee
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SWGM9B2YW5VGA" target="_blank">PayPal donation link</a>
 
-<script type='text/javascript' src='https://www.openhub.net/p/pyfreebilling/widgets/project_partner_badge?format=js'></script>
+[![Project Stats](https://www.openhub.net/p/pyfreebilling/widgets/project_thin_badge.gif)](https://www.openhub.net/p/pyfreebilling)
 
