@@ -209,6 +209,7 @@ if session:ready() then
   channel["sip_authorized"] = get_Variable("sip_authorized")
   channel["destination_number"] = get_Variable("destination_number")
   channel["caller_id_number"] = get_Variable("caller_id_number")
+  channel["outbound_caller_id_number"] = get_Variable("outbound_caller_id_number")
   channel["caller_id_name"] = get_Variable("caller_id_name")
   channel["direction"] = get_Variable("direction")
   channel["session_id"] = get_Variable("session_id")
@@ -408,6 +409,9 @@ if (session:ready() == true) then
 
   -- CallerID normalization
   log("CallerID Norm - callerID num / rem_prefix / add_prefix : ", channel["caller_id_number"].." / "..customer["ccnr_remove_prefix"].." / "..customer["ccnr_add_prefix"], "debug")
+  if (channel["outbound_caller_id_number"] ~= "" or channel["outbound_caller_id_number"] ~= nil) then
+    channel["caller_id_number"] = channel["outbound_caller_id_number"]
+  end  
   if (customer["ccnr_remove_prefix"] == "" or customer["ccnr_remove_prefix"] == nil) then
     customer["ccnr_remove_prefix"]  = "^"
   end
