@@ -409,9 +409,12 @@ if (session:ready() == true) then
 
   -- CallerID normalization
   log("CallerID Norm - callerID num / rem_prefix / add_prefix : ", channel["caller_id_number"].." / "..customer["ccnr_remove_prefix"].." / "..customer["ccnr_add_prefix"], "debug")
-  if (channel["outbound_caller_id_number"] ~= "" or channel["outbound_caller_id_number"] ~= nil) then
-    channel["caller_id_number"] = channel["outbound_caller_id_number"]
-  end  
+
+  if (channel["outbound_caller_id_number"] == "" or channel["outbound_caller_id_number"] == nil) then
+     channel["outbound_caller_id_number"] = channel["caller_id_number"]
+  else
+     channel["caller_id_number"] = channel["outbound_caller_id_number"]
+  end
   if (customer["ccnr_remove_prefix"] == "" or customer["ccnr_remove_prefix"] == nil) then
     customer["ccnr_remove_prefix"]  = "^"
   end
