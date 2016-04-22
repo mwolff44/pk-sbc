@@ -2,10 +2,10 @@
 ![logo](http://www.pyfreebilling.com/wp-content/uploads/2014/12/PyFreeBilling-logo-small.png)
 -------------
 
-[![GitHub release](https://img.shields.io/github/mwolff44/pyfreebilling/rubidium.svg?maxAge=2592000)]()
+[![PyFB release](https://img.shields.io/badge/Release-1.4.7-ff69b4.svg)
+[![Documentation Status](https://readthedocs.org/projects/pyfreebilling/badge/?version=latest)](http://pyfreebilling.readthedocs.org/en/latest/?badge=latest)
 [![Code Health](https://landscape.io/github/asifpy/django-crudbuilder/master/landscape.svg?style=flat)](https://landscape.io/github/asifpy/django-crudbuilder/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/?branch=master)
-[![Github All Releases](https://img.shields.io/github/downloads/mwolff44/pyfreebilling/total.svg?maxAge=2592000)]()
 [![Donate to this project using Paypal](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SWGM9B2YW5VGA)
 
 ### Table of content
