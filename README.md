@@ -1,6 +1,15 @@
 
 ![logo](http://www.pyfreebilling.com/wp-content/uploads/2014/12/PyFreeBilling-logo-small.png)
 
+
+|CodeHealth|_ |CodeQuality|_
+
+.. |CodeHealth| image:: https://landscape.io/github/mwolff44/pyfreebilling/master/landscape.svg?style=flat
+.. _CodeHealth: https://landscape.io/github/mwolff44/pyfreebilling/master
+
+.. |CodeQuality| image:: https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/badges/quality-score.png?b=master
+.. _CodeQuality: https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/badges/quality-score.png?b=master
+
 ### Table of content
 
 - About pyfreebilling
