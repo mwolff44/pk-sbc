@@ -83,7 +83,6 @@ Freeswitch installation
    formats/mod_sndfile
    formats/mod_tone_stream
    languages/mod_lua
-   languages/mod_spidermonkey
    loggers/mod_console
    loggers/mod_logfile
    loggers/mod_syslog
