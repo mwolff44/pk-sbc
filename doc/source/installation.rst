@@ -59,7 +59,7 @@ Freeswitch installation
    applications/mod_commands
    applications/mod_db
    applications/mod_dptools
-   pplications/mod_esf
+   applications/mod_esf
    applications/mod_esl
    applications/mod_expr
    applications/mod_fifo
