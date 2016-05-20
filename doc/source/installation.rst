@@ -520,7 +520,8 @@ Pyfreebilling installation
 ::
 
 	pip install -r requirements/requirements.txt
-	python manage.py syncdb (IMPORTANT : enter your username and password)
+	python manage.py syncdb 
+	#- (IMPORTANT : enter your username and password) --
 	python manage.py initcurrencies
 	python manage.py migrate
 	python manage.py loaddata country_dialcode.json
