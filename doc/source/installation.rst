@@ -465,7 +465,7 @@ Pyfreebilling installation
 
 ::
 
-    touch pyfreebilling/local_settings.py
+    nano /usr/local/venv/pyfreebilling/pyfreebilling/local_settings.py
     
 * edit this new file, and put yours specific values
 
