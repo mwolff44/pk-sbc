@@ -338,7 +338,7 @@ Postgresql configuration
 
 ::
 
-    createuser -P pyfreebilling   
+    createuser -P pyfreebilling --interactive
         Enter password for new role:    
         Enter it again:    
         Shall the new role be a superuser? (y/n) n   
