@@ -1,215 +1,38 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PyFreeBilling\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-21 16:25+0200\n"
-"Language: fr\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: POEditor.com\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-#: adminactions/export.py:30 adminactions/export.py:212
-#: adminactions/export.py:289 adminactions/merge.py:63
-msgid "Sorry you do not have rights to execute this action (%s)"
-msgstr "Désolé, mais vous n'avez pas le droit d'executer cette action (%s)"
-
-#: adminactions/export.py:111 adminactions/export.py:116
-msgid "Export as CSV"
-msgstr "Exporter au format CSV"
-
-#: adminactions/export.py:123 adminactions/export.py:128
-msgid "Export as XLS"
-msgstr "Exporter au format XLS"
-
-#: adminactions/export.py:265
-msgid "Export as Fixture"
-msgstr ""
-
-#: adminactions/export.py:278
-msgid "Export as fixture"
-msgstr ""
-
-#: adminactions/export.py:351
-msgid "Export Delete Tree"
-msgstr ""
-
-#: adminactions/export.py:364
-msgid "Export delete tree"
-msgstr ""
-
-#: adminactions/mass_update.py:209
-msgid "Sorry you do not have rights to execute this action"
-msgstr "Désolé, mais vous n'avez pas le droit d'executer cette action"
-
-#: adminactions/mass_update.py:276
-msgid "Updated %s records"
-msgstr ""
-
-#: adminactions/merge.py:28
-msgid "Dependencies"
-msgstr "Dépendances"
-
-#: adminactions/merge.py:29
-msgid "Move"
-msgstr "Déplacer"
-
-#: adminactions/merge.py:29
-#: src/admintools-bootstrap/admintools_bootstrap/templates/admin/submit_line.html:3
-#: templates/admin/edit_inline/popup.html:23
-#: templates/admin/edit_inline/popup.html:33
-#: templates/admin/edit_inline/popup.html:43
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/delete_confirmation.html:3
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/delete_confirmation.html:16
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/delete_selected_confirmation.html:3
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/submit_line.html:4
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/edit_inline/popup.html:23
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/edit_inline/popup.html:33
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/edit_inline/popup.html:43
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/import_export/import.html:105
-#: yawd-admin/yawdadmin/templates/admin/delete_confirmation.html:3
-#: yawd-admin/yawdadmin/templates/admin/delete_confirmation.html:16
-#: yawd-admin/yawdadmin/templates/admin/delete_selected_confirmation.html:3
-#: yawd-admin/yawdadmin/templates/admin/submit_line.html:4
-#: yawd-admin/yawdadmin/templates/admin/edit_inline/popup.html:23
-#: yawd-admin/yawdadmin/templates/admin/edit_inline/popup.html:33
-#: yawd-admin/yawdadmin/templates/admin/edit_inline/popup.html:43
-#: yawd-admin/yawdadmin/templates/admin/import_export/import.html:105
-msgid "Delete"
-msgstr "Supprimer"
-
-#: adminactions/merge.py:131
-msgid "Please select exactly 2 records"
-msgstr ""
-
-#: adminactions/merge.py:154
-msgid "Merge selected %(verbose_name_plural)s"
-msgstr ""
-
-#: adminactions/templates/adminactions/any_model.html:26
-#: adminactions/templates/adminactions/charts.html:18
-#: adminactions/templates/adminactions/export_csv.html:46
-#: adminactions/templates/adminactions/export_fixture.html:6
-#: adminactions/templates/adminactions/export_xls.html:19
-#: adminactions/templates/adminactions/mass_update.html:26
-#: adminactions/templates/adminactions/merge.html:5
-#: adminactions/templates/adminactions/merge_preview.html:5
-#: pyfreebill/models.py:269 pyfreebill/models.py:301
-#: src/admintools-bootstrap/admintools_bootstrap/templates/admin/app_index.html:7
-#: src/admintools-bootstrap/admintools_bootstrap/templates/admin/base.html:161
-#: src/admintools-bootstrap/admintools_bootstrap/templates/admin/change_form.html:20
-#: src/admintools-bootstrap/admintools_bootstrap/templates/admin/change_list.html:53
-#: src/admintools-bootstrap/admintools_bootstrap/templates/registration/logged_out.html:5
-#: src/admintools-bootstrap/admintools_bootstrap/templates/registration/password_change_done.html:6
-#: src/admintools-bootstrap/admintools_bootstrap/templates/registration/password_change_form.html:10
-#: templates/admin/index.html:12
-#: templates/admin/pyfreebill/cdr/change_list_copy.html:41
-#: templates/customer/base.html:25
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/index.html:36
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/reversion/recover_list.html:9
-#: yawd-admin/yawdadmin/templates/admin/index.html:36
-#: yawd-admin/yawdadmin/templates/reversion/recover_list.html:9
-#: yawd-translations/build/lib.linux-x86_64-2.7/translations/templates/admin/edit_translation_messages.html:7
-#: yawd-translations/build/lib.linux-x86_64-2.7/translations/templates/admin/translation_messages.html:49
-#: yawd-translations/translations/templates/admin/edit_translation_messages.html:7
-#: yawd-translations/translations/templates/admin/translation_messages.html:49
-msgid "Home"
-msgstr "Accueil"
-
-#: adminactions/templates/adminactions/export_csv.html:50
-msgid "CSV Export Options"
-msgstr "Options d'export CSV"
-
-#: adminactions/templates/adminactions/export_csv.html:69
-#: templates/admin/import_export/export.html:8
-#: templates/admin/import_export/export.html:13
-#: templates/admin/pyfreebill/cdr/change_list.html:66
-#: templates/admin/pyfreebill/cdr/change_list_copy.html:56
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/import_export/change_list_export.html:8
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/import_export/change_list_import_export.html:13
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/import_export/export.html:8
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/import_export/export.html:13
-#: yawd-admin/yawdadmin/templates/admin/import_export/change_list_export.html:8
-#: yawd-admin/yawdadmin/templates/admin/import_export/change_list_import_export.html:13
-#: yawd-admin/yawdadmin/templates/admin/import_export/export.html:8
-#: yawd-admin/yawdadmin/templates/admin/import_export/export.html:13
-msgid "Export"
-msgstr "Exporter"
-
-#: adminactions/templates/adminactions/merge.html:8
-#: adminactions/templates/adminactions/merge_preview.html:8
-msgid "Merge records"
-msgstr "Fusionner les enregistrements"
-
-#: adminactions/templates/adminactions/merge.html:34
-msgid "Field"
-msgstr "Champs"
-
-#: adminactions/templates/adminactions/merge.html:35
-msgid "Master"
-msgstr "Maître"
-
-#: adminactions/templates/adminactions/merge.html:35
-msgid "This will be preserved"
-msgstr ""
-
-#: adminactions/templates/adminactions/merge.html:39
-msgid "swap"
-msgstr ""
-
-#: adminactions/templates/adminactions/merge.html:40
-msgid "Result"
-msgstr "Résultat"
-
-#: adminactions/templates/adminactions/merge.html:42 pyfreebill/models.py:270
-#: pyfreebill/models.py:305 pyfreebill/models.py:344
-msgid "Other"
-msgstr "Autre"
-
-#: adminactions/templates/adminactions/merge.html:42
-msgid "This will be removed"
-msgstr ""
-
-#: adminactions/templates/adminactions/merge.html:71
-#: adminactions/templates/adminactions/merge_preview.html:9
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/import_export/import.html:86
-#: yawd-admin/yawdadmin/templates/admin/import_export/import.html:86
-msgid "Preview"
-msgstr "Aperçu"
-
-#: adminactions/templates/adminactions/merge_preview.html:18
-msgid "Key"
-msgstr "Clé"
-
-#: adminactions/templates/adminactions/merge_preview.html:23
-msgid "Original"
-msgstr "original"
-
-#: adminactions/templates/adminactions/merge_preview.html:24
-msgid "After Merging"
-msgstr ""
-
-#: adminactions/templates/adminactions/merge_preview.html:39
-msgid "Merge"
-msgstr ""
-
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: customerportal/forms.py:33 pyfreebill/forms.py:35
 msgid "From"
-msgstr "De"
+msgstr ""
 
 #: customerportal/forms.py:35 pyfreebill/forms.py:37
 msgid "To"
-msgstr "à"
+msgstr ""
 
 #: customerportal/forms.py:37 pyfreebill/forms.py:43
 msgid "Destination Number"
-msgstr "Numéro de destination"
+msgstr ""
 
 #: customerportal/forms.py:38 pyfreebill/forms.py:44
 msgid "Enter the full number or the first part"
-msgstr "Entrer le numéro complet ou le début"
+msgstr ""
 
 #: customerportal/views.py:73 customerportal/views.py:141
 #: customerportal/views.py:166 customerportal/views.py:184
@@ -219,25 +42,17 @@ msgstr ""
 
 #: customerportal/views.py:129
 msgid "Wellcome"
-msgstr "Bienvenue"
+msgstr ""
 
 #: customerportal/views.py:135
 #, python-format
 msgid "ALERT : Low balance (credit alert level : %s)"
-msgstr "ALERTE : la balance est faible (niveau d'alerte du crédit : %s)"
+msgstr ""
 
 #: customerportal/views.py:137
 msgid ""
 "ALERT : Account blocked - no remaining credit - Please make an urgent payment"
 msgstr ""
-"ALERTE : le compte est bloqué - il ne reste plus de crédit - Merci "
-"d'effectuer un paiement en urgence"
-
-#: customerportal/views.py:65 customerportal/views.py:90
-#: customerportal/views.py:108 customerportal/views.py:163
-#: customerportal/views.py:173
-msgid "This user is not linked to a customer !"
-msgstr "L'utilisateur n'est pas lié à un client !"
 
 #: did/signals.py:36
 msgid ""
@@ -275,12 +90,12 @@ msgstr ""
 
 #: did/models/did.py:29
 msgid "DID number"
-msgstr "Numéro SDA"
+msgstr ""
 
 #: did/models/did.py:38 pyfreebill/forms.py:40 pyfreebill/models.py:788
 #: pyfreebill/models.py:1626
 msgid "Provider"
-msgstr "Fournisseur"
+msgstr ""
 
 #: did/models/did.py:41
 msgid "provider rate plan"
@@ -288,17 +103,17 @@ msgstr ""
 
 #: did/models/did.py:43
 msgid "provider channels"
-msgstr "Nombre de canaux"
+msgstr ""
 
 #: did/models/did.py:45 did/models/did.py:62
 msgid ""
 "maximum\n"
 "                    simultaneous calls allowed for this did."
-msgstr "Appels simultanés max autorisés pour cette SDA"
+msgstr ""
 
 #: did/models/did.py:49 pyfreebill/forms.py:39
 msgid "Customer"
-msgstr "Client"
+msgstr ""
 
 #: did/models/did.py:54
 msgid "customer rate plan"
@@ -306,7 +121,7 @@ msgstr ""
 
 #: did/models/did.py:58
 msgid "customer channels"
-msgstr "nombre de canaux fournisseur"
+msgstr ""
 
 #: did/models/did.py:64 did/models/routesDid.py:46 pyfreebill/models.py:563
 #: pyfreebill/models.py:735 pyfreebill/models.py:808 pyfreebill/models.py:918
@@ -315,7 +130,7 @@ msgstr "nombre de canaux fournisseur"
 #: pyfreebill/models.py:1189 pyfreebill/models.py:1223
 #: pyfreebill/models.py:1256 pyfreebill/models.py:1760
 msgid "description"
-msgstr "description"
+msgstr ""
 
 #: did/models/did.py:66 did/models/ratesDid.py:37 did/models/ratesDid.py:69
 #: did/models/routesDid.py:48 pyfreebill/models.py:154
@@ -333,7 +148,7 @@ msgstr "description"
 #: pyfreebill/models.py:1590 pyfreebill/models.py:1728
 #: pyfreebill/models.py:1762 switch/models/Switch.py:42
 msgid "date added"
-msgstr "date d'ajout"
+msgstr ""
 
 #: did/models/did.py:68 did/models/ratesDid.py:39 did/models/ratesDid.py:71
 #: did/models/routesDid.py:50 pyfreebill/models.py:156
@@ -351,27 +166,27 @@ msgstr "date d'ajout"
 #: pyfreebill/models.py:1592 pyfreebill/models.py:1730
 #: pyfreebill/models.py:1764 switch/models/Switch.py:43
 msgid "date modified"
-msgstr "date de modification"
+msgstr ""
 
 #: did/models/did.py:75
 msgid "DID"
-msgstr "SDA"
+msgstr ""
 
 #: did/models/did.py:76
 msgid "DIDs"
-msgstr "SDA"
+msgstr ""
 
 #: did/models/ratesDid.py:24 did/models/ratesDid.py:59 pyfreebill/models.py:63
 #: pyfreebill/models.py:264 pyfreebill/models.py:732 pyfreebill/models.py:785
 #: pyfreebill/models.py:915 pyfreebill/models.py:976 pyfreebill/models.py:1287
 #: pyfreebill/models.py:1617
 msgid "name"
-msgstr "nom"
+msgstr ""
 
 #: did/models/ratesDid.py:25 did/models/ratesDid.py:60
 #: templates/customer/cdr_view.html:262
 msgid "Rate"
-msgstr "tarif"
+msgstr ""
 
 #: did/models/ratesDid.py:28 did/models/ratesDid.py:63
 #: pyfreebill/models.py:877 pyfreebill/models.py:1044
@@ -388,13 +203,13 @@ msgstr ""
 #: pyfreebill/models.py:1973 pyfreebill/models.py:1991
 #: pyfreebill/models.py:2041
 msgid "provider"
-msgstr "fournisseur"
+msgstr ""
 
 #: did/models/ratesDid.py:35 did/models/ratesDid.py:67
 #: pyfreebill/models.py:669 pyfreebill/models.py:838 pyfreebill/models.py:886
 #: pyfreebill/models.py:998
 msgid "Enabled / Disabled"
-msgstr "Activé / Désactivé"
+msgstr ""
 
 #: did/models/ratesDid.py:47
 msgid "DID provider rate"
@@ -414,15 +229,15 @@ msgstr ""
 
 #: did/models/routesDid.py:28
 msgid "SIP Trunk"
-msgstr "Trunk SIP"
+msgstr ""
 
 #: did/models/routesDid.py:29
 msgid "External number"
-msgstr "Numéro externe"
+msgstr ""
 
 #: did/models/routesDid.py:31
 msgid "Route type"
-msgstr "Type de route"
+msgstr ""
 
 #: did/models/routesDid.py:35
 msgid ""
@@ -432,7 +247,7 @@ msgstr ""
 
 #: did/models/routesDid.py:41
 msgid "destination number"
-msgstr "Numéro de destination"
+msgstr ""
 
 #: did/models/routesDid.py:58
 msgid "DID route"
@@ -448,25 +263,25 @@ msgstr ""
 
 #: pyfreebill/admin.py:82
 msgid "update sofia config xml file"
-msgstr "Mettre à jour le fichier de config xml de sofia"
+msgstr ""
 
 #: pyfreebill/admin.py:114
 msgid "update customer sip config xml file"
-msgstr "Mettre à jour le fichier de config xml des comptes SIP clients"
+msgstr ""
 
 #: pyfreebill/admin.py:144
 msgid "update ACL config xml file"
-msgstr "Mettre à jour le fichier de config xml des ACL"
+msgstr ""
 
 #: pyfreebill/admin.py:146
 msgid ""
 "generate customer sip\n"
 "    configuration file"
-msgstr "Générer le fichier de configuration sip du client"
+msgstr ""
 
 #: pyfreebill/admin.py:148
 msgid "generate sofia configuration file"
-msgstr "Générer le fichier de configuration de sofia"
+msgstr ""
 
 #: pyfreebill/admin.py:149
 msgid "generate acl configuration file"
@@ -474,39 +289,39 @@ msgstr ""
 
 #: pyfreebill/admin.py:652 pyfreebill/admin.py:769
 msgid "mark selected items as enabled"
-msgstr "Activer les objets sélectionnés "
+msgstr ""
 
 #: pyfreebill/admin.py:661 pyfreebill/admin.py:779
 msgid "mark selected items as disabled"
-msgstr "Désactiver les objets sélectionnés "
+msgstr ""
 
 #: pyfreebill/base_modules.py:32
 msgid "Stats chart"
-msgstr "Statistiques"
+msgstr ""
 
 #: pyfreebill/base_modules.py:77
 msgid "Stats"
-msgstr "Statistiques"
+msgstr ""
 
 #: pyfreebill/base_modules.py:87
 msgid "By Day"
-msgstr "Par Jour"
+msgstr ""
 
 #: pyfreebill/base_modules.py:88
 msgid "By Week"
-msgstr "Par Semaine"
+msgstr ""
 
 #: pyfreebill/base_modules.py:89
 msgid "By Month"
-msgstr "Par Mois"
+msgstr ""
 
 #: pyfreebill/fields.py:32 switch/fields.py:33
 msgid "This value must be an integer or a FreeSWITCH variable."
-msgstr "Cette valeur doit être un entier ou une variable FreeSWITCH"
+msgstr ""
 
 #: pyfreebill/fields.py:34 switch/fields.py:35
 msgid "Integer or FreeSWITCH variable"
-msgstr "Entier ou une variable FreeSWITCH"
+msgstr ""
 
 #: pyfreebill/fields.py:58 switch/fields.py:59
 msgid ""
@@ -520,7 +335,7 @@ msgstr ""
 
 #: pyfreebill/forms.py:41
 msgid "Customer Ratecard"
-msgstr "Grille tarifaire client"
+msgstr ""
 
 #: pyfreebill/forms.py:42
 msgid "LCR Group"
@@ -529,11 +344,11 @@ msgstr ""
 #: pyfreebill/forms.py:50 pyfreebill/forms.py:62 pyfreebill/forms.py:74
 #: pyfreebill/forms.py:85
 msgid "all"
-msgstr "Tous"
+msgstr ""
 
 #: pyfreebill/models.py:66 pyfreebill/models.py:219
 msgid "nickname"
-msgstr "surnom"
+msgstr ""
 
 #: pyfreebill/models.py:70 pyfreebill/models.py:222 pyfreebill/models.py:267
 msgid "slug"
@@ -541,23 +356,23 @@ msgstr ""
 
 #: pyfreebill/models.py:73 pyfreebill/models.py:231 pyfreebill/models.py:270
 msgid "about"
-msgstr "À propos"
+msgstr ""
 
 #: pyfreebill/models.py:82
 msgid "Account number"
-msgstr "Numéro de compte"
+msgstr ""
 
 #: pyfreebill/models.py:85
 msgid "VAT Applicable / Not applicable"
-msgstr "TVA applicable / non applicable"
+msgstr ""
 
 #: pyfreebill/models.py:87
 msgid "if checked, VAT is applicable."
-msgstr "si sélectionné, la TVA est applicable"
+msgstr ""
 
 #: pyfreebill/models.py:88
 msgid "VAT number"
-msgstr "Numéro de TVA"
+msgstr ""
 
 #: pyfreebill/models.py:92
 msgid "VAT Vies Validated."
@@ -571,91 +386,91 @@ msgstr ""
 
 #: pyfreebill/models.py:97
 msgid "SWIFT BIC bank account number"
-msgstr "Numéro de compte bancaire SWIFT BIC"
+msgstr ""
 
 #: pyfreebill/models.py:100
 msgid "IBAN bank account number"
-msgstr "Numéro de compte bancaire IBAN"
+msgstr ""
 
 #: pyfreebill/models.py:103
 msgid "Prepaid / Postpaid"
-msgstr "Pré-paiement - post-paiement"
+msgstr ""
 
 #: pyfreebill/models.py:105
 msgid "If checked, this account customer is prepaid."
-msgstr "Si sélectionné, le compte client est en pré-paiement"
+msgstr ""
 
 #: pyfreebill/models.py:106
 msgid "credit limit"
-msgstr "limite de crédit"
+msgstr ""
 
 #: pyfreebill/models.py:110
 msgid "Credit limit for postpaid account."
-msgstr "limite de crédit pour les comptes en post-paiement"
+msgstr ""
 
 #: pyfreebill/models.py:111
 msgid "low credit level alert"
-msgstr "alerte de crédit faible"
+msgstr ""
 
 #: pyfreebill/models.py:115
 msgid "Low credit limit alert."
-msgstr "niveau d'alerte de crédit faible"
+msgstr ""
 
 #: pyfreebill/models.py:116
 msgid "low credit alert ON"
-msgstr "alerte de crédit faible activée"
+msgstr ""
 
 #: pyfreebill/models.py:118
 msgid "Customer account blocked - low balance - ON"
-msgstr "Compte client bloqué - balance faible - activé"
+msgstr ""
 
 #: pyfreebill/models.py:120
 msgid "alert email address"
-msgstr "adresse email d'alerte"
+msgstr ""
 
 #: pyfreebill/models.py:123 pyfreebill/models.py:503
 msgid "customer balance"
-msgstr "balance client"
+msgstr ""
 
 #: pyfreebill/models.py:127
 msgid "Actual customer balance."
-msgstr "balance client actuelle"
+msgstr ""
 
 #: pyfreebill/models.py:129 pyfreebill/models.py:791 pyfreebill/models.py:982
 msgid "Currency"
-msgstr "Monnaie"
+msgstr ""
 
 #: pyfreebill/models.py:130
 msgid "supplier balance"
-msgstr "balance fournisseur"
+msgstr ""
 
 #: pyfreebill/models.py:134
 msgid "Actual supplier balance."
-msgstr "Balance fournisseur actuelle"
+msgstr ""
 
 #: pyfreebill/models.py:135
 msgid "max simultaneous calls"
-msgstr "nombre d'appels simultanés maximum"
+msgstr ""
 
 #: pyfreebill/models.py:137
 msgid "maximum simultaneous calls allowed for this customer account."
-msgstr "nombre d'appels simultanés maximum autorisés pour ce compte client"
+msgstr ""
 
 #: pyfreebill/models.py:138 pyfreebill/models.py:589
 msgid "max calls per second"
-msgstr "nombre d'appels par seconde maximum"
+msgstr ""
 
 #: pyfreebill/models.py:140
 msgid "maximum calls per seconds allowed for this customer account."
-msgstr "nombre d'appels par seconde maximum pour ce compte client"
+msgstr ""
 
 #: pyfreebill/models.py:142
 msgid "weekly"
-msgstr "hebdomadaire"
+msgstr ""
 
 #: pyfreebill/models.py:143
 msgid "monthly"
-msgstr "mensuel"
+msgstr ""
 
 #: pyfreebill/models.py:145
 msgid "billing cycle"
@@ -675,19 +490,19 @@ msgstr ""
 
 #: pyfreebill/models.py:162
 msgid "Company"
-msgstr "Entreprise"
+msgstr ""
 
 #: pyfreebill/models.py:163 pyfreebilling/menu.py:46 pyfreebilling/menu.py:48
 msgid "Companies"
-msgstr "Entreprises"
+msgstr ""
 
 #: pyfreebill/models.py:207
 msgid "first name"
-msgstr "prénom"
+msgstr ""
 
 #: pyfreebill/models.py:209
 msgid "last name"
-msgstr "nom"
+msgstr ""
 
 #: pyfreebill/models.py:211
 msgid "middle name"
@@ -695,15 +510,15 @@ msgstr ""
 
 #: pyfreebill/models.py:215 pyfreebill/models.py:804 pyfreebill/models.py:1639
 msgid "suffix"
-msgstr "suffixe"
+msgstr ""
 
 #: pyfreebill/models.py:225
 msgid "title"
-msgstr "titre"
+msgstr ""
 
 #: pyfreebill/models.py:236
 msgid "user"
-msgstr "utilisateur"
+msgstr ""
 
 #: pyfreebill/models.py:251
 msgid "person"
@@ -715,15 +530,15 @@ msgstr ""
 
 #: pyfreebill/models.py:288
 msgid "group"
-msgstr "groupe"
+msgstr ""
 
 #: pyfreebill/models.py:289
 msgid "groups"
-msgstr "groupes"
+msgstr ""
 
 #: pyfreebill/models.py:295 pyfreebill/models.py:330
 msgid "Work"
-msgstr "Travail"
+msgstr ""
 
 #: pyfreebill/models.py:296 pyfreebill/models.py:332
 msgid "Mobile"
@@ -731,7 +546,7 @@ msgstr ""
 
 #: pyfreebill/models.py:297 pyfreebill/models.py:333
 msgid "Fax"
-msgstr "Fax"
+msgstr ""
 
 #: pyfreebill/models.py:298
 msgid "Pager"
@@ -742,11 +557,11 @@ msgstr ""
 #: templates/admin/pyfreebill/cdr/change_list2.html:41
 #: templates/customer/base.html:25
 msgid "Home"
-msgstr "Accueil"
+msgstr ""
 
 #: pyfreebill/models.py:300 pyfreebill/models.py:335 pyfreebill/models.py:374
 msgid "Other"
-msgstr "Autre"
+msgstr ""
 
 #: pyfreebill/models.py:310
 msgid "number"
@@ -759,11 +574,11 @@ msgstr ""
 
 #: pyfreebill/models.py:334
 msgid "Personal"
-msgstr "Personnel"
+msgstr ""
 
 #: pyfreebill/models.py:344
 msgid "email address"
-msgstr "adresse e-mail"
+msgstr ""
 
 #: pyfreebill/models.py:383
 msgid "im account"
@@ -779,19 +594,19 @@ msgstr ""
 
 #: pyfreebill/models.py:427
 msgid "web site"
-msgstr "site web"
+msgstr ""
 
 #: pyfreebill/models.py:428
 msgid "web sites"
-msgstr "sites web"
+msgstr ""
 
 #: pyfreebill/models.py:439
 msgid "street"
-msgstr "rue"
+msgstr ""
 
 #: pyfreebill/models.py:441
 msgid "city"
-msgstr "ville"
+msgstr ""
 
 #: pyfreebill/models.py:444
 msgid "province"
@@ -799,11 +614,11 @@ msgstr ""
 
 #: pyfreebill/models.py:447
 msgid "postal code"
-msgstr "code postal"
+msgstr ""
 
 #: pyfreebill/models.py:450
 msgid "country"
-msgstr "pays"
+msgstr ""
 
 #: pyfreebill/models.py:465
 msgid "street address"
@@ -823,7 +638,7 @@ msgstr ""
 #: pyfreebill/models.py:2043
 #: templates/admin/pyfreebill/cdr/voip_report.html:54
 msgid "date"
-msgstr "date"
+msgstr ""
 
 #: pyfreebill/models.py:477
 msgid "every year"
@@ -840,7 +655,7 @@ msgstr ""
 #: pyfreebill/models.py:496 pyfreebill/models.py:550 pyfreebill/models.py:1073
 #: pyfreebill/models.py:1315
 msgid "company"
-msgstr "entreprise"
+msgstr ""
 
 #: pyfreebill/models.py:497
 msgid "amount debited"
@@ -868,11 +683,11 @@ msgstr ""
 
 #: pyfreebill/models.py:516
 msgid "operation on customer account"
-msgstr "opération sur compte client"
+msgstr ""
 
 #: pyfreebill/models.py:517
 msgid "operation on provider account"
-msgstr "opération sur compte fournisseur"
+msgstr ""
 
 #: pyfreebill/models.py:519
 msgid "operation type"
@@ -893,7 +708,7 @@ msgstr ""
 #: pyfreebill/models.py:551 templates/customer/sip_account.html:28
 #: templates/customer/sip_account.html:69
 msgid "Registration"
-msgstr "Enregistrement"
+msgstr ""
 
 #: pyfreebill/models.py:553
 msgid ""
@@ -909,7 +724,7 @@ msgstr ""
 
 #: pyfreebill/models.py:558 pyfreebill/models.py:1672
 msgid "password"
-msgstr "mot de passe"
+msgstr ""
 
 #: pyfreebill/models.py:561
 msgid ""
@@ -948,7 +763,7 @@ msgstr ""
 
 #: pyfreebill/models.py:582 pyfreebill/models.py:1422
 msgid "SIP port"
-msgstr "Port SIP"
+msgstr ""
 
 #: pyfreebill/models.py:584
 msgid "max calls"
@@ -1064,7 +879,7 @@ msgstr ""
 #: pyfreebill/models.py:616 pyfreebill/models.py:1478
 #: pyfreebill/models.py:1660
 msgid "ALL"
-msgstr "TOUS"
+msgstr ""
 
 #: pyfreebill/models.py:618 pyfreebill/models.py:1662
 msgid "Codecs"
@@ -1086,15 +901,15 @@ msgstr ""
 
 #: pyfreebill/models.py:627
 msgid "False"
-msgstr "Faux"
+msgstr ""
 
 #: pyfreebill/models.py:628
 msgid "True"
-msgstr "Vrai"
+msgstr ""
 
 #: pyfreebill/models.py:629
 msgid "multiple registrations"
-msgstr "enregistrements multiples"
+msgstr ""
 
 #: pyfreebill/models.py:633
 msgid ""
@@ -1129,11 +944,11 @@ msgstr ""
 
 #: pyfreebill/models.py:650
 msgid "false"
-msgstr "faux"
+msgstr ""
 
 #: pyfreebill/models.py:651 pyfreebill/models.py:1523
 msgid "true"
-msgstr "vrai"
+msgstr ""
 
 #: pyfreebill/models.py:652
 msgid "ring_ready"
@@ -1235,15 +1050,15 @@ msgstr ""
 
 #: pyfreebill/models.py:800 pyfreebill/models.py:1635
 msgid "prefix"
-msgstr "préfixe"
+msgstr ""
 
 #: pyfreebill/models.py:811 pyfreebill/models.py:986
 msgid "No filter"
-msgstr "Aucun filtre"
+msgstr ""
 
 #: pyfreebill/models.py:812 pyfreebill/models.py:987
 msgid "Prefix authorized"
-msgstr "Préfixe autorisé"
+msgstr ""
 
 #: pyfreebill/models.py:813 pyfreebill/models.py:988
 msgid "Prefix prohibited"
@@ -1259,7 +1074,7 @@ msgstr ""
 
 #: pyfreebill/models.py:825
 msgid "quality"
-msgstr "qualité"
+msgstr ""
 
 #: pyfreebill/models.py:828
 msgid "Order by quality."
@@ -1267,7 +1082,7 @@ msgstr ""
 
 #: pyfreebill/models.py:829
 msgid "reliability"
-msgstr "fiabilité"
+msgstr ""
 
 #: pyfreebill/models.py:832
 msgid "Order by reliability."
@@ -1319,11 +1134,11 @@ msgstr ""
 
 #: pyfreebill/models.py:922
 msgid "best quality"
-msgstr "meilleure qualité"
+msgstr ""
 
 #: pyfreebill/models.py:923
 msgid "best reliability"
-msgstr "meilleure fiabilité"
+msgstr ""
 
 #: pyfreebill/models.py:924
 msgid "load balance"
@@ -1343,7 +1158,7 @@ msgstr ""
 
 #: pyfreebill/models.py:950
 msgid "Provider tariff"
-msgstr "Tarif fournisseur"
+msgstr ""
 
 #: pyfreebill/models.py:958
 msgid "LCR provider"
@@ -1382,7 +1197,7 @@ msgstr ""
 #: templates/customer/sip_account.html:63
 #: templates/customer/sip_account.html:74
 msgid "Enabled"
-msgstr "Activé"
+msgstr ""
 
 #: pyfreebill/models.py:1063
 msgid "customer rate"
@@ -1394,7 +1209,7 @@ msgstr ""
 
 #: pyfreebill/models.py:1078
 msgid "technical prefix"
-msgstr "préfixe technique"
+msgstr ""
 
 #: pyfreebill/models.py:1084
 msgid "1"
@@ -1422,7 +1237,7 @@ msgstr ""
 
 #: pyfreebill/models.py:1094
 msgid "discount"
-msgstr "remise"
+msgstr ""
 
 #: pyfreebill/models.py:1098
 #, python-format
@@ -1469,7 +1284,7 @@ msgstr ""
 #: pyfreebill/models.py:1781 pyfreebill/models.py:1937
 #: pyfreebill/models.py:1955 pyfreebill/models.py:2009
 msgid "customer"
-msgstr "client"
+msgstr ""
 
 #: pyfreebill/models.py:1153 pyfreebill/models.py:1187
 #: pyfreebill/models.py:1221 pyfreebill/models.py:1254
@@ -2653,10 +2468,22 @@ msgstr ""
 #: templates/admin/pyfreebill/cdr/voip_report.html:27
 #: templates/admin/pyfreebill/customerdirectory/change_list.html:76
 #: templates/admin/pyfreebill/sofiagateway/change_list.html:76
+#, fuzzy
 msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
 msgstr[0] ""
+"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 msgstr[1] ""
+"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
 
 #: templates/admin/live_report.html:35
 #: templates/admin/pyfreebill/cdr/voip_report.html:35
@@ -2696,7 +2523,7 @@ msgstr ""
 #: templates/admin/edit_inline/popup.html:33
 #: templates/admin/edit_inline/popup.html:43
 msgid "Delete"
-msgstr "Supprimer"
+msgstr ""
 
 #: templates/admin/edit_inline/popup.html:38
 msgid "You are about to delete this object! Are you sure you want to continue?"
@@ -2771,7 +2598,7 @@ msgstr ""
 #: templates/admin/pyfreebill/cdr/change_list.html:66
 #: templates/admin/pyfreebill/cdr/change_list2.html:56
 msgid "Export"
-msgstr "Exporter"
+msgstr ""
 
 #: templates/admin/import_export/export.html:38
 msgid "Submit"
@@ -2960,9 +2787,8 @@ msgid "SIP Accounts"
 msgstr ""
 
 #: templates/customer/base.html:28
-#, fuzzy
 msgid "Report"
-msgstr "Exporter"
+msgstr ""
 
 #: templates/customer/base.html:30
 msgid "Logged in as"
@@ -3139,42 +2965,3 @@ msgstr ""
 #: templates/simple_import/match_relations.html:60
 msgid "Simulate import"
 msgstr ""
-
-#~ msgid "Sorry you do not have rights to execute this action (%s)"
-#~ msgstr "Désolé, mais vous n'avez pas le droit d'executer cette action (%s)"
-
-#~ msgid "Export as CSV"
-#~ msgstr "Exporter au format CSV"
-
-#~ msgid "Export as XLS"
-#~ msgstr "Exporter au format XLS"
-
-#~ msgid "Sorry you do not have rights to execute this action"
-#~ msgstr "Désolé, mais vous n'avez pas le droit d'executer cette action"
-
-#~ msgid "Dependencies"
-#~ msgstr "Dépendances"
-
-#~ msgid "Move"
-#~ msgstr "Déplacer"
-
-#~ msgid "CSV Export Options"
-#~ msgstr "Options d'export CSV"
-
-#~ msgid "Merge records"
-#~ msgstr "Fusionner les enregistrements"
-
-#~ msgid "Field"
-#~ msgstr "Champs"
-
-#~ msgid "Master"
-#~ msgstr "Maître"
-
-#~ msgid "Result"
-#~ msgstr "Résultat"
-
-#~ msgid "Key"
-#~ msgstr "Clé"
-
-#~ msgid "Original"
-#~ msgstr "original"
