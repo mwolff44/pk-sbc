@@ -2,198 +2,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PyFreeBilling\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-21 16:25+0200\n"
+"POT-Creation-Date: 2016-06-21 17:02+0200\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-#: adminactions/export.py:30 adminactions/export.py:212
-#: adminactions/export.py:289 adminactions/merge.py:63
-msgid "Sorry you do not have rights to execute this action (%s)"
-msgstr "Désolé, mais vous n'avez pas le droit d'executer cette action (%s)"
-
-#: adminactions/export.py:111 adminactions/export.py:116
-msgid "Export as CSV"
-msgstr "Exporter au format CSV"
-
-#: adminactions/export.py:123 adminactions/export.py:128
-msgid "Export as XLS"
-msgstr "Exporter au format XLS"
-
-#: adminactions/export.py:265
-msgid "Export as Fixture"
-msgstr ""
-
-#: adminactions/export.py:278
-msgid "Export as fixture"
-msgstr ""
-
-#: adminactions/export.py:351
-msgid "Export Delete Tree"
-msgstr ""
-
-#: adminactions/export.py:364
-msgid "Export delete tree"
-msgstr ""
-
-#: adminactions/mass_update.py:209
-msgid "Sorry you do not have rights to execute this action"
-msgstr "Désolé, mais vous n'avez pas le droit d'executer cette action"
-
-#: adminactions/mass_update.py:276
-msgid "Updated %s records"
-msgstr ""
-
-#: adminactions/merge.py:28
-msgid "Dependencies"
-msgstr "Dépendances"
-
-#: adminactions/merge.py:29
-msgid "Move"
-msgstr "Déplacer"
-
-#: adminactions/merge.py:29
-#: src/admintools-bootstrap/admintools_bootstrap/templates/admin/submit_line.html:3
-#: templates/admin/edit_inline/popup.html:23
-#: templates/admin/edit_inline/popup.html:33
-#: templates/admin/edit_inline/popup.html:43
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/delete_confirmation.html:3
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/delete_confirmation.html:16
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/delete_selected_confirmation.html:3
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/submit_line.html:4
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/edit_inline/popup.html:23
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/edit_inline/popup.html:33
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/edit_inline/popup.html:43
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/import_export/import.html:105
-#: yawd-admin/yawdadmin/templates/admin/delete_confirmation.html:3
-#: yawd-admin/yawdadmin/templates/admin/delete_confirmation.html:16
-#: yawd-admin/yawdadmin/templates/admin/delete_selected_confirmation.html:3
-#: yawd-admin/yawdadmin/templates/admin/submit_line.html:4
-#: yawd-admin/yawdadmin/templates/admin/edit_inline/popup.html:23
-#: yawd-admin/yawdadmin/templates/admin/edit_inline/popup.html:33
-#: yawd-admin/yawdadmin/templates/admin/edit_inline/popup.html:43
-#: yawd-admin/yawdadmin/templates/admin/import_export/import.html:105
-msgid "Delete"
-msgstr "Supprimer"
-
-#: adminactions/merge.py:131
-msgid "Please select exactly 2 records"
-msgstr ""
-
-#: adminactions/merge.py:154
-msgid "Merge selected %(verbose_name_plural)s"
-msgstr ""
-
-#: adminactions/templates/adminactions/any_model.html:26
-#: adminactions/templates/adminactions/charts.html:18
-#: adminactions/templates/adminactions/export_csv.html:46
-#: adminactions/templates/adminactions/export_fixture.html:6
-#: adminactions/templates/adminactions/export_xls.html:19
-#: adminactions/templates/adminactions/mass_update.html:26
-#: adminactions/templates/adminactions/merge.html:5
-#: adminactions/templates/adminactions/merge_preview.html:5
-#: pyfreebill/models.py:269 pyfreebill/models.py:301
-#: src/admintools-bootstrap/admintools_bootstrap/templates/admin/app_index.html:7
-#: src/admintools-bootstrap/admintools_bootstrap/templates/admin/base.html:161
-#: src/admintools-bootstrap/admintools_bootstrap/templates/admin/change_form.html:20
-#: src/admintools-bootstrap/admintools_bootstrap/templates/admin/change_list.html:53
-#: src/admintools-bootstrap/admintools_bootstrap/templates/registration/logged_out.html:5
-#: src/admintools-bootstrap/admintools_bootstrap/templates/registration/password_change_done.html:6
-#: src/admintools-bootstrap/admintools_bootstrap/templates/registration/password_change_form.html:10
-#: templates/admin/index.html:12
-#: templates/admin/pyfreebill/cdr/change_list_copy.html:41
-#: templates/customer/base.html:25
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/index.html:36
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/reversion/recover_list.html:9
-#: yawd-admin/yawdadmin/templates/admin/index.html:36
-#: yawd-admin/yawdadmin/templates/reversion/recover_list.html:9
-#: yawd-translations/build/lib.linux-x86_64-2.7/translations/templates/admin/edit_translation_messages.html:7
-#: yawd-translations/build/lib.linux-x86_64-2.7/translations/templates/admin/translation_messages.html:49
-#: yawd-translations/translations/templates/admin/edit_translation_messages.html:7
-#: yawd-translations/translations/templates/admin/translation_messages.html:49
-msgid "Home"
-msgstr "Accueil"
-
-#: adminactions/templates/adminactions/export_csv.html:50
-msgid "CSV Export Options"
-msgstr "Options d'export CSV"
-
-#: adminactions/templates/adminactions/export_csv.html:69
-#: templates/admin/import_export/export.html:8
-#: templates/admin/import_export/export.html:13
-#: templates/admin/pyfreebill/cdr/change_list.html:66
-#: templates/admin/pyfreebill/cdr/change_list_copy.html:56
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/import_export/change_list_export.html:8
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/import_export/change_list_import_export.html:13
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/import_export/export.html:8
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/import_export/export.html:13
-#: yawd-admin/yawdadmin/templates/admin/import_export/change_list_export.html:8
-#: yawd-admin/yawdadmin/templates/admin/import_export/change_list_import_export.html:13
-#: yawd-admin/yawdadmin/templates/admin/import_export/export.html:8
-#: yawd-admin/yawdadmin/templates/admin/import_export/export.html:13
-msgid "Export"
-msgstr "Exporter"
-
-#: adminactions/templates/adminactions/merge.html:8
-#: adminactions/templates/adminactions/merge_preview.html:8
-msgid "Merge records"
-msgstr "Fusionner les enregistrements"
-
-#: adminactions/templates/adminactions/merge.html:34
-msgid "Field"
-msgstr "Champs"
-
-#: adminactions/templates/adminactions/merge.html:35
-msgid "Master"
-msgstr "Maître"
-
-#: adminactions/templates/adminactions/merge.html:35
-msgid "This will be preserved"
-msgstr ""
-
-#: adminactions/templates/adminactions/merge.html:39
-msgid "swap"
-msgstr ""
-
-#: adminactions/templates/adminactions/merge.html:40
-msgid "Result"
-msgstr "Résultat"
-
-#: adminactions/templates/adminactions/merge.html:42 pyfreebill/models.py:270
-#: pyfreebill/models.py:305 pyfreebill/models.py:344
-msgid "Other"
-msgstr "Autre"
-
-#: adminactions/templates/adminactions/merge.html:42
-msgid "This will be removed"
-msgstr ""
-
-#: adminactions/templates/adminactions/merge.html:71
-#: adminactions/templates/adminactions/merge_preview.html:9
-#: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/import_export/import.html:86
-#: yawd-admin/yawdadmin/templates/admin/import_export/import.html:86
-msgid "Preview"
-msgstr "Aperçu"
-
-#: adminactions/templates/adminactions/merge_preview.html:18
-msgid "Key"
-msgstr "Clé"
-
-#: adminactions/templates/adminactions/merge_preview.html:23
-msgid "Original"
-msgstr "original"
-
-#: adminactions/templates/adminactions/merge_preview.html:24
-msgid "After Merging"
-msgstr ""
-
-#: adminactions/templates/adminactions/merge_preview.html:39
-msgid "Merge"
-msgstr ""
-
 
 #: customerportal/forms.py:33 pyfreebill/forms.py:35
 msgid "From"
@@ -232,12 +47,6 @@ msgid ""
 msgstr ""
 "ALERTE : le compte est bloqué - il ne reste plus de crédit - Merci "
 "d'effectuer un paiement en urgence"
-
-#: customerportal/views.py:65 customerportal/views.py:90
-#: customerportal/views.py:108 customerportal/views.py:163
-#: customerportal/views.py:173
-msgid "This user is not linked to a customer !"
-msgstr "L'utilisateur n'est pas lié à un client !"
 
 #: did/signals.py:36
 msgid ""
@@ -3172,6 +2981,9 @@ msgstr ""
 
 #~ msgid "Result"
 #~ msgstr "Résultat"
+
+#~ msgid "Preview"
+#~ msgstr "Aperçu"
 
 #~ msgid "Key"
 #~ msgstr "Clé"
