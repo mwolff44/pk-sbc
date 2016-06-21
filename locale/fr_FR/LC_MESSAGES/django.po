@@ -174,7 +174,7 @@ msgstr ""
 #: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/admin/import_export/import.html:86
 #: yawd-admin/yawdadmin/templates/admin/import_export/import.html:86
 msgid "Preview"
-msgstr ""
+msgstr "Aperçu"
 
 #: adminactions/templates/adminactions/merge_preview.html:18
 msgid "Key"
@@ -206,7 +206,7 @@ msgstr "Numéro de destination"
 
 #: customerportal/forms.py:38 pyfreebill/forms.py:44
 msgid "Enter the full number or the first part"
-msgstr ""
+msgstr "Entrer le numéro complet ou le début"
 
 #: customerportal/views.py:53
 msgid "Wellcome"
@@ -224,7 +224,7 @@ msgstr "ALERTE : le compte est bloqué - il ne reste plus de crédit - Merci d'e
 #: customerportal/views.py:108 customerportal/views.py:163
 #: customerportal/views.py:173
 msgid "This user is not linked to a customer !"
-msgstr ""
+msgstr "L'utilisateur n'est pas lié à un client !"
 
 #: did/admin/didAdmin.py:56
 msgid "update DID config xml file"
@@ -236,7 +236,7 @@ msgstr ""
 
 #: did/models/did.py:29
 msgid "DID number"
-msgstr ""
+msgstr "Numéro SDA"
 
 #: did/models/did.py:38 pyfreebill/forms.py:40 pyfreebill/models.py:758
 #: pyfreebill/models.py:1596
@@ -254,7 +254,7 @@ msgstr "Nombre de canaux"
 #: did/models/did.py:45 did/models/did.py:62
 msgid "maximum\n"
 "                    simultaneous calls allowed for this did."
-msgstr ""
+msgstr "Appels simultanés max autorisés pour cette SDA"
 
 #: did/models/did.py:49 pyfreebill/forms.py:39
 msgid "Customer"
@@ -315,11 +315,11 @@ msgstr "date de modification"
 
 #: did/models/did.py:75
 msgid "DID"
-msgstr ""
+msgstr "SDA"
 
 #: did/models/did.py:76
 msgid "DIDs"
-msgstr ""
+msgstr "SDA"
 
 #: did/models/ratesDid.py:24 did/models/ratesDid.py:59 pyfreebill/models.py:57
 #: pyfreebill/models.py:234 pyfreebill/models.py:702 pyfreebill/models.py:755
@@ -378,11 +378,11 @@ msgstr "Trunk SIP"
 
 #: did/models/routesDid.py:29
 msgid "External number"
-msgstr ""
+msgstr "Numéro externe"
 
 #: did/models/routesDid.py:31
 msgid "Route type"
-msgstr ""
+msgstr "Type de route"
 
 #: did/models/routesDid.py:35
 msgid "Routing type : trunk or\n"
@@ -391,7 +391,7 @@ msgstr ""
 
 #: did/models/routesDid.py:41
 msgid "destination number"
-msgstr ""
+msgstr "Numéro de destination"
 
 #: did/models/routesDid.py:58
 msgid "DID route"
@@ -407,15 +407,15 @@ msgstr ""
 
 #: pyfreebill/admin.py:82
 msgid "update sofia config xml file"
-msgstr ""
+msgstr "Mettre à jour le fichier de config xml de sofia"
 
 #: pyfreebill/admin.py:114
 msgid "update customer sip config xml file"
-msgstr ""
+msgstr "Mettre à jour le fichier de config xml des comptes SIP clients"
 
 #: pyfreebill/admin.py:144
 msgid "update ACL config xml file"
-msgstr ""
+msgstr "Mettre à jour le fichier de config xml des ACL"
 
 #: pyfreebill/admin.py:146
 msgid "generate customer sip\n"
@@ -424,7 +424,7 @@ msgstr "Générer le fichier de configuration sip du client"
 
 #: pyfreebill/admin.py:148
 msgid "generate sofia configuration file"
-msgstr ""
+msgstr "Générer le fichier de configuration de sofia"
 
 #: pyfreebill/admin.py:149
 msgid "generate acl configuration file"
@@ -432,15 +432,15 @@ msgstr ""
 
 #: pyfreebill/admin.py:643 pyfreebill/admin.py:760
 msgid "mark selected items as enabled"
-msgstr ""
+msgstr "Activer les objets sélectionnés "
 
 #: pyfreebill/admin.py:652 pyfreebill/admin.py:770
 msgid "mark selected items as disabled"
-msgstr ""
+msgstr "Désactiver les objets sélectionnés "
 
 #: pyfreebill/base_modules.py:32
 msgid "Stats chart"
-msgstr ""
+msgstr "Statistiques"
 
 #. On peut laisser Stats si c'est trop long
 #: pyfreebill/base_modules.py:77
@@ -477,7 +477,7 @@ msgstr ""
 
 #: pyfreebill/forms.py:41
 msgid "Customer Ratecard"
-msgstr ""
+msgstr "Grille tarifaire client"
 
 #: pyfreebill/forms.py:42
 msgid "LCR Group"
@@ -490,7 +490,7 @@ msgstr "Tous"
 
 #: pyfreebill/models.py:60 pyfreebill/models.py:189
 msgid "nickname"
-msgstr ""
+msgstr "surnom"
 
 #: pyfreebill/models.py:64 pyfreebill/models.py:192 pyfreebill/models.py:237
 msgid "slug"
@@ -502,35 +502,35 @@ msgstr "À propos"
 
 #: pyfreebill/models.py:76
 msgid "Account number"
-msgstr ""
+msgstr "Numéro de compte"
 
 #: pyfreebill/models.py:79
 msgid "VAT Applicable / Not applicable"
-msgstr ""
+msgstr "TVA applicable / non applicable"
 
 #: pyfreebill/models.py:81
 msgid "if checked, VAT is applicable."
-msgstr ""
+msgstr "si sélectionné, la TVA est applicable"
 
 #: pyfreebill/models.py:82
 msgid "VAT number"
-msgstr ""
+msgstr "Numéro de TVA"
 
 #: pyfreebill/models.py:85
 msgid "SWIFT BIC bank account number"
-msgstr ""
+msgstr "Numéro de compte bancaire SWIFT BIC"
 
 #: pyfreebill/models.py:88
 msgid "IBAN bank account number"
-msgstr ""
+msgstr "Numéro de compte bancaire IBAN"
 
 #: pyfreebill/models.py:91
 msgid "Prepaid / Postpaid"
-msgstr ""
+msgstr "Pré-paiement - post-paiement"
 
 #: pyfreebill/models.py:93
 msgid "If checked, this account customer is prepaid."
-msgstr ""
+msgstr "Si sélectionné, le compte client est en pré-paiement"
 
 #: pyfreebill/models.py:94
 msgid "credit limit"
@@ -538,67 +538,67 @@ msgstr "limite de crédit"
 
 #: pyfreebill/models.py:98
 msgid "Credit limit for postpaid account."
-msgstr ""
+msgstr "limite de crédit pour les comptes en post-paiement"
 
 #: pyfreebill/models.py:99
 msgid "low credit level alert"
-msgstr ""
+msgstr "alerte de crédit faible"
 
 #: pyfreebill/models.py:103
 msgid "Low credit limit alert."
-msgstr ""
+msgstr "niveau d'alerte de crédit faible"
 
 #: pyfreebill/models.py:104
 msgid "low credit alert ON"
-msgstr ""
+msgstr "alerte de crédit faible activée"
 
 #: pyfreebill/models.py:106
 msgid "Customer account blocked - low balance - ON"
-msgstr ""
+msgstr "Compte client bloqué - balance faible - activé"
 
 #: pyfreebill/models.py:108
 msgid "alert email address"
-msgstr ""
+msgstr "adresse email d'alerte"
 
 #: pyfreebill/models.py:111 pyfreebill/models.py:473
 msgid "customer balance"
-msgstr ""
+msgstr "balance client"
 
 #: pyfreebill/models.py:115
 msgid "Actual customer balance."
-msgstr ""
+msgstr "balance client actuelle"
 
 #: pyfreebill/models.py:117 pyfreebill/models.py:761 pyfreebill/models.py:952
 msgid "Currency"
-msgstr ""
+msgstr "Monnaie"
 
 #: pyfreebill/models.py:118
 msgid "supplier balance"
-msgstr ""
+msgstr "balance fournisseur"
 
 #: pyfreebill/models.py:122
 msgid "Actual supplier balance."
-msgstr ""
+msgstr "Balance fournisseur actuelle"
 
 #: pyfreebill/models.py:123
 msgid "max simultaneous calls"
-msgstr ""
+msgstr "nombre d'appels simultanés maximum"
 
 #: pyfreebill/models.py:125
 msgid "maximum simultaneous calls allowed for this customer account."
-msgstr ""
+msgstr "nombre d'appels simultanés maximum autorisés pour ce compte client"
 
 #: pyfreebill/models.py:126 pyfreebill/models.py:559
 msgid "max calls per second"
-msgstr ""
+msgstr "nombre d'appels par seconde maximum"
 
 #: pyfreebill/models.py:128
 msgid "maximum calls per seconds allowed for this customer account."
-msgstr ""
+msgstr "nombre d'appels par seconde maximum pour ce compte client"
 
 #: pyfreebill/models.py:130
 msgid "weekly"
-msgstr ""
+msgstr "hebdomadaire"
 
 #: pyfreebill/models.py:131
 msgid "monthly"
@@ -622,11 +622,11 @@ msgstr ""
 
 #: pyfreebill/models.py:150
 msgid "Company"
-msgstr ""
+msgstr "Entreprise"
 
 #: pyfreebill/models.py:151 pyfreebilling/menu.py:46 pyfreebilling/menu.py:48
 msgid "Companies"
-msgstr ""
+msgstr "Entreprises"
 
 #: pyfreebill/models.py:177
 msgid "first name"
@@ -670,7 +670,7 @@ msgstr "groupes"
 
 #: pyfreebill/models.py:265 pyfreebill/models.py:300
 msgid "Work"
-msgstr ""
+msgstr "Travail"
 
 #: pyfreebill/models.py:266 pyfreebill/models.py:302
 msgid "Mobile"
@@ -695,7 +695,7 @@ msgstr ""
 
 #: pyfreebill/models.py:304
 msgid "Personal"
-msgstr ""
+msgstr "Personnel"
 
 #: pyfreebill/models.py:314
 msgid "email address"
@@ -723,7 +723,7 @@ msgstr "sites web"
 
 #: pyfreebill/models.py:409
 msgid "street"
-msgstr ""
+msgstr "rue"
 
 #: pyfreebill/models.py:411
 msgid "city"
@@ -776,7 +776,7 @@ msgstr ""
 #: pyfreebill/models.py:466 pyfreebill/models.py:520 pyfreebill/models.py:1043
 #: pyfreebill/models.py:1285
 msgid "company"
-msgstr ""
+msgstr "entreprise"
 
 #: pyfreebill/models.py:467
 msgid "amount debited"
@@ -827,7 +827,7 @@ msgstr ""
 #: pyfreebill/models.py:521 templates/customer/sip_account.html:28
 #: templates/customer/sip_account.html:69
 msgid "Registration"
-msgstr ""
+msgstr "Enregistrement"
 
 #: pyfreebill/models.py:523
 msgid "Is registration needed\n"
@@ -986,7 +986,7 @@ msgstr ""
 #: pyfreebill/models.py:586 pyfreebill/models.py:1448
 #: pyfreebill/models.py:1630
 msgid "ALL"
-msgstr ""
+msgstr "TOUS"
 
 #: pyfreebill/models.py:588 pyfreebill/models.py:1632
 msgid "Codecs"
@@ -1007,15 +1007,15 @@ msgstr ""
 
 #: pyfreebill/models.py:597
 msgid "False"
-msgstr ""
+msgstr "Faux"
 
 #: pyfreebill/models.py:598
 msgid "True"
-msgstr ""
+msgstr "Vrai"
 
 #: pyfreebill/models.py:599
 msgid "multiple registrations"
-msgstr ""
+msgstr "enregistrements multiples"
 
 #: pyfreebill/models.py:603
 msgid "Used to allow to\n"
@@ -1046,11 +1046,11 @@ msgstr ""
 
 #: pyfreebill/models.py:620
 msgid "false"
-msgstr ""
+msgstr "faux"
 
 #: pyfreebill/models.py:621 pyfreebill/models.py:1493
 msgid "true"
-msgstr ""
+msgstr "vrai"
 
 #: pyfreebill/models.py:622
 msgid "ring_ready"
@@ -1147,7 +1147,7 @@ msgstr "préfixe"
 
 #: pyfreebill/models.py:781 pyfreebill/models.py:956
 msgid "No filter"
-msgstr ""
+msgstr "Aucun filtre"
 
 #: pyfreebill/models.py:782 pyfreebill/models.py:957
 msgid "Prefix authorized"
@@ -1167,7 +1167,7 @@ msgstr ""
 
 #: pyfreebill/models.py:795
 msgid "quality"
-msgstr ""
+msgstr "qualité"
 
 #: pyfreebill/models.py:798
 msgid "Order by quality."
@@ -1175,7 +1175,7 @@ msgstr ""
 
 #: pyfreebill/models.py:799
 msgid "reliability"
-msgstr ""
+msgstr "fiabilité"
 
 #: pyfreebill/models.py:802
 msgid "Order by reliability."
@@ -1290,7 +1290,7 @@ msgstr ""
 #: templates/customer/sip_account.html:63
 #: templates/customer/sip_account.html:74
 msgid "Enabled"
-msgstr ""
+msgstr "Activé"
 
 #: pyfreebill/models.py:1033
 msgid "customer rate"
@@ -1302,7 +1302,7 @@ msgstr ""
 
 #: pyfreebill/models.py:1048
 msgid "technical prefix"
-msgstr ""
+msgstr "préfixe technique"
 
 #: pyfreebill/models.py:1054
 msgid "1"
@@ -1329,7 +1329,7 @@ msgstr ""
 
 #: pyfreebill/models.py:1064
 msgid "discount"
-msgstr ""
+msgstr "remise"
 
 #: pyfreebill/models.py:1068
 msgid "ratecard discount. For\n"
@@ -1371,7 +1371,7 @@ msgstr ""
 #: pyfreebill/models.py:1751 pyfreebill/models.py:1907
 #: pyfreebill/models.py:1925 pyfreebill/models.py:1979
 msgid "customer"
-msgstr ""
+msgstr "client"
 
 #: pyfreebill/models.py:1123 pyfreebill/models.py:1157
 #: pyfreebill/models.py:1191 pyfreebill/models.py:1224
