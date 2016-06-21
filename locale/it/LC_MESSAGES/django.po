@@ -4295,7 +4295,8 @@ msgstr "DATETIME_FORMAT"
 msgid "\n"
 "                Compare <strong>%(date1)s</strong> with <strong>%(date2)s</strong>:\n"
 "            "
-msgstr "Compara <strong>%(date1)s</strong> con <strong>%(date2)s</strong>:\n"
+msgstr "\n"
+"                Compara <strong>%(date1)s</strong> con <strong>%(date2)s</strong>:\n"
 "␣␣␣␣␣␣␣␣␣␣␣␣ "
 
 #: yawd-admin/build/lib.linux-x86_64-2.7/yawdadmin/templates/reversion-compare/compare.html:38

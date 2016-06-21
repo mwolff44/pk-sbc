@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 
 setup(name='pyfreebilling',
-      version='1.23',
+      version='1.4.8',
       description='Softswitch billing app.',
       author='Mathias WOLFF',
       author_email='mathiaswolff@mac.com',
