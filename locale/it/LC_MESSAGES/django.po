@@ -3,10 +3,14 @@ msgstr ""
 "Project-Id-Version: PyFreeBilling\n"
 "Report-Msgid-Bugs-To: \n"
 <<<<<<< HEAD
+<<<<<<< HEAD
 "POT-Creation-Date: 2016-06-22 10:48+0200\n"
 =======
 "POT-Creation-Date: 2016-06-21 16:25+0200\n"
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+"POT-Creation-Date: 2016-06-22 10:48+0200\n"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,10 +19,14 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: customerportal/forms.py:33 pyfreebill/forms.py:36
 =======
 #: customerportal/forms.py:33 pyfreebill/forms.py:35
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: customerportal/forms.py:33 pyfreebill/forms.py:36
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "From"
 msgstr "Da"
 
@@ -56,6 +64,9 @@ msgstr ""
 "ATTENZIONE : l'account è bloccato - il credito è esaurito - Per favore, "
 "eseguire un pagamento"
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 
 #: did/signals.py:36
 msgid ""
@@ -69,6 +80,7 @@ msgstr ""
 #: pyfreebill/admin.py:135
 msgid "FS successfully reload"
 msgstr "FS riavviato correttamente"
+<<<<<<< HEAD
 =======
 
 #: did/signals.py:36
@@ -82,6 +94,8 @@ msgstr ""
 msgid "FS successfully reload"
 msgstr "è stato cancellato correttamente"
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 
 #: did/signals.py:49
 msgid ""
@@ -89,12 +103,16 @@ msgid ""
 "                    FS update failed ! Try manually"
 msgstr ""
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 "Aggiornamento file di configurazione numeri geografici fallito.\n"
 "                    Aggiornamento FS fallito ! Riprovare manualmente"
 
 #: did/signals.py:53
 msgid "DID config xml file update success"
 msgstr "File XML di configurazione numeri geografici aggiornato correttamente"
+<<<<<<< HEAD
 =======
 
 #: did/signals.py:53
@@ -102,6 +120,8 @@ msgstr "File XML di configurazione numeri geografici aggiornato correttamente"
 msgid "DID config xml file update success"
 msgstr "aggiorna file XML configurazioni numeri geografici"
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 
 #: did/signals.py:55
 msgid ""
@@ -109,10 +129,15 @@ msgid ""
 "            create file !"
 msgstr ""
 <<<<<<< HEAD
+<<<<<<< HEAD
 "Aggiornamento file di configurazione numeri geografici fallito. Impossibile\n"
 "            creare il file !"
 =======
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+"Aggiornamento file di configurazione numeri geografici fallito. Impossibile\n"
+"            creare il file !"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 
 #: did/admin/didAdmin.py:56
 msgid "update DID config xml file"
@@ -127,12 +152,17 @@ msgid "DID number"
 msgstr "Numero geografico"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: did/models/did.py:38 pyfreebill/admin.py:273 pyfreebill/forms.py:41
 #: pyfreebill/models.py:790 pyfreebill/models.py:1628
 =======
 #: did/models/did.py:38 pyfreebill/forms.py:40 pyfreebill/models.py:788
 #: pyfreebill/models.py:1626
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: did/models/did.py:38 pyfreebill/admin.py:273 pyfreebill/forms.py:41
+#: pyfreebill/models.py:790 pyfreebill/models.py:1628
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "Provider"
 msgstr "Fornitore"
 
@@ -165,12 +195,16 @@ msgid "customer channels"
 msgstr "Canali cliente"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 #: did/models/did.py:64 did/models/routesDid.py:46 pyfreebill/models.py:565
 #: pyfreebill/models.py:737 pyfreebill/models.py:810 pyfreebill/models.py:920
 #: pyfreebill/models.py:981 pyfreebill/models.py:1078
 #: pyfreebill/models.py:1129 pyfreebill/models.py:1157
 #: pyfreebill/models.py:1191 pyfreebill/models.py:1225
 #: pyfreebill/models.py:1258 pyfreebill/models.py:1762
+<<<<<<< HEAD
 =======
 #: did/models/did.py:64 did/models/routesDid.py:46 pyfreebill/models.py:563
 #: pyfreebill/models.py:735 pyfreebill/models.py:808 pyfreebill/models.py:918
@@ -179,10 +213,13 @@ msgstr "Canali cliente"
 #: pyfreebill/models.py:1189 pyfreebill/models.py:1223
 #: pyfreebill/models.py:1256 pyfreebill/models.py:1760
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "description"
 msgstr "descrizione"
 
 #: did/models/did.py:66 did/models/ratesDid.py:37 did/models/ratesDid.py:69
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: did/models/routesDid.py:48 pyfreebill/models.py:156
 #: pyfreebill/models.py:245 pyfreebill/models.py:282 pyfreebill/models.py:318
@@ -235,11 +272,14 @@ msgstr "data creazione"
 #: pyfreebill/models.py:1766 switch/models/Switch.py:43
 =======
 #: did/models/routesDid.py:50 pyfreebill/models.py:156
+=======
+#: did/models/routesDid.py:48 pyfreebill/models.py:156
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 #: pyfreebill/models.py:245 pyfreebill/models.py:282 pyfreebill/models.py:318
 #: pyfreebill/models.py:351 pyfreebill/models.py:395 pyfreebill/models.py:419
 #: pyfreebill/models.py:457 pyfreebill/models.py:481 pyfreebill/models.py:531
 #: pyfreebill/models.py:687 pyfreebill/models.py:739 pyfreebill/models.py:767
-#: pyfreebill/models.py:842 pyfreebill/models.py:888 pyfreebill/models.py:932
+#: pyfreebill/models.py:842 pyfreebill/models.py:889 pyfreebill/models.py:932
 #: pyfreebill/models.py:953 pyfreebill/models.py:1002
 #: pyfreebill/models.py:1056 pyfreebill/models.py:1105
 #: pyfreebill/models.py:1136 pyfreebill/models.py:1167
@@ -247,8 +287,30 @@ msgstr "data creazione"
 #: pyfreebill/models.py:1268 pyfreebill/models.py:1299
 #: pyfreebill/models.py:1331 pyfreebill/models.py:1371
 #: pyfreebill/models.py:1592 pyfreebill/models.py:1730
+<<<<<<< HEAD
 #: pyfreebill/models.py:1764 switch/models/Switch.py:43
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:1764 switch/models/Switch.py:42
+msgid "date added"
+msgstr "data creazione"
+
+#: did/models/did.py:68 did/models/ratesDid.py:39 did/models/ratesDid.py:71
+#: did/models/routesDid.py:50 pyfreebill/models.py:158
+#: pyfreebill/models.py:247 pyfreebill/models.py:284 pyfreebill/models.py:320
+#: pyfreebill/models.py:353 pyfreebill/models.py:397 pyfreebill/models.py:421
+#: pyfreebill/models.py:459 pyfreebill/models.py:483 pyfreebill/models.py:533
+#: pyfreebill/models.py:689 pyfreebill/models.py:741 pyfreebill/models.py:769
+#: pyfreebill/models.py:844 pyfreebill/models.py:890 pyfreebill/models.py:934
+#: pyfreebill/models.py:955 pyfreebill/models.py:1004
+#: pyfreebill/models.py:1058 pyfreebill/models.py:1107
+#: pyfreebill/models.py:1138 pyfreebill/models.py:1169
+#: pyfreebill/models.py:1203 pyfreebill/models.py:1237
+#: pyfreebill/models.py:1270 pyfreebill/models.py:1301
+#: pyfreebill/models.py:1333 pyfreebill/models.py:1373
+#: pyfreebill/models.py:1594 pyfreebill/models.py:1732
+#: pyfreebill/models.py:1766 switch/models/Switch.py:43
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "date modified"
 msgstr "data modifica"
 
@@ -261,16 +323,22 @@ msgid "DIDs"
 msgstr "Numeri geografici"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 #: did/models/ratesDid.py:24 did/models/ratesDid.py:59 pyfreebill/models.py:65
 #: pyfreebill/models.py:266 pyfreebill/models.py:734 pyfreebill/models.py:787
 #: pyfreebill/models.py:917 pyfreebill/models.py:978 pyfreebill/models.py:1289
 #: pyfreebill/models.py:1619
+<<<<<<< HEAD
 =======
 #: did/models/ratesDid.py:24 did/models/ratesDid.py:59 pyfreebill/models.py:63
 #: pyfreebill/models.py:264 pyfreebill/models.py:732 pyfreebill/models.py:785
 #: pyfreebill/models.py:915 pyfreebill/models.py:976 pyfreebill/models.py:1287
 #: pyfreebill/models.py:1617
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "name"
 msgstr "nome"
 
@@ -281,12 +349,17 @@ msgstr "Tariffa"
 
 #: did/models/ratesDid.py:28 did/models/ratesDid.py:63
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: pyfreebill/models.py:879 pyfreebill/models.py:1046
 #: pyfreebill/models.py:1809
 =======
 #: pyfreebill/models.py:877 pyfreebill/models.py:1044
 #: pyfreebill/models.py:1807
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:879 pyfreebill/models.py:1046
+#: pyfreebill/models.py:1809
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "block min duration"
 msgstr "Durata minima"
 
@@ -295,20 +368,27 @@ msgid "Interval duration"
 msgstr "Incremento"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 #: did/models/ratesDid.py:33 pyfreebill/models.py:1188
 #: pyfreebill/models.py:1255 pyfreebill/models.py:1810
 #: pyfreebill/models.py:1975 pyfreebill/models.py:1993
 #: pyfreebill/models.py:2043
+<<<<<<< HEAD
 =======
 #: did/models/ratesDid.py:33 pyfreebill/models.py:1186
 #: pyfreebill/models.py:1253 pyfreebill/models.py:1808
 #: pyfreebill/models.py:1973 pyfreebill/models.py:1991
 #: pyfreebill/models.py:2041
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "provider"
 msgstr "fornitore"
 
 #: did/models/ratesDid.py:35 did/models/ratesDid.py:67
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:671 pyfreebill/models.py:840 pyfreebill/models.py:888
 #: pyfreebill/models.py:1000
@@ -316,6 +396,10 @@ msgstr "fornitore"
 #: pyfreebill/models.py:669 pyfreebill/models.py:838 pyfreebill/models.py:886
 #: pyfreebill/models.py:998
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:671 pyfreebill/models.py:840 pyfreebill/models.py:888
+#: pyfreebill/models.py:1000
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "Enabled / Disabled"
 msgstr "Abilitato / Disabilitato"
 
@@ -496,6 +580,20 @@ msgid "generate acl configuration file"
 msgstr "genera file di configurazione ACL"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+#: pyfreebill/admin.py:201
+msgid "select the Ratecards affected to customer account. Order is important !"
+msgstr ""
+
+#: pyfreebill/admin.py:230 pyfreebill/admin.py:473 pyfreebill/admin.py:863
+#: pyfreebill/admin.py:1180
+msgid "General"
+msgstr "Generale"
+
+#: pyfreebill/admin.py:237
+msgid "General company informations"
+msgstr ""
+=======
 #: pyfreebill/admin.py:201
 msgid "select the Ratecards affected to customer account. Order is important !"
 msgstr ""
@@ -549,6 +647,322 @@ msgstr "Tariffa fornitore"
 msgid "Prepaid"
 msgstr "Prepagato"
 
+#: pyfreebill/admin.py:281
+#, fuzzy
+msgid "prepaid"
+msgstr "Prepagato"
+
+#: pyfreebill/admin.py:287
+#, fuzzy
+msgid "VAT"
+msgstr "ACT"
+
+#: pyfreebill/admin.py:288
+msgid "vat"
+msgstr ""
+
+#: pyfreebill/admin.py:294
+msgid "VIES"
+msgstr ""
+
+#: pyfreebill/admin.py:295
+msgid "vies"
+msgstr ""
+
+#: pyfreebill/admin.py:452
+msgid "No need to update balance"
+msgstr ""
+
+#: pyfreebill/admin.py:469
+msgid "balance updated"
+msgstr ""
+
+#: pyfreebill/admin.py:478 templates/customer/cdr_view.html:263
+msgid "Amount"
+msgstr "Importo"
+
+#: pyfreebill/admin.py:481
+#, fuzzy
+msgid "Balances"
+msgstr "Bilancio"
+
+#: pyfreebill/admin.py:597 pyfreebill/admin.py:636 pyfreebill/admin.py:752
+#: pyfreebill/admin.py:818 pyfreebill/admin.py:914 pyfreebill/admin.py:981
+#: pyfreebill/models.py:1054 pyfreebill/models.py:1635
+#: templates/customer/sip_account.html:63
+#: templates/customer/sip_account.html:74
+msgid "Enabled"
+msgstr "Abilitato"
+
+#: pyfreebill/admin.py:598 pyfreebill/admin.py:637 pyfreebill/admin.py:753
+#: pyfreebill/admin.py:819 pyfreebill/admin.py:915 pyfreebill/admin.py:982
+#, fuzzy
+msgid "enabled"
+msgstr "Abilitato"
+
+#: pyfreebill/admin.py:648 pyfreebill/admin.py:657 pyfreebill/admin.py:764
+#: pyfreebill/admin.py:774
+msgid "1 item was"
+msgstr ""
+
+#: pyfreebill/admin.py:650 pyfreebill/admin.py:659 pyfreebill/admin.py:766
+#: pyfreebill/admin.py:776
+#, python-format
+msgid "%s items were"
+msgstr ""
+
+#: pyfreebill/admin.py:651 pyfreebill/admin.py:768
+#, fuzzy, python-format
+msgid "%s successfully marked as enabled."
+msgstr "è stato cancellato correttamente"
+
+#: pyfreebill/admin.py:652 pyfreebill/admin.py:769
+msgid "mark selected items as enabled"
+msgstr "imposta gli elementi selezionati come Abilitati"
+
+#: pyfreebill/admin.py:660 pyfreebill/admin.py:778
+#, fuzzy, python-format
+msgid "%s successfully marked as disabled."
+msgstr "FS riavviato correttamente"
+
+#: pyfreebill/admin.py:661 pyfreebill/admin.py:779
+msgid "mark selected items as disabled"
+msgstr "imposta gli elementi selezionati come Disabilitati"
+
+#: pyfreebill/admin.py:871
+msgid "General sip account informations"
+msgstr ""
+
+#: pyfreebill/admin.py:873
+#, fuzzy
+msgid "Registration settings"
+msgstr "Registrazione"
+
+#: pyfreebill/admin.py:878
+msgid "If registration, you must set a password"
+msgstr ""
+
+#: pyfreebill/admin.py:880
+msgid "IP Settings"
+msgstr ""
+
+#: pyfreebill/admin.py:885
+msgid "If no registration, SIP IP CIDR is needed"
+msgstr ""
+
+#: pyfreebill/admin.py:887
+#, fuzzy
+msgid "Description"
+msgstr "descrizione"
+
+#: pyfreebill/admin.py:890
+#, fuzzy
+msgid "description informations"
+msgstr "descrizione"
+
+#: pyfreebill/admin.py:892
+msgid "Advanced settings"
+msgstr ""
+
+#: pyfreebill/admin.py:899
+#, fuzzy
+msgid "Advanced parameters"
+msgstr "Aggiungi pagamento"
+
+#: pyfreebill/admin.py:907 pyfreebill/admin.py:1061 pyfreebill/models.py:553
+#: templates/customer/sip_account.html:28
+#: templates/customer/sip_account.html:69
+msgid "Registration"
+msgstr "Registrazione"
+
+#: pyfreebill/admin.py:908
+#, fuzzy
+msgid "registration"
+msgstr "Registrazione"
+
+#: pyfreebill/admin.py:921 pyfreebill/models.py:673
+msgid "Fake ring"
+msgstr "Ring simulato"
+
+#: pyfreebill/admin.py:922
+#, fuzzy
+msgid "fake_ring"
+msgstr "Ring simulato"
+
+#: pyfreebill/admin.py:928 pyfreebill/admin.py:929
+msgid "cli_debug"
+msgstr ""
+
+#: pyfreebill/admin.py:988
+#, fuzzy
+msgid "Register"
+msgstr "Registra"
+
+#: pyfreebill/admin.py:989 pyfreebill/models.py:1678
+msgid "register"
+msgstr "Registra"
+
+#: pyfreebill/admin.py:1014
+msgid "Basic settings"
+msgstr ""
+
+#: pyfreebill/admin.py:1018
+msgid "General sip profile informations"
+msgstr ""
+
+#: pyfreebill/admin.py:1025
+msgid "Codecs Related Options"
+msgstr ""
+
+#: pyfreebill/admin.py:1029
+msgid "Manage Codecs Related Options"
+msgstr ""
+
+#: pyfreebill/admin.py:1031
+#, fuzzy
+msgid "NAT"
+msgstr "ACT"
+
+#: pyfreebill/admin.py:1037
+#, fuzzy
+msgid "NAT management"
+msgstr "Gestione cliente"
+
+#: pyfreebill/admin.py:1039
+#, fuzzy
+msgid "DTMF Related options"
+msgstr "Opzioni traducibili"
+
+#: pyfreebill/admin.py:1042
+#, fuzzy
+msgid "DTMF management"
+msgstr "Gestione cliente"
+
+#: pyfreebill/admin.py:1044
+msgid "SIP Related Options"
+msgstr ""
+
+#: pyfreebill/admin.py:1047
+msgid "Manage SIP Related Options"
+msgstr ""
+
+#: pyfreebill/admin.py:1049
+#, fuzzy
+msgid "RTP Related Options"
+msgstr "Opzioni traducibili"
+
+#: pyfreebill/admin.py:1052
+msgid "Manage RTP Related Options"
+msgstr ""
+
+#: pyfreebill/admin.py:1054
+#, fuzzy
+msgid "Authentification Authorization"
+msgstr "IP autenticazione"
+
+#: pyfreebill/admin.py:1059
+msgid "Authentification Authorization management"
+msgstr ""
+
+#: pyfreebill/admin.py:1065
+msgid "Registration settings management"
+msgstr ""
+
+#: pyfreebill/admin.py:1067
+#, fuzzy
+msgid "Others"
+msgstr "Altro"
+
+#: pyfreebill/admin.py:1070
+msgid "Others parameters"
+msgstr ""
+
+#: pyfreebill/admin.py:1188
+#, fuzzy
+msgid "Advanced date / duration infos"
+msgstr "Durata fatturata in secondi"
+
+#: pyfreebill/admin.py:1195
+#, fuzzy
+msgid "Financial infos"
+msgstr "Sommario economico"
+
+#: pyfreebill/admin.py:1200
+msgid "LCR infos"
+msgstr ""
+
+#: pyfreebill/admin.py:1206
+msgid "Call detailed infos"
+msgstr ""
+
+#: pyfreebill/admin.py:1492
+msgid "object_repr"
+msgstr ""
+
+#: pyfreebill/admin.py:1493
+msgid "object"
+msgstr ""
+
+#: pyfreebill/admin.py:1502
+msgid "Action"
+msgstr "Azioen"
+
+#: pyfreebill/base_modules.py:32
+msgid "Stats chart"
+msgstr "Grafici statistiche"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#: pyfreebill/admin.py:239
+#, fuzzy
+msgid "Customer settings"
+msgstr "Statistiche destinazione cliente"
+
+#: pyfreebill/admin.py:246
+#, fuzzy
+msgid "Customer alerts"
+msgstr "Listini cliente"
+
+#: pyfreebill/admin.py:252
+msgid "All the customer alert parameters"
+msgstr ""
+
+#: pyfreebill/admin.py:254
+#, fuzzy
+msgid "Provider settings"
+msgstr "Tariffe fornitore"
+
+#: pyfreebill/admin.py:258
+msgid ""
+"If this company is your provider, this is right place to manage its "
+"parameters"
+msgstr ""
+
+#: pyfreebill/admin.py:267
+#, fuzzy
+msgid "customer_enabled"
+msgstr "Tariffa cliente"
+
+<<<<<<< HEAD
+#: pyfreebill/admin.py:274
+#, fuzzy
+msgid "provider_enabled"
+msgstr "Tariffa fornitore"
+=======
+#: pyfreebill/fields.py:58 switch/fields.py:59
+msgid ""
+"Enter a valid IPv4 address (dot-decimal or CIDR notation) or a FreeSWITCH "
+"variable."
+msgstr ""
+"Inserire un indirizzo IPv4 valido (in notazione decimale o CIDR) o una "
+"variabile FreeSWITCH."
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#: pyfreebill/admin.py:280 templates/customer/balance.html:39
+#: templates/customer/home.html:66
+msgid "Prepaid"
+msgstr "Prepagato"
+
+<<<<<<< HEAD
 #: pyfreebill/admin.py:281
 #, fuzzy
 msgid "prepaid"
@@ -901,11 +1315,60 @@ msgstr "Se selezionato, l'IVA è applicabile."
 msgid "VAT number"
 msgstr "Partita IVA/VAT ID"
 
+=======
+#: pyfreebill/forms.py:42
+msgid "Customer Ratecard"
+msgstr "Listino Cliente"
+
+#: pyfreebill/forms.py:43
+msgid "LCR Group"
+msgstr "Gruppo LCR"
+
+#: pyfreebill/forms.py:51 pyfreebill/forms.py:63 pyfreebill/forms.py:75
+#: pyfreebill/forms.py:86
+msgid "all"
+msgstr "Tutti"
+
+#: pyfreebill/models.py:60
+#, fuzzy, python-format
+msgid "%s is not a valid VAT number"
+msgstr "Questo non è un file immagine valido"
+
+#: pyfreebill/models.py:68 pyfreebill/models.py:221
+msgid "nickname"
+msgstr "soprannome"
+
+#: pyfreebill/models.py:72 pyfreebill/models.py:224 pyfreebill/models.py:269
+msgid "slug"
+msgstr "slug"
+
+#: pyfreebill/models.py:75 pyfreebill/models.py:233 pyfreebill/models.py:272
+msgid "about"
+msgstr "A proposito di"
+
+#: pyfreebill/models.py:84
+msgid "Account number"
+msgstr "Numero account"
+
+#: pyfreebill/models.py:87
+msgid "VAT Applicable / Not applicable"
+msgstr "IVA Applicabile / Non applicabile"
+
+#: pyfreebill/models.py:89
+msgid "if checked, VAT is applicable."
+msgstr "Se selezionato, l'IVA è applicabile."
+
+#: pyfreebill/models.py:90
+msgid "VAT number"
+msgstr "Partita IVA/VAT ID"
+
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 #: pyfreebill/models.py:94
 msgid "VAT Vies Validated."
 msgstr "Partita IVA validata su Vies."
 
 #: pyfreebill/models.py:96
+<<<<<<< HEAD
 =======
 #: pyfreebill/models.py:66 pyfreebill/models.py:219
 msgid "nickname"
@@ -941,11 +1404,16 @@ msgstr ""
 
 #: pyfreebill/models.py:94
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "If on, it means that VAT is validated through <a target='_blank' "
 "href='http://ec.europa.eu/taxation_customs/vies/vatRequest.html'>Vies</a>."
 msgstr ""
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 "Se acceso, significa che la partita IVA è stata validata attraverso il <a "
 "target='_blank' href='http://ec.europa.eu/taxation_customs/vies/vatRequest."
 "html'>Vies</a>. "
@@ -1027,6 +1495,7 @@ msgid "max calls per second"
 msgstr "Chiamate massime al secondo"
 
 #: pyfreebill/models.py:142
+<<<<<<< HEAD
 =======
 
 #: pyfreebill/models.py:97
@@ -1232,81 +1701,121 @@ msgstr "Schema di fatturazione"
 #: pyfreebill/models.py:149
 msgid "billinng cycle for invoice generation."
 msgstr "Schema di fatturazione per la generazione delle fatture."
+=======
+msgid "maximum calls per seconds allowed for this customer account."
+msgstr ""
+"Numero di chiamate massime al secondo autorizzate per questo account cliente."
 
-#: pyfreebill/models.py:150
+#: pyfreebill/models.py:144
+msgid "weekly"
+msgstr "settimanale"
+
+#: pyfreebill/models.py:145
+msgid "monthly"
+msgstr "mensile"
+
+#: pyfreebill/models.py:147
+msgid "billing cycle"
+msgstr "Schema di fatturazione"
+
+#: pyfreebill/models.py:151
+msgid "billinng cycle for invoice generation."
+msgstr "Schema di fatturazione per la generazione delle fatture."
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#: pyfreebill/models.py:152
 msgid "Customer Enabled / Disabled"
 msgstr "Cliente Abilitato / Disabilitato"
 
-#: pyfreebill/models.py:152
+#: pyfreebill/models.py:154
 msgid "Supplier Enabled / Disabled"
 msgstr "Fornitore Abilitato / Disabilitato"
 
-#: pyfreebill/models.py:162
+#: pyfreebill/models.py:164
 msgid "Company"
 msgstr "Azienda"
 
-#: pyfreebill/models.py:163 pyfreebilling/menu.py:46 pyfreebilling/menu.py:48
+#: pyfreebill/models.py:165 pyfreebilling/menu.py:46 pyfreebilling/menu.py:48
 msgid "Companies"
 msgstr "Aziende"
 
-#: pyfreebill/models.py:207
+#: pyfreebill/models.py:172
+#, python-format
+msgid "Wrong VAT number - validation made throw VIES services. %s"
+msgstr ""
+
+#: pyfreebill/models.py:204
+#, fuzzy
+msgid "balance history"
+msgstr "Storico bilancio"
+
+#: pyfreebill/models.py:209
 msgid "first name"
 msgstr "nome"
 
-#: pyfreebill/models.py:209
+#: pyfreebill/models.py:211
 msgid "last name"
 msgstr "cognome"
 
-#: pyfreebill/models.py:211
+#: pyfreebill/models.py:213
 msgid "middle name"
 msgstr "secondo nome"
 
-#: pyfreebill/models.py:215 pyfreebill/models.py:804 pyfreebill/models.py:1639
+#: pyfreebill/models.py:217 pyfreebill/models.py:806 pyfreebill/models.py:1641
 msgid "suffix"
 msgstr "suffisso"
 
-#: pyfreebill/models.py:225
+#: pyfreebill/models.py:227
 msgid "title"
 msgstr "titolo"
 
-#: pyfreebill/models.py:236
+#: pyfreebill/models.py:238
 msgid "user"
 msgstr "utente"
 
-#: pyfreebill/models.py:251
+#: pyfreebill/models.py:253
 msgid "person"
 msgstr "Persona"
 
-#: pyfreebill/models.py:252
+#: pyfreebill/models.py:254 pyfreebill/models.py:275
 msgid "people"
 msgstr "Persone"
 
-#: pyfreebill/models.py:288
+#: pyfreebill/models.py:279
+#, fuzzy
+msgid "companies"
+msgstr "Aziende"
+
+#: pyfreebill/models.py:290
 msgid "group"
 msgstr "gruppo"
 
-#: pyfreebill/models.py:289
+#: pyfreebill/models.py:291
 msgid "groups"
 msgstr "gruppi"
 
-#: pyfreebill/models.py:295 pyfreebill/models.py:330
+#: pyfreebill/models.py:297 pyfreebill/models.py:332
 msgid "Work"
 msgstr "Ufficio"
 
-#: pyfreebill/models.py:296 pyfreebill/models.py:332
+#: pyfreebill/models.py:298 pyfreebill/models.py:334
 msgid "Mobile"
 msgstr "Cellulare"
 
-#: pyfreebill/models.py:297 pyfreebill/models.py:333
+#: pyfreebill/models.py:299 pyfreebill/models.py:335
 msgid "Fax"
 msgstr "Fax"
 
-#: pyfreebill/models.py:298
+#: pyfreebill/models.py:300
 msgid "Pager"
 msgstr "Pager"
 
+<<<<<<< HEAD
 #: pyfreebill/models.py:299 pyfreebill/models.py:331
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:301 pyfreebill/models.py:333
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 #: templates/admin/_index.html:12 templates/admin/index.html:12
 #: templates/admin/pyfreebill/cdr/change_list2.html:41
 #: templates/customer/base.html:25
@@ -1314,11 +1823,15 @@ msgid "Home"
 msgstr "Home"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 #: pyfreebill/models.py:302 pyfreebill/models.py:337 pyfreebill/models.py:376
 msgid "Other"
 msgstr "Altro"
 
 #: pyfreebill/models.py:312
+<<<<<<< HEAD
 msgid "number"
 msgstr "Numero"
 
@@ -1422,84 +1935,121 @@ msgid "Other"
 msgstr "Altro"
 
 #: pyfreebill/models.py:310
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "number"
 msgstr "Numero"
 
-#: pyfreebill/models.py:312 pyfreebill/models.py:345 pyfreebill/models.py:385
-#: pyfreebill/models.py:413 pyfreebill/models.py:451
+#: pyfreebill/models.py:314 pyfreebill/models.py:347 pyfreebill/models.py:387
+#: pyfreebill/models.py:415 pyfreebill/models.py:453
 msgid "location"
 msgstr "Posizione"
 
-#: pyfreebill/models.py:334
+#: pyfreebill/models.py:328
+#, fuzzy
+msgid "phone number"
+msgstr "Numero linea"
+
+#: pyfreebill/models.py:329
+#, fuzzy
+msgid "phone numbers"
+msgstr "Numero linea"
+
+#: pyfreebill/models.py:336
 msgid "Personal"
 msgstr "Personale"
 
-#: pyfreebill/models.py:344
+#: pyfreebill/models.py:346 pyfreebill/models.py:361
 msgid "email address"
 msgstr "indirizzo email"
 
-#: pyfreebill/models.py:383
+#: pyfreebill/models.py:362
+#, fuzzy
+msgid "email addresses"
+msgstr "indirizzo email"
+
+#: pyfreebill/models.py:385
 msgid "im account"
 msgstr "Account IM"
 
-#: pyfreebill/models.py:389
+#: pyfreebill/models.py:391
 msgid "service"
 msgstr "Servizi"
 
-#: pyfreebill/models.py:412
+#: pyfreebill/models.py:405
+#, fuzzy
+msgid "instant messenger"
+msgstr "Traduci messaggi"
+
+#: pyfreebill/models.py:406
+#, fuzzy
+msgid "instant messengers"
+msgstr "Traduci messaggi"
+
+#: pyfreebill/models.py:414
 msgid "URL"
 msgstr "URL"
 
-#: pyfreebill/models.py:427
+#: pyfreebill/models.py:429
 msgid "web site"
 msgstr "sito web"
 
-#: pyfreebill/models.py:428
+#: pyfreebill/models.py:430
 msgid "web sites"
 msgstr "siti web"
 
-#: pyfreebill/models.py:439
+#: pyfreebill/models.py:441
 msgid "street"
 msgstr "Indirizzo"
 
-#: pyfreebill/models.py:441
+#: pyfreebill/models.py:443
 msgid "city"
 msgstr "città"
 
-#: pyfreebill/models.py:444
+#: pyfreebill/models.py:446
 msgid "province"
 msgstr "Provincia"
 
-#: pyfreebill/models.py:447
+#: pyfreebill/models.py:449
 msgid "postal code"
 msgstr "codice postale"
 
-#: pyfreebill/models.py:450
+#: pyfreebill/models.py:452
 msgid "country"
 msgstr "nazione"
 
-#: pyfreebill/models.py:465
+#: pyfreebill/models.py:467
 msgid "street address"
 msgstr "Indirizzo"
 
-#: pyfreebill/models.py:466
+#: pyfreebill/models.py:468
 msgid "street addresses"
 msgstr "Indirizzi"
 
-#: pyfreebill/models.py:474
+#: pyfreebill/models.py:476
 msgid "occasion"
 msgstr "Occasione"
 
+<<<<<<< HEAD
 #: pyfreebill/models.py:476 pyfreebill/models.py:1940
 #: pyfreebill/models.py:1958 pyfreebill/models.py:1976
 #: pyfreebill/models.py:1994 pyfreebill/models.py:2011
 #: pyfreebill/models.py:2043
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:478 pyfreebill/models.py:1942
+#: pyfreebill/models.py:1960 pyfreebill/models.py:1978
+#: pyfreebill/models.py:1996 pyfreebill/models.py:2013
+#: pyfreebill/models.py:2045
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 #: templates/admin/pyfreebill/cdr/voip_report.html:54
 msgid "date"
 msgstr "data"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 #: pyfreebill/models.py:479
 msgid "every year"
 msgstr "ogni anno"
@@ -1526,6 +2076,7 @@ msgid "amount refund"
 msgstr "Importo accreditato"
 
 #: pyfreebill/models.py:509
+<<<<<<< HEAD
 =======
 #: pyfreebill/models.py:477
 msgid "every year"
@@ -1554,6 +2105,8 @@ msgstr "Importo accreditato"
 
 #: pyfreebill/models.py:507
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Resulting customer\n"
 "                                           balance."
@@ -1561,6 +2114,7 @@ msgstr ""
 "Bilancio cliente\n"
 "                                           risultante."
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:511
 msgid "provider balance"
@@ -1574,6 +2128,13 @@ msgstr "Bilancio fornitore"
 
 #: pyfreebill/models.py:513
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:511
+msgid "provider balance"
+msgstr "Bilancio fornitore"
+
+#: pyfreebill/models.py:515
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Resulting provider\n"
 "                                           balance."
@@ -1581,6 +2142,7 @@ msgstr ""
 "Bilancio fornitore\n"
 "                                           risultante."
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:518
 msgid "operation on customer account"
@@ -1609,29 +2171,33 @@ msgstr "Storico bilancio azienda"
 #: pyfreebill/models.py:555
 =======
 #: pyfreebill/models.py:516
+=======
+#: pyfreebill/models.py:518
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "operation on customer account"
 msgstr "operazione su account cliente"
 
-#: pyfreebill/models.py:517
+#: pyfreebill/models.py:519
 msgid "operation on provider account"
 msgstr "operazione su account fornitore"
 
-#: pyfreebill/models.py:519
+#: pyfreebill/models.py:521
 msgid "operation type"
 msgstr "tipo operazione"
 
-#: pyfreebill/models.py:523
+#: pyfreebill/models.py:525
 msgid "public description"
 msgstr "descrizione pubblica"
 
-#: pyfreebill/models.py:526
+#: pyfreebill/models.py:528
 msgid "internal description"
 msgstr "descrizione interna"
 
-#: pyfreebill/models.py:537 pyfreebill/models.py:538
+#: pyfreebill/models.py:539 pyfreebill/models.py:540
 msgid "Company balance history"
 msgstr "Storico bilancio azienda"
 
+<<<<<<< HEAD
 #: pyfreebill/models.py:551 templates/customer/sip_account.html:28
 #: templates/customer/sip_account.html:69
 msgid "Registration"
@@ -1639,6 +2205,9 @@ msgstr "Registrazione"
 
 #: pyfreebill/models.py:553
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:555
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Is registration needed\n"
 "                                       for calling ? True, the phone needs "
@@ -1659,6 +2228,7 @@ msgstr ""
 "                                       IP CIDR !"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: pyfreebill/models.py:560 pyfreebill/models.py:1674
 msgid "password"
 msgstr "password"
@@ -1671,6 +2241,13 @@ msgstr "password"
 
 #: pyfreebill/models.py:561
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:560 pyfreebill/models.py:1674
+msgid "password"
+msgstr "password"
+
+#: pyfreebill/models.py:563
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "It's recommended to use strong\n"
 "                                passwords for the endpoint."
@@ -1678,6 +2255,7 @@ msgstr ""
 "E' raccomandato l'utilizzo di una \n"
 "                                password forte per il dispositivo."
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:567
 msgid "SIP username"
@@ -1694,19 +2272,26 @@ msgstr "RTP IP CIDR"
 #: pyfreebill/models.py:574
 =======
 #: pyfreebill/models.py:565
+=======
+#: pyfreebill/models.py:567
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "SIP username"
 msgstr "Username SIP"
 
-#: pyfreebill/models.py:568
+#: pyfreebill/models.py:570
 msgid "Ex.: customer SIP username, etc..."
 msgstr "Es.: username SIP cliente, ecc..."
 
-#: pyfreebill/models.py:569
+#: pyfreebill/models.py:571
 msgid "RTP IP CIDR"
 msgstr "RTP IP CIDR"
 
+<<<<<<< HEAD
 #: pyfreebill/models.py:572
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:574
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Internal IP address/mask to bind\n"
 "                              to for RTP. Format : CIDR Ex. 192.168.1.0/32"
@@ -1714,6 +2299,7 @@ msgstr ""
 "Indirizzo IP/maschera interno da collegare\n"
 "                              a RTP. Formato : CIDR Es. 192.168.1.0/32"
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:576
 msgid "SIP IP CIDR"
@@ -1727,6 +2313,13 @@ msgstr "SIP IP CIDR"
 
 #: pyfreebill/models.py:579
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:576
+msgid "SIP IP CIDR"
+msgstr "SIP IP CIDR"
+
+#: pyfreebill/models.py:581
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Internal IP address/mask to bind\n"
 "                              to for SIP. Format : CIDR. Ex. 192.168.1.0/32\n"
@@ -1735,6 +2328,7 @@ msgstr ""
 "Indirizzo IP/maschera interno da collegare\n"
 "                              a SIP. Formato : CIDR Es. 192.168.1.0/32"
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:584 pyfreebill/models.py:1424
 msgid "SIP port"
@@ -1747,15 +2341,22 @@ msgstr "chiamate massime"
 #: pyfreebill/models.py:588
 =======
 #: pyfreebill/models.py:582 pyfreebill/models.py:1422
+=======
+#: pyfreebill/models.py:584 pyfreebill/models.py:1424
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "SIP port"
 msgstr "Porta SIP"
 
-#: pyfreebill/models.py:584
+#: pyfreebill/models.py:586
 msgid "max calls"
 msgstr "chiamate massime"
 
+<<<<<<< HEAD
 #: pyfreebill/models.py:586
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:588
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "max simultaneous\n"
 "                                            calls allowed for this customer\n"
@@ -1766,10 +2367,14 @@ msgstr ""
 "                                            per questo account cliente."
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: pyfreebill/models.py:593
 =======
 #: pyfreebill/models.py:591
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:593
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "maximum\n"
 "                                                   calls per second allowed "
@@ -1780,6 +2385,7 @@ msgstr ""
 "                                            al secondo consentite\n"
 "                                            per questo account cliente."
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:596 pyfreebill/models.py:1457
 msgid "log auth failures"
@@ -1793,6 +2399,13 @@ msgstr "registra tentativi falliti"
 
 #: pyfreebill/models.py:596
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:596 pyfreebill/models.py:1457
+msgid "log auth failures"
+msgstr "registra tentativi falliti"
+
+#: pyfreebill/models.py:598
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "It true, the server\n"
 "                                            will log authentication "
@@ -1803,6 +2416,7 @@ msgstr ""
 "                                            i tentativi di accesso falliti.\n"
 "                                            Richiesto per Fail2ban."
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:602 pyfreebill/models.py:1464
 #: pyfreebill/models.py:1646
@@ -1897,95 +2511,103 @@ msgstr "Codec"
 =======
 #: pyfreebill/models.py:600 pyfreebill/models.py:1462
 #: pyfreebill/models.py:1644
+=======
+#: pyfreebill/models.py:602 pyfreebill/models.py:1464
+#: pyfreebill/models.py:1646
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "PCMA,PCMU,G729"
 msgstr "PCMA,PCMU,G729"
 
-#: pyfreebill/models.py:601 pyfreebill/models.py:1463
-#: pyfreebill/models.py:1645
+#: pyfreebill/models.py:603 pyfreebill/models.py:1465
+#: pyfreebill/models.py:1647
 msgid "PCMU,PCMA,G729"
 msgstr "PCMU,PCMA,G729"
 
-#: pyfreebill/models.py:602 pyfreebill/models.py:1464
-#: pyfreebill/models.py:1646
+#: pyfreebill/models.py:604 pyfreebill/models.py:1466
+#: pyfreebill/models.py:1648
 msgid "G729,PCMA,PCMU"
 msgstr "G729,PCMA,PCMU"
 
-#: pyfreebill/models.py:603 pyfreebill/models.py:1465
-#: pyfreebill/models.py:1647
+#: pyfreebill/models.py:605 pyfreebill/models.py:1467
+#: pyfreebill/models.py:1649
 msgid "G729,PCMU,PCMA"
 msgstr "G729,PCMU,PCMA"
 
-#: pyfreebill/models.py:604 pyfreebill/models.py:1466
-#: pyfreebill/models.py:1648
+#: pyfreebill/models.py:606 pyfreebill/models.py:1468
+#: pyfreebill/models.py:1650
 msgid "PCMA,G729"
 msgstr "PCMA,G729"
 
-#: pyfreebill/models.py:605 pyfreebill/models.py:1467
-#: pyfreebill/models.py:1649
+#: pyfreebill/models.py:607 pyfreebill/models.py:1469
+#: pyfreebill/models.py:1651
 msgid "PCMU,G729"
 msgstr "PCMU,G729"
 
-#: pyfreebill/models.py:606 pyfreebill/models.py:1468
-#: pyfreebill/models.py:1650
+#: pyfreebill/models.py:608 pyfreebill/models.py:1470
+#: pyfreebill/models.py:1652
 msgid "G729,PCMA"
 msgstr "G729,PCMA"
 
-#: pyfreebill/models.py:607 pyfreebill/models.py:1469
-#: pyfreebill/models.py:1651
+#: pyfreebill/models.py:609 pyfreebill/models.py:1471
+#: pyfreebill/models.py:1653
 msgid "G729,PCMU"
 msgstr "G729,PCMU"
 
-#: pyfreebill/models.py:608 pyfreebill/models.py:1470
-#: pyfreebill/models.py:1652
+#: pyfreebill/models.py:610 pyfreebill/models.py:1472
+#: pyfreebill/models.py:1654
 msgid "PCMA,PCMU"
 msgstr "PCMA,PCMU"
 
-#: pyfreebill/models.py:609 pyfreebill/models.py:1471
-#: pyfreebill/models.py:1653
+#: pyfreebill/models.py:611 pyfreebill/models.py:1473
+#: pyfreebill/models.py:1655
 msgid "PCMU,PCMA"
 msgstr "PCMU,PCMA"
 
-#: pyfreebill/models.py:610 pyfreebill/models.py:1472
-#: pyfreebill/models.py:1654
+#: pyfreebill/models.py:612 pyfreebill/models.py:1474
+#: pyfreebill/models.py:1656
 msgid "G722,PCMA,PCMU"
 msgstr "G722,PCMA,PCMU"
 
-#: pyfreebill/models.py:611 pyfreebill/models.py:1473
-#: pyfreebill/models.py:1655
+#: pyfreebill/models.py:613 pyfreebill/models.py:1475
+#: pyfreebill/models.py:1657
 msgid "G722,PCMU,PCMA"
 msgstr "G722,PCMU,PCMA"
 
-#: pyfreebill/models.py:612 pyfreebill/models.py:1474
-#: pyfreebill/models.py:1656
+#: pyfreebill/models.py:614 pyfreebill/models.py:1476
+#: pyfreebill/models.py:1658
 msgid "G722"
 msgstr "G722"
 
-#: pyfreebill/models.py:613 pyfreebill/models.py:1475
-#: pyfreebill/models.py:1657
+#: pyfreebill/models.py:615 pyfreebill/models.py:1477
+#: pyfreebill/models.py:1659
 msgid "G729"
 msgstr "G729"
 
-#: pyfreebill/models.py:614 pyfreebill/models.py:1476
-#: pyfreebill/models.py:1658
+#: pyfreebill/models.py:616 pyfreebill/models.py:1478
+#: pyfreebill/models.py:1660
 msgid "PCMU"
 msgstr "PCMU"
 
-#: pyfreebill/models.py:615 pyfreebill/models.py:1477
-#: pyfreebill/models.py:1659
+#: pyfreebill/models.py:617 pyfreebill/models.py:1479
+#: pyfreebill/models.py:1661
 msgid "PCMA"
 msgstr "PCMA"
 
-#: pyfreebill/models.py:616 pyfreebill/models.py:1478
-#: pyfreebill/models.py:1660
+#: pyfreebill/models.py:618 pyfreebill/models.py:1480
+#: pyfreebill/models.py:1662
 msgid "ALL"
 msgstr "TUTTI"
 
-#: pyfreebill/models.py:618 pyfreebill/models.py:1662
+#: pyfreebill/models.py:620 pyfreebill/models.py:1664
 msgid "Codecs"
 msgstr "Codec"
 
+<<<<<<< HEAD
 #: pyfreebill/models.py:622 pyfreebill/models.py:1666
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:624 pyfreebill/models.py:1668
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Codecs allowed - beware about\n"
 "                              order, 1st has high priority "
@@ -1993,6 +2615,7 @@ msgstr ""
 "Codec consentiti - attenzione riguardo\n"
 "                              l'ordine, il primo ha alta priorità"
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:627
 msgid "Call-id"
@@ -2017,27 +2640,34 @@ msgstr "registrazioni multiple"
 #: pyfreebill/models.py:635
 =======
 #: pyfreebill/models.py:625
+=======
+#: pyfreebill/models.py:627
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "Call-id"
 msgstr "Call-id"
 
-#: pyfreebill/models.py:626
+#: pyfreebill/models.py:628
 msgid "Contact"
 msgstr "Contatto"
 
-#: pyfreebill/models.py:627
+#: pyfreebill/models.py:629
 msgid "False"
 msgstr "Falso"
 
-#: pyfreebill/models.py:628
+#: pyfreebill/models.py:630
 msgid "True"
 msgstr "vero"
 
-#: pyfreebill/models.py:629
+#: pyfreebill/models.py:631
 msgid "multiple registrations"
 msgstr "registrazioni multiple"
 
+<<<<<<< HEAD
 #: pyfreebill/models.py:633
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:635
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Used to allow to\n"
 "                                              call one extension and ring\n"
@@ -2047,6 +2677,7 @@ msgstr ""
 "                                              chiamare un numero e far\n"
 "                                              squillare più telefoni."
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:638
 msgid "CallerID name"
@@ -2060,6 +2691,13 @@ msgstr "Nome chiamante"
 
 #: pyfreebill/models.py:639
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:638
+msgid "CallerID name"
+msgstr "Nome chiamante"
+
+#: pyfreebill/models.py:641
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Caller ID name\n"
 "                                               sent to provider on outbound\n"
@@ -2070,20 +2708,28 @@ msgstr ""
 "                                               nelle chiamate in uscita."
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: pyfreebill/models.py:644
 =======
 #: pyfreebill/models.py:642
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:644
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "CallerID\n"
 "                                                   num"
 msgstr "Numero chiamante"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: pyfreebill/models.py:648
 =======
 #: pyfreebill/models.py:646
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:648
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Caller ID\n"
 "                                                 number sent to provider on\n"
@@ -2093,6 +2739,7 @@ msgstr ""
 "                                               inviato al fornitore\n"
 "                                               nelle chiamate in uscita."
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:652
 msgid "false"
@@ -2113,23 +2760,30 @@ msgstr "Ignora early media"
 #: pyfreebill/models.py:659
 =======
 #: pyfreebill/models.py:650
+=======
+#: pyfreebill/models.py:652
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "false"
 msgstr "falso"
 
-#: pyfreebill/models.py:651 pyfreebill/models.py:1523
+#: pyfreebill/models.py:653 pyfreebill/models.py:1525
 msgid "true"
 msgstr "vero"
 
-#: pyfreebill/models.py:652
+#: pyfreebill/models.py:654
 msgid "ring_ready"
 msgstr "ring_ready"
 
-#: pyfreebill/models.py:653
+#: pyfreebill/models.py:655
 msgid "Ignore early media"
 msgstr "Ignora early media"
 
+<<<<<<< HEAD
 #: pyfreebill/models.py:657
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:659
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Controls if the call\n"
 "                                                      returns on early "
@@ -2169,6 +2823,7 @@ msgstr ""
 "                                                      "
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: pyfreebill/models.py:675
 =======
 #: pyfreebill/models.py:671
@@ -2177,6 +2832,9 @@ msgstr "Ring simulato"
 
 #: pyfreebill/models.py:673
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:675
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Fake ring : Enabled /\n"
 "                                    Disabled - Send a fake ring to the\n"
@@ -2186,6 +2844,7 @@ msgstr ""
 "                                    Disabilitato - Invia un ring simulato\n"
 "                                    al chiamante."
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:678
 msgid "CLI debug"
@@ -2199,6 +2858,13 @@ msgstr "Debug CLI"
 
 #: pyfreebill/models.py:678
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:678
+msgid "CLI debug"
+msgstr "Debug CLI"
+
+#: pyfreebill/models.py:680
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "CLI debug : Enabled /\n"
 "                                    Disabled - Permit to see all debug\n"
@@ -2209,6 +2875,7 @@ msgstr ""
 "i\n"
 "                                    messaggi di debug sul CLI."
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:683
 msgid "Voicemail detection : Enabled / Disabled"
@@ -2222,6 +2889,13 @@ msgstr "Rilevamento Voicemail : Abilitato / Disabilitato"
 
 #: pyfreebill/models.py:683
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:683
+msgid "Voicemail detection : Enabled / Disabled"
+msgstr "Rilevamento Voicemail : Abilitato / Disabilitato"
+
+#: pyfreebill/models.py:685
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Be carefull with this option, as\n"
 "                              it takes a lot of ressources !."
@@ -2230,6 +2904,9 @@ msgstr ""
 "                              richiede molte risorse!."
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 #: pyfreebill/models.py:695
 msgid "Customer sip account"
 msgstr "Account SIP cliente"
@@ -2246,6 +2923,7 @@ msgid ""
 msgstr ""
 "Dominio da utilizzare nel campo From.\n"
 "                                       Uguale al realm se lasciato in bianco."
+<<<<<<< HEAD
 
 #: pyfreebill/models.py:708
 #, fuzzy
@@ -2285,6 +2963,47 @@ msgstr "Lista prefissi numero chiamante"
 msgid "CallerID prefix lists"
 msgstr "Liste prefissi numero chiamante"
 
+=======
+
+#: pyfreebill/models.py:708
+#, fuzzy
+msgid ""
+"You must specify a SIP IP CIDR if you do\n"
+"                                  not want to use registration"
+msgstr ""
+"Modifica il numero del chiamante\n"
+"                                        nell'header SDP."
+
+#: pyfreebill/models.py:714
+#, fuzzy, python-format
+msgid ""
+"The password must be at least %d\n"
+"                                      characters long."
+msgstr ""
+"Bilancio cliente\n"
+"                                           risultante."
+
+#: pyfreebill/models.py:718
+#, fuzzy
+msgid ""
+"The new password must contain\n"
+"                                            at least one letter and at "
+"least\n"
+"                                            one digit"
+msgstr ""
+"usato per consentire di\n"
+"                                              chiamare un numero e far\n"
+"                                              squillare più telefoni."
+
+#: pyfreebill/models.py:747
+msgid "CallerID prefix list"
+msgstr "Lista prefissi numero chiamante"
+
+#: pyfreebill/models.py:748
+msgid "CallerID prefix lists"
+msgstr "Liste prefissi numero chiamante"
+
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 #: pyfreebill/models.py:757 pyfreebill/models.py:802 pyfreebill/models.py:1637
 msgid "prefix"
 msgstr "prefisso"
@@ -2292,6 +3011,7 @@ msgstr "prefisso"
 #: pyfreebill/models.py:763
 msgid "callerid prefix list"
 msgstr "lista prefissi numero chiamante"
+<<<<<<< HEAD
 
 #: pyfreebill/models.py:764 pyfreebill/models.py:873 pyfreebill/models.py:1039
 #: pyfreebill/models.py:1127
@@ -2511,205 +3231,212 @@ msgstr "Liste prefissi numero chiamante"
 #: pyfreebill/models.py:761
 msgid "callerid prefix list"
 msgstr "lista prefissi numero chiamante"
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 
-#: pyfreebill/models.py:762 pyfreebill/models.py:871 pyfreebill/models.py:1037
-#: pyfreebill/models.py:1125
+#: pyfreebill/models.py:764 pyfreebill/models.py:873 pyfreebill/models.py:1039
+#: pyfreebill/models.py:1127
 msgid "numeric prefix"
 msgstr "prefisso numerico"
 
-#: pyfreebill/models.py:774 pyfreebill/models.py:775
+#: pyfreebill/models.py:776 pyfreebill/models.py:777
 msgid "Callerid prefix"
 msgstr "Prefisso numero chiamante"
 
-#: pyfreebill/models.py:792
+#: pyfreebill/models.py:794
 msgid "lead strip"
 msgstr "Aggiungi prefisso"
 
-#: pyfreebill/models.py:796
+#: pyfreebill/models.py:798
 msgid "tail strip"
 msgstr "Rimuovi prefisso"
 
-#: pyfreebill/models.py:800 pyfreebill/models.py:1635
-msgid "prefix"
-msgstr "prefisso"
-
-#: pyfreebill/models.py:811 pyfreebill/models.py:986
+#: pyfreebill/models.py:813 pyfreebill/models.py:988
 msgid "No filter"
 msgstr "Nessun filtro"
 
-#: pyfreebill/models.py:812 pyfreebill/models.py:987
+#: pyfreebill/models.py:814 pyfreebill/models.py:989
 msgid "Prefix authorized"
 msgstr "Prefisso autorizzato"
 
-#: pyfreebill/models.py:813 pyfreebill/models.py:988
+#: pyfreebill/models.py:815 pyfreebill/models.py:990
 msgid "Prefix prohibited"
 msgstr "Prefisso proibito"
 
-#: pyfreebill/models.py:815 pyfreebill/models.py:990
+#: pyfreebill/models.py:817 pyfreebill/models.py:992
 msgid "CallerID Prefix filter"
 msgstr "Filtro prefissi Numero chiamante"
 
-#: pyfreebill/models.py:820 pyfreebill/models.py:995
+#: pyfreebill/models.py:822 pyfreebill/models.py:997
 msgid "CallerID prefix List"
 msgstr "Lista prefissi Numero chiamante"
 
-#: pyfreebill/models.py:825
+#: pyfreebill/models.py:827
 msgid "quality"
 msgstr "qualità"
 
-#: pyfreebill/models.py:828
+#: pyfreebill/models.py:830
 msgid "Order by quality."
 msgstr "Ordina per qualità."
 
-#: pyfreebill/models.py:829
+#: pyfreebill/models.py:831
 msgid "reliability"
 msgstr "affidabilità"
 
-#: pyfreebill/models.py:832
+#: pyfreebill/models.py:834
 msgid "Order by reliability."
 msgstr "Ordina per affidabilità."
 
-#: pyfreebill/models.py:833
+#: pyfreebill/models.py:835
 msgid "cid"
 msgstr "numero chiamante"
 
-#: pyfreebill/models.py:837
+#: pyfreebill/models.py:839
 msgid "Regex to modify CallerID number."
 msgstr "Espressione regolare per modificare il numero del chiamante."
 
-#: pyfreebill/models.py:850
+#: pyfreebill/models.py:852
 msgid "provider ratecard"
 msgstr "Listino fornitore"
 
-#: pyfreebill/models.py:851
+#: pyfreebill/models.py:853
 msgid "provider ratecards"
 msgstr "Listini fornitore"
 
-#: pyfreebill/models.py:865 pyfreebill/models.py:1031
-#: pyfreebill/models.py:1938 pyfreebill/models.py:1956
-#: pyfreebill/models.py:1974 pyfreebill/models.py:1992
-#: pyfreebill/models.py:2010 pyfreebill/models.py:2042
+#: pyfreebill/models.py:862 pyfreebill/models.py:970
+#, fuzzy
+msgid "rates"
+msgstr "Tariffe"
+
+#: pyfreebill/models.py:867 pyfreebill/models.py:1033
+#: pyfreebill/models.py:1940 pyfreebill/models.py:1958
+#: pyfreebill/models.py:1976 pyfreebill/models.py:1994
+#: pyfreebill/models.py:2012 pyfreebill/models.py:2044
 msgid "destination"
 msgstr "destinazione"
 
-#: pyfreebill/models.py:874
+#: pyfreebill/models.py:876
 msgid "Cost rate"
 msgstr "tariffa acquisto"
 
-#: pyfreebill/models.py:879 pyfreebill/models.py:1046
-#: pyfreebill/models.py:1806
+#: pyfreebill/models.py:881 pyfreebill/models.py:1048
+#: pyfreebill/models.py:1808
 msgid "Init block rate"
 msgstr "Costo di connessione"
 
-#: pyfreebill/models.py:897
+#: pyfreebill/models.py:899
 msgid "provider rate"
 msgstr "Tariffa fornitore"
 
-#: pyfreebill/models.py:898
+#: pyfreebill/models.py:900
 msgid "provider rates"
 msgstr "Tariffe fornitore"
 
-#: pyfreebill/models.py:921
+#: pyfreebill/models.py:923
 msgid "lower price"
 msgstr "prezzo minore"
 
-#: pyfreebill/models.py:922
+#: pyfreebill/models.py:924
 msgid "best quality"
 msgstr "miglior qualità"
 
-#: pyfreebill/models.py:923
+#: pyfreebill/models.py:925
 msgid "best reliability"
 msgstr "miglior affidabilità"
 
-#: pyfreebill/models.py:924
+#: pyfreebill/models.py:926
 msgid "load balance"
 msgstr "bilanciamento carico"
 
-#: pyfreebill/models.py:926
+#: pyfreebill/models.py:928
 msgid "lcr type"
 msgstr "Tipologia LCR"
 
-#: pyfreebill/models.py:938 pyfreebill/models.py:948
+#: pyfreebill/models.py:940 pyfreebill/models.py:950 pyfreebilling/urls.py:157
 msgid "LCR"
 msgstr "LCR"
 
-#: pyfreebill/models.py:939 pyfreebilling/menu.py:104
+#: pyfreebill/models.py:941 pyfreebilling/menu.py:104
 msgid "LCRs"
 msgstr "LCR"
 
-#: pyfreebill/models.py:950
+#: pyfreebill/models.py:952
 msgid "Provider tariff"
 msgstr "Tariffa fornitore"
 
-#: pyfreebill/models.py:958
+#: pyfreebill/models.py:960
 msgid "LCR provider"
 msgstr "Fornitore LCR"
 
-#: pyfreebill/models.py:959
+#: pyfreebill/models.py:961
 msgid "LCR providers"
 msgstr "Fornitori LCR"
 
-#: pyfreebill/models.py:984
+#: pyfreebill/models.py:986 pyfreebill/models.py:1026
 msgid "lcr"
 msgstr "lcr"
 
-#: pyfreebill/models.py:1008
+#: pyfreebill/models.py:1010
 msgid "Customer ratecard"
 msgstr "Listino cliente"
 
-#: pyfreebill/models.py:1009 pyfreebilling/menu.py:100
+#: pyfreebill/models.py:1011 pyfreebilling/menu.py:100
 msgid "Customer ratecards"
 msgstr "Listini cliente"
 
-#: pyfreebill/models.py:1030 pyfreebill/models.py:1075
-#: pyfreebill/models.py:1809
+#: pyfreebill/models.py:1020 pyfreebilling/menu.py:95
+#: pyfreebilling/menu.py:101 pyfreebilling/menu.py:132
+#: pyfreebilling/urls.py:64 pyfreebilling/urls.py:104
+msgid "Rates"
+msgstr "Tariffe"
+
+#: pyfreebill/models.py:1032 pyfreebill/models.py:1077
+#: pyfreebill/models.py:1811
 msgid "ratecard"
 msgstr "Voce di listino"
 
-#: pyfreebill/models.py:1040 pyfreebill/models.py:1805
+#: pyfreebill/models.py:1042 pyfreebill/models.py:1807
 msgid "sell rate"
 msgstr "tariffa vendita"
 
-#: pyfreebill/models.py:1043
+#: pyfreebill/models.py:1045
 msgid "to block the prefix, put -1"
 msgstr "per bloccare il prefisso, inserire -1"
 
-#: pyfreebill/models.py:1052 pyfreebill/models.py:1633
-#: templates/customer/sip_account.html:63
-#: templates/customer/sip_account.html:74
-msgid "Enabled"
-msgstr "Abilitato"
-
-#: pyfreebill/models.py:1063
+#: pyfreebill/models.py:1065
 msgid "customer rate"
 msgstr "Tariffa cliente"
 
-#: pyfreebill/models.py:1064
+#: pyfreebill/models.py:1066
 msgid "customer rates"
 msgstr "Tariffe cliente"
 
-#: pyfreebill/models.py:1078
+#: pyfreebill/models.py:1080
 msgid "technical prefix"
 msgstr "prefisso tecnico"
 
-#: pyfreebill/models.py:1084
+#: pyfreebill/models.py:1086
 msgid "1"
 msgstr "1"
 
-#: pyfreebill/models.py:1085
+#: pyfreebill/models.py:1087
 msgid "2"
 msgstr "2"
 
-#: pyfreebill/models.py:1086
+#: pyfreebill/models.py:1088
 msgid "3"
 msgstr "3"
 
-#: pyfreebill/models.py:1088
+#: pyfreebill/models.py:1090
 msgid "priority"
 msgstr "priorità"
 
+<<<<<<< HEAD
 #: pyfreebill/models.py:1090
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:1092
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Priority order, 1 is the\n"
 "                                               higher priority and 3 the\n"
@@ -2723,6 +3450,7 @@ msgstr ""
 "                                               sono : 1, 2 o 3 !."
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: pyfreebill/models.py:1096
 msgid "discount"
 msgstr "sconto"
@@ -2735,6 +3463,13 @@ msgstr "sconto"
 
 #: pyfreebill/models.py:1098
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:1096
+msgid "discount"
+msgstr "sconto"
+
+#: pyfreebill/models.py:1100
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 #, python-format
 msgid ""
 "ratecard discount. For\n"
@@ -2745,10 +3480,14 @@ msgstr ""
 "10 !"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: pyfreebill/models.py:1102
 =======
 #: pyfreebill/models.py:1100
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:1102
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Allow calls with\n"
 "                                                  negative margin"
@@ -2756,6 +3495,7 @@ msgstr ""
 "Permetti chiamate\n"
 "                                                  con margine negativo"
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:1113
 msgid "Customer Ratecard Allocation"
@@ -2772,19 +3512,26 @@ msgstr "Formato regola"
 #: pyfreebill/models.py:1133
 =======
 #: pyfreebill/models.py:1111
+=======
+#: pyfreebill/models.py:1113
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "Customer Ratecard Allocation"
 msgstr "Allocazione listino cliente"
 
-#: pyfreebill/models.py:1112
+#: pyfreebill/models.py:1114
 msgid "Customer ratecard Allocations"
 msgstr "Allocazioni listino cliente"
 
-#: pyfreebill/models.py:1129
+#: pyfreebill/models.py:1131
 msgid "Rule format"
 msgstr "Formato regola"
 
+<<<<<<< HEAD
 #: pyfreebill/models.py:1131
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:1133
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 #, python-format
 msgid ""
 "example for Tunisia :\n"
@@ -2796,6 +3543,9 @@ msgstr ""
 "                                      $"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 #: pyfreebill/models.py:1144
 msgid "Destination Number Normalization Rule"
 msgstr "Regola normalizzazione numero destinazione"
@@ -2902,6 +3652,7 @@ msgid "ACL nodes"
 msgstr "Nodi ACL"
 
 #: pyfreebill/models.py:1350 pyfreebill/models.py:1352
+<<<<<<< HEAD
 =======
 #: pyfreebill/models.py:1142
 msgid "Destination Number Normalization Rule"
@@ -3038,34 +3789,54 @@ msgid "switch IP"
 msgstr "IP Switch"
 
 #: pyfreebill/models.py:1354 switch/models/Switch.py:38
+=======
+#: switch/models/Switch.py:37
+msgid "Switch name"
+msgstr "Nome Switch"
+
+#: pyfreebill/models.py:1353 switch/models/Switch.py:38
+msgid "switch IP"
+msgstr "IP Switch"
+
+#: pyfreebill/models.py:1356 switch/models/Switch.py:38
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "Switch IP."
 msgstr "IP Switch"
 
-#: pyfreebill/models.py:1355 switch/models/Switch.py:39
+#: pyfreebill/models.py:1357 switch/models/Switch.py:39
 msgid "event socket switch IP"
 msgstr "Indirizzo IP event socket switch"
 
-#: pyfreebill/models.py:1358 switch/models/Switch.py:39
+#: pyfreebill/models.py:1360 switch/models/Switch.py:39
 msgid "Event socket switch IP."
 msgstr "Indirizzo IP dell'event socket dello switch."
 
+<<<<<<< HEAD
 #: pyfreebill/models.py:1359
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:1361
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "event socket switch\n"
 "                                                    port"
 msgstr "Porta event socket switch"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: pyfreebill/models.py:1364
 =======
 #: pyfreebill/models.py:1362
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:1364
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Event socket\n"
 "                                                              switch port."
 msgstr "Porta dell'event socket dello switch."
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:1366 switch/models/Switch.py:41
 msgid "event socket switch password"
@@ -3079,11 +3850,19 @@ msgstr "Password event socket switch"
 
 #: pyfreebill/models.py:1367
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:1366 switch/models/Switch.py:41
+msgid "event socket switch password"
+msgstr "Password event socket switch"
+
+#: pyfreebill/models.py:1369
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Event socket switch\n"
 "                                                password."
 msgstr "Password dell'event socket dello switch"
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:1379 switch/models/Switch.py:49
 msgid "VoIP Switch"
@@ -3108,27 +3887,34 @@ msgstr "Nome User Agent"
 #: pyfreebill/models.py:1397
 =======
 #: pyfreebill/models.py:1377 switch/models/Switch.py:49
+=======
+#: pyfreebill/models.py:1379 switch/models/Switch.py:49
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid "VoIP Switch"
 msgstr "Switch VoIP"
 
-#: pyfreebill/models.py:1378 switch/models/Switch.py:50
+#: pyfreebill/models.py:1380 switch/models/Switch.py:50
 msgid "VoIP Switches"
 msgstr "Switch VoIP"
 
-#: pyfreebill/models.py:1388
+#: pyfreebill/models.py:1390
 msgid "SIP profile name"
 msgstr "Nome profilo SIP"
 
-#: pyfreebill/models.py:1391
+#: pyfreebill/models.py:1393
 msgid "E.g.: the name you want ..."
 msgstr "Es.: il nome che si preferisce"
 
-#: pyfreebill/models.py:1392
+#: pyfreebill/models.py:1394
 msgid "User agent name"
 msgstr "Nome User Agent"
 
+<<<<<<< HEAD
 #: pyfreebill/models.py:1395
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:1397
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "E.g.: the user agent\n"
 "                                              you want ... - take care\n"
@@ -3146,6 +3932,7 @@ msgstr ""
 "                                              respingimento dei messaggi\n"
 "                                              da alcuni proxy come "
 "invalidi ! "
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 #: pyfreebill/models.py:1403
@@ -3160,6 +3947,14 @@ msgstr "IP RTP esterno"
 
 #: pyfreebill/models.py:1404
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+
+#: pyfreebill/models.py:1403
+msgid "external RTP IP"
+msgstr "IP RTP esterno"
+
+#: pyfreebill/models.py:1406
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "External/public IP\n"
 "                                    address to bind to for RTP."
@@ -3167,6 +3962,7 @@ msgstr ""
 "Indirizzo IP esterno/pubblico\n"
 "                                          da collegare a RTP."
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:1408
 msgid "external SIP IP"
@@ -3180,6 +3976,13 @@ msgstr "IP SIP esterno"
 
 #: pyfreebill/models.py:1409
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:1408
+msgid "external SIP IP"
+msgstr "IP SIP esterno"
+
+#: pyfreebill/models.py:1411
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "External/public IP\n"
 "                                              address to bind to for\n"
@@ -3188,6 +3991,7 @@ msgstr ""
 "Indirizzo IP esterno/pubblico\n"
 "                                          da collegare a SIP."
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:1414
 msgid "RTP IP"
@@ -3201,6 +4005,13 @@ msgstr "IP RTP"
 
 #: pyfreebill/models.py:1415
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:1414
+msgid "RTP IP"
+msgstr "IP RTP"
+
+#: pyfreebill/models.py:1417
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Internal IP address to bind\n"
 "                                          to for RTP."
@@ -3208,6 +4019,7 @@ msgstr ""
 "Indirizzo IP interno\n"
 "                                          da collegare a RTP."
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:1419 templates/customer/sip_account.html:60
 msgid "SIP IP"
@@ -3221,6 +4033,13 @@ msgstr "IP SIP"
 
 #: pyfreebill/models.py:1420
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:1419 templates/customer/sip_account.html:60
+msgid "SIP IP"
+msgstr "IP SIP"
+
+#: pyfreebill/models.py:1422
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "Internal IP address to bind\n"
 "                                          to for SIP."
@@ -3228,6 +4047,7 @@ msgstr ""
 "Indirizzo IP interno\n"
 "                                          da collegare a SIP."
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:1426
 msgid "disable transcoding"
@@ -3241,6 +4061,13 @@ msgstr "Disabilita traduzione"
 
 #: pyfreebill/models.py:1426
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:1426
+msgid "disable transcoding"
+msgstr "Disabilita traduzione"
+
+#: pyfreebill/models.py:1428
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "If true, you\n"
 "                                                          can not use\n"
@@ -3251,6 +4078,7 @@ msgstr ""
 "usare\n"
 "                                                          la traduzione tra "
 "codec."
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 #: pyfreebill/models.py:1431
@@ -3265,6 +4093,14 @@ msgstr "Accetta registrazioni anonime"
 
 #: pyfreebill/models.py:1431
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+
+#: pyfreebill/models.py:1431
+msgid "accept blind registration"
+msgstr "Accetta registrazioni anonime"
+
+#: pyfreebill/models.py:1433
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "If true, anyone can\n"
 "                                                       register to the "
@@ -3283,6 +4119,7 @@ msgstr ""
 "                                                       username/password."
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: pyfreebill/models.py:1439
 msgid "disable register"
 msgstr "Disabilita registrazione"
@@ -3295,6 +4132,13 @@ msgstr "Disabilita registrazione"
 
 #: pyfreebill/models.py:1439
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:1439
+msgid "disable register"
+msgstr "Disabilita registrazione"
+
+#: pyfreebill/models.py:1441
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "disable register\n"
 "                                                       which may be "
@@ -3306,6 +4150,7 @@ msgstr ""
 "indesiderata\n"
 "                                                       su uno switch "
 "pubblico "
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 #: pyfreebill/models.py:1444
@@ -3320,6 +4165,14 @@ msgstr "Applica una ACL in entrata"
 
 #: pyfreebill/models.py:1444
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+
+#: pyfreebill/models.py:1444
+msgid "Apply an inbound ACL"
+msgstr "Applica una ACL in entrata"
+
+#: pyfreebill/models.py:1446
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "If true, FS will\n"
 "                                                      apply the default acl\n"
@@ -3329,6 +4182,7 @@ msgstr ""
 "                                                      applicherà la ACL\n"
 "                                                      di default : domains "
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #: pyfreebill/models.py:1449
 msgid "authenticate calls"
@@ -3342,6 +4196,13 @@ msgstr "Autentica chiamate"
 
 #: pyfreebill/models.py:1449
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:1449
+msgid "authenticate calls"
+msgstr "Autentica chiamate"
+
+#: pyfreebill/models.py:1451
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "If true, FreeeSWITCH will\n"
 "                                                 authorize all calls on "
@@ -3364,10 +4225,14 @@ msgstr ""
 "                                                 "
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #: pyfreebill/models.py:1459
 =======
 #: pyfreebill/models.py:1457
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+#: pyfreebill/models.py:1459
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 msgid ""
 "It true, log\n"
 "                                                      authentication "
@@ -3382,6 +4247,7 @@ msgstr ""
 "                                                      Richiesto per "
 "Fail2ban.\n"
 "                                                      "
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 #: pyfreebill/models.py:1482
@@ -6412,6 +7278,2129 @@ msgstr "Simula report"
 #~ msgid "Press the save button below to revert to this version of the object."
 #~ msgstr ""
 #~ "Cliccare sul pulsante salva per ripristinare l'oggetto a questa versione."
+=======
+
+#: pyfreebill/models.py:1482
+msgid "inbound codec prefs"
+msgstr "Preferenze codec in entrata"
+
+#: pyfreebill/models.py:1486
+msgid ""
+"Define allowed\n"
+"                                                       preferred codecs for\n"
+"                                                       inbound calls."
+msgstr ""
+"Definisce i codec\n"
+"                                                       preferiti per le "
+"chiamate\n"
+"                                                       in entrata."
+
+#: pyfreebill/models.py:1489
+msgid "outbound codec prefs"
+msgstr "Preferenze codec in uscita"
+
+#: pyfreebill/models.py:1493
+msgid ""
+"Define allowed\n"
+"                                                        preferred codecs "
+"for\n"
+"                                                        outbound calls."
+msgstr ""
+"Definisce i codec\n"
+"                                                       preferiti per le "
+"chiamate\n"
+"                                                       in uscita."
+
+#: pyfreebill/models.py:1496
+msgid ""
+"Agressive NAT\n"
+"                                                     detection"
+msgstr ""
+"Rilevamento NAT\n"
+"                                                     aggressivo"
+
+#: pyfreebill/models.py:1499
+msgid ""
+"This will\n"
+"                                                               enable NAT "
+"mode\n"
+"                                                               if the "
+"network\n"
+"                                                               IP/port from\n"
+"                                                               which "
+"therequest\n"
+"                                                               was received\n"
+"                                                               differs from "
+"the\n"
+"                                                               IP/Port\n"
+"                                                               combination "
+"in\n"
+"                                                               the SIP Via:\n"
+"                                                               header, or "
+"if\n"
+"                                                               the Via: "
+"header\n"
+"                                                               contains the\n"
+"                                                               received\n"
+"                                                               parameter"
+msgstr ""
+"Questo abiliterà\n"
+"                                                               la modalità "
+"NAT\n"
+"                                                               se "
+"nell'indirizzo\n"
+"                                                               IP/porta da "
+"cui\n"
+"                                                               la richiesta\n"
+"                                                               viene "
+"ricevuta\n"
+"                                                               differisce "
+"dalla\n"
+"                                                               combinazione\n"
+"                                                               indirizzo IP/"
+"Porta\n"
+"                                                               nell'header:\n"
+"                                                               SIP Via, o "
+"se\n"
+"                                                               l'header Via\n"
+"                                                               contiene\n"
+"                                                               il parametro\n"
+"                                                               ricevuto"
+
+#: pyfreebill/models.py:1514
+msgid ""
+"NDLB received\n"
+"                                                  in nat reg contact"
+msgstr ""
+"Includi NDLB nel contact\n"
+"                                                  per registrazioni NAT"
+
+#: pyfreebill/models.py:1517
+msgid ""
+"add a;received=\n"
+"                                                            \"ip:port\"\n"
+"                                                            to the contact "
+"when\n"
+"                                                            replying to\n"
+"                                                            register\n"
+"                                                            for nat "
+"handling\n"
+"                                                            "
+msgstr ""
+"aggiunge a;received=\n"
+"                                                            \"ip:port\"\n"
+"                                                            al campo "
+"contact\n"
+"                                                            quando risponde\n"
+"                                                            a una "
+"registrazione\n"
+"                                                            per la gestione "
+"del NAT\n"
+"␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣"
+
+#: pyfreebill/models.py:1526
+msgid "safe"
+msgstr "sicuro"
+
+#: pyfreebill/models.py:1528
+msgid "NDLB Force rport"
+msgstr "Forza porta NDLB"
+
+#: pyfreebill/models.py:1534
+msgid ""
+"This will force\n"
+"                                                    FreeSWITCH to send\n"
+"                                                    SIP responses to the\n"
+"                                                    network port from\n"
+"                                                    which they were "
+"received.\n"
+"                                                    Use at your own risk!"
+msgstr ""
+"Questo forzerà\n"
+"                                                    FreeSWITCH a inviare\n"
+"                                                    i responsi SIP\n"
+"                                                    alla porta di rete da\n"
+"                                                    cui sono stati "
+"ricevuti.\n"
+"                                                    Usare a proprio rischio!"
+
+#: pyfreebill/models.py:1540
+msgid ""
+"NDLB broken auth hash\n"
+"                                                  "
+msgstr ""
+"NDLB broken auth hash\n"
+"␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣"
+
+#: pyfreebill/models.py:1543
+msgid ""
+"Used for when\n"
+"                                                            phones respond "
+"to a\n"
+"                                                            challenged ACK\n"
+"                                                            with method "
+"INVITE\n"
+"                                                            in the hash"
+msgstr ""
+"Usato quando i\n"
+"                                                            telefoni "
+"rispondono\n"
+"                                                            a un ACK con\n"
+"                                                            metodo INVITE\n"
+"                                                            nell'hash "
+
+#: pyfreebill/models.py:1548
+msgid "Enable timer"
+msgstr "Abilita Session Timers"
+
+#: pyfreebill/models.py:1550
+msgid ""
+"This enables or disables\n"
+"                                                   support for RFC 4028 SIP\n"
+"                                                   Session Timers"
+msgstr ""
+"Questo abilita il \n"
+"                                                   il supporto per i SIP "
+"Session\n"
+"                                                   Timers RFC 4028"
+
+#: pyfreebill/models.py:1553
+msgid "Session timeout"
+msgstr "Timeout sessione"
+
+#: pyfreebill/models.py:1555
+msgid ""
+"session\n"
+"                                                              timers for "
+"all\n"
+"                                                              call to "
+"expire\n"
+"                                                              after the\n"
+"                                                              specified "
+"seconds\n"
+"                                                              Then it will "
+"send\n"
+"                                                              another "
+"invite\n"
+"                                                              --re-invite. "
+"If\n"
+"                                                              not specified\n"
+"                                                              defaults to "
+"30\n"
+"                                                              minutes. Some\n"
+"                                                              gateways may\n"
+"                                                              reject values\n"
+"                                                              less than 30\n"
+"                                                              minutes. This\n"
+"                                                              values refers "
+"to\n"
+"                                                              Session-"
+"Expires\n"
+"                                                              in RFC 4028 -"
+"The\n"
+"                                                              time at which\n"
+"                                                              an element "
+"will\n"
+"                                                              consider the\n"
+"                                                              session timed\n"
+"                                                              out, if no\n"
+"                                                              successful\n"
+"                                                              session "
+"refresh\n"
+"                                                              transaction\n"
+"                                                              occurs\n"
+"                                                              beforehand-\n"
+"                                                              "
+msgstr ""
+"tempo di\n"
+"                                                              sessione per "
+"tutte\n"
+"                                                              le chiamate "
+"che\n"
+"                                                              vengono "
+"terminate\n"
+"                                                              dopo i secondi "
+"specificati\n"
+"                                                              Quindi verrà "
+"inviato\n"
+"                                                              un altro "
+"invite\n"
+"                                                              --re-invite. "
+"Se\n"
+"                                                              non "
+"specificato di\n"
+"                                                              default è 30\n"
+"                                                              minuti. "
+"Alcune\n"
+"                                                              terminazioni "
+"potrebbero\n"
+"                                                              rifiutare "
+"valori\n"
+"                                                              inferiori a "
+"30\n"
+"                                                              minuti. "
+"Questi\n"
+"                                                              valori si "
+"riferiscono al\n"
+"                                                              Session-"
+"Expires\n"
+"                                                              nel RFC 4028 - "
+"Il\n"
+"                                                              tempo dopo "
+"cui\n"
+"                                                              un elemento\n"
+"                                                              considera la\n"
+"                                                              sessione come\n"
+"                                                              scaduta, se "
+"non\n"
+"                                                              avviente la\n"
+"                                                              transazione "
+"di \n"
+"                                                              refresh della\n"
+"                                                              sessione\n"
+"                                                              prima\n"
+"␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣ "
+
+#: pyfreebill/models.py:1584
+msgid "RTP rewrite timestamps"
+msgstr "Riscrivi timestamp RTP"
+
+#: pyfreebill/models.py:1586
+msgid ""
+"If you don't want to pass\n"
+"                                           through timestampes from 1 RTP "
+"call\n"
+"                                           to another"
+msgstr ""
+"Se non si vuole trasmettere\n"
+"                                           i timestamp RTP da una\n"
+"                                           chiamata all'altra"
+
+#: pyfreebill/models.py:1589 pyfreebill/models.py:1591
+msgid "pass rfc2833"
+msgstr "Trasmetti RFC2833"
+
+#: pyfreebill/models.py:1601 pyfreebill/models.py:1623
+msgid "SIP profile"
+msgstr "Profilo SIP"
+
+#: pyfreebill/models.py:1602 pyfreebilling/menu.py:138
+msgid "SIP profiles"
+msgstr "Profili SIP"
+
+#: pyfreebill/models.py:1624
+msgid ""
+"Which Sip Profile\n"
+"                                        communication with this gateway "
+"will\n"
+"                                        take place on."
+msgstr ""
+"Quale profilo SIP\n"
+"                                        verrà utilizzato per le "
+"comunicazioni\n"
+"                                        con questa terminazione. "
+
+#: pyfreebill/models.py:1630
+msgid "channels number"
+msgstr "numero canali"
+
+#: pyfreebill/models.py:1632
+msgid ""
+"maximum simultaneous\n"
+"                                               calls allowed for this "
+"gateway.\n"
+"                                               "
+msgstr ""
+"chiamate massime simultanee\n"
+"                                               consentite per questa "
+"terminazione.\n"
+"␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣ "
+
+#: pyfreebill/models.py:1670
+msgid "username"
+msgstr "Nome utente"
+
+#: pyfreebill/models.py:1680
+msgid "proxy"
+msgstr "Proxy"
+
+#: pyfreebill/models.py:1683
+msgid "IP if register is False."
+msgstr "Indirizzo IP se Registra è Falso."
+
+#: pyfreebill/models.py:1684
+msgid "extension number"
+msgstr "Numero estensione"
+
+#: pyfreebill/models.py:1688
+msgid ""
+"Extension for inbound calls.\n"
+"                                     Same as username, if blank."
+msgstr ""
+"Estensione per le chiamate in entrata.\n"
+"                                     Usato nome utente se lasciato in bianco."
+
+#: pyfreebill/models.py:1690
+msgid "realm"
+msgstr "Realm"
+
+#: pyfreebill/models.py:1694
+msgid ""
+"Authentication realm. Same as\n"
+"                                 gateway name, if blank."
+msgstr ""
+"Realm di autenticazione. Uguale al\n"
+"                                 nome del gateway se lasciato in bianco."
+
+#: pyfreebill/models.py:1696
+msgid "from domain"
+msgstr "Dominio provenienza"
+
+#: pyfreebill/models.py:1700
+msgid ""
+"Domain to use in from field.\n"
+"                                       Same as realm if blank."
+msgstr ""
+"Dominio da utilizzare nel campo From.\n"
+"                                       Uguale al realm se lasciato in bianco."
+
+#: pyfreebill/models.py:1702
+msgid "expire seconds"
+msgstr "Timeout scadenza"
+
+#: pyfreebill/models.py:1705
+msgid "retry seconds"
+msgstr "Timeout nuovo tentativo"
+
+#: pyfreebill/models.py:1708
+msgid ""
+"How many\n"
+"                                                    seconds before a retry "
+"when\n"
+"                                                    a failure or timeout "
+"occurs\n"
+"                                                    "
+msgstr ""
+"Quanti secondi attendere\n"
+"                                                    prima di riprovare dopo\n"
+"                                                    un fallimento o un "
+"timeout\n"
+"                                                    "
+
+#: pyfreebill/models.py:1712
+msgid "caller ID in From field"
+msgstr "Numero chiamante nel campo From"
+
+#: pyfreebill/models.py:1714
+msgid ""
+"Use the callerid of\n"
+"                                                an inbound call in the from\n"
+"                                                field on outbound calls via\n"
+"                                                this gateway."
+msgstr ""
+"Usa il numero chiamante\n"
+"                                                di una chiamate in entrata\n"
+"                                                nel campo From nelle "
+"chiamate\n"
+"                                                in uscita su questa "
+"terminazione."
+
+#: pyfreebill/models.py:1719
+msgid "none"
+msgstr "nessuno"
+
+#: pyfreebill/models.py:1720
+msgid "default"
+msgstr "default"
+
+#: pyfreebill/models.py:1721
+msgid "pid"
+msgstr "pid"
+
+#: pyfreebill/models.py:1722
+msgid "rpid"
+msgstr "rpid"
+
+#: pyfreebill/models.py:1724
+msgid "SIP CID type"
+msgstr "Tipologia numero chiamante SIP"
+
+#: pyfreebill/models.py:1728
+msgid ""
+"Modify callerID in SDP\n"
+"                                        Headers."
+msgstr ""
+"Modifica il numero del chiamante\n"
+"                                        nell'header SDP."
+
+#: pyfreebill/models.py:1738
+msgid "Sofia gateway"
+msgstr "Gateway Sofia"
+
+#: pyfreebill/models.py:1739
+msgid "Sofia gateways"
+msgstr "Gateway Sofia"
+
+#: pyfreebill/models.py:1749
+msgid "Hangup code"
+msgstr "Codice chiusura"
+
+#: pyfreebill/models.py:1751
+msgid "ITU-T Q.850 Code."
+msgstr "Codice ITU-T Q.850."
+
+#: pyfreebill/models.py:1752
+msgid "enumeration"
+msgstr "Enumerazione"
+
+#: pyfreebill/models.py:1756
+msgid "enumeration."
+msgstr "Enumerazione."
+
+#: pyfreebill/models.py:1757
+msgid "cause"
+msgstr "Causa"
+
+#: pyfreebill/models.py:1761
+msgid "Cause."
+msgstr "Causa."
+
+#: pyfreebill/models.py:1772 pyfreebill/models.py:1941
+#: pyfreebill/models.py:1977
+msgid "hangupcause"
+msgstr "causa chiusura"
+
+#: pyfreebill/models.py:1773
+msgid "hangupcauses"
+msgstr "cause chiusura"
+
+#: pyfreebill/models.py:1784
+msgid "customer IP address"
+msgstr "Indirizzo IP cliente"
+
+#: pyfreebill/models.py:1784
+msgid "Customer IP address."
+msgstr "Indirizzo IP cliente"
+
+#: pyfreebill/models.py:1785
+msgid "UUID"
+msgstr "UUID"
+
+#: pyfreebill/models.py:1786
+msgid "b leg UUID"
+msgstr "b leg UUID"
+
+#: pyfreebill/models.py:1787
+msgid "caller ID num"
+msgstr "Numero chiamante"
+
+#: pyfreebill/models.py:1788 templates/customer/cdr_view.html:235
+msgid "Dest. number"
+msgstr "Numero destinazione"
+
+#: pyfreebill/models.py:1789
+msgid "channel name"
+msgstr "Nome canale"
+
+#: pyfreebill/models.py:1790
+msgid "start time"
+msgstr "Ora inizio"
+
+#: pyfreebill/models.py:1791
+msgid "answered time"
+msgstr "Ora risposta"
+
+#: pyfreebill/models.py:1792
+msgid "hangup time"
+msgstr "Ora chiusura"
+
+#: pyfreebill/models.py:1793
+msgid "global duration"
+msgstr "Durata globale"
+
+#: pyfreebill/models.py:1794 pyfreebill/models.py:2016
+#: pyfreebill/models.py:2048
+msgid "total duration"
+msgstr "Durata totale"
+
+#: pyfreebill/models.py:1794
+msgid "Global call duration since call has been received by the switch in ms."
+msgstr ""
+"Durata totale della chiamata dal momento in cui è stata ricevuta dallo "
+"switch, in msec."
+
+#: pyfreebill/models.py:1795
+msgid "effective duration"
+msgstr "Durata effettiva"
+
+#: pyfreebill/models.py:1795
+msgid "real call duration in s."
+msgstr "Durata reale in secondi."
+
+#: pyfreebill/models.py:1796
+msgid "billed duration"
+msgstr "Durata fatturata"
+
+#: pyfreebill/models.py:1796
+msgid "billed call duration in s."
+msgstr "Durata fatturata in secondi"
+
+#: pyfreebill/models.py:1797
+msgid "read codec"
+msgstr "Codec lettura"
+
+#: pyfreebill/models.py:1798
+msgid "write codec"
+msgstr "Codec scrittura"
+
+#: pyfreebill/models.py:1799
+msgid "hangup cause"
+msgstr "Causa chiusura"
+
+#: pyfreebill/models.py:1800
+msgid "q.850"
+msgstr "Q.850"
+
+#: pyfreebill/models.py:1801
+msgid "gateway"
+msgstr "Gateway"
+
+#: pyfreebill/models.py:1802
+msgid "buy rate"
+msgstr "Tariffa acquisto"
+
+#: pyfreebill/models.py:1803 pyfreebill/models.py:2020
+#: pyfreebill/models.py:2052
+msgid "total sell"
+msgstr "Costo vendita totale"
+
+#: pyfreebill/models.py:1804 pyfreebill/models.py:2021
+#: pyfreebill/models.py:2053
+msgid "total cost"
+msgstr "Costo acquisto totale"
+
+#: pyfreebill/models.py:1805 templates/customer/cdr_view.html:260
+msgid "Prefix"
+msgstr "Prefisso"
+
+#: pyfreebill/models.py:1806
+msgid "Country"
+msgstr "Nazione"
+
+#: pyfreebill/models.py:1812
+msgid "lcr group"
+msgstr "Gruppo LCR"
+
+#: pyfreebill/models.py:1813
+msgid "sip user agent"
+msgstr "User Agent SIP"
+
+#: pyfreebill/models.py:1814
+msgid "sip rtp rx stat"
+msgstr "Statistiche SIP RTP in ricezione"
+
+#: pyfreebill/models.py:1815
+msgid "sip rtp tx stat"
+msgstr "Statistiche SIP RTP in trasmissione"
+
+#: pyfreebill/models.py:1816
+msgid "switchname"
+msgstr "Nome switch"
+
+#: pyfreebill/models.py:1817
+msgid "switch ipv4"
+msgstr "IPv4 switch"
+
+#: pyfreebill/models.py:1818
+msgid "hangup disposition"
+msgstr "Disposizione chiusura"
+
+#: pyfreebill/models.py:1819
+msgid "SIP hangup cause"
+msgstr "Causa chiusura SIP"
+
+#: pyfreebill/models.py:1820
+msgid "sell destination"
+msgstr "Destinazione di vendita"
+
+#: pyfreebill/models.py:1821
+msgid "cost destination"
+msgstr "Destinazione di acquisto"
+
+#: pyfreebill/models.py:1826 pyfreebilling/urls.py:226
+#: templates/customer/base.html:29
+msgid "CDR"
+msgstr "CDR"
+
+#: pyfreebill/models.py:1827 pyfreebilling/menu.py:115
+#: templates/admin/pyfreebill/company/change_form.html:29
+msgid "CDRs"
+msgstr "CDR"
+
+#: pyfreebill/models.py:1920 templates/customer/cdr_view.html:45
+#: templates/customer/cdr_view.html:155
+msgid "day"
+msgstr "Giorno"
+
+#: pyfreebill/models.py:1921
+msgid "day of the week"
+msgstr "Giorno della settimana"
+
+#: pyfreebill/models.py:1922
+msgid "hour"
+msgstr "Ora"
+
+#: pyfreebill/models.py:1923 templates/customer/cdr_view.html:28
+#: templates/customer/cdr_view.html:138
+msgid "month"
+msgstr "Mese"
+
+#: pyfreebill/models.py:1924
+msgid "quarter"
+msgstr "Trimestre"
+
+#: pyfreebill/models.py:1925 templates/customer/cdr_view.html:19
+#: templates/customer/cdr_view.html:129
+msgid "year"
+msgstr "Anno"
+
+#: pyfreebill/models.py:1930
+msgid "date dimension"
+msgstr "dimensione data"
+
+#: pyfreebill/models.py:1931
+msgid "date dimensions"
+msgstr "dimensioni data"
+
+#: pyfreebill/models.py:1943 pyfreebill/models.py:1961
+#: pyfreebill/models.py:1979 pyfreebill/models.py:1997
+#: pyfreebill/models.py:2014 pyfreebill/models.py:2046
+msgid "total calls"
+msgstr "Chiamate totali"
+
+#: pyfreebill/models.py:1948 pyfreebill/models.py:1949
+msgid "Customer Hangupcause stats"
+msgstr "Statistiche causa chiusura cliente"
+
+#: pyfreebill/models.py:1959 pyfreebill/models.py:1995
+msgid "sip hangupcause"
+msgstr "Causa chiusura SIP"
+
+#: pyfreebill/models.py:1966 pyfreebill/models.py:1967
+msgid "Customer SIP Hangupcause stats"
+msgstr "Statistiche causa chiusura SIP cliente"
+
+#: pyfreebill/models.py:1984 pyfreebill/models.py:1985
+msgid "Provider Hangupcause stats"
+msgstr "Statistiche causa chiusura fornitore"
+
+#: pyfreebill/models.py:2002 pyfreebill/models.py:2003
+msgid "Provider SIP Hangupcause stats"
+msgstr "Statistiche causa chiusura SIP fornitore"
+
+#: pyfreebill/models.py:2015 pyfreebill/models.py:2047
+msgid "success calls"
+msgstr "Chiamate connesse"
+
+#: pyfreebill/models.py:2017 pyfreebill/models.py:2049
+msgid "average duration"
+msgstr "Durata media"
+
+#: pyfreebill/models.py:2018 pyfreebill/models.py:2050
+msgid "max duration"
+msgstr "Durata massima"
+
+#: pyfreebill/models.py:2019 pyfreebill/models.py:2051
+msgid "min duration"
+msgstr "Durata minima"
+
+#: pyfreebill/models.py:2026 pyfreebill/models.py:2027
+msgid "Customer destination stats"
+msgstr "Statistiche destinazione cliente"
+
+#: pyfreebill/models.py:2058 pyfreebill/models.py:2059
+msgid "Provider destination stats"
+msgstr "Statistiche destinazioni fornitore"
+
+#: pyfreebill/modules.py:30
+msgid "Sales stats"
+msgstr "Statistiche vendite"
+
+#: pyfreebill/modules.py:41
+msgid "Sales"
+msgstr "Vendite"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "Compare %(name)s"
+#~ msgstr "Compara %(name)s"
+
+#~ msgid "DATETIME_FORMAT"
+#~ msgstr "DATETIME_FORMAT"
+
+#~ msgid ""
+#~ "\n"
+#~ "                Compare <strong>%(date1)s</strong> with <strong>"
+#~ "%(date2)s</strong>:\n"
+#~ "            "
+#~ msgstr ""
+#~ "\n"
+#~ "                Compara <strong>%(date1)s</strong> con <strong>%(date2)s</"
+#~ "strong>:\n"
+#~ "␣␣␣␣␣␣␣␣␣␣␣␣ "
+
+#~ msgid "Go back to history list"
+#~ msgstr "Vai indietro alla lista storica"
+
+#~ msgid "Edit comment:"
+#~ msgstr "Modifica commento:"
+
+#~ msgid "Note:"
+#~ msgstr "Nota:"
+
+#~ msgid "compare"
+#~ msgstr "Compara"
+
+#~ msgid "Django Administration"
+#~ msgstr "Amministrazione Django"
+
+<<<<<<< HEAD
+#~ msgid ""
+#~ "Welcome to the yawd-admin administration page. Please sign in to manage "
+#~ "your website."
+#~ msgstr ""
+#~ "Benvenuti nella pagina di amministrazione di yawd-admin. Per favore, "
+#~ "autenticarsi per gestire il sito."
+
+#~ msgid "File not found"
+#~ msgstr "File non  trovato"
+
+#~ msgid "Access denied"
+#~ msgstr "Accesso non consentito"
+=======
+#: pyfreebilling/menu.py:44 pyfreebilling/menu.py:162
+#: templates/admin/_index.html:21 templates/admin/index.html:21
+msgid "Dashboard"
+msgstr "Dashboard"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "Volume could not be found"
+#~ msgstr "Il volume non può essere trovato"
+
+#~ msgid "This file is no longer valid"
+#~ msgstr "Il file non è più valido"
+
+#~ msgid "Size"
+#~ msgstr "Dimensione"
+
+#~ msgid "Path"
+#~ msgstr "Percorso"
+
+#~ msgid "Link"
+#~ msgstr "Collegamento"
+
+#~ msgid "Modified"
+#~ msgstr "Modificato"
+
+#~ msgid "Dimensions"
+#~ msgstr "Dimensioni"
+
+#~ msgid "Set"
+#~ msgstr "Imposta"
+
+<<<<<<< HEAD
+#~ msgid "Clear"
+#~ msgstr "Pulisci"
+=======
+#: pyfreebilling/menu.py:65 pyfreebilling/urls.py:209
+msgid "Add payment"
+msgstr "Aggiungi pagamento"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "No volume id found"
+#~ msgstr "Sconosciuto"
+
+#~ msgid "Unknown"
+#~ msgstr "Sconosciuto"
+
+#~ msgid "%(count)d non-default language was deleted"
+#~ msgid_plural "%(count)d non-default languages were deleted"
+#~ msgstr[0] "%(count)d lingua cancellata"
+#~ msgstr[1] "%(count)d lingue cancellate"
+
+#~ msgid "Delete selected languages"
+#~ msgstr "Rimuovi lingue selezionate"
+
+#~ msgid "Image"
+#~ msgstr "Immagine"
+
+<<<<<<< HEAD
+#~ msgid "Default"
+#~ msgstr "Predefinito"
+=======
+#: pyfreebilling/menu.py:75 pyfreebilling/urls.py:94 pyfreebilling/urls.py:179
+msgid "Provider gateways"
+msgstr "Gateway del fornitore"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "Order"
+#~ msgstr "Ordine"
+
+#~ msgid "Language"
+#~ msgstr "Lingua"
+
+#~ msgid "Languages"
+#~ msgstr "Lingue"
+
+<<<<<<< HEAD
+#~ msgid "not translated in"
+#~ msgstr "non tradotto in"
+
+#~ msgid "Cannot delete the default language"
+#~ msgstr "Non è possibile eliminare la lingua predefinita"
+
+#~ msgid "Could not create the target folder."
+#~ msgstr "Impossibile creare la cartella richiesta."
+
+#~ msgid ""
+#~ "<b>Configuration error!</b> Please set the LOCALE_PATHS project setting "
+#~ "to allow the creation of a unified messages catalog."
+#~ msgstr ""
+#~ "<b>Errore di configurazione!</b> Impostare il LOCALE_PATHS del progetto "
+#~ "per consentire la creazione di un catalogo di messaggi unificato. "
+=======
+#: pyfreebilling/menu.py:97
+msgid "Sell rates"
+msgstr "Tariffe di vendita"
+
+#: pyfreebilling/menu.py:99 pyfreebilling/urls.py:59 pyfreebilling/urls.py:99
+msgid "Ratecards"
+msgstr "Listini"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid ""
+#~ "The system does not appear to have any translation messages for this "
+#~ "language. Please use the \"Generate messages\" button."
+#~ msgstr ""
+#~ "Il sistema sembra non avere nessun messaggio tradotto per questa lingua. "
+#~ "Utilizzare il pulsante \"Genera messaggi\"."
+
+#~ msgid "Translate and save the following messages."
+#~ msgstr "Traduci e salva il seguente messaggio"
+
+#~ msgid "Loading messages..."
+#~ msgstr "Caricando messaggi"
+
+#~ msgid "yawd-translations example project"
+#~ msgstr "Progetto esempio yawd-translations"
+
+#~ msgid "yawd-translations example"
+#~ msgstr "Esempio yawd-translations"
+
+#~ msgid "Page details"
+#~ msgstr "Dettagli pagina"
+
+=======
+
+#~ msgid "Dependencies"
+#~ msgstr "Dipendenze"
+
+<<<<<<< HEAD
+#~ msgid "Move"
+#~ msgstr "Muovi"
+=======
+#: pyfreebilling/menu.py:128 pyfreebilling/menu.py:131
+#: pyfreebilling/urls.py:245 templates/admin/server_status.html:45
+msgid "Users"
+msgstr "Utenti"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "Please select exactly 2 records"
+#~ msgstr "Per favore, selezionare esattamente 2 record"
+
+#~ msgid "Merge selected %(verbose_name_plural)s"
+#~ msgstr "Unisci selezionati %(verbose_name_plural)s"
+
+#~ msgid "CSV Export Options"
+#~ msgstr "Opzioni esportazione CSV"
+
+<<<<<<< HEAD
+#~ msgid "Merge records"
+#~ msgstr "Unisci record"
+=======
+#: pyfreebilling/menu.py:145 pyfreebilling/urls.py:249
+msgid "Access logs"
+msgstr "Log di accesso"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "Field"
+#~ msgstr "Campo"
+
+#~ msgid "Master"
+#~ msgstr "Principale"
+
+#~ msgid "This will be preserved"
+#~ msgstr "Questo verrà mantenuto"
+
+#~ msgid "swap"
+#~ msgstr "scambia"
+
+<<<<<<< HEAD
+#~ msgid "Result"
+#~ msgstr "Risultato"
+=======
+#: pyfreebilling/menu.py:153 pyfreebilling/urls.py:281
+msgid "Database size"
+msgstr "Dimensioni database"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "This will be removed"
+#~ msgstr "Questo verrà rimosso"
+
+#~ msgid "Preview"
+#~ msgstr "Anteprima"
+
+#~ msgid "Key"
+#~ msgstr "Chiave"
+
+<<<<<<< HEAD
+#~ msgid "Original"
+#~ msgstr "Originale"
+
+#~ msgid "After Merging"
+#~ msgstr "Prima di unire"
+
+#~ msgid "Merge"
+#~ msgstr "Unisci"
+
+#~ msgid "Français"
+#~ msgstr "Francese"
+
+#~ msgid "Anglais"
+#~ msgstr "Inglese"
+
+#~ msgid "Run the selected action"
+#~ msgstr "Esegui l'azione selezionata"
+
+#~ msgid "Go"
+#~ msgstr "Vai"
+
+#~ msgid "Click here to select the objects across all pages"
+#~ msgstr "Cliccare qui per selezionare gli oggetti su tutte le pagine"
+
+#~ msgid "Select all %(total_count)s %(module_name)s"
+#~ msgstr "Seleziona tutti %(total_count)s %(module_name)s"
+
+#~ msgid "Clear selection"
+#~ msgstr "Pulisci selezione"
+
+#~ msgid "Menu Search"
+#~ msgstr "Menu Ricerca"
+
+#~ msgid "Search in menu"
+#~ msgstr "Cerca in menu"
+
+#~ msgid "Documentation"
+#~ msgstr "Documentazione"
+
+#~ msgid "admin"
+#~ msgstr "admin"
+
+#~ msgid "Add %(name)s"
+#~ msgstr "Aggiungi %(name)s"
+
+#~ msgid "Toggle sorting"
+#~ msgstr "Inverti ordine"
+
+#~ msgid "Remove from sorting"
+#~ msgstr "Rimuovi dall'ordine"
+
+#~ msgid "Enter username and password"
+#~ msgstr "Inserire nome utente e password"
+
+#~ msgid "Username:"
+#~ msgstr "Nome utente:"
+
+#~ msgid "Password:"
+#~ msgstr "Password:"
+
+#~ msgid "Log in"
+#~ msgstr "Log in"
+
+#~ msgid "Show all"
+#~ msgstr "Mostra tutto"
+
+#~ msgid "Previous"
+#~ msgstr "Precedente"
+
+#~ msgid "Next"
+#~ msgstr "Successivo"
+
+#~ msgid "Save"
+#~ msgstr "Salva"
+
+#~ msgid "%(counter)s result"
+#~ msgid_plural "%(counter)s results"
+#~ msgstr[0] "%(counter)s risultato"
+#~ msgstr[1] "%(counter)s risultati"
+=======
+#: pyfreebilling/urls.py:48
+#, fuzzy
+msgid "1_Customers"
+msgstr "Clienti"
+
+#: pyfreebilling/urls.py:50
+#, fuzzy
+msgid "Customers list"
+msgstr "Clienti"
+
+#: pyfreebilling/urls.py:54
+#, fuzzy
+msgid "SIP accounts"
+msgstr "Account SIP"
+
+#: pyfreebilling/urls.py:68 pyfreebilling/urls.py:108
+#, fuzzy
+msgid "Destination number normalization"
+msgstr "Regole normalizzazione numero di destinazione"
+
+#: pyfreebilling/urls.py:73 pyfreebilling/urls.py:113
+#, fuzzy
+msgid "CallerID normalization"
+msgstr "Regole di normalizzazione numero chiamante"
+
+#: pyfreebilling/urls.py:77
+#, fuzzy
+msgid "Customer statistics"
+msgstr "Statistiche destinazione cliente"
+
+#: pyfreebilling/urls.py:82 pyfreebilling/urls.py:122
+#, fuzzy
+msgid "Destination statistics"
+msgstr "Statistiche destinazione cliente"
+
+#: pyfreebilling/urls.py:88
+#, fuzzy
+msgid "2_Providers"
+msgstr "Fornitori"
+
+#: pyfreebilling/urls.py:90
+#, fuzzy
+msgid "Providers list"
+msgstr "Fornitori"
+
+#: pyfreebilling/urls.py:117
+#, fuzzy
+msgid "Provider statistics"
+msgstr "Statistiche destinazioni fornitore"
+
+#: pyfreebilling/urls.py:128
+msgid "3_DID"
+msgstr ""
+
+#: pyfreebilling/urls.py:155
+msgid "4_Routing"
+msgstr ""
+
+#: pyfreebilling/urls.py:161
+#, fuzzy
+msgid "Destination Number Normalization"
+msgstr "Regola normalizzazione numero destinazione"
+
+#: pyfreebilling/urls.py:166
+#, fuzzy
+msgid "CallerID prefix management"
+msgstr "Lista prefissi numero chiamante"
+
+#: pyfreebilling/urls.py:173
+#, fuzzy
+msgid "5_Switches"
+msgstr "Switch VoIP"
+
+#: pyfreebilling/urls.py:175
+#, fuzzy
+msgid "Customer accounts"
+msgstr "Account SIP cliente"
+
+#: pyfreebilling/urls.py:183
+msgid "Freeswitch status"
+msgstr ""
+
+#: pyfreebilling/urls.py:188
+#, fuzzy
+msgid "Registration status"
+msgstr "Registrazione"
+
+#: pyfreebilling/urls.py:192
+msgid "Bridged Calls"
+msgstr ""
+
+#: pyfreebilling/urls.py:196
+#, fuzzy
+msgid "Freeswitch list"
+msgstr "IPv4 switch"
+
+#: pyfreebilling/urls.py:200
+#, fuzzy
+msgid "Sofia profiles"
+msgstr "Profili SIP"
+
+#: pyfreebilling/urls.py:207
+msgid "6_Finance"
+msgstr ""
+
+#: pyfreebilling/urls.py:213
+#: templates/admin/pyfreebill/company/change_form.html:13
+msgid "History"
+msgstr "Storico"
+
+#: pyfreebilling/urls.py:217
+#, fuzzy
+msgid "Currency Management"
+msgstr "Gestione cliente"
+
+#: pyfreebilling/urls.py:224
+#, fuzzy
+msgid "7_Report"
+msgstr "Report"
+
+#: pyfreebilling/urls.py:230
+#, fuzzy
+msgid "Server status"
+msgstr "Statistiche vendite"
+
+#: pyfreebilling/urls.py:235
+msgid "FreeSwitch status"
+msgstr ""
+
+#: pyfreebilling/urls.py:243
+#, fuzzy
+msgid "8_Admin"
+msgstr "Admin"
+
+#: pyfreebilling/urls.py:254
+#, fuzzy
+msgid "Access attempts"
+msgstr "Tentativi di accesso"
+
+#: pyfreebilling/urls.py:258
+msgid "Honeypot logs"
+msgstr ""
+
+#: pyfreebilling/urls.py:263
+#, fuzzy
+msgid "Visitors stats"
+msgstr "Visitatori"
+
+#: pyfreebilling/urls.py:268
+#, fuzzy
+msgid "Admin logs"
+msgstr "Admin"
+
+#: pyfreebilling/urls.py:273
+#, fuzzy
+msgid "Recurring task logs"
+msgstr "Log operazioni ricorrenti"
+
+#: pyfreebilling/urls.py:277
+#, fuzzy
+msgid "Import logs"
+msgstr "Importa"
+
+#: pyfreebilling/urls.py:286
+msgid "Version"
+msgstr ""
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "%(full_result_count)s total"
+#~ msgstr "%(full_result_count)s totali"
+
+#~ msgid "Save as new"
+#~ msgstr "Salva come nuovo"
+
+#~ msgid "Save and add another"
+#~ msgstr "Salva e aggiungi un altro"
+
+#~ msgid "Save and continue editing"
+#~ msgstr "Salva e continua la modifica"
+
+#~ msgid "Add another %(verbose_name)s"
+#~ msgstr "Aggiungi un altro %(verbose_name)s"
+
+#~ msgid "+Add another %(verbose_name)s"
+#~ msgstr "+Aggiungi un altro %(verbose_name)s"
+
+<<<<<<< HEAD
+#~ msgid "Thanks for spending some quality time with the Web site today."
+#~ msgstr "Grazie per aver usato un po' di tempo con questo sito oggi."
+=======
+#: templates/admin/_index.html:62 templates/admin/index.html:62
+#: templates/admin/list_models.html:31
+#, python-format
+msgid "'%(name)s' section links."
+msgstr "Collegamenti sezione '%(name)s'"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "Log in again"
+#~ msgstr "Autenticarsi nuovamente"
+
+#~ msgid "Password change"
+#~ msgstr "Cambia passowrd"
+
+#~ msgid "Password change successful"
+#~ msgstr "Cambio password eseguito"
+
+#~ msgid "Your password was changed."
+#~ msgstr "La password è stata modificata"
+
+#~ msgid ""
+#~ "Please enter your old password, for security's sake, and then enter your "
+#~ "new password twice so we can verify you typed it in correctly."
+#~ msgstr ""
+#~ "Per favore, inserire la vecchia password, per motivi di sicurezza, quindi "
+#~ "inserire due volte la nuova password in modo da poter verificare che sia "
+#~ "stata scritta correttamente."
+
+#~ msgid "Old password"
+#~ msgstr "Vecchia password"
+
+#~ msgid "New password"
+#~ msgstr "Nuova password"
+
+#~ msgid "Password (again)"
+#~ msgstr "Nuova password (di nuovo)"
+
+<<<<<<< HEAD
+#~ msgid "Change my password"
+#~ msgstr "Cambia la password"
+=======
+#: templates/admin/live_report.html:27
+#: templates/admin/pyfreebill/cdr/change_list.html:96
+#: templates/admin/pyfreebill/cdr/change_list2.html:63
+#: templates/admin/pyfreebill/cdr/voip_report.html:27
+#: templates/admin/pyfreebill/customerdirectory/change_list.html:76
+#: templates/admin/pyfreebill/sofiagateway/change_list.html:76
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] "Per favore correggere l'errore sotto riportato"
+msgstr[1] "Per favore correggere gli errori sotto riportati"
+
+#: templates/admin/live_report.html:35
+#: templates/admin/pyfreebill/cdr/voip_report.html:35
+msgid "search option"
+msgstr "Opzioni ricerca"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "Open site"
+#~ msgstr "Apri sito"
+
+#~ msgid "Django site"
+#~ msgstr "Sito Django"
+
+<<<<<<< HEAD
+#~ msgid "Page %(current)s of %(total)s"
+#~ msgstr "Pagina %(current)s di %(total)s"
+=======
+#: templates/admin/server_status.html:22
+msgid "System"
+msgstr ""
+
+#: templates/admin/server_status.html:25
+msgid "OS"
+msgstr ""
+
+#: templates/admin/server_status.html:29
+#, fuzzy
+msgid "Hostname"
+msgstr "cognome"
+
+#: templates/admin/server_status.html:33
+msgid "Uptime"
+msgstr ""
+
+#: templates/admin/server_status.html:37
+msgid "CPU Cores"
+msgstr ""
+
+#: templates/admin/server_status.html:45
+#, fuzzy
+msgid "Logged in"
+msgstr "Connesso come"
+
+#: templates/admin/server_status.html:49 templates/admin/server_status.html:77
+msgid "User"
+msgstr "Utente"
+
+#: templates/admin/server_status.html:50
+msgid "Started"
+msgstr ""
+
+#: templates/admin/server_status.html:51
+msgid "Host"
+msgstr ""
+
+#: templates/admin/server_status.html:70
+msgid "CPU"
+msgstr ""
+
+#: templates/admin/server_status.html:70
+msgid "cores"
+msgstr ""
+
+#: templates/admin/server_status.html:73
+msgid "Load average"
+msgstr ""
+
+#: templates/admin/server_status.html:81
+msgid "System<"
+msgstr ""
+
+#: templates/admin/server_status.html:85
+msgid "Idle"
+msgstr ""
+
+#: templates/admin/server_status.html:89
+msgid "I/O wait"
+msgstr ""
+
+#: templates/admin/server_status.html:97
+msgid "Memory"
+msgstr ""
+
+#: templates/admin/server_status.html:100
+#: templates/admin/server_status.html:127
+#: templates/admin/server_status.html:184
+#, fuzzy
+msgid "Total"
+msgstr "Totale"
+
+#: templates/admin/server_status.html:104
+#, fuzzy
+msgid "Available"
+msgstr "Files disponibili"
+
+#: templates/admin/server_status.html:108
+#: templates/admin/server_status.html:112
+#: templates/admin/server_status.html:131
+#: templates/admin/server_status.html:185
+msgid "Used"
+msgstr ""
+
+#: templates/admin/server_status.html:108
+msgid "excl. cache and buffers"
+msgstr ""
+
+#: templates/admin/server_status.html:112
+msgid "incl. cache and buffers"
+msgstr ""
+
+#: templates/admin/server_status.html:116
+#: templates/admin/server_status.html:135
+#: templates/admin/server_status.html:186
+msgid "Free"
+msgstr ""
+
+#: templates/admin/server_status.html:124
+msgid "Swap"
+msgstr ""
+
+#: templates/admin/server_status.html:139
+msgid "Swapped in"
+msgstr ""
+
+#: templates/admin/server_status.html:143
+msgid "Swapped out"
+msgstr ""
+
+#: templates/admin/server_status.html:153
+msgid "Network I/O"
+msgstr ""
+
+#: templates/admin/server_status.html:157
+msgid "Name"
+msgstr "Nome"
+
+#: templates/admin/server_status.html:158
+msgid "IP"
+msgstr ""
+
+#: templates/admin/server_status.html:159
+msgid "P. Dropped"
+msgstr ""
+
+#: templates/admin/server_status.html:160
+#, fuzzy
+msgid "P. Error"
+msgstr "Errori"
+
+#: templates/admin/server_status.html:178
+msgid "Disk usage"
+msgstr ""
+
+#: templates/admin/server_status.html:182
+#, fuzzy
+msgid "Device"
+msgstr "Servizi"
+
+#: templates/admin/server_status.html:183
+#, fuzzy
+msgid "Mounted"
+msgstr "Nazioni"
+
+#: templates/admin/did/did/simple_import/import.html:7
+msgid "Did import wizard"
+msgstr "Procedura importazione numeri geografici"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "%(count)s of %(total)s"
+#~ msgstr "%(count)s di %(total)s"
+
+#~ msgid "countries"
+#~ msgstr "Nazioni"
+
+#~ msgid "Normal"
+#~ msgstr "Normale"
+
+<<<<<<< HEAD
+#~ msgid "Lazy"
+#~ msgstr "Lento"
+=======
+#: templates/admin/edit_inline/popup.html:23
+#: templates/admin/edit_inline/popup.html:33
+#: templates/admin/edit_inline/popup.html:43
+msgid "Delete"
+msgstr "Elimina"
+
+#: templates/admin/edit_inline/popup.html:38
+msgid "You are about to delete this object! Are you sure you want to continue?"
+msgstr "Si sta per cancellare questo oggetto. Si è sicuri?"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "capital"
+#~ msgstr "maiuscolo"
+
+#~ msgid "translation test"
+#~ msgstr "test traduzione"
+
+#~ msgid "translation test lazy"
+#~ msgstr "test traduzione lento"
+
+#~ msgid "CDR Report"
+#~ msgstr "Report CDR"
+
+#~ msgid "%(name)s object with primary key %(key)r does not exist."
+#~ msgstr "L'oggetto %(name)s con la chiave primaria %(key)r non esiste."
+
+<<<<<<< HEAD
+#~ msgid "No data sent with the request"
+#~ msgstr "Nessun dato inviato con la richiesta"
+
+#~ msgid "Unable to reorder objects"
+#~ msgstr "Impossibile riordinare gli oggetti"
+
+#~ msgid "Site administration"
+#~ msgstr "Amministrazione sito"
+=======
+#: templates/admin/edit_inline/stacked.html:13
+#: templates/admin/edit_inline/tabular.html:26
+#: templates/admin/pyfreebill/company/edit_inline/stacked.html:13
+msgid "View on site"
+msgstr "Visualizza il sito"
+
+#: templates/admin/edit_inline/stacked.html:19
+#: templates/admin/pyfreebill/company/edit_inline/stacked.html:19
+#, python-format
+msgid "Edit %(modaltitle)s"
+msgstr "Modifica %(modaltitle)s"
+
+#: templates/admin/edit_inline/stacked.html:41
+#: templates/admin/edit_inline/tabular.html:53
+#: templates/admin/pyfreebill/company/edit_inline/stacked.html:43
+msgid "Remove"
+msgstr "Rimuovi"
+
+#: templates/admin/edit_inline/stacked.html:42
+#: templates/admin/edit_inline/tabular.html:52
+#: templates/admin/pyfreebill/company/edit_inline/stacked.html:44
+msgid "Add new"
+msgstr "Aggiungi nuovo"
+
+#: templates/admin/edit_inline/tabular.html:15
+msgid "Delete?"
+msgstr "Cancello?"
+
+#: templates/admin/edit_inline/translatable-inline.html:11
+msgid "Warning!"
+msgstr "Attenzione!"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "%s administration"
+#~ msgstr "amministrazione %s"
+
+#~ msgid "The options were succesfully saved."
+#~ msgstr "L'opzione era salvata correttamente."
+
+#~ msgid "The user was successfully connected."
+#~ msgstr "L'utente era connesso correttamente."
+
+<<<<<<< HEAD
+#~ msgid ""
+#~ "The server does not have permissions to write to the token file. Please "
+#~ "contact your system administrator."
+#~ msgstr ""
+#~ "Il server non ha il permesso per scrivere il file token. Per favore "
+#~ "contattare l'amministratore di sistema."
+=======
+#: templates/admin/import_export/export.html:8
+#: templates/admin/import_export/export.html:13
+#: templates/admin/pyfreebill/cdr/change_list.html:66
+#: templates/admin/pyfreebill/cdr/change_list2.html:56
+msgid "Export"
+msgstr "Esporta"
+
+#: templates/admin/import_export/export.html:38
+msgid "Submit"
+msgstr "Inoltra"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "Your account has been updated successfuly."
+#~ msgstr "Il suo account è stato aggiornato correttamente."
+
+#~ msgid "My account"
+#~ msgstr "Il mio account"
+
+#~ msgid "YES"
+#~ msgstr "SI"
+
+#~ msgid "NO"
+#~ msgstr "NO"
+
+#~ msgid "We're sorry, but the requested page could not be found."
+#~ msgstr "Siamo spiacenti, ma la pagina cercata non può essere trovata."
+
+#~ msgid "Server error"
+#~ msgstr "Errore server"
+
+#~ msgid "Server error (500)"
+#~ msgstr "Errore server (500)"
+
+#~ msgid "Server Error <em>(500)</em>"
+#~ msgstr "Errore server <em>(500)</em>"
+
+#~ msgid ""
+#~ "There's been an error. It's been reported to the site administrators via "
+#~ "e-mail and should be fixed shortly. Thanks for your patience."
+#~ msgstr ""
+#~ "Si è verificato un errore. E' stato già riportato all'amministratore del "
+#~ "sito via email e dovrebbe essere corretto a stretto giro. Grazie per la "
+#~ "pazienza."
+
+<<<<<<< HEAD
+#~ msgid "Actions"
+#~ msgstr "Azioni"
+=======
+#: templates/admin/pyfreebill/cdr/change_list2.html:78
+msgid "Filter"
+msgstr "Filtro"
+
+#: templates/admin/pyfreebill/cdr/voip_report.html:8
+msgid "home"
+msgstr "Home"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "Configure Google Analytics"
+#~ msgstr "Configura Google Analytics"
+
+#~ msgid "Profile ID"
+#~ msgstr "ID Profilo"
+
+#~ msgid "Showing last"
+#~ msgstr "Mostrando gli ultimi"
+
+#~ msgid "days"
+#~ msgstr "giorni"
+
+#~ msgid "Connected"
+#~ msgstr "Connesso"
+
+#~ msgid "Yes"
+#~ msgstr "Si"
+
+#~ msgid "No"
+#~ msgstr "No"
+
+#~ msgid "Current session expiry"
+#~ msgstr "Scadenza sessione corrente"
+
+#~ msgid "Refresh token"
+#~ msgstr "Aggiorna token"
+
+#~ msgid "Authenticate new account"
+#~ msgstr "Autentica nuovo account"
+
+#~ msgid "help text"
+#~ msgstr "testo aiuto"
+
+#~ msgid ""
+#~ "<p>Use this button to connect to a Google account and enable statistics. "
+#~ "The google account must have access to the above Google Analytics Profile "
+#~ "ID.</p><p class=\\"
+#~ msgstr ""
+#~ "<p>Usare questo pulsante per connettersi a Google e abilitare le "
+#~ "statistiche. L'account di Google deve aver accesso all'ID Profilo di "
+#~ "Google Analytics di sopra.</p><p class=\\"
+
+#~ msgid "add"
+#~ msgstr "aggiungi"
+
+#~ msgid "edit"
+#~ msgstr "modifica"
+
+#~ msgid "General"
+#~ msgstr "Generale"
+
+#~ msgid "ON"
+#~ msgstr "ON"
+
+#~ msgid "OFF"
+#~ msgstr "OFF"
+
+#~ msgid "Sorting priority: %(priority_number)s"
+#~ msgstr "Priorità ordine: %(priority_number)s"
+
+#~ msgid "No results found matching the specified criteria. Please try again!"
+#~ msgstr ""
+#~ "Nessun risultato trovato con i criteri specificati. Per favore riprovare!"
+
+#~ msgid ""
+#~ "There are no records yet. Use the <strong>add</strong> button above to "
+#~ "create a new"
+#~ msgstr ""
+#~ "Non ci sono ancora record. Usare il pulsante <strong>Aggiungi</strong> "
+#~ "sopra riportato per crearne uno"
+
+<<<<<<< HEAD
+#~ msgid "delete"
+#~ msgstr "elimina"
+
+#~ msgid ""
+#~ "Deleting the %(object_name)s '%(escaped_object)s' would result in "
+#~ "deleting related objects, but your account doesn't have permission to "
+#~ "delete the following types of objects:"
+#~ msgstr ""
+#~ "Cancellare l'oggetto %(object_name)s '%(escaped_object)s' richiederebbe "
+#~ "la cancellazione di oggetti collegati, ma il suo account non ha i "
+#~ "permessi per cancellare i seguenti tipi di oggetto."
+=======
+#: templates/customer/balance.html:39 templates/customer/home.html:66
+msgid "Postpaid"
+msgstr "Postpagato"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid ""
+#~ "Deleting the %(object_name)s '%(escaped_object)s' would require deleting "
+#~ "the following protected related objects:"
+#~ msgstr ""
+#~ "Cancellare l'oggetto %(object_name)s '%(escaped_object)s' richiederebbe "
+#~ "la cancellazione dei seguenti oggetti protetti collegati:"
+
+#~ msgid ""
+#~ "Are you sure you want to delete the %(object_name)s \"%(escaped_object)s"
+#~ "\"? All of the following related items will be deleted:"
+#~ msgstr ""
+#~ "Si è sicuri di voler cancellare l'oggetto %(object_name)s "
+#~ "\"%(escaped_object)s\"? Tutti i seguenti elementi collegati verranno "
+#~ "cancellati: "
+
+#~ msgid "Yes, I'm sure"
+#~ msgstr "Si, sono sicuro"
+
+#~ msgid "Delete multiple objects"
+#~ msgstr "Cancella oggetti multipli"
+
+#~ msgid ""
+#~ "Deleting the selected %(objects_name)s would result in deleting related "
+#~ "objects, but your account doesn't have permission to delete the following "
+#~ "types of objects:"
+#~ msgstr ""
+#~ "Cancellare l'oggetto %(objects_name)s richiederebbe la cancellazione di "
+#~ "oggetti collegati, ma il suo account non ha i permessi per cancellare i "
+#~ "seguenti tipi di oggetto:"
+
+#~ msgid ""
+#~ "Deleting the selected %(objects_name)s would require deleting the "
+#~ "following protected related objects:"
+#~ msgstr ""
+#~ "Cancellare l'oggetto %(objects_name)s richiederebbe la cancellazione dei "
+#~ "seguenti oggetti protetti collegati:"
+
+#~ msgid ""
+#~ "Are you sure you want to delete the selected %(objects_name)s? All of the "
+#~ "following objects and their related items will be deleted:"
+#~ msgstr ""
+#~ "Si è sicuri di vole cancellare l'oggetto %(objects_name)s? Tutti i "
+#~ "seguenti oggetti e i loro elementi correlati verranno cancellati:"
+
+#~ msgid "Translate Static Messages"
+#~ msgstr "Traduci messaggi statici"
+
+#~ msgid "%(filter_title)s"
+#~ msgstr "%(filter_title)s"
+
+#~ msgid "New"
+#~ msgstr "Nuovo"
+
+#~ msgid "Returning"
+#~ msgstr "Ritornati"
+
+#~ msgid "Total visits"
+#~ msgstr "Visite totali"
+
+#~ msgid "Last 30 days visits"
+#~ msgstr "Visite ultimi 30 giorni"
+
+#~ msgid "Visitors"
+#~ msgstr "Visitatori"
+
+#~ msgid "Pageviews"
+#~ msgstr "Visualizzazioni di pagina"
+
+#~ msgid "Avg. visit time"
+#~ msgstr "Tempo visita medio"
+
+#~ msgid "Bounce rate"
+#~ msgstr "Tasso rimbalzi"
+
+#~ msgid "New visits"
+#~ msgstr "Nuove visite"
+
+#~ msgid "Analytics data could not be generated"
+#~ msgstr "I dati di Analitycs non possono essere generati"
+
+#~ msgid "The key has expired."
+#~ msgstr "La chiave è scaduta"
+
+#~ msgid ""
+#~ "The analytics user is not authenticated. <a href=\"%(analytics_url)s"
+#~ "\">Click here</a> to connect a user with the analytics account."
+#~ msgstr ""
+#~ "L'utente di Analytics non è autenticato. <a href=\"%(analytics_url)s"
+#~ "\">Cliccare qui</a> per connettere l'utente all'account di analytics. "
+
+#~ msgid ""
+#~ "Your account has no data yet. <strong>Just be patient, visits will come!</"
+#~ "strong> :)"
+#~ msgstr ""
+#~ "Nel tuo account non ci sono ancora dati. <strong>Bisogna essere pazienti, "
+#~ "le visite arriveranno!</strong> :) "
+
+#~ msgid "Error code"
+#~ msgstr "Codice errore"
+
+#~ msgid ""
+#~ "Something's wrong with your database installation. Make sure the "
+#~ "appropriate database tables have been created, and make sure the database "
+#~ "is readable by the appropriate user."
+#~ msgstr ""
+#~ "C'è qualcosa di sbagliato nell'installazione del database. Assicurarsi "
+#~ "che le tabelle siano state create correttamente, e assicurarsi che il "
+#~ "database sia leggibile dall'utente collegato."
+
+#~ msgid "Login"
+#~ msgstr "Login"
+
+#~ msgid "Password"
+#~ msgstr "Password"
+
+#~ msgid "Forgot password?"
+#~ msgstr "Password dimenticata?"
+
+#~ msgid "history"
+#~ msgstr "storico"
+
+#~ msgid "Date/time"
+#~ msgstr "Data/ora"
+
+#~ msgid "User"
+#~ msgstr "Utente"
+
+#~ msgid "Action"
+#~ msgstr "Azioen"
+
+#~ msgid ""
+#~ "This object doesn't have a change history. It probably wasn't added via "
+#~ "this admin site."
+#~ msgstr ""
+#~ "Questo oggetto non ha storico di cambiamenti. Probabilmente non è stato "
+#~ "aggiunto attraverso questo portale."
+
+#~ msgid "Translatable options"
+#~ msgstr "Opzioni traducibili"
+
+#~ msgid "Search..."
+#~ msgstr "Cerca..."
+
+#~ msgid "Generate messages"
+#~ msgstr "Genera messaggi"
+
+<<<<<<< HEAD
+#~ msgid "Regenerate messages"
+#~ msgstr "Rigenera messaggi"
+=======
+#: templates/customer/base.html:28
+msgid "Report"
+msgstr "Report"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "Update messages"
+#~ msgstr "Aggiorna messaggi"
+
+#~ msgid ""
+#~ "First, enter a username and password. Then, you'll be able to edit more "
+#~ "user options."
+#~ msgstr ""
+#~ "Prima inserire il nome utente e la password. Successivamente sarà "
+#~ "possibile modifica altre opzioni utente."
+
+#~ msgid "Enter a username and password."
+#~ msgstr "Inserire un nome utente e una password."
+
+#~ msgid "Enter a new password for the user <strong>%(username)s</strong>."
+#~ msgstr ""
+#~ "Inserire una nuova password per l'utente <strong>%(username)s</strong>. "
+
+<<<<<<< HEAD
+#~ msgid "Enter the same password as above, for verification."
+#~ msgstr "Inserire la stessa password come sopra, per verifica"
+=======
+#: templates/customer/cdr_view.html:242
+msgid "Search"
+msgstr "Cerca"
+
+#: templates/customer/cdr_view.html:258
+msgid "Destination number"
+msgstr "Numero di destinazione"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid ""
+#~ "\n"
+#~ "\t\t\tPeriodic tasks won't be dispatched unless you set the\n"
+#~ "\t\t\t<code>CELERYBEAT_SCHEDULER</code> setting to\n"
+#~ "\t\t\t<code>djcelery.schedulers.DatabaseScheduler</code>,\n"
+#~ "\t\t\tor specify it using the <code>-S</code> option to celerybeat"
+#~ msgstr ""
+#~ "\n"
+#~ "\t\t\tLe operazioni ricorrenti non verranno eseguite\n"
+#~ "                        finché non verrà impostato il\n"
+#~ "\t\t\t<code>CELERYBEAT_SCHEDULER</code> a\n"
+#~ "\t\t\t<code>djcelery.schedulers.DatabaseScheduler</code>,\n"
+#~ "\t\t\to specificandolo usando l'opzione <code>-S</code> in celerybeat"
+
+#~ msgid ""
+#~ "Bellow is a preview of applied import data. If you are satisfied with a "
+#~ "result click Confirm import"
+#~ msgstr ""
+#~ "Sotto c'è un'anteprima dei dati importati. Se si è soddisfatti, cliccare "
+#~ "su Conferma importazione"
+
+#~ msgid "Confirm import"
+#~ msgstr "Conferma importazione"
+
+#~ msgid "This importer excpect and will import following fields: "
+#~ msgstr "Questa procedura si aspetta e importerà i seguenti campi:"
+
+#~ msgid "Errors"
+#~ msgstr "Errori"
+
+#~ msgid "Line number"
+#~ msgstr "Numero linea"
+
+#~ msgid "Skipped"
+#~ msgstr "Saltati"
+
+#~ msgid "Update"
+#~ msgstr "Aggiorna"
+
+#~ msgid "Change Password"
+#~ msgstr "Cambio password"
+
+<<<<<<< HEAD
+#~ msgid "Logout"
+#~ msgstr "Termina sessione"
+
+#~ msgid "Options"
+#~ msgstr "Opzioni"
+
+#~ msgid ""
+#~ "Are you sure you want to regenerate the messages? This will override your "
+#~ "changes. "
+#~ msgstr ""
+#~ "Si è sicuri di voler rigenerare i messaggi? Questo sovrascriverà i "
+#~ "cambiamenti."
+
+#~ msgid "Available files"
+#~ msgstr "Files disponibili"
+
+#~ msgid "Translate messages"
+#~ msgstr "Traduci messaggi"
+
+#~ msgid "Update account"
+#~ msgstr "Aggiorna account"
+
+#~ msgid "Your password was changed successfully."
+#~ msgstr "La password è stata modifica con successo."
+
+#~ msgid "New password (again)"
+#~ msgstr "Nuova password (ripetere)"
+
+#~ msgid "Password reset complete"
+#~ msgstr "Reset della password completato"
+
+#~ msgid "Your password has been set. You may go ahead and log in now."
+#~ msgstr "La password è stata impostata. E' ora possibile eseguire il login"
+
+#~ msgid "Password reset"
+#~ msgstr "Reset della password"
+
+#~ msgid "Enter new password"
+#~ msgstr "Inserire la nuova password"
+
+#~ msgid ""
+#~ "Please enter your new password twice so we can verify you typed it in "
+#~ "correctly."
+#~ msgstr ""
+#~ "Per favore, inserire la password due volte al fine di verificare che sia "
+#~ "stata scritta correttamente."
+
+#~ msgid "Password reset unsuccessful"
+#~ msgstr "Reset della password fallito"
+
+#~ msgid ""
+#~ "The password reset link was invalid, possibly because it has already been "
+#~ "used.  Please request a new password reset."
+#~ msgstr ""
+#~ "Il link per il reset della password non è valido, probabilmente perché è "
+#~ "stato già usato. Per favore, richiedere un nuovo reset della password."
+
+#~ msgid ""
+#~ "Forgotten your password? Enter your e-mail address below, and we'll e-"
+#~ "mail instructions for setting a new one."
+#~ msgstr ""
+#~ "Dimenticata la password? Inserire la propria email e invieremo un "
+#~ "messaggio con le istruzione per impostarne una nuova."
+
+#~ msgid ""
+#~ "We've e-mailed you instructions for setting your password to the e-mail "
+#~ "address you submitted. You should be receiving it shortly."
+#~ msgstr ""
+#~ "Abbiamo inviato un messaggio con le istruzioni per reimpostare la "
+#~ "password all'indirizzo email specificato. Dovrebbe essere ricevuto a "
+#~ "stretto giro."
+=======
+#: templates/customer/cdr_view.html:264
+msgid "Codec"
+msgstr "Codec"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid ""
+#~ "You're receiving this e-mail because you requested a password reset for "
+#~ "your user account at %(site_name)s."
+#~ msgstr ""
+#~ "Si riceve questo messaggio perché è stato richiesto il reset della "
+#~ "password per l'account utente sul sito %(site_name)s."
+
+#~ msgid "Please go to the following page and choose a new password:"
+#~ msgstr ""
+#~ "Per favore, aprire la seguente pagina e scegliere una nuova password:"
+
+#~ msgid "Your username, in case you've forgotten:"
+#~ msgstr "Il nome utente, nel caso lo si abbia dimenticato:"
+
+#~ msgid "Thanks for using our site!"
+#~ msgstr "Grazie per usare il nostro sito!"
+
+#~ msgid "The %(site_name)s team"
+#~ msgstr "Il team di %(site_name)s"
+
+#~ msgid "Reset my password"
+#~ msgstr "Resetta la mia password"
+
+#~ msgid "Take me to login"
+#~ msgstr "Portami al login"
+
+#~ msgid "Recover deleted %(name)s"
+#~ msgstr "Ripristina %(name)s cancellati"
+
+<<<<<<< HEAD
+#~ msgid ""
+#~ "Choose a date from the list below to revert to a previous version of this "
+#~ "object."
+#~ msgstr ""
+#~ "Selezionare una data dalla lista sotto riportata per ripristinare una "
+#~ "versione precedente di questo oggetto."
+
+#~ msgid "Press the save button below to recover this version of the object."
+#~ msgstr ""
+#~ "Cliccare sul pulsante salva per ripristinare questa versione dell'oggetto."
+
+#~ msgid ""
+#~ "Choose a date from the list below to recover a deleted version of an "
+#~ "object."
+#~ msgstr ""
+#~ "Selezionare una data dalla lista sotto riportata per ripristinare una "
+#~ "versione cancellata di questo oggetto."
+=======
+#: templates/customer/report.html:4
+msgid "PyFreeBilling : Customer Portal Report"
+msgstr "PyFreeBilling : Report portale cliente"
+
+#: templates/customer/report.html:12
+msgid "Daily CDR Reports (Last 7 Days)"
+msgstr "Report CDR giornaliero (Ultimi 7 giorni)"
+
+#: templates/customer/report.html:58
+msgid "Monthly CDR reports (Last 3 Months)"
+msgstr "Report CDR Mensile (Ultimi 3 mesi)"
+
+#: templates/customer/sip_account.html:13
+msgid "IP Authentification"
+msgstr "IP autenticazione"
+
+#: templates/customer/sip_account.html:18
+msgid ""
+"You only need to specify our switch ip address in your system. To get it, "
+"please contact support"
+msgstr ""
+"C'è solo bisogno di specificare l'indirizzo ip del nostro switch nel nostro "
+"sistema. Per ottenerlo, contattare il supporto"
+
+#: templates/customer/sip_account.html:33
+msgid ""
+"Your system needs to register with correct username/password. If you lost "
+"your password, please contact support"
+msgstr ""
+"Il sistema ha bisogno di registrarsi con username/password corrette. Se ha "
+"perso la password, contattare il supporto"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "There are no deleted objects to recover."
+#~ msgstr "Non ci sono oggetti cancellati da ripristinare"
+
+<<<<<<< HEAD
+#~ msgid "Revert %(verbose_name)s"
+#~ msgstr "Ripristina %(verbose_name)s"
+=======
+#: templates/customer/sip_account.html:48
+msgid ""
+"If you need to modify limits, adding, modifying or deleting a sip account, "
+"please contact support team"
+msgstr ""
+"Se si ha bisogno di modificare limiti, aggiungere, modificare o eliminare un "
+"account SIP, contattare il supporto"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
+
+#~ msgid "Press the save button below to revert to this version of the object."
+#~ msgstr ""
+#~ "Cliccare sul pulsante salva per ripristinare l'oggetto a questa versione."
 
 #~ msgid "Compare %(name)s"
 #~ msgstr "Compara %(name)s"
@@ -6452,18 +9441,38 @@ msgstr "Simula report"
 #~ "Benvenuti nella pagina di amministrazione di yawd-admin. Per favore, "
 #~ "autenticarsi per gestire il sito."
 
+<<<<<<< HEAD
 #~ msgid "File not found"
 #~ msgstr "File non  trovato"
 
 #~ msgid "Access denied"
 #~ msgstr "Accesso non consentito"
+=======
+#: templates/reporting/admin/index.html:18
+#, python-format
+msgid "Models available in the %(name)s application."
+msgstr "Modelli disponibili nell'applicazione %(name)s"
+
+#: templates/reporting/admin/index.html:19
+#, python-format
+msgid "%(name)s"
+msgstr "%(name)s"
+
+#: templates/reporting/admin/index.html:58
+msgid "None available"
+msgstr "Nessuno disponibile"
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 
 #~ msgid "Volume could not be found"
 #~ msgstr "Il volume non può essere trovato"
 
+#~ msgid "This is not a valid image file"
+#~ msgstr "Questo non è un file immagine valido"
+
 #~ msgid "This file is no longer valid"
 #~ msgstr "Il file non è più valido"
 
+<<<<<<< HEAD
 #~ msgid "Size"
 #~ msgstr "Dimensione"
 
@@ -6501,6 +9510,9 @@ msgstr "Simula report"
 
 #~ msgid "Image"
 #~ msgstr "Immagine"
+
+#~ msgid "Name"
+#~ msgstr "Nome"
 
 #~ msgid "Default"
 #~ msgstr "Predefinito"
@@ -6543,16 +9555,33 @@ msgstr "Simula report"
 #~ msgid "Loading messages..."
 #~ msgstr "Caricando messaggi"
 
-#~ msgid "yawd-translations example project"
-#~ msgstr "Progetto esempio yawd-translations"
-
-#~ msgid "yawd-translations example"
-#~ msgstr "Esempio yawd-translations"
-
-#~ msgid "Page details"
-#~ msgstr "Dettagli pagina"
-
 =======
+#~ msgid "Sorry you do not have rights to execute this action (%s)"
+#~ msgstr "Spiacenti, non si è autorizzati a eseguire questa azione (%s)"
+
+#~ msgid "Export as CSV"
+#~ msgstr "Esporta come CSV"
+
+#~ msgid "Export as XLS"
+#~ msgstr "Esporta come XLS"
+
+#~ msgid "Export as Fixture"
+#~ msgstr "Esporta come Fixture"
+
+#~ msgid "Export as fixture"
+#~ msgstr "Esporta come Fixture"
+
+#~ msgid "Export Delete Tree"
+#~ msgstr "Esporta albero cancellazioni"
+
+#~ msgid "Export delete tree"
+#~ msgstr "Esporta albero cancellazioni"
+
+#~ msgid "Sorry you do not have rights to execute this action"
+#~ msgstr "Spiacenti, non si è autorizzati a eseguire questa azione"
+
+#~ msgid "Updated %s records"
+#~ msgstr "Aggiornati %s record"
 
 #~ msgid "Dependencies"
 #~ msgstr "Dipendenze"
@@ -6741,9 +9770,6 @@ msgstr "Simula report"
 #~ msgid "%(count)s of %(total)s"
 #~ msgstr "%(count)s di %(total)s"
 
-#~ msgid "countries"
-#~ msgstr "Nazioni"
-
 #~ msgid "Normal"
 #~ msgstr "Normale"
 
@@ -6873,9 +9899,6 @@ msgstr "Simula report"
 #~ msgid "edit"
 #~ msgstr "modifica"
 
-#~ msgid "General"
-#~ msgstr "Generale"
-
 #~ msgid "ON"
 #~ msgstr "ON"
 
@@ -6970,9 +9993,6 @@ msgstr "Simula report"
 #~ msgid "Last 30 days visits"
 #~ msgstr "Visite ultimi 30 giorni"
 
-#~ msgid "Visitors"
-#~ msgstr "Visitatori"
-
 #~ msgid "Pageviews"
 #~ msgstr "Visualizzazioni di pagina"
 
@@ -7032,21 +10052,12 @@ msgstr "Simula report"
 #~ msgid "Date/time"
 #~ msgstr "Data/ora"
 
-#~ msgid "User"
-#~ msgstr "Utente"
-
-#~ msgid "Action"
-#~ msgstr "Azioen"
-
 #~ msgid ""
 #~ "This object doesn't have a change history. It probably wasn't added via "
 #~ "this admin site."
 #~ msgstr ""
 #~ "Questo oggetto non ha storico di cambiamenti. Probabilmente non è stato "
 #~ "aggiunto attraverso questo portale."
-
-#~ msgid "Translatable options"
-#~ msgstr "Opzioni traducibili"
 
 #~ msgid "Search..."
 #~ msgstr "Cerca..."
@@ -7104,12 +10115,6 @@ msgstr "Simula report"
 #~ msgid "This importer excpect and will import following fields: "
 #~ msgstr "Questa procedura si aspetta e importerà i seguenti campi:"
 
-#~ msgid "Errors"
-#~ msgstr "Errori"
-
-#~ msgid "Line number"
-#~ msgstr "Numero linea"
-
 #~ msgid "Skipped"
 #~ msgstr "Saltati"
 
@@ -7131,12 +10136,6 @@ msgstr "Simula report"
 #~ msgstr ""
 #~ "Si è sicuri di voler rigenerare i messaggi? Questo sovrascriverà i "
 #~ "cambiamenti."
-
-#~ msgid "Available files"
-#~ msgstr "Files disponibili"
-
-#~ msgid "Translate messages"
-#~ msgstr "Traduci messaggi"
 
 #~ msgid "Update account"
 #~ msgstr "Aggiorna account"
@@ -7296,9 +10295,6 @@ msgstr "Simula report"
 #~ msgid "Volume could not be found"
 #~ msgstr "Il volume non può essere trovato"
 
-#~ msgid "This is not a valid image file"
-#~ msgstr "Questo non è un file immagine valido"
-
 #~ msgid "This file is no longer valid"
 #~ msgstr "Il file non è più valido"
 
@@ -7339,9 +10335,6 @@ msgstr "Simula report"
 
 #~ msgid "Image"
 #~ msgstr "Immagine"
-
-#~ msgid "Name"
-#~ msgstr "Nome"
 
 #~ msgid "Default"
 #~ msgstr "Predefinito"
@@ -7384,6 +10377,7 @@ msgstr "Simula report"
 #~ msgid "Loading messages..."
 #~ msgstr "Caricando messaggi"
 
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 #~ msgid "yawd-translations example project"
 #~ msgstr "Progetto esempio yawd-translations"
 
@@ -7393,7 +10387,10 @@ msgstr "Simula report"
 #~ msgid "Page details"
 #~ msgstr "Dettagli pagina"
 
+<<<<<<< HEAD
 >>>>>>> eeb8b87213be95bece1f2ea4156ce1a91099c4a3
+=======
+>>>>>>> 9859f84... Add new translations (menu, alerts ...)
 #~ msgid "Pages"
 #~ msgstr "Pagine"
 
