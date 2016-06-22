@@ -488,7 +488,7 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
             return ['company', 'operation_type']
         else:
             return []
-            
+
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
             return True
@@ -605,7 +605,8 @@ class ProviderTariffAdmin(admin.ModelAdmin):
 
 
 class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ['provider_tariff',
+    list_display = ['id',
+                    'provider_tariff',
                     'destination',
                     'digits',
                     'cost_rate',
@@ -751,7 +752,7 @@ class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
         return mark_safe('<span class="label label-warning"><i class="icon-thumbs-down"></i> NO</span>')
     get_boolean_display.short_description = _(u'Enabled')
     get_boolean_display.admin_order_field = _(u'enabled')
-    
+
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
             return True
