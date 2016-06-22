@@ -20,13 +20,14 @@ from base_modules import BaseChart, BaseCharts
 from django.utils.translation import ugettext_lazy as _
 from pyfreebill.models import DimCustomerDestination
 
+
 class SalesChart(BaseChart):
     """
 Dashboard module with sales charts.
 
 With default values it is suited best for 2-column dashboard layouts.
 """
-    title = _('Sales stats')
+    title = _(u'Sales stats')
     template = 'admin/pyfreebill/stats/chart.html'
     chart_size = "580x100"
     days = None
@@ -37,5 +38,5 @@ With default values it is suited best for 2-column dashboard layouts.
 
 class SalesCharts(BaseCharts):
     """ Group module with 3 default sales charts """
-    title = _('Sales')
+    title = _(u'Sales')
     chart_model = SalesChart

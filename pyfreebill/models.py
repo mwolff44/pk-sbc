@@ -54,20 +54,22 @@ from pyfreebill.validators import validate_cidr
 # Finance
 from django.core.exceptions import ValidationError
 
+
 def check_vat(value):
     if value != "" and not vatnumber.check_vat(value):
-        raise ValidationError(u"%s is not a valid VAT number" % value)
+        raise ValidationError(_(u"%s is not a valid VAT number") % value)
+
 
 class Company(models.Model):
     """Company model."""
     name = models.CharField(_(u'name'),
                             max_length=200,
                             unique=True)
-    nickname = models.CharField(_('nickname'),
+    nickname = models.CharField(_(u'nickname'),
                                 max_length=50,
                                 blank=True,
                                 null=True)
-    slug = models.SlugField(_('slug'),
+    slug = models.SlugField(_(u'slug'),
                             max_length=50,
                             unique=True)
     about = models.CharField(_(u'about'),
@@ -117,7 +119,7 @@ class Company(models.Model):
                                                 default=False)
     account_blocked_alert_sent = models.BooleanField(_(u"Customer account blocked - low balance - ON"),
                                                      default=False)
-    email_alert = models.EmailField(_('alert email address'),
+    email_alert = models.EmailField(_(u'alert email address'),
                                     blank=True,
                                     null=True)
     customer_balance = models.DecimalField(_(u'customer balance'),
@@ -167,7 +169,7 @@ class Company(models.Model):
             try:
                 vatnumber.check_vies(self.vat_number)
             except Exception, e:
-                raise ValidationError("""Wrong VAT number - validation made throw VIES services. %s""") % e
+                raise ValidationError(_(u"""Wrong VAT number - validation made throw VIES services. %s""")) % e
 
     def save(self, *args, **kwargs):
         if self.vat_number:
@@ -199,41 +201,41 @@ class Company(models.Model):
         html = '<span><a href="/extranet/pyfreebill/companybalancehistory/?company__id__exact={0}" class="btn btn-inverse btn-mini">Balance history <i class="icon-plus-sign"></i></a></span>'
         return format_html(html, (self.id))
     balance_history.allow_tags = True
-    balance_history.short_description = 'balance history'
+    balance_history.short_description = _(u'balance history')
 
 
 class Person(models.Model):
     """Person model."""
-    first_name = models.CharField(_('first name'),
+    first_name = models.CharField(_(u'first name'),
                                   max_length=100)
-    last_name = models.CharField(_('last name'),
+    last_name = models.CharField(_(u'last name'),
                                  max_length=200)
-    middle_name = models.CharField(_('middle name'),
+    middle_name = models.CharField(_(u'middle name'),
                                    max_length=200,
                                    blank=True,
                                    null=True)
-    suffix = models.CharField(_('suffix'),
+    suffix = models.CharField(_(u'suffix'),
                               max_length=50,
                               blank=True,
                               null=True)
-    nickname = models.CharField(_('nickname'),
+    nickname = models.CharField(_(u'nickname'),
                                 max_length=100,
                                 blank=True)
-    slug = models.SlugField(_('slug'),
+    slug = models.SlugField(_(u'slug'),
                             max_length=50,
                             unique=True)
-    title = models.CharField(_('title'),
+    title = models.CharField(_(u'title'),
                              max_length=200,
                              blank=True)
     company = models.ForeignKey(Company,
                                 blank=True,
                                 null=True)
-    about = models.TextField(_('about'),
+    about = models.TextField(_(u'about'),
                              blank=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 blank=True,
                                 null=True,
-                                verbose_name=_('user'))
+                                verbose_name=_(u'user'))
     phone_number = GenericRelation('PhoneNumber')
     email_address = GenericRelation('EmailAddress')
     instant_messenger = GenericRelation('InstantMessenger')
@@ -242,14 +244,14 @@ class Person(models.Model):
                            object_id_field='object_pk')
     date_added = models.DateTimeField(_('date added'),
                                       auto_now_add=True)
-    date_modified = models.DateTimeField(_('date modified'),
+    date_modified = models.DateTimeField(_(u'date modified'),
                                          auto_now=True)
 
     class Meta:
         db_table = 'contacts_people'
         ordering = ('last_name', 'first_name')
-        verbose_name = _('person')
-        verbose_name_plural = _('people')
+        verbose_name = _(u'person')
+        verbose_name_plural = _(u'people')
 
     def __unicode__(self):
         return self.fullname
@@ -261,43 +263,43 @@ class Person(models.Model):
 
 class Group(models.Model):
     """Group model."""
-    name = models.CharField(_('name'),
+    name = models.CharField(_(u'name'),
                             max_length=200,
                             unique=True)
-    slug = models.SlugField(_('slug'),
+    slug = models.SlugField(_(u'slug'),
                             max_length=50,
                             unique=True)
-    about = models.TextField(_('about'),
+    about = models.TextField(_(u'about'),
                              blank=True)
     people = models.ManyToManyField(Person,
-                                    verbose_name='people',
+                                    verbose_name=_(u'people'),
                                     blank=True,
                                     null=True)
     companies = models.ManyToManyField(Company,
-                                       verbose_name='companies',
+                                       verbose_name=_(u'companies'),
                                        blank=True,
                                        null=True)
-    date_added = models.DateTimeField(_('date added'),
+    date_added = models.DateTimeField(_(u'date added'),
                                       auto_now_add=True)
-    date_modified = models.DateTimeField(_('date modified'),
+    date_modified = models.DateTimeField(_(u'date modified'),
                                          auto_now=True)
 
     class Meta:
         db_table = 'contacts_groups'
         ordering = ('name',)
-        verbose_name = _('group')
-        verbose_name_plural = _('groups')
+        verbose_name = _(u'group')
+        verbose_name_plural = _(u'groups')
 
     def __unicode__(self):
         return u"%s" % self.name
 
 PHONE_LOCATION_CHOICES = (
-    ('work', _('Work')),
-    ('mobile', _('Mobile')),
-    ('fax', _('Fax')),
-    ('pager', _('Pager')),
-    ('home', _('Home')),
-    ('other', _('Other')),
+    ('work', _(u'Work')),
+    ('mobile', _(u'Mobile')),
+    ('fax', _(u'Fax')),
+    ('pager', _(u'Pager')),
+    ('home', _(u'Home')),
+    ('other', _(u'Other')),
 )
 
 
@@ -307,15 +309,15 @@ class PhoneNumber(models.Model):
                                      limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
-    phone_number = models.CharField(_('number'),
+    phone_number = models.CharField(_(u'number'),
                                     max_length=50)
-    location = models.CharField(_('location'),
+    location = models.CharField(_(u'location'),
                                 max_length=6,
                                 choices=PHONE_LOCATION_CHOICES,
                                 default='work')
-    date_added = models.DateTimeField(_('date added'),
+    date_added = models.DateTimeField(_(u'date added'),
                                       auto_now_add=True)
-    date_modified = models.DateTimeField(_('date modified'),
+    date_modified = models.DateTimeField(_(u'date modified'),
                                          auto_now=True)
 
     def __unicode__(self):
@@ -323,16 +325,16 @@ class PhoneNumber(models.Model):
 
     class Meta:
         db_table = 'contacts_phone_numbers'
-        verbose_name = 'phone number'
-        verbose_name_plural = 'phone numbers'
+        verbose_name = _(u'phone number')
+        verbose_name_plural = _(u'phone numbers')
 
 LOCATION_CHOICES = (
-    ('work', _('Work')),
-    ('home', _('Home')),
-    ('mobile', _('Mobile')),
-    ('fax', _('Fax')),
-    ('person', _('Personal')),
-    ('other', _('Other'))
+    ('work', _(u'Work')),
+    ('home', _(u'Home')),
+    ('mobile', _(u'Mobile')),
+    ('fax', _(u'Fax')),
+    ('person', _(u'Personal')),
+    ('other', _(u'Other'))
 )
 
 
@@ -341,14 +343,14 @@ class EmailAddress(models.Model):
                                      limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
-    email_address = models.EmailField(_('email address'))
-    location = models.CharField(_('location'),
+    email_address = models.EmailField(_(u'email address'))
+    location = models.CharField(_(u'location'),
                                 max_length=6,
                                 choices=LOCATION_CHOICES,
                                 default='work')
-    date_added = models.DateTimeField(_('date added'),
+    date_added = models.DateTimeField(_(u'date added'),
                                       auto_now_add=True)
-    date_modified = models.DateTimeField(_('date modified'),
+    date_modified = models.DateTimeField(_(u'date modified'),
                                          auto_now=True)
 
     def __unicode__(self):
@@ -356,8 +358,8 @@ class EmailAddress(models.Model):
 
     class Meta:
         db_table = 'contacts_email_addresses'
-        verbose_name = 'email address'
-        verbose_name_plural = 'email addresses'
+        verbose_name = _(u'email address')
+        verbose_name_plural = _(u'email addresses')
 
 IM_SERVICE_CHOICES = (
     ('aim', 'AIM'),
@@ -371,7 +373,7 @@ IM_SERVICE_CHOICES = (
     ('gadu-gadu', 'Gadu-Gadu'),
     ('google-talk', 'Google Talk'),
     ('twitter', 'Twitter'),
-    ('other', _('Other'))
+    ('other', _(u'Other'))
 )
 
 
@@ -380,19 +382,19 @@ class InstantMessenger(models.Model):
                                      limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
-    im_account = models.CharField(_('im account'),
+    im_account = models.CharField(_(u'im account'),
                                   max_length=100)
-    location = models.CharField(_('location'),
+    location = models.CharField(_(u'location'),
                                 max_length=6,
                                 choices=LOCATION_CHOICES,
                                 default='work')
-    service = models.CharField(_('service'),
+    service = models.CharField(_(u'service'),
                                max_length=11,
                                choices=IM_SERVICE_CHOICES,
                                default='jabber')
-    date_added = models.DateTimeField(_('date added'),
+    date_added = models.DateTimeField(_(u'date added'),
                                       auto_now_add=True)
-    date_modified = models.DateTimeField(_('date modified'),
+    date_modified = models.DateTimeField(_(u'date modified'),
                                          auto_now=True)
 
     def __unicode__(self):
@@ -400,8 +402,8 @@ class InstantMessenger(models.Model):
 
     class Meta:
         db_table = 'contacts_instant_messengers'
-        verbose_name = 'instant messenger'
-        verbose_name_plural = 'instant messengers'
+        verbose_name = _(u'instant messenger')
+        verbose_name_plural = _(u'instant messengers')
 
 
 class WebSite(models.Model):
@@ -409,14 +411,14 @@ class WebSite(models.Model):
                                      limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
-    url = models.URLField(_('URL'))
-    location = models.CharField(_('location'),
+    url = models.URLField(_(u'URL'))
+    location = models.CharField(_(u'location'),
                                 max_length=6,
                                 choices=LOCATION_CHOICES,
                                 default='work')
-    date_added = models.DateTimeField(_('date added'),
+    date_added = models.DateTimeField(_(u'date added'),
                                       auto_now_add=True)
-    date_modified = models.DateTimeField(_('date modified'),
+    date_modified = models.DateTimeField(_(u'date modified'),
                                          auto_now=True)
 
     def __unicode__(self):
@@ -424,8 +426,8 @@ class WebSite(models.Model):
 
     class Meta:
         db_table = 'contacts_web_sites'
-        verbose_name = _('web site')
-        verbose_name_plural = _('web sites')
+        verbose_name = _(u'web site')
+        verbose_name_plural = _(u'web sites')
 
     def get_absolute_url(self):
         return u"%s?web_site=%s" % (self.content_object.get_absolute_url(), self.pk)
@@ -436,25 +438,25 @@ class StreetAddress(models.Model):
                                      limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
-    street = models.TextField(_('street'),
+    street = models.TextField(_(u'street'),
                               blank=True)
-    city = models.CharField(_('city'),
+    city = models.CharField(_(u'city'),
                             max_length=200,
                             blank=True)
-    province = models.CharField(_('province'),
+    province = models.CharField(_(u'province'),
                                 max_length=200,
                                 blank=True)
-    postal_code = models.CharField(_('postal code'),
+    postal_code = models.CharField(_(u'postal code'),
                                    max_length=10,
                                    blank=True)
-    country = CountryField(_('country'))
-    location = models.CharField(_('location'),
+    country = CountryField(_(u'country'))
+    location = models.CharField(_(u'location'),
                                 max_length=6,
                                 choices=LOCATION_CHOICES,
                                 default='work')
-    date_added = models.DateTimeField(_('date added'),
+    date_added = models.DateTimeField(_(u'date added'),
                                       auto_now_add=True)
-    date_modified = models.DateTimeField(_('date modified'),
+    date_modified = models.DateTimeField(_(u'date modified'),
                                          auto_now=True)
 
     def __unicode__(self):
@@ -462,8 +464,8 @@ class StreetAddress(models.Model):
 
     class Meta:
         db_table = 'contacts_street_addresses'
-        verbose_name = _('street address')
-        verbose_name_plural = _('street addresses')
+        verbose_name = _(u'street address')
+        verbose_name_plural = _(u'street addresses')
 
 
 class SpecialDate(models.Model):
@@ -471,14 +473,14 @@ class SpecialDate(models.Model):
                                      limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
-    occasion = models.TextField(_('occasion'),
+    occasion = models.TextField(_(u'occasion'),
                                 max_length=200)
-    date = models.DateField(_('date'))
-    every_year = models.BooleanField(_('every year'),
+    date = models.DateField(_(u'date'))
+    every_year = models.BooleanField(_(u'every year'),
                                      default=True)
-    date_added = models.DateTimeField(_('date added'),
+    date_added = models.DateTimeField(_(u'date added'),
                                       auto_now_add=True)
-    date_modified = models.DateTimeField(_('date modified'),
+    date_modified = models.DateTimeField(_(u'date modified'),
                                          auto_now=True)
 
     def __unicode__(self):
@@ -486,8 +488,8 @@ class SpecialDate(models.Model):
 
     class Meta:
         db_table = 'contacts_special_dates'
-        verbose_name = _('special date')
-        verbose_name_plural = _('special dates')
+        verbose_name = _(u'special date')
+        verbose_name_plural = _(u'special dates')
 
 
 class CompanyBalanceHistory(models.Model):
@@ -699,23 +701,23 @@ class CustomerDirectory(models.Model):
     def clean(self):
         if (self.registration and
                 (self.password is None or self.password == '')):
-            raise ValidationError("""You have to specify a password if you
-                                  want to allow registration""")
+            raise ValidationError(_(u"""You have to specify a password if you
+                                  want to allow registration"""))
         if (self.registration is False and
                 (self.sip_ip is None or self.sip_ip == '')):
-            raise ValidationError("""You must specify a SIP IP CIDR if you do
-                                  not want to use registration""")
+            raise ValidationError(_(u"""You must specify a SIP IP CIDR if you do
+                                  not want to use registration"""))
         if self.registration and self.password:
             # in future use https://github.com/dstufft/django-passwords ?
             MIN_LENGTH = 8
             if len(self.password) < MIN_LENGTH:
-                raise ValidationError("""The password must be at least %d
-                                      characters long.""" % MIN_LENGTH)
+                raise ValidationError(_(u"""The password must be at least %d
+                                      characters long.""") % MIN_LENGTH)
             first_isalpha = self.password[0].isalpha()
             if all(c.isalpha() == first_isalpha for c in self.password):
-                raise ValidationError("""The new password must contain
+                raise ValidationError(_(u"""The new password must contain
                                             at least one letter and at least
-                                            one digit""")
+                                            one digit"""))
         if self.sip_ip:
             m = re.search('/32$', self.sip_ip)
             if m:
@@ -752,7 +754,7 @@ class CalleridPrefixList(models.Model):
         html = '<span><a href="/extranet/pyfreebill/calleridprefix/?calleridprefixlist__id__exact={0}" class="btn btn-inverse btn-mini">Prefix <i class="icon-plus-sign"></i></a></span>'
         return format_html(html, (self.id))
     prefix.allow_tags = True
-    prefix.short_description = 'prefix'
+    prefix.short_description = _(u'prefix')
 
 
 class CalleridPrefix(models.Model):
@@ -857,7 +859,7 @@ class ProviderTariff(models.Model):
         html = '<span><a href="/extranet/pyfreebill/providerrates/?provider_tariff__id__exact={0}" class="btn btn-inverse btn-mini">Rates <i class="icon-plus-sign"></i></a></span>'
         return format_html(html, (self.id))
     rates.allow_tags = True
-    rates.short_description = 'rates'
+    rates.short_description = _(u'rates')
 
 
 class ProviderRates(models.Model):
@@ -965,7 +967,7 @@ class LCRProviders(models.Model):
         html = '<span><a href="/extranet/pyfreebill/providerrates/?provider_tariff__id__exact={0}" class="btn btn-inverse btn-mini">Rates <i class="icon-plus-sign"></i></a></span>'
         return format_html(html, (self.provider_tariff))
     rates.allow_tags = True
-    rates.short_description = 'rates'
+    rates.short_description = _(u'rates')
 
 
 # Ratecard
@@ -1015,13 +1017,13 @@ class RateCard(models.Model):
         html = '<span><a href="/extranet/pyfreebill/customerrates/?ratecard__id__exact={0}" class="btn btn-inverse btn-mini">Rates <i class="icon-plus-sign"></i></a></span>'
         return format_html(html, (self.id))
     rates.allow_tags = True
-    rates.short_description = 'Rates'
+    rates.short_description = _(u'Rates')
 
     def lcr(self):
         html = '<span><a href="/extranet/pyfreebill/lcrgroup/{0}/" class="btn btn-inverse btn-mini">LCR <i class="icon-plus-sign"></i></a></span>'
         return format_html(html, (self.lcrgroup.pk))
     lcr.allow_tags = True
-    lcr.short_description = 'lcr'
+    lcr.short_description = _(u'lcr')
 
 
 class CustomerRates(models.Model):

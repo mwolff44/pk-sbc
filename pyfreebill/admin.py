@@ -45,7 +45,7 @@ from pyfreebill.forms import CustomerRateCardsAdminForm, CompanyAdminForm, Custo
 from pyfreebill.resources import CDRResourceExtra, CalleridPrefixResource
 
 
-APP_LABEL = _('CDR report')
+APP_LABEL = _(u'CDR report')
 
 DEFAULT_FORMATS = (base_formats.CSV, )
 
@@ -56,8 +56,8 @@ def sofiaupdate(modeladmin, request, queryset):
         t = loader.get_template('xml/sofia.conf.xml')
     except IOError:
         messages.error(request,
-                       """sofia config xml file update failed. Can not load
-                       template file !""")
+                       _(u"""sofia config xml file update failed. Can not load
+                       template file !"""))
     sipprofiles = SipProfile.objects.all()
     accounts = Company.objects.filter(supplier_enabled=True)
     c = Context({"sipprofiles": sipprofiles, "accounts": accounts})
@@ -69,16 +69,16 @@ def sofiaupdate(modeladmin, request, queryset):
             f.close()
             try:
                 fs = esl.getReloadGateway()
-                messages.success(request, "FS successfully reload")
+                messages.success(request, _(u"FS successfully reload"))
             except IOError:
-                messages.error(request, """customer sip config xml file update
-                    failed. FS ACL update failed ! Try manually -- %s""" % fs)
+                messages.error(request, _(u"""customer sip config xml file update
+                    failed. FS ACL update failed ! Try manually -- %s""" % fs))
         finally:
             #f.close()
-            messages.success(request, "sofia config xml file update success")
+            messages.success(request, _(u"sofia config xml file update success"))
     except IOError:
-        messages.error(request, """sofia config xml file update failed. Can
-            not create file !""")
+        messages.error(request, _(u"""sofia config xml file update failed. Can
+            not create file !"""))
 sofiaupdate.short_description = _(u"update sofia config xml file")
 
 
@@ -87,8 +87,8 @@ def directoryupdate(modeladmin, request, queryset):
     try:
         t = loader.get_template('xml/directory.conf.xml')
     except IOError:
-        messages.error(request, """customer sip config xml file update failed.
-            Can not load template file !""")
+        messages.error(request, _(u"""customer sip config xml file update failed.
+            Can not load template file !"""))
     customerdirectorys = CustomerDirectory.objects.filter(company__customer_enabled__exact=True, enabled=True)
     accounts = Company.objects.filter(customer_enabled=True)
     c = Context({"customerdirectorys": customerdirectorys,
@@ -100,17 +100,17 @@ def directoryupdate(modeladmin, request, queryset):
             f.close()
             try:
                 fs = esl.getReloadACL()
-                messages.success(request, "FS successfully reload")
+                messages.success(request, _(u"FS successfully reload"))
             except IOError:
-                messages.error(request, """customer sip config xml file update
-                    failed. FS ACL update failed ! Try manually - %s""" % fs)
+                messages.error(request, _(u"""customer sip config xml file update
+                    failed. FS ACL update failed ! Try manually - %s""" % fs))
         finally:
             #f.close()
-            messages.success(request, """customer sip config xml file update
-                success""")
+            messages.success(request, _(u"""customer sip config xml file update
+                success"""))
     except IOError:
-        messages.error(request, """customer sip config xml file update failed.
-            Can not create file !""")
+        messages.error(request, _(u"""customer sip config xml file update failed.
+            Can not create file !"""))
 directoryupdate.short_description = _(u"update customer sip config xml file")
 
 
@@ -119,8 +119,8 @@ def aclupdate(modeladmin, request, queryset):
     try:
         t = loader.get_template('xml/acl.conf.xml')
     except IOError:
-        messages.error(request, """ACL config xml file update failed. Can
-            not load template file !""")
+        messages.error(request, _(u"""ACL config xml file update failed. Can
+            not load template file !"""))
     acllists = AclLists.objects.all()
     aclnodes = AclNodes.objects.all()
     c = Context({"acllists": acllists, "aclnodes": aclnodes})
@@ -132,15 +132,15 @@ def aclupdate(modeladmin, request, queryset):
             f.close()
             try:
                 fs = esl.getReloadACL()
-                messages.success(request, "FS successfully reload")
+                messages.success(request, _(u"FS successfully reload"))
             except IOError:
-                messages.error(request, """ACL config xml file update failed.
-                    FS ACL update failed ! Try manually--- %s""" % fs)
+                messages.error(request, _(u"""ACL config xml file update failed.
+                    FS ACL update failed ! Try manually--- %s""" % fs))
         finally:
-            messages.success(request, "ACL config xml file update success")
+            messages.success(request, _(u"ACL config xml file update success"))
     except IOError:
-        messages.error(request, """ACL xml file update failed. Can not
-            create file !""")
+        messages.error(request, _(u"""ACL xml file update failed. Can not
+            create file !"""))
 aclupdate.short_description = _(u"update ACL config xml file")
 
 admin.site.add_action(directoryupdate, _(u"""generate customer sip
@@ -198,7 +198,7 @@ class CommentInline(generic.GenericStackedInline):
 
 class CustomerRateCardsInline(admin.StackedInline):
     model = CustomerRateCards
-    description = 'select the Ratecards affected to customer account. Order is important !'
+    description = _(u'select the Ratecards affected to customer account. Order is important !')
     form = CustomerRateCardsAdminForm
     max_num = 3
     extra = 0
@@ -227,35 +227,35 @@ class CompanyAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     readonly_fields = ('customer_balance', 'supplier_balance', 'vat_number_validated')
     fieldsets = (
-        ('General', {
+        (_(u'General'), {
             'fields': (('name', 'nickname'),
                        ('slug', 'about'),
                        'account_number',
                        ('vat', 'vat_number'),
                        'vat_number_validated',
                        ('swift_bic', 'iban')),
-            'description': 'General company informations'
+            'description': _(u'General company informations')
         }),
-        ('Customer settings', {
+        (_(u'Customer settings'), {
             'fields': ('customer_enabled',
                        ('max_calls', 'calls_per_second'),
                        'billing_cycle',
                        ('prepaid', 'credit_limit'),
                        ('customer_balance', 'cb_currency')),
         }),
-        ('Customer alerts', {
+        (_(u'Customer alerts'), {
             'fields': ('low_credit_alert',
                        'email_alert',
                        'low_credit_alert_sent',
                        'account_blocked_alert_sent'),
             'classes': ('collapsed',),
-            'description': 'All the customer alert parameters'
+            'description': _(u'All the customer alert parameters')
         }),
-        ('Provider settings', {
+        (_(u'Provider settings'), {
             'fields': ('supplier_enabled',
                        'supplier_balance'),
             'classes': ('collapsed',),
-            'description': 'If this company is your provider, this is right place to manage its parameters'
+            'description': _(u'If this company is your provider, this is right place to manage its parameters')
         }),
     )
 
@@ -263,36 +263,36 @@ class CompanyAdmin(admin.ModelAdmin):
         if obj.customer_enabled:
             return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
-    get_customer_enabled_display.short_description = 'Customer'
-    get_customer_enabled_display.admin_order_field = 'customer_enabled'
+    get_customer_enabled_display.short_description = _(u'Customer')
+    get_customer_enabled_display.admin_order_field = _(u'customer_enabled')
 
     def get_supplier_enabled_display(self, obj):
         if obj.supplier_enabled:
             return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
-    get_supplier_enabled_display.short_description = 'Provider'
-    get_supplier_enabled_display.admin_order_field = 'provider_enabled'
-    
+    get_supplier_enabled_display.short_description = _(u'Provider')
+    get_supplier_enabled_display.admin_order_field = _(u'provider_enabled')
+
     def get_prepaid_display(self, obj):
         if obj.prepaid:
             return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
-    get_prepaid_display.short_description = 'Prepaid'
-    get_prepaid_display.admin_order_field = 'prepaid'
-    
+    get_prepaid_display.short_description = _(u'Prepaid')
+    get_prepaid_display.admin_order_field = _(u'prepaid')
+
     def get_vat_display(self, obj):
         if obj.vat:
             return mark_safe('<span class="label label-info"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
-    get_vat_display.short_description = 'VAT'
-    get_vat_display.admin_order_field = 'vat'
+    get_vat_display.short_description = _(u'VAT')
+    get_vat_display.admin_order_field = _(u'vat')
 
     def get_vat_number_validated_display(self, obj):
         if obj.vat_number_validated:
             return mark_safe('<span class="label label-info"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
-    get_vat_number_validated_display.short_description = 'VIES'
-    get_vat_number_validated_display.admin_order_field = 'vies'
+    get_vat_number_validated_display.short_description = _(u'VIES')
+    get_vat_number_validated_display.admin_order_field = _(u'vies')
 
     def has_add_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -449,7 +449,7 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if change:
-            messages.info(request, "No need to update balance")
+            messages.info(request, _(u"No need to update balance"))
         else:
             company = form.cleaned_data['company']
             amount_debited = form.cleaned_data['amount_debited']
@@ -466,19 +466,19 @@ class CompanyBalanceHistoryAdmin(admin.ModelAdmin):
                 obj.supplier_balance = balance.supplier_balance
             else:
                 pass
-            messages.success(request, "balance updated")
+            messages.success(request, _(u"balance updated"))
         obj.save()
 
     fieldsets = (
-        ('General', {
+        (_(u'General'), {
             'fields': ('company',
                        'operation_type',
                        'reference',
                        'description')}),
-        ('Amount', {
+        (_(u'Amount'), {
             'fields': ('amount_debited',
                        'amount_refund')}),
-        ('Balances', {
+        (_(u'Balances'), {
             'fields': ('customer_balance',
                        'supplier_balance')}),
     )
@@ -594,8 +594,8 @@ class ProviderTariffAdmin(admin.ModelAdmin):
         if obj.enabled:
             return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-warning"><i class="icon-thumbs-down"></i> NO</span>')
-    get_boolean_display.short_description = 'Enabled'
-    get_boolean_display.admin_order_field = 'enabled'
+    get_boolean_display.short_description = _(u'Enabled')
+    get_boolean_display.admin_order_field = _(u'enabled')
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -628,13 +628,13 @@ class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
     actions = ['make_enabled',
                'make_disabled']
     form = ProviderRatesAdminForm
-    
+
     def get_boolean_display(self, obj):
         if obj.enabled:
             return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-warning"><i class="icon-thumbs-down"></i> NO</span>')
-    get_boolean_display.short_description = 'Enabled'
-    get_boolean_display.admin_order_field = 'enabled'
+    get_boolean_display.short_description = _(u'Enabled')
+    get_boolean_display.admin_order_field = _(u'enabled')
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -645,19 +645,19 @@ class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
     def make_enabled(self, request, queryset):
         rows_updated = queryset.update(enabled=True)
         if rows_updated == 1:
-            message_bit = "1 item was"
+            message_bit = _(u"1 item was")
         else:
-            message_bit = "%s items were" % rows_updated
-        self.message_user(request, "%s successfully marked as enabled." % message_bit)
+            message_bit = _(u"%s items were") % rows_updated
+        self.message_user(request, _(u"%s successfully marked as enabled.") % message_bit)
     make_enabled.short_description = _(u"mark selected items as enabled")
 
     def make_disabled(self, request, queryset):
         rows_updated = queryset.update(enabled=False)
         if rows_updated == 1:
-            message_bit = "1 item was"
+            message_bit = _(u"1 item was")
         else:
-            message_bit = "%s items were" % rows_updated
-        self.message_user(request, "%s successfully marked as disabled." % message_bit)
+            message_bit = _(u"%s items were") % rows_updated
+        self.message_user(request, _(u"%s successfully marked as disabled.") % message_bit)
     make_disabled.short_description = _(u"mark selected items as disabled")
 
     def get_import_formats(self):
@@ -749,8 +749,8 @@ class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
         if obj.enabled:
             return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-warning"><i class="icon-thumbs-down"></i> NO</span>')
-    get_boolean_display.short_description = 'Enabled'
-    get_boolean_display.admin_order_field = 'enabled'
+    get_boolean_display.short_description = _(u'Enabled')
+    get_boolean_display.admin_order_field = _(u'enabled')
     
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -761,21 +761,21 @@ class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
     def make_enabled(self, request, queryset):
         rows_updated = queryset.update(enabled=True)
         if rows_updated == 1:
-            message_bit = "1 item was"
+            message_bit = _(u"1 item was")
         else:
-            message_bit = "%s items were" % rows_updated
+            message_bit = _(u"%s items were") % rows_updated
         self.message_user(request,
-                          "%s successfully marked as enabled." % message_bit)
+                          _(u"%s successfully marked as enabled.") % message_bit)
     make_enabled.short_description = _(u"mark selected items as enabled")
 
     def make_disabled(self, request, queryset):
         rows_updated = queryset.update(enabled=False)
         if rows_updated == 1:
-            message_bit = "1 item was"
+            message_bit = _(u"1 item was")
         else:
-            message_bit = "%s items were" % rows_updated
+            message_bit = _(u"%s items were") % rows_updated
         self.message_user(request,
-                          "%s successfully marked as disabled." % message_bit)
+                          _(u"%s successfully marked as disabled.") % message_bit)
     make_disabled.short_description = _(u"mark selected items as disabled")
 
     def get_import_formats(self):
@@ -815,8 +815,8 @@ class RateCardAdmin(admin.ModelAdmin):
         if obj.enabled:
             return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-warning"><i class="icon-thumbs-down"></i> NO</span>')
-    get_boolean_display.short_description = 'Enabled'
-    get_boolean_display.admin_order_field = 'enabled'
+    get_boolean_display.short_description = _(u'Enabled')
+    get_boolean_display.admin_order_field = _(u'enabled')
 
 
 class CustomerRateCardsAdmin(SortableModelAdmin):
@@ -860,7 +860,7 @@ class CustomerDirectoryAdmin(admin.ModelAdmin):
     save_on_top = True
     affix = True
     fieldsets = (
-        ('General', {
+        (_(u'General'), {
             'fields': (('company',
                         'enabled'),
                        ('name',
@@ -868,35 +868,35 @@ class CustomerDirectoryAdmin(admin.ModelAdmin):
                        'max_calls',
                        'calls_per_second',
                        'codecs'),
-            'description': 'General sip account informations'
+            'description': _(u'General sip account informations')
         }),
-        ('Registration settings', {
+        (_(u'Registration settings'), {
             'fields': (('password',
                         'multiple_registrations'),
                        'log_auth_failures'),
             'classes': ('collapsed',),
-            'description': 'If registration, you must set a password'
+            'description': _(u'If registration, you must set a password')
         }),
-        ('IP Settings', {
+        (_(u'IP Settings'), {
             'fields': (('sip_ip',
                         'sip_port'),
                        'rtp_ip'),
             'classes': ('collapsed',),
-            'description': 'If no registration, SIP IP CIDR is needed'
+            'description': _(u'If no registration, SIP IP CIDR is needed')
         }),
-        ('Description', {
+        (_(u'Description'), {
             'fields': ('description',),
             'classes': ('collapsed',),
-            'description': 'description informations'
+            'description': _(u'description informations')
         }),
-        ('Advanced settings', {
+        (_(u'Advanced settings'), {
             'fields': (('outbound_caller_id_name',
                         'outbound_caller_id_number'),
                        'ignore_early_media',
                        'fake_ring',
                        'cli_debug'),
             'classes': ('collapsed',),
-            'description': 'Advanced parameters'
+            'description': _(u'Advanced parameters')
         }),
     )
 
@@ -904,30 +904,30 @@ class CustomerDirectoryAdmin(admin.ModelAdmin):
         if obj.registration:
             return mark_safe('<span class="label label-warning"><i class="icon-ok-sign"></i> Registration</span>')
         return mark_safe('<span class="label label-info"><i class="icon-minus-sign"></i> IP Auth</span>')
-    get_registration_display.short_description = 'Registration'
-    get_registration_display.admin_order_field = 'registration'
+    get_registration_display.short_description = _(u'Registration')
+    get_registration_display.admin_order_field = _(u'registration')
 
     def get_enabled_display(self, obj):
         if obj.enabled:
             return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
-    get_enabled_display.short_description = 'Enabled'
-    get_enabled_display.admin_order_field = 'enabled'
+    get_enabled_display.short_description = _(u'Enabled')
+    get_enabled_display.admin_order_field = _(u'enabled')
 
     def get_fake_ring_display(self, obj):
         if obj.fake_ring:
             return mark_safe('<span class="label label-info"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
-    get_fake_ring_display.short_description = 'Fake ring'
-    get_fake_ring_display.admin_order_field = 'fake_ring'
-    
+    get_fake_ring_display.short_description = _(u'Fake ring')
+    get_fake_ring_display.admin_order_field = _(u'fake_ring')
+
     def get_cli_debug_display(self, obj):
         if obj.cli_debug:
             return mark_safe('<span class="label label-warning"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
-    get_cli_debug_display.short_description = 'cli_debug'
-    get_cli_debug_display.admin_order_field = 'cli_debug'
-    
+    get_cli_debug_display.short_description = _(u'cli_debug')
+    get_cli_debug_display.admin_order_field = _(u'cli_debug')
+
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
             return True
@@ -973,20 +973,20 @@ class SofiaGatewayAdmin(admin.ModelAdmin):
     search_fields = ['^company__name',
                      'proxy']
     actions = [sofiaupdate]
-    
+
     def get_enabled_display(self, obj):
         if obj.enabled:
             return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
         return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
-    get_enabled_display.short_description = 'Enabled'
-    get_enabled_display.admin_order_field = 'enabled'
+    get_enabled_display.short_description = _(u'Enabled')
+    get_enabled_display.admin_order_field = _(u'enabled')
 
     def get_register_display(self, obj):
         if obj.register:
             return mark_safe('<span class="label label-info"><i class="icon-thumbs-up"></i> ON</span>')
         return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> OFF</span>')
-    get_register_display.short_description = 'Register'
-    get_register_display.admin_order_field = 'register'
+    get_register_display.short_description = _(u'Register')
+    get_register_display.admin_order_field = _(u'register')
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
@@ -1011,63 +1011,63 @@ class SipProfileAdmin(admin.ModelAdmin):
     search_fields = ['^name', ]
     affix = True
     fieldsets = (
-        ('Basic settings', {
+        (_(u'Basic settings'), {
             'fields': (('name', 'sip_port'),
                        ('sip_ip', 'rtp_ip'),
                        ('ext_sip_ip', 'ext_rtp_ip')),
-            'description': 'General sip profile informations'
+            'description': _(u'General sip profile informations')
         }),
         # ('Media Related Options', {
         #     'fields': (''),
         #     'classes': ('collapsed',),
         #     'description': 'Manage Media Related Options'
         # }),
-        ('Codecs Related Options', {
+        (_(u'Codecs Related Options'), {
             'fields': ('disable_transcoding',
                        ('inbound_codec_prefs', 'outbound_codec_prefs')),
             'classes': ('collapsed',),
-            'description': 'Manage Codecs Related Options'
+            'description': _(u'Manage Codecs Related Options')
         }),
-        ('NAT', {
+        (_(u'NAT'), {
             'fields': ('aggressive_nat_detection',
                        'NDLB_rec_in_nat_reg_c',
                        'NDLB_force_rport',
                        'NDLB_broken_auth_hash'),
             'classes': ('collapsed',),
-            'description': 'NAT management'
+            'description': _(u'NAT management')
         }),
-        ('DTMF Related options', {
+        (_(u'DTMF Related options'), {
             'fields': ('pass_rfc2833',),
             'classes': ('collapsed',),
-            'description': 'DTMF management'
+            'description': _(u'DTMF management')
         }),
-        ('SIP Related Options', {
+        (_(u'SIP Related Options'), {
             'fields': (('enable_timer', 'session_timeout')),
             'classes': ('collapsed',),
-            'description': 'Manage SIP Related Options'
+            'description': _(u'Manage SIP Related Options')
         }),
-        ('RTP Related Options', {
+        (_(u'RTP Related Options'), {
             'fields': ('rtp_rewrite_timestamps',),
             'classes': ('collapsed',),
-            'description': 'Manage RTP Related Options'
+            'description': _(u'Manage RTP Related Options')
         }),
-        ('Authentification Authorization', {
+        (_(u'Authentification Authorization'), {
             'fields': ('apply_inbound_acl',
                        'auth_calls',
                        'log_auth_failures'),
             'classes': ('collapsed',),
-            'description': 'Authentification Authorization management'
+            'description': _(u'Authentification Authorization management')
         }),
-        ('Registration', {
+        (_(u'Registration'), {
             'fields': ('disable_register',
                        'accept_blind_reg'),
             'classes': ('collapsed',),
-            'description': 'Registration settings management'
+            'description': _(u'Registration settings management')
         }),
-        ('Others', {
+        (_(u'Others'), {
             'fields': ('user_agent',),
             'classes': ('collapsed',),
-            'description': 'Others parameters'
+            'description': _(u'Others parameters')
         }),
     )
 
@@ -1177,7 +1177,7 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
     change_list_template = 'admin/pyfreebill/cdr/change_list.html'
     resource_class = CDRResourceExtra
     fieldsets = (
-        ('General', {
+        (_(u'General'), {
             'fields': ('customer',
                        'start_stamp',
                        'destination_number',
@@ -1185,25 +1185,25 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
                        ('sell_destination', 'cost_destination'),
                        'switchname')
         }),
-        ('Advanced date / duration infos', {
+        (_(u'Advanced date / duration infos'), {
             'classes': ('collapse',),
             'fields': (('answered_stamp',
                         'end_stamp',
                         'duration',
                         'effectiv_duration'))
         }),
-        ('Financial infos', {
+        (_(u'Financial infos'), {
             'fields': (('total_cost', 'cost_rate'),
                        ('total_sell', 'rate'),
                        ('init_block', 'block_min_duration'))
         }),
-        ('LCR infos', {
+        (_(u'LCR infos'), {
             'classes': ('collapse',),
             'fields': ('prefix',
                        ('ratecard_id', 'lcr_group_id'),
                        ('lcr_carrier_id', 'gateway'))
         }),
-        ('Call detailed infos', {
+        (_(u'Call detailed infos'), {
             'classes': ('collapse',),
             'fields': ('caller_id_number',
                        ('hangup_cause',
@@ -1489,8 +1489,8 @@ class LogEntryAdmin(admin.ModelAdmin):
             )
         return link
     object_link.allow_tags = True
-    object_link.admin_order_field = 'object_repr'
-    object_link.short_description = u'object'
+    object_link.admin_order_field = _(u'object_repr')
+    object_link.short_description = _(u'object')
 
     def action_description(self, obj):
         action_names = {
@@ -1499,7 +1499,7 @@ class LogEntryAdmin(admin.ModelAdmin):
             CHANGE: 'Change',
         }
         return action_names[obj.action_flag]
-    action_description.short_description = 'Action'
+    action_description.short_description = _(u'Action')
 
 #    admin.site.disable_action('delete_selected')
 

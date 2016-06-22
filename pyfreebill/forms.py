@@ -23,6 +23,7 @@ from datetimewidget.widgets import DateTimeWidget
 
 from pyfreebill.models import Company, RateCard, LCRGroup
 
+
 class CDRSearchForm(forms.Form):
     """VoIP call Report Search Parameters"""
     dateTimeOptions = {
@@ -32,22 +33,22 @@ class CDRSearchForm(forms.Form):
         'usel10n': 'true',
         'usei18n': 'true'
     }
-    from_date = forms.CharField(label=_('From'), required=False, max_length=20,
+    from_date = forms.CharField(label=_(u'From'), required=False, max_length=20,
         widget=DateTimeWidget(options=dateTimeOptions))
-    to_date = forms.CharField(label=_('To'), required=False, max_length=20,
+    to_date = forms.CharField(label=_(u'To'), required=False, max_length=20,
         widget=DateTimeWidget(options=dateTimeOptions))
-    customer_id = forms.ChoiceField(label=_('Customer'), required=False)
-    provider_id = forms.ChoiceField(label=_('Provider'), required=False)
-    ratecard_id = forms.ChoiceField(label=_('Customer Ratecard'), required=False)
-    lcr_id = forms.ChoiceField(label=_('LCR Group'), required=False)
-    dest_num = forms.IntegerField(label=_('Destination Number'), required=False,
-        help_text=_('Enter the full number or the first part'))
+    customer_id = forms.ChoiceField(label=_(u'Customer'), required=False)
+    provider_id = forms.ChoiceField(label=_(u'Provider'), required=False)
+    ratecard_id = forms.ChoiceField(label=_(u'Customer Ratecard'), required=False)
+    lcr_id = forms.ChoiceField(label=_(u'LCR Group'), required=False)
+    dest_num = forms.IntegerField(label=_(u'Destination Number'), required=False,
+        help_text=_(u'Enter the full number or the first part'))
 
     def __init__(self, user, *args, **kwargs):
         super(CDRSearchForm, self).__init__(*args, **kwargs)
         # Customer list
         cust_list = []
-        cust_list.append((0, _('all').upper()))
+        cust_list.append((0, _(u'all').upper()))
         customer_list = Company.objects.values_list('id', 'name')\
                     .filter(customer_enabled='true')\
                     .order_by('name')
@@ -59,7 +60,7 @@ class CDRSearchForm(forms.Form):
 
         # Provider list
         prov_list = []
-        prov_list.append((0, _('all').upper()))
+        prov_list.append((0, _(u'all').upper()))
         provider_list = Company.objects.values_list('id', 'name')\
                     .filter(supplier_enabled='true')\
                     .order_by('name')
@@ -71,7 +72,7 @@ class CDRSearchForm(forms.Form):
 
         # Customer Ratecard list
         cratec_list = []
-        cratec_list.append((0, _('all').upper()))
+        cratec_list.append((0, _(u'all').upper()))
         cratecard_list = RateCard.objects.values_list('id', 'name')\
                     .order_by('name')
 
@@ -82,7 +83,7 @@ class CDRSearchForm(forms.Form):
 
         # LCR Group list
         lcrg_list = []
-        lcrg_list.append((0, _('all').upper()))
+        lcrg_list.append((0, _(u'all').upper()))
         lcrgroup_list = LCRGroup.objects.values_list('id', 'name')\
                     .order_by('name')
 

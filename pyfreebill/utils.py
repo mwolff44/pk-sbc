@@ -48,6 +48,7 @@ def getvar(request, field_name, setsession=False):
 
     return val
 
+
 def return_query_string(query_string, postvalue):
     """
     test query_string and if none add &%s

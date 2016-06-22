@@ -19,22 +19,22 @@
         <div class="row">
             <div class="span6">
                 <div class="panel panel-primary">
-                    <div class="panel-heading"><h4><span class="icon-home"></span> System</h4></div>
+                    <div class="panel-heading"><h4><span class="icon-home"></span> {% trans 'System' %}</h4></div>
                     <table class="table table-striped table-bordered">
                         <tr>
-                            <td class="label-col"><b>OS</b></td>
+                            <td class="label-col"><b>{% trans 'OS' %}</b></td>
                             <td>{{ os }}</td>
                         </tr>
                         <tr>
-                            <td class="label-col"><b>Hostname</b></td>
+                            <td class="label-col"><b>{% trans 'Hostname' %}'/b></td>
                             <td>{{ hostname }}</td>
                         </tr>
                         <tr>
-                            <td class="label-col"><b>Uptime</b></td>
+                            <td class="label-col"><b>{% trans 'Uptime' %}</b></td>
                             <td>{{ uptime }}</td>
                         </tr>
                         <tr>
-                            <td class="label-col"><b>CPU Cores</b></td>
+                            <td class="label-col"><b>{% trans 'CPU Cores' %}</b></td>
                             <td>{{ num_cpus }}</td>
                         </tr>
                     </table>
@@ -42,13 +42,13 @@
             </div>
             <div class="span6">
                 <div class="panel panel-primary">
-                    <div class="panel-heading"><h4><span class="icon-user"></span> Users <small>(Logged in)</small></h4></div>
+                    <div class="panel-heading"><h4><span class="icon-user"></span> {% trans 'Users' %} <small>({% trans 'Logged in' %})</small></h4></div>
                     <table class="users table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>User</th>
-                                <th>Started</th>
-                                <th>Host</th>
+                                <th>{% trans 'User' %}</th>
+                                <th>{% trans 'Started' %}</th>
+                                <th>{% trans 'Host' %}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -67,26 +67,26 @@
         <div class="row">
             <div class="span4">
                 <div class="panel panel-primary">
-                    <div class="panel-heading"><h4><span class="icon-dashboard"></span> CPU <span class="pull-right"><small>{{ num_cpus }} cores</small></span></h4></div>
+                    <div class="panel-heading"><h4><span class="icon-dashboard"></span> {% trans 'CPU' %} <span class="pull-right"><small>{{ num_cpus }} {% trans 'cores' %}</small></span></h4></div>
                     <table class="cpu table table-striped table-bordered">
                         <tr>
-                            <td class="label-col"><b>Load average</b></td>
+                            <td class="label-col"><b>{% trans 'Load average' %}</b></td>
                             <td class="load" style="word-spacing: 10px;">{{ load_avg.0 }} {{ load_avg.1 }} {{ load_avg.2 }}</td>
                         </tr>
                         <tr>
-                            <td class="label-col"><b>User</b></td>
+                            <td class="label-col"><b>{% trans 'User' %}</b></td>
                             <td class="user">{{ cpu.user }} %</td>
                         </tr>
                         <tr>
-                            <td class="label-col"><b>System</b></td>
+                            <td class="label-col"><b>{% trans 'System<' %}/b></td>
                             <td class="system">{{ cpu.system }} %</td>
                         </tr>
                         <tr>
-                            <td class="label-col"><b>Idle</b></td>
+                            <td class="label-col"><b>{% trans 'Idle' %}</b></td>
                             <td class="idle">{{ cpu.idle }} %</td>
                         </tr>
                         <tr>
-                            <td class="label-col"><b>I/O wait</b></td>
+                            <td class="label-col"><b>{% trans 'I/O wait' %}</b></td>
                             <td class="iowait">{{ cpu.iowait }} %</td>
                         </tr>
                     </table>
@@ -94,26 +94,26 @@
             </div>
             <div class="span4">
                 <div class="panel panel-primary">
-                    <div class="panel-heading"><h4><span class="icon-tasks"></span> Memory</h4></div>
+                    <div class="panel-heading"><h4><span class="icon-tasks"></span> {% trans 'Memory' %}</h4></div>
                     <table class="memory table table-striped table-bordered">
                         <tr>
-                            <td class="label-col"><b>Total</b></td>
+                            <td class="label-col"><b>{% trans 'Total' %}</b></td>
                             <td class="total">{{ memory.total|filesizeformat }}</td>
                         </tr>
                         <tr>
-                            <td class="label-col"><b>Available</b></td>
+                            <td class="label-col"><b>{% trans 'Available' %}</b></td>
                             <td class="available">{{ memory.available|filesizeformat }}</td>
                         </tr>
                         <tr>
-                            <td class="label-col"><b>Used </b><small>(excl. cache &amp; buffers)</small></td>
+                            <td class="label-col"><b>{% trans 'Used' %} </b><small>({% trans 'excl. cache and buffers' %})</small></td>
                             <td class="used_excl">{{ mem_wo_c|filesizeformat }} ({{ memory.percent }} %)</td>
                         </tr>
                         <tr>
-                            <td class="label-col"><b>Used </b><small>(incl. cache &amp; buffers)</small></td>
+                            <td class="label-col"><b>{% trans 'Used' %} </b><small>({% trans 'incl. cache and buffers' %})</small></td>
                             <td class="used_incl">{{ memory.used|filesizeformat }}</td>
                         </tr>
                         <tr>
-                            <td class="label-col"><b>Free</b></td>
+                            <td class="label-col"><b>{% trans 'Free' %}</b></td>
                             <td class="free">{{ memory.free|filesizeformat }}</td>
                         </tr>
                     </table>
@@ -121,26 +121,26 @@
             </div>
             <div class="span4">
                 <div class="panel panel-primary">
-                    <div class="panel-heading"><h4><span class="icon-warning-sign"></span> Swap</h4></div>
+                    <div class="panel-heading"><h4><span class="icon-warning-sign"></span> {% trans 'Swap' %}</h4></div>
                     <table class="swap table table-striped table-bordered">
                         <tr>
-                            <td class="label-col"><b>Total</b></td>
+                            <td class="label-col"><b>{% trans 'Total' %}</b></td>
                             <td class="total">{{ swap.total|filesizeformat }}</td>
                         </tr>
                         <tr>
-                            <td class="label-col"><b>Used</b></td>
+                            <td class="label-col"><b>{% trans 'Used' %}</b></td>
                             <td class="used">{{ swap.used|filesizeformat }} ({{ swap.percent }} %)</td>
                         </tr>
                         <tr>
-                            <td class="label-col"><b>Free</b></td>
+                            <td class="label-col"><b>{% trans 'Free' %}</b></td>
                             <td class="free">{{ swap.free|filesizeformat }}</td>
                         </tr>
                         <tr>
-                            <td class="label-col"><b>Swapped in</b></td>
+                            <td class="label-col"><b>{% trans 'Swapped in' %}</b></td>
                             <td class="swapped-in">{{ swap.swapped_in|filesizeformat }}</td>
                         </tr>
                         <tr>
-                            <td class="label-col"><b>Swapped out</b></td>
+                            <td class="label-col"><b>{% trans 'Swapped out' %}</b></td>
                             <td class="swapped-out">{{ swap.swapped_out|filesizeformat }}</td>
                         </tr>
                     </table>
@@ -150,14 +150,14 @@
         <div class="row">
             <div class="span6">
                 <div class="panel panel-primary">
-                    <div class="panel-heading"><h4><span class="icon-resize-full"></span> Network I/O</h4></div>
+                    <div class="panel-heading"><h4><span class="icon-resize-full"></span> {% trans 'Network I/O' %}</h4></div>
                     <table class="network table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>IP</th>
-                                <th>P. Dropped</th>
-                                <th>P. Error</th>
+                                <th>{% trans 'Name' %}</th>
+                                <th>{% trans 'IP' %}</th>
+                                <th>{% trans 'P. Dropped' %}</th>
+                                <th>{% trans 'P. Error' %}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -175,15 +175,15 @@
             </div>
             <div class="span6">
                 <div class="panel panel-primary">
-                    <div class="panel-heading"><h4><span class="icon-hdd"></span> Disk usage</h4></div>
+                    <div class="panel-heading"><h4><span class="icon-hdd"></span> {% trans 'Disk usage' %}</h4></div>
                     <table class="disks table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>Device</th>
-                                <th>Mounted</th>
-                                <th>Total</th>
-                                <th>Used</th>
-                                <th>Free</th>
+                                <th>{% trans 'Device' %}</th>
+                                <th>{% trans 'Mounted' %}</th>
+                                <th>{% trans 'Total' %}</th>
+                                <th>{% trans 'Used' %}</th>
+                                <th>{% trans 'Free' %}</th>
                             </tr>
                         </thead>
                         <tbody>
