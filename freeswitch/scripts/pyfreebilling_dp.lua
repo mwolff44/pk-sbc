@@ -459,6 +459,7 @@ if (session:ready() == true) then
           r.rate AS rate, 
           r.block_min_duration AS block_min_duration, 
           r.init_block AS init_block,
+          r.minimal_time AS minimal_time,
           lg.name AS lcrgoup, 
           lg.lcrtype AS lcrtype,
           cip.prefix AS cip_prefix
@@ -519,11 +520,13 @@ if (session:ready() == true) then
     session:hangup("BEARERCAPABILITY_NOTAVAIL")
   else
     rate["rate"] = tonumber(rate["rate"])*(1-tonumber(rate["discount"])/100)
+    rate["minimal"] = tonumber(rate["minimal_time"]) * tonumber(rate["rate"]) + tonumber(rate["block_min_duration"])
     log("Rate", "OK")
     set_variable("sell_rate", tonumber(rate["rate"]))
     set_variable("sell_increment", rate["block_min_duration"])
     set_variable("prefix", rate["prefix"])
     set_variable("init_block", rate["init_block"])
+    set_variable("sell_minimum", tonumber(rate["minimal"]))
     set_variable("ratecard_id", rate["ratecard_id"])
     set_variable("lcr_group_id", rate["lcrgroup_id"])
     set_variable("sell_destination", rate["destination"])
@@ -780,7 +783,7 @@ if (session:ready() == true) then
       --   end
       -- end
 
-      myvarbridge = "nobal_amt="..tonumber(customer["credit_limit"])..", execute_on_post_originate=limit hash outbound "..lcr_gwname[i].." "..lcr_channels[i].." !NORMAL_TEMPORARY_FAILURE, sip_from_uri=sip:"..caller_id.."@${sip_from_host},origination_caller_id_number="..caller_id..",origination_caller_id_name="..caller_id..",sip_cid_type="..lcr_sipcidtype[i]..",sell_destination="..rate["destination"]..",cost_destination="..lcr_destination[i]..",sell_rate="..tonumber(rate["rate"])..",sell_increment="..rate["block_min_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"]
+      myvarbridge = "nobal_amt="..tonumber(customer["credit_limit"])..", execute_on_post_originate=limit hash outbound "..lcr_gwname[i].." "..lcr_channels[i].." !NORMAL_TEMPORARY_FAILURE, sip_from_uri=sip:"..caller_id.."@${sip_from_host},origination_caller_id_number="..caller_id..",origination_caller_id_name="..caller_id..",sip_cid_type="..lcr_sipcidtype[i]..",sell_destination="..rate["destination"]..",cost_destination="..lcr_destination[i]..",sell_rate="..tonumber(rate["rate"])..",sell_increment="..rate["block_min_duration"]..",destination_number="..channel["destination_number"]..",user_agent="..channel["sip_user_agent"]..",customer_ip="..channel["sip_received_ip"]..",nibble_rate="..tonumber(rate["rate"])..",nibble_minimum="..tonumber(rate["minimal"])..",nibble_account="..channel["accountcode"]..",nibble_increment="..rate["block_min_duration"]..",customer="..channel["accountcode"]..",gateway="..lcr_gwid[i]..",cost_rate="..lcr_cost_rate[i]..",prefix="..rate["prefix"]..",init_block="..rate["init_block"]..",block_min_duration="..rate["block_min_duration"]..",lcr_carrier_id="..lcr_carrier[i]..",ratecard_id="..rate["ratecard_id"]..",lcr_group_id="..rate["lcrgroup_id"]
       log("WS CALL my variables bridge : ", myvarbridge)
       if mydialbridge == "" then
         mydialbridge = "{ignore_early_media=" .. channel["ignore_early_media"] .. "}[" .. myvarbridge .. "]sofia/gateway/" .. lcr_gwname[i] .. "/" .. called_number

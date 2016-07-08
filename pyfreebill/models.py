@@ -1043,9 +1043,11 @@ class CustomerRates(models.Model):
                                max_digits=11,
                                decimal_places=5,
                                help_text=_(u"to block the prefix, put -1"))
-    block_min_duration = models.IntegerField(_(u'block min duration'),
+    block_min_duration = models.IntegerField(_(u'Increment'),
                                              default=1)
-    init_block = models.DecimalField(_(u'Init block rate'),
+    minimal_time = models.IntegerField(_(u'Minimal time'),
+                                             default=1)
+    init_block = models.DecimalField(_(u'Connection fee'),
                                      max_digits=11,
                                      decimal_places=5,
                                      default=0)
@@ -1805,8 +1807,8 @@ class CDR(models.Model):
     prefix = models.CharField(_(u'Prefix'), max_length=30, null=True)
     country = models.CharField(_(u'Country'), max_length=100, null=True)
     rate = models.DecimalField(_(u'sell rate'), max_digits=11, decimal_places=5, null=True)
-    init_block = models.DecimalField(_(u'Init block rate'), max_digits=11, decimal_places=5, null=True)
-    block_min_duration = models.IntegerField(_(u'block min duration'), null=True)
+    init_block = models.DecimalField(_(u'Connection fee'), max_digits=11, decimal_places=5, null=True)
+    block_min_duration = models.IntegerField(_(u'increment'), null=True)
     lcr_carrier_id = models.ForeignKey(Company, verbose_name=_(u"provider"), null=True, related_name="carrier_related")
     ratecard_id = models.ForeignKey(RateCard, null=True, verbose_name=_(u"ratecard"))
     lcr_group_id = models.ForeignKey(LCRGroup, null=True, verbose_name=_(u"lcr group"))
