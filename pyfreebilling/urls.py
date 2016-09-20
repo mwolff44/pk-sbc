@@ -38,6 +38,7 @@ admin_site._registry.update(admin.site._registry)
 handler404 = Template404View.as_view()
 handler500 = Template500View.as_view()
 
+
 # Custom menu
 def perms_func(request, item):
         if not request.user.is_superuser and item['name'].startswith('Statistics'):
@@ -79,7 +80,7 @@ admin_site.register_top_menu_item(_(u'1_Customers'),
                                              'order': 6,
                                              'separator': True,
                                              'title_icon': 'icon-dashboard'},
-                                             {'name': _(u'Destination statistics'),
+                                            {'name': _(u'Destination statistics'),
                                              'admin_url': '/extranet/destination_customers_stats/',
                                              'order': 6,
                                              'title_icon': 'icon-dashboard'}, ],
@@ -119,7 +120,7 @@ admin_site.register_top_menu_item(_(u'2_Providers'),
                                              'order': 7,
                                              'separator': True,
                                              'title_icon': 'icon-dashboard'},
-                                             {'name': _(u'Destination statistics'),
+                                            {'name': _(u'Destination statistics'),
                                              'admin_url': '/extranet/destination_providers_stats/',
                                              'order': 8,
                                              'title_icon': 'icon-dashboard'}, ],

@@ -1,16 +1,16 @@
 # Copyright 2013 Mathias WOLFF
 # This file is part of pyfreebilling.
-# 
+#
 # pyfreebilling is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # pyfreebilling is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
@@ -28,6 +28,7 @@ from admin_tools.menu import items, Menu
 from django.template import Context, loader, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 
+
 class CustomMenu(Menu):
     """
     Custom Menu for pyfreebilling admin site.
@@ -36,8 +37,7 @@ class CustomMenu(Menu):
 #        request = context['request']
 #        Menu.__init__(self, **kwargs)
 
-
-    def init_with_context(self, context): 
+    def init_with_context(self, context):
         user = context['request'].user
         if user.is_superuser:
             self.children += [

@@ -64,9 +64,9 @@ class AdminFieldFormatter(object):
                 ' ',
                 self.short_description).capitalize()
 
-            #TODO: Allow markup in short_description? Not practical due to
-            #hardcoded escape() in
-            #django.contrib.admin.helpers.AdminReadonlyField
+            # TODO: Allow markup in short_description? Not practical due to
+            # hardcoded escape() in
+            # django.contrib.admin.helpers.AdminReadonlyField
 #            if self.title_align:
 #                title_template = '<span style="text-align:%s">%s</span>'
 #                self.short_description = title_template \
