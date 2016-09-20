@@ -7,14 +7,14 @@ env:
     - DJANGO_VERSION=1.6
 
 install:
-    - pip install argparse --use-mirrors
+    - pip install argparse
     
-    - pip install -q Django==$DJANGO_VERSION --use-mirrors
+    - pip install -q Django==$DJANGO_VERSION
     
     - pip install coverage
 
-    - pip install pep8 --use-mirrors
-    - pip install pyflakes --use-mirrors
+    - pip install pep8
+    - pip install pyflakes
 
 before_script:
     - "pep8 --ignore=E501 {{APP_NAME}}"
