@@ -17,11 +17,11 @@ install:
     - pip install pyflakes
 
 before_script:
-    - "pep8 --ignore=E501 {{APP_NAME}}"
-    - pyflakes {{APP_NAME}}
+    - "pep8 --ignore=E501 pyfreebilling"
+    - pyflakes pyfreebilling
     
 script:
-    - coverage run quicktest.py {{APP_NAME}}    
+    - coverage run quicktest.py pyfreebilling    
     
     - pip install -r requirements/requirements.txt
     - python manage.py syncdb
