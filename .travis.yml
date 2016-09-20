@@ -8,19 +8,20 @@ env:
 
 before_install:
   # get the C part of the GeoIP API
-  - wget https://github.com/maxmind/geoip-api-c/releases/download/v1.6.9/GeoIP-1.6.9.tar.gz
-  - tar xzf GeoIP-1.6.9.tar.gz
-  - cd GeoIP-1.6.9
-  - ./configure --prefix /opt/geoip-1.6.9
-  - make
-  - make check  #     (Used to have some errors, but not in 1.6.9)
-  - sudo make install
+    - wget https://github.com/maxmind/geoip-api-c/releases/download/v1.6.9/GeoIP-1.6.9.tar.gz
+    - tar xzf GeoIP-1.6.9.tar.gz
+    - cd GeoIP-1.6.9
+    - ./configure --prefix /opt/geoip-1.6.9
+    - make
+    - make check  #     (Used to have some errors, but not in 1.6.9)
+    - sudo make install
 
   # get the GeoIP database needed for the tests
-  - wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz
-  - gunzip GeoIP.dat.gz
-  - sudo mkdir -p /opt/geoip-1.6.9/share/GeoIP/
-  - sudo mv GeoIP.dat /opt/geoip-1.6.9/share/GeoIP/GeoIP.dat
+    - wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz
+    - gunzip GeoIP.dat.gz
+    - sudo mkdir -p /opt/geoip-1.6.9/share/GeoIP/
+    - sudo mv GeoIP.dat /opt/geoip-1.6.9/share/GeoIP/GeoIP.dat
+    - cd ..
 
 install:
     - pip install argparse
