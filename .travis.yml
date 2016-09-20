@@ -8,6 +8,8 @@ env:
 
 install:
     - pip install argparse
+
+    - pip install -U setuptools
     
     - pip install -q Django==$DJANGO_VERSION
     
