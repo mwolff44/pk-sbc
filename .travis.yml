@@ -18,10 +18,9 @@ install:
 
 before_script:
     - "pep8 --ignore=E501,E127,E128,E123,E226,E502 pyfreebilling"
-    - pyflakes pyfreebilling
     
 script:
-    - coverage run quicktest.py pyfreebilling    
+    - coverage run quicktest.py  
     
     - pip install -r requirements/requirements.txt
     - python manage.py syncdb

@@ -18,8 +18,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from admin_tools.dashboard import modules, Dashboard, AppIndexDashboard
 from admin_tools.utils import get_admin_site_name
-from django.conf import settings
-from pyfreebill.modules import SalesChart
 
 
 class CustomIndexDashboard(Dashboard):
@@ -27,7 +25,7 @@ class CustomIndexDashboard(Dashboard):
     Custom index dashboard for pyfreebilling.
     """
     def init_with_context(self, context):
-        request = context['request']
+        # request = context['request']
 
         # we want a 3 columns layout
         self.columns = 3
@@ -64,7 +62,7 @@ class CustomIndexDashboard(Dashboard):
             children=[
                 {
                     'title': _('PyFreeBilling documentation'),
-                    'url': 'http://www.blog-des-telecoms.com/',
+                    'url': 'https://www.pyfreebilling.com/',
                     'external': True,
                 },
             ]
