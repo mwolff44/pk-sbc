@@ -108,7 +108,7 @@ If you need paid support, specific features or consulting services, you will fin
 
 If you want to support my developments you are welcome to buy me a cup of coffee :)
 
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SWGM9B2YW5VGA" target="_blank">PayPal donation link</a>
+[![Paypal donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SWGM9B2YW5VGA)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SWGM9B2YW5VGA)
 
 
 ### Stats
