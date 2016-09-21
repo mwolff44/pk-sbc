@@ -37,7 +37,7 @@ Please visit : [http://pyfreebilling.readthedocs.org/](http://pyfreebilling.read
 
 pyfreebilling is under AGPLv3 license. You can read it in COPYING file.
 
-[![AGPLv3 License](http://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)](http://www.fsf.org)
+[![AGPLv3 License](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)](http://www.fsf.org)
 
 ### Features
 
