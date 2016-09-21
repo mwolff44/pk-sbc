@@ -6,7 +6,7 @@
 [![Code Health](https://landscape.io/github/asifpy/django-crudbuilder/master/landscape.svg?style=flat)](https://landscape.io/github/asifpy/django-crudbuilder/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/?branch=master)
 [![AGPLv3 License](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)](http://www.fsf.org)
-[![Donate to this project using Paypal](https://img.shields.io/badge/paypal-donate-red.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SWGM9B2YW5VGA)
+[![Donate to this project using Paypal](https://img.shields.io/badge/paypal-donate-red.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FANG9JC63Q7DY&lc=FR&item_name=PyFreeBilling&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
 
 ### Table of content
 
@@ -108,7 +108,7 @@ If you need paid support, specific features or consulting services, you will fin
 
 If you want to support my developments you are welcome to buy me a cup of coffee :)
 
-[![Paypal donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SWGM9B2YW5VGA)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SWGM9B2YW5VGA)
+[![Paypal donation](http://images.google.fr/imgres?imgurl=http%3A%2F%2Fteaparty.mn%2Fwp-content%2Fuploads%2F2013%2F04%2FDonate.jpg&imgrefurl=http%3A%2F%2Fteaparty.mn%2Ftea-party-pac%2F&h=300&w=300&tbnid=4ppyiBmwo0kr6M%3A&docid=_EesWDG-3Py8XM&ei=hWviV8y8HaiNgAbOsZa4Ag&tbm=isch&iact=rc&uact=3&dur=1626&page=0&start=0&ndsp=54&ved=0ahUKEwiMk5apqqDPAhWoBsAKHc6YBScQMwhXKDUwNQ&bih=1121&biw=1773)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FANG9JC63Q7DY&lc=FR&item_name=PyFreeBilling&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
 
 
 ### Stats
