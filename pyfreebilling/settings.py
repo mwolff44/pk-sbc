@@ -199,6 +199,8 @@ INSTALLED_APPS = (
     'bootstrap_pagination',
     'mathfilters',
     'dbbackup',
+    'crispy_forms',
+    #'django_extensions',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -336,6 +338,9 @@ FILE_UPLOAD_TEMP_DIR = '/tmp'
 # FILE_UPLOAD_PERMISSIONS = 0644
 # FILE_UPLOAD_DIRECTORY_PERMISSIONS
 # FILE_UPLOAD_HANDLERS
+
+# Crispy forms
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # -- dbbackup settings
 DBBACKUP_SERVER_NAME = 'pyfreebilling'

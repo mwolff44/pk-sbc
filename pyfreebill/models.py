@@ -137,18 +137,22 @@ class Company(models.Model):
     max_calls = models.PositiveIntegerField(_(u'max simultaneous calls'),
                                             default=1,
                                             help_text=_(u"maximum simultaneous calls allowed for this customer account."))
-    calls_per_second = models.PositiveIntegerField(_(u'max calls per second'),
-                                                   default=10,
-                                                   help_text=_(u"maximum calls per seconds allowed for this customer account."))
+    calls_per_second = models.PositiveIntegerField(
+        _(u'max calls per second'),
+        default=10,
+        help_text=_(u"maximum calls per seconds allowed for this customer account.")
+    )
     BILLING_CYCLE_CHOICES = (
         ('w', _(u'weekly')),
         ('m', _(u'monthly')),
     )
-    billing_cycle = models.CharField(_(u'billing cycle'),
-                                     max_length=10,
-                                     choices=BILLING_CYCLE_CHOICES,
-                                     default='m',
-                                     help_text=_(u"billinng cycle for invoice generation."))
+    billing_cycle = models.CharField(
+        _(u'billing cycle'),
+        max_length=10,
+        choices=BILLING_CYCLE_CHOICES,
+        default='m',
+        help_text=_(u"billinng cycle for invoice generation.")
+    )
     customer_enabled = models.BooleanField(_(u"Customer Enabled / Disabled"),
                                            default=True)
     supplier_enabled = models.BooleanField(_(u"Supplier Enabled / Disabled"),
@@ -293,6 +297,7 @@ class Group(models.Model):
     def __unicode__(self):
         return u"%s" % self.name
 
+
 PHONE_LOCATION_CHOICES = (
     ('work', _(u'Work')),
     ('mobile', _(u'Mobile')),
@@ -305,8 +310,9 @@ PHONE_LOCATION_CHOICES = (
 
 class PhoneNumber(models.Model):
     """Phone Number model."""
-    content_type = models.ForeignKey(ContentType,
-                                     limit_choices_to={'app_label': 'contacts'})
+    content_type = models.ForeignKey(
+        ContentType,
+        limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
     phone_number = models.CharField(_(u'number'),
@@ -328,6 +334,7 @@ class PhoneNumber(models.Model):
         verbose_name = _(u'phone number')
         verbose_name_plural = _(u'phone numbers')
 
+
 LOCATION_CHOICES = (
     ('work', _(u'Work')),
     ('home', _(u'Home')),
@@ -339,8 +346,9 @@ LOCATION_CHOICES = (
 
 
 class EmailAddress(models.Model):
-    content_type = models.ForeignKey(ContentType,
-                                     limit_choices_to={'app_label': 'contacts'})
+    content_type = models.ForeignKey(
+        ContentType,
+        limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
     email_address = models.EmailField(_(u'email address'))
@@ -361,6 +369,7 @@ class EmailAddress(models.Model):
         verbose_name = _(u'email address')
         verbose_name_plural = _(u'email addresses')
 
+
 IM_SERVICE_CHOICES = (
     ('aim', 'AIM'),
     ('msn', 'MSN'),
@@ -378,8 +387,9 @@ IM_SERVICE_CHOICES = (
 
 
 class InstantMessenger(models.Model):
-    content_type = models.ForeignKey(ContentType,
-                                     limit_choices_to={'app_label': 'contacts'})
+    content_type = models.ForeignKey(
+        ContentType,
+        limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
     im_account = models.CharField(_(u'im account'),
@@ -407,8 +417,9 @@ class InstantMessenger(models.Model):
 
 
 class WebSite(models.Model):
-    content_type = models.ForeignKey(ContentType,
-                                     limit_choices_to={'app_label': 'contacts'})
+    content_type = models.ForeignKey(
+        ContentType,
+        limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
     url = models.URLField(_(u'URL'))
@@ -434,8 +445,9 @@ class WebSite(models.Model):
 
 
 class StreetAddress(models.Model):
-    content_type = models.ForeignKey(ContentType,
-                                     limit_choices_to={'app_label': 'contacts'})
+    content_type = models.ForeignKey(
+        ContentType,
+        limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
     street = models.TextField(_(u'street'),
@@ -469,8 +481,9 @@ class StreetAddress(models.Model):
 
 
 class SpecialDate(models.Model):
-    content_type = models.ForeignKey(ContentType,
-                                     limit_choices_to={'app_label': 'contacts'})
+    content_type = models.ForeignKey(
+        ContentType,
+        limit_choices_to={'app_label': 'contacts'})
     object_id = models.IntegerField(db_index=True)
     content_object = generic.GenericForeignKey()
     occasion = models.TextField(_(u'occasion'),
@@ -759,8 +772,9 @@ class CalleridPrefixList(models.Model):
 
 class CalleridPrefix(models.Model):
     """ Customer Rates Model """
-    calleridprefixlist = models.ForeignKey(CalleridPrefixList,
-                                           verbose_name=_(u"callerid prefix list"))
+    calleridprefixlist = models.ForeignKey(
+        CalleridPrefixList,
+        verbose_name=_(u"callerid prefix list"))
     prefix = models.CharField(_(u'numeric prefix'),
                               max_length=30,
                               db_index=True)
@@ -789,8 +803,9 @@ class ProviderTariff(models.Model):
     carrier = models.ForeignKey(Company,
                                 verbose_name=_(u"Provider"),
                                 limit_choices_to={'supplier_enabled': True})
-    currency = models.ForeignKey(Currency,
-                                verbose_name=_(u"Currency"))
+    currency = models.ForeignKey(
+        Currency,
+        verbose_name=_(u"Currency"))
     lead_strip = models.CharField(_(u'lead strip'),
                                   blank=True,
                                   default='',
@@ -1046,7 +1061,7 @@ class CustomerRates(models.Model):
     block_min_duration = models.IntegerField(_(u'Increment'),
                                              default=1)
     minimal_time = models.IntegerField(_(u'Minimal time'),
-                                             default=1)
+                                       default=1)
     init_block = models.DecimalField(_(u'Connection fee'),
                                      max_digits=11,
                                      decimal_places=5,

@@ -15,6 +15,7 @@ django-clear-cache==0.3
 django-countries==2.1.2
 django-country-blocker==1.1.12
 django-country-dialcode==0.5.1
+django-crispy-forms==1.5.2
 django-currencies==0.3.2
 django-database-size==0.3.0
 django-datetime-widget==0.9

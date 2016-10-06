@@ -16,19 +16,50 @@
 
 from django.conf.urls import patterns, include, url
 
-from customerportal.views import HomePageCustView, ProfileCustView, BalanceHistoryCustView, CdrReportCustView, SipAccountCustView, csv_view, ListExportCustView
+from customerportal.views import HomePageCustView,\
+    ProfileCustView,\
+    BalanceHistoryCustView,\
+    CdrReportCustView,\
+    SipAccountCustView,\
+    csv_view,\
+    rates_csv_view,\
+    ListExportCustView,\
+    ListRatesCustView
 
 
 urlpatterns = patterns('',
-                       url(r'^$', HomePageCustView.as_view(), name='home'),
-                       url(r'^sip_account/$', SipAccountCustView.as_view(), name='sip_account'),
-                       url(r'^balance/$', BalanceHistoryCustView.as_view(), name='balance_history'),
-                       url(r'^stats/$', CdrReportCustView.as_view(), name='stats'),
-                       url(r'^reports/$', ListExportCustView.as_view(), name='list_export'),
-                       url(r'^cdr_export/(?P<month>\d{1})/(?P<day>\d{1})/$', 'customerportal.views.csv_view', name='report'),
-                       url(r'^cdr_report/$', CdrReportCustView.as_view(), name='cdr_report'),
-                       url(r'^accounts/login/$', 'django.contrib.auth.views.login',
+                       url(r'^$',
+                           HomePageCustView.as_view(),
+                           name='home'),
+                       url(r'^sip_account/$',
+                           SipAccountCustView.as_view(),
+                           name='sip_account'),
+                       url(r'^balance/$',
+                           BalanceHistoryCustView.as_view(),
+                           name='balance_history'),
+                       url(r'^stats/$',
+                           CdrReportCustView.as_view(),
+                           name='stats'),
+                       url(r'^reports/$',
+                           ListExportCustView.as_view(),
+                           name='list_export'),
+                       url(r'^rates_export/(?P<ratecard>\d{1})/$',
+                           'customerportal.views.rates_csv_view',
+                           name='rates_download'),
+                       url(r'^rates/$',
+                           ListRatesCustView.as_view(),
+                           name='list_rate'),
+                       url(r'^cdr_export/(?P<month>\d{1})/(?P<day>\d{1})/$',
+                           'customerportal.views.csv_view',
+                           name='report'),
+                       url(r'^cdr_report/$',
+                           CdrReportCustView.as_view(),
+                           name='cdr_report'),
+                       url(r'^accounts/login/$',
+                           'django.contrib.auth.views.login',
                            {'template_name': 'customer/login.html'}),
-                       url(r'^accounts/logout/$', 'django.contrib.auth.views.logout_then_login'),
-                       url(r'^$', HomePageCustView.as_view(), name='user_profile'),
-                       url(r'^accounts/profile/$', HomePageCustView.as_view(), name='user_profile'), )
+                       url(r'^accounts/logout/$',
+                           'django.contrib.auth.views.logout_then_login'),
+                       url(r'^accounts/profile/$',
+                           HomePageCustView.as_view(),
+                           name='user_profile'), )

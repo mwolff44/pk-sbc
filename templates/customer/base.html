@@ -25,9 +25,9 @@
 						<li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
 						<li><a href="{% url 'sip_account' %}">{% trans "SIP Accounts" %}</a></li>
 						<li><a href="{% url 'balance_history' %}">{% trans "Balance history" %}</a></li>
+						<li><a href="{% url 'list_rate' %}">{% trans "Rates" %}</a></li>
 						<li><a href="{% url 'list_export' %}">{% trans "Report" %}</a></li>
 						<li><a href="{% url 'cdr_report' %}">{% trans "CDR" %}</a></li>
-						<li><a href="{% url 'user_profile' %}">{% trans "Logged in as" %} {{ user.username }}</a></li>
 						<li><a href="{% url 'django.contrib.auth.views.logout_then_login' %}"><i class="icon-off"></i>{% trans "Log out" %}</a></li>
 					</ul>
 				</div><!--/.navbar-collapse -->

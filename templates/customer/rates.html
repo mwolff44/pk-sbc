@@ -1,0 +1,93 @@
+{% extends 'customer/base.html' %}
+
+{% load bootstrap3 bootstrap_pagination %}{% load i18n %}
+
+{% block bootstrap3_title %}{% trans "PyFreeBilling : Customer Portal Rates" %}{% endblock %}
+
+{% block content %}
+
+
+	<div class="row">
+        <div class="box">
+			<form action="{% url 'list_rate' %}" method="GET" class="form-horizontal" role="form">
+				<div class="col-xs-8">
+					<h3 class="form-signin-heading">{% trans "Rates search" %} : </h3>
+					
+
+					<table class="table table-hover">
+						<thead>
+							<tr>
+							    <th>{% trans "Priority" %}</th>
+								<th>{% trans "Ratecard" %}</th>
+								<th>{% trans "Tech prefix" %}</th>
+								<th>{% trans "Ciscount" %}</th>
+								<th>{% trans "Currency" %}</th>
+								<th>{% trans "Rates download" %}</th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for r in ratecards %}
+							<tr>
+								<td>{{ r.priority }}</td>
+								<td>{{ r.ratecard }}</td>
+								<td>{{ r.tech_prefix }}</td>
+								<td>{{ r.discount }}</td>
+								<td>{{ r.ratecard.currency }}</td>
+								<th><a href="{% url 'rates_download' ratecard=r.id %}">{% trans "Download" %}</a></th>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+
+					<div class="form-group">
+						<label for="destination" class="col-xs-2 control-label">{% trans "Destination" %}</label>
+						<div class="col-xs-4">
+	            			<input type="text" name="destination" class="form-control">
+	        			</div>
+	        		</div>
+	        		<div class="form-group">
+						<label for="prefix" class="col-xs-2 control-label">{% trans "Prefix" %}</label>
+						<div class="col-xs-4">
+	            			<input type="num" name="prefix" class="form-control">
+	        			</div>
+	        		</div>
+
+					{% buttons %}
+						<button type="submit" class="btn btn-primary btn-block">{% trans "Search" %}</button>
+					{% endbuttons %}
+		        </div>
+			</form>
+		</div>
+	</div>
+
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>{% trans "Destination" %}</th>
+			<th>{% trans "Numeric prefix" %}</th>
+			<th>{% trans "Rate" %}</th>
+			<th>{% trans "Increment" %}</th>
+			<th>{% trans "Minimal time" %}</th>
+			<th>{% trans "Connection fee" %}</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for cr in Rate %}
+		<tr>
+			<td>{{ cr.destination }}</td>
+			<td>{{ cr.prefix }}</td>
+			<td>{{ cr.rate }}</td>
+			<td>{{ cr.block_min_duration }}</td>
+			<td>{{ cr.minimal_time }}</td>
+			<td>{{ cr.init_block}}</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+
+<div class="pagination pagination-centered">
+	{% bootstrap_paginate page_obj range=15 show_prev_next="false" show_first_last="true" size="small" %}
+</div>
+{% endblock %}

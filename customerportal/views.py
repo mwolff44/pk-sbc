@@ -39,10 +39,48 @@ import calendar
 
 from dateutil.relativedelta import relativedelta
 
-from pyfreebill.models import Company, Person, CompanyBalanceHistory, CDR, CustomerDirectory
+from pyfreebill.models import Company,\
+    Person,\
+    CompanyBalanceHistory,\
+    CDR,\
+    CustomerDirectory,\
+    CustomerRates,\
+    CustomerRateCards
 
-from customerportal.forms import CDRSearchForm
+from customerportal.forms import CDRSearchForm, RatesForm
 
+
+@login_required
+def rates_csv_view(request, *args, **kwargs):
+    ratecard = kwargs['ratecard']
+
+    qs = CustomerRates.objects.values(
+        'destination',
+        'prefix',
+        'rate',
+        'block_min_duration',
+        'minimal_time',
+        'init_block')
+
+    try:
+        usercompany = Person.objects.get(user=request.user)
+        company = get_object_or_404(Company, name=usercompany.company)
+        rc = CustomerRateCards.objects.filter(
+            company=company.pk)\
+            .filter(ratecard__enabled=True)\
+            .order_by('priority')
+        qs = qs.filter(ratecard__pk=ratecard)
+    except Person.DoesNotExist:
+            messages.error(request,
+                           _(u"""This user is not linked to a customer !"""))
+
+    if ratecard and int(ratecard) and ratecard in rc:
+        ratecard = int(ratecard)
+        qs = qs.filter(ratecard__pk=ratecard)
+    else:
+        qs.none()
+    return render_to_csv_response(qs,
+                                  append_datestamp=True)
 
 @login_required
 def csv_view(request, *args, **kwargs):
@@ -51,26 +89,29 @@ def csv_view(request, *args, **kwargs):
     daymonth = None
 
     qs = CDR.objects.values('customer__name',
-        'caller_id_number',
-        'destination_number',
-        'start_stamp',
-        'billsec',
-        'prefix',
-        'sell_destination',
-        'rate',
-        'init_block',
-        'block_min_duration',
-        'total_sell',
-        'customer_ip',
-        'sip_user_agent'
-    )
+                            'caller_id_number',
+                            'destination_number',
+                            'start_stamp',
+                            'billsec',
+                            'prefix',
+                            'sell_destination',
+                            'rate',
+                            'init_block',
+                            'block_min_duration',
+                            'total_sell',
+                            'customer_ip',
+                            'sip_user_agent'
+                            )
 
     try:
         usercompany = Person.objects.get(user=request.user)
         company = get_object_or_404(Company, name=usercompany.company)
-        qs = qs.filter(customer=company.pk).exclude(effective_duration="0").order_by('-start_stamp')
+        qs = qs.filter(customer=company.pk)\
+               .exclude(effective_duration="0")\
+               .order_by('-start_stamp')
     except Person.DoesNotExist:
-            messages.error(request, _(u"""This user is not linked to a customer !"""))
+            messages.error(request,
+                           _(u"""This user is not linked to a customer !"""))
 
     if day and int(day) < 8 and int(day) > 0:
         day = int(day)
@@ -92,8 +133,8 @@ def csv_view(request, *args, **kwargs):
         qs.none()
     # import pdb; pdb.set_trace()
     return render_to_csv_response(qs,
-        append_datestamp=True,
-        field_header_map={'customer__name': 'Customer'})
+                                  append_datestamp=True,
+                                  field_header_map={'customer__name': 'Customer'})
 
 
 class Template404View(LoginRequiredMixin, TemplateView):
@@ -102,6 +143,7 @@ class Template404View(LoginRequiredMixin, TemplateView):
 
 class Template500View(LoginRequiredMixin, TemplateView):
     template_name = 'customer/500.html'
+
 
 class ListExportCustView(LoginRequiredMixin, TemplateView):
     template_name = 'customer/report.html'
@@ -116,10 +158,11 @@ class ListExportCustView(LoginRequiredMixin, TemplateView):
         context['day_6'] = datetime.date.today() - datetime.timedelta(days=6)
         context['day_7'] = datetime.date.today() - datetime.timedelta(days=7)
         dm = datetime.date.today()
-        context['month_1'] = datetime.date(dm.year, dm.month, 1)- relativedelta(months=1)
-        context['month_2'] = datetime.date(dm.year, dm.month, 1)- relativedelta(months=2)
-        context['month_3'] = datetime.date(dm.year, dm.month, 1)- relativedelta(months=3)
+        context['month_1'] = datetime.date(dm.year, dm.month, 1) - relativedelta(months=1)
+        context['month_2'] = datetime.date(dm.year, dm.month, 1) - relativedelta(months=2)
+        context['month_3'] = datetime.date(dm.year, dm.month, 1) - relativedelta(months=3)
         return context
+
 
 class HomePageCustView(LoginRequiredMixin, TemplateView):
     template_name = 'customer/home.html'
@@ -132,13 +175,16 @@ class HomePageCustView(LoginRequiredMixin, TemplateView):
             try:
                 context['company'] = Company.objects.get(name=usercompany.company)
                 if context['company'].low_credit_alert > context['company'].customer_balance:
-                    messages.warning(self.request, _(u'ALERT : Low balance (credit alert level : %s)') % context['company'].low_credit_alert)
+                    messages.warning(self.request,
+                                     _(u'ALERT : Low balance (credit alert level : %s)') % context['company'].low_credit_alert)
                 if context['company'].account_blocked_alert_sent:
-                    messages.error(self.request, _(u'ALERT : Account blocked - no remaining credit - Please make an urgent payment'))
+                    messages.error(self.request,
+                                   _(u'ALERT : Account blocked - no remaining credit - Please make an urgent payment'))
             except Company.DoesNotExist:
                 pass
         except Person.DoesNotExist:
-            messages.error(self.request, _(u"""This user is not linked to a customer !"""))
+            messages.error(self.request,
+                           _(u"""This user is not linked to a customer !"""))
 
         # integrer panneau contact et stats
         # integrer facture
@@ -146,8 +192,72 @@ class HomePageCustView(LoginRequiredMixin, TemplateView):
         return context
 
 
+class ListRatesCustView(LoginRequiredMixin, FormMixin, ListView):
+    template_name = 'customer/rates.html'
+    rates_form = RatesForm()
+
+    context_object_name = 'Rate'
+    paginate_by = 30
+    model = CustomerRates
+
+    def get_queryset(self):
+        qs = super(ListRatesCustView, self).get_queryset()
+        try:
+            self.usercompany = Person.objects.get(user=self.request.user)
+            self.company = get_object_or_404(Company,
+                                             name=self.usercompany.company)
+            self.rc = CustomerRateCards.objects.filter(
+                company=self.company.pk)\
+                .filter(ratecard__enabled=True)\
+                .order_by('priority')
+            qs = qs.filter(enabled=True).order_by('destination')
+        except Person.DoesNotExist:
+            messages.error(self.request,
+                           _(u"""This user is not linked to a customer !"""))
+        # ratecard
+        if self.request.GET.get("ratecard") and self.request.GET.get("ratecard") in self.rc:
+            ratecard = self.request.GET.get("ratecard")
+        else:
+            self.rc = CustomerRateCards.objects.filter(
+                company=self.company.pk)\
+                .filter(ratecard__enabled=True)\
+                .order_by('priority')
+            ratecard = self.rc[0].id
+            # import pdb; pdb.set_trace()
+        destination = self.request.GET.get("destination")
+        prefix = self.request.GET.get("prefix")
+
+        if ratecard:  # and ratecard.isnumeric():
+            qs = qs.filter(ratecard__pk=ratecard)
+            if destination:
+                qs = qs.filter(destination__contains=destination)
+            if prefix:
+                qs = qs.filter(prefix__startswith=prefix)
+            # import pdb; pdb.set_trace()
+            return qs
+
+        return qs.none()
+
+    def get_context_data(self, **kwargs):
+        context = super(ListRatesCustView, self).get_context_data(**kwargs)
+        try:
+            self.usercompany = Person.objects.get(user=self.request.user)
+            self.company = get_object_or_404(Company,
+                                             name=self.usercompany.company)
+            context['ratecards'] = CustomerRateCards.objects.filter(
+                company=self.company.pk)\
+                .filter(ratecard__enabled=True)\
+                .order_by('priority')
+            # import pdb; pdb.set_trace()
+            return context
+        except Person.DoesNotExist:
+            messages.error(self.request,
+                           _(u"""This user is not linked to a customer !"""))
+        return context
+
+
 class StatsCustView(LoginRequiredMixin, TemplateView):
-	template_name = 'customer/stats.html'
+    template_name = 'customer/stats.html'
 
 
 class SipAccountCustView(LoginRequiredMixin, ListView):
@@ -160,10 +270,13 @@ class SipAccountCustView(LoginRequiredMixin, ListView):
         qs = super(SipAccountCustView, self).get_queryset()
         try:
             self.usercompany = Person.objects.get(user=self.request.user)
-            self.company = get_object_or_404(Company, name=self.usercompany.company)
-            return CustomerDirectory.objects.filter(company=self.company.pk).order_by('id')
+            self.company = get_object_or_404(Company,
+                                             name=self.usercompany.company)
+            return CustomerDirectory.objects.filter(company=self.company.pk)\
+                                            .order_by('id')
         except Person.DoesNotExist:
-            messages.error(self.request, _(u"""This user is not linked to a customer !"""))
+            messages.error(self.request,
+                           _(u"""This user is not linked to a customer !"""))
         return qs.none()
 
 
@@ -178,19 +291,19 @@ class CdrReportCustView(LoginRequiredMixin, FormMixin, ListView):
         qs = super(CdrReportCustView, self).get_queryset()
         try:
             self.usercompany = Person.objects.get(user=self.request.user)
-            self.company = get_object_or_404(Company, name=self.usercompany.company)
-            qs = qs.filter(customer=self.company.pk).exclude(effective_duration="0").order_by('-start_stamp')
+            self.company = get_object_or_404(Company,
+                                             name=self.usercompany.company)
+            qs = qs.filter(customer=self.company.pk)\
+                   .exclude(effective_duration="0")\
+                   .order_by('-start_stamp')
         except Person.DoesNotExist:
-            messages.error(self.request, _(u"""This user is not linked to a customer !"""))
+            messages.error(self.request,
+                           _(u"""This user is not linked to a customer !"""))
 
         # set start_date and end_date
         end_date = datetime.date.today() + datetime.timedelta(days=1)
         start_date = end_date - datetime.timedelta(days=30)
 
-        #First print
-
-    	# Get the q GET parameter
-    	# date from and to and check value
     	start_d = {'y': [], 'm': [], 'd': [], 'h': [], 'min': [], 'status': True}
     	end_d = {'y': [], 'm': [], 'd': [], 'h': [], 'min': [],'status': True}
     	li = ['y', 'm', 'd', 'h', 'min']
@@ -234,7 +347,9 @@ class BalanceHistoryCustView(LoginRequiredMixin, ListView):
         try:
             self.usercompany = Person.objects.get(user=self.request.user)
             self.company = get_object_or_404(Company, name=self.usercompany.company)
-            return CompanyBalanceHistory.objects.filter(company=self.company.pk).filter(operation_type='customer').order_by('-date_modified')
+            return CompanyBalanceHistory.objects.filter(company=self.company.pk)\
+                                                .filter(operation_type='customer')\
+                                                .order_by('-date_modified')
         except Person.DoesNotExist:
             messages.error(self.request, _(u"""This user is not linked to a customer !"""))
         return qs.none()
