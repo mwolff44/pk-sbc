@@ -164,12 +164,6 @@ class PhoneNumberInline(generic.GenericTabularInline):
     title_icon = 'fa-phone-square'
 
 
-class InstantMessengerInline(generic.GenericTabularInline):
-    model = InstantMessenger
-    extra = 0
-    collapse = True
-
-
 class WebSiteInline(generic.GenericTabularInline):
     model = WebSite
     extra = 0
@@ -181,19 +175,6 @@ class StreetAddressInline(generic.GenericStackedInline):
     extra = 0
     collapse = True
     modal = True
-
-
-class SpecialDateInline(generic.GenericStackedInline):
-    model = SpecialDate
-    extra = 0
-    collapse = True
-
-
-class CommentInline(generic.GenericStackedInline):
-    model = Comment
-    ct_fk_field = 'object_pk'
-    extra = 0
-    collapse = True
 
 
 class CustomerRateCardsInline(admin.StackedInline):
@@ -212,11 +193,8 @@ class CompanyAdmin(admin.ModelAdmin):
         CustomerRateCardsInline,
         PhoneNumberInline,
         EmailAddressInline,
-        InstantMessengerInline,
         WebSiteInline,
         StreetAddressInline,
-        SpecialDateInline,
-        CommentInline,
     ]
     form = CompanyAdminForm
     affix = True
@@ -387,12 +365,6 @@ class CompanyAdmin(admin.ModelAdmin):
 class PersonAdmin(admin.ModelAdmin):
     inlines = [
         PhoneNumberInline,
-        EmailAddressInline,
-        InstantMessengerInline,
-        WebSiteInline,
-        StreetAddressInline,
-        SpecialDateInline,
-        CommentInline,
     ]
 
     list_display_links = ('first_name',

@@ -1,0 +1,21 @@
+{% extends 'customer/base.html' %}
+{% load bootstrap3 %}{% load i18n yawdadmin_tags %}
+{% load crispy_forms_tags %}
+
+{% block bootstrap3_title %}{% trans "PyFreeBilling : Customer Portal Register Page" %}{% endblock %}
+
+{% block title %}{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+	<div class="row">
+        <div class="box">
+            {% crispy form %}
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}

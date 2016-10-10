@@ -20,7 +20,7 @@ from __future__ import unicode_literals
 from django.core.files.storage import default_storage
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models.fields.files import FieldFile
-from django.views.generic import FormView, ListView, View
+from django.views.generic import FormView, ListView, View, CreateView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormMixin
 from django.contrib import messages
@@ -45,9 +45,15 @@ from pyfreebill.models import Company,\
     CDR,\
     CustomerDirectory,\
     CustomerRates,\
-    CustomerRateCards
+    CustomerRateCards,\
+    Person
 
 from customerportal.forms import CDRSearchForm, RatesForm
+
+
+class CreateUserView(CreateView):
+    template_name = "customer/register.html"
+    model = Person
 
 
 @login_required
@@ -81,6 +87,7 @@ def rates_csv_view(request, *args, **kwargs):
         qs.none()
     return render_to_csv_response(qs,
                                   append_datestamp=True)
+
 
 @login_required
 def csv_view(request, *args, **kwargs):

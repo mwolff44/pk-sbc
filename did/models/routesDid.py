@@ -23,7 +23,7 @@ class RoutesDid(models.Model):
     routing plan
     """
     contract_did = models.ForeignKey('did.Did')
-    order = models.IntegerField(default=0)
+    order = models.IntegerField(default=1)
     ROUTE_TYPE_CHOICES = (
         ('s', _(u'SIP Trunk')),
         ('e', _(u'External number')),

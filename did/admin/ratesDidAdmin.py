@@ -64,8 +64,9 @@ class ProviderRatesDidAdmin(admin.ModelAdmin):
         else:
             return False
 
-#----------------------------------------
-# register
-#----------------------------------------
+
+#  ----------------------------------------
+#   register
+#  ----------------------------------------
 admin_site.register(CustomerRatesDid, CustomerRatesDidAdmin)
 admin_site.register(ProviderRatesDid, ProviderRatesDidAdmin)

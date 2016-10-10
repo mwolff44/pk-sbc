@@ -17,8 +17,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-#from cities_light.models import City
-
 #from pyfreebill.models import Company
 
 
@@ -30,9 +28,6 @@ class Did(models.Model):
                               max_length=30,
                               db_index=True,
                               unique=True)
-    city = models.ForeignKey('cities_light.City',
-                             blank=True,
-                             null=True)
     provider = models.ForeignKey('pyfreebill.Company',
                                  related_name='didprovider',
                                  verbose_name=_(u"Provider"),

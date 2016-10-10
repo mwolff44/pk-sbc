@@ -80,7 +80,6 @@ class Company(models.Model):
     email_address = GenericRelation(u'EmailAddress')
     web_site = GenericRelation(u'WebSite')
     street_address = GenericRelation(u'StreetAddress')
-    note = GenericRelation(Comment, object_id_field='object_pk')
     account_number = models.IntegerField(_(u"Account number"),
                                          blank=True,
                                          null=True)
@@ -236,16 +235,13 @@ class Person(models.Model):
                                 null=True)
     about = models.TextField(_(u'about'),
                              blank=True)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL,
-                                blank=True,
-                                null=True,
-                                verbose_name=_(u'user'))
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        verbose_name=_(u'user'))
     phone_number = GenericRelation('PhoneNumber')
-    email_address = GenericRelation('EmailAddress')
-    instant_messenger = GenericRelation('InstantMessenger')
-    special_date = GenericRelation('SpecialDate')
-    note = GenericRelation(Comment,
-                           object_id_field='object_pk')
     date_added = models.DateTimeField(_('date added'),
                                       auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'),
@@ -386,36 +382,6 @@ IM_SERVICE_CHOICES = (
 )
 
 
-class InstantMessenger(models.Model):
-    content_type = models.ForeignKey(
-        ContentType,
-        limit_choices_to={'app_label': 'contacts'})
-    object_id = models.IntegerField(db_index=True)
-    content_object = generic.GenericForeignKey()
-    im_account = models.CharField(_(u'im account'),
-                                  max_length=100)
-    location = models.CharField(_(u'location'),
-                                max_length=6,
-                                choices=LOCATION_CHOICES,
-                                default='work')
-    service = models.CharField(_(u'service'),
-                               max_length=11,
-                               choices=IM_SERVICE_CHOICES,
-                               default='jabber')
-    date_added = models.DateTimeField(_(u'date added'),
-                                      auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'),
-                                         auto_now=True)
-
-    def __unicode__(self):
-        return u"%s (%s)" % (self.im_account, self.location)
-
-    class Meta:
-        db_table = 'contacts_instant_messengers'
-        verbose_name = _(u'instant messenger')
-        verbose_name_plural = _(u'instant messengers')
-
-
 class WebSite(models.Model):
     content_type = models.ForeignKey(
         ContentType,
@@ -478,31 +444,6 @@ class StreetAddress(models.Model):
         db_table = 'contacts_street_addresses'
         verbose_name = _(u'street address')
         verbose_name_plural = _(u'street addresses')
-
-
-class SpecialDate(models.Model):
-    content_type = models.ForeignKey(
-        ContentType,
-        limit_choices_to={'app_label': 'contacts'})
-    object_id = models.IntegerField(db_index=True)
-    content_object = generic.GenericForeignKey()
-    occasion = models.TextField(_(u'occasion'),
-                                max_length=200)
-    date = models.DateField(_(u'date'))
-    every_year = models.BooleanField(_(u'every year'),
-                                     default=True)
-    date_added = models.DateTimeField(_(u'date added'),
-                                      auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'),
-                                         auto_now=True)
-
-    def __unicode__(self):
-        return u"%s: %s" % (self.occasion, self.date)
-
-    class Meta:
-        db_table = 'contacts_special_dates'
-        verbose_name = _(u'special date')
-        verbose_name_plural = _(u'special dates')
 
 
 class CompanyBalanceHistory(models.Model):

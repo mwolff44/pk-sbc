@@ -24,7 +24,8 @@ from customerportal.views import HomePageCustView,\
     csv_view,\
     rates_csv_view,\
     ListExportCustView,\
-    ListRatesCustView
+    ListRatesCustView,\
+    CreateUserView
 
 
 urlpatterns = patterns('',
@@ -62,4 +63,7 @@ urlpatterns = patterns('',
                            'django.contrib.auth.views.logout_then_login'),
                        url(r'^accounts/profile/$',
                            HomePageCustView.as_view(),
-                           name='user_profile'), )
+                           name='user_profile'),
+                       url(r'^register/$',
+                           CreateUserView.as_view(),
+                           name='create_user'), )

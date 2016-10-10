@@ -17,7 +17,7 @@
 from django.contrib import admin
 from django.contrib import messages
 from django.template import Context, loader
-from django.utils.safestring import mark_safe
+#  from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from yawdadmin import admin_site
@@ -48,18 +48,20 @@ def didupdate(modeladmin, request, queryset):
                 messages.error(request, """DID config xml file update failed.
                     FS update failed ! Try manually""")
         finally:
-            #f.close()
+            #  f.close()
             messages.success(request, "DID config xml file update success")
     except IOError:
         messages.error(request, """DID config xml file update failed. Can not
             create file !""")
+
+
 didupdate.short_description = _(u"update DID config xml file")
 
 admin.site.add_action(didupdate, _(u"generate DID configuration file"))
 
 
 class RoutesDidInline(admin.StackedInline):
-    #form = RoutesDidForm
+    #  form = RoutesDidForm
     description = 'Did routes'
     model = RoutesDid
     modal = True
@@ -69,7 +71,6 @@ class RoutesDidInline(admin.StackedInline):
 
 class DidAdmin(admin.ModelAdmin):
     list_display = ('number',
-                    'city',
                     'provider',
                     'prov_max_channels',
                     'customer',
@@ -102,7 +103,8 @@ class DidAdmin(admin.ModelAdmin):
         else:
             return False
 
-#----------------------------------------
-# register
-#----------------------------------------
+
+#  ----------------------------------------
+#  register
+#  ----------------------------------------
 admin_site.register(Did, DidAdmin)
