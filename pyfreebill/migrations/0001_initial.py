@@ -1,733 +1,973 @@
 # -*- coding: utf-8 -*-
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+import pyfreebill.validators
+import django_countries.fields
+from django.conf import settings
+import django_iban.fields
+import pyfreebill.models
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'Company'
-        db.create_table('company', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('nickname', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=50)),
-            ('about', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-            ('vat', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('vat_number', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('prepaid', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('credit_limit', self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=12, decimal_places=4)),
-            ('balance', self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=12, decimal_places=4)),
-            ('max_calls', self.gf('django.db.models.fields.PositiveIntegerField')(default=1)),
-            ('billing_cycle', self.gf('django.db.models.fields.CharField')(default='m', max_length=10)),
-            ('enabled', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['Company'])
+    dependencies = [
+        ('currencies', '__first__'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('contenttypes', '0001_initial'),
+    ]
 
-        # Adding model 'Person'
-        db.create_table('contacts_people', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('first_name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('last_name', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('middle_name', self.gf('django.db.models.fields.CharField')(max_length=200, null=True, blank=True)),
-            ('suffix', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
-            ('nickname', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=50)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-            ('company', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pyfreebill.Company'], null=True, blank=True)),
-            ('about', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True, null=True, blank=True)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['Person'])
-
-        # Adding model 'Group'
-        db.create_table('contacts_groups', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=50)),
-            ('about', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['Group'])
-
-        # Adding M2M table for field people on 'Group'
-        db.create_table('contacts_groups_people', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('group', models.ForeignKey(orm[u'pyfreebill.group'], null=False)),
-            ('person', models.ForeignKey(orm[u'pyfreebill.person'], null=False))
-        ))
-        db.create_unique('contacts_groups_people', ['group_id', 'person_id'])
-
-        # Adding M2M table for field companies on 'Group'
-        db.create_table('contacts_groups_companies', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('group', models.ForeignKey(orm[u'pyfreebill.group'], null=False)),
-            ('company', models.ForeignKey(orm[u'pyfreebill.company'], null=False))
-        ))
-        db.create_unique('contacts_groups_companies', ['group_id', 'company_id'])
-
-        # Adding model 'PhoneNumber'
-        db.create_table('contacts_phone_numbers', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
-            ('object_id', self.gf('django.db.models.fields.IntegerField')(db_index=True)),
-            ('phone_number', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('location', self.gf('django.db.models.fields.CharField')(default='work', max_length=6)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['PhoneNumber'])
-
-        # Adding model 'EmailAddress'
-        db.create_table('contacts_email_addresses', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
-            ('object_id', self.gf('django.db.models.fields.IntegerField')(db_index=True)),
-            ('email_address', self.gf('django.db.models.fields.EmailField')(max_length=75)),
-            ('location', self.gf('django.db.models.fields.CharField')(default='work', max_length=6)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['EmailAddress'])
-
-        # Adding model 'InstantMessenger'
-        db.create_table('contacts_instant_messengers', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
-            ('object_id', self.gf('django.db.models.fields.IntegerField')(db_index=True)),
-            ('im_account', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('location', self.gf('django.db.models.fields.CharField')(default='work', max_length=6)),
-            ('service', self.gf('django.db.models.fields.CharField')(default='jabber', max_length=11)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['InstantMessenger'])
-
-        # Adding model 'WebSite'
-        db.create_table('contacts_web_sites', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
-            ('object_id', self.gf('django.db.models.fields.IntegerField')(db_index=True)),
-            ('url', self.gf('django.db.models.fields.URLField')(max_length=200)),
-            ('location', self.gf('django.db.models.fields.CharField')(default='work', max_length=6)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['WebSite'])
-
-        # Adding model 'StreetAddress'
-        db.create_table('contacts_street_addresses', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
-            ('object_id', self.gf('django.db.models.fields.IntegerField')(db_index=True)),
-            ('street', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('city', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-            ('province', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-            ('postal_code', self.gf('django.db.models.fields.CharField')(max_length=10, blank=True)),
-            ('country', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('location', self.gf('django.db.models.fields.CharField')(default='work', max_length=6)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['StreetAddress'])
-
-        # Adding model 'SpecialDate'
-        db.create_table('contacts_special_dates', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
-            ('object_id', self.gf('django.db.models.fields.IntegerField')(db_index=True)),
-            ('occasion', self.gf('django.db.models.fields.TextField')(max_length=200)),
-            ('date', self.gf('django.db.models.fields.DateField')()),
-            ('every_year', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['SpecialDate'])
-
-        # Adding model 'CompanyBalanceHistory'
-        db.create_table('company_balance_history', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('company', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pyfreebill.Company'])),
-            ('amount_debited', self.gf('django.db.models.fields.DecimalField')(max_digits=12, decimal_places=4)),
-            ('amount_refund', self.gf('django.db.models.fields.DecimalField')(max_digits=12, decimal_places=4)),
-            ('balance', self.gf('django.db.models.fields.DecimalField')(default=0, max_digits=12, decimal_places=4)),
-            ('reference', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['CompanyBalanceHistory'])
-
-        # Adding model 'CustomerDirectory'
-        db.create_table('customer_directory', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('company', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pyfreebill.Company'])),
-            ('password', self.gf('django.db.models.fields.CharField')(max_length=100, blank=True)),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('rtp_ip', self.gf('django.db.models.fields.CharField')(default='auto', max_length=100)),
-            ('sip_ip', self.gf('django.db.models.fields.CharField')(default='auto', max_length=100)),
-            ('sip_port', self.gf('django.db.models.fields.PositiveIntegerField')(default=5060)),
-            ('log_auth_failures', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('multiple_registrations', self.gf('django.db.models.fields.CharField')(default='false', max_length=100)),
-            ('outbound_caller_id_name', self.gf('django.db.models.fields.CharField')(max_length=50, blank=True)),
-            ('outbound_caller_id_number', self.gf('django.db.models.fields.CharField')(max_length=80, blank=True)),
-            ('enabled', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['CustomerDirectory'])
-
-        # Adding model 'LCRGroup'
-        db.create_table('lcr_group', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('lcrtype', self.gf('django.db.models.fields.CharField')(default='p', max_length=10)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['LCRGroup'])
-
-        # Adding model 'Lcr'
-        db.create_table('lcr', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('country', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['country_dialcode.Country'])),
-            ('digits', self.gf('django.db.models.fields.CharField')(max_length=15)),
-            ('sell_rate', self.gf('django.db.models.fields.DecimalField')(default='', max_digits=11, decimal_places=5, blank=True)),
-            ('cost_rate', self.gf('django.db.models.fields.DecimalField')(max_digits=11, decimal_places=5)),
-            ('carrier', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pyfreebill.Company'])),
-            ('lead_strip', self.gf('django.db.models.fields.CharField')(default='', max_length=15, blank=True)),
-            ('tail_strip', self.gf('django.db.models.fields.CharField')(default='', max_length=15, blank=True)),
-            ('prefix', self.gf('django.db.models.fields.CharField')(default='', max_length=15, blank=True)),
-            ('suffix', self.gf('django.db.models.fields.CharField')(default='', max_length=15, blank=True)),
-            ('lcr_profile', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pyfreebill.LCRGroup'])),
-            ('date_start', self.gf('django.db.models.fields.DateTimeField')()),
-            ('date_end', self.gf('django.db.models.fields.DateTimeField')()),
-            ('quality', self.gf('django.db.models.fields.IntegerField')(default='', blank=True)),
-            ('reliability', self.gf('django.db.models.fields.IntegerField')(default='', blank=True)),
-            ('cid', self.gf('django.db.models.fields.CharField')(default='', max_length=25, blank=True)),
-            ('enabled', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['Lcr'])
-
-        # Adding model 'RateCard'
-        db.create_table('ratecard', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('lcrgroup', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pyfreebill.LCRGroup'])),
-            ('enabled', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['RateCard'])
-
-        # Adding model 'Rates'
-        db.create_table('rates', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('ratecard', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pyfreebill.RateCard'])),
-            ('country', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['country_dialcode.Country'])),
-            ('prefix', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('rate', self.gf('django.db.models.fields.DecimalField')(max_digits=11, decimal_places=5)),
-            ('block_min_duration', self.gf('django.db.models.fields.IntegerField')(default=1)),
-            ('init_block', self.gf('django.db.models.fields.DecimalField')(default=1, max_digits=11, decimal_places=5)),
-            ('date_start', self.gf('django.db.models.fields.DateTimeField')()),
-            ('date_end', self.gf('django.db.models.fields.DateTimeField')()),
-            ('enabled', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['Rates'])
-
-        # Adding model 'CustomerRateCards'
-        db.create_table('customer_ratecards', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('company', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pyfreebill.Company'])),
-            ('ratecard', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pyfreebill.RateCard'])),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('tech_prefix', self.gf('django.db.models.fields.CharField')(default='', max_length=15, blank=True)),
-            ('priority', self.gf('django.db.models.fields.IntegerField')()),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['CustomerRateCards'])
-
-        # Adding model 'AclLists'
-        db.create_table('acl_lists', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('acl_name', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('default_policy', self.gf('django.db.models.fields.CharField')(default='deny', max_length=10)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['AclLists'])
-
-        # Adding model 'AclNodes'
-        db.create_table('acl_nodes', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('company', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pyfreebill.Company'])),
-            ('cidr', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('policy', self.gf('django.db.models.fields.CharField')(default='allow', max_length=10)),
-            ('list', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pyfreebill.AclLists'])),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['AclNodes'])
-
-        # Adding model 'SipProfile'
-        db.create_table('sip_profile', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('ext_rtp_ip', self.gf('django.db.models.fields.CharField')(default='auto', max_length=100)),
-            ('ext_sip_ip', self.gf('django.db.models.fields.CharField')(default='auto', max_length=100)),
-            ('rtp_ip', self.gf('django.db.models.fields.CharField')(default='auto', max_length=100)),
-            ('sip_ip', self.gf('django.db.models.fields.CharField')(default='auto', max_length=100)),
-            ('sip_port', self.gf('django.db.models.fields.PositiveIntegerField')(default=5060)),
-            ('accept_blind_reg', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('auth_calls', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('log_auth_failures', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['SipProfile'])
-
-        # Adding model 'SofiaGateway'
-        db.create_table('sofia_gateway', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=100)),
-            ('sip_profile', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pyfreebill.SipProfile'])),
-            ('company', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['pyfreebill.Company'])),
-            ('channels', self.gf('django.db.models.fields.PositiveIntegerField')(default=1)),
-            ('prefix', self.gf('django.db.models.fields.CharField')(default='', max_length=15, blank=True)),
-            ('suffix', self.gf('django.db.models.fields.CharField')(default='', max_length=15, blank=True)),
-            ('codec', self.gf('django.db.models.fields.CharField')(default='', max_length=30, blank=True)),
-            ('username', self.gf('django.db.models.fields.CharField')(default='', max_length=35, blank=True)),
-            ('password', self.gf('django.db.models.fields.CharField')(default='', max_length=35, blank=True)),
-            ('register', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('proxy', self.gf('django.db.models.fields.CharField')(max_length=48)),
-            ('extension', self.gf('django.db.models.fields.CharField')(default='', max_length=50, blank=True)),
-            ('realm', self.gf('django.db.models.fields.CharField')(default='', max_length=50, blank=True)),
-            ('from_domain', self.gf('django.db.models.fields.CharField')(default='', max_length=50, blank=True)),
-            ('expire_seconds', self.gf('django.db.models.fields.PositiveIntegerField')(default=3600, null=True)),
-            ('retry_seconds', self.gf('django.db.models.fields.PositiveIntegerField')(default=30, null=True)),
-            ('caller_id_in_from', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('sip_cid_type', self.gf('django.db.models.fields.CharField')(default='rpid', max_length=10)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal(u'pyfreebill', ['SofiaGateway'])
-
-
-    def backwards(self, orm):
-        # Deleting model 'Company'
-        db.delete_table('company')
-
-        # Deleting model 'Person'
-        db.delete_table('contacts_people')
-
-        # Deleting model 'Group'
-        db.delete_table('contacts_groups')
-
-        # Removing M2M table for field people on 'Group'
-        db.delete_table('contacts_groups_people')
-
-        # Removing M2M table for field companies on 'Group'
-        db.delete_table('contacts_groups_companies')
-
-        # Deleting model 'PhoneNumber'
-        db.delete_table('contacts_phone_numbers')
-
-        # Deleting model 'EmailAddress'
-        db.delete_table('contacts_email_addresses')
-
-        # Deleting model 'InstantMessenger'
-        db.delete_table('contacts_instant_messengers')
-
-        # Deleting model 'WebSite'
-        db.delete_table('contacts_web_sites')
-
-        # Deleting model 'StreetAddress'
-        db.delete_table('contacts_street_addresses')
-
-        # Deleting model 'SpecialDate'
-        db.delete_table('contacts_special_dates')
-
-        # Deleting model 'CompanyBalanceHistory'
-        db.delete_table('company_balance_history')
-
-        # Deleting model 'CustomerDirectory'
-        db.delete_table('customer_directory')
-
-        # Deleting model 'LCRGroup'
-        db.delete_table('lcr_group')
-
-        # Deleting model 'Lcr'
-        db.delete_table('lcr')
-
-        # Deleting model 'RateCard'
-        db.delete_table('ratecard')
-
-        # Deleting model 'Rates'
-        db.delete_table('rates')
-
-        # Deleting model 'CustomerRateCards'
-        db.delete_table('customer_ratecards')
-
-        # Deleting model 'AclLists'
-        db.delete_table('acl_lists')
-
-        # Deleting model 'AclNodes'
-        db.delete_table('acl_nodes')
-
-        # Deleting model 'SipProfile'
-        db.delete_table('sip_profile')
-
-        # Deleting model 'SofiaGateway'
-        db.delete_table('sofia_gateway')
-
-
-    models = {
-        u'auth.group': {
-            'Meta': {'object_name': 'Group'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
-            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
-        },
-        u'auth.permission': {
-            'Meta': {'ordering': "(u'content_type__app_label', u'content_type__model', u'codename')", 'unique_together': "((u'content_type', u'codename'),)", 'object_name': 'Permission'},
-            'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        },
-        u'auth.user': {
-            'Meta': {'object_name': 'User'},
-            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
-            'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
-            'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
-        },
-        u'comments.comment': {
-            'Meta': {'ordering': "('submit_date',)", 'object_name': 'Comment', 'db_table': "'django_comments'"},
-            'comment': ('django.db.models.fields.TextField', [], {'max_length': '3000'}),
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'content_type_set_for_comment'", 'to': u"orm['contenttypes.ContentType']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'ip_address': ('django.db.models.fields.IPAddressField', [], {'max_length': '15', 'null': 'True', 'blank': 'True'}),
-            'is_public': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'is_removed': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'object_pk': ('django.db.models.fields.TextField', [], {}),
-            'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
-            'submit_date': ('django.db.models.fields.DateTimeField', [], {'default': 'None'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'comment_comments'", 'null': 'True', 'to': u"orm['auth.User']"}),
-            'user_email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
-            'user_name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'blank': 'True'}),
-            'user_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'blank': 'True'})
-        },
-        u'contenttypes.contenttype': {
-            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
-            'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
-        },
-        u'country_dialcode.country': {
-            'Meta': {'object_name': 'Country', 'db_table': "'dialcode_country'"},
-            'countrycode': ('django.db.models.fields.CharField', [], {'max_length': '3'}),
-            'countryname': ('django.db.models.fields.CharField', [], {'max_length': '240'}),
-            'countryprefix': ('django.db.models.fields.IntegerField', [], {'max_length': '12'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'iso2': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '2'})
-        },
-        u'pyfreebill.acllists': {
-            'Meta': {'ordering': "('acl_name',)", 'object_name': 'AclLists', 'db_table': "'acl_lists'"},
-            'acl_name': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'default_policy': ('django.db.models.fields.CharField', [], {'default': "'deny'", 'max_length': '10'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
-        },
-        u'pyfreebill.aclnodes': {
-            'Meta': {'ordering': "('company', 'policy', 'cidr')", 'object_name': 'AclNodes', 'db_table': "'acl_nodes'"},
-            'cidr': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'company': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pyfreebill.Company']"}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'list': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pyfreebill.AclLists']"}),
-            'policy': ('django.db.models.fields.CharField', [], {'default': "'allow'", 'max_length': '10'})
-        },
-        u'pyfreebill.company': {
-            'Meta': {'ordering': "('name',)", 'object_name': 'Company', 'db_table': "'company'"},
-            'about': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            'balance': ('django.db.models.fields.DecimalField', [], {'default': '0', 'max_digits': '12', 'decimal_places': '4'}),
-            'billing_cycle': ('django.db.models.fields.CharField', [], {'default': "'m'", 'max_length': '10'}),
-            'credit_limit': ('django.db.models.fields.DecimalField', [], {'default': '0', 'max_digits': '12', 'decimal_places': '4'}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'enabled': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'max_calls': ('django.db.models.fields.PositiveIntegerField', [], {'default': '1'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'nickname': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
-            'prepaid': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'}),
-            'vat': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'vat_number': ('django.db.models.fields.TextField', [], {'blank': 'True'})
-        },
-        u'pyfreebill.companybalancehistory': {
-            'Meta': {'ordering': "('company', 'date_added')", 'object_name': 'CompanyBalanceHistory', 'db_table': "'company_balance_history'"},
-            'amount_debited': ('django.db.models.fields.DecimalField', [], {'max_digits': '12', 'decimal_places': '4'}),
-            'amount_refund': ('django.db.models.fields.DecimalField', [], {'max_digits': '12', 'decimal_places': '4'}),
-            'balance': ('django.db.models.fields.DecimalField', [], {'default': '0', 'max_digits': '12', 'decimal_places': '4'}),
-            'company': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pyfreebill.Company']"}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'reference': ('django.db.models.fields.TextField', [], {'blank': 'True'})
-        },
-        u'pyfreebill.customerdirectory': {
-            'Meta': {'ordering': "('company', 'name')", 'object_name': 'CustomerDirectory', 'db_table': "'customer_directory'"},
-            'company': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pyfreebill.Company']"}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'enabled': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'log_auth_failures': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'multiple_registrations': ('django.db.models.fields.CharField', [], {'default': "'false'", 'max_length': '100'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
-            'outbound_caller_id_name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'blank': 'True'}),
-            'outbound_caller_id_number': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
-            'password': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
-            'rtp_ip': ('django.db.models.fields.CharField', [], {'default': "'auto'", 'max_length': '100'}),
-            'sip_ip': ('django.db.models.fields.CharField', [], {'default': "'auto'", 'max_length': '100'}),
-            'sip_port': ('django.db.models.fields.PositiveIntegerField', [], {'default': '5060'})
-        },
-        u'pyfreebill.customerratecards': {
-            'Meta': {'ordering': "('company', 'priority', 'ratecard')", 'object_name': 'CustomerRateCards', 'db_table': "'customer_ratecards'"},
-            'company': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pyfreebill.Company']"}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'priority': ('django.db.models.fields.IntegerField', [], {}),
-            'ratecard': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pyfreebill.RateCard']"}),
-            'tech_prefix': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '15', 'blank': 'True'})
-        },
-        u'pyfreebill.emailaddress': {
-            'Meta': {'object_name': 'EmailAddress', 'db_table': "'contacts_email_addresses'"},
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'email_address': ('django.db.models.fields.EmailField', [], {'max_length': '75'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'location': ('django.db.models.fields.CharField', [], {'default': "'work'", 'max_length': '6'}),
-            'object_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'})
-        },
-        u'pyfreebill.group': {
-            'Meta': {'ordering': "('name',)", 'object_name': 'Group', 'db_table': "'contacts_groups'"},
-            'about': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'companies': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['pyfreebill.Company']", 'null': 'True', 'blank': 'True'}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'people': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['pyfreebill.Person']", 'null': 'True', 'blank': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'})
-        },
-        u'pyfreebill.instantmessenger': {
-            'Meta': {'object_name': 'InstantMessenger', 'db_table': "'contacts_instant_messengers'"},
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'im_account': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'location': ('django.db.models.fields.CharField', [], {'default': "'work'", 'max_length': '6'}),
-            'object_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
-            'service': ('django.db.models.fields.CharField', [], {'default': "'jabber'", 'max_length': '11'})
-        },
-        u'pyfreebill.lcr': {
-            'Meta': {'ordering': "('enabled', 'lcr_profile', 'digits')", 'object_name': 'Lcr', 'db_table': "'lcr'"},
-            'carrier': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pyfreebill.Company']"}),
-            'cid': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '25', 'blank': 'True'}),
-            'cost_rate': ('django.db.models.fields.DecimalField', [], {'max_digits': '11', 'decimal_places': '5'}),
-            'country': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['country_dialcode.Country']"}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_end': ('django.db.models.fields.DateTimeField', [], {}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'date_start': ('django.db.models.fields.DateTimeField', [], {}),
-            'digits': ('django.db.models.fields.CharField', [], {'max_length': '15'}),
-            'enabled': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'lcr_profile': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pyfreebill.LCRGroup']"}),
-            'lead_strip': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '15', 'blank': 'True'}),
-            'prefix': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '15', 'blank': 'True'}),
-            'quality': ('django.db.models.fields.IntegerField', [], {'default': "''", 'blank': 'True'}),
-            'reliability': ('django.db.models.fields.IntegerField', [], {'default': "''", 'blank': 'True'}),
-            'sell_rate': ('django.db.models.fields.DecimalField', [], {'default': "''", 'max_digits': '11', 'decimal_places': '5', 'blank': 'True'}),
-            'suffix': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '15', 'blank': 'True'}),
-            'tail_strip': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '15', 'blank': 'True'})
-        },
-        u'pyfreebill.lcrgroup': {
-            'Meta': {'ordering': "('name',)", 'object_name': 'LCRGroup', 'db_table': "'lcr_group'"},
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'lcrtype': ('django.db.models.fields.CharField', [], {'default': "'p'", 'max_length': '10'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '128'})
-        },
-        u'pyfreebill.person': {
-            'Meta': {'ordering': "('last_name', 'first_name')", 'object_name': 'Person', 'db_table': "'contacts_people'"},
-            'about': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'company': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pyfreebill.Company']", 'null': 'True', 'blank': 'True'}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'first_name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'last_name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'middle_name': ('django.db.models.fields.CharField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'nickname': ('django.db.models.fields.CharField', [], {'max_length': '100', 'blank': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'}),
-            'suffix': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True', 'null': 'True', 'blank': 'True'})
-        },
-        u'pyfreebill.phonenumber': {
-            'Meta': {'object_name': 'PhoneNumber', 'db_table': "'contacts_phone_numbers'"},
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'location': ('django.db.models.fields.CharField', [], {'default': "'work'", 'max_length': '6'}),
-            'object_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
-            'phone_number': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        },
-        u'pyfreebill.ratecard': {
-            'Meta': {'ordering': "('name', 'enabled')", 'object_name': 'RateCard', 'db_table': "'ratecard'"},
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'enabled': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'lcrgroup': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pyfreebill.LCRGroup']"}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '128'})
-        },
-        u'pyfreebill.rates': {
-            'Meta': {'ordering': "('ratecard', 'prefix', 'enabled')", 'object_name': 'Rates', 'db_table': "'rates'"},
-            'block_min_duration': ('django.db.models.fields.IntegerField', [], {'default': '1'}),
-            'country': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['country_dialcode.Country']"}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_end': ('django.db.models.fields.DateTimeField', [], {}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'date_start': ('django.db.models.fields.DateTimeField', [], {}),
-            'enabled': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'init_block': ('django.db.models.fields.DecimalField', [], {'default': '1', 'max_digits': '11', 'decimal_places': '5'}),
-            'prefix': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
-            'rate': ('django.db.models.fields.DecimalField', [], {'max_digits': '11', 'decimal_places': '5'}),
-            'ratecard': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pyfreebill.RateCard']"})
-        },
-        u'pyfreebill.sipprofile': {
-            'Meta': {'ordering': "('name',)", 'object_name': 'SipProfile', 'db_table': "'sip_profile'"},
-            'accept_blind_reg': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'auth_calls': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'ext_rtp_ip': ('django.db.models.fields.CharField', [], {'default': "'auto'", 'max_length': '100'}),
-            'ext_sip_ip': ('django.db.models.fields.CharField', [], {'default': "'auto'", 'max_length': '100'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'log_auth_failures': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
-            'rtp_ip': ('django.db.models.fields.CharField', [], {'default': "'auto'", 'max_length': '100'}),
-            'sip_ip': ('django.db.models.fields.CharField', [], {'default': "'auto'", 'max_length': '100'}),
-            'sip_port': ('django.db.models.fields.PositiveIntegerField', [], {'default': '5060'})
-        },
-        u'pyfreebill.sofiagateway': {
-            'Meta': {'ordering': "('company', 'name')", 'object_name': 'SofiaGateway', 'db_table': "'sofia_gateway'"},
-            'caller_id_in_from': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'channels': ('django.db.models.fields.PositiveIntegerField', [], {'default': '1'}),
-            'codec': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '30', 'blank': 'True'}),
-            'company': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pyfreebill.Company']"}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'expire_seconds': ('django.db.models.fields.PositiveIntegerField', [], {'default': '3600', 'null': 'True'}),
-            'extension': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '50', 'blank': 'True'}),
-            'from_domain': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '50', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
-            'password': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '35', 'blank': 'True'}),
-            'prefix': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '15', 'blank': 'True'}),
-            'proxy': ('django.db.models.fields.CharField', [], {'max_length': '48'}),
-            'realm': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '50', 'blank': 'True'}),
-            'register': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'retry_seconds': ('django.db.models.fields.PositiveIntegerField', [], {'default': '30', 'null': 'True'}),
-            'sip_cid_type': ('django.db.models.fields.CharField', [], {'default': "'rpid'", 'max_length': '10'}),
-            'sip_profile': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pyfreebill.SipProfile']"}),
-            'suffix': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '15', 'blank': 'True'}),
-            'username': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '35', 'blank': 'True'})
-        },
-        u'pyfreebill.specialdate': {
-            'Meta': {'object_name': 'SpecialDate', 'db_table': "'contacts_special_dates'"},
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
-            'date': ('django.db.models.fields.DateField', [], {}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'every_year': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'object_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
-            'occasion': ('django.db.models.fields.TextField', [], {'max_length': '200'})
-        },
-        u'pyfreebill.streetaddress': {
-            'Meta': {'object_name': 'StreetAddress', 'db_table': "'contacts_street_addresses'"},
-            'city': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
-            'country': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'location': ('django.db.models.fields.CharField', [], {'default': "'work'", 'max_length': '6'}),
-            'object_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
-            'postal_code': ('django.db.models.fields.CharField', [], {'max_length': '10', 'blank': 'True'}),
-            'province': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
-            'street': ('django.db.models.fields.TextField', [], {'blank': 'True'})
-        },
-        u'pyfreebill.website': {
-            'Meta': {'object_name': 'WebSite', 'db_table': "'contacts_web_sites'"},
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'location': ('django.db.models.fields.CharField', [], {'default': "'work'", 'max_length': '6'}),
-            'object_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
-            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
-        },
-        u'sites.site': {
-            'Meta': {'ordering': "('domain',)", 'object_name': 'Site', 'db_table': "'django_site'"},
-            'domain': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        }
-    }
-
-    complete_apps = ['pyfreebill']
+    operations = [
+        migrations.CreateModel(
+            name='AclLists',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('acl_name', models.CharField(max_length=128, verbose_name='name')),
+                ('default_policy', models.CharField(default=b'deny', max_length=10, verbose_name='default policy', choices=[(b'deny', 'deny'), (b'allow', 'allow')])),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+            ],
+            options={
+                'ordering': ('acl_name',),
+                'db_table': 'acl_lists',
+                'verbose_name': 'ACL list',
+                'verbose_name_plural': 'ACL lists',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='AclNodes',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('cidr', models.CharField(help_text='Customer IP or cidr address.', max_length=100, verbose_name='ip/cidr Address')),
+                ('policy', models.CharField(default=b'allow', max_length=10, verbose_name='policy', choices=[(b'deny', 'deny'), (b'allow', 'allow')])),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+                ('acllist', models.ForeignKey(verbose_name='acl list', to='pyfreebill.AclLists')),
+            ],
+            options={
+                'ordering': ('company', 'policy', 'cidr'),
+                'db_table': 'acl_nodes',
+                'verbose_name': 'ACL node',
+                'verbose_name_plural': 'ACL nodes',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='CalleridPrefix',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('prefix', models.CharField(max_length=30, verbose_name='numeric prefix', db_index=True)),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+            ],
+            options={
+                'ordering': ('calleridprefixlist', 'prefix'),
+                'db_table': 'caller_id_prefix',
+                'verbose_name': 'Callerid prefix',
+                'verbose_name_plural': 'Callerid prefix',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='CalleridPrefixList',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(unique=True, max_length=128, verbose_name='name')),
+                ('description', models.TextField(verbose_name='description', blank=True)),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+            ],
+            options={
+                'ordering': ('name',),
+                'db_table': 'callerid_prefix_list',
+                'verbose_name': 'CallerID prefix list',
+                'verbose_name_plural': 'CallerID prefix lists',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='CarrierCIDNormalizationRules',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('prefix', models.CharField(max_length=30, verbose_name='rule title')),
+                ('description', models.TextField(verbose_name='description', blank=True)),
+                ('remove_prefix', models.CharField(default=b'', max_length=15, verbose_name='remove prefix', blank=True)),
+                ('add_prefix', models.CharField(default=b'', max_length=15, verbose_name='add prefix', blank=True)),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+            ],
+            options={
+                'ordering': ('company',),
+                'db_table': 'carrier_cid_norm_rules',
+                'verbose_name': 'Provider CallerID Normalization Rule',
+                'verbose_name_plural': 'Provider CallerID Normalization Rules',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='CarrierNormalizationRules',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('prefix', models.CharField(max_length=30, verbose_name='rule title')),
+                ('description', models.TextField(verbose_name='description', blank=True)),
+                ('remove_prefix', models.CharField(default=b'', max_length=15, verbose_name='remove prefix', blank=True)),
+                ('add_prefix', models.CharField(default=b'', max_length=15, verbose_name='add prefix', blank=True)),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+            ],
+            options={
+                'ordering': ('company', 'prefix'),
+                'db_table': 'carrier_norm_rules',
+                'verbose_name': 'Provider Normalization Rule',
+                'verbose_name_plural': 'Provider Normalization Rules',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='CDR',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('customer_ip', models.CharField(help_text='Customer IP address.', max_length=100, null=True, verbose_name='customer IP address')),
+                ('uuid', models.CharField(max_length=100, null=True, verbose_name='UUID')),
+                ('bleg_uuid', models.CharField(default=b'', max_length=100, null=True, verbose_name='b leg UUID')),
+                ('caller_id_number', models.CharField(max_length=100, null=True, verbose_name='caller ID num')),
+                ('destination_number', models.CharField(max_length=100, null=True, verbose_name='Dest. number')),
+                ('chan_name', models.CharField(max_length=100, null=True, verbose_name='channel name')),
+                ('start_stamp', models.DateTimeField(null=True, verbose_name='start time', db_index=True)),
+                ('answered_stamp', models.DateTimeField(null=True, verbose_name='answered time')),
+                ('end_stamp', models.DateTimeField(null=True, verbose_name='hangup time')),
+                ('duration', models.IntegerField(null=True, verbose_name='global duration')),
+                ('effectiv_duration', models.IntegerField(help_text='Global call duration since call has been received by the switch in ms.', null=True, verbose_name='total duration')),
+                ('effective_duration', models.IntegerField(help_text='real call duration in s.', null=True, verbose_name='effective duration')),
+                ('billsec', models.IntegerField(help_text='billed call duration in s.', null=True, verbose_name='billed duration')),
+                ('read_codec', models.CharField(max_length=20, null=True, verbose_name='read codec')),
+                ('write_codec', models.CharField(max_length=20, null=True, verbose_name='write codec')),
+                ('hangup_cause', models.CharField(max_length=50, null=True, verbose_name='hangup cause', db_index=True)),
+                ('hangup_cause_q850', models.IntegerField(null=True, verbose_name='q.850')),
+                ('cost_rate', models.DecimalField(default=b'0', null=True, verbose_name='buy rate', max_digits=11, decimal_places=5)),
+                ('total_sell', models.DecimalField(default=b'0', null=True, verbose_name='total sell', max_digits=11, decimal_places=5)),
+                ('total_cost', models.DecimalField(default=b'0', null=True, verbose_name='total cost', max_digits=11, decimal_places=5)),
+                ('prefix', models.CharField(max_length=30, null=True, verbose_name='Prefix')),
+                ('country', models.CharField(max_length=100, null=True, verbose_name='Country')),
+                ('rate', models.DecimalField(null=True, verbose_name='sell rate', max_digits=11, decimal_places=5)),
+                ('init_block', models.DecimalField(null=True, verbose_name='Connection fee', max_digits=11, decimal_places=5)),
+                ('block_min_duration', models.IntegerField(null=True, verbose_name='increment')),
+                ('sip_user_agent', models.CharField(max_length=100, null=True, verbose_name='sip user agent')),
+                ('sip_rtp_rxstat', models.CharField(max_length=30, null=True, verbose_name='sip rtp rx stat')),
+                ('sip_rtp_txstat', models.CharField(max_length=30, null=True, verbose_name='sip rtp tx stat')),
+                ('switchname', models.CharField(default=b'', max_length=100, null=True, verbose_name='switchname')),
+                ('switch_ipv4', models.CharField(default=b'', max_length=100, null=True, verbose_name='switch ipv4')),
+                ('hangup_disposition', models.CharField(default=b'', max_length=100, null=True, verbose_name='hangup disposition')),
+                ('sip_hangup_cause', models.CharField(default=b'', max_length=100, null=True, verbose_name='SIP hangup cause')),
+                ('sell_destination', models.CharField(default=b'', max_length=128, blank=True, null=True, verbose_name='sell destination', db_index=True)),
+                ('cost_destination', models.CharField(default=b'', max_length=128, blank=True, null=True, verbose_name='cost destination', db_index=True)),
+            ],
+            options={
+                'ordering': ('start_stamp', 'customer'),
+                'db_table': 'cdr',
+                'verbose_name': 'CDR',
+                'verbose_name_plural': 'CDRs',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Company',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(unique=True, max_length=200, verbose_name='name')),
+                ('nickname', models.CharField(max_length=50, null=True, verbose_name='nickname', blank=True)),
+                ('slug', models.SlugField(unique=True, verbose_name='slug')),
+                ('about', models.CharField(max_length=250, null=True, verbose_name='about', blank=True)),
+                ('account_number', models.IntegerField(null=True, verbose_name='Account number', blank=True)),
+                ('vat', models.BooleanField(default=False, help_text='if checked, VAT is applicable.', verbose_name='VAT Applicable / Not applicable')),
+                ('vat_number', models.CharField(blank=True, max_length=30, verbose_name='VAT number', validators=[pyfreebill.models.check_vat])),
+                ('vat_number_validated', models.BooleanField(default=False, help_text="If on, it means that VAT is validated through <a target='_blank' href='http://ec.europa.eu/taxation_customs/vies/vatRequest.html'>Vies</a>.", verbose_name='VAT Vies Validated.')),
+                ('swift_bic', django_iban.fields.SWIFTBICField(max_length=11, null=True, verbose_name='SWIFT BIC bank account number', blank=True)),
+                ('iban', django_iban.fields.IBANField(max_length=34, null=True, verbose_name='IBAN bank account number', blank=True)),
+                ('prepaid', models.BooleanField(default=True, help_text='If checked, this account customer is prepaid.', verbose_name='Prepaid / Postpaid')),
+                ('credit_limit', models.DecimalField(default=0, help_text='Credit limit for postpaid account.', verbose_name='credit limit', max_digits=12, decimal_places=4)),
+                ('low_credit_alert', models.DecimalField(default=b'10', help_text='Low credit limit alert.', verbose_name='low credit level alert', max_digits=12, decimal_places=4)),
+                ('low_credit_alert_sent', models.BooleanField(default=False, verbose_name='low credit alert ON')),
+                ('account_blocked_alert_sent', models.BooleanField(default=False, verbose_name='Customer account blocked - low balance - ON')),
+                ('email_alert', models.EmailField(max_length=75, null=True, verbose_name='alert email address', blank=True)),
+                ('customer_balance', models.DecimalField(default=0, help_text='Actual customer balance.', verbose_name='customer balance', max_digits=12, decimal_places=6)),
+                ('supplier_balance', models.DecimalField(default=0, help_text='Actual supplier balance.', verbose_name='supplier balance', max_digits=12, decimal_places=6)),
+                ('max_calls', models.PositiveIntegerField(default=1, help_text='maximum simultaneous calls allowed for this customer account.', verbose_name='max simultaneous calls')),
+                ('calls_per_second', models.PositiveIntegerField(default=10, help_text='maximum calls per seconds allowed for this customer account.', verbose_name='max calls per second')),
+                ('billing_cycle', models.CharField(default=b'm', help_text='billinng cycle for invoice generation.', max_length=10, verbose_name='billing cycle', choices=[(b'w', 'weekly'), (b'm', 'monthly')])),
+                ('customer_enabled', models.BooleanField(default=True, verbose_name='Customer Enabled / Disabled')),
+                ('supplier_enabled', models.BooleanField(default=True, verbose_name='Supplier Enabled / Disabled')),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+                ('cb_currency', models.ForeignKey(verbose_name='Currency', to='currencies.Currency')),
+            ],
+            options={
+                'ordering': ('name',),
+                'db_table': 'company',
+                'verbose_name': 'Company',
+                'verbose_name_plural': 'Companies',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='CompanyBalanceHistory',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('amount_debited', models.DecimalField(verbose_name='amount debited', max_digits=12, decimal_places=4)),
+                ('amount_refund', models.DecimalField(verbose_name='amount refund', max_digits=12, decimal_places=4)),
+                ('customer_balance', models.DecimalField(default=0, help_text='Resulting customer\n                                           balance.', verbose_name='customer balance', max_digits=12, decimal_places=4)),
+                ('supplier_balance', models.DecimalField(default=0, help_text='Resulting provider\n                                           balance.', verbose_name='provider balance', max_digits=12, decimal_places=4)),
+                ('operation_type', models.CharField(default=b'customer', max_length=10, verbose_name='operation type', choices=[(b'customer', 'operation on customer account'), (b'provider', 'operation on provider account')])),
+                ('reference', models.CharField(max_length=255, verbose_name='public description', blank=True)),
+                ('description', models.CharField(max_length=255, verbose_name='internal description', blank=True)),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+                ('company', models.ForeignKey(verbose_name='company', to='pyfreebill.Company')),
+            ],
+            options={
+                'ordering': ('company', 'date_added'),
+                'db_table': 'company_balance_history',
+                'verbose_name': 'Company balance history',
+                'verbose_name_plural': 'Company balance history',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='CustomerCIDNormalizationRules',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('prefix', models.CharField(max_length=30, verbose_name='rule title')),
+                ('description', models.TextField(verbose_name='description', blank=True)),
+                ('remove_prefix', models.CharField(default=b'', max_length=15, verbose_name='remove prefix', blank=True)),
+                ('add_prefix', models.CharField(default=b'', max_length=15, verbose_name='add prefix', blank=True)),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+                ('company', models.ForeignKey(verbose_name='customer', to='pyfreebill.Company')),
+            ],
+            options={
+                'ordering': ('company',),
+                'db_table': 'customer_cid_norm_rules',
+                'verbose_name': 'Customer CallerID Normalization Rule',
+                'verbose_name_plural': 'Customer CallerID Normalization Rules',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='CustomerDirectory',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('registration', models.BooleanField(default=False, help_text='Is registration needed\n                                       for calling ? True, the phone needs to\n                                       register with correct username/password.\n                                       If false, you must specify a CIDR in SIP\n                                       IP CIDR !', verbose_name='Registration')),
+                ('password', models.CharField(help_text="It's recommended to use strong\n                                passwords for the endpoint.", max_length=100, verbose_name='password', blank=True)),
+                ('description', models.TextField(verbose_name='description', blank=True)),
+                ('name', models.CharField(help_text='Ex.: customer SIP username, etc...', unique=True, max_length=50, verbose_name='SIP username')),
+                ('rtp_ip', models.CharField(default=b'auto', help_text='Internal IP address/mask to bind\n                              to for RTP. Format : CIDR Ex. 192.168.1.0/32', max_length=100, verbose_name='RTP IP CIDR')),
+                ('sip_ip', models.CharField(validators=[pyfreebill.validators.validate_cidr], max_length=100, blank=True, help_text='Internal IP address/mask to bind\n                              to for SIP. Format : CIDR. Ex. 192.168.1.0/32\n                              ', null=True, verbose_name='SIP IP CIDR')),
+                ('sip_port', models.PositiveIntegerField(default=5060, verbose_name='SIP port')),
+                ('max_calls', models.PositiveIntegerField(default=1, help_text='max simultaneous\n                                            calls allowed for this customer\n                                            account.', verbose_name='max calls')),
+                ('calls_per_second', models.PositiveIntegerField(default=10, help_text='maximum\n                                                   calls per second allowed for\n                                                   this customer account.', verbose_name='max calls per second')),
+                ('log_auth_failures', models.BooleanField(default=False, help_text='It true, the server\n                                            will log authentication failures.\n                                            Required for Fail2ban.', verbose_name='log auth failures')),
+                ('codecs', models.CharField(default=b'ALL', help_text='Codecs allowed - beware about\n                              order, 1st has high priority ', max_length=100, verbose_name='Codecs', choices=[(b'PCMA,PCMU,G729', 'PCMA,PCMU,G729'), (b'PCMU,PCMA,G729', 'PCMU,PCMA,G729'), (b'G729,PCMA,PCMU', 'G729,PCMA,PCMU'), (b'G729,PCMU,PCMA', 'G729,PCMU,PCMA'), (b'PCMA,G729', 'PCMA,G729'), (b'PCMU,G729', 'PCMU,G729'), (b'G729,PCMA', 'G729,PCMA'), (b'G729,PCMU', 'G729,PCMU'), (b'PCMA,PCMU', 'PCMA,PCMU'), (b'PCMU,PCMA', 'PCMU,PCMA'), (b'G722,PCMA,PCMU', 'G722,PCMA,PCMU'), (b'G722,PCMU,PCMA', 'G722,PCMU,PCMA'), (b'G722', 'G722'), (b'G729', 'G729'), (b'PCMU', 'PCMU'), (b'PCMA', 'PCMA'), (b'ALL', 'ALL')])),
+                ('multiple_registrations', models.CharField(default=b'false', help_text='Used to allow to\n                                              call one extension and ring\n                                              several phones.', max_length=100, verbose_name='multiple registrations', choices=[(b'call-id', 'Call-id'), (b'contact', 'Contact'), (b'false', 'False'), (b'true', 'True')])),
+                ('outbound_caller_id_name', models.CharField(help_text='Caller ID name\n                                               sent to provider on outbound\n                                               calls.', max_length=50, verbose_name='CallerID name', blank=True)),
+                ('outbound_caller_id_number', models.CharField(help_text='Caller ID\n                                                 number sent to provider on\n                                                 outbound calls.', max_length=80, verbose_name='CallerID\n                                                   num', blank=True)),
+                ('ignore_early_media', models.CharField(default=b'false', help_text='Controls if the call\n                                                      returns on early media\n                                                      or not. Default is false.\n                                                      Setting the value to\n                                                      "ring_ready" will work\n                                                      the same as\n                                                      ignore_early_media=true\n                                                      but also send a SIP 180\n                                                      to the inbound leg when\n                                                      the first SIP 183 is\n                                                      caught.\n                                                      ', max_length=20, verbose_name='Ignore early media', choices=[(b'false', 'false'), (b'true', 'true'), (b'ring_ready', 'ring_ready')])),
+                ('enabled', models.BooleanField(default=True, verbose_name='Enabled / Disabled')),
+                ('fake_ring', models.BooleanField(default=False, help_text='Fake ring : Enabled /\n                                    Disabled - Send a fake ring to the\n                                    caller.', verbose_name='Fake ring')),
+                ('cli_debug', models.BooleanField(default=False, help_text='CLI debug : Enabled /\n                                    Disabled - Permit to see all debug\n                                    messages on cli.', verbose_name='CLI debug')),
+                ('vmd', models.BooleanField(default=False, help_text='Be carefull with this option, as\n                              it takes a lot of ressources !.', verbose_name='Voicemail detection : Enabled / Disabled')),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+                ('company', models.ForeignKey(verbose_name='company', to='pyfreebill.Company')),
+            ],
+            options={
+                'ordering': ('company', 'name'),
+                'db_table': 'customer_directory',
+                'verbose_name': 'Customer sip account',
+                'verbose_name_plural': 'Customer sip accounts',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='CustomerNormalizationRules',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('prefix', models.CharField(max_length=30, verbose_name='rule title')),
+                ('description', models.TextField(verbose_name='description', blank=True)),
+                ('remove_prefix', models.CharField(default=b'', max_length=15, verbose_name='remove prefix', blank=True)),
+                ('add_prefix', models.CharField(default=b'', max_length=15, verbose_name='add prefix', blank=True)),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+                ('company', models.ForeignKey(verbose_name='customer', to='pyfreebill.Company')),
+            ],
+            options={
+                'ordering': ('company', 'prefix'),
+                'db_table': 'customer_norm_rules',
+                'verbose_name': 'Customer Normalization Rule',
+                'verbose_name_plural': 'Customer Normalization Rules',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='CustomerRateCards',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('description', models.TextField(verbose_name='description', blank=True)),
+                ('tech_prefix', models.CharField(default=b'', max_length=7, null=True, verbose_name='technical prefix', blank=True)),
+                ('priority', models.IntegerField(help_text='Priority order, 1 is the\n                                               higher priority and 3 the\n                                               lower one. Correct values\n                                               are : 1, 2 or 3 !.', verbose_name='priority', choices=[(1, '1'), (2, '2'), (3, '3')])),
+                ('discount', models.DecimalField(default=0, help_text='ratecard discount. For\n                                               10% discount, enter 10 !', verbose_name='discount', max_digits=3, decimal_places=2)),
+                ('allow_negative_margin', models.BooleanField(default=False, verbose_name='Allow calls with\n                                                  negative margin')),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+                ('company', models.ForeignKey(verbose_name='company', to='pyfreebill.Company')),
+            ],
+            options={
+                'ordering': ('company', 'priority', 'ratecard'),
+                'db_table': 'customer_ratecards',
+                'verbose_name': 'Customer Ratecard Allocation',
+                'verbose_name_plural': 'Customer ratecard Allocations',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='CustomerRates',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('destination', models.CharField(default=b'', max_length=128, blank=True, null=True, verbose_name='destination', db_index=True)),
+                ('prefix', models.CharField(max_length=30, verbose_name='numeric prefix', db_index=True)),
+                ('rate', models.DecimalField(help_text='to block the prefix, put -1', verbose_name='sell rate', max_digits=11, decimal_places=5)),
+                ('block_min_duration', models.IntegerField(default=1, verbose_name='Increment')),
+                ('minimal_time', models.IntegerField(default=1, verbose_name='Minimal time')),
+                ('init_block', models.DecimalField(default=0, verbose_name='Connection fee', max_digits=11, decimal_places=5)),
+                ('date_start', models.DateTimeField()),
+                ('date_end', models.DateTimeField()),
+                ('enabled', models.BooleanField(default=True, verbose_name='Enabled')),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+            ],
+            options={
+                'ordering': ('ratecard', 'prefix', 'enabled'),
+                'db_table': 'customer_rates',
+                'verbose_name': 'customer rate',
+                'verbose_name_plural': 'customer rates',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='DestinationNumberRules',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('prefix', models.CharField(max_length=30, verbose_name='numeric prefix')),
+                ('description', models.TextField(verbose_name='description', blank=True)),
+                ('format_num', models.CharField(help_text='example for Tunisia :\n                                      ^216[%d][%d][%d][%d][%d][%d][%d][%d]\n                                      $', max_length=150, verbose_name='Rule format')),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+            ],
+            options={
+                'ordering': ('prefix',),
+                'db_table': 'destination_norm_rules',
+                'verbose_name': 'Destination Number Normalization Rule',
+                'verbose_name_plural': 'Destination Number Normalization Rules',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='DimCustomerDestination',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('destination', models.CharField(max_length=250, null=True, verbose_name='destination', blank=True)),
+                ('total_calls', models.IntegerField(default=0, verbose_name='total calls')),
+                ('success_calls', models.IntegerField(default=0, verbose_name='success calls')),
+                ('total_duration', models.IntegerField(default=0, verbose_name='total duration')),
+                ('avg_duration', models.IntegerField(default=0, verbose_name='average duration')),
+                ('max_duration', models.IntegerField(default=0, verbose_name='max duration')),
+                ('min_duration', models.IntegerField(default=0, verbose_name='min duration')),
+                ('total_sell', models.DecimalField(verbose_name='total sell', max_digits=12, decimal_places=2)),
+                ('total_cost', models.DecimalField(verbose_name='total cost', max_digits=12, decimal_places=2)),
+                ('customer', models.ForeignKey(verbose_name='customer', to='pyfreebill.Company')),
+            ],
+            options={
+                'ordering': ('date', 'customer', 'destination'),
+                'db_table': 'dim_customer_destination',
+                'verbose_name': 'Customer destination stats',
+                'verbose_name_plural': 'Customer destination stats',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='DimCustomerHangupcause',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('destination', models.CharField(max_length=250, null=True, verbose_name='destination', blank=True)),
+                ('hangupcause', models.CharField(max_length=100, null=True, verbose_name='hangupcause', blank=True)),
+                ('total_calls', models.IntegerField(verbose_name='total calls')),
+                ('customer', models.ForeignKey(verbose_name='customer', to='pyfreebill.Company')),
+            ],
+            options={
+                'ordering': ('date', 'customer', 'hangupcause'),
+                'db_table': 'dim_customer_hangupcause',
+                'verbose_name': 'Customer Hangupcause stats',
+                'verbose_name_plural': 'Customer Hangupcause stats',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='DimCustomerSipHangupcause',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('destination', models.CharField(max_length=250, null=True, verbose_name='destination', blank=True)),
+                ('sip_hangupcause', models.CharField(max_length=100, null=True, verbose_name='sip hangupcause', blank=True)),
+                ('total_calls', models.IntegerField(verbose_name='total calls')),
+                ('customer', models.ForeignKey(verbose_name='customer', to='pyfreebill.Company')),
+            ],
+            options={
+                'ordering': ('date', 'customer', 'sip_hangupcause'),
+                'db_table': 'dim_customer_sip_hangupcause',
+                'verbose_name': 'Customer SIP Hangupcause stats',
+                'verbose_name_plural': 'Customer SIP Hangupcause stats',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='DimDate',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('date', models.DateTimeField()),
+                ('day', models.CharField(max_length=2, verbose_name='day')),
+                ('day_of_week', models.CharField(max_length=30, verbose_name='day of the week')),
+                ('hour', models.CharField(max_length=2, null=True, verbose_name='hour', blank=True)),
+                ('month', models.CharField(max_length=2, verbose_name='month')),
+                ('quarter', models.CharField(max_length=2, verbose_name='quarter')),
+                ('year', models.CharField(max_length=4, verbose_name='year')),
+            ],
+            options={
+                'ordering': ('date',),
+                'db_table': 'date_dimension',
+                'verbose_name': 'date dimension',
+                'verbose_name_plural': 'date dimensions',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='DimProviderDestination',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('destination', models.CharField(max_length=250, null=True, verbose_name='destination', blank=True)),
+                ('total_calls', models.IntegerField(default=0, verbose_name='total calls')),
+                ('success_calls', models.IntegerField(default=0, verbose_name='success calls')),
+                ('total_duration', models.IntegerField(default=0, verbose_name='total duration')),
+                ('avg_duration', models.IntegerField(default=0, verbose_name='average duration')),
+                ('max_duration', models.IntegerField(default=0, verbose_name='max duration')),
+                ('min_duration', models.IntegerField(default=0, verbose_name='min duration')),
+                ('total_sell', models.DecimalField(verbose_name='total sell', max_digits=12, decimal_places=2)),
+                ('total_cost', models.DecimalField(verbose_name='total cost', max_digits=12, decimal_places=2)),
+                ('date', models.ForeignKey(verbose_name='date', to='pyfreebill.DimDate')),
+                ('provider', models.ForeignKey(verbose_name='provider', to='pyfreebill.Company')),
+            ],
+            options={
+                'ordering': ('date', 'provider', 'destination'),
+                'db_table': 'dim_provider_destination',
+                'verbose_name': 'Provider destination stats',
+                'verbose_name_plural': 'Provider destination stats',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='DimProviderHangupcause',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('destination', models.CharField(max_length=250, null=True, verbose_name='destination', blank=True)),
+                ('hangupcause', models.CharField(max_length=100, null=True, verbose_name='hangupcause', blank=True)),
+                ('total_calls', models.IntegerField(verbose_name='total calls')),
+                ('date', models.ForeignKey(verbose_name='date', to='pyfreebill.DimDate')),
+                ('provider', models.ForeignKey(verbose_name='provider', to='pyfreebill.Company')),
+            ],
+            options={
+                'ordering': ('date', 'provider', 'hangupcause'),
+                'db_table': 'dim_provider_hangupcause',
+                'verbose_name': 'Provider Hangupcause stats',
+                'verbose_name_plural': 'Provider Hangupcause stats',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='DimProviderSipHangupcause',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('destination', models.CharField(max_length=250, null=True, verbose_name='destination', blank=True)),
+                ('sip_hangupcause', models.CharField(max_length=100, null=True, verbose_name='sip hangupcause', blank=True)),
+                ('total_calls', models.IntegerField(verbose_name='total calls')),
+                ('date', models.ForeignKey(verbose_name='date', to='pyfreebill.DimDate')),
+                ('provider', models.ForeignKey(verbose_name='provider', to='pyfreebill.Company')),
+            ],
+            options={
+                'ordering': ('date', 'provider', 'sip_hangupcause'),
+                'db_table': 'dim_provider_sip_hangupcause',
+                'verbose_name': 'Provider SIP Hangupcause stats',
+                'verbose_name_plural': 'Provider SIP Hangupcause stats',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='EmailAddress',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('object_id', models.IntegerField(db_index=True)),
+                ('email_address', models.EmailField(max_length=75, verbose_name='email address')),
+                ('location', models.CharField(default=b'work', max_length=6, verbose_name='location', choices=[(b'work', 'Work'), (b'home', 'Home'), (b'mobile', 'Mobile'), (b'fax', 'Fax'), (b'person', 'Personal'), (b'other', 'Other')])),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+                ('content_type', models.ForeignKey(to='contenttypes.ContentType')),
+            ],
+            options={
+                'db_table': 'contacts_email_addresses',
+                'verbose_name': 'email address',
+                'verbose_name_plural': 'email addresses',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Group',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(unique=True, max_length=200, verbose_name='name')),
+                ('slug', models.SlugField(unique=True, verbose_name='slug')),
+                ('about', models.TextField(verbose_name='about', blank=True)),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+                ('companies', models.ManyToManyField(to='pyfreebill.Company', null=True, verbose_name='companies', blank=True)),
+            ],
+            options={
+                'ordering': ('name',),
+                'db_table': 'contacts_groups',
+                'verbose_name': 'group',
+                'verbose_name_plural': 'groups',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='HangupCause',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('code', models.PositiveIntegerField(help_text='ITU-T Q.850 Code.', unique=True, verbose_name='Hangup code')),
+                ('enumeration', models.CharField(help_text='enumeration.', max_length=100, null=True, verbose_name='enumeration', blank=True)),
+                ('cause', models.CharField(help_text='Cause.', max_length=100, null=True, verbose_name='cause', blank=True)),
+                ('description', models.TextField(verbose_name='description', blank=True)),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+            ],
+            options={
+                'ordering': ('code',),
+                'db_table': 'hangup_cause',
+                'verbose_name': 'hangupcause',
+                'verbose_name_plural': 'hangupcauses',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='LCRGroup',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(unique=True, max_length=128, verbose_name='name')),
+                ('description', models.TextField(verbose_name='description', blank=True)),
+                ('lcrtype', models.CharField(default=b'p', max_length=10, verbose_name='lcr type', choices=[(b'p', 'lower price'), (b'q', 'best quality'), (b'r', 'best reliability'), (b'l', 'load balance')])),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+            ],
+            options={
+                'ordering': ('name',),
+                'db_table': 'lcr_group',
+                'verbose_name': 'LCR',
+                'verbose_name_plural': 'LCRs',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='LCRProviders',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+                ('lcr', models.ForeignKey(verbose_name='LCR', to='pyfreebill.LCRGroup')),
+            ],
+            options={
+                'db_table': 'lcr_providers',
+                'verbose_name': 'LCR provider',
+                'verbose_name_plural': 'LCR providers',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Person',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('first_name', models.CharField(max_length=100, verbose_name='first name')),
+                ('last_name', models.CharField(max_length=200, verbose_name='last name')),
+                ('middle_name', models.CharField(max_length=200, null=True, verbose_name='middle name', blank=True)),
+                ('suffix', models.CharField(max_length=50, null=True, verbose_name='suffix', blank=True)),
+                ('nickname', models.CharField(max_length=100, verbose_name='nickname', blank=True)),
+                ('slug', models.SlugField(unique=True, verbose_name='slug')),
+                ('title', models.CharField(max_length=200, verbose_name='title', blank=True)),
+                ('about', models.TextField(verbose_name='about', blank=True)),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+                ('company', models.ForeignKey(blank=True, to='pyfreebill.Company', null=True)),
+                ('user', models.OneToOneField(null=True, blank=True, to=settings.AUTH_USER_MODEL, verbose_name='user')),
+            ],
+            options={
+                'ordering': ('last_name', 'first_name'),
+                'db_table': 'contacts_people',
+                'verbose_name': 'person',
+                'verbose_name_plural': 'people',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='PhoneNumber',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('object_id', models.IntegerField(db_index=True)),
+                ('phone_number', models.CharField(max_length=50, verbose_name='number')),
+                ('location', models.CharField(default=b'work', max_length=6, verbose_name='location', choices=[(b'work', 'Work'), (b'mobile', 'Mobile'), (b'fax', 'Fax'), (b'pager', 'Pager'), (b'home', 'Home'), (b'other', 'Other')])),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+                ('content_type', models.ForeignKey(to='contenttypes.ContentType')),
+            ],
+            options={
+                'db_table': 'contacts_phone_numbers',
+                'verbose_name': 'phone number',
+                'verbose_name_plural': 'phone numbers',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='ProviderRates',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('destination', models.CharField(default=b'', max_length=128, blank=True, null=True, verbose_name='destination', db_index=True)),
+                ('digits', models.CharField(max_length=30, verbose_name='numeric prefix', db_index=True)),
+                ('cost_rate', models.DecimalField(verbose_name='Cost rate', max_digits=11, decimal_places=5)),
+                ('block_min_duration', models.IntegerField(default=1, verbose_name='block min duration')),
+                ('init_block', models.DecimalField(default=0, verbose_name='Init block rate', max_digits=11, decimal_places=5)),
+                ('date_start', models.DateTimeField()),
+                ('date_end', models.DateTimeField()),
+                ('enabled', models.BooleanField(default=True, verbose_name='Enabled / Disabled')),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+            ],
+            options={
+                'ordering': ('enabled', 'provider_tariff', 'digits'),
+                'verbose_name_plural': 'provider rates',
+                'db_table': 'provider_rates',
+                'verbose_name': 'provider rate',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='ProviderTariff',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(max_length=128, verbose_name='name')),
+                ('lead_strip', models.CharField(default=b'', max_length=15, verbose_name='lead strip', blank=True)),
+                ('tail_strip', models.CharField(default=b'', max_length=15, verbose_name='tail strip', blank=True)),
+                ('prefix', models.CharField(default=b'', max_length=15, verbose_name='prefix', blank=True)),
+                ('suffix', models.CharField(default=b'', max_length=15, verbose_name='suffix', blank=True)),
+                ('description', models.TextField(verbose_name='description', blank=True)),
+                ('callerid_filter', models.CharField(default=b'1', max_length=2, verbose_name='CallerID Prefix filter', choices=[(b'1', 'No filter'), (b'2', 'Prefix authorized'), (b'3', 'Prefix prohibited')])),
+                ('date_start', models.DateTimeField()),
+                ('date_end', models.DateTimeField()),
+                ('quality', models.IntegerField(default=b'100', help_text='Order by quality.', verbose_name='quality', blank=True)),
+                ('reliability', models.IntegerField(default=b'100', help_text='Order by reliability.', verbose_name='reliability', blank=True)),
+                ('cid', models.CharField(default=b'', help_text='Regex to modify CallerID number.', max_length=25, verbose_name='cid', blank=True)),
+                ('enabled', models.BooleanField(default=True, verbose_name='Enabled / Disabled')),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+                ('callerid_list', models.ForeignKey(verbose_name='CallerID prefix List', blank=True, to='pyfreebill.CalleridPrefixList', null=True)),
+                ('carrier', models.ForeignKey(verbose_name='Provider', to='pyfreebill.Company')),
+                ('currency', models.ForeignKey(verbose_name='Currency', to='currencies.Currency')),
+            ],
+            options={
+                'ordering': ('enabled', 'quality', 'reliability'),
+                'db_table': 'provider_tariff',
+                'verbose_name': 'provider ratecard',
+                'verbose_name_plural': 'provider ratecards',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='RateCard',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(unique=True, max_length=128, verbose_name='name')),
+                ('description', models.TextField(verbose_name='description', blank=True)),
+                ('callerid_filter', models.CharField(default=b'1', max_length=2, verbose_name='CallerID Prefix filter', choices=[(b'1', 'No filter'), (b'2', 'Prefix authorized'), (b'3', 'Prefix prohibited')])),
+                ('enabled', models.BooleanField(default=True, verbose_name='Enabled / Disabled')),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+                ('callerid_list', models.ForeignKey(verbose_name='CallerID prefix List', blank=True, to='pyfreebill.CalleridPrefixList', null=True)),
+                ('currency', models.ForeignKey(verbose_name='Currency', to='currencies.Currency')),
+                ('lcrgroup', models.ForeignKey(verbose_name='lcr', to='pyfreebill.LCRGroup')),
+            ],
+            options={
+                'ordering': ('name', 'enabled'),
+                'db_table': 'ratecard',
+                'verbose_name': 'Customer ratecard',
+                'verbose_name_plural': 'Customer ratecards',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='SipProfile',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(help_text='E.g.: the name you want ...', unique=True, max_length=50, verbose_name='SIP profile name')),
+                ('user_agent', models.CharField(default=b'pyfreebilling', help_text='E.g.: the user agent\n                                              you want ... - take care\n                                              with certain characters\n                                              such as @ could cause others sip\n                                              proxies reject yours messages as\n                                              invalid ! ', max_length=50, verbose_name='User agent name')),
+                ('ext_rtp_ip', models.CharField(default=b'auto', help_text='External/public IP\n                                    address to bind to for RTP.', max_length=100, verbose_name='external RTP IP')),
+                ('ext_sip_ip', models.CharField(default=b'auto', help_text='External/public IP\n                                              address to bind to for\n                                              SIP.', max_length=100, verbose_name='external SIP IP')),
+                ('rtp_ip', models.CharField(default=b'auto', help_text='Internal IP address to bind\n                                          to for RTP.', max_length=100, verbose_name='RTP IP')),
+                ('sip_ip', models.CharField(default=b'auto', help_text='Internal IP address to bind\n                                          to for SIP.', max_length=100, verbose_name='SIP IP')),
+                ('sip_port', models.PositiveIntegerField(default=5060, verbose_name='SIP port')),
+                ('disable_transcoding', models.BooleanField(default=True, help_text='If true, you\n                                                          can not use\n                                                          transcoding.', verbose_name='disable transcoding')),
+                ('accept_blind_reg', models.BooleanField(default=False, help_text='If true, anyone can\n                                                       register to the server\n                                                       and will not be\n                                                       challenged for\n                                                       username/password\n                                                       information.', verbose_name='accept blind registration')),
+                ('disable_register', models.BooleanField(default=True, help_text='disable register\n                                                       which may be undesirable\n                                                       in a public switch ', verbose_name='disable register')),
+                ('apply_inbound_acl', models.BooleanField(default=True, help_text='If true, FS will\n                                                      apply the default acl\n                                                      list : domains ', verbose_name='Apply an inbound ACL')),
+                ('auth_calls', models.BooleanField(default=True, help_text='If true, FreeeSWITCH will\n                                                 authorize all calls on this\n                                                 profile, i.e. challenge the\n                                                 other side for\n                                                 username/password information.\n                                                 ', verbose_name='authenticate calls')),
+                ('log_auth_failures', models.BooleanField(default=False, help_text='It true, log\n                                                      authentication failures.\n                                                      Required for Fail2ban.\n                                                      ', verbose_name='log auth failures')),
+                ('inbound_codec_prefs', models.CharField(default=b'G729,PCMU,PCMA', help_text='Define allowed\n                                                       preferred codecs for\n                                                       inbound calls.', max_length=100, verbose_name='inbound codec prefs', choices=[(b'PCMA,PCMU,G729', 'PCMA,PCMU,G729'), (b'PCMU,PCMA,G729', 'PCMU,PCMA,G729'), (b'G729,PCMA,PCMU', 'G729,PCMA,PCMU'), (b'G729,PCMU,PCMA', 'G729,PCMU,PCMA'), (b'PCMA,G729', 'PCMA,G729'), (b'PCMU,G729', 'PCMU,G729'), (b'G729,PCMA', 'G729,PCMA'), (b'G729,PCMU', 'G729,PCMU'), (b'PCMA,PCMU', 'PCMA,PCMU'), (b'PCMU,PCMA', 'PCMU,PCMA'), (b'G722,PCMA,PCMU', 'G722,PCMA,PCMU'), (b'G722,PCMU,PCMA', 'G722,PCMU,PCMA'), (b'G722', 'G722'), (b'G729', 'G729'), (b'PCMU', 'PCMU'), (b'PCMA', 'PCMA'), (b'ALL', 'ALL')])),
+                ('outbound_codec_prefs', models.CharField(default=b'G729,PCMU,PCMA', help_text='Define allowed\n                                                        preferred codecs for\n                                                        outbound calls.', max_length=100, verbose_name='outbound codec prefs', choices=[(b'PCMA,PCMU,G729', 'PCMA,PCMU,G729'), (b'PCMU,PCMA,G729', 'PCMU,PCMA,G729'), (b'G729,PCMA,PCMU', 'G729,PCMA,PCMU'), (b'G729,PCMU,PCMA', 'G729,PCMU,PCMA'), (b'PCMA,G729', 'PCMA,G729'), (b'PCMU,G729', 'PCMU,G729'), (b'G729,PCMA', 'G729,PCMA'), (b'G729,PCMU', 'G729,PCMU'), (b'PCMA,PCMU', 'PCMA,PCMU'), (b'PCMU,PCMA', 'PCMU,PCMA'), (b'G722,PCMA,PCMU', 'G722,PCMA,PCMU'), (b'G722,PCMU,PCMA', 'G722,PCMU,PCMA'), (b'G722', 'G722'), (b'G729', 'G729'), (b'PCMU', 'PCMU'), (b'PCMA', 'PCMA'), (b'ALL', 'ALL')])),
+                ('aggressive_nat_detection', models.BooleanField(default=False, help_text='This will\n                                                               enable NAT mode\n                                                               if the network\n                                                               IP/port from\n                                                               which therequest\n                                                               was received\n                                                               differs from the\n                                                               IP/Port\n                                                               combination in\n                                                               the SIP Via:\n                                                               header, or if\n                                                               the Via: header\n                                                               contains the\n                                                               received\n                                                               parameter', verbose_name='Agressive NAT\n                                                     detection')),
+                ('NDLB_rec_in_nat_reg_c', models.BooleanField(default=False, help_text='add a;received=\n                                                            "ip:port"\n                                                            to the contact when\n                                                            replying to\n                                                            register\n                                                            for nat handling\n                                                            ', verbose_name='NDLB received\n                                                  in nat reg contact')),
+                ('NDLB_force_rport', models.CharField(default=b'Null', choices=[(b'true', 'true'), (b'safe', 'safe')], max_length=10, blank=True, help_text='This will force\n                                                    FreeSWITCH to send\n                                                    SIP responses to the\n                                                    network port from\n                                                    which they were received.\n                                                    Use at your own risk!', null=True, verbose_name='NDLB Force rport')),
+                ('NDLB_broken_auth_hash', models.BooleanField(default=False, help_text='Used for when\n                                                            phones respond to a\n                                                            challenged ACK\n                                                            with method INVITE\n                                                            in the hash', verbose_name='NDLB broken auth hash\n                                                  ')),
+                ('enable_timer', models.BooleanField(default=False, help_text='This enables or disables\n                                                   support for RFC 4028 SIP\n                                                   Session Timers', verbose_name='Enable timer')),
+                ('session_timeout', models.PositiveIntegerField(default=1800, help_text='session\n                                                              timers for all\n                                                              call to expire\n                                                              after the\n                                                              specified seconds\n                                                              Then it will send\n                                                              another invite\n                                                              --re-invite. If\n                                                              not specified\n                                                              defaults to 30\n                                                              minutes. Some\n                                                              gateways may\n                                                              reject values\n                                                              less than 30\n                                                              minutes. This\n                                                              values refers to\n                                                              Session-Expires\n                                                              in RFC 4028 -The\n                                                              time at which\n                                                              an element will\n                                                              consider the\n                                                              session timed\n                                                              out, if no\n                                                              successful\n                                                              session refresh\n                                                              transaction\n                                                              occurs\n                                                              beforehand-\n                                                              ', verbose_name='Session timeout')),
+                ('rtp_rewrite_timestamps', models.BooleanField(default=False, help_text="If you don't want to pass\n                                           through timestampes from 1 RTP call\n                                           to another", verbose_name='RTP rewrite timestamps')),
+                ('pass_rfc2833', models.BooleanField(default=False, help_text='pass rfc2833', verbose_name='pass rfc2833')),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+            ],
+            options={
+                'ordering': ('name',),
+                'db_table': 'sip_profile',
+                'verbose_name': 'SIP profile',
+                'verbose_name_plural': 'SIP profiles',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='SofiaGateway',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(unique=True, max_length=100, verbose_name='name')),
+                ('channels', models.PositiveIntegerField(default=1, help_text='maximum simultaneous\n                                               calls allowed for this gateway.\n                                               ', verbose_name='channels number')),
+                ('enabled', models.BooleanField(default=True, verbose_name='Enabled')),
+                ('prefix', models.CharField(default=b'', max_length=15, verbose_name='prefix', blank=True)),
+                ('suffix', models.CharField(default=b'', max_length=15, verbose_name='suffix', blank=True)),
+                ('codec', models.CharField(default=b'ALL', help_text='Codecs allowed - beware about\n                              order, 1st has high priority ', max_length=30, verbose_name='Codecs', choices=[(b'PCMA,PCMU,G729', 'PCMA,PCMU,G729'), (b'PCMU,PCMA,G729', 'PCMU,PCMA,G729'), (b'G729,PCMA,PCMU', 'G729,PCMA,PCMU'), (b'G729,PCMU,PCMA', 'G729,PCMU,PCMA'), (b'PCMA,G729', 'PCMA,G729'), (b'PCMU,G729', 'PCMU,G729'), (b'G729,PCMA', 'G729,PCMA'), (b'G729,PCMU', 'G729,PCMU'), (b'PCMA,PCMU', 'PCMA,PCMU'), (b'PCMU,PCMA', 'PCMU,PCMA'), (b'G722,PCMA,PCMU', 'G722,PCMA,PCMU'), (b'G722,PCMU,PCMA', 'G722,PCMU,PCMA'), (b'G722', 'G722'), (b'G729', 'G729'), (b'PCMU', 'PCMU'), (b'PCMA', 'PCMA'), (b'ALL', 'ALL')])),
+                ('username', models.CharField(default=b'', max_length=35, verbose_name='username', blank=True)),
+                ('password', models.CharField(default=b'', max_length=35, verbose_name='password', blank=True)),
+                ('register', models.BooleanField(default=False, verbose_name='register')),
+                ('proxy', models.CharField(default=b'', help_text='IP if register is False.', max_length=48, verbose_name='proxy')),
+                ('extension', models.CharField(default=b'', help_text='Extension for inbound calls.\n                                     Same as username, if blank.', max_length=50, verbose_name='extension number', blank=True)),
+                ('realm', models.CharField(default=b'', help_text='Authentication realm. Same as\n                                 gateway name, if blank.', max_length=50, verbose_name='realm', blank=True)),
+                ('from_domain', models.CharField(default=b'', help_text='Domain to use in from field.\n                                       Same as realm if blank.', max_length=50, verbose_name='from domain', blank=True)),
+                ('expire_seconds', models.PositiveIntegerField(default=3600, null=True, verbose_name='expire seconds')),
+                ('retry_seconds', models.PositiveIntegerField(default=30, help_text='How many\n                                                    seconds before a retry when\n                                                    a failure or timeout occurs\n                                                    ', null=True, verbose_name='retry seconds')),
+                ('caller_id_in_from', models.BooleanField(default=True, help_text='Use the callerid of\n                                                an inbound call in the from\n                                                field on outbound calls via\n                                                this gateway.', verbose_name='caller ID in From field')),
+                ('sip_cid_type', models.CharField(default=b'rpid', help_text='Modify callerID in SDP\n                                        Headers.', max_length=10, verbose_name='SIP CID type', choices=[(b'none', 'none'), (b'default', 'default'), (b'pid', 'pid'), (b'rpid', 'rpid')])),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+                ('company', models.ForeignKey(verbose_name='Provider', to='pyfreebill.Company')),
+                ('sip_profile', models.ForeignKey(verbose_name='SIP profile', to='pyfreebill.SipProfile', help_text='Which Sip Profile\n                                        communication with this gateway will\n                                        take place on.')),
+            ],
+            options={
+                'ordering': ('company', 'name'),
+                'db_table': 'sofia_gateway',
+                'verbose_name': 'Sofia gateway',
+                'verbose_name_plural': 'Sofia gateways',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='StreetAddress',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('object_id', models.IntegerField(db_index=True)),
+                ('street', models.TextField(verbose_name='street', blank=True)),
+                ('city', models.CharField(max_length=200, verbose_name='city', blank=True)),
+                ('province', models.CharField(max_length=200, verbose_name='province', blank=True)),
+                ('postal_code', models.CharField(max_length=10, verbose_name='postal code', blank=True)),
+                ('country', django_countries.fields.CountryField(max_length=2, verbose_name='country', choices=[('AF', 'Afghanistan'), ('AL', 'Albania'), ('DZ', 'Algeria'), ('AS', 'American Samoa'), ('AD', 'Andorra'), ('AO', 'Angola'), ('AI', 'Anguilla'), ('AQ', 'Antarctica'), ('AG', 'Antigua and Barbuda'), ('AR', 'Argentina'), ('AM', 'Armenia'), ('AW', 'Aruba'), ('AU', 'Australia'), ('AT', 'Austria'), ('AZ', 'Azerbaijan'), ('BS', 'Bahamas'), ('BH', 'Bahrain'), ('BD', 'Bangladesh'), ('BB', 'Barbados'), ('BY', 'Belarus'), ('BE', 'Belgium'), ('BZ', 'Belize'), ('BJ', 'Benin'), ('BM', 'Bermuda'), ('BT', 'Bhutan'), ('BO', 'Bolivia, Plurinational State of'), ('BQ', 'Bonaire, Sint Eustatius and Saba'), ('BA', 'Bosnia and Herzegovina'), ('BW', 'Botswana'), ('BV', 'Bouvet Island'), ('BR', 'Brazil'), ('IO', 'British Indian Ocean Territory'), ('BN', 'Brunei Darussalam'), ('BG', 'Bulgaria'), ('BF', 'Burkina Faso'), ('BI', 'Burundi'), ('KH', 'Cambodia'), ('CM', 'Cameroon'), ('CA', 'Canada'), ('CV', 'Cape Verde'), ('KY', 'Cayman Islands'), ('CF', 'Central African Republic'), ('TD', 'Chad'), ('CL', 'Chile'), ('CN', 'China'), ('CX', 'Christmas Island'), ('CC', 'Cocos (Keeling) Islands'), ('CO', 'Colombia'), ('KM', 'Comoros'), ('CG', 'Congo'), ('CD', 'Congo (the Democratic Republic of the)'), ('CK', 'Cook Islands'), ('CR', 'Costa Rica'), ('HR', 'Croatia'), ('CU', 'Cuba'), ('CW', 'Cura\xe7ao'), ('CY', 'Cyprus'), ('CZ', 'Czech Republic'), ('CI', "C\xf4te d'Ivoire"), ('DK', 'Denmark'), ('DJ', 'Djibouti'), ('DM', 'Dominica'), ('DO', 'Dominican Republic'), ('EC', 'Ecuador'), ('EG', 'Egypt'), ('SV', 'El Salvador'), ('GQ', 'Equatorial Guinea'), ('ER', 'Eritrea'), ('EE', 'Estonia'), ('ET', 'Ethiopia'), ('FK', 'Falkland Islands  [Malvinas]'), ('FO', 'Faroe Islands'), ('FJ', 'Fiji'), ('FI', 'Finland'), ('FR', 'France'), ('GF', 'French Guiana'), ('PF', 'French Polynesia'), ('TF', 'French Southern Territories'), ('GA', 'Gabon'), ('GM', 'Gambia (The)'), ('GE', 'Georgia'), ('DE', 'Germany'), ('GH', 'Ghana'), ('GI', 'Gibraltar'), ('GR', 'Greece'), ('GL', 'Greenland'), ('GD', 'Grenada'), ('GP', 'Guadeloupe'), ('GU', 'Guam'), ('GT', 'Guatemala'), ('GG', 'Guernsey'), ('GN', 'Guinea'), ('GW', 'Guinea-Bissau'), ('GY', 'Guyana'), ('HT', 'Haiti'), ('HM', 'Heard Island and McDonald Islands'), ('VA', 'Holy See  [Vatican City State]'), ('HN', 'Honduras'), ('HK', 'Hong Kong'), ('HU', 'Hungary'), ('IS', 'Iceland'), ('IN', 'India'), ('ID', 'Indonesia'), ('IR', 'Iran (the Islamic Republic of)'), ('IQ', 'Iraq'), ('IE', 'Ireland'), ('IM', 'Isle of Man'), ('IL', 'Israel'), ('IT', 'Italy'), ('JM', 'Jamaica'), ('JP', 'Japan'), ('JE', 'Jersey'), ('JO', 'Jordan'), ('KZ', 'Kazakhstan'), ('KE', 'Kenya'), ('KI', 'Kiribati'), ('KP', "Korea (the Democratic People's Republic of)"), ('KR', 'Korea (the Republic of)'), ('KW', 'Kuwait'), ('KG', 'Kyrgyzstan'), ('LA', "Lao People's Democratic Republic"), ('LV', 'Latvia'), ('LB', 'Lebanon'), ('LS', 'Lesotho'), ('LR', 'Liberia'), ('LY', 'Libya'), ('LI', 'Liechtenstein'), ('LT', 'Lithuania'), ('LU', 'Luxembourg'), ('MO', 'Macao'), ('MK', 'Macedonia (the former Yugoslav Republic of)'), ('MG', 'Madagascar'), ('MW', 'Malawi'), ('MY', 'Malaysia'), ('MV', 'Maldives'), ('ML', 'Mali'), ('MT', 'Malta'), ('MH', 'Marshall Islands'), ('MQ', 'Martinique'), ('MR', 'Mauritania'), ('MU', 'Mauritius'), ('YT', 'Mayotte'), ('MX', 'Mexico'), ('FM', 'Micronesia (the Federated States of)'), ('MD', 'Moldova (the Republic of)'), ('MC', 'Monaco'), ('MN', 'Mongolia'), ('ME', 'Montenegro'), ('MS', 'Montserrat'), ('MA', 'Morocco'), ('MZ', 'Mozambique'), ('MM', 'Myanmar'), ('NA', 'Namibia'), ('NR', 'Nauru'), ('NP', 'Nepal'), ('NL', 'Netherlands'), ('NC', 'New Caledonia'), ('NZ', 'New Zealand'), ('NI', 'Nicaragua'), ('NE', 'Niger'), ('NG', 'Nigeria'), ('NU', 'Niue'), ('NF', 'Norfolk Island'), ('MP', 'Northern Mariana Islands'), ('NO', 'Norway'), ('OM', 'Oman'), ('PK', 'Pakistan'), ('PW', 'Palau'), ('PS', 'Palestine, State of'), ('PA', 'Panama'), ('PG', 'Papua New Guinea'), ('PY', 'Paraguay'), ('PE', 'Peru'), ('PH', 'Philippines'), ('PN', 'Pitcairn'), ('PL', 'Poland'), ('PT', 'Portugal'), ('PR', 'Puerto Rico'), ('QA', 'Qatar'), ('RO', 'Romania'), ('RU', 'Russian Federation'), ('RW', 'Rwanda'), ('RE', 'R\xe9union'), ('BL', 'Saint Barth\xe9lemy'), ('SH', 'Saint Helena, Ascension and Tristan da Cunha'), ('KN', 'Saint Kitts and Nevis'), ('LC', 'Saint Lucia'), ('MF', 'Saint Martin (French part)'), ('PM', 'Saint Pierre and Miquelon'), ('VC', 'Saint Vincent and the Grenadines'), ('WS', 'Samoa'), ('SM', 'San Marino'), ('ST', 'Sao Tome and Principe'), ('SA', 'Saudi Arabia'), ('SN', 'Senegal'), ('RS', 'Serbia'), ('SC', 'Seychelles'), ('SL', 'Sierra Leone'), ('SG', 'Singapore'), ('SX', 'Sint Maarten (Dutch part)'), ('SK', 'Slovakia'), ('SI', 'Slovenia'), ('SB', 'Solomon Islands'), ('SO', 'Somalia'), ('ZA', 'South Africa'), ('GS', 'South Georgia and the South Sandwich Islands'), ('SS', 'South Sudan'), ('ES', 'Spain'), ('LK', 'Sri Lanka'), ('SD', 'Sudan'), ('SR', 'Suriname'), ('SJ', 'Svalbard and Jan Mayen'), ('SZ', 'Swaziland'), ('SE', 'Sweden'), ('CH', 'Switzerland'), ('SY', 'Syrian Arab Republic'), ('TW', 'Taiwan (Province of China)'), ('TJ', 'Tajikistan'), ('TZ', 'Tanzania, United Republic of'), ('TH', 'Thailand'), ('TL', 'Timor-Leste'), ('TG', 'Togo'), ('TK', 'Tokelau'), ('TO', 'Tonga'), ('TT', 'Trinidad and Tobago'), ('TN', 'Tunisia'), ('TR', 'Turkey'), ('TM', 'Turkmenistan'), ('TC', 'Turks and Caicos Islands'), ('TV', 'Tuvalu'), ('UG', 'Uganda'), ('UA', 'Ukraine'), ('AE', 'United Arab Emirates'), ('GB', 'United Kingdom'), ('US', 'United States'), ('UM', 'United States Minor Outlying Islands'), ('UY', 'Uruguay'), ('UZ', 'Uzbekistan'), ('VU', 'Vanuatu'), ('VE', 'Venezuela, Bolivarian Republic of'), ('VN', 'Viet Nam'), ('VG', 'Virgin Islands (British)'), ('VI', 'Virgin Islands (U.S.)'), ('WF', 'Wallis and Futuna'), ('EH', 'Western Sahara'), ('YE', 'Yemen'), ('ZM', 'Zambia'), ('ZW', 'Zimbabwe'), ('AX', '\xc5land Islands')])),
+                ('location', models.CharField(default=b'work', max_length=6, verbose_name='location', choices=[(b'work', 'Work'), (b'home', 'Home'), (b'mobile', 'Mobile'), (b'fax', 'Fax'), (b'person', 'Personal'), (b'other', 'Other')])),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+                ('content_type', models.ForeignKey(to='contenttypes.ContentType')),
+            ],
+            options={
+                'db_table': 'contacts_street_addresses',
+                'verbose_name': 'street address',
+                'verbose_name_plural': 'street addresses',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='VoipSwitch',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(help_text='Switch name', max_length=50, verbose_name='Switch name')),
+                ('ip', models.CharField(default=b'auto', help_text='Switch IP.', max_length=100, verbose_name='switch IP')),
+                ('esl_listen_ip', models.CharField(default=b'127.0.0.1', help_text='Event socket switch IP.', max_length=100, verbose_name='event socket switch IP')),
+                ('esl_listen_port', models.PositiveIntegerField(default=b'8021', help_text='Event socket\n                                                              switch port.', verbose_name='event socket switch\n                                                    port')),
+                ('esl_password', models.CharField(default=b'ClueCon', help_text='Event socket switch\n                                                password.', max_length=30, verbose_name='event socket switch password')),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+            ],
+            options={
+                'ordering': ('name',),
+                'db_table': 'voip_switch',
+                'verbose_name': 'VoIP Switch',
+                'verbose_name_plural': 'VoIP Switches',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='WebSite',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('object_id', models.IntegerField(db_index=True)),
+                ('url', models.URLField(verbose_name='URL')),
+                ('location', models.CharField(default=b'work', max_length=6, verbose_name='location', choices=[(b'work', 'Work'), (b'home', 'Home'), (b'mobile', 'Mobile'), (b'fax', 'Fax'), (b'person', 'Personal'), (b'other', 'Other')])),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+                ('content_type', models.ForeignKey(to='contenttypes.ContentType')),
+            ],
+            options={
+                'db_table': 'contacts_web_sites',
+                'verbose_name': 'web site',
+                'verbose_name_plural': 'web sites',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.AlterUniqueTogether(
+            name='sipprofile',
+            unique_together=set([('sip_ip', 'sip_port')]),
+        ),
+        migrations.AddField(
+            model_name='providerrates',
+            name='provider_tariff',
+            field=models.ForeignKey(to='pyfreebill.ProviderTariff'),
+            preserve_default=True,
+        ),
+        migrations.AlterUniqueTogether(
+            name='providerrates',
+            unique_together=set([('digits', 'provider_tariff')]),
+        ),
+        migrations.AlterIndexTogether(
+            name='providerrates',
+            index_together=set([('provider_tariff', 'digits', 'enabled')]),
+        ),
+        migrations.AddField(
+            model_name='lcrproviders',
+            name='provider_tariff',
+            field=models.ForeignKey(verbose_name='Provider tariff', to='pyfreebill.ProviderTariff'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='group',
+            name='people',
+            field=models.ManyToManyField(to='pyfreebill.Person', null=True, verbose_name='people', blank=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='dimcustomersiphangupcause',
+            name='date',
+            field=models.ForeignKey(verbose_name='date', to='pyfreebill.DimDate'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='dimcustomerhangupcause',
+            name='date',
+            field=models.ForeignKey(verbose_name='date', to='pyfreebill.DimDate'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='dimcustomerdestination',
+            name='date',
+            field=models.ForeignKey(verbose_name='date', to='pyfreebill.DimDate'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='customerrates',
+            name='ratecard',
+            field=models.ForeignKey(verbose_name='ratecard', to='pyfreebill.RateCard'),
+            preserve_default=True,
+        ),
+        migrations.AlterUniqueTogether(
+            name='customerrates',
+            unique_together=set([('ratecard', 'prefix')]),
+        ),
+        migrations.AddField(
+            model_name='customerratecards',
+            name='ratecard',
+            field=models.ForeignKey(verbose_name='ratecard', to='pyfreebill.RateCard'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='cdr',
+            name='customer',
+            field=models.ForeignKey(related_name='customer_related', verbose_name='customer', to='pyfreebill.Company', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='cdr',
+            name='gateway',
+            field=models.ForeignKey(verbose_name='gateway', to='pyfreebill.SofiaGateway', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='cdr',
+            name='lcr_carrier_id',
+            field=models.ForeignKey(related_name='carrier_related', verbose_name='provider', to='pyfreebill.Company', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='cdr',
+            name='lcr_group_id',
+            field=models.ForeignKey(verbose_name='lcr group', to='pyfreebill.LCRGroup', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='cdr',
+            name='ratecard_id',
+            field=models.ForeignKey(verbose_name='ratecard', to='pyfreebill.RateCard', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='carriernormalizationrules',
+            name='company',
+            field=models.ForeignKey(verbose_name='provider', to='pyfreebill.Company'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='carriercidnormalizationrules',
+            name='company',
+            field=models.ForeignKey(verbose_name='provider', to='pyfreebill.Company'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='calleridprefix',
+            name='calleridprefixlist',
+            field=models.ForeignKey(verbose_name='callerid prefix list', to='pyfreebill.CalleridPrefixList'),
+            preserve_default=True,
+        ),
+        migrations.AlterUniqueTogether(
+            name='calleridprefix',
+            unique_together=set([('calleridprefixlist', 'prefix')]),
+        ),
+        migrations.AddField(
+            model_name='aclnodes',
+            name='company',
+            field=models.ForeignKey(verbose_name='company', to='pyfreebill.Company'),
+            preserve_default=True,
+        ),
+    ]

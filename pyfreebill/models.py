@@ -21,7 +21,6 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.contrib.contenttypes import generic
-from django.contrib.comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.generic import GenericRelation
 from django.utils.translation import ugettext_lazy as _

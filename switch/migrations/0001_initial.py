@@ -1,44 +1,33 @@
 # -*- coding: utf-8 -*-
-from south.utils import datetime_utils as datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'VoipSwitch'
-        db.create_table('fs_switch', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('ip', self.gf('django.db.models.fields.CharField')(default='auto', max_length=100)),
-            ('esl_listen_ip', self.gf('django.db.models.fields.CharField')(default='127.0.0.1', max_length=100)),
-            ('esl_listen_port', self.gf('django.db.models.fields.PositiveIntegerField')(default='8021')),
-            ('esl_password', self.gf('django.db.models.fields.CharField')(default='ClueCon', max_length=30)),
-            ('date_added', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('date_modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-        ))
-        db.send_create_signal('switch', ['VoipSwitch'])
+    dependencies = [
+    ]
 
-
-    def backwards(self, orm):
-        # Deleting model 'VoipSwitch'
-        db.delete_table('fs_switch')
-
-
-    models = {
-        'switch.voipswitch': {
-            'Meta': {'ordering': "('name',)", 'object_name': 'VoipSwitch', 'db_table': "'voip_switch'"},
-            'date_added': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'date_modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'esl_listen_ip': ('django.db.models.fields.CharField', [], {'default': "'127.0.0.1'", 'max_length': '100'}),
-            'esl_listen_port': ('django.db.models.fields.PositiveIntegerField', [], {'default': "'8021'"}),
-            'esl_password': ('django.db.models.fields.CharField', [], {'default': "'ClueCon'", 'max_length': '30'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'ip': ('django.db.models.fields.CharField', [], {'default': "'auto'", 'max_length': '100'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        }
-    }
-
-    complete_apps = ['switch']
+    operations = [
+        migrations.CreateModel(
+            name='VoipSwitch',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('name', models.CharField(help_text='Switch name', max_length=50, verbose_name='Switch name')),
+                ('ip', models.CharField(default=b'auto', help_text='Switch IP.', max_length=100, verbose_name='switch IP')),
+                ('esl_listen_ip', models.CharField(default=b'127.0.0.1', help_text='Event socket switch IP.', max_length=100, verbose_name='event socket switch IP')),
+                ('esl_listen_port', models.PositiveIntegerField(default=b'8021', help_text='Event socket switch port.', verbose_name='event socket switch port')),
+                ('esl_password', models.CharField(default=b'ClueCon', help_text='Event socket switch password.', max_length=30, verbose_name='event socket switch password')),
+                ('date_added', models.DateTimeField(auto_now_add=True, verbose_name='date added')),
+                ('date_modified', models.DateTimeField(auto_now=True, verbose_name='date modified')),
+            ],
+            options={
+                'ordering': ('name',),
+                'db_table': 'fs_switch',
+                'verbose_name': 'VoIP Switch',
+                'verbose_name_plural': 'VoIP Switches',
+            },
+            bases=(models.Model,),
+        ),
+    ]
