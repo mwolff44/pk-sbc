@@ -1,19 +1,19 @@
 # requirements.in
 
 Django==1.7.11
-django-admin-honeypot==0.3.0
-django-axes==1.3.8
-django-bootstrap-pagination==1.5.0
+django-admin-honeypot==1.0.0
+django-axes==1.6.0
+django-bootstrap-pagination==1.6.2
 django-bootstrap-toolkit==2.15.0
-django-bootstrap3==4.11.0
-django-braces==1.4.0
-django-chroniker==0.6.7
+django-bootstrap3==6.2.2
+django-braces==1.9.0
+django-chroniker==0.9.3
 django-clear-cache==0.3
-django-countries==2.1.2
-django-crispy-forms==1.5.2
-django-currencies==0.3.2
-django-datetime-widget==0.9
-django-iban==0.2.8
+django-countries==3.4.1
+django-crispy-forms==1.6.0
+django-currencies==0.4.0
+django-datetime-widget==0.9.3
+## -- to be upated
 django-import-export==0.2.3
 django-qsstats-magic==0.7.2
 django-mathfilters==0.3.0

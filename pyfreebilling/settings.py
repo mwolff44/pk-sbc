@@ -144,6 +144,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.contrib.messages.context_processors.messages",
     "django.core.context_processors.request",
+    #  'currencies.context_processors.currencies',
 )
 
 ROOT_URLCONF = 'pyfreebilling.urls'
@@ -165,6 +166,7 @@ INSTALLED_APPS = (
     'customerportal',
     'yawdadmin',
     'import_export',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -172,12 +174,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'admin_honeypot',
-    'django_iban',
     'chroniker',
     'clear_cache',
     'axes',
     'qsstats',
-    'django.contrib.admin',
     'django_countries',
     'did',
     'simple_import',

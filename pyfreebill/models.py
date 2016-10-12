@@ -18,7 +18,6 @@ from django.db import models
 from django.db.models import permalink, Sum, Avg, Count, Max, Min
 from django.core.validators import EMPTY_VALUES
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
@@ -29,8 +28,6 @@ from django.utils.html import format_html
 import datetime
 import qsstats
 import vatnumber
-
-from django_iban.fields import IBANField, SWIFTBICField
 
 import decimal
 
@@ -94,12 +91,6 @@ class Company(models.Model):
                                                help_text=_(u"If on, it means that VAT is "
                                                            u"validated through <a target='_blank' "
                                                            u"href='http://ec.europa.eu/taxation_customs/vies/vatRequest.html'>Vies</a>."))
-    swift_bic = SWIFTBICField(_(u"SWIFT BIC bank account number"),
-                              blank=True,
-                              null=True)
-    iban = IBANField(_(u"IBAN bank account number"),
-                     blank=True,
-                     null=True)
     prepaid = models.BooleanField(_(u"Prepaid / Postpaid"),
                                   default=True,
                                   help_text=_(u"If checked, this account customer is prepaid."))

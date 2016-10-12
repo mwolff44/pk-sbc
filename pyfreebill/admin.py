@@ -18,8 +18,7 @@
 from django.contrib import admin
 from django.contrib import messages
 from django.contrib.contenttypes import generic
-from django.contrib.comments.models import Comment
-from django.contrib.admin.models import LogEntry, ADDITION, CHANGE, DELETION
+#  from django.contrib.admin.models import LogEntry, ADDITION, CHANGE, DELETION
 from django.utils.html import escape
 from django.core.urlresolvers import reverse
 from django.contrib.admin.views.main import ChangeList
@@ -210,8 +209,7 @@ class CompanyAdmin(admin.ModelAdmin):
                        ('slug', 'about'),
                        'account_number',
                        ('vat', 'vat_number'),
-                       'vat_number_validated',
-                       ('swift_bic', 'iban')),
+                       'vat_number_validated'),
             'description': _(u'General company informations')
         }),
         (_(u'Customer settings'), {
