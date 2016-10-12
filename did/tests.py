@@ -18,7 +18,6 @@
 from django.test import TestCase
 from django.test import Client
 
-from cities_light.models import City
 
 from pyfreebill.models import Company
 
@@ -59,7 +58,6 @@ class test_Did(TestCase):
         self.test_create_provider()
         provider = Company.objects.get(name="Celea")
         did = Did(number='33100110011',
-                  #city=City.objects.get(id=52277),
                   provider=provider,
                   max_channels='10',
                   description="did created by MW")

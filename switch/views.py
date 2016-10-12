@@ -37,6 +37,7 @@ from switch import psdash
 
 from pyfreebilling import __version__
 
+
 @staff_member_required
 def fs_status_view(request):
     try:

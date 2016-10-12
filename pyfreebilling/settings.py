@@ -175,30 +175,22 @@ INSTALLED_APPS = (
     'admin_honeypot',
     'django_iban',
     'chroniker',
-    'common',
     'clear_cache',
     'axes',
     'qsstats',
     'django.contrib.admin',
     'south',
-    'cities_light',
     'django_countries',
-    'country_dialcode',
-    'database_size',
     'did',
     'simple_import',
-    'sysmon',
-    'request',
     'datetimewidget',
     'bootstrap3',
     'currencies',
     'djangosecure',
-    'country_block',
     'django_tables2',
     'bootstrap_toolkit',
     'bootstrap_pagination',
     'mathfilters',
-    'dbbackup',
     'crispy_forms',
     #'django_extensions',
 )
@@ -270,13 +262,6 @@ ADMIN_DISABLE_APP_INDEX = 'True'
 
 
 # ----------
-# django-cities-light
-# ----------
-SOUTH_MIGRATION_MODULES = {
-    'cities_light': 'cities_light.south_migrations',
-}
-
-# ----------
 # Chroniker
 # ----------
 CHRONIKER_USE_PID = False
@@ -341,20 +326,3 @@ FILE_UPLOAD_TEMP_DIR = '/tmp'
 
 # Crispy forms
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
-
-# -- dbbackup settings
-DBBACKUP_SERVER_NAME = 'pyfreebilling'
-# DBBACKUP_CLEANUP_KEEP = 10
-FORCE_ENGINE = 'postgres'
-# DBBACKUP_POSTGRESQL_BACKUP_COMMANDS = 'pg_dump --username=pyfreebilling --host=localhost pyfreebilling'
-DBBACKUP_BACKUP_DIRECTORY = 'backups'
-DBBACKUP_SERVER_NAME = 'pyfreebilling'
-DBBACKUP_SEND_EMAIL = True
-DBBACKUP_GPG_ALWAYS_TRUST = False
-DBBACKUP_GPG_RECIPIENT = None
-# - FTP
-# DBBACKUP_STORAGE = 'dbbackup.storage.ftp_storage'
-# DBBACKUP_FTP_HOST = 'ftp.host'
-# DBBACKUP_FTP_USER = 'user, blank if anonymous'
-# DBBACKUP_FTP_PASSWORD = 'password, can be blank'
-# DBBACKUP_FTP_PATH = 'path, blank for default'

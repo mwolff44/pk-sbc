@@ -16,7 +16,6 @@
 
 from django.conf.urls import patterns, include, url, handler404, handler500
 from django.contrib import admin
-from django.http import request
 from django.views.generic.base import TemplateView
 from django.utils.translation import ugettext_lazy as _
 
@@ -261,32 +260,22 @@ admin_site.register_top_menu_item(_(u'8_Admin'),
                                              'order': 4,
                                              'separator': True,
                                              'title_icon': 'icon-warning-sign'},
-                                             {'name': _(u'Visitors stats'),
-                                             'admin_url': '/extranet/request/request/overview/',
-                                             'order': 5,
-                                             'separator': True,
-                                             'title_icon': 'icon-exclamation-sign'},
                                             {'name': _(u'Admin logs'),
                                              'admin_url': '/extranet/admin/logentry/',
-                                             'order': 6,
+                                             'order': 5,
                                              'separator': True,
                                              'title_icon': 'icon-exclamation-sign'},
                                             {'name': _(u'Recurring task logs'),
                                              'admin_url': '/extranet/chroniker/log/',
-                                             'order': 7,
+                                             'order': 6,
                                              'title_icon': 'icon-puzzle-piece'},
                                              {'name': _(u'Import logs'),
                                              'admin_url': '/extranet/simple_import/importlog/',
-                                             'order': 8,
+                                             'order': 7,
                                              'title_icon': 'icon-download-alt'},
-                                            {'name': _(u'Database size'),
-                                             'admin_url': '/extranet/database_size/table/',
-                                             'order': 9,
-                                             'separator': True,
-                                             'title_icon': 'icon-pushpin'},
                                             {'name': _(u'Version'),
                                              'admin_url': '/extranet/status/',
-                                             'order': 10,
+                                             'order': 8,
                                              'separator': True,
                                              'title_icon': 'icon-pushpin'}, ],
                                   perms=perms_func)
