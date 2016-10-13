@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
-import django.core.handlers.wsgi
+from django.core.wsgi import get_wsgi_application
 
 import os
 import sys
@@ -34,4 +34,4 @@ root = os.path.join(os.path.dirname(__file__))
 sys.path.insert(0, root)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'pyfreebilling.settings'
 
-application = django.core.handlers.wsgi.WSGIHandler()
+application = get_wsgi_application()

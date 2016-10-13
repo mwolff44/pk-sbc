@@ -37,5 +37,4 @@
           </IfVersion>
         </Directory>
 </VirtualHost>
-
-#WSGIPythonPath /usr/src/wikipbx:/usr/src/django:/usr/src/freeswitch/libs/esl/python
+WSGIPythonPath /usr/local/venv/pyfreebilling:/usr/local/venv/lib/python2.7/site-packages

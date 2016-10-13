@@ -77,8 +77,8 @@ def rates_csv_view(request, *args, **kwargs):
             .order_by('priority')
         qs = qs.filter(ratecard__pk=ratecard)
     except Person.DoesNotExist:
-            messages.error(request,
-                           _(u"""This user is not linked to a customer !"""))
+        messages.error(request,
+                       _(u"""This user is not linked to a customer !"""))
 
     if ratecard and int(ratecard) and ratecard in rc:
         ratecard = int(ratecard)
@@ -117,8 +117,8 @@ def csv_view(request, *args, **kwargs):
                .exclude(effective_duration="0")\
                .order_by('-start_stamp')
     except Person.DoesNotExist:
-            messages.error(request,
-                           _(u"""This user is not linked to a customer !"""))
+        messages.error(request,
+                       _(u"""This user is not linked to a customer !"""))
 
     if day and int(day) < 8 and int(day) > 0:
         day = int(day)
@@ -139,9 +139,10 @@ def csv_view(request, *args, **kwargs):
     else:
         qs.none()
     # import pdb; pdb.set_trace()
-    return render_to_csv_response(qs,
-                                  append_datestamp=True,
-                                  field_header_map={'customer__name': 'Customer'})
+    return render_to_csv_response(
+        qs,
+        append_datestamp=True,
+        field_header_map={'customer__name': 'Customer'})
 
 
 class Template404View(LoginRequiredMixin, TemplateView):

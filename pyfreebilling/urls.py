@@ -341,6 +341,4 @@ urlpatterns += patterns(
     url(regex=r'^chart_stats_general_json/$',
         view=chart_stats_general_json,
         name='chart_stats_general_json'),
-    url(r'^extranet/',
-        include("massadmin.urls")),
     url(r'^currencies/', include('currencies.urls')), )

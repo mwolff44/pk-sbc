@@ -122,17 +122,13 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'request.middleware.RequestMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'djangosecure.middleware.SecurityMiddleware',
-    'axes.middleware.FailedLoginMiddleware',
-    # For django < 1.6
     'yawdadmin.middleware.PopupMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
@@ -184,7 +180,6 @@ INSTALLED_APPS = (
     'datetimewidget',
     'bootstrap3',
     'currencies',
-    'djangosecure',
     'django_tables2',
     'bootstrap_toolkit',
     'bootstrap_pagination',

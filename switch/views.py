@@ -28,7 +28,6 @@ import psutil
 import logging
 import os
 import platform
-import psutil
 import socket
 import time
 
@@ -60,6 +59,7 @@ def fs_status_view(request):
     return render_to_response('admin/fs_status.html', locals(),
         context_instance=RequestContext(request))
 
+
 @staff_member_required
 def fs_registry_view(request):
     try:
@@ -69,6 +69,7 @@ def fs_registry_view(request):
 
     return render_to_response('admin/fs_status.html', locals(),
         context_instance=RequestContext(request))
+
 
 @staff_member_required
 def fs_bcalls_view(request):
@@ -89,6 +90,7 @@ def fs_bcalls_view(request):
 #     bar_chart.add('idle', cputimes.idle)
 #     return HttpResponse(bar_chart.render(), content_type="image/svg+xml")
 
+
 @staff_member_required
 def server_status_view(request):
     sysinfo = psdash.get_sysinfo()
@@ -97,7 +99,7 @@ def server_status_view(request):
     memory = psdash.get_memory()
     mem_wo_c = memory['total'] - memory['available']
     netifs = psdash.get_network_interfaces().values()
-    net_interfaces = netifs  #.sort(key=lambda x: x.get('bytes_sent'), reverse=True)
+    net_interfaces = netifs  #  .sort(key=lambda x: x.get('bytes_sent'), reverse=True)
     os = sysinfo['os'].decode('utf-8')
     hostname = sysinfo['hostname'].decode('utf-8')
     uptime = uptime

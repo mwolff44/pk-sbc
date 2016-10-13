@@ -350,9 +350,9 @@ class CompanyAdmin(admin.ModelAdmin):
 
         return super(CompanyAdmin, self).get_form(request, obj, **kwargs)
 
-    def queryset(self, request):
+    def get_queryset(self, request):
         user = getattr(request, 'user', None)
-        qs = super(CompanyAdmin, self).queryset(request)
+        qs = super(CompanyAdmin, self).get_queryset(request)
         if user.is_superuser:
             return qs
         else:
@@ -1316,11 +1316,11 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
             self.exclude.append('cost_destination')
         return super(CDRAdmin, self).get_form(request, obj, **kwargs)
 
-    def queryset(self, request):
+    def get_queryset(self, request):
         today_c = date.today() - datetime.timedelta(days=settings.PFB_NB_CUST_CDR)
         today_a = date.today() - datetime.timedelta(days=settings.PFB_NB_ADMIN_CDR)
         user = getattr(request, 'user', None)
-        qs = super(CDRAdmin, self).queryset(request)
+        qs = super(CDRAdmin, self).get_queryset(request)
         # add .prefetch_related('content_type') for reduce queries
         if user.is_superuser:
             return qs.filter(start_stamp__gte=today_a)

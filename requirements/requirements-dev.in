@@ -1,0 +1,3 @@
+django-extensions==1.7.4  #  python manage.py runserver_plus --cert /etc/ssl/private/localhost.pem
+werkzeug==0.11.11
+pyOpenSSL==16.1.0
