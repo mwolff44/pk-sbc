@@ -5,7 +5,6 @@ from django.db import models, migrations
 import pyfreebill.validators
 import django_countries.fields
 from django.conf import settings
-import django_iban.fields
 import pyfreebill.models
 
 
@@ -183,8 +182,8 @@ class Migration(migrations.Migration):
                 ('vat', models.BooleanField(default=False, help_text='if checked, VAT is applicable.', verbose_name='VAT Applicable / Not applicable')),
                 ('vat_number', models.CharField(blank=True, max_length=30, verbose_name='VAT number', validators=[pyfreebill.models.check_vat])),
                 ('vat_number_validated', models.BooleanField(default=False, help_text="If on, it means that VAT is validated through <a target='_blank' href='http://ec.europa.eu/taxation_customs/vies/vatRequest.html'>Vies</a>.", verbose_name='VAT Vies Validated.')),
-                ('swift_bic', django_iban.fields.SWIFTBICField(max_length=11, null=True, verbose_name='SWIFT BIC bank account number', blank=True)),
-                ('iban', django_iban.fields.IBANField(max_length=34, null=True, verbose_name='IBAN bank account number', blank=True)),
+                ('swift_bic', models.CharField(max_length=11, null=True, verbose_name='SWIFT BIC bank account number', blank=True)),
+                ('iban', models.CharField(max_length=34, null=True, verbose_name='IBAN bank account number', blank=True)),
                 ('prepaid', models.BooleanField(default=True, help_text='If checked, this account customer is prepaid.', verbose_name='Prepaid / Postpaid')),
                 ('credit_limit', models.DecimalField(default=0, help_text='Credit limit for postpaid account.', verbose_name='credit limit', max_digits=12, decimal_places=4)),
                 ('low_credit_alert', models.DecimalField(default=b'10', help_text='Low credit limit alert.', verbose_name='low credit level alert', max_digits=12, decimal_places=4)),
