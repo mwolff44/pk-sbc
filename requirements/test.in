@@ -1,0 +1,22 @@
+# Importing from base.txt
+-r base.in
+
+# Measures code coverage
+# http://nedbatchelder.com/code/coverage/
+coverage==3.7.1
+
+# Easily specify directories to be excluded from testing
+# https://github.com/kgrandis/nose-exclude/
+nose-exclude==0.4.1
+
+# Django test runner using nose
+# https://github.com/django-nose/django-nose
+django-nose==1.4.1
+
+# Test fixtures replacement for Python
+# https://github.com/rbarrois/factory_boy
+factory-boy==2.5.2
+
+# Python style checker
+# http://flake8.readthedocs.org/en/latest/
+flake8==2.4.1

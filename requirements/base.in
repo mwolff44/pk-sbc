@@ -1,0 +1,65 @@
+# requirements.in
+
+# Current framework
+# https://docs.djangoproject.com/en/1.8/
+django==1.8.15
+
+django-admin-honeypot==1.0.0
+django-axes==2.2.0
+django-bootstrap-pagination==1.6.2
+django-bootstrap-toolkit==2.15.0
+django-bootstrap3==7.1.0
+
+# Lots of custom mixins
+# http://django-braces.readthedocs.org/en/latest/
+django-braces==1.9.0
+
+django-chroniker==0.9.3
+
+# Simple Django management command that clears your cache
+# https://github.com/rdegges/django-clear-cache
+django-clear-cache==0.3
+
+django-countries==4.0
+django-crispy-forms==1.6.0
+django-currencies==0.4.0
+django-datetime-widget==0.9.3
+django-import-export==0.5.1
+django-qsstats-magic==0.7.2
+django-queryset-csv==0.3.3
+django-mathfilters==0.4.0
+
+
+# Useful model mixins and utilities such as `TimeStampedModel` and `Choices`
+# https://django-model-utils.readthedocs.org/en/latest/
+django-model-utils==2.6
+
+
+django-simple-import==2.0.1
+django-solo==1.1.2
+django-tables2==1.2.6
+
+# Templated email
+# https://github.com/vintasoftware/django-templated-email/
+django-templated-email==1.0
+
+FreeSWITCH-ESL-Python==1.2
+netaddr==0.7.18
+netifaces==0.10.5
+
+# PostgreSQL adapter
+# http://pythonhosted.org/psycopg2/
+psycopg2==2.6.2
+
+raven==5.27.1
+
+# HTTP request API
+# http://docs.python-requests.org/en/latest/
+requests==2.11.1
+
+# World timezone definitions
+# http://pytz.sourceforge.net/
+pytz==2016.7
+
+vatnumber==1.2
+-e git+https://github.com/mwolff44/yawd-admin.git@0.7.4#egg=yawd-admin
