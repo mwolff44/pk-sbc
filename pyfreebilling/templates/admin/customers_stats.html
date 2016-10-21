@@ -24,13 +24,13 @@
 	<div class="container">
 		<div class="row">
 			{% if vue == "customer" %}
-			<form action="{% url 'customers_stats' %}" method="GET" class="form-horizontal" role="form">
+			<form action="{% url 'pyfreebill:customers_stats' %}" method="GET" class="form-horizontal" role="form">
 			{% elif vue == "provider" %}
-			<form action="{% url 'providers_stats' %}" method="GET" class="form-horizontal" role="form">
+			<form action="{% url 'pyfreebill:providers_stats' %}" method="GET" class="form-horizontal" role="form">
 			{% elif vue == "dest_customer" %}
-			<form action="{% url 'dest_customers_stats' %}" method="GET" class="form-horizontal" role="form">
+			<form action="{% url 'pyfreebill:dest_customers_stats' %}" method="GET" class="form-horizontal" role="form">
 			{% elif vue == "dest_provider" %}
-			<form action="{% url 'dest_providers_stats' %}" method="GET" class="form-horizontal" role="form">
+			<form action="{% url 'pyfreebill:dest_providers_stats' %}" method="GET" class="form-horizontal" role="form">
 			{% endif %}
 				<h3 class="form-signin-heading">Stats selection : </h3>
 				

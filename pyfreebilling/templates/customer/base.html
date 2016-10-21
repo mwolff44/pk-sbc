@@ -1,6 +1,6 @@
 {% extends 'customer/bootstrap3.html' %}
 {% load i18n %}
-{% load url from future %}
+
 {% load bootstrap3 %}
 
 {% block bootstrap3_extra_head %}{% endblock %}
@@ -22,13 +22,12 @@
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
-						<li><a href="{% url 'sip_account' %}">{% trans "SIP Accounts" %}</a></li>
-						<li><a href="{% url 'balance_history' %}">{% trans "Balance history" %}</a></li>
-						<li><a href="{% url 'list_rate' %}">{% trans "Rates" %}</a></li>
-						<li><a href="{% url 'list_export' %}">{% trans "Report" %}</a></li>
-						<li><a href="{% url 'cdr_report' %}">{% trans "CDR" %}</a></li>
-						<li><a href="{% url 'django.contrib.auth.views.logout_then_login' %}"><i class="icon-off"></i>{% trans "Log out" %}</a></li>
+						<li><a href="{% url 'customerportal:home' %}">{% trans "Home" %}</a></li>
+						<li><a href="{% url 'customerportal:sip_account' %}">{% trans "SIP Accounts" %}</a></li>
+						<li><a href="{% url 'customerportal:balance_history' %}">{% trans "Balance history" %}</a></li>
+						<li><a href="{% url 'customerportal:list_export' %}">{% trans "Report" %}</a></li>
+						<li><a href="{% url 'customerportal:cdr_report' %}">{% trans "CDR" %}</a></li>
+						<li><a href="{% url 'customerportal:logout_then_login' %}"><i class="icon-off"></i>{% trans "Log out" %}</a></li>
 					</ul>
 				</div><!--/.navbar-collapse -->
 			</div>

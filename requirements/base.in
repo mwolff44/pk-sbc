@@ -1,8 +1,10 @@
 # requirements.in
+# pip-compile -v requirements/base.in
+# pip-sync requirements/base.txt
 
 # Current framework
 # https://docs.djangoproject.com/en/1.8/
-django==1.8.15
+django==1.9.10
 
 django-admin-honeypot==1.0.0
 django-axes==2.2.0
@@ -14,16 +16,27 @@ django-bootstrap3==7.1.0
 # http://django-braces.readthedocs.org/en/latest/
 django-braces==1.9.0
 
-django-chroniker==0.9.3
+# cron tasks
+# https://github.com/chrisspen/django-chroniker/
+django-chroniker==0.9.5
 
 # Simple Django management command that clears your cache
 # https://github.com/rdegges/django-clear-cache
 django-clear-cache==0.3
 
 django-countries==4.0
-django-crispy-forms==1.6.0
+
+# forms tools
+# https://github.com/maraujop/django-crispy-forms/
+django-crispy-forms==1.6.1
+
 django-currencies==0.4.0
 django-datetime-widget==0.9.3
+
+# Filtering queryset
+# https://github.com/carltongibson/django-filter
+django-filter==0.15.3
+
 django-import-export==0.5.1
 django-qsstats-magic==0.7.2
 django-queryset-csv==0.3.3
@@ -51,7 +64,9 @@ netifaces==0.10.5
 # http://pythonhosted.org/psycopg2/
 psycopg2==2.6.2
 
-raven==5.27.1
+# Sentry python lib
+# https://github.com/getsentry/raven-python/
+raven==5.30.0
 
 # HTTP request API
 # http://docs.python-requests.org/en/latest/
@@ -62,4 +77,7 @@ requests==2.11.1
 pytz==2016.7
 
 vatnumber==1.2
--e git+https://github.com/mwolff44/yawd-admin.git@0.7.4#egg=yawd-admin
+
+# admin template
+# https://github.com/mwolff44/yawd-admin
+-e git+https://github.com/mwolff44/yawd-admin.git@master#egg=yawd-admin

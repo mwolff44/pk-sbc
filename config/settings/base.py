@@ -17,6 +17,10 @@
 # Django settings for pyfreebilling project.
 from __future__ import absolute_import, unicode_literals
 
+# SECRET_KEY = 'securitykeymustbechanged'
+#import django
+#django.setup()
+
 from os.path import abspath, basename, dirname, join, normpath
 from sys import path
 
@@ -28,6 +32,7 @@ CONFIG_ROOT = dirname(dirname(abspath(__file__)))
 # Absolute filesystem path to the project directory:
 PROJECT_ROOT = dirname(CONFIG_ROOT)
 APP_DIR = normpath(join(PROJECT_ROOT, 'pyfreebilling'))
+APPS_DIR = APP_DIR
 
 # Absolute filesystem path to the django repo directory:
 DJANGO_ROOT = PROJECT_ROOT
@@ -89,13 +94,14 @@ THIRD_PARTY_APPS = (
     'mathfilters',
     'crispy_forms',
     'solo',
+    'django_filters',
 )
 
 PROJECT_APPS = (
-    'pyfreebilling.apps.pyfreebill.apps.PyfreebillConfig',
-    'pyfreebilling.apps.did.apps.DidConfig',
-    'pyfreebilling.apps.switch.apps.SwitchConfig',
-    'pyfreebilling.apps.customerportal.apps.CustomerPortalConfig',
+    'pyfreebilling.pyfreebill.apps.PyfreebillConfig',
+    'pyfreebilling.did.apps.DidConfig',
+    'pyfreebilling.switch.apps.SwitchConfig',
+    'pyfreebilling.customerportal.apps.CustomerPortalConfig',
 )
 
 EXTENSION_APPS = (
@@ -323,6 +329,7 @@ LOGGING = {
 
 
 #  ######### SECURITY CONFIGURATION
+SECRET_KEY = 'securitykeymustbechanged'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
 SECURE_BROWSER_XSS_FILTER = True
@@ -381,3 +388,7 @@ FILE_UPLOAD_TEMP_DIR = '/tmp'
 
 # Crispy forms
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+# Location of root django.contrib.admin URL
+HONEYPOT_URL = r'^admin/'
+ADMIN_URL = r'^extranet/'

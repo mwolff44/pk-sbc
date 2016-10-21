@@ -9,7 +9,7 @@
 
 	<div class="row">
         <div class="box">
-			<form action="{% url 'list_rate' %}" method="GET" class="form-horizontal" role="form">
+			<form action="{% url 'customerportal:list_rate' %}" method="GET" class="form-horizontal" role="form">
 				<div class="col-xs-8">
 					<h3 class="form-signin-heading">{% trans "Rates search" %} : </h3>
 					
@@ -33,7 +33,7 @@
 								<td>{{ r.tech_prefix }}</td>
 								<td>{{ r.discount }}</td>
 								<td>{{ r.ratecard.currency }}</td>
-								<th><a href="{% url 'rates_download' ratecard=r.id %}">{% trans "Download" %}</a></th>
+								<th><a href="{% url 'customerportal:rates_download' ratecard=r.id %}">{% trans "Download" %}</a></th>
 							</tr>
 						{% endfor %}
 						</tbody>

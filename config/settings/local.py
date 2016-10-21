@@ -12,7 +12,7 @@ ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1']
 
 #  ######### SECRET CONFIGURATION
 # Note: This key should only be used for development and testing.
-SECRET_KEY = r'securitykeymustbechanged'
+SECRET_KEY = 'securitykeymustbechanged'
 #  ######### END SECRET CONFIGURATION
 
 #  ######### MANAGER CONFIGURATION
@@ -41,10 +41,11 @@ DATABASES = {
 #  ######### DEV SPECIFIC
 INSTALLED_APPS += (
     'django_extensions',
-    'debug_toolbar', )
+    #'debug_toolbar', 
+)
 
 MIDDLEWARE_CLASSES += (
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 INTERNAL_IPS = ('10.0.3.27', )

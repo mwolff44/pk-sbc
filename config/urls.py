@@ -18,31 +18,18 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.conf.urls import patterns, include, url, handler404, handler500
+from django.conf.urls import include, url
+from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.generic.base import TemplateView
+# from django.views.generic.base import TemplateView
+from django.views import defaults as default_views
 from django.utils.translation import ugettext_lazy as _
 
-from yawdadmin import admin_site
-
-if settings.DEBUG:
-    import debug_toolbar
-
-#  from pyfreebilling.settings import DEBUG
-
-from pyfreebill.views import chart_stats_general_json, FsDirectoryUpdateView, FsSofiaUpdateView
-
-
-from customerportal.urls import urlpatterns as customerportal_url
-from customerportal.views import Template404View, Template500View
+from yawdadmin.resources import admin_site
 
 
 admin.autodiscover()
 admin_site._registry.update(admin.site._registry)
-
-
-handler404 = Template404View.as_view()
-handler500 = Template500View.as_view()
 
 
 # Custom menu
@@ -288,68 +275,133 @@ admin_site.register_top_menu_item(_(u'8_Admin'),
                                   perms=perms_func)
 
 
-# Modules
-urlpatterns = customerportal_url
+urlpatterns = [
+    # url(r'^$',
+    #     TemplateView.as_view(template_name='pages/home.html'),
+    #     name='home'),
+    # url(r'^about/$',
+    #     TemplateView.as_view(template_name='pages/about.html'),
+    #     name='about'),
+
+    # Django Admin, use {% raw %}{% url 'admin:index' %}{% endraw %}
+    url(
+        settings.ADMIN_URL,
+        include(admin_site.urls)
+    ),
+
+    # Honeypot
+    url(
+        settings.HONEYPOT_URL,
+        include('admin_honeypot.urls',
+                namespace='admin_honeypot')
+    ),
+
+    # user management
+    # url(r'^accounts/', include('allauth.urls')),
+
+    # Currencies management
+    url(
+        r'^currencies/',
+        include('currencies.urls')
+    ),
+
+    # Simple import module
+    url(
+        r'^extranet/simple_import/',
+        include('simple_import.urls')
+    ),
+
+    # Pyfreebilling applications
+    url(
+        r'^',
+        include('pyfreebilling.customerportal.urls',
+                namespace='customerportal')
+    ),
+    url(
+        r'^',
+        include('pyfreebilling.did.urls',
+                namespace='did')
+    ),
+    url(
+        r'^',
+        include('pyfreebilling.pyfreebill.urls',
+                namespace='pyfreebill')
+    ),
+    url(
+        r'^',
+        include('pyfreebilling.switch.urls',
+                namespace='switch')
+    ),
+
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
-    urlpatterns += patterns(
-        '',
-        url(r'^500/$',
-            TemplateView.as_view(template_name="customer/500.html")),
+    # This allows the error pages to be debugged during development, just visit
+    # these url in browser to see how these error pages look like.
+    urlpatterns += [
+        url(r'^400/$',
+            default_views.bad_request,
+            kwargs={'exception': Exception('Bad Request!')}),
+        url(r'^403/$',
+            default_views.permission_denied,
+            kwargs={'exception': Exception('Permission Denied')}),
         url(r'^404/$',
-            TemplateView.as_view(template_name="customer/404.html")),
-        url(r'^__debug__/',
-            include(debug_toolbar.urls)),
-    )
+            default_views.page_not_found,
+            kwargs={'exception': Exception('Page not Found')}),
+        url(r'^500/$',
+            default_views.server_error),
+    ]
+    if 'debug_toolbar' in settings.INSTALLED_APPS:
+        import debug_toolbar
 
-urlpatterns += patterns(
-    '',
-    url(r'^extranet/report/$',
-        'pyfreebill.views.admin_report_view'),
-    url(r'^extranet/FsServer/$',
-        'switch.views.fs_status_view'),
-    url(r'^extranet/FsServerRegistry/$',
-        'switch.views.fs_registry_view'),
-    url(r'^extranet/FsServerBCalls/$',
-        'switch.views.fs_bcalls_view'),
-    url(r'^extranet/cdrform/$',
-        'pyfreebill.views.live_report_view'),
-    url(r'^extranet/status/$',
-        'pyfreebill.views.admin_status_view'),
-    url(r'^extranet/list_models/$',
-        'pyfreebill.views.admin_listmodels_view'),
-    url(r'^extranet/customers_stats/$',
-        'pyfreebill.views.customers_stats_view',
-        name='customers_stats'),
-    url(r'^extranet/destination_customers_stats/$',
-        'pyfreebill.views.destination_customers_stats_view',
-        name='dest_customers_stats'),
-    url(r'^extranet/providers_stats/$',
-        'pyfreebill.views.providers_stats_view',
-        name='providers_stats'),
-    url(r'^extranet/destination_providers_stats/$',
-        'pyfreebill.views.destination_providers_stats_view',
-        name='dest_providers_stats'),
-    url(r'^extranet/ServerStatus/$',
-        'switch.views.server_status_view'),
-    url(r'^extranet/did/wizard_import/$',
-        'did.views.start_import',),
-    url(r'^i18n/',
-        include('django.conf.urls.i18n')),
-    url(r'^admin/',
-        include('admin_honeypot.urls',
-                namespace='admin_honeypot')),
-    url(r'^extranet/simple_import/',
-        include('simple_import.urls')),
-    url(r'^extranet/FsDirectoryUpdate/',
-        'pyfreebill.views.FsDirectoryUpdateView',
-        name='fs_directory_update'),
-    url(r'^extranet/FsSofiaUpdate/',
-        'pyfreebill.views.FsSofiaUpdateView',
-        name='fs_sofia_update'),
-    url(r'^extranet/',
-        include(admin_site.urls)),
-    url(regex=r'^chart_stats_general_json/$',
-        view=chart_stats_general_json,
-        name='chart_stats_general_json'),
-    url(r'^currencies/', include('currencies.urls')), )
+        urlpatterns += [
+            url(r'^__debug__/', include(debug_toolbar.urls)),
+        ]
+
+# urlpatterns += patterns(
+#     '',
+#     url(r'^extranet/report/$',
+#         'pyfreebill.views.admin_report_view'),
+#     url(r'^extranet/FsServer/$',
+#         'switch.views.fs_status_view'),
+#     url(r'^extranet/FsServerRegistry/$',
+#         'switch.views.fs_registry_view'),
+#     url(r'^extranet/FsServerBCalls/$',
+#         'switch.views.fs_bcalls_view'),
+#     url(r'^extranet/cdrform/$',
+#         'pyfreebill.views.live_report_view'),
+#     url(r'^extranet/status/$',
+#         'pyfreebill.views.admin_status_view'),
+#     url(r'^extranet/list_models/$',
+#         'pyfreebill.views.admin_listmodels_view'),
+#     url(r'^extranet/customers_stats/$',
+#         'pyfreebill.views.customers_stats_view',
+#         name='customers_stats'),
+#     url(r'^extranet/destination_customers_stats/$',
+#         'pyfreebill.views.destination_customers_stats_view',
+#         name='dest_customers_stats'),
+#     url(r'^extranet/providers_stats/$',
+#         'pyfreebill.views.providers_stats_view',
+#         name='providers_stats'),
+#     url(r'^extranet/destination_providers_stats/$',
+#         'pyfreebill.views.destination_providers_stats_view',
+#         name='dest_providers_stats'),
+#     url(r'^extranet/ServerStatus/$',
+#         'switch.views.server_status_view'),
+#     url(r'^extranet/did/wizard_import/$',
+#         'did.views.start_import',),
+#     url(r'^i18n/',
+#         include('django.conf.urls.i18n')),
+#     url(r'^extranet/simple_import/',
+#         include('simple_import.urls')),
+#     url(r'^extranet/FsDirectoryUpdate/',
+#         'pyfreebill.views.FsDirectoryUpdateView',
+#         name='fs_directory_update'),
+#     url(r'^extranet/FsSofiaUpdate/',
+#         'pyfreebill.views.FsSofiaUpdateView',
+#         name='fs_sofia_update'),
+#     url(regex=r'^chart_stats_general_json/$',
+#         view=chart_stats_general_json,
+#         name='chart_stats_general_json'),
+# )
