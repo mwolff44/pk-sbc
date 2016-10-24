@@ -71,7 +71,6 @@ DJANGO_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'yawdadmin',
     'django.contrib.admin',
     'django.contrib.admindocs',
 )
@@ -121,7 +120,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'yawdadmin.middleware.PopupMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 #  ######### END MIDDLEWARE CONFIGURATION

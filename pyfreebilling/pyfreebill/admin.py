@@ -31,9 +31,6 @@ from django.utils.translation import ugettext_lazy as _
 from datetime import date
 import datetime
 
-from yawdadmin.resources import admin_site
-from yawdadmin.admin import SortableModelAdmin
-
 from import_export.admin import ImportExportMixin, ExportMixin, ImportMixin
 from import_export.formats import base_formats
 
@@ -791,7 +788,7 @@ class RateCardAdmin(admin.ModelAdmin):
     get_boolean_display.admin_order_field = _(u'enabled')
 
 
-class CustomerRateCardsAdmin(SortableModelAdmin):
+class CustomerRateCardsAdmin(admin.ModelAdmin):  # (SortableModelAdmin):
     list_display = ['company',
                     'ratecard',
                     'tech_prefix',
@@ -1420,38 +1417,38 @@ class DimProviderDestinationAdmin(admin.ModelAdmin):
 #----------------------------------------
 # register
 #----------------------------------------
-admin_site.register(Company, CompanyAdmin)
-admin_site.register(Person, PersonAdmin)
-admin_site.register(Group, GroupAdmin)
-admin_site.register(CompanyBalanceHistory, CompanyBalanceHistoryAdmin)
-admin_site.register(CalleridPrefix, CalleridPrefixAdmin)
-admin_site.register(CalleridPrefixList, CalleridPrefixListAdmin)
-admin_site.register(ProviderTariff, ProviderTariffAdmin)
-admin_site.register(ProviderRates, ProviderRatesAdmin)
-admin_site.register(LCRGroup, LCRGroupAdmin)
+admin.site.register(Company, CompanyAdmin)
+admin.site.register(Person, PersonAdmin)
+admin.site.register(Group, GroupAdmin)
+admin.site.register(CompanyBalanceHistory, CompanyBalanceHistoryAdmin)
+admin.site.register(CalleridPrefix, CalleridPrefixAdmin)
+admin.site.register(CalleridPrefixList, CalleridPrefixListAdmin)
+admin.site.register(ProviderTariff, ProviderTariffAdmin)
+admin.site.register(ProviderRates, ProviderRatesAdmin)
+admin.site.register(LCRGroup, LCRGroupAdmin)
 #admin.site.register(LCRProviders, LCRProvidersAdmin)
-admin_site.register(RateCard, RateCardAdmin)
-admin_site.register(CustomerRates, CustomerRatesAdmin)
-admin_site.register(CustomerRateCards, CustomerRateCardsAdmin)
-admin_site.register(CustomerDirectory, CustomerDirectoryAdmin)
-#admin_site.register(AclLists, AclListsAdmin)
+admin.site.register(RateCard, RateCardAdmin)
+admin.site.register(CustomerRates, CustomerRatesAdmin)
+admin.site.register(CustomerRateCards, CustomerRateCardsAdmin)
+admin.site.register(CustomerDirectory, CustomerDirectoryAdmin)
+#admin.site.register(AclLists, AclListsAdmin)
 #admin.site.register(AclNodes, AclNodesAdmin)
 #admin.site.register(VoipSwitch, VoipSwitchAdmin)
-admin_site.register(SipProfile, SipProfileAdmin)
-admin_site.register(SofiaGateway, SofiaGatewayAdmin)
+admin.site.register(SipProfile, SipProfileAdmin)
+admin.site.register(SofiaGateway, SofiaGatewayAdmin)
 #admin.site.register(HangupCause, HangupCauseAdmin)
-admin_site.register(CDR, CDRAdmin)
-admin_site.register(CarrierNormalizationRules, CarrierNormalizationRulesAdmin)
-admin_site.register(CustomerNormalizationRules,
+admin.site.register(CDR, CDRAdmin)
+admin.site.register(CarrierNormalizationRules, CarrierNormalizationRulesAdmin)
+admin.site.register(CustomerNormalizationRules,
                     CustomerNormalizationRulesAdmin)
-admin_site.register(CarrierCIDNormalizationRules,
+admin.site.register(CarrierCIDNormalizationRules,
                     CarrierCIDNormalizationRulesAdmin)
-admin_site.register(CustomerCIDNormalizationRules,
+admin.site.register(CustomerCIDNormalizationRules,
                     CustomerCIDNormalizationRulesAdmin)
-admin_site.register(DestinationNumberRules, DestinationNumberRulesAdmin)
+admin.site.register(DestinationNumberRules, DestinationNumberRulesAdmin)
 #admin.site.register(DimCustomerHangupcause, DimCustomerHangupcauseAdmin)
 #admin.site.register(DimCustomerSipHangupcause, DimCustomerSipHangupcauseAdmin)
 #admin.site.register(DimProviderHangupcause, DimProviderHangupcauseAdmin)
 #admin.site.register(DimProviderSipHangupcause, DimProviderSipHangupcauseAdmin)
-admin_site.register(DimCustomerDestination, DimCustomerDestinationAdmin)
-admin_site.register(DimProviderDestination, DimProviderDestinationAdmin)
+admin.site.register(DimCustomerDestination, DimCustomerDestinationAdmin)
+admin.site.register(DimProviderDestination, DimProviderDestinationAdmin)

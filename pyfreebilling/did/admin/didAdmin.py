@@ -22,8 +22,6 @@ from django.template import Context, loader
 #  from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from yawdadmin.resources import admin_site
-
 from pyfreebilling.switch import esl
 
 from pyfreebilling.did.models import Did
@@ -111,4 +109,4 @@ class DidAdmin(admin.ModelAdmin):
 #  ----------------------------------------
 #  register
 #  ----------------------------------------
-admin_site.register(Did, DidAdmin)
+admin.site.register(Did, DidAdmin)

@@ -77,7 +77,3 @@ requests==2.11.1
 pytz==2016.7
 
 vatnumber==1.2
-
-# admin template
-# https://github.com/mwolff44/yawd-admin
--e git+https://github.com/mwolff44/yawd-admin.git@master#egg=yawd-admin

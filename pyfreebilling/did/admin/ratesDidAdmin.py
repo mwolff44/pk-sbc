@@ -16,8 +16,6 @@
 
 from django.contrib import admin
 
-from yawdadmin.resources import admin_site
-
 from pyfreebilling.did.models import CustomerRatesDid, ProviderRatesDid
 
 
@@ -68,5 +66,5 @@ class ProviderRatesDidAdmin(admin.ModelAdmin):
 #  ----------------------------------------
 #   register
 #  ----------------------------------------
-admin_site.register(CustomerRatesDid, CustomerRatesDidAdmin)
-admin_site.register(ProviderRatesDid, ProviderRatesDidAdmin)
+admin.site.register(CustomerRatesDid, CustomerRatesDidAdmin)
+admin.site.register(ProviderRatesDid, ProviderRatesDidAdmin)

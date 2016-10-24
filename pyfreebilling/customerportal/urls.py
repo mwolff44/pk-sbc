@@ -33,6 +33,16 @@ urlpatterns = [
         view=views.SipAccountCustView.as_view(),
         name='sip_account'
     ),
+    # url(
+    #     regex=r'^sip_account/add$',
+    #     view=views.SipAccountCustAddView.as_view(),
+    #     name='add_sip_account'
+    # ),
+    # url(
+    #     regex=r'^sip_account/dactivate$',
+    #     view=views.SipAccountCustDeactivateView.as_view(),
+    #     name='deactivate_sip_account'
+    # ),
     url(
         regex=r'^balance/$',
         view=views.BalanceHistoryCustView.as_view(),

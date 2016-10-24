@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
-#import os
 from django.contrib import admin
+
 from pyfreebilling.switch.models import VoipSwitch
 
 
@@ -25,7 +25,8 @@ class VoipSwitchAdmin(admin.ModelAdmin):
     list_filter = ('name',)
     ordering = ('name',)
 
-#----------------------------------------
+
+# ----------------------------------------
 # register
-#----------------------------------------
+# ----------------------------------------
 admin.site.register(VoipSwitch, VoipSwitchAdmin)
