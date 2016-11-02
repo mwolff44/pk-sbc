@@ -457,7 +457,7 @@ Pyfreebilling installation
 
 ::
 
-	git clone https://github.com/mwolff44/pyfreebilling.git
+	git clone -b '1.4.8' --single-branch --depth 1 https://github.com/mwolff44/pyfreebilling.git
 	chown -R www-data:www-data pyfreebilling
 	cd pyfreebilling
 
