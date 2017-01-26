@@ -520,7 +520,7 @@ if (session:ready() == true) then
     session:hangup("BEARERCAPABILITY_NOTAVAIL")
   else
     rate["rate"] = tonumber(rate["rate"])*(1-tonumber(rate["discount"])/100)
-    rate["minimal"] = tonumber(rate["minimal_time"]) * tonumber(rate["rate"]) + tonumber(rate["block_min_duration"])
+    rate["minimal"] = tonumber(rate["minimal_time"]) * tonumber(rate["rate"]) + tonumber(rate["init_block"])
     log("Rate", "OK")
     set_variable("sell_rate", tonumber(rate["rate"]))
     set_variable("sell_increment", rate["block_min_duration"])
