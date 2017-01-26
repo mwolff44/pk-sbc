@@ -30,7 +30,7 @@ pyfreebilling is developed under python, LUA and PostgreSQL as the database laye
 ### Documentation
 
 
-Please visit : [http://pyfreebilling.readthedocs.org/](http://pyfreebilling.readthedocs.org/)
+Please visit : [http://pyfreebilling.readthedocs.org/](https://github.com/mwolff44/pyfreebilling/blob/master/doc/source/installation.rst)
 
 ### License
 
