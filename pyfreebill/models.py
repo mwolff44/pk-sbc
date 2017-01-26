@@ -992,7 +992,7 @@ class CustomerRates(models.Model):
     block_min_duration = models.IntegerField(_(u'Increment'),
                                              default=1)
     minimal_time = models.IntegerField(_(u'Minimal time'),
-                                       default=1)
+                                       default=0)
     init_block = models.DecimalField(_(u'Connection fee'),
                                      max_digits=11,
                                      decimal_places=5,
