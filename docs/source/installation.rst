@@ -685,14 +685,14 @@ Pyfreebilling installation
 ::
 
     */1 * * * * perl /usr/local/venv/pyfreebilling/freeswitch/scripts/import-csv.pl>> /var/log/cron.log 2>&1
-    * * * * * /usr/local/venv/bin/chroniker -e /usr/local/venv/bin/activate_this.py -p /usr/local/venv/pyfreebilling
+    * * * * * /usr/local/venv/bin/chroniker -e /usr/local/venv/bin/activate_this.py -p /usr/local/venv/pyfreebilling -s config.settings.local
 
 
 * modify db password and somme settings in :
 
 ::
 
-	/usr/local/venv/pyfreebilling/pyfreebilling/local_settings.py
+	/usr/local/venv/pyfreebilling/config/settings/local.py
 	/usr/local/venv/pyfreebilling/freeswitch/scripts/import-csv.pl
 
 
