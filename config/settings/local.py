@@ -23,7 +23,7 @@ ADMINS = (
 MANAGERS = ADMINS
 #  ######### END MANAGER CONFIGURATION
 
-INTERNAL_IPS = ('10.0.3.27', )
+INTERNAL_IPS = ('10.0.3.0/24', )
 
 #  ######### DATABASE CONFIGURATION
 DATABASES = {
@@ -41,7 +41,8 @@ DATABASES = {
 #  ######### DEV SPECIFIC
 INSTALLED_APPS += (
     'django_extensions',
-    #'debug_toolbar', 
+    #'debug_toolbar',
+    'pyfreebilling.urgencyfr.apps.UrgencyfrConfig',
 )
 
 MIDDLEWARE_CLASSES += (
@@ -81,3 +82,5 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 EMAIL_SIGNATURE = ''
 #  ######### END EMAIL CONFIGURATION
+
+#  ADMIN_TOOLS_THEMING_CSS = 'css/theming.css'
