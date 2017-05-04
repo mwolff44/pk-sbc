@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2013 Mathias WOLFF
 # This file is part of pyfreebilling.
 #
@@ -35,10 +36,24 @@ class VoipSwitch(models.Model):
     </configuration>
     """
 
+    FS_RTP = 10
+    KAM = 0
+    FS_MESS = 1
+
     name = models.CharField(
         _(u"Switch name"),
         max_length=50,
         help_text=_(u"Switch name"))
+    FSTYPE_CHOICES = (
+        (FS_RTP, (u"FREESWITCH")),
+        (KAM, _(u"KAMAILIO")),
+        (FS_MESS, _(u"FREESWITCH FOR TECHNICAL VOICE MESSAGES")),
+    )
+    setid = models.IntegerField(
+        _(u"Switch type"),
+        default=KAM,
+        choices=FSTYPE_CHOICES,
+        help_text=_(u"""Select the switch type (Kamailio, FreeSwitch)"""))
     ip = models.CharField(
         _(u"switch IP"),
         max_length=100,
@@ -58,6 +73,29 @@ class VoipSwitch(models.Model):
         max_length=30,
         default="ClueCon",
         help_text=_(u"Event socket switch password."))
+    enabled = models.BooleanField(
+        _(u"Enabled"),
+        default=True)
+    flags = models.PositiveIntegerField(
+        _(u"flags"),
+        default="0",
+        help_text=_(u"Flags."))
+    priority = models.PositiveIntegerField(
+        _(u"priority"),
+        default="0",
+        help_text=_(u"Priority."))
+    attrs = models.CharField(
+        _(u"attrs"),
+        max_length=128,
+        default=" ",
+        blank=True,
+        help_text=_(u"Attrs."))
+    description = models.CharField(
+        _(u"Description"),
+        max_length=64,
+        default=" ",
+        blank=True,
+        help_text=_(u"Description."))
     date_added = models.DateTimeField(
         _(u'date added'),
         auto_now_add=True)
@@ -73,4 +111,72 @@ class VoipSwitch(models.Model):
         verbose_name_plural = _(u'VoIP Switches')
 
     def __unicode__(self):
-        return u"%s (:%s)" % (self.name, self.ip)
+        return u"%s (:%s) / %s" % (self.name, self.ip, self.setid)
+
+
+class VoipSwitchProfile(models.Model):
+    """
+    VoipSwitch Profile link
+    """
+
+    sipprofile = models.ForeignKey(
+        'pyfreebill.Sipprofile',
+        on_delete=models.CASCADE,
+        verbose_name=_(u"Sip profile"))
+    fsswitch = models.ForeignKey(
+        VoipSwitch,
+        on_delete=models.CASCADE,
+        verbose_name=_(u"FS server"),
+        limit_choices_to={'setid': 10})
+
+    CALLIN = 1
+    CALLOUT = 2
+
+    CALLTYPE_CHOICES = (
+        (CALLIN, (u"IN")),
+        (CALLOUT, _(u"OUT")),
+    )
+    direction = models.IntegerField(
+        _(u"Call direction"),
+        default=CALLIN,
+        choices=CALLTYPE_CHOICES,
+        help_text=_(u"""Select the direction of calls for this profile"""))
+    ip = models.CharField(
+        _(u"context IP"),
+        max_length=100,
+        default="auto",
+        help_text=_(u"Sofia context IP address."))
+    priority = models.PositiveIntegerField(
+        _(u"priority"),
+        default="0",
+        help_text=_(u"Priority."))
+    outbound_proxy = models.ForeignKey(
+        VoipSwitch,
+        on_delete=models.CASCADE,
+        related_name='outboundproxy',
+        blank=True,
+        null=True,
+        verbose_name=_(u"Kamailio server"),
+        limit_choices_to={'setid': 0})
+    description = models.CharField(
+        _(u"Description"),
+        max_length=64,
+        default=" ",
+        blank=True,
+        help_text=_(u"Description."))
+    date_added = models.DateTimeField(
+        _(u'date added'),
+        auto_now_add=True)
+    date_modified = models.DateTimeField(
+        _(u'date modified'),
+        auto_now=True)
+
+    class Meta:
+        db_table = 'fs_switch_profile'
+        app_label = 'switch'
+        ordering = ('fsswitch', 'sipprofile', )
+        verbose_name = _(u'FS profile')
+        verbose_name_plural = _(u'FS profiles')
+
+    def __unicode__(self):
+        return u"%s -> %s" % (self.fsswitch, self.sipprofile)

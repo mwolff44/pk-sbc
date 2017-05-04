@@ -16,3 +16,4 @@
 
 from .didAdmin import Did
 from .ratesDidAdmin import CustomerRatesDid, ProviderRatesDid
+from .routesDidAdmin import RoutesDidAdmin

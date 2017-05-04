@@ -15,10 +15,12 @@
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
 from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
 
 from netaddr import IPNetwork, AddrFormatError
 
 import re
+import vatnumber
 
 
 def validate_cidr(value):
@@ -34,3 +36,8 @@ def validate_cidr(value):
                 return IPNetwork(cidr_val)
         except (AddrFormatError, TypeError), e:
             raise ValidationError(str(e))
+
+
+def check_vat(value):
+    if value != "" and not vatnumber.check_vat(value):
+        raise ValidationError(_(u"%s is not a valid VAT number") % value)

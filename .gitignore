@@ -79,6 +79,7 @@ pyfreebilling/media/
 media/
 custom_admin_tools/
 staticfiles/
+pyfreebilling/priv*
 
 # Vagrant
 #########

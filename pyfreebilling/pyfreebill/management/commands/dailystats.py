@@ -15,7 +15,8 @@
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
 from django.core.management.base import BaseCommand, CommandError
-from .models import CDR, DimDate, DimCustomerHangupcause, DimCustomerSipHangupcause, DimProviderHangupcause, DimProviderSipHangupcause, DimCustomerDestination, DimProviderDestination
+from pyfreebilling.cdr.models import CDR
+from pyfreebilling.pyfreebill.models import DimDate, DimCustomerHangupcause, DimCustomerSipHangupcause, DimProviderHangupcause, DimProviderSipHangupcause, DimCustomerDestination, DimProviderDestination
 import datetime
 from django.db.models import Sum, Avg, Count, Max, Min
 from django.db import connection

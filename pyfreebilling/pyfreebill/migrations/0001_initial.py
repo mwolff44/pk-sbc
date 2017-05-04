@@ -2,10 +2,10 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import pyfreebill.validators
+from ..validators import *
 import django_countries.fields
 from django.conf import settings
-import pyfreebill.models
+from ..models import *
 
 
 class Migration(migrations.Migration):
@@ -180,7 +180,7 @@ class Migration(migrations.Migration):
                 ('about', models.CharField(max_length=250, null=True, verbose_name='about', blank=True)),
                 ('account_number', models.IntegerField(null=True, verbose_name='Account number', blank=True)),
                 ('vat', models.BooleanField(default=False, help_text='if checked, VAT is applicable.', verbose_name='VAT Applicable / Not applicable')),
-                ('vat_number', models.CharField(blank=True, max_length=30, verbose_name='VAT number', validators=[pyfreebill.models.check_vat])),
+                ('vat_number', models.CharField(blank=True, max_length=30, verbose_name='VAT number', validators=[check_vat])),
                 ('vat_number_validated', models.BooleanField(default=False, help_text="If on, it means that VAT is validated through <a target='_blank' href='http://ec.europa.eu/taxation_customs/vies/vatRequest.html'>Vies</a>.", verbose_name='VAT Vies Validated.')),
                 ('swift_bic', models.CharField(max_length=11, null=True, verbose_name='SWIFT BIC bank account number', blank=True)),
                 ('iban', models.CharField(max_length=34, null=True, verbose_name='IBAN bank account number', blank=True)),
@@ -261,7 +261,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(verbose_name='description', blank=True)),
                 ('name', models.CharField(help_text='Ex.: customer SIP username, etc...', unique=True, max_length=50, verbose_name='SIP username')),
                 ('rtp_ip', models.CharField(default=b'auto', help_text='Internal IP address/mask to bind\n                              to for RTP. Format : CIDR Ex. 192.168.1.0/32', max_length=100, verbose_name='RTP IP CIDR')),
-                ('sip_ip', models.CharField(validators=[pyfreebill.validators.validate_cidr], max_length=100, blank=True, help_text='Internal IP address/mask to bind\n                              to for SIP. Format : CIDR. Ex. 192.168.1.0/32\n                              ', null=True, verbose_name='SIP IP CIDR')),
+                ('sip_ip', models.CharField(validators=[validate_cidr], max_length=100, blank=True, help_text='Internal IP address/mask to bind\n                              to for SIP. Format : CIDR. Ex. 192.168.1.0/32\n                              ', null=True, verbose_name='SIP IP CIDR')),
                 ('sip_port', models.PositiveIntegerField(default=5060, verbose_name='SIP port')),
                 ('max_calls', models.PositiveIntegerField(default=1, help_text='max simultaneous\n                                            calls allowed for this customer\n                                            account.', verbose_name='max calls')),
                 ('calls_per_second', models.PositiveIntegerField(default=10, help_text='maximum\n                                                   calls per second allowed for\n                                                   this customer account.', verbose_name='max calls per second')),

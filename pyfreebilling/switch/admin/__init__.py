@@ -15,3 +15,4 @@
 # along with pyfreebilling. If not, see <http://www.gnu.org/licenses/>
 
 from .SwitchAdmin import VoipSwitch
+from .DomainAdmin import Domain

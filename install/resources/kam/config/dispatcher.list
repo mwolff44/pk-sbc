@@ -1,0 +1,12 @@
+# $Id$
+# dispatcher destination sets
+#
+
+# line format
+# setit(int) destination(sip uri) flags(int,opt) priority(int,opt) attributes(str,opt)
+
+# external FS profiles
+2 sip:192.168.42.1:5092
+
+# internal FS profiles
+1 sip:192.168.100.1:5090

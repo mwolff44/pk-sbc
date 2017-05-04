@@ -38,7 +38,8 @@ urlpatterns = [
             ),
             url(
                 regex=r'^ServerStatus/$',
-                view=views.server_status_view
+                view=views.server_status_view,
+                name='ServerStatus'
             ),
         ])),
 ]

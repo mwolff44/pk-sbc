@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2013 Mathias WOLFF
 # This file is part of pyfreebilling.
 #
@@ -20,7 +21,7 @@ from pyfreebilling.switch.models import VoipSwitch
 
 
 class VoipSwitchAdmin(admin.ModelAdmin):
-    list_display = ('name', 'ip', 'esl_listen_ip', 'date_modified')
+    list_display = ('name', 'setid', 'ip', 'esl_listen_ip', 'date_modified')
     readonly_fields = ('date_added', 'date_modified')
     list_filter = ('name',)
     ordering = ('name',)

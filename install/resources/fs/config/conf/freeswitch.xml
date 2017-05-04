@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<document type="freeswitch/xml">
+
+  <X-PRE-PROCESS cmd="include" data="vars.xml"/>
+
+  <section name="configuration" description="Various Configuration">
+    <X-PRE-PROCESS cmd="include" data="autoload_configs/*.xml"/>
+  </section>
+
+  <section name="dialplan" description="Regex/XML Dialplan">
+    <X-PRE-PROCESS cmd="include" data="dialplan/default.xml"/>
+    <X-PRE-PROCESS cmd="include" data="dialplan/public.xml"/>
+  </section>
+
+  <!-- languages section (under development still) -->
+  <section name="languages" description="Language Management">
+    <X-PRE-PROCESS cmd="include" data="lang/de/*.xml"/>
+    <X-PRE-PROCESS cmd="include" data="lang/en/*.xml"/>
+    <X-PRE-PROCESS cmd="include" data="lang/fr/*.xml"/>
+    <X-PRE-PROCESS cmd="include" data="lang/ru/*.xml"/>
+    <X-PRE-PROCESS cmd="include" data="lang/he/*.xml"/>
+    <X-PRE-PROCESS cmd="include" data="lang/es/es_ES.xml"/>
+    <X-NO-PRE-PROCESS cmd="include" data="lang/es/es_MX.xml"/>
+    <X-PRE-PROCESS cmd="include" data="lang/pt/pt_BR.xml"/>
+    <X-NO-PRE-PROCESS cmd="include" data="lang/pt/pt_PT.xml"/>
+  </section>
+</document>

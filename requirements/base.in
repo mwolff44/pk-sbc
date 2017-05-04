@@ -1,30 +1,34 @@
 # requirements.in
+# To be installed before : pip - pip-tools==1.7.0
 # pip-compile -v requirements/base.in
 # pip-sync requirements/base.txt
+# pip list --outdated
 
 # Current framework
 # https://docs.djangoproject.com/en/1.8/
-django==1.9.10
+django==1.9.12
 
 django-admin-honeypot==1.0.0
-django-axes==2.2.0
+django-axes==2.3.2
 django-bootstrap-pagination==1.6.2
 django-bootstrap-toolkit==2.15.0
-django-bootstrap3==7.1.0
+
+# https://github.com/dyve/django-bootstrap3
+django-bootstrap3==8.2.1
 
 # Lots of custom mixins
 # http://django-braces.readthedocs.org/en/latest/
-django-braces==1.9.0
+django-braces==1.11.0
 
 # cron tasks
 # https://github.com/chrisspen/django-chroniker/
-django-chroniker==0.9.5
+django-chroniker==1.0.3
 
 # Simple Django management command that clears your cache
 # https://github.com/rdegges/django-clear-cache
 django-clear-cache==0.3
 
-django-countries==4.0
+django-countries==4.2
 
 # forms tools
 # https://github.com/maraujop/django-crispy-forms/
@@ -33,47 +37,60 @@ django-crispy-forms==1.6.1
 django-currencies==0.4.0
 django-datetime-widget==0.9.3
 
+# Useful command line extensions (`shell_plus`, `create_command`, `export_emails`)
+# http://django-extensions.readthedocs.org/en/latest/
+django-extensions==1.7.7
+
 # Filtering queryset
 # https://github.com/carltongibson/django-filter
+# Need to upgrade to 1.0 -> https://django-filter.readthedocs.io/en/develop/guide/migration.html
 django-filter==0.15.3
 
 django-import-export==0.5.1
 django-qsstats-magic==0.7.2
-django-queryset-csv==0.3.3
+
+# https://github.com/azavea/django-queryset-csv
+django-queryset-csv==1.0.0
+
 django-mathfilters==0.4.0
 
+# Django Migrations support for raw SQL
+django-migrate-sql==0.1.1
 
 # Useful model mixins and utilities such as `TimeStampedModel` and `Choices`
 # https://django-model-utils.readthedocs.org/en/latest/
-django-model-utils==2.6
+django-model-utils==2.6.1
 
 
 django-simple-import==2.0.1
 django-solo==1.1.2
-django-tables2==1.2.6
+django-tables2==1.4.2
 
 # Templated email
 # https://github.com/vintasoftware/django-templated-email/
-django-templated-email==1.0
+django-templated-email==2.1
 
 FreeSWITCH-ESL-Python==1.2
-netaddr==0.7.18
+netaddr==0.7.19
 netifaces==0.10.5
 
 # PostgreSQL adapter
 # http://pythonhosted.org/psycopg2/
-psycopg2==2.6.2
+psycopg2==2.7.1
 
 # Sentry python lib
 # https://github.com/getsentry/raven-python/
-raven==5.30.0
+raven==6.0.0
 
 # HTTP request API
 # http://docs.python-requests.org/en/latest/
-requests==2.11.1
+requests==2.13.0
 
 # World timezone definitions
 # http://pytz.sourceforge.net/
-pytz==2016.7
+pytz==2016.10
 
 vatnumber==1.2
+
+django-admin-tools==0.8.0
+feedparser==5.2.1

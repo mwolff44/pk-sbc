@@ -39,9 +39,13 @@ from pyfreebilling.switch import esl
 
 from pyfreebilling import __version__
 
+from pyfreebilling.cdr.models import CDR
+
+from pyfreebilling.customerdirectory.models import CustomerDirectory
+
 from .utils import round_value, getvar, return_query_string
 from .forms import CDRSearchForm
-from .models import DimCustomerDestination, DimProviderDestination, DimCustomerHangupcause, CDR, Company, CustomerDirectory, SipProfile
+from .models import DimCustomerDestination, DimProviderDestination, DimCustomerHangupcause, Company, SipProfile
 from .tables import TopCustTable, TopProvTable, TopDestCustTable, TopDestProvTable
 
 

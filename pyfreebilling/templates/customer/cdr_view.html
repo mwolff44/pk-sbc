@@ -11,7 +11,7 @@
         <div class="box">
 			<form action="{% url 'customerportal:cdr_report' %}" method="GET" class="form-horizontal" role="form">
 				<h3 class="form-signin-heading">{% trans "CDR search" %} : </h3>
-				
+
 				<div class="form-group">
 					<label for="from_date" class="col-xs-2 control-label">{% trans "From date" %} (Y/M/D h:m)</label>
 					<div class="col-xs-2">
@@ -21,6 +21,9 @@
 				  			<option>2014</option>
 				  			<option>2015</option>
 						  	<option>2016</option>
+							<option>2017</option>
+							<option>2018</option>
+							<option>2019</option>
 						</select>
         			</div>
         			<div class="col-xs-2">
@@ -131,6 +134,9 @@
 				  			<option>2014</option>
 				  			<option>2015</option>
 						  	<option>2016</option>
+							<option>2017</option>
+							<option>2018</option>
+							<option>2019</option>
 						</select>
         			</div>
         			<div class="col-xs-2">
@@ -241,7 +247,7 @@
 				{% buttons %}
 					<button type="submit" class="btn btn-primary btn-block">{% trans "Search" %}</button>
 				{% endbuttons %}
-		       
+
 			</form>
 		</div>
 	</div>

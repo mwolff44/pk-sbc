@@ -71,6 +71,12 @@ DJANGO_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'admin_tools',
+    'admin_tools.theming',
+    'admin_tools.menu',
+    #'admin_tools.dashboard',
+    #'jet.dashboard',
+    #'jet',
     'django.contrib.admin',
     'django.contrib.admindocs',
 )
@@ -94,13 +100,17 @@ THIRD_PARTY_APPS = (
     'crispy_forms',
     'solo',
     'django_filters',
+    'migrate_sql',
 )
 
 PROJECT_APPS = (
     'pyfreebilling.pyfreebill.apps.PyfreebillConfig',
     'pyfreebilling.did.apps.DidConfig',
     'pyfreebilling.switch.apps.SwitchConfig',
+    'pyfreebilling.customerdirectory.apps.CustomerDirectoryConfig',
     'pyfreebilling.customerportal.apps.CustomerPortalConfig',
+    'pyfreebilling.normalizationrule.apps.NormalizationRuleConfig',
+    'pyfreebilling.cdr.apps.CDRConfig',
 )
 
 EXTENSION_APPS = (
@@ -160,10 +170,12 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
+                'currencies.context_processors.currencies',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
+                'admin_tools.template_loaders.Loader',
             ],
             'string_if_invalid': 'NULL',
         },
@@ -347,11 +359,15 @@ ADMIN_HONEYPOT_EMAIL_ADMINS = False
 # -----------------------------------
 COUNTRIES_FLAG_PATH = 'flags/%s.png'
 
-# YAWD ADMIN SETTINGS
+# ADMIN SETTINGS
+BOOTSTRAP_ADMIN_SIDEBAR_MENU = True
 ADMIN_SITE_NAME = 'PyFreeBilling'
+ADMIN_SITE_TITLE = 'PyFreeBilling administration'
 ADMIN_SITE_DESCRIPTION = 'Softswitch and billing application'
-# ADMIN_SITE_LOGO_HTML = '<div id="myproject-logo hidden-phone">Logo</div>'
+ADMIN_SITE_LOGO_HTML = '<div id="myproject-logo hidden-phone">Logo</div>'
 ADMIN_DISABLE_APP_INDEX = 'True'
+ADMIN_TOOLS_THEMING_CSS = STATIC_URL + '/css/theming.css'
+ADMIN_TOOLS_MENU = 'config.menu.CustomMenu'
 
 
 # ----------

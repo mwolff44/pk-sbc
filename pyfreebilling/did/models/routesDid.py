@@ -35,10 +35,10 @@ class RoutesDid(models.Model):
                             max_length=2,
                             choices=ROUTE_TYPE_CHOICES,
                             default='m',
-                            help_text=_(u"""Routing type : trunk or
-                                external number."""))
+                            help_text=_(u"""Routing type : sip trunk (s) or
+                                external number (e)."""))
     trunk = models.ForeignKey(
-        'pyfreebill.CustomerDirectory',
+        'customerdirectory.CustomerDirectory',
         #  limit_choices_to={'company': contract_did__customer__company}
         null=True,
         blank=True,

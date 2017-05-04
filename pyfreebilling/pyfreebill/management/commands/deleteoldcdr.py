@@ -1,21 +1,21 @@
 # Copyright 2013 Mathias WOLFF
 # This file is part of pyfreebilling.
-# 
+#
 # pyfreebilling is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # pyfreebilling is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
 from django.core.management.base import BaseCommand, CommandError
-from .models import CDR
+from pyfreebilling.cdr.models import CDR
 import datetime
 from django.db import connection
 from django.utils import timezone
@@ -49,7 +49,7 @@ class Command(BaseCommand):
 # Query construction and delete
                 qs_delete_cdr = CDR.objects.all().filter(start_stamp__lt=yesterday).filter(effective_duration="0").delete()
 
-#                pprint(connection.queries)   
+#                pprint(connection.queries)
             except CDR.DoesNotExist:
                 raise CommandError('cdr does not exist')
 

@@ -26,15 +26,18 @@ urlpatterns = [
         r'^extranet/', include([
             url(
                 regex=r'^report/$',
-                view=views.admin_report_view
+                view=views.admin_report_view,
+                name='status'
             ),
             url(
                 regex=r'^cdrform/$',
-                view=views.live_report_view
+                view=views.live_report_view,
+                name='cdr_report'
             ),
             url(
                 regex=r'^status/$',
-                view=views.admin_status_view
+                view=views.admin_status_view,
+                name='version'
             ),
             url(
                 regex=r'^list_models/$',

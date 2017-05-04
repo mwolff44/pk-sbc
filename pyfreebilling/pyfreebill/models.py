@@ -22,16 +22,13 @@ from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericRelation
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import format_html
 
 import datetime
 import qsstats
 import vatnumber
-
-import decimal
-
-import math
 
 from django_countries.fields import CountryField
 
@@ -41,19 +38,9 @@ import re
 
 from currencies.models import Currency
 
-from .validators import validate_cidr
+from .validators import validate_cidr, check_vat
 
-# CustomUser -- Django 1.6
-# class CustomUser(AbstractUser):
-#    keyboard_shortcuts = models.BooleanField(default=True)
-
-# Finance
-from django.core.exceptions import ValidationError
-
-
-def check_vat(value):
-    if value != "" and not vatnumber.check_vat(value):
-        raise ValidationError(_(u"%s is not a valid VAT number") % value)
+from pyfreebilling.switch.models import Domain
 
 
 class Company(models.Model):
@@ -496,189 +483,7 @@ class CompanyBalanceHistory(models.Model):
                                  self.operation_type)
 
 
-class CustomerDirectory(models.Model):
-    """ Customer Directory Model """
-    company = models.ForeignKey(Company,
-                                verbose_name=_(u"company"))
-    registration = models.BooleanField(_(u"Registration"),
-                                       default=False,
-                                       help_text=_(u"""Is registration needed
-                                       for calling ? True, the phone needs to
-                                       register with correct username/password.
-                                       If false, you must specify a CIDR in SIP
-                                       IP CIDR !"""))
-    password = models.CharField(_(u"password"),
-                                max_length=100,
-                                blank=True,
-                                help_text=_(u"""It's recommended to use strong
-                                passwords for the endpoint."""))
-    description = models.TextField(_(u'description'),
-                                   blank=True)
-    name = models.CharField(_(u"SIP username"),
-                            max_length=50,
-                            unique=True,
-                            help_text=_(u"Ex.: customer SIP username, etc..."))
-    rtp_ip = models.CharField(_(u"RTP IP CIDR"),
-                              max_length=100,
-                              default="auto",
-                              help_text=_(u"""Internal IP address/mask to bind
-                              to for RTP. Format : CIDR Ex. 192.168.1.0/32"""))
-    sip_ip = models.CharField(_(u"SIP IP CIDR"),
-                              max_length=100,
-                              null=True,
-                              blank=True,
-                              validators=[validate_cidr],
-                              help_text=_(u"""Internal IP address/mask to bind
-                              to for SIP. Format : CIDR. Ex. 192.168.1.0/32
-                              """))
-    sip_port = models.PositiveIntegerField(_(u"SIP port"),
-                                           default=5060)
-    max_calls = models.PositiveIntegerField(_(u'max calls'),
-                                            default=1,
-                                            help_text=_(u"""max simultaneous
-                                            calls allowed for this customer
-                                            account."""))
-    calls_per_second = models.PositiveIntegerField(_(u'max calls per second'),
-                                                   default=10,
-                                                   help_text=_(u"""maximum
-                                                   calls per second allowed for
-                                                   this customer account."""))
-    log_auth_failures = models.BooleanField(_(u"log auth failures"),
-                                            default=False,
-                                            help_text=_(u"""It true, the server
-                                            will log authentication failures.
-                                            Required for Fail2ban."""))
-    MULTIPLE_CODECS_CHOICES = (
-        ("PCMA,PCMU,G729", _(u"PCMA,PCMU,G729")),
-        ("PCMU,PCMA,G729", _(u"PCMU,PCMA,G729")),
-        ("G729,PCMA,PCMU", _(u"G729,PCMA,PCMU")),
-        ("G729,PCMU,PCMA", _(u"G729,PCMU,PCMA")),
-        ("PCMA,G729", _(u"PCMA,G729")),
-        ("PCMU,G729", _(u"PCMU,G729")),
-        ("G729,PCMA", _(u"G729,PCMA")),
-        ("G729,PCMU", _(u"G729,PCMU")),
-        ("PCMA,PCMU", _(u"PCMA,PCMU")),
-        ("PCMU,PCMA", _(u"PCMU,PCMA")),
-        ("G722,PCMA,PCMU", _(u"G722,PCMA,PCMU")),
-        ("G722,PCMU,PCMA", _(u"G722,PCMU,PCMA")),
-        ("G722", _(u"G722")),
-        ("G729", _(u"G729")),
-        ("PCMU", _(u"PCMU")),
-        ("PCMA", _(u"PCMA")),
-        ("ALL", _(u"ALL")),
-    )
-    codecs = models.CharField(_(u"Codecs"),
-                              max_length=100,
-                              default="ALL",
-                              choices=MULTIPLE_CODECS_CHOICES,
-                              help_text=_(u"""Codecs allowed - beware about
-                              order, 1st has high priority """))
-    MULTIPLE_REG_CHOICES = (
-        ("call-id", _(u"Call-id")),
-        ("contact", _(u"Contact")),
-        ("false", _(u"False")),
-        ("true", _(u"True")))
-    multiple_registrations = models.CharField(_(u"multiple registrations"),
-                                              max_length=100,
-                                              default="false",
-                                              choices=MULTIPLE_REG_CHOICES,
-                                              help_text=_(u"""Used to allow to
-                                              call one extension and ring
-                                              several phones."""))
-    outbound_caller_id_name = models.CharField(_(u"CallerID name"),
-                                               max_length=50,
-                                               blank=True,
-                                               help_text=_(u"""Caller ID name
-                                               sent to provider on outbound
-                                               calls."""))
-    outbound_caller_id_number = models.CharField(_(u"""CallerID
-                                                   num"""),
-                                                 max_length=80,
-                                                 blank=True,
-                                                 help_text=_(u"""Caller ID
-                                                 number sent to provider on
-                                                 outbound calls."""))
-    IEM_CHOICES = (
-        ("false", _(u"false")),
-        ("true", _(u"true")),
-        ("ring_ready", _(u"ring_ready")))
-    ignore_early_media = models.CharField(_(u"Ignore early media"),
-                                          max_length=20,
-                                          default="false",
-                                          choices=IEM_CHOICES,
-                                          help_text=_(u"""Controls if the call
-                                                      returns on early media
-                                                      or not. Default is false.
-                                                      Setting the value to
-                                                      "ring_ready" will work
-                                                      the same as
-                                                      ignore_early_media=true
-                                                      but also send a SIP 180
-                                                      to the inbound leg when
-                                                      the first SIP 183 is
-                                                      caught.
-                                                      """))
-    enabled = models.BooleanField(_(u"Enabled / Disabled"),
-                                  default=True)
-    fake_ring = models.BooleanField(_(u"Fake ring"),
-                                    default=False,
-                                    help_text=_(u"""Fake ring : Enabled /
-                                    Disabled - Send a fake ring to the
-                                    caller."""))
-    cli_debug = models.BooleanField(_(u"CLI debug"),
-                                    default=False,
-                                    help_text=_(u"""CLI debug : Enabled /
-                                    Disabled - Permit to see all debug
-                                    messages on cli."""))
-    vmd = models.BooleanField(_(u"Voicemail detection : Enabled / Disabled"),
-                              default=False,
-                              help_text=_(u"""Be carefull with this option, as
-                              it takes a lot of ressources !."""))
-    date_added = models.DateTimeField(_(u'date added'),
-                                      auto_now_add=True)
-    date_modified = models.DateTimeField(_(u'date modified'),
-                                         auto_now=True)
-
-    class Meta:
-        db_table = 'customer_directory'
-        app_label = 'pyfreebill'
-        ordering = ('company', 'name')
-        verbose_name = _(u'Customer sip account')
-        verbose_name_plural = _(u'Customer sip accounts')
-
-    def __unicode__(self):
-        return "%s (%s:%s)" % (self.name, self.sip_ip, self.sip_port)
-
-    def clean(self):
-        if (self.registration and
-                (self.password is None or self.password == '')):
-            raise ValidationError(_(u"""You have to specify a password if you
-                                  want to allow registration"""))
-        if (self.registration is False and
-                (self.sip_ip is None or self.sip_ip == '')):
-            raise ValidationError(_(u"""You must specify a SIP IP CIDR if you do
-                                  not want to use registration"""))
-        if self.registration and self.password:
-            # in future use https://github.com/dstufft/django-passwords ?
-            MIN_LENGTH = 8
-            if len(self.password) < MIN_LENGTH:
-                raise ValidationError(_(u"""The password must be at least %d
-                                      characters long.""") % MIN_LENGTH)
-            first_isalpha = self.password[0].isalpha()
-            if all(c.isalpha() == first_isalpha for c in self.password):
-                raise ValidationError(_(u"""The new password must contain
-                                            at least one letter and at least
-                                            one digit"""))
-        if self.sip_ip:
-            m = re.search('/32$', self.sip_ip)
-            if m:
-                pass
-            elif len(IPNetwork(self.sip_ip)) == 1:
-                self.sip_ip = str(self.sip_ip) + str('/32')
-                # add name check no space ...
-
 # Caller ID list
-
 
 class CalleridPrefixList(models.Model):
     """ CallerID List """
@@ -839,8 +644,8 @@ class ProviderRates(models.Model):
                                      decimal_places=5,
                                      default=0)
     provider_tariff = models.ForeignKey(ProviderTariff)
-    date_start = models.DateTimeField()
-    date_end = models.DateTimeField()
+    # date_start = models.DateTimeField()
+    # date_end = models.DateTimeField()
     enabled = models.BooleanField(_(u"Enabled / Disabled"), default=True)
     date_added = models.DateTimeField(_(u'date added'), auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'), auto_now=True)
@@ -930,17 +735,32 @@ class LCRProviders(models.Model):
 
 
 # Ratecard
-
+def default_time():
+    return timezone.now() + timezone.timedelta(days=3650)
 
 class RateCard(models.Model):
     """ RateCard Model """
     name = models.CharField(_(u'name'),
                             max_length=128,
                             unique=True)
+    RCTYPE_CHOICES = (
+        ("PSTN", _(u"CALLS TO PSTN")),
+        ("DIDIN", _(u"DID - INBOUND CALLS")),
+        ("DIDOUT", _(u"OUTBOUND CALLS TO INTERNAL DID")),
+        ("EMERGENCY", _(u"EMERGENCY CALLS"))
+    )
+    rctype = models.CharField(
+        _(u"Type of ratecards"),
+        max_length=10,
+        default="PSTN",
+        choices=RCTYPE_CHOICES,
+        help_text=_(u"""Select the right ratecard
+            regarding the type of calls. Default is PSTN"""))
     description = models.TextField(_(u'description'),
                                    blank=True)
-    currency = models.ForeignKey(Currency,
-                                verbose_name=_(u"Currency"))
+    currency = models.ForeignKey(
+        Currency,
+        verbose_name=_(u"Currency"))
     lcrgroup = models.ForeignKey(LCRGroup,
                                  verbose_name=_(u"lcr"))
     CALLERID_FILTER_CHOICES = (
@@ -958,6 +778,8 @@ class RateCard(models.Model):
                                       null=True)
     enabled = models.BooleanField(_(u"Enabled / Disabled"),
                                   default=True)
+    date_start = models.DateTimeField(default=timezone.now)
+    date_end = models.DateTimeField(default=default_time)
     date_added = models.DateTimeField(_(u'date added'),
                                       auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'),
@@ -971,7 +793,7 @@ class RateCard(models.Model):
         verbose_name_plural = _(u'Customer ratecards')
 
     def __unicode__(self):
-        return u"%s" % self.name
+        return u"%s (%s-%s) %s" % (self.name, self.rctype, self.currency, self.enabled)
 
     def rates(self):
         html = '<span><a href="/extranet/pyfreebill/customerrates/?ratecard__id__exact={0}" class="btn btn-inverse btn-mini">Rates <i class="icon-plus-sign"></i></a></span>'
@@ -999,20 +821,27 @@ class CustomerRates(models.Model):
     prefix = models.CharField(_(u'numeric prefix'),
                               max_length=30,
                               db_index=True)
+    destnum_length = models.IntegerField(
+        _(u'Destination number length'),
+        default=0,
+        help_text=_(u"If value > 0, then destination number must match tsi length")
+    )
     rate = models.DecimalField(_(u'sell rate'),
                                max_digits=11,
                                decimal_places=5,
                                help_text=_(u"to block the prefix, put -1"))
     block_min_duration = models.IntegerField(_(u'Increment'),
                                              default=1)
-    minimal_time = models.IntegerField(_(u'Minimal time'),
-                                       default=1)
+    minimal_time = models.IntegerField(
+        _(u'Minimal time'),
+       default=0,
+       help_text=_(u"minimal time to be billed in seconds"))
     init_block = models.DecimalField(_(u'Connection fee'),
                                      max_digits=11,
                                      decimal_places=5,
                                      default=0)
-    date_start = models.DateTimeField()
-    date_end = models.DateTimeField()
+    # date_start = models.DateTimeField()
+    # date_end = models.DateTimeField()
     enabled = models.BooleanField(_(u"Enabled"),
                                   default=True)
     date_added = models.DateTimeField(_(u'date added'),
@@ -1038,8 +867,10 @@ class CustomerRateCards(models.Model):
                                 verbose_name=_(u"company"))
     ratecard = models.ForeignKey(RateCard,
                                  verbose_name=_(u"ratecard"))
-    description = models.TextField(_(u'description'),
-                                   blank=True)
+    description = models.CharField(
+        _(u'Comment'),
+        max_length=30,
+        blank=True)
     tech_prefix = models.CharField(_(u"technical prefix"),
                                    blank=True,
                                    default='',
@@ -1049,13 +880,17 @@ class CustomerRateCards(models.Model):
         (1, _(u'1')),
         (2, _(u'2')),
         (3, _(u'3')),
+        (4, _(u'4')),
+        (5, _(u'5')),
+        (6, _(u'6')),
+        (7, _(u'7')),
     )
     priority = models.IntegerField(_(u'priority'),
                                    choices=DEFAULT_PRIORITY_CHOICES,
                                    help_text=_(u"""Priority order, 1 is the
                                                higher priority and 3 the
                                                lower one. Correct values
-                                               are : 1, 2 or 3 !."""))
+                                               are : 1 to 7 !."""))
     discount = models.DecimalField(_(u'discount'),
                                    max_digits=3,
                                    decimal_places=2,
@@ -1152,7 +987,7 @@ class CarrierNormalizationRules(models.Model):
     """ Carrier Normalization Rules """
     company = models.ForeignKey(Company,
                                 verbose_name=_(u"provider"))
-    prefix = models.CharField(_(u'rule title'),
+    prefix = models.CharField(_(u'prefix'),
                               max_length=30)
     description = models.TextField(_(u'description'),
                                    blank=True)
@@ -1187,7 +1022,7 @@ class CustomerCIDNormalizationRules(models.Model):
     """ Customer Caller ID Number Normalization Rules """
     company = models.ForeignKey(Company,
                                 verbose_name=_(u"customer"))
-    prefix = models.CharField(_(u'rule title'),
+    prefix = models.CharField(_(u'prefix'),
                               max_length=30)
     description = models.TextField(_(u'description'),
                                    blank=True)
@@ -1221,7 +1056,7 @@ class CarrierCIDNormalizationRules(models.Model):
     """ Carrier Caller ID Number Normalization Rules """
     company = models.ForeignKey(Company,
                                 verbose_name=_(u"provider"))
-    prefix = models.CharField(_(u'rule title'),
+    prefix = models.CharField(_(u'prefix'),
                               max_length=30)
     description = models.TextField(_(u'description'),
                                    blank=True)
@@ -1561,6 +1396,9 @@ class SipProfile(models.Model):
     pass_rfc2833 = models.BooleanField(_(u"""pass rfc2833"""),
                                        default=False,
                                        help_text=_(u"""pass rfc2833"""))
+    enabled = models.BooleanField(
+        _(u"Enabled"),
+        default=True)
     date_added = models.DateTimeField(_(u'date added'),
                                       auto_now_add=True)
     date_modified = models.DateTimeField(_(u'date modified'),
@@ -1592,6 +1430,11 @@ class SofiaGateway(models.Model):
     name = models.CharField(_(u"name"),
                             max_length=100,
                             unique=True)
+    domain = models.ForeignKey(
+        Domain,
+        verbose_name=_(u"SIP domain"),
+        help_text=_(u"""A gateway must belong to a domain.
+            This domain must be used in SIP message"""))
     sip_profile = models.ForeignKey('SipProfile',
                                     verbose_name=_(u"SIP profile"),
                                     help_text=_(u"""Which Sip Profile
@@ -1749,143 +1592,6 @@ class HangupCause(models.Model):
 
     def __unicode__(self):
         return u"[%s] %s" % (self.code, self.enumeration)
-
-# CDR
-
-
-class CDR(models.Model):
-    """ CDR Model    """
-    customer = models.ForeignKey(Company, verbose_name=_(u"customer"), null=True, related_name="customer_related")
-    customer_ip = models.CharField(_(u"customer IP address"), max_length=100, null=True, help_text=_(u"Customer IP address."))
-    uuid = models.CharField(_(u"UUID"), max_length=100, null=True)
-    bleg_uuid = models.CharField(_(u"b leg UUID"), null=True, default="", max_length=100)
-    caller_id_number = models.CharField(_(u"caller ID num"), max_length=100, null=True)
-    destination_number = models.CharField(_(u"Dest. number"), max_length=100, null=True)
-    chan_name = models.CharField(_(u"channel name"), max_length=100, null=True)
-    start_stamp = models.DateTimeField(_(u"start time"), null=True, db_index=True)
-    answered_stamp = models.DateTimeField(_(u"answered time"), null=True)
-    end_stamp = models.DateTimeField(_(u"hangup time"), null=True)
-    duration = models.IntegerField(_(u"global duration"), null=True)
-    effectiv_duration = models.IntegerField(_(u"total duration"), null=True, help_text=_(u"Global call duration since call has been received by the switch in ms."))
-    effective_duration = models.IntegerField(_(u"effective duration"), null=True, help_text=_(u"real call duration in s."))
-    billsec = models.IntegerField(_(u"billed duration"), null=True, help_text=_(u"billed call duration in s."))
-    read_codec = models.CharField(_(u"read codec"), max_length=20, null=True)
-    write_codec = models.CharField(_(u"write codec"), max_length=20, null=True)
-    hangup_cause = models.CharField(_(u"hangup cause"), max_length=50, null=True, db_index=True)
-    hangup_cause_q850 = models.IntegerField(_(u"q.850"), null=True)
-    gateway = models.ForeignKey(SofiaGateway, verbose_name=_(u"gateway"), null=True)
-    cost_rate = models.DecimalField(_(u'buy rate'), max_digits=11, decimal_places=5, default="0", null=True)
-    total_sell = models.DecimalField(_(u'total sell'), max_digits=11, decimal_places=5, default="0", null=True)
-    total_cost = models.DecimalField(_(u'total cost'), max_digits=11, decimal_places=5, default="0", null=True)
-    prefix = models.CharField(_(u'Prefix'), max_length=30, null=True)
-    country = models.CharField(_(u'Country'), max_length=100, null=True)
-    rate = models.DecimalField(_(u'sell rate'), max_digits=11, decimal_places=5, null=True)
-    init_block = models.DecimalField(_(u'Connection fee'), max_digits=11, decimal_places=5, null=True)
-    block_min_duration = models.IntegerField(_(u'increment'), null=True)
-    lcr_carrier_id = models.ForeignKey(Company, verbose_name=_(u"provider"), null=True, related_name="carrier_related")
-    ratecard_id = models.ForeignKey(RateCard, null=True, verbose_name=_(u"ratecard"))
-    lcr_group_id = models.ForeignKey(LCRGroup, null=True, verbose_name=_(u"lcr group"))
-    sip_user_agent = models.CharField(_(u'sip user agent'), null=True, max_length=100)
-    sip_rtp_rxstat = models.CharField(_(u'sip rtp rx stat'), null=True, max_length=30)
-    sip_rtp_txstat = models.CharField(_(u'sip rtp tx stat'), null=True, max_length=30)
-    switchname = models.CharField(_(u"switchname"), null=True, default="", max_length=100)
-    switch_ipv4 = models.CharField(_(u"switch ipv4"), null=True, default="", max_length=100)
-    hangup_disposition = models.CharField(_(u"hangup disposition"), null=True, default="", max_length=100)
-    sip_hangup_cause = models.CharField(_(u"SIP hangup cause"), null=True, default="", max_length=100)
-    sell_destination = models.CharField(_(u'sell destination'), blank=True, default='', null=True, max_length=128, db_index=True)
-    cost_destination = models.CharField(_(u'cost destination'), blank=True, default='', null=True, max_length=128, db_index=True)
-
-    class Meta:
-        db_table = 'cdr'
-        app_label = 'pyfreebill'
-        ordering = ('start_stamp', 'customer')
-        verbose_name = _(u"CDR")
-        verbose_name_plural = _(u"CDRs")
-
-    def __unicode__(self):
-        if self.start_stamp:
-            return self.start_stamp
-        else:
-            return self.custom_alias_name
-
-    def hangup_cause_colored(self):
-        if self.billsec == 0:
-            color = "red"
-        else:
-            color = "green"
-        return " <span style=color:%s>%s</span>" % (color, self.hangup_cause)
-    hangup_cause_colored.allow_tags = True
-
-    @property
-    def daily_total_answered_calls(self):
-        return qsstats.QuerySetStats(self.objects.all().exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING"), 'start_stamp', aggregate=Count('id')).this_day()
-
-    @property
-    def daily_total_calls(self):
-        return qsstats.QuerySetStats(self.objects.all(), 'start_stamp', aggregate=Count('id')).this_day()
-
-    @property
-    def daily_total_effective_duration_calls(self):
-        return qsstats.QuerySetStats(self.objects.all().exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING"), 'start_stamp', aggregate=Sum('effective_duration')).this_day()
-
-    @property
-    def daily_total_sell_calls(self):
-        return qsstats.QuerySetStats(self.objects.all().exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING"), 'start_stamp', aggregate=Sum('total_sell')).this_day()
-
-    @property
-    def daily_total_cost_calls(self):
-        return qsstats.QuerySetStats(self.objects.all().exclude(effective_duration="0").filter(hangup_cause="NORMAL_CLEARING"), 'start_stamp', aggregate=Sum('total_cost')).this_day()
-
-    def _get_min_effective_duration(self):
-        if self.effective_duration:
-            min = int(self.effective_duration / 60)
-            sec = int(self.effective_duration % 60)
-        else:
-            min = 0
-            sec = 0
-
-        return "%02d:%02d" % (min, sec)
-    min_effective_duration = property(_get_min_effective_duration)
-
-    def _get_total_sell(self):
-        if self.rate and self.rate != 0:
-            totalsell = decimal.Decimal(self.billsec) * decimal.Decimal(self.rate) / 60
-        else:
-            totalsell = 0.000000
-        if self.init_block:
-            totalsell = decimal.Decimal(totalsell) + decimal.Decimal(self.init_block)
-        return round(totalsell, 6)
-    total_sell_py = property(_get_total_sell)
-
-    def _get_total_cost(self):
-        if self.cost_rate:
-            totalcost = decimal.Decimal(self.effective_duration) * decimal.Decimal(self.cost_rate) / 60
-        else:
-            totalcost = 0.000000
-        return round(totalcost, 6)
-    total_cost_py = property(_get_total_cost)
-
-    def _get_effective_duration(self):
-        if self.effectiv_duration:
-            effdur = math.ceil(self.effectiv_duration / 1000.0)
-        else:
-            effdur = 0
-        return int(effdur)
-    effective_duration_py = property(_get_effective_duration)
-
-    def _get_billsec(self):
-        if self.block_min_duration and self.effective_duration:
-            if self.effective_duration < self.block_min_duration:
-                billsec = self.block_min_duration
-            else:
-                billsec = math.ceil(self.effective_duration / self.block_min_duration) * self.block_min_duration
-        else:
-            billsec = self.effective_duration
-        return int(billsec)
-    billsec_py = property(_get_billsec)
-
-    def success_cdr(self):
-        return self.CDR.objects.exclude(effective_duration="0")
 
 # STATS
 

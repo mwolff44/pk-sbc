@@ -25,7 +25,10 @@
 
 from django.contrib import messages
 
-import ESL
+try:
+    import ESL
+except ImportError:
+    from freeswitchESL import ESL
 
 from pyfreebilling.pyfreebill.models import SipProfile
 

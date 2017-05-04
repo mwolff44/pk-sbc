@@ -28,17 +28,17 @@ from django.utils.safestring import mark_safe
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
-from datetime import date
-import datetime
-
-from import_export.admin import ImportExportMixin, ExportMixin, ImportMixin
+from import_export.admin import ImportExportMixin, ImportMixin
 from import_export.formats import base_formats
 
 from pyfreebilling.switch import esl
+from pyfreebilling.switch.models import VoipSwitchProfile
+
+from pyfreebilling.customerdirectory.models import CustomerDirectory
 
 from .models import *
 from .forms import CustomerRateCardsAdminForm, CompanyAdminForm, CustomerRatesAdminForm, ProviderRatesAdminForm, ProviderTariffAdminForm, RateCardAdminForm, CustomerDirectoryAdminForm
-from .resources import CDRResourceExtra, CalleridPrefixResource
+from .resources import CalleridPrefixResource
 
 
 APP_LABEL = _(u'CDR report')
@@ -78,38 +78,6 @@ def sofiaupdate(modeladmin, request, queryset):
 sofiaupdate.short_description = _(u"update sofia config xml file")
 
 
-def directoryupdate(modeladmin, request, queryset):
-    """ generate new directory xml config file """
-    try:
-        t = loader.get_template('xml/directory.conf.xml')
-    except IOError:
-        messages.error(request, _(u"""customer sip config xml file update failed.
-            Can not load template file !"""))
-    customerdirectorys = CustomerDirectory.objects.filter(company__customer_enabled__exact=True, enabled=True)
-    accounts = Company.objects.filter(customer_enabled=True)
-    c = Context({"customerdirectorys": customerdirectorys,
-                 "accounts": accounts})
-    try:
-        f = open('/usr/local/freeswitch/conf/directory/default.xml', 'w')
-        try:
-            f.write(t.render(c))
-            f.close()
-            try:
-                fs = esl.getReloadACL()
-                messages.success(request, _(u"FS successfully reload"))
-            except IOError:
-                messages.error(request, _(u"""customer sip config xml file update
-                    failed. FS ACL update failed ! Try manually - %s""" % fs))
-        finally:
-            #f.close()
-            messages.success(request, _(u"""customer sip config xml file update
-                success"""))
-    except IOError:
-        messages.error(request, _(u"""customer sip config xml file update failed.
-            Can not create file !"""))
-directoryupdate.short_description = _(u"update customer sip config xml file")
-
-
 def aclupdate(modeladmin, request, queryset):
     """ generate new ACL xml config file """
     try:
@@ -139,12 +107,16 @@ def aclupdate(modeladmin, request, queryset):
             create file !"""))
 aclupdate.short_description = _(u"update ACL config xml file")
 
-admin.site.add_action(directoryupdate, _(u"""generate customer sip
-    configuration file"""))
+
 admin.site.add_action(sofiaupdate, _(u"generate sofia configuration file"))
 admin.site.add_action(aclupdate, _(u"generate acl configuration file"))
 
 # Company - Contatcs
+
+
+class CustomerDirectoryInline(GenericStackedInline):
+    model = CustomerDirectory
+    extra = 0
 
 
 class EmailAddressInline(GenericTabularInline):
@@ -173,11 +145,11 @@ class StreetAddressInline(GenericStackedInline):
     modal = True
 
 
-class CustomerRateCardsInline(admin.StackedInline):
+class CustomerRateCardsInline(admin.TabularInline):
     model = CustomerRateCards
     description = _(u'select the Ratecards affected to customer account. Order is important !')
     form = CustomerRateCardsAdminForm
-    max_num = 3
+    max_num = 7
     extra = 0
     modal = True
     # sortable = True
@@ -187,19 +159,23 @@ class CustomerRateCardsInline(admin.StackedInline):
 class CompanyAdmin(admin.ModelAdmin):
     inlines = [
         CustomerRateCardsInline,
+        #CustomerDirectoryInline,
         PhoneNumberInline,
         EmailAddressInline,
         WebSiteInline,
         StreetAddressInline,
     ]
-    form = CompanyAdminForm
-    affix = True
+    # form = CompanyAdminForm
     save_on_top = True
     title_icon = 'fa-group'
 
     search_fields = ['^name', ]
     prepopulated_fields = {'slug': ('name',)}
-    readonly_fields = ('customer_balance', 'supplier_balance', 'vat_number_validated')
+    readonly_fields = (
+        'customer_balance',
+        'supplier_balance',
+        'vat_number_validated'
+    )
     fieldsets = (
         (_(u'General'), {
             'fields': (('name', 'nickname'),
@@ -221,13 +197,13 @@ class CompanyAdmin(admin.ModelAdmin):
                        'email_alert',
                        'low_credit_alert_sent',
                        'account_blocked_alert_sent'),
-            'classes': ('collapsed',),
+            'classes': ('collapse',),
             'description': _(u'All the customer alert parameters')
         }),
         (_(u'Provider settings'), {
             'fields': ('supplier_enabled',
                        'supplier_balance'),
-            'classes': ('collapsed',),
+            'classes': ('collapse',),
             'description': _(u'If this company is your provider, this is right place to manage its parameters')
         }),
     )
@@ -297,7 +273,8 @@ class CompanyAdmin(admin.ModelAdmin):
 
     def get_list_display(self, request):
         if request.user.is_superuser:
-            return ('name',
+            return ('id',
+                    'name',
                     'get_prepaid_display',
                     'get_vat_display',
                     'get_vat_number_validated_display',
@@ -579,19 +556,14 @@ class ProviderRatesAdmin(ImportExportMixin, admin.ModelAdmin):
                     'cost_rate',
                     'block_min_duration',
                     'init_block',
-                    'date_start',
-                    'date_end',
                     'get_boolean_display',
                     'date_added',
                     'date_modified']
     ordering = ['provider_tariff',
                 'digits']
     list_filter = ['provider_tariff',
-                   'enabled',
-                   'destination']
+                   'enabled',]
     search_fields = ['^digits',
-                     'date_start',
-                     'date_end',
                      '^destination']
     actions = ['make_enabled',
                'make_disabled']
@@ -692,23 +664,18 @@ class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
                     'ratecard',
                     'destination',
                     'prefix',
+                    'destnum_length',
                     'rate',
                     'init_block',
                     'block_min_duration',
                     'minimal_time',
-                    'date_start',
-                    'date_end',
                     'get_boolean_display',
-                    'date_added',
-                    'date_modified']
+                    ]
     ordering = ['ratecard',
                 'prefix']
     list_filter = ['ratecard',
-                   'enabled',
-                   'destination']
+                   'enabled']
     search_fields = ['^prefix',
-                     'date_start',
-                     'date_end',
                      '^destination']
     actions = ['make_enabled', 'make_disabled']
     readonly_fields = ['id', ]
@@ -759,11 +726,14 @@ class CustomerRatesAdmin(ImportExportMixin, admin.ModelAdmin):
 class RateCardAdmin(admin.ModelAdmin):
     list_display = ['id',
                     'name',
+                    'rctype',
                     'currency',
                     'lcrgroup',
                     'lcr',
                     'get_boolean_display',
                     'rates',
+                    'date_start',
+                    'date_end',
                     'callerid_filter',
                     'callerid_list']
     ordering = ['name', 'enabled', 'lcrgroup']
@@ -779,7 +749,7 @@ class RateCardAdmin(admin.ModelAdmin):
             return True
         else:
             return False
-            
+
     def get_boolean_display(self, obj):
         if obj.enabled:
             return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
@@ -806,104 +776,16 @@ class CustomerRateCardsAdmin(admin.ModelAdmin):  # (SortableModelAdmin):
         else:
             return False
 
-# CustomerDirectory
-
-
-class CustomerDirectoryAdmin(admin.ModelAdmin):
-    list_display = ['company',
-                    'get_registration_display',
-                    'name',
-                    'sip_ip',
-                    'max_calls',
-                    'calls_per_second',
-                    'get_enabled_display',
-                    'get_fake_ring_display',
-                    'get_cli_debug_display']
-    ordering = ['company', 'enabled']
-    list_filter = ['enabled', ]
-    #list_editable = ['max_calls', 'calls_per_second']
-    search_filter = ['^sip_ip', '^company', '^name']
-    exclude = ['vmd', ]
-    form = CustomerDirectoryAdminForm
-    actions = [directoryupdate]
-    save_on_top = True
-    affix = True
-    fieldsets = (
-        (_(u'General'), {
-            'fields': (('company',
-                        'enabled'),
-                       ('name',
-                        'registration'),
-                       'max_calls',
-                       'calls_per_second',
-                       'codecs'),
-            'description': _(u'General sip account informations')
-        }),
-        (_(u'Registration settings'), {
-            'fields': (('password',
-                        'multiple_registrations'),
-                       'log_auth_failures'),
-            'classes': ('collapsed',),
-            'description': _(u'If registration, you must set a password')
-        }),
-        (_(u'IP Settings'), {
-            'fields': (('sip_ip',
-                        'sip_port'),
-                       'rtp_ip'),
-            'classes': ('collapsed',),
-            'description': _(u'If no registration, SIP IP CIDR is needed')
-        }),
-        (_(u'Description'), {
-            'fields': ('description',),
-            'classes': ('collapsed',),
-            'description': _(u'description informations')
-        }),
-        (_(u'Advanced settings'), {
-            'fields': (('outbound_caller_id_name',
-                        'outbound_caller_id_number'),
-                       'ignore_early_media',
-                       'fake_ring',
-                       'cli_debug'),
-            'classes': ('collapsed',),
-            'description': _(u'Advanced parameters')
-        }),
-    )
-
-    def get_registration_display(self, obj):
-        if obj.registration:
-            return mark_safe('<span class="label label-warning"><i class="icon-ok-sign"></i> Registration</span>')
-        return mark_safe('<span class="label label-info"><i class="icon-minus-sign"></i> IP Auth</span>')
-    get_registration_display.short_description = _(u'Registration')
-    get_registration_display.admin_order_field = _(u'registration')
-
-    def get_enabled_display(self, obj):
-        if obj.enabled:
-            return mark_safe('<span class="label label-success"><i class="icon-thumbs-up"></i> YES</span>')
-        return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
-    get_enabled_display.short_description = _(u'Enabled')
-    get_enabled_display.admin_order_field = _(u'enabled')
-
-    def get_fake_ring_display(self, obj):
-        if obj.fake_ring:
-            return mark_safe('<span class="label label-info"><i class="icon-thumbs-up"></i> YES</span>')
-        return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
-    get_fake_ring_display.short_description = _(u'Fake ring')
-    get_fake_ring_display.admin_order_field = _(u'fake_ring')
-
-    def get_cli_debug_display(self, obj):
-        if obj.cli_debug:
-            return mark_safe('<span class="label label-warning"><i class="icon-thumbs-up"></i> YES</span>')
-        return mark_safe('<span class="label label-danger"><i class="icon-thumbs-down"></i> NO</span>')
-    get_cli_debug_display.short_description = _(u'cli_debug')
-    get_cli_debug_display.admin_order_field = _(u'cli_debug')
-
-    def has_change_permission(self, request, obj=None):
-        if request.user.is_superuser:
-            return True
-        else:
-            return False
 
 # VoipSwitch
+
+class VoipSwitchProfileInline(admin.TabularInline):
+    #  form = RoutesDidForm
+    description = 'FS profiles'
+    model = VoipSwitchProfile
+    modal = True
+    extra = 0
+    collapse = False
 
 
 class VoipSwitchAdmin(admin.ModelAdmin):
@@ -974,27 +856,29 @@ class SipProfileAdmin(admin.ModelAdmin):
                     'disable_register',
                     'log_auth_failures',
                     'disable_transcoding',
+                    'enabled',
                     'date_modified']
     ordering = ['name', ]
     list_filter = ['sip_port', ]
     search_fields = ['^name', ]
-    affix = True
+    inlines = [VoipSwitchProfileInline, ]
     fieldsets = (
         (_(u'Basic settings'), {
             'fields': (('name', 'sip_port'),
                        ('sip_ip', 'rtp_ip'),
-                       ('ext_sip_ip', 'ext_rtp_ip')),
+                       ('ext_sip_ip', 'ext_rtp_ip'),
+                       'enabled'),
             'description': _(u'General sip profile informations')
         }),
         # ('Media Related Options', {
         #     'fields': (''),
-        #     'classes': ('collapsed',),
+        #     'classes': ('collapse',),
         #     'description': 'Manage Media Related Options'
         # }),
         (_(u'Codecs Related Options'), {
             'fields': ('disable_transcoding',
                        ('inbound_codec_prefs', 'outbound_codec_prefs')),
-            'classes': ('collapsed',),
+            'classes': ('collapse',),
             'description': _(u'Manage Codecs Related Options')
         }),
         (_(u'NAT'), {
@@ -1002,40 +886,40 @@ class SipProfileAdmin(admin.ModelAdmin):
                        'NDLB_rec_in_nat_reg_c',
                        'NDLB_force_rport',
                        'NDLB_broken_auth_hash'),
-            'classes': ('collapsed',),
+            'classes': ('collapse',),
             'description': _(u'NAT management')
         }),
         (_(u'DTMF Related options'), {
             'fields': ('pass_rfc2833',),
-            'classes': ('collapsed',),
+            'classes': ('collapse',),
             'description': _(u'DTMF management')
         }),
         (_(u'SIP Related Options'), {
             'fields': (('enable_timer', 'session_timeout')),
-            'classes': ('collapsed',),
+            'classes': ('collapse',),
             'description': _(u'Manage SIP Related Options')
         }),
         (_(u'RTP Related Options'), {
             'fields': ('rtp_rewrite_timestamps',),
-            'classes': ('collapsed',),
+            'classes': ('collapse',),
             'description': _(u'Manage RTP Related Options')
         }),
         (_(u'Authentification Authorization'), {
             'fields': ('apply_inbound_acl',
                        'auth_calls',
                        'log_auth_failures'),
-            'classes': ('collapsed',),
+            'classes': ('collapse',),
             'description': _(u'Authentification Authorization management')
         }),
         (_(u'Registration'), {
             'fields': ('disable_register',
                        'accept_blind_reg'),
-            'classes': ('collapsed',),
+            'classes': ('collapse',),
             'description': _(u'Registration settings management')
         }),
         (_(u'Others'), {
             'fields': ('user_agent',),
-            'classes': ('collapsed',),
+            'classes': ('collapse',),
             'description': _(u'Others parameters')
         }),
     )
@@ -1092,242 +976,6 @@ class HangupCauseAdmin(ImportExportMixin, admin.ModelAdmin):
             return True
         else:
             return False
-
-# CDR
-
-
-class TotalAveragesChangeList(ChangeList):
-
-    def get_min_duration(self, sec_duration):
-        if sec_duration:
-            min = int(sec_duration / 60)
-            sec = int(sec_duration % 60)
-        else:
-            min = 0
-            sec = 0
-        return "%02d:%02d" % (min, sec)
-
-    def get_results(self, *args, **kwargs):
-        super(TotalAveragesChangeList, self).get_results(*args, **kwargs)
-        self.total_sell_total = 0
-        self.total_cost_total = 0
-        try:
-            q = self.result_list.aggregate(total_sell_sum=Sum('total_sell'),
-                                           total_cost_sum=Sum('total_cost'),
-                                           effective_duration_sum=Sum('effective_duration'),
-                                           effective_duration_avg=Avg('effective_duration'))
-        except:
-            self.total_effective_duration = 0
-            self.total_cost_total = 0
-            self.total_sell_total = 0
-            self.avg_effective_duration = 0
-            self.margin = 0
-            return
-        self.total_effective_duration = q['effective_duration_sum']
-        self.total_cost_total = q['total_cost_sum']
-        self.total_sell_total = q['total_sell_sum']
-        self.avg_effective_duration = q['effective_duration_avg']
-        try:
-            self.margin = self.total_sell_total - self.total_cost_total
-        except:
-            self.margin = 0
-        self.min_avg_effective_duration = self.get_min_duration(q['effective_duration_avg'])
-        self.min_total_effective_duration = self.get_min_duration(q['effective_duration_sum'])
-
-
-class CDRAdmin(ExportMixin, admin.ModelAdmin):
-    search_fields = ['^prefix',
-                     '^destination_number',
-                     '^customer__name',
-                     '^cost_destination',
-                     '^sell_destination']
-    list_filter = ('start_stamp',)
-#    date_hierarchy = 'start_stamp'
-    change_list_template = 'admin/pyfreebill/cdr/change_list.html'
-    resource_class = CDRResourceExtra
-    fieldsets = (
-        (_(u'General'), {
-            'fields': ('customer',
-                       'start_stamp',
-                       'destination_number',
-                       ('min_effective_duration', 'billsec'),
-                       ('sell_destination', 'cost_destination'),
-                       'switchname')
-        }),
-        (_(u'Advanced date / duration infos'), {
-            'classes': ('collapse',),
-            'fields': (('answered_stamp',
-                        'end_stamp',
-                        'duration',
-                        'effectiv_duration'))
-        }),
-        (_(u'Financial infos'), {
-            'fields': (('total_cost', 'cost_rate'),
-                       ('total_sell', 'rate'),
-                       ('init_block', 'block_min_duration'))
-        }),
-        (_(u'LCR infos'), {
-            'classes': ('collapse',),
-            'fields': ('prefix',
-                       ('ratecard_id', 'lcr_group_id'),
-                       ('lcr_carrier_id', 'gateway'))
-        }),
-        (_(u'Call detailed infos'), {
-            'classes': ('collapse',),
-            'fields': ('caller_id_number',
-                       ('hangup_cause',
-                        'hangup_cause_q850',
-                        'hangup_disposition',
-                        'sip_hangup_cause'),
-                       ('read_codec', 'write_codec'),
-                       'sip_user_agent',
-                       'customer_ip',
-                       ('uuid', 'bleg_uuid', 'chan_name', 'country'))
-        }),
-    )
-
-    def has_add_permission(self, request, obj=None):
-        return False
-
-    def has_delete_permission(self, request, obj=None):
-        return False
-
-    def get_actions(self, request):
-        if request.user.is_superuser:
-            return
-        else:
-            return
-
-    def get_changelist(self, request, **kwargs):
-        return TotalAveragesChangeList
-
-    def changelist_view(self, request, extra_context=None):
-        if request.user.is_superuser:
-            self.list_display_links = ['start_stamp', ]
-            return super(CDRAdmin, self).changelist_view(request,
-                                                         extra_context=None)
-        else:
-            self.list_display_links = ['None', ]
-            return super(CDRAdmin, self).changelist_view(request,
-                                                         extra_context=None)
-
-    def get_ordering(self, request):
-        if request.user.is_superuser:
-            return ['-start_stamp', ]
-        else:
-            return ['-start_stamp', ]
-
-    def get_list_display(self, request):
-        if request.user.is_superuser:
-            return ['start_stamp',
-                    'customer',
-                    'sell_destination',
-                    'destination_number',
-                    'min_effective_duration',
-                    'hangup_cause_colored',
-                    'lcr_carrier_id',
-                    'cost_rate',
-                    'rate',
-                    'prefix',
-                    'ratecard_id',
-                    'switchname']
-        else:
-            return ['start_stamp',
-                    'customer',
-                    'customer_ip',
-                    'sell_destination',
-                    'destination_number',
-                    'min_effective_duration',
-                    'hangup_cause',
-                    'rate',
-                    'total_sell']
-
-    def get_list_filter(self, request):
-        if request.user.is_superuser:
-            return ['start_stamp', 'customer', 'lcr_carrier_id', 'ratecard_id']
-        else:
-            return ['start_stamp', 'sell_destination']
-
-    def get_readonly_fields(self, request, obj=None):
-        if request.user.is_superuser:
-            return ['customer_ip',
-                    'customer',
-                    'caller_id_number',
-                    'destination_number',
-                    'start_stamp',
-                    'answered_stamp',
-                    'end_stamp',
-                    'duration',
-                    'min_effective_duration',
-                    'billsec',
-                    'hangup_cause',
-                    'hangup_cause_q850',
-                    'gateway',
-                    'lcr_carrier_id',
-                    'prefix',
-                    'country',
-                    'cost_rate',
-                    'total_cost',
-                    'total_sell',
-                    'rate',
-                    'init_block',
-                    'block_min_duration',
-                    'ratecard_id',
-                    'lcr_group_id',
-                    'uuid',
-                    'bleg_uuid',
-                    'chan_name',
-                    'read_codec',
-                    'write_codec',
-                    'sip_user_agent',
-                    'hangup_disposition',
-                    'effectiv_duration',
-                    'sip_hangup_cause',
-                    'sell_destination',
-                    'cost_destination',
-                    'switchname']
-        else:
-            return ['start_stamp',
-                    'customer',
-                    'customer_ip',
-                    'sell_destination',
-                    'destination_number',
-                    'min_effective_duration',
-                    'hangup_cause',
-                    'rate',
-                    'total_sell']
-
-    def get_form(self, request, obj=None, **kwargs):
-        self.exclude = ['effectiv_duration',
-                        'effective_duration',
-                        'sip_rtp_rxstat',
-                        'sip_rtp_txstat',
-                        'switch_ipv4']
-        if not request.user.is_superuser:
-            self.exclude.append('cost_rate')
-            self.exclude.append('total_cost')
-            self.exclude.append('gateway')
-            self.exclude.append('switchname')
-            self.exclude.append('lcr_carrier_id')
-            self.exclude.append('lcr_group_id')
-            self.exclude.append('cost_destination')
-        return super(CDRAdmin, self).get_form(request, obj, **kwargs)
-
-    def get_queryset(self, request):
-        today_c = date.today() - datetime.timedelta(days=settings.PFB_NB_CUST_CDR)
-        today_a = date.today() - datetime.timedelta(days=settings.PFB_NB_ADMIN_CDR)
-        user = getattr(request, 'user', None)
-        qs = super(CDRAdmin, self).get_queryset(request)
-        # add .prefetch_related('content_type') for reduce queries
-        if user.is_superuser:
-            return qs.filter(start_stamp__gte=today_a)
-        else:
-            usercompany = Person.objects.get(user=user)
-        return qs.filter(customer=usercompany.company).filter(start_stamp__gte=today_c).filter(effective_duration__gt="0")
-
-    def get_export_formats(self):
-        format_csv = DEFAULT_FORMATS
-        return [f for f in format_csv if f().can_export()]
 
 
 class CarrierNormalizationRulesAdmin(admin.ModelAdmin):
@@ -1430,14 +1078,12 @@ admin.site.register(LCRGroup, LCRGroupAdmin)
 admin.site.register(RateCard, RateCardAdmin)
 admin.site.register(CustomerRates, CustomerRatesAdmin)
 admin.site.register(CustomerRateCards, CustomerRateCardsAdmin)
-admin.site.register(CustomerDirectory, CustomerDirectoryAdmin)
 #admin.site.register(AclLists, AclListsAdmin)
 #admin.site.register(AclNodes, AclNodesAdmin)
 #admin.site.register(VoipSwitch, VoipSwitchAdmin)
 admin.site.register(SipProfile, SipProfileAdmin)
 admin.site.register(SofiaGateway, SofiaGatewayAdmin)
 #admin.site.register(HangupCause, HangupCauseAdmin)
-admin.site.register(CDR, CDRAdmin)
 admin.site.register(CarrierNormalizationRules, CarrierNormalizationRulesAdmin)
 admin.site.register(CustomerNormalizationRules,
                     CustomerNormalizationRulesAdmin)

@@ -1,0 +1,104 @@
+<configuration name="switch.conf" description="Core Configuration">
+
+  <cli-keybindings>
+    <key name="1" value="help"/>
+    <key name="2" value="status"/>
+    <key name="3" value="show channels"/>
+    <key name="4" value="show calls"/>
+    <key name="5" value="sofia status"/>
+    <key name="6" value="reloadxml"/>
+    <key name="7" value="console loglevel 0"/>
+    <key name="8" value="console loglevel 7"/>
+    <key name="9" value="sofia status profile internal"/>
+    <key name="10" value="sofia profile internal siptrace on"/>
+    <key name="11" value="sofia profile internal siptrace off"/>
+    <key name="12" value="version"/>
+  </cli-keybindings>
+
+  <default-ptimes>
+    <!-- Set this to override the 20ms assumption of various codecs in the sdp with no ptime defined -->
+    <!-- <codec name="G729" ptime="40"/> -->
+  </default-ptimes>
+
+  <settings>
+    <!-- Colorize the Console -->
+    <param name="colorize-console" value="true"/>
+
+    <!--Include full timestamps in dialplan logs -->
+    <param name="dialplan-timestamps" value="false"/>
+
+    <!-- Maximum number of simultaneous DB handles open -->
+    <param name="max-db-handles" value="50"/>
+    <!-- Maximum number of seconds to wait for a new DB handle before failing -->
+    <param name="db-handle-timeout" value="10"/>
+
+    <!-- Minimum idle CPU before refusing calls -->
+    <!-- <param name="min-idle-cpu" value="25"/> -->
+
+    <param name="max-sessions" value="1000"/>
+    <!--Most channels to create per second -->
+    <param name="sessions-per-second" value="30"/>
+    <!-- Default Global Log Level - value is one of debug,info,notice,warning,err,crit,alert -->
+    <param name="loglevel" value="debug"/>
+
+    <!-- Set the core DEBUG level (0-10) -->
+    <!-- <param name="debug-level" value="10"/> -->
+
+    <param name="mailer-app" value="sendmail"/>
+    <param name="mailer-app-args" value="-t"/>
+    <param name="dump-cores" value="yes"/>
+
+    <!-- Enable verbose channel events to include every detail about a channel on every event  -->
+    <!-- <param name="verbose-channel-events" value="no"/> -->
+
+    <!-- Enable clock nanosleep -->
+    <!-- <param name="enable-clock-nanosleep" value="true"/> -->
+
+    <!-- Enable monotonic timing -->
+    <!-- <param name="enable-monotonic-timing" value="true"/> -->
+
+    <!-- NEEDS DOCUMENTATION -->
+    <!-- <param name="enable-softtimer-timerfd" value="true"/> -->
+    <!-- <param name="enable-cond-yield" value="true"/> -->
+    <!-- <param name="enable-timer-matrix" value="true"/> -->
+    <!-- <param name="threaded-system-exec" value="true"/> -->
+    <!-- <param name="tipping-point" value="0"/> -->
+    <!-- <param name="timer-affinity" value="disabled"/> -->
+    <!-- NEEDS DOCUMENTATION -->
+
+    <!-- RTP port range -->
+    <!-- <param name="rtp-start-port" value="16384"/> -->
+    <!-- <param name="rtp-end-port" value="32768"/> -->
+
+    <!-- Test each port to make sure it is not in use by some other process before allocating it to RTP -->
+    <!-- <param name="rtp-port-usage-robustness" value="true"/> -->
+
+    <param name="rtp-enable-zrtp" value="false"/>
+
+    <!--
+	 Store encryption keys for secure media in channel variables and call CDRs. Default: false.
+	 WARNING: If true, anyone with CDR access can decrypt secure media!
+    -->
+    <!-- <param name="rtp-retain-crypto-keys" value="true"/> -->
+
+    <!-- <param name="core-db-dsn" value="pgsql://hostaddr=127.0.0.1 dbname=freeswitch user=freeswitch password='' options='-c client_min_messages=NOTICE'" /> -->
+    <!-- <param name="core-db-dsn" value="dsn:username:password" /> -->
+    <!--
+	 Allow to specify the sqlite db at a different location (In this example, move it to ramdrive for
+	 better performance on most linux distro (note, you loose the data if you reboot))
+    -->
+    <!-- <param name="core-db-name" value="/dev/shm/core.db" /> -->
+
+    <!-- The system will create all the db schemas automatically, set this to false to avoid this behaviour -->
+    <!-- <param name="auto-create-schemas" value="true"/> -->
+    <!-- <param name="auto-clear-sql" value="true"/> -->
+    <!-- <param name="enable-early-hangup" value="true"/> -->
+
+    <!-- <param name="core-dbtype" value="MSSQL"/> -->
+
+    <!-- Allow multiple registrations to the same account in the central registration table -->
+    <!-- <param name="multiple-registrations" value="true"/> -->
+
+  </settings>
+
+</configuration>

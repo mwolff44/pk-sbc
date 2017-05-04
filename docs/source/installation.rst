@@ -6,7 +6,8 @@ Table of contents
 
 * Introduction
 * Prerequisites
-* Freeswitch installation
+* Sip server installation
+* SBC installation
 * Postgresql configuration
 * Web server install
 * PyFreeBilling installation
@@ -28,10 +29,105 @@ First, you need to install these packages
 
     apt-get install git-core build-essential autoconf automake libtool libtool-bin libncurses5 libncurses5-dev gawk libjpeg-dev zlib1g-dev pkg-config libssl-dev libpq-dev unixodbc-dev odbc-postgresql postgresql postgresql-client libpq-dev libxml2-dev libxslt-dev ntp ntpdate libapache2-mod-wsgi apache2 gcc python-setuptools python-pip libdbd-pg-perl libtext-csv-perl sqlite3 libsqlite3-dev libcurl4-openssl-dev libpcre3-dev libspeex-dev libspeexdsp-dev libldns-dev libedit-dev libmemcached-dev python-psycopg2 python-dev libgeoip-dev
 
-Freeswitch installation
+Sip server installation
 =======================
 
-* go to the source directory
+* First, install dependencies, edit sources.list :
+
+::
+
+    nano /etc/apt/sources.list
+
+* Add this lines at the end of the files :
+
+::
+
+    # Kamailio 4.4 Release
+    deb http://deb.kamailio.org/kamailio44 jessie main
+    deb-src http://deb.kamailio.org/kamailio44 jessie main
+
+* Add the repo GPG key, update the packages list, and install packages :
+
+::
+
+    apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xfb40d3e6508ea4c8
+    apt-get update
+    apt-get install libpq5 libpq-dev
+    apt-get install kamailio kamailio-tls-modules kamailio-postgres-modules kamailio-outbound-modules kamailio-extra-modules kamailio-xml-modules
+
+// kamailio-carrierroute-modules kamailio-outbound-modules
+
+* After finishing the installation, you have to edit  /etc/default/kamailio file:
+
+::
+
+    #
+	# Kamailio startup options
+	#
+
+	# Set to yes to enable kamailio, once configured properly.
+	RUN_KAMAILIO=yes
+
+	# User to run as
+	USER=kamailio
+
+	# Group to run as
+	GROUP=kamailio
+
+	# Amount of shared and private memory to allocate
+	# for the running Kamailio server (in Mb)
+	#SHM_MEMORY=64
+	#PKG_MEMORY=8
+
+	# Config file
+	CFGFILE=/etc/kamailio/kamailio.cfg
+
+	# Enable the server to leave a core file when it crashes.
+	# Set this to 'yes' to enable Kamailio to leave a core file when it crashes
+	# or 'no' to disable this feature. This option is case sensitive and only
+	# accepts 'yes' and 'no' and only in lowercase letters.
+	# On some systems it is necessary to specify a directory for the core files
+	# to get a dump. Look into the kamailio init file for an example configuration.
+	DUMP_CORE=yes
+
+* Restart kamailio :
+
+::
+
+    /etc/init.d/kamailio restart
+
+* Check if it is ok :
+
+::
+
+    lsof -i :5060
+
+* Add crontab :
+
+::
+
+    */10 * * * * /usr/sbin/kamcmd dialplan.reload>> /var/log/cron.log 2>&1
+    */10 * * * * /usr/sbin/kamcmd dispatcher.reload>> /var/log/cron.log 2>&1
+    */10 * * * * /usr/sbin/kamcmd permissions.addressReload>> /var/log/cron.log 2>&1
+
+SBC installation
+=======================
+
+* 1) AUTOMATIC INSTALL (from package) :
+
+::
+
+    wget -O - https://files.freeswitch.org/repo/deb/debian/freeswitch_archive_g0.pub | apt-key add -
+
+	echo "deb http://files.freeswitch.org/repo/deb/freeswitch-1.6/ jessie main" > /etc/apt/sources.list.d/freeswitch.list
+
+	# you may want to populate /etc/freeswitch at this point.
+	# if /etc/freeswitch does not exist, the standard vanilla configuration is deployed
+	apt-get update && apt-get install -y freeswitch-meta-bare freeswitch-mod-commands freeswitch-meta-codecs freeswitch-mod-console freeswitch-mod-logfile freeswitch-conf-vanilla freeswitch-mod-lua freeswitch-mod-cdr-csv freeswitch-mod-event-socket freeswitch-mod-sofia freeswitch-mod-sofia-dbg freeswitch-mod-loopback freeswitch-mod-db freeswitch-mod-dptools freeswitch-mod-hash freeswitch-mod-esl freeswitch-mod-dialplan-xml freeswitch-dbg freeswitch-mod-directory freeswitch-mod-nibblebill
+	apt-get install -f odbc-postgresql unixodbc-bin unixodbc-dev
+
+
+* 2) or install from sources : go to the source directory
 
 ::
 
@@ -49,7 +145,7 @@ Freeswitch installation
 
     cd freeswitch
     ./bootstrap.sh -j
-    
+
 
 * edit modules.conf suiting your needs. You will find below the minimum
    modules to install :
@@ -142,7 +238,7 @@ Freeswitch installation
 	#
 	### END INIT INFO
 	# Do NOT "set -e"
-	 
+
 	# PATH should only include /usr/* if it runs after the mountnfs.sh script
 	PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin
 	DESC="Freeswitch"
@@ -151,23 +247,23 @@ Freeswitch installation
 	DAEMON_ARGS="-nc -nonat"
 	PIDFILE=/usr/local/freeswitch/run/$NAME.pid
 	SCRIPTNAME=/etc/init.d/$NAME
-	 
+
 	FS_USER=freeswitch
 	FS_GROUP=daemon
-	 
+
 	# Exit if the package is not installed
 	[ -x "$DAEMON" ] || exit 0
-	 
+
 	# Read configuration variable file if it is present
 	[ -r /etc/default/$NAME ] && . /etc/default/$NAME
-	 
+
 	# Load the VERBOSE setting and other rcS variables
 	. /lib/init/vars.sh
-	 
+
 	# Define LSB log_* functions.
 	# Depend on lsb-base (>= 3.0-6) to ensure that this file is present.
 	. /lib/lsb/init-functions
-	 
+
 	#
 	# Function that sets ulimit values for the daemon
 	#
@@ -185,7 +281,7 @@ Freeswitch installation
 	        ulimit -l unlimited
 	        return 0
 	}
-	 
+
 	#
 	# Function that starts the daemon/service
 	#
@@ -199,7 +295,7 @@ Freeswitch installation
 	        if [ $FS_GROUP ] ; then
 	          DAEMON_ARGS="`echo $DAEMON_ARGS` -g $FS_GROUP"
 	        fi
-	 
+
 	        # Return
 	        #   0 if daemon has been started
 	        #   1 if daemon was already running
@@ -214,7 +310,7 @@ Freeswitch installation
 	        # to handle requests from services started subsequently which depend
 	        # on this one.  As a last resort, sleep for some time.
 	}
-	 
+
 	#
 	# Function that stops the daemon/service
 	#
@@ -240,7 +336,7 @@ Freeswitch installation
 	        rm -f $PIDFILE
 	        return "$RETVAL"
 	}
-	 
+
 	#
 	# Function that sends a SIGHUP to the daemon/service
 	#
@@ -253,7 +349,7 @@ Freeswitch installation
 	        start-stop-daemon --stop --signal 1 --quiet --pidfile $PIDFILE --name $NAME
 	        return 0
 	}
-	 
+
 	case "$1" in
 	  start)
 	        [ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
@@ -311,7 +407,7 @@ Freeswitch installation
 	        exit 3
 	        ;;
 	esac
-	 
+
 	exit 0
 
 * make this script executable :
@@ -334,16 +430,16 @@ Postgresql configuration
 
 ::
 
-    sudo -i -u postgres   
+    sudo -i -u postgres
 
 ::
 
     createuser -P pyfreebilling --interactive
-        Enter password for new role:    
-        Enter it again:    
-        Shall the new role be a superuser? (y/n) n   
-        Shall the new role be allowed to create databases? (y/n) y   
-        Shall the new role be allowed to create more new roles? (y/n) y  
+        Enter password for new role:
+        Enter it again:
+        Shall the new role be a superuser? (y/n) n
+        Shall the new role be allowed to create databases? (y/n) y
+        Shall the new role be allowed to create more new roles? (y/n) y
 
 ::
 
@@ -354,32 +450,32 @@ Postgresql configuration
 
 ::
 
-    [freeswitch]   
-    Driver = PostgreSQL   
-    Description = Connection to POSTGRESQL   
-    Servername = 127.0.0.1   
-    Port = 5432   
-    Protocol = 6.4   
-    FetchBufferSize = 99   
-    Username = pyfreebilling   
-    Password =    
-    Database = pyfreebilling   
-    ReadOnly = no   
-    Debug = 0   
+    [freeswitch]
+    Driver = PostgreSQL
+    Description = Connection to POSTGRESQL
+    Servername = 127.0.0.1
+    Port = 5432
+    Protocol = 6.4
+    FetchBufferSize = 99
+    Username = pyfreebilling
+    Password =
+    Database = pyfreebilling
+    ReadOnly = no
+    Debug = 0
     CommLog = 0
 
 * edit /etc/odbcinst.ini (delete all entries and add these ones)
 
 ::
 
-    [PostgreSQL]   
-    Description     = PostgreSQL ODBC driver (Unicode version)   
-    Driver          = /usr/lib/x86_64-linux-gnu/odbc/psqlodbcw.so   
-    Setup           = /usr/lib/x86_64-linux-gnu/odbc/libodbcpsqlS.so   
-    Debug           = 0   
-    CommLog         = 0   
-    UsageCount      = 0   
-    Threading       = 0   
+    [PostgreSQL]
+    Description     = PostgreSQL ODBC driver (Unicode version)
+    Driver          = /usr/lib/x86_64-linux-gnu/odbc/psqlodbcw.so
+    Setup           = /usr/lib/x86_64-linux-gnu/odbc/libodbcpsqlS.so
+    Debug           = 0
+    CommLog         = 0
+    UsageCount      = 0
+    Threading       = 0
     MaxLongVarcharSize = 65536
 
 Web server install
@@ -418,7 +514,7 @@ Web server install
 		apt-get install build-essential
 
    * invoke the cpan command as a normal user :
-   
+
    ::
 
       $cpan
@@ -428,27 +524,27 @@ Web server install
       you automatically.
 
       -> ANSWER YES
-      
-   
+
+
    * Once the above is done, you will be present with the cpan prompt.
       now enter the commands below
-      
+
    ::
-      
+
       cpan prompt> make install
       cpan prompt> install Bundle::CPAN
 
 
    * Now all is set and you can install any perl module you want.
       examples of what installed below
-      
+
    ::
-      
+
       cpan prompt>  install Carp
       cpan prompt>  install Filter::Simple
       cpan prompt>  install Config::Vars
       cpan prompt>  exit
-      
+
 
 Pyfreebilling installation
 ==========================
@@ -466,46 +562,46 @@ Pyfreebilling installation
 ::
 
     nano /usr/local/venv/pyfreebilling/pyfreebilling/local_settings.py
-    
+
 * edit this new file, and put yours specific values
 
 ::
 
 	# -*- coding: utf-8 -*-
 	from .settings import *
-	
+
 	DEBUG = False
-	
+
 	MANAGERS = ADMINS
-	
+
 	DATABASES = {
 	    'default': {
 	        'ENGINE': 'django.db.backends.postgresql_psycopg2',
 	        'NAME': 'pyfreebilling',
 	        'USER': 'pyfreebilling',
 	        'PASSWORD': 'password',
-	        'HOST': '127.0.0.1',                      
+	        'HOST': '127.0.0.1',
 	        'PORT': '',                      # Set to empty string for default.
 	    }
 	}
-	
+
 	ALLOWED_HOSTS = ['*']
 
 	SECRET_KEY = 'securitykeymustbechanged'  # very important - put your key for security - any string
-	
+
 	TIME_ZONE = 'Europe/Paris'
 
 	OPENEXCHANGERATES_APP_ID = "Your API Key"
-	
+
 	#-- Nb days of CDR to show
 	PFB_NB_ADMIN_CDR = 3
 	PFB_NB_CUST_CDR = 30
-	
+
 	# EMAIL SETUP
 	TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
 	TEMPLATED_EMAIL_TEMPLATE_DIR = 'templated_email/'
 	TEMPLATED_EMAIL_FILE_EXTENSION = 'email'
-	
+
 	EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 	EMAIL_HOST = ''
 	EMAIL_PORT = 587
@@ -513,22 +609,19 @@ Pyfreebilling installation
 	EMAIL_HOST_PASSWORD = ''
 	#EMAIL_USE_TLS = True
 	EMAIL_USE_SSL = True
-	EMAIL_SIGNATURE = '' 
+	EMAIL_SIGNATURE = ''
 
 * and now, enter the following commands without sudo (IMPORTANT). At the step "syncdb", you will fave a prompt asking you to enter a username and a password. They are very important, as thez are the admin one !
-	
+
 ::
 
 	pip install -r requirements/requirements.txt
-	python manage.py syncdb 
-	#- (IMPORTANT : enter your username and password) --
-	python manage.py initcurrencies
 	python manage.py migrate
-	python manage.py loaddata country_dialcode.json
+	python manage.py createsuperuser
+	- (IMPORTANT : enter your username and password) --
 	python manage.py loaddata switch 0001_fixtures.json
 	python manage.py loaddata 0001_initial_SipProfile.json
 	python manage.py loaddata 0001_initial_ReccurentTasks.json
-	python manage.py loaddata country.json
 	python manage.py updatecurrencies (if you have set your Openexchange API key)
 	python manage.py collectstatic (answer 'yes')
 
@@ -591,7 +684,7 @@ Pyfreebilling installation
 
 ::
 
-    */1 * * * * perl /usr/local/venv/pyfreebilling/freeswitch/scripts/import-csv.pl>> /var/log/cron.log 2>&1   
+    */1 * * * * perl /usr/local/venv/pyfreebilling/freeswitch/scripts/import-csv.pl>> /var/log/cron.log 2>&1
     * * * * * /usr/local/venv/bin/chroniker -e /usr/local/venv/bin/activate_this.py -p /usr/local/venv/pyfreebilling
 
 
@@ -617,5 +710,5 @@ Pyfreebilling login
  Got to the url https://my-ip/extranet and enter your username and password.
 
  The customer portal url is : https://my-ip
- 
+
  I recommend to setup a firewall restrincting access to web pages and your voip ports !

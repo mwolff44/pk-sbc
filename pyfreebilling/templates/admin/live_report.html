@@ -1,9 +1,11 @@
 {% extends "admin/base_site.html" %}
 {% load i18n admin_static admin_list %}
+{% load bootstrap3 %}
 
 {% block extrahead %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
     {{ form.media }}
 {{ block.super }}
 

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2013 Mathias WOLFF
 # This file is part of pyfreebilling.
 #
@@ -41,14 +42,15 @@ import calendar
 
 from dateutil.relativedelta import relativedelta
 
+from pyfreebilling.customerdirectory.models import CustomerDirectory
+
 from pyfreebilling.pyfreebill.models import Company,\
-    Person,\
     CompanyBalanceHistory,\
-    CDR,\
-    CustomerDirectory,\
     CustomerRates,\
     CustomerRateCards,\
     Person
+
+from pyfreebilling.cdr.models import CDR
 
 from .forms import CDRSearchForm, RatesForm, RatesListFormHelper
 from .filters import RatesListFilter

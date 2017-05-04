@@ -22,11 +22,17 @@ from django.template import Context, loader
 #  from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
+from import_export.admin import ImportExportModelAdmin
+from import_export.formats import base_formats
+
+from pyfreebilling.did.resources import DidResource
+
 from pyfreebilling.switch import esl
 
-from pyfreebilling.did.models import Did
+from pyfreebilling.did.models import Did, RoutesDid
 
-from pyfreebilling.did.models import RoutesDid
+
+DEFAULT_FORMATS = (base_formats.CSV, )
 
 
 def didupdate(modeladmin, request, queryset):
@@ -71,22 +77,28 @@ class RoutesDidInline(admin.StackedInline):
     collapse = False
 
 
-class DidAdmin(admin.ModelAdmin):
-    list_display = ('number',
+class DidAdmin(ImportExportModelAdmin):
+    list_display = ('id',
+                    'number',
                     'provider',
                     'prov_max_channels',
+                    'prov_ratecard',
                     'customer',
                     'cust_max_channels',
+                    'cust_ratecard',
                     'date_modified')
     readonly_fields = ('date_added',
                        'date_modified')
     list_filter = ('provider',
-                   'customer')
+                   'customer',
+                   'prov_ratecard',
+                   'cust_ratecard',)
     list_display_links = ('number',)
     ordering = ('number',)
     search_fields = ('number',)
     inlines = [RoutesDidInline, ]
-    actions = [didupdate]
+    resource_class = DidResource
+    #actions = [didupdate]
 
     # def get_reserved(self, obj):
     #     if ContractDid.objects.get(did=obj):
@@ -105,6 +117,9 @@ class DidAdmin(admin.ModelAdmin):
         else:
             return False
 
+    def get_import_formats(self):
+        format_csv = DEFAULT_FORMATS
+        return [f for f in format_csv if f().can_import()]
 
 #  ----------------------------------------
 #  register

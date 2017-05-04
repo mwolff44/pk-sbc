@@ -15,4 +15,5 @@
 # along with pyfreebilling. If not, see <http://www.gnu.org/licenses/>
 
 from __future__ import absolute_import
-from .Switch import VoipSwitch
+from .Switch import VoipSwitch, VoipSwitchProfile
+from .Domain import Domain

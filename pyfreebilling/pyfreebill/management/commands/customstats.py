@@ -1,21 +1,21 @@
 # Copyright 2013-2016 Mathias WOLFF
 # This file is part of pyfreebilling.
-# 
+#
 # pyfreebilling is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # pyfreebilling is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
 from django.core.management.base import BaseCommand, CommandError
-from .models import CDR
+from pyfreebilling.cdr.models import CDR
 import datetime, qsstats
 from django.db.models import Sum, Avg, Count, Max, Min
 from django.db import connection
@@ -34,7 +34,7 @@ class Command(BaseCommand):
 
                 qss_sell = qsstats.QuerySetStats(qs, 'start_stamp', aggregate=Sum('total_sell'))
                 qss_sum_duration = qsstats.QuerySetStats(qs, 'start_stamp', aggregate=Sum('effective_duration'))
-                qss_avg_duration = qsstats.QuerySetStats(qs, 'start_stamp', aggregate=Avg('effective_duration'))                
+                qss_avg_duration = qsstats.QuerySetStats(qs, 'start_stamp', aggregate=Avg('effective_duration'))
                 qss_max_duration = qsstats.QuerySetStats(qs, 'start_stamp', aggregate=Max('effective_duration'))
 
                 qs1 = CDR.objects.all().filter(customer="13").filter(effective_duration__gt="0")
@@ -75,4 +75,3 @@ class Command(BaseCommand):
             #poll.save()
 
             self.stdout.write('Successfully stats ')
-

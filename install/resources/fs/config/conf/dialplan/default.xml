@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    NOTICE:
+
+    This context is usually accessed via authenticated callers on the sip profile on port 5060
+    or transfered callers from the public context which arrived via the sip profile on port 5080.
+
+    Authenticated users will use the user_context variable on the user to determine what context
+    they can access.  You can also add a user in the directory with the cidr= attribute acl.conf.xml
+    will build the domains ACL using this value.
+-->
+<!-- http://wiki.freeswitch.org/wiki/Dialplan_XML -->
+<include>
+  <context name="default">
+
+    <extension name="unloop">
+      <condition field="${unroll_loops}" expression="^true$"/>
+      <condition field="${sip_looped_call}" expression="^true$">
+	<action application="deflect" data="${destination_number}"/>
+      </condition>
+    </extension>
+
+    <extension name="EMERGENCY">
+       <condition field="${sip_h_X-PyFB-CallType}" expression="^(EMERGENCY)$">
+          <action application="log" data="INFO - $1 CALL - continue"/>
+          <condition field="destination_number" expression="^(.+)$">
+                  <action application="info"/>
+                  <action application="set" data="outside_call=true"/>
+                  <action application="lua" data="pyfreebilling_dp.lua" />
+                  <action application="set"><![CDATA[sip_h_X-CID=${sip_call_id}]]></action>
+                  <action application="bridge" data="${pyfb_bridge}" />
+                  <action application="hangup" />
+          </condition>
+        </condition>
+    </extension>
+
+
+    <extension name="PSTN">
+       <condition field="${sip_h_X-PyFB-CallType}" expression="^(PSTN)$">
+          <action application="log" data="INFO - good Sip Account ID $1 - continue"/>
+          <condition field="destination_number" expression="^(.+)$">
+                  <action application="info"/>
+                  <action application="set" data="outside_call=true"/>
+                  <action application="lua" data="pyfreebilling_dp.lua" />
+                  <action application="set"><![CDATA[sip_h_X-CID=${sip_call_id}]]></action>
+                  <action application="bridge" data="${pyfb_bridge}" />
+                  <action application="hangup" />
+          </condition>
+        </condition>
+    </extension>
+
+    <extension name="DIDOUT">
+        <condition field="${sip_h_X-PyFB-CallType}" expression="^(DIDOUT)$">
+          <action application="log" data="INFO - $1 CALL - continue"/>
+          <condition field="destination_number" expression="^(.+)$">
+                  <action application="info"/>
+                  <action application="set" data="outside_call=true"/>
+                  <action application="lua" data="pyfreebilling_dp.lua" />
+                  <action application="set"><![CDATA[sip_h_X-CID=${sip_call_id}]]></action>
+                  <action application="bridge" data="${pyfb_bridge}" />
+                  <action application="hangup" />
+          </condition>
+        </condition>
+
+
+          <anti-action application="log" data="INFO wrong Sip Account ID $1 - hangup"/>
+          <anti-action application="hangup"/>
+    </extension>
+
+    <extension name="DIDIN">
+        <condition field="${sip_h_X-PyFB-CallType}" expression="^(DIDIN)$">
+          <action application="log" data="INFO - $1 CALL - continue"/>
+          <condition field="destination_number" expression="^(.+)$">
+                  <action application="info"/>
+                  <action application="set" data="outside_call=true"/>
+                  <action application="lua" data="pyfreebilling_dp.lua" />
+                  <action application="set"><![CDATA[sip_h_X-CID=${sip_call_id}]]></action>
+                  <action application="bridge" data="${pyfb_bridge}" />
+                  <action application="hangup" />
+          </condition>
+        </condition>
+
+
+          <anti-action application="log" data="INFO wrong CALL TYPE $1 - hangup"/>
+          <anti-action application="hangup"/>
+    </extension>
+
+  </context>
+</include>

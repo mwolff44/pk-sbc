@@ -17,7 +17,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-#from pyfreebilling.pyfreebilling.models import Company
+#from pyfreebilling.pyfreebill.models import Ratecard, Providertariff
 
 
 class Did(models.Model):
@@ -34,15 +34,18 @@ class Did(models.Model):
         related_name='didprovider',
         verbose_name=_(u"Provider"),
         limit_choices_to={'supplier_enabled': True})
-    prov_plan = models.ForeignKey(
-        'did.ProviderRatesDid',
+    prov_ratecard = models.ForeignKey(
+        'pyfreebill.Providertariff',
         on_delete=models.CASCADE,
         verbose_name=_(u"provider rate plan"),
+        null=True,
+        blank=True,
         limit_choices_to={'enabled': True})
-    prov_max_channels = models.PositiveIntegerField(_(u'provider channels'),
-                                                    default=1,
-                                                    help_text=_(u"""maximum
-                    simultaneous calls allowed for this did."""))
+    prov_max_channels = models.PositiveIntegerField(
+        _(u'provider channels'),
+        default=0,
+        help_text=_(u"""maximum simultaneous calls allowed
+            for this did. 0 means no limit"""))
     customer = models.ForeignKey(
         'pyfreebill.Company',
         on_delete=models.SET_NULL,
@@ -51,19 +54,26 @@ class Did(models.Model):
         null=True,
         blank=True,
         limit_choices_to={'customer_enabled': True})
-    cust_plan = models.ForeignKey(
-        'did.CustomerRatesDid',
+    cust_ratecard = models.ForeignKey(
+        'pyfreebill.ratecard',
         on_delete=models.SET_NULL,
-        verbose_name=_(u"customer rate plan"),
+        verbose_name=_(u"Customer rate plan"),
         null=True,
         blank=True,
-        limit_choices_to={'enabled': True})
-    cust_max_channels = models.PositiveIntegerField(_(u'customer channels'),
-                                                    default=1,
-                                                    null=True,
-                                                    blank=True,
-                                                    help_text=_(u"""maximum
-                    simultaneous calls allowed for this did."""))
+        limit_choices_to={'enabled': True, 'rctype': 'DIDIN'})
+    cust_max_channels = models.PositiveIntegerField(
+        _(u'customer channels'),
+        default=0,
+        null=True,
+        blank=True,
+        help_text=_(u"""maximum simultaneous calls allowed
+            for this did. 0 means no limit"""))
+    insee_code = models.PositiveIntegerField(
+        _(u'Special code for routing urgency numbers'),
+        null=True,
+        blank=True,
+        help_text=_(u"""Postal code, INSEE code ... for routing
+          urgency number to the right urgency call center."""))
     description = models.TextField(_(u'description'),
                                    blank=True)
     date_added = models.DateTimeField(_(u'date added'),

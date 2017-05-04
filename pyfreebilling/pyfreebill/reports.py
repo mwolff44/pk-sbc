@@ -17,7 +17,7 @@
 
 from django.db.models import Sum, Avg, Count
 
-from .models import CDR
+from pyfreebilling.cdr.models import CDR
 
 from model_report.report import reports, ReportAdmin
 from model_report.utils import (usd_format, avg_column, sum_column, count_column)

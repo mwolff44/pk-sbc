@@ -1,4 +1,4 @@
-# Create your tests here.
+# -*- coding: utf-8 -*-
 # Copyright 2013 Mathias WOLFF
 # This file is part of pyfreebilling.
 #
