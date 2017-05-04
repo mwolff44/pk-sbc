@@ -13,13 +13,13 @@
         </a>
     </li>
     <li>
-        <a href="../../../customerdirectory/?company__id__exact={{ object_id }}">
+        <a href="../../customerdirectory/customerdirectory/?company__id__exact={{ object_id }}">
             {% trans "Customer SIP" %}
         </a>
     </li>
 
     <li>
-        <a href="../../../cdr/?customer__id__exact={{ object_id }}">
+        <a href="../../cdr/cdr/?customer__id__exact={{ object_id }}">
             {% trans "CDRs" %}
         </a>
     </li>
@@ -32,6 +32,6 @@
         <a href="../../../person/?company__id__exact={{ object_id }}">
             {% trans "Contacts" %}
         </a>
-    </li> 
+    </li>
 
 {% endblock %}
