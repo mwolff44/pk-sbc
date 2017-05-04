@@ -23,7 +23,7 @@
 
 ### What is pyfreebilling
 
-*pyfreebilling* is an *open source wholesale billing platform* for *FreeSWITCH* . 
+*pyfreebilling* is an *open source wholesale billing platform* based on *Kamailio* and *FreeSwitch* . 
 
 pyfreebilling is developed under python, LUA and PostgreSQL as the database layer.
 
@@ -77,7 +77,7 @@ interface. A few of them are:
 
 ### Prerequisites
 
-In order to run pyfreebilling, you need the following configured, secured  and 
+In order to run pyfreebilling, you need the following configured, secured  and
 working Basic Operating System (Linux or BSD, but also windows).
 
 The project uses freeswitch, PostgreSQL and Django.

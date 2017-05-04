@@ -557,7 +557,7 @@ Pyfreebilling installation
 	chown -R www-data:www-data pyfreebilling
 	cd pyfreebilling
 
-* create un new file in pyfreebilling directory called local_settings.py
+* create a new file in pyfreebilling directory called local_settings.py
 
 ::
 
