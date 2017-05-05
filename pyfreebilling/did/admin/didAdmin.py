@@ -27,7 +27,7 @@ from import_export.formats import base_formats
 
 from pyfreebilling.did.resources import DidResource
 
-from pyfreebilling.switch import esl
+# from pyfreebilling.switch import esl
 
 from pyfreebilling.did.models import Did, RoutesDid
 
@@ -35,37 +35,37 @@ from pyfreebilling.did.models import Did, RoutesDid
 DEFAULT_FORMATS = (base_formats.CSV, )
 
 
-def didupdate(modeladmin, request, queryset):
-    """ generate new did xml config file """
-    try:
-        t = loader.get_template('xml/00_did.xml')
-    except IOError:
-        messages.error(request, """did config xml file update failed.
-            Can not load template file !""")
-    dids = Did.objects.all()
-    c = Context({"dids": dids, })
-    try:
-        f = open('/usr/local/freeswitch/conf/dialplan/public/00_did.xml', 'w')
-        try:
-            f.write(t.render(c))
-            f.close()
-            try:
-                esl.getReloadDialplan()
-                messages.success(request, "FS successfully reload")
-            except IOError:
-                messages.error(request, """DID config xml file update failed.
-                    FS update failed ! Try manually""")
-        finally:
-            #  f.close()
-            messages.success(request, "DID config xml file update success")
-    except IOError:
-        messages.error(request, """DID config xml file update failed. Can not
-            create file !""")
-
-
-didupdate.short_description = _(u"update DID config xml file")
-
-admin.site.add_action(didupdate, _(u"generate DID configuration file"))
+# def didupdate(modeladmin, request, queryset):
+#     """ generate new did xml config file """
+#     try:
+#         t = loader.get_template('xml/00_did.xml')
+#     except IOError:
+#         messages.error(request, """did config xml file update failed.
+#             Can not load template file !""")
+#     dids = Did.objects.all()
+#     c = Context({"dids": dids, })
+#     try:
+#         f = open('/usr/local/freeswitch/conf/dialplan/public/00_did.xml', 'w')
+#         try:
+#             f.write(t.render(c))
+#             f.close()
+#             try:
+#                 esl.getReloadDialplan()
+#                 messages.success(request, "FS successfully reload")
+#             except IOError:
+#                 messages.error(request, """DID config xml file update failed.
+#                     FS update failed ! Try manually""")
+#         finally:
+#             #  f.close()
+#             messages.success(request, "DID config xml file update success")
+#     except IOError:
+#         messages.error(request, """DID config xml file update failed. Can not
+#             create file !""")
+#
+#
+# didupdate.short_description = _(u"update DID config xml file")
+#
+# admin.site.add_action(didupdate, _(u"generate DID configuration file"))
 
 
 class RoutesDidInline(admin.StackedInline):

@@ -46,70 +46,70 @@ APP_LABEL = _(u'CDR report')
 DEFAULT_FORMATS = (base_formats.CSV, )
 
 
-def sofiaupdate(modeladmin, request, queryset):
-    """ generate new sofia xml config file """
-    try:
-        t = loader.get_template('xml/sofia.conf.xml')
-    except IOError:
-        messages.error(request,
-                       _(u"""sofia config xml file update failed. Can not load
-                       template file !"""))
-    sipprofiles = SipProfile.objects.all()
-    accounts = Company.objects.filter(supplier_enabled=True)
-    c = Context({"sipprofiles": sipprofiles, "accounts": accounts})
-    try:
-        f = open('/usr/local/freeswitch/conf/autoload_configs/sofia.conf.xml',
-                 'w')
-        try:
-            f.write(t.render(c))
-            f.close()
-            try:
-                fs = esl.getReloadGateway()
-                messages.success(request, _(u"FS successfully reload"))
-            except IOError:
-                messages.error(request, _(u"""customer sip config xml file update
-                    failed. FS ACL update failed ! Try manually -- %s""" % fs))
-        finally:
-            #f.close()
-            messages.success(request, _(u"sofia config xml file update success"))
-    except IOError:
-        messages.error(request, _(u"""sofia config xml file update failed. Can
-            not create file !"""))
-sofiaupdate.short_description = _(u"update sofia config xml file")
-
-
-def aclupdate(modeladmin, request, queryset):
-    """ generate new ACL xml config file """
-    try:
-        t = loader.get_template('xml/acl.conf.xml')
-    except IOError:
-        messages.error(request, _(u"""ACL config xml file update failed. Can
-            not load template file !"""))
-    acllists = AclLists.objects.all()
-    aclnodes = AclNodes.objects.all()
-    c = Context({"acllists": acllists, "aclnodes": aclnodes})
-    try:
-        f = open('/usr/local/freeswitch/conf/autoload_configs/acl.conf.xml',
-                 'w')
-        try:
-            f.write(t.render(c))
-            f.close()
-            try:
-                fs = esl.getReloadACL()
-                messages.success(request, _(u"FS successfully reload"))
-            except IOError:
-                messages.error(request, _(u"""ACL config xml file update failed.
-                    FS ACL update failed ! Try manually--- %s""" % fs))
-        finally:
-            messages.success(request, _(u"ACL config xml file update success"))
-    except IOError:
-        messages.error(request, _(u"""ACL xml file update failed. Can not
-            create file !"""))
-aclupdate.short_description = _(u"update ACL config xml file")
-
-
-admin.site.add_action(sofiaupdate, _(u"generate sofia configuration file"))
-admin.site.add_action(aclupdate, _(u"generate acl configuration file"))
+# def sofiaupdate(modeladmin, request, queryset):
+#     """ generate new sofia xml config file """
+#     try:
+#         t = loader.get_template('xml/sofia.conf.xml')
+#     except IOError:
+#         messages.error(request,
+#                        _(u"""sofia config xml file update failed. Can not load
+#                        template file !"""))
+#     sipprofiles = SipProfile.objects.all()
+#     accounts = Company.objects.filter(supplier_enabled=True)
+#     c = Context({"sipprofiles": sipprofiles, "accounts": accounts})
+#     try:
+#         f = open('/usr/local/freeswitch/conf/autoload_configs/sofia.conf.xml',
+#                  'w')
+#         try:
+#             f.write(t.render(c))
+#             f.close()
+#             try:
+#                 fs = esl.getReloadGateway()
+#                 messages.success(request, _(u"FS successfully reload"))
+#             except IOError:
+#                 messages.error(request, _(u"""customer sip config xml file update
+#                     failed. FS ACL update failed ! Try manually -- %s""" % fs))
+#         finally:
+#             #f.close()
+#             messages.success(request, _(u"sofia config xml file update success"))
+#     except IOError:
+#         messages.error(request, _(u"""sofia config xml file update failed. Can
+#             not create file !"""))
+# sofiaupdate.short_description = _(u"update sofia config xml file")
+#
+#
+# def aclupdate(modeladmin, request, queryset):
+#     """ generate new ACL xml config file """
+#     try:
+#         t = loader.get_template('xml/acl.conf.xml')
+#     except IOError:
+#         messages.error(request, _(u"""ACL config xml file update failed. Can
+#             not load template file !"""))
+#     acllists = AclLists.objects.all()
+#     aclnodes = AclNodes.objects.all()
+#     c = Context({"acllists": acllists, "aclnodes": aclnodes})
+#     try:
+#         f = open('/usr/local/freeswitch/conf/autoload_configs/acl.conf.xml',
+#                  'w')
+#         try:
+#             f.write(t.render(c))
+#             f.close()
+#             try:
+#                 fs = esl.getReloadACL()
+#                 messages.success(request, _(u"FS successfully reload"))
+#             except IOError:
+#                 messages.error(request, _(u"""ACL config xml file update failed.
+#                     FS ACL update failed ! Try manually--- %s""" % fs))
+#         finally:
+#             messages.success(request, _(u"ACL config xml file update success"))
+#     except IOError:
+#         messages.error(request, _(u"""ACL xml file update failed. Can not
+#             create file !"""))
+# aclupdate.short_description = _(u"update ACL config xml file")
+#
+#
+# admin.site.add_action(sofiaupdate, _(u"generate sofia configuration file"))
+# admin.site.add_action(aclupdate, _(u"generate acl configuration file"))
 
 # Company - Contatcs
 

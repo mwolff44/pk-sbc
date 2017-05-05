@@ -20,46 +20,46 @@ from django.template import Context, loader
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from pyfreebilling.switch import esl
+# from pyfreebilling.switch import esl
 from pyfreebilling.pyfreebill.models import Company
 
 from .models import CustomerDirectory
 
 
-def directoryupdate(modeladmin, request, queryset):
-    """ generate new directory xml config file """
-    try:
-        t = loader.get_template('xml/directory.conf.xml')
-    except IOError:
-        messages.error(request, _(u"""customer sip config xml file update failed.
-            Can not load template file !"""))
-    customerdirectorys = CustomerDirectory.objects.filter(company__customer_enabled__exact=True, enabled=True)
-    accounts = Company.objects.filter(customer_enabled=True)
-    c = Context({"customerdirectorys": customerdirectorys,
-                 "accounts": accounts})
-    try:
-        f = open('/usr/local/freeswitch/conf/directory/default.xml', 'w')
-        try:
-            f.write(t.render(c))
-            f.close()
-            try:
-                fs = esl.getReloadACL()
-                messages.success(request, _(u"FS successfully reload"))
-            except IOError:
-                messages.error(request, _(u"""customer sip config xml file update
-                    failed. FS ACL update failed ! Try manually - %s""" % fs))
-        finally:
-            #f.close()
-            messages.success(request, _(u"""customer sip config xml file update
-                success"""))
-    except IOError:
-        messages.error(request, _(u"""customer sip config xml file update failed.
-            Can not create file !"""))
-directoryupdate.short_description = _(u"update customer sip config xml file")
-
-
-admin.site.add_action(directoryupdate, _(u"""generate customer sip
-    configuration file"""))
+# def directoryupdate(modeladmin, request, queryset):
+#     """ generate new directory xml config file """
+#     try:
+#         t = loader.get_template('xml/directory.conf.xml')
+#     except IOError:
+#         messages.error(request, _(u"""customer sip config xml file update failed.
+#             Can not load template file !"""))
+#     customerdirectorys = CustomerDirectory.objects.filter(company__customer_enabled__exact=True, enabled=True)
+#     accounts = Company.objects.filter(customer_enabled=True)
+#     c = Context({"customerdirectorys": customerdirectorys,
+#                  "accounts": accounts})
+#     try:
+#         f = open('/usr/local/freeswitch/conf/directory/default.xml', 'w')
+#         try:
+#             f.write(t.render(c))
+#             f.close()
+#             try:
+#                 fs = esl.getReloadACL()
+#                 messages.success(request, _(u"FS successfully reload"))
+#             except IOError:
+#                 messages.error(request, _(u"""customer sip config xml file update
+#                     failed. FS ACL update failed ! Try manually - %s""" % fs))
+#         finally:
+#             #f.close()
+#             messages.success(request, _(u"""customer sip config xml file update
+#                 success"""))
+#     except IOError:
+#         messages.error(request, _(u"""customer sip config xml file update failed.
+#             Can not create file !"""))
+# directoryupdate.short_description = _(u"update customer sip config xml file")
+#
+#
+# admin.site.add_action(directoryupdate, _(u"""generate customer sip
+#     configuration file"""))
 
 # CustomerDirectory
 
