@@ -810,7 +810,7 @@ class SofiaGatewayAdmin(admin.ModelAdmin):
                     'company',
                     'channels',
                     'proxy',
-                    #'transport',
+                    'transport',
                     'get_enabled_display',
                     'get_register_display',
                     'date_added',
