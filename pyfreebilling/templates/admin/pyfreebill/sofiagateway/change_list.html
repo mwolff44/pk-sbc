@@ -11,14 +11,8 @@
                 {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
               </a>
             </li>
-            <li>
-				<a href="{% url 'pyfreebill:fs_sofia_update' %}" 
-				class="big-button">
-					<i class="reload-item"></i> {% trans 'Apply Conf to Freeswitch' %}
-				</a>
-			</li>
+
           {% endblock %}
         </ul>
       {% endif %}
     {% endblock %}
-
