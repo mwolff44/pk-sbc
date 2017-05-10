@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         ('pyfreebill', '0004_auto_20161029_1103'),
     ]
 
-    operations = [
+    state_operations = [
         migrations.CreateModel(
             name='CustomerDirectory',
             fields=[
@@ -51,4 +51,11 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'Customer sip accounts',
             },
         ),
+    ]
+
+    operations = [
+        # By running only state operations, we are making Django think it has
+        # applied this migration to the database. In reality, we renamed a
+        # "cars_tires" table to "tires_tires" earlier.
+        migrations.SeparateDatabaseAndState(state_operations=state_operations)
     ]

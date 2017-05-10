@@ -32,7 +32,7 @@ django-simple-import==2.0.1
 django-solo==1.1.2
 django-tables2==1.4.2
 django-templated-email==2.1
-django==1.9.12
+django==1.9.13
 feedparser==5.2.1
 FreeSWITCH-ESL-Python==1.2
 netaddr==0.7.19

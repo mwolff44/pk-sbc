@@ -11,9 +11,19 @@ class Migration(migrations.Migration):
         ('pyfreebill', '0003_auto_20161025_1701'),
     ]
 
-    operations = [
+    database_operations = [
         migrations.AlterModelTable(
-            name='customer_directory',
-            table='customer_directory-old',
+            name='CustomerDirectory',
+            table='customer_directory',
         ),
+    ]
+
+    state_operations = [
+
+    ]
+
+    operations = [
+        migrations.SeparateDatabaseAndState(
+            database_operations=database_operations,
+            state_operations=state_operations)
     ]

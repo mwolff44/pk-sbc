@@ -29,7 +29,7 @@ INTERNAL_IPS = ('10.0.3.0/24', )
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'pyfreebilling',
+        'NAME': 'pyfreebilling1',
         'USER': 'pyfreebilling',
         'PASSWORD': 'password',
         'HOST': '127.0.0.1',

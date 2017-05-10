@@ -82,7 +82,7 @@ class CustomerDirectoryAdmin(admin.ModelAdmin):
     # list_editable = ['max_calls', 'calls_per_second']
     search_fields = ['^sip_ip', '^company__name', '^name']
     exclude = ['vmd', ]
-    actions = [directoryupdate]
+    # actions = [directoryupdate]
     save_on_top = True
     affix = True
     fieldsets = (

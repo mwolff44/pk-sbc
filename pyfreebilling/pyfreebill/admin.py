@@ -810,6 +810,7 @@ class SofiaGatewayAdmin(admin.ModelAdmin):
                     'company',
                     'channels',
                     'proxy',
+                    #'transport',
                     'get_enabled_display',
                     'get_register_display',
                     'date_added',
@@ -823,7 +824,7 @@ class SofiaGatewayAdmin(admin.ModelAdmin):
                    'sip_profile']
     search_fields = ['^company__name',
                      'proxy']
-    actions = [sofiaupdate]
+    # actions = [sofiaupdate]
 
     def get_enabled_display(self, obj):
         if obj.enabled:

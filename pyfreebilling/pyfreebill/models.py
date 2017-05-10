@@ -1497,6 +1497,16 @@ class SofiaGateway(models.Model):
                              max_length=48,
                              default="",
                              help_text=_(u"IP if register is False."))
+    # SIP_TRANSPORT_CHOICES = (
+    #     ("udp", _(u"UDP")),
+    #     ("tcp", _(u"TCP")),
+    #     ("tls", _(u"TLS")),
+    # )
+    # transport = models.CharField(_(u"SIP transport"),
+    #                              max_length=15,
+    #                              default="udp",
+    #                              choices=SIP_TRANSPORT_CHOICES,
+    #                              help_text=_(u"Which transport to use for register"))
     extension = models.CharField(_(u"extension number"),
                                  max_length=50,
                                  blank=True,

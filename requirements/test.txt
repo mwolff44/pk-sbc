@@ -35,7 +35,7 @@ django-simple-import==2.0.1
 django-solo==1.1.2
 django-tables2==1.4.2
 django-templated-email==2.1
-django==1.9.12
+django==1.9.13
 enum34==1.1.6             # via flake8
 factory-boy==2.8.1
 Faker==0.7.10             # via factory-boy

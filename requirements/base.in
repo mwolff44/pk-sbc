@@ -6,7 +6,7 @@
 
 # Current framework
 # https://docs.djangoproject.com/en/1.8/
-django==1.9.12
+django==1.9.13
 
 django-admin-honeypot==1.0.0
 django-axes==2.3.2

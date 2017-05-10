@@ -12,12 +12,17 @@ class Migration(migrations.Migration):
         ('pyfreebill', '0004_auto_20161029_1103'),
     ]
 
-    operations = [
-        migrations.RemoveField(
-            model_name='customerdirectory',
-            name='company',
-        ),
+    # This needs to be a state-only operation because the database model was
+    # renamed, and no longer exists according to Django.
+    state_operations = [
+        # Pasted from auto-generated operations in previous step:
         migrations.DeleteModel(
             name='CustomerDirectory',
         ),
+    ]
+
+    operations = [
+        # After this state operation, the Django DB state should match the
+        # actual database structure.
+        migrations.SeparateDatabaseAndState(state_operations=state_operations)
     ]
