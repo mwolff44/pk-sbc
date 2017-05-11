@@ -1,0 +1,25 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% load admin_urls %}
+
+
+{% block title %}{% trans 'PyFreeBilling : AGPL License' %}{% endblock %}
+
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+    &rsaquo; <a href="{% url 'pyfreebill:license' %}">{% trans 'PyFreeBilling license' %}</a>
+    {% if title %} &rsaquo; {{ title }}{% endif %}
+    </div>
+{% endblock %}
+
+{% block content_title %}{% trans 'PyFreeBilling license' %}{% endblock %}
+
+{% block content %}
+    <div id="license">
+        {{ license|safe }}
+    </div>
+{% endblock %}
+
+{% block sidebar %}{% endblock %}
