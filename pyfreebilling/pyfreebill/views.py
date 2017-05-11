@@ -35,7 +35,7 @@ import qsstats
 import json
 import pytz
 
-from pyfreebilling.switch import esl
+# from pyfreebilling.switch import esl
 
 from pyfreebilling import __version__
 
