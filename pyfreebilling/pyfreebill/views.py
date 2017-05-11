@@ -14,12 +14,13 @@
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from django.template import RequestContext, Context, loader
 from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum, Avg, Count, Max, Min
+from django.views.decorators.cache import cache_page
 from django.views.generic import TemplateView
 from django.utils import timezone
 from django.contrib import messages
@@ -34,6 +35,14 @@ import datetime
 import qsstats
 import json
 import pytz
+import markdown
+
+try:
+    # python 2
+    from urllib2 import urlopen
+except ImportError:
+    # python 3
+    from urllib.request import urlopen
 
 # from pyfreebilling.switch import esl
 
@@ -47,6 +56,16 @@ from .utils import round_value, getvar, return_query_string
 from .forms import CDRSearchForm
 from .models import DimCustomerDestination, DimProviderDestination, DimCustomerHangupcause, Company, SipProfile
 from .tables import TopCustTable, TopProvTable, TopDestCustTable, TopDestProvTable
+
+
+@staff_member_required
+@cache_page(60*60*24)
+def license_view(request):
+    url = "https://www.gnu.org/licenses/agpl-3.0.md"
+    str = urlopen(url).read()
+    license = markdown.markdown(str)
+    context = {'license': license}
+    return render(request, 'admin/license.html', context)
 
 
 @staff_member_required

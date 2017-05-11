@@ -94,3 +94,5 @@ vatnumber==1.2
 
 django-admin-tools==0.8.0
 feedparser==5.2.1
+
+Markdown==2.3.1

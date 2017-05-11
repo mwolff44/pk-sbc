@@ -35,6 +35,11 @@ urlpatterns = [
                 name='cdr_report'
             ),
             url(
+                regex=r'^license/$',
+                view=views.license_view,
+                name='license'
+            ),
+            url(
                 regex=r'^status/$',
                 view=views.admin_status_view,
                 name='version'
@@ -63,16 +68,16 @@ urlpatterns = [
                 view=views.destination_providers_stats_view,
                 name='dest_providers_stats'
             ),
-            url(
-                regex=r'^FsDirectoryUpdate/',
-                view=views.FsDirectoryUpdateView,
-                name='fs_directory_update'
-            ),
-            url(
-                regex=r'^FsSofiaUpdate/',
-                view=views.FsSofiaUpdateView,
-                name='fs_sofia_update'
-            ),
+            # url(
+            #     regex=r'^FsDirectoryUpdate/',
+            #     view=views.FsDirectoryUpdateView,
+            #     name='fs_directory_update'
+            # ),
+            # url(
+            #     regex=r'^FsSofiaUpdate/',
+            #     view=views.FsSofiaUpdateView,
+            #     name='fs_sofia_update'
+            # ),
         ])),
     url(
         regex=r'^chart_stats_general_json/$',

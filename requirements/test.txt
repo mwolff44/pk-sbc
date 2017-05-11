@@ -43,6 +43,7 @@ feedparser==5.2.1
 flake8==3.3.0
 FreeSWITCH-ESL-Python==1.2
 ipaddress==1.0.18         # via faker
+Markdown==2.3.1
 mccabe==0.6.1             # via flake8
 netaddr==0.7.19
 netifaces==0.10.5

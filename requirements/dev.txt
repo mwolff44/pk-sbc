@@ -43,6 +43,7 @@ FreeSWITCH-ESL-Python==1.2
 futures==3.0.5            # via requests-futures
 idna==2.1                 # via cryptography
 ipaddress==1.0.17         # via cryptography
+Markdown==2.3.1
 netaddr==0.7.19
 netifaces==0.10.5
 packaging==16.8           # via setuptools

@@ -179,6 +179,7 @@ class CustomMenu(Menu):
                         ]
                     ),
                     items.MenuItem(_('PyFreeBilling version'), '/extranet/status/'),
+                    items.MenuItem(_('PyFreeBilling license'), '/extranet/license/'),
                 ]
             ),
         ]
