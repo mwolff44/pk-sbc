@@ -1,7 +1,6 @@
 {% extends "admin/base_site.html" %}
 {% load i18n %}
-{% load admin_urls %}
-
+{% load admin_modify admin_urls %}
 
 {% block title %}{% trans 'PyFreeBilling : AGPL License' %}{% endblock %}
 
@@ -17,9 +16,7 @@
 {% block content_title %}{% trans 'PyFreeBilling license' %}{% endblock %}
 
 {% block content %}
-    <div id="license">
+    <div id="content-main">
         {{ license|safe }}
     </div>
 {% endblock %}
-
-{% block sidebar %}{% endblock %}
