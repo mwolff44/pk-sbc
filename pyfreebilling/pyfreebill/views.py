@@ -162,74 +162,74 @@ def destination_providers_stats_view(request):
     return global_stats_view(request, vue='dest_provider')
 
 
-@staff_member_required
-def FsDirectoryUpdateView(request):
-    messages.info(request, """Reloading FS""")
-    try:
-        t = loader.get_template('xml/directory.conf.xml')
-    except IOError:
-        messages.error(request, """customer sip config xml file update failed.
-            Can not load template file !""")
-    customerdirectorys = CustomerDirectory.objects.filter(
-        company__customer_enabled__exact=True, enabled=True)
-    accounts = Company.objects.filter(customer_enabled=True)
-    c = Context({"customerdirectorys": customerdirectorys,
-                 "accounts": accounts})
-    try:
-        f = open('/usr/local/freeswitch/conf/directory/default.xml', 'w')
-        try:
-            f.write(t.render(c))
-            f.close()
-            try:
-                fs = esl.getReloadACL()
-                messages.success(request, "FS successfully reload")
-            except IOError:
-                messages.error(request, """customer sip config xml file update
-                    failed. FS ACL update failed ! Try manually - %s""" % fs)
-        finally:
-            # f.close()
-            messages.success(request, """customer sip config xml file update
-                success""")
-    except IOError:
-        messages.error(request, """customer sip config xml file update failed.
-            Can not create file !""")
-    pfb_version = __version__
-    return render_to_response('admin/admin_status.html', locals(),
-                              context_instance=RequestContext(request))
+# @staff_member_required
+# def FsDirectoryUpdateView(request):
+#     messages.info(request, """Reloading FS""")
+#     try:
+#         t = loader.get_template('xml/directory.conf.xml')
+#     except IOError:
+#         messages.error(request, """customer sip config xml file update failed.
+#             Can not load template file !""")
+#     customerdirectorys = CustomerDirectory.objects.filter(
+#         company__customer_enabled__exact=True, enabled=True)
+#     accounts = Company.objects.filter(customer_enabled=True)
+#     c = Context({"customerdirectorys": customerdirectorys,
+#                  "accounts": accounts})
+#     try:
+#         f = open('/usr/local/freeswitch/conf/directory/default.xml', 'w')
+#         try:
+#             f.write(t.render(c))
+#             f.close()
+#             try:
+#                 fs = esl.getReloadACL()
+#                 messages.success(request, "FS successfully reload")
+#             except IOError:
+#                 messages.error(request, """customer sip config xml file update
+#                     failed. FS ACL update failed ! Try manually - %s""" % fs)
+#         finally:
+#             # f.close()
+#             messages.success(request, """customer sip config xml file update
+#                 success""")
+#     except IOError:
+#         messages.error(request, """customer sip config xml file update failed.
+#             Can not create file !""")
+#     pfb_version = __version__
+#     return render_to_response('admin/admin_status.html', locals(),
+#                               context_instance=RequestContext(request))
 
 
-def FsSofiaUpdateView(request):
-    """ generate new sofia xml config file """
-    try:
-        t = loader.get_template('xml/sofia.conf.xml')
-    except IOError:
-        messages.error(request,
-                       """sofia config xml file update failed. Can not load
-                       template file !""")
-    sipprofiles = SipProfile.objects.all()
-    accounts = Company.objects.filter(supplier_enabled=True)
-    c = Context({"sipprofiles": sipprofiles, "accounts": accounts})
-    try:
-        f = open('/usr/local/freeswitch/conf/autoload_configs/sofia.conf.xml',
-                 'w')
-        try:
-            f.write(t.render(c))
-            f.close()
-            try:
-                fs = esl.getReloadGateway(request)
-                messages.success(request, "FS successfully reload")
-            except IOError:
-                messages.error(request, """customer sip config xml file update
-                    failed. FS ACL update failed ! Try manually -- %s""" % fs)
-        finally:
-            # f.close()
-            messages.success(request, "sofia config xml file update success")
-    except IOError:
-        messages.error(request, """sofia config xml file update failed. Can
-            not create file !""")
-    pfb_version = __version__
-    return render_to_response('admin/admin_status.html', locals(),
-                              context_instance=RequestContext(request))
+# def FsSofiaUpdateView(request):
+#     """ generate new sofia xml config file """
+#     try:
+#         t = loader.get_template('xml/sofia.conf.xml')
+#     except IOError:
+#         messages.error(request,
+#                        """sofia config xml file update failed. Can not load
+#                        template file !""")
+#     sipprofiles = SipProfile.objects.all()
+#     accounts = Company.objects.filter(supplier_enabled=True)
+#     c = Context({"sipprofiles": sipprofiles, "accounts": accounts})
+#     try:
+#         f = open('/usr/local/freeswitch/conf/autoload_configs/sofia.conf.xml',
+#                  'w')
+#         try:
+#             f.write(t.render(c))
+#             f.close()
+#             try:
+#                 fs = esl.getReloadGateway(request)
+#                 messages.success(request, "FS successfully reload")
+#             except IOError:
+#                 messages.error(request, """customer sip config xml file update
+#                     failed. FS ACL update failed ! Try manually -- %s""" % fs)
+#         finally:
+#             # f.close()
+#             messages.success(request, "sofia config xml file update success")
+#     except IOError:
+#         messages.error(request, """sofia config xml file update failed. Can
+#             not create file !""")
+#     pfb_version = __version__
+#     return render_to_response('admin/admin_status.html', locals(),
+#                               context_instance=RequestContext(request))
 
 
 @staff_member_required
