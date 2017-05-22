@@ -2,6 +2,10 @@
 #############
 test_import*
 
+# Geany
+#######
+*.geany
+
 # SublimeText
 #############
 # cache files for sublime text
