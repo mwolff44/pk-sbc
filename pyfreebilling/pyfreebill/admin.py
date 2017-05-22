@@ -31,6 +31,8 @@ from django.utils.translation import ugettext_lazy as _
 from import_export.admin import ImportExportMixin, ImportMixin
 from import_export.formats import base_formats
 
+from pyfreebilling.antifraud.models import Fraud
+
 from pyfreebilling.switch import esl
 from pyfreebilling.switch.models import VoipSwitchProfile
 
@@ -114,6 +116,16 @@ DEFAULT_FORMATS = (base_formats.CSV, )
 # Company - Contatcs
 
 
+class AntiFraudInline(admin.TabularInline):
+    model = Fraud
+    collapse = True
+    max_num = 1
+    description = _(u'AntiFraud system parameters')
+    readonly_fields = ('high_amount_alert_sent',
+                       'high_minutes_alert_sent',
+                       'account_blocked_alert_sent')
+
+
 class CustomerDirectoryInline(GenericStackedInline):
     model = CustomerDirectory
     extra = 0
@@ -129,7 +141,6 @@ class PhoneNumberInline(GenericTabularInline):
     model = PhoneNumber
     extra = 0
     collapse = True
-    title_icon = 'fa-phone-square'
 
 
 class WebSiteInline(GenericTabularInline):
@@ -159,6 +170,7 @@ class CustomerRateCardsInline(admin.TabularInline):
 class CompanyAdmin(admin.ModelAdmin):
     inlines = [
         CustomerRateCardsInline,
+        AntiFraudInline,
         #CustomerDirectoryInline,
         PhoneNumberInline,
         EmailAddressInline,

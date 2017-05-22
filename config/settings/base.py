@@ -17,7 +17,7 @@
 # Django settings for pyfreebilling project.
 from __future__ import absolute_import, unicode_literals
 
-# SECRET_KEY = 'securitykeymustbechanged'
+# SECRET_KEY = 'securitykeymustbechanged 
 #import django
 #django.setup()
 
@@ -56,7 +56,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'pyfreebilling',
         'USER': 'pyfreebilling',
-        'PASSWORD': 'password',
+        'PASSWORD' : 'password',
         'HOST': '127.0.0.1',
         'PORT': '',  # Set to empty string for default.
     }
@@ -74,8 +74,8 @@ DJANGO_APPS = (
     'admin_tools',
     'admin_tools.theming',
     'admin_tools.menu',
-    #'admin_tools.dashboard',
-    #'jet.dashboard',
+    #'admin_tools.dashboard ,
+    #'jet.dashboard ,
     #'jet',
     'django.contrib.admin',
     'django.contrib.admindocs',
@@ -111,6 +111,7 @@ PROJECT_APPS = (
     'pyfreebilling.customerportal.apps.CustomerPortalConfig',
     'pyfreebilling.normalizationrule.apps.NormalizationRuleConfig',
     'pyfreebilling.cdr.apps.CDRConfig',
+    'pyfreebilling.antifraud.apps.AntiFraudConfig',
 )
 
 EXTENSION_APPS = (
@@ -155,7 +156,7 @@ USE_TZ = True
 #  ######### TEMPLATE CONFIGURATION
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'BACKEND' : 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             normpath(join(APP_DIR, 'templates')),
             normpath(join(APP_DIR, 'extensions')),
@@ -406,3 +407,25 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 # Location of root django.contrib.admin URL
 HONEYPOT_URL = r'^admin/'
 ADMIN_URL = r'^extranet/'
+
+# -------------------------#
+# ANTIFRAUD SYSTEM SETTINGS
+# general settings
+antifraud_activate = False # to activate threshold antifraud system, set to True 
+antifraud_activate_sip_blocking = False # mettre a YES pour activer le blocage sur seuil 
+antifraud_activate_customer = False # mettre a YES pour activer l'antifraude sur les comptes clients
+antifraud_activate_customer_force = False # To force antifraud system for all customers using default settings, set to YES
+antifraud_activate_sipaccount = False # mettre a YES pour activer l'antifraude sur les comptes SIP
+
+# customer account default settings
+antifraud_cust_amount_alert = 100 # valeur en monnaie de consommation maximum d un compte client declenchant une alerte 
+antifraud_cust_minutes_alert = 10000 # valeur en minutes de consommation maximum d un compte client declenchant une alerte 
+antifraud_cust_amount_block = 200 # valeur en monnaie de consommation maximum d un compte client declenchant un blocage 
+antifraud_cust_minutes_block = 20000 # valeur en minutes de consommation maximum d un compte client declenchant un blocage  
+
+# SIP account default settings 
+antifraud_sip_amount_alert = 100 # valeur en monnaie de consommation maximum d un compte client declenchant une alerte 
+antifraud_sip_minutes_alert = 10000 # valeur en minutes de consommation maximum d un compte client declenchant une alerte 
+antifraud_sip_amount_block = 200 # valeur en monnaie de consommation maximum d un compte client declenchant un blocage 
+antifraud_sip_minutes_block = 20000 # valeur en minutes de consommation maximum d un compte client declenchant un blocage
+# -------------------------#
