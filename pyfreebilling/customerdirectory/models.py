@@ -202,10 +202,11 @@ class CustomerDirectory(models.Model):
         default=True,
         help_text=_(u"""You have also to allow global routing option
           and define an urgency ratecard"""))
-    insee_code = models.PositiveIntegerField(
+    insee_code = models.CharField(
         _(u'Special code for routing urgency numbers'),
         null=True,
         blank=True,
+        max_length=10,
         help_text=_(u"""Postal code, INSEE code ... for routing
           urgency number to the right urgency call center."""))
     IEM_CHOICES = (

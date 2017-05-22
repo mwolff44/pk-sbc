@@ -134,6 +134,7 @@ class CustomerDirectoryAdmin(admin.ModelAdmin):
         (_(u'Urgency settings'), {
             'fields': ('urgency_numbr',
                        'insee_code'),
+            'classes': ('collapse',),
             'description': _(u'Urgency routing numbers parameters')
         }),
         (_(u'Description'), {

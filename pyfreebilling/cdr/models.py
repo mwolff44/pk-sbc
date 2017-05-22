@@ -229,10 +229,11 @@ class CDR(models.Model):
         null=True,
         max_length=128,
         db_index=True)
-    insee_code = models.PositiveIntegerField(
+    insee_code = models.CharField(
         _(u'Special code for routing urgency numbers'),
         null=True,
         blank=True,
+        max_length=10,
         help_text=_(u"""Postal code, INSEE code ... for routing
           urgency number to the right urgency call center."""))
     customerdirectory_id = models.ForeignKey(
