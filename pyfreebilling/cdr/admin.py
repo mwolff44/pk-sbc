@@ -37,6 +37,9 @@ DEFAULT_FORMATS = (base_formats.CSV, )
 
 class TotalAveragesChangeList(ChangeList):
 
+    def __init__(self, *args):
+        super(TotalAveragesChangeList, self).__init__(*args)
+
     def get_min_duration(self, sec_duration):
         if sec_duration:
             min = int(sec_duration / 60)
@@ -46,8 +49,8 @@ class TotalAveragesChangeList(ChangeList):
             sec = 0
         return "%02d:%02d" % (min, sec)
 
-    def get_results(self, *args, **kwargs):
-        super(TotalAveragesChangeList, self).get_results(*args, **kwargs)
+    def get_results(self, request):
+        super(TotalAveragesChangeList, self).get_results(request)
         self.total_sell_total = 0
         self.total_cost_total = 0
         try:
