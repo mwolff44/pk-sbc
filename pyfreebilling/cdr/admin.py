@@ -167,7 +167,8 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
                     'cost_rate',
                     'rate',
                     'prefix',
-                    'ratecard_id']
+                    'ratecard_id',
+                    'switchname']
         else:
             return ['start_stamp',
                     'customer',
@@ -186,8 +187,7 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
                     'lcr_carrier_id',
                     'ratecard_id',
                     'rctype',
-                    'switchname',
-                    'sipserver_name']
+                    'switchname']
         else:
             return ['start_stamp', 'sell_destination']
 
@@ -228,7 +228,8 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
                     'sip_hangup_cause',
                     'sell_destination',
                     'cost_destination',
-                    'switchname']
+                    'switchname',
+                    'sipserver_name']
         else:
             return ['start_stamp',
                     'customer',
