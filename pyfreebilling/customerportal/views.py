@@ -234,14 +234,14 @@ class RatesFilteredTableView(PagedFilteredTableView):
             messages.error(self.request,
                            _(u"""This user is not linked to a customer !"""))
         # ratecard
-        if self.kwargs['ratecard'] and self.kwargs['ratecard'] in self.rc:
-            self.ratecard = kwargs['ratecard']
+        if self.kwargs['ratecard'] and self.rc.filter(ratecard_id=self.kwargs['ratecard']):
+            self.ratecard = self.kwargs['ratecard']
         else:
             self.rc = CustomerRateCards.objects.filter(
                 company=self.company.pk)\
                 .filter(ratecard__enabled=True)\
                 .order_by('priority')
-            self.ratecard = self.rc[0].id
+            self.ratecard = self.rc[0].ratecard_id
 
         if self.ratecard:  # and ratecard.isnumeric():
             qs = qs.filter(ratecard__pk=self.ratecard)
@@ -298,9 +298,9 @@ class CdrReportCustView(LoginRequiredMixin, FormMixin, ListView):
         end_date = datetime.date.today() + datetime.timedelta(days=1)
         start_date = end_date - datetime.timedelta(days=30)
 
-    	start_d = {'y': [], 'm': [], 'd': [], 'h': [], 'min': [], 'status': True}
-    	end_d = {'y': [], 'm': [], 'd': [], 'h': [], 'min': [],'status': True}
-    	li = ['y', 'm', 'd', 'h', 'min']
+        start_d = {'y': [], 'm': [], 'd': [], 'h': [], 'min': [], 'status': True}
+        end_d = {'y': [], 'm': [], 'd': [], 'h': [], 'min': [],'status': True}
+        li = ['y', 'm', 'd', 'h', 'min']
         for i in li:
             start_d[str(i)] = self.request.GET.get("from_" + str(i))
             if start_d[str(i)] and start_d[str(i)].isnumeric():
