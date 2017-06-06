@@ -1,6 +1,8 @@
 #!/usr/bin/perl -w
-
-# PyFreeBilling
+#
+# PyFreeBilling v2.0
+# v1.21
+#
 
 
 use strict;
