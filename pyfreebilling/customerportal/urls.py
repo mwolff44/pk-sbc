@@ -59,12 +59,12 @@ urlpatterns = [
         name='list_export'
     ),
     url(
-        regex=r'^rates_export/(?P<ratecard>\d{1})/$',
+        regex=r'^rates_export/(?P<ratecard>\d+)/$',
         view=views.rates_csv_view,
         name='rates_download'
     ),
     url(
-        regex=r'^rates/(?P<ratecard>\d{1})/$',
+        regex=r'^rates/(?P<ratecard>\d+)/$',
         view=views.RatesFilteredTableView.as_view(),
         name='list_rates'
     ),
