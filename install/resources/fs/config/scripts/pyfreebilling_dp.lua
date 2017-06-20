@@ -210,7 +210,12 @@ if session:ready() then
   channel["sip_authorized"] = get_Variable("sip_authorized")
   channel["destination_number"] = get_Variable("destination_number")
   channel["caller_id_number"] = get_Variable("sip_h_X-PyFB-CallerNum") -- get_Variable("caller_id_number")
+  -- Clean + in callerID
   pyfb_caller_id_number = string.gsub(channel["caller_id_number"], "+")
+  log("CallerID num - clean + :", pyfb_caller_id_number, "debug")
+  -- Clean non alphanum in callerID
+  pyfb_caller_id_number = string.gsub(pyfb_caller_id_number, "%W")
+  log("CallerID num - clean alphanum :", pyfb_caller_id_number, "debug")
   channel["caller_id_name"] = get_Variable("caller_id_name")
   channel["direction"] = get_Variable("direction")
   channel["session_id"] = get_Variable("session_id")
