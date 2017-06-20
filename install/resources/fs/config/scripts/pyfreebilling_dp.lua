@@ -199,6 +199,7 @@ end
 --session:execute("info", "")
 --session:setHangupHook("myHangupHook")
 channel = {}
+pyfb_caller_id_number = ""
 if session:ready() then
   channel["cli_debug"] = "True"
   channel["uuid"] = get_Variable("uuid")
@@ -209,6 +210,7 @@ if session:ready() then
   channel["sip_authorized"] = get_Variable("sip_authorized")
   channel["destination_number"] = get_Variable("destination_number")
   channel["caller_id_number"] = get_Variable("sip_h_X-PyFB-CallerNum") -- get_Variable("caller_id_number")
+  pyfb_caller_id_number = string.gsub(channel["caller_id_number"], "+")
   channel["caller_id_name"] = get_Variable("caller_id_name")
   channel["direction"] = get_Variable("direction")
   channel["session_id"] = get_Variable("session_id")
@@ -358,7 +360,7 @@ if session:ready() then
           ON ccnr.company_id = c.id
               AND ']] .. channel["caller_id_number"] .. [[' LIKE concat(ccnr.prefix,'%')
           LEFT JOIN destination_norm_rules dnr
-          ON ']] .. channel["destination_number"] .. [[' LIKE concat(dnr.prefix,'%')
+          ON ']] .. pyfb_caller_id_number .. [[' LIKE concat(dnr.prefix,'%')
           WHERE c.id=cd.company_id
               AND c.customer_enabled = TRUE]]
   end
@@ -565,12 +567,12 @@ if (session:ready() == true) then
                 ON lg.id = rc.lcrgroup_id
               LEFT JOIN caller_id_prefix cip
                 ON cip.calleridprefixlist_id = rc.callerid_list_id
-                  AND ']] .. channel["caller_id_number"] .. [[' LIKE concat(cip.prefix,'%')
+                  AND ']] .. pyfb_caller_id_number .. [[' LIKE concat(cip.prefix,'%')
               INNER JOIN customer_rates r
                 ON rc.id = r.ratecard_id ]] .. ratecardfilter .. [[
               WHERE rc.enabled = TRUE
                 AND r.enabled = true
-                AND ']] .. channel["destination_number"] .. [[' LIKE concat(c.tech_prefix,r.prefix,'%')
+                AND ']] .. pyfb_caller_id_number .. [[' LIKE concat(c.tech_prefix,r.prefix,'%')
               ) T
               WHERE destnum_length_map <> 2
               ORDER BY destnum_length_map, LENGTH(prefix) desc LIMIT 1]]
@@ -659,7 +661,7 @@ if channel["call-type"] == "EMERGENCY" then
     inseecode_sql1 = [[SELECT
         insee_code
         FROM did d
-        WHERE d.number=']] .. channel["caller_id_number"] .. [[']]
+        WHERE d.number=']] .. pyfb_caller_id_number .. [[']]
     log("SQL: ", inseecode_sql1, "debug")
     assert(dbh:query(inseecode_sql1, function(row)
       for key, val in pairs(row) do
@@ -878,7 +880,7 @@ if (session:ready() == true) then
               AND s.enabled = TRUE
           LEFT JOIN carrier_cid_norm_rules ccnr
             ON ccnr.company_id = T.carrier_id
-              AND ']] .. channel["caller_id_number"] .. [[' LIKE concat(ccnr.prefix, '%') ]]
+              AND ']] .. pyfb_caller_id_number .. [[' LIKE concat(ccnr.prefix, '%') ]]
           .. negativemargin .. [[ORDER BY ]] .. ratefilter
 
       assert(dbh:query(query_cost_sql, function(row)
