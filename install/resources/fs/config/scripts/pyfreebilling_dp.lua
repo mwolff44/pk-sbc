@@ -209,13 +209,7 @@ if session:ready() then
   channel["user_name"] = get_Variable("user_name")
   channel["sip_authorized"] = get_Variable("sip_authorized")
   channel["destination_number"] = get_Variable("destination_number")
-  channel["caller_id_number"] = get_Variable("sip_h_X-PyFB-CallerNum") -- get_Variable("caller_id_number")
-  -- Clean + in callerID
-  pyfb_caller_id_number = string.gsub(channel["caller_id_number"], "+", "", 1)
-  log("CallerID num - clean + :", pyfb_caller_id_number, "debug")
-  -- Clean non alphanum in callerID
-  pyfb_caller_id_number = string.gsub(pyfb_caller_id_number, "%W", "", 1)
-  log("CallerID num - clean alphanum :", pyfb_caller_id_number, "debug")
+  channel["caller_id_number"] = get_Variable("sip_h_X-PyFB-CallerNum")
   channel["caller_id_name"] = get_Variable("caller_id_name")
   channel["direction"] = get_Variable("direction")
   channel["session_id"] = get_Variable("session_id")
@@ -240,6 +234,18 @@ if session:ready() then
 --  channel["FreeSWITCH-IPv4"] = get_Variable("FreeSWITCH-IPv4")
 --  channel["FreeSWITCH-Switchname"] = get_Variable("FreeSWITCH-Switchname")
   log("Get session variable :", "done", "debug")
+  
+  -- Clean + in callerID
+  pyfb_caller_id_number = string.gsub(channel["caller_id_number"], "+", "", 1)
+  log("CallerID num", " - clean plus sign : " .. pyfb_caller_id_number, "debug", 1)
+  -- Clean non alphanum in callerID
+  if tonumber(pyfb_caller_id_number) then
+      log("CallerID num", " - clean only digits ", "debug", 1)
+  else
+      pyfb_caller_id_number = "CALLERIDNONAVAIL"
+      log("CallerID num", " - clean alphanum : " .. pyfb_caller_id_number, "debug", 1)
+  end
+  
   set_variable("user_agent", channel["sip_user_agent"])
   set_variable("customer_ip", channel["sip_received_ip"])
   set_variable("cost_rate", "0.000000")
@@ -363,9 +369,9 @@ if session:ready() then
               AND ']] .. channel["destination_number"] .. [[' LIKE concat(cnr.prefix,'%')
           LEFT JOIN customer_cid_norm_rules ccnr
           ON ccnr.company_id = c.id
-              AND ']] .. channel["caller_id_number"] .. [[' LIKE concat(ccnr.prefix,'%')
+              AND ']] .. pyfb_caller_id_number .. [[' LIKE concat(ccnr.prefix,'%')
           LEFT JOIN destination_norm_rules dnr
-          ON ']] .. pyfb_caller_id_number .. [[' LIKE concat(dnr.prefix,'%')
+          ON ']] .. channel["destination_number"] .. [[' LIKE concat(dnr.prefix,'%')
           WHERE c.id=cd.company_id
               AND c.customer_enabled = TRUE]]
   end
@@ -577,7 +583,7 @@ if (session:ready() == true) then
                 ON rc.id = r.ratecard_id ]] .. ratecardfilter .. [[
               WHERE rc.enabled = TRUE
                 AND r.enabled = true
-                AND ']] .. pyfb_caller_id_number .. [[' LIKE concat(c.tech_prefix,r.prefix,'%')
+                AND ']] .. channel["destination_number"] .. [[' LIKE concat(c.tech_prefix,r.prefix,'%')
               ) T
               WHERE destnum_length_map <> 2
               ORDER BY destnum_length_map, LENGTH(prefix) desc LIMIT 1]]
