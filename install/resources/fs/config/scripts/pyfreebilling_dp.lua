@@ -243,6 +243,7 @@ if session:ready() then
       log("CallerID num", " - clean only digits ", "debug", 1)
   else
       pyfb_caller_id_number = "CALLERIDNONAVAIL"
+      channel["caller_id_number"] = "Anonymous"
       log("CallerID num", " - clean alphanum : " .. pyfb_caller_id_number, "debug", 1)
   end
   
@@ -369,7 +370,7 @@ if session:ready() then
               AND ']] .. channel["destination_number"] .. [[' LIKE concat(cnr.prefix,'%')
           LEFT JOIN customer_cid_norm_rules ccnr
           ON ccnr.company_id = c.id
-              AND ']] .. pyfb_caller_id_number .. [[' LIKE concat(ccnr.prefix,'%')
+              AND ']] .. channel["caller_id_number"] .. [[' LIKE concat(ccnr.prefix,'%')
           LEFT JOIN destination_norm_rules dnr
           ON ']] .. channel["destination_number"] .. [[' LIKE concat(dnr.prefix,'%')
           WHERE c.id=cd.company_id
@@ -498,6 +499,7 @@ if (session:ready() == true) then
     channel["caller_id_number"] = string.gsub(channel["caller_id_number"], customer["ccnr_remove_prefix"], customer["ccnr_add_prefix"], 1)
     log("CallerID Norm - callerID num / rem_prefix / add_prefix : ", channel["caller_id_number"].." / "..customer["ccnr_remove_prefix"].." / "..customer["ccnr_add_prefix"], "debug")
   end
+  pyfb_caller_id_number = string.gsub(channel["caller_id_number"], "+", "", 1)
   log("Customer CallerID : ", channel["caller_id_number"])
 else
   if dbh:connected() == true then
@@ -994,6 +996,10 @@ if (session:ready() == true) then
           log("WS CALL CallerID strip prefix:", lcr_remove_prefix[i])
           log("WS CALL CallerID number:", channel["caller_id_number"])
           log("WS CALL CallerID add prefix :", lcr_add_prefix[i])
+          -- test if the callerID start with a + and the gw prefix is a + to avoid ++
+          if lcr_add_prefix[i] == "+" then
+              channel["caller_id_number"] = string.gsub(channel["caller_id_number"], "+", "", 1)
+          end
           caller_id = string.gsub(channel["caller_id_number"], lcr_remove_prefix[i], lcr_add_prefix[i], 1)
           log("WS CALL CallerID sent to provider: ", caller_id)
           log("WS CALL dest num with prefix/suffix/strip : ", called_number)
