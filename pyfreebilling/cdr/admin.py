@@ -198,6 +198,7 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
         if request.user.is_superuser:
             return ['customer_ip',
                     'customer',
+                    'customerdirectory_id',
                     'caller_id_number',
                     'destination_number',
                     'start_stamp',
