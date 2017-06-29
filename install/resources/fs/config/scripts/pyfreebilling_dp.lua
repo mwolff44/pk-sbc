@@ -1047,7 +1047,7 @@ if (session:ready() == true) then
             end
           end))
           if dnsipcode["name"] == '' or dnsipcode["name"] == 'nil' then
-              log("No coresponding destnum sip account found for didout")
+              log("No corresponding destnum sip account found for didout")
           else
               execute("set", "sip_h_X-PyFB-SIPAccountId=" .. dnsipcode["name"])
           end
