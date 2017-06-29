@@ -1025,6 +1025,7 @@ if (session:ready() == true) then
       myvarbridge = myvarbridge .. ",nibble_rate="..tonumber(rate["rate"])
       myvarbridge = myvarbridge .. ",nibble_minimum="..tonumber(rate["minimal"])
       myvarbridge = myvarbridge .. ",nibble_account="..channel["accountcode"]
+      myvarbridge = myvarbridge .. ",sip_account_id="..channel["sipaccountcode"]
       if channel["call-type"] == "DIDIN" then
           execute("set", "sip_h_X-PyFB-SIPAccountId=" .. customer["sipname"])
       elseif channel["call-type"] == "DIDOUT" then
@@ -1050,6 +1051,7 @@ if (session:ready() == true) then
               log("No corresponding destnum sip account found for didout")
           else
               execute("set", "sip_h_X-PyFB-SIPAccountId=" .. dnsipcode["name"])
+              myvarbridge = myvarbridge .. ",sip_account_id="..dnsipcode["name"]
           end
       end
       myvarbridge = myvarbridge .. ",nibble_increment="..rate["block_min_duration"]
