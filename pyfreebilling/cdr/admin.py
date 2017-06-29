@@ -91,7 +91,7 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
     resource_class = CDRResourceExtra
     fieldsets = (
         (_(u'General'), {
-            'fields': ('customer',
+            'fields': ('customer', 'customerdirectory_id',
                        'start_stamp',
                        'destination_number',
                        ('min_effective_duration', 'billsec'),
