@@ -27,7 +27,7 @@ import pytz
 
 class Command(BaseCommand):
     args = '<date>'
-    help = 'delete old cdr from database - failed : delete failed cdr older than 7 days -'
+    help = 'delete old cdr from database - failed : delete failed cdr older than 3 days -'
 
     def handle(self, *args, **options):
         for var in args:
@@ -37,7 +37,7 @@ class Command(BaseCommand):
                 if var == "failed":
                     dt = datetime.datetime.now()
                     today = datetime.datetime(dt.year, dt.month, dt.day, 00, 00, 00).replace(tzinfo=current_tz)
-                    yesterday = today - datetime.timedelta(days=7)
+                    yesterday = today - datetime.timedelta(days=3) # better to add a settings
                 elif var == "past":
                     today = datetime.datetime(2013, 7, 8, 00, 00, 00).replace(tzinfo=current_tz)
                     yesterday = today - datetime.timedelta(days=1)
