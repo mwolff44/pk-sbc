@@ -137,7 +137,7 @@ class Command(BaseCommand):
                         year=yesterday.year
                     )
                     workingdate.save()
-                current_date = DimDate.objects.get(date=yesterday).id
+                current_date = DimDate.objects.get(date=yesterday)_id
 
 # DimCustomerHangupCause
     # check if entry
