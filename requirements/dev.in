@@ -13,7 +13,7 @@ pyOpenSSL==16.2.0
 
 # Debug information in a toolbar
 # http://django-debug-toolbar.readthedocs.org/
-django-debug-toolbar==1.7
+django-debug-toolbar==1.8
 
 # How rotten are your requirements?
 # https://github.com/sesh/piprot

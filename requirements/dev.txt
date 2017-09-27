@@ -4,13 +4,12 @@
 #
 #    pip-compile --output-file requirements/dev.txt requirements/dev.in
 #
-appdirs==1.4.3            # via setuptools
 cffi==1.8.3               # via cryptography
 contextlib2==0.5.4        # via raven
 cryptography==1.5.2       # via pyopenssl
 diff-match-patch==20121119  # via django-import-export
 django-admin-honeypot==1.0.0
-django-admin-tools==0.8.0
+django-admin-tools==0.8.1
 django-axes==2.3.2
 django-bootstrap-pagination==1.6.2
 django-bootstrap-toolkit==2.15.0
@@ -22,7 +21,7 @@ django-countries==4.2
 django-crispy-forms==1.6.1
 django-currencies==0.4.0
 django-datetime-widget==0.9.3
-django-debug-toolbar==1.7
+django-debug-toolbar==1.8
 django-extensions==1.7.7
 django-filter==0.15.3
 django-import-export==0.5.1
@@ -46,21 +45,19 @@ ipaddress==1.0.17         # via cryptography
 Markdown==2.3.1
 netaddr==0.7.19
 netifaces==0.10.5
-packaging==16.8           # via setuptools
 piprot==0.9.7
 psutil==4.3.1             # via django-chroniker
 psycopg2==2.7.1
 pyasn1==0.1.9             # via cryptography
 pycparser==2.14           # via cffi
 pyOpenSSL==16.2.0
-pyparsing==2.2.0          # via packaging
 python-dateutil==2.5.3    # via django-chroniker
 python-stdnum==1.4        # via vatnumber
 pytz==2016.10
 raven==6.0.0
 requests-futures==0.9.7   # via piprot
 requests==2.13.0
-six==1.10.0               # via cryptography, django-chroniker, django-extensions, django-templated-email, packaging, piprot, pyopenssl, python-dateutil, setuptools
+six==1.10.0               # via cryptography, django-chroniker, django-extensions, django-templated-email, piprot, pyopenssl, python-dateutil
 sqlparse==0.2.1           # via django-debug-toolbar
 tablib==0.11.2            # via django-import-export
 toposort==1.4             # via django-chroniker

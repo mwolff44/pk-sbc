@@ -39,12 +39,12 @@ DATABASES = {
 #  ######### DEV SPECIFIC
 INSTALLED_APPS += (
     'django_extensions',
-    #'debug_toolbar',
+    'debug_toolbar',
     'pyfreebilling.urgencyfr.apps.UrgencyfrConfig',
 )
 
 MIDDLEWARE_CLASSES += (
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 INTERNAL_IPS = ('10.0.3.27', )

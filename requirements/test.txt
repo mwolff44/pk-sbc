@@ -9,7 +9,7 @@ contextlib2==0.5.4        # via raven
 coverage==4.3.4
 diff-match-patch==20121119  # via django-import-export
 django-admin-honeypot==1.0.0
-django-admin-tools==0.8.0
+django-admin-tools==0.8.1
 django-axes==2.3.2
 django-bootstrap-pagination==1.6.2
 django-bootstrap-toolkit==2.15.0
