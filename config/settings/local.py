@@ -23,8 +23,6 @@ ADMINS = (
 MANAGERS = ADMINS
 #  ######### END MANAGER CONFIGURATION
 
-INTERNAL_IPS = ('10.0.3.0/24', )
-
 #  ######### DATABASE CONFIGURATION
 DATABASES = {
     'default': {
