@@ -92,4 +92,3 @@ pyfreebilling/priv*
 # Vagrant
 #########
 .vagrant/
-Vagrantfile
