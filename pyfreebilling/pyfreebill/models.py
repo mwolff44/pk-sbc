@@ -793,7 +793,7 @@ class RateCard(models.Model):
         verbose_name_plural = _(u'Customer ratecards')
 
     def __unicode__(self):
-        return u"%s (%s-%s) %s" % (self.name, self.rctype, self.currency, self.enabled)
+        return u"%s (%s) %s" % (self.name, self.rctype, self.enabled)
 
     def rates(self):
         html = '<span><a href="/extranet/pyfreebill/customerrates/?ratecard__id__exact={0}" class="btn btn-inverse btn-mini">Rates <i class="icon-plus-sign"></i></a></span>'

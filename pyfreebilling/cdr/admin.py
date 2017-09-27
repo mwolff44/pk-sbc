@@ -86,6 +86,11 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
                      '^cost_destination',
                      '^sell_destination']
     list_filter = ('start_stamp',)
+    list_select_related = (
+        'customer',
+        'ratecard_id',
+        'lcr_carrier_id',
+    )
 #    date_hierarchy = 'start_stamp'
     change_list_template = 'admin/cdr/change_list.html'
     resource_class = CDRResourceExtra
