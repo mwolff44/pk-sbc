@@ -54,7 +54,7 @@ class CaauAdmin(admin.ModelAdmin):
 
 class PdauAdmin(admin.ModelAdmin):
     list_filter = ('urgencynumber', 'caau')
-    search_fields = ['^caau__caau_code', 'insee_code', ]
+    search_fields = ['^caau__caau_code', 'insee_code__insee_code', ]
 
     def has_change_permission(self, request, obj=None):
         if request.user.is_superuser:
