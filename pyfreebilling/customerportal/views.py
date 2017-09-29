@@ -184,7 +184,7 @@ class HomePageCustView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomePageCustView, self).get_context_data(**kwargs)
-        messages.info(self.request, _(u'Wellcome'))
+        messages.info(self.request, _(u'Welcome'))
         try:
             usercompany = Person.objects.get(user=self.request.user)
             try:
