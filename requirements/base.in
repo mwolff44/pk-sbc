@@ -5,94 +5,170 @@
 # pip list --outdated
 
 # Current framework
-# https://docs.djangoproject.com/en/1.8/
+# https://docs.djangoproject.com/en/1.9/
+# BSD
+# py3
 django==1.9.13
 
+# Honeypot
+# https://github.com/dmpayton/django-admin-honeypot/
+# MIT
+# py3
 django-admin-honeypot==1.0.0
-django-axes==2.3.2
-django-bootstrap-pagination==1.6.2
-django-bootstrap-toolkit==2.15.0
 
+# Admin tools
+# https://github.com/django-admin-tools/django-admin-tools/
+# MIT
+# py3
+django-admin-tools==0.8.1
+
+# Login security
+# https://github.com/jazzband/django-axes
+# MIT
+# py3
+django-axes==2.3.3
+
+# bootstrap pagination
+# https://github.com/jmcclell/django-bootstrap-pagination/
+# Bootstrap 3.x only
+# MIT
+# py3
+django-bootstrap-pagination==1.6.3
+
+# Bootstrap3 for django
 # https://github.com/dyve/django-bootstrap3
-django-bootstrap3==8.2.1
+# BSD - 3 clause
+# py3
+django-bootstrap3==9.0.0
 
 # Lots of custom mixins
 # http://django-braces.readthedocs.org/en/latest/
+# BSD
+# py3
 django-braces==1.11.0
 
 # cron tasks
 # https://github.com/chrisspen/django-chroniker/
+# BSD
+# py3
 django-chroniker==1.0.3
 
-# Simple Django management command that clears your cache
-# https://github.com/rdegges/django-clear-cache
-django-clear-cache==0.3
-
-django-countries==4.2
+# countries app
+# https://github.com/smileychris/django-countries/
+# MIT
+# py3
+django-countries==4.6.2
 
 # forms tools
 # https://github.com/maraujop/django-crispy-forms/
+# MIT
+# py3
 django-crispy-forms==1.6.1
 
+# Currencies management
+# https://github.com/panosl/django-currencies/
+# BSD
+# py3
 django-currencies==0.4.0
+
+# widget for DateField, Timefiled and DateTimeField in Django framework.
+# https://github.com/asaglimbeni/django-datetime-widget/
+# BSD
+# no py3 => need to migrate
 django-datetime-widget==0.9.3
 
 # Useful command line extensions (`shell_plus`, `create_command`, `export_emails`)
 # http://django-extensions.readthedocs.org/en/latest/
-django-extensions==1.7.7
+# MIT
+# py3
+django-extensions==1.9.1
 
 # Filtering queryset
 # https://github.com/carltongibson/django-filter
-# Need to upgrade to 1.0 -> https://django-filter.readthedocs.io/en/develop/guide/migration.html
-django-filter==0.15.3
+# BSD
+# py3
+django-filter==1.0.4
 
+# import export functions
+# https://github.com/bmihelac/django-import-export/
+# BSD
+# py3
 django-import-export==0.5.1
-django-qsstats-magic==0.7.2
 
-# https://github.com/azavea/django-queryset-csv
-django-queryset-csv==1.0.0
-
+# set of simple math filters
+# https://github.com/dbrgn/django-mathfilters/
+# MIT
+# py3
 django-mathfilters==0.4.0
 
 # Django Migrations support for raw SQL
+# https://github.com/klichukb/django-migrate-sql/
+# BSD
+# py3
 django-migrate-sql==0.1.1
 
-# Useful model mixins and utilities such as `TimeStampedModel` and `Choices`
+# Useful model mixins and utilities such as TimeStampedModel and Choices
 # https://django-model-utils.readthedocs.org/en/latest/
-django-model-utils==2.6.1
+# BSD
+# py3
+django-model-utils==3.0.0
 
+# aggregate statistics of querysets
+# https://github.com/PetrDlouhy/django-qsstats-magic
+# BSD
+# NO PY3 => WIP
+django-qsstats-magic==0.7.2 # 1.0.0 need testing
 
-django-simple-import==2.0.1
+# a CSV exporter for django querysets 
+# https://github.com/azavea/django-queryset-csv
+# GPL v3
+# py3
+django-queryset-csv==1.0.0
+
+# Helps working with singletons
+# https://github.com/lazybird/django-solo
+# Creative Commons Attribution 3.0 Unported
+# py3 ?
+### NEED REVIEW !
 django-solo==1.1.2
-django-tables2==1.4.2
+
+# app for creating HTML tables
+# https://github.com/bradleyayers/django-tables2/
+# Simplified BSD
+# py3
+django-tables2==1.11.0
 
 # Templated email
 # https://github.com/vintasoftware/django-templated-email/
-django-templated-email==2.1
+# MIT
+# py3
+django-templated-email==2.2.0
+
+feedparser==5.2.1
 
 FreeSWITCH-ESL-Python==1.2
+
+Markdown==2.6.9
+
 netaddr==0.7.19
-netifaces==0.10.5
+
+netifaces==0.10.6
 
 # PostgreSQL adapter
 # http://pythonhosted.org/psycopg2/
-psycopg2==2.7.1
-
-# Sentry python lib
-# https://github.com/getsentry/raven-python/
-raven==6.0.0
-
-# HTTP request API
-# http://docs.python-requests.org/en/latest/
-requests==2.13.0
+# LGPL
+# py3
+psycopg2==2.7.3.1
 
 # World timezone definitions
 # http://pytz.sourceforge.net/
-pytz==2016.10
+pytz==2017.02
 
+# HTTP request API
+# http://docs.python-requests.org/en/latest/
+requests==2.18.4
+
+# GPL v3
+# py3
 vatnumber==1.2
 
-django-admin-tools==0.8.1
-feedparser==5.2.1
-
-Markdown==2.3.1

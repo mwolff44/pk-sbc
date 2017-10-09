@@ -53,12 +53,6 @@ urlpatterns = [
         include('currencies.urls')
     ),
 
-    # Simple import module
-    url(
-        r'^extranet/simple_import/',
-        include('simple_import.urls')
-    ),
-
     # Pyfreebilling applications
     url(
         r'^',

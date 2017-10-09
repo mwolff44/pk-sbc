@@ -21,12 +21,12 @@ from django.conf.urls import url, include
 from . import views
 
 
-urlpatterns = [
-    url(
-        r'^extranet/', include([
-            url(
-                regex=r'^did/wizard_import/$',
-                view=views.start_import
-            ),
-        ])),
-]
+#urlpatterns = [
+    #url(
+        #r'^extranet/', include([
+            #url(
+                #regex=r'^did/wizard_import/$',
+                #view=views.start_import
+            #),
+        #])),
+#]

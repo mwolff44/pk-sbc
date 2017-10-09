@@ -5,205 +5,203 @@
 
 {% load django_tables2 %}
 
-{% load bootstrap_toolkit %}
-
 {% block title %}{% trans 'PyFreeBilling : stats' %}{% endblock %}
 
 
 {% if not is_popup %}
 {% block breadcrumbs %}
-	<div class="breadcrumbs">
-		<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
-		{% if vue == "customer" %}
-		&rsaquo; <a href="{% url 'pyfreebill:customers_stats' %}">Customers stats</a>
-		{% elif vue == "provider" %}
-		&rsaquo; <a href="{% url 'pyfreebill:providers_stats' %}">Providers stats</a>
-		{% elif vue == "dest_customer" %}
-		&rsaquo; <a href="{% url 'pyfreebill:dest_customers_stats' %}">Destinations stats (customer point of view)</a>
-		{% elif vue == "dest_provider" %}
-		&rsaquo; <a href="{% url 'pyfreebill:dest_providers_stats' %}">Destinations stats (provider point of view)</a>
-		{% endif %}
-	</div>
+        <div class="breadcrumbs">
+                <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+                {% if vue == "customer" %}
+                &rsaquo; <a href="{% url 'pyfreebill:customers_stats' %}">Customers stats</a>
+                {% elif vue == "provider" %}
+                &rsaquo; <a href="{% url 'pyfreebill:providers_stats' %}">Providers stats</a>
+                {% elif vue == "dest_customer" %}
+                &rsaquo; <a href="{% url 'pyfreebill:dest_customers_stats' %}">Destinations stats (customer point of view)</a>
+                {% elif vue == "dest_provider" %}
+                &rsaquo; <a href="{% url 'pyfreebill:dest_providers_stats' %}">Destinations stats (provider point of view)</a>
+                {% endif %}
+        </div>
 {% endblock %}
 {% endif %}
 
 
 {% block content %}
   <div id="content-main">
-	<div class="container">
-		<div class="row">
-			{% if vue == "customer" %}
-			<form action="{% url 'pyfreebill:customers_stats' %}" method="GET" class="form-horizontal" role="form">
-			{% elif vue == "provider" %}
-			<form action="{% url 'pyfreebill:providers_stats' %}" method="GET" class="form-horizontal" role="form">
-			{% elif vue == "dest_customer" %}
-			<form action="{% url 'pyfreebill:dest_customers_stats' %}" method="GET" class="form-horizontal" role="form">
-			{% elif vue == "dest_provider" %}
-			<form action="{% url 'pyfreebill:dest_providers_stats' %}" method="GET" class="form-horizontal" role="form">
-			{% endif %}
-				<h3 class="form-signin-heading">Stats selection : </h3>
+        <div class="container">
+                <div class="row">
+                        {% if vue == "customer" %}
+                        <form action="{% url 'pyfreebill:customers_stats' %}" method="GET" class="form-horizontal" role="form">
+                        {% elif vue == "provider" %}
+                        <form action="{% url 'pyfreebill:providers_stats' %}" method="GET" class="form-horizontal" role="form">
+                        {% elif vue == "dest_customer" %}
+                        <form action="{% url 'pyfreebill:dest_customers_stats' %}" method="GET" class="form-horizontal" role="form">
+                        {% elif vue == "dest_provider" %}
+                        <form action="{% url 'pyfreebill:dest_providers_stats' %}" method="GET" class="form-horizontal" role="form">
+                        {% endif %}
+                                <h3 class="form-signin-heading">Stats selection : </h3>
 
-				<div class="control-group">
-					<label for="from_date" class="control-label">From date (Y/M/D h:m) :</label>
-					<div class="row">
-						<div>
-	            			<select name="from_y" class="input-small" placeholder="year">
-	            				<option selected disabled>year</option>
-					  			<option>2013</option>
-					  			<option>2014</option>
-					  			<option>2015</option>
-							  	<option>2016</option>
-								<option>2017</option>
-								<option>2018</option>
-								<option>2019</option>
-							</select>
-	            			<select name="from_m" class="input-small" placeholder="month">
-	            				<option selected disabled>month</option>
-					  			<option>1</option>
-					  			<option>2</option>
-					  			<option>3</option>
-							  	<option>4</option>
-							  	<option>5</option>
-							  	<option>6</option>
-							  	<option>7</option>
-							  	<option>8</option>
-							  	<option>9</option>
-							  	<option>10</option>
-							  	<option>11</option>
-							  	<option>12</option>
-							</select>
-	            			<select name="from_d" class="input-small" placeholder="day">
-	            				<option selected disabled>day</option>
-					  			<option>1</option>
-					  			<option>2</option>
-					  			<option>3</option>
-							  	<option>4</option>
-							  	<option>5</option>
-							  	<option>6</option>
-							  	<option>7</option>
-							  	<option>8</option>
-							  	<option>9</option>
-							  	<option>10</option>
-							  	<option>11</option>
-							  	<option>12</option>
-							  	<option>13</option>
-							  	<option>14</option>
-							  	<option>15</option>
-							  	<option>16</option>
-							  	<option>17</option>
-							  	<option>18</option>
-							  	<option>19</option>
-							  	<option>20</option>
-							  	<option>21</option>
-							  	<option>22</option>
-							  	<option>23</option>
-							  	<option>24</option>
-							  	<option>25</option>
-							  	<option>26</option>
-							  	<option>27</option>
-							  	<option>28</option>
-							  	<option>29</option>
-							  	<option>30</option>
-							  	<option>31</option>
-							</select>
-	        			</div>
-				    </div>
+                                <div class="control-group">
+                                        <label for="from_date" class="control-label">From date (Y/M/D h:m) :</label>
+                                        <div class="row">
+                                                <div>
+                                        <select name="from_y" class="input-small" placeholder="year">
+                                                <option selected disabled>year</option>
+                                                                <option>2013</option>
+                                                                <option>2014</option>
+                                                                <option>2015</option>
+                                                                <option>2016</option>
+                                                                <option>2017</option>
+                                                                <option>2018</option>
+                                                                <option>2019</option>
+                                                        </select>
+                                        <select name="from_m" class="input-small" placeholder="month">
+                                                <option selected disabled>month</option>
+                                                                <option>1</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                                <option>4</option>
+                                                                <option>5</option>
+                                                                <option>6</option>
+                                                                <option>7</option>
+                                                                <option>8</option>
+                                                                <option>9</option>
+                                                                <option>10</option>
+                                                                <option>11</option>
+                                                                <option>12</option>
+                                                        </select>
+                                        <select name="from_d" class="input-small" placeholder="day">
+                                                <option selected disabled>day</option>
+                                                                <option>1</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                                <option>4</option>
+                                                                <option>5</option>
+                                                                <option>6</option>
+                                                                <option>7</option>
+                                                                <option>8</option>
+                                                                <option>9</option>
+                                                                <option>10</option>
+                                                                <option>11</option>
+                                                                <option>12</option>
+                                                                <option>13</option>
+                                                                <option>14</option>
+                                                                <option>15</option>
+                                                                <option>16</option>
+                                                                <option>17</option>
+                                                                <option>18</option>
+                                                                <option>19</option>
+                                                                <option>20</option>
+                                                                <option>21</option>
+                                                                <option>22</option>
+                                                                <option>23</option>
+                                                                <option>24</option>
+                                                                <option>25</option>
+                                                                <option>26</option>
+                                                                <option>27</option>
+                                                                <option>28</option>
+                                                                <option>29</option>
+                                                                <option>30</option>
+                                                                <option>31</option>
+                                                        </select>
+                                        </div>
+                                    </div>
 
-					<label for="to_date" class="control-label">To date (Y/M/D h:m) :</label>
-					<div>
-            			<select name="to_y" class="input-small" placeholder="year">
-            				<option selected disabled>year</option>
-				  			<option>2013</option>
-				  			<option>2014</option>
-				  			<option>2015</option>
-						  	<option>2016</option>
-							<option>2017</option>
-							<option>2018</option>
-							<option>2019</option>
-						</select>
-            			<select name="to_m" class="input-small" placeholder="month">
-            				<option selected disabled>month</option>
-				  			<option>1</option>
-				  			<option>2</option>
-				  			<option>3</option>
-						  	<option>4</option>
-						  	<option>5</option>
-						  	<option>6</option>
-						  	<option>7</option>
-						  	<option>8</option>
-						  	<option>9</option>
-						  	<option>10</option>
-						  	<option>11</option>
-						  	<option>12</option>
-						</select>
-            			<select name="to_d" class="input-small" placeholder="day">
-            				<option selected disabled>day</option>
-				  			<option>1</option>
-				  			<option>2</option>
-				  			<option>3</option>
-						  	<option>4</option>
-						  	<option>5</option>
-						  	<option>6</option>
-						  	<option>7</option>
-						  	<option>8</option>
-						  	<option>9</option>
-						  	<option>10</option>
-						  	<option>11</option>
-						  	<option>12</option>
-						  	<option>13</option>
-						  	<option>14</option>
-						  	<option>15</option>
-						  	<option>16</option>
-						  	<option>17</option>
-						  	<option>18</option>
-						  	<option>19</option>
-						  	<option>20</option>
-						  	<option>21</option>
-						  	<option>22</option>
-						  	<option>23</option>
-						  	<option>24</option>
-						  	<option>25</option>
-						  	<option>26</option>
-						  	<option>27</option>
-						  	<option>28</option>
-						  	<option>29</option>
-						  	<option>30</option>
-						  	<option>31</option>
-						</select>
-        			</div>
-				</div>
-				<div class="control-group">
-					{% if vue == "customer" or vue == "dest_customer" %}
-					<label for="company" class="control-label">{% trans "customer"|title %} :</label>
-					{% elif vue == "provider" or vue == "dest_provider" %}
-					<label for="company" class="control-label">{% trans "provider"|title %} :</label>
-					{% endif %}
+                                        <label for="to_date" class="control-label">To date (Y/M/D h:m) :</label>
+                                        <div>
+                                <select name="to_y" class="input-small" placeholder="year">
+                                        <option selected disabled>year</option>
+                                                        <option>2013</option>
+                                                        <option>2014</option>
+                                                        <option>2015</option>
+                                                        <option>2016</option>
+                                                        <option>2017</option>
+                                                        <option>2018</option>
+                                                        <option>2019</option>
+                                                </select>
+                                <select name="to_m" class="input-small" placeholder="month">
+                                        <option selected disabled>month</option>
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                        <option>5</option>
+                                                        <option>6</option>
+                                                        <option>7</option>
+                                                        <option>8</option>
+                                                        <option>9</option>
+                                                        <option>10</option>
+                                                        <option>11</option>
+                                                        <option>12</option>
+                                                </select>
+                                <select name="to_d" class="input-small" placeholder="day">
+                                        <option selected disabled>day</option>
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                        <option>5</option>
+                                                        <option>6</option>
+                                                        <option>7</option>
+                                                        <option>8</option>
+                                                        <option>9</option>
+                                                        <option>10</option>
+                                                        <option>11</option>
+                                                        <option>12</option>
+                                                        <option>13</option>
+                                                        <option>14</option>
+                                                        <option>15</option>
+                                                        <option>16</option>
+                                                        <option>17</option>
+                                                        <option>18</option>
+                                                        <option>19</option>
+                                                        <option>20</option>
+                                                        <option>21</option>
+                                                        <option>22</option>
+                                                        <option>23</option>
+                                                        <option>24</option>
+                                                        <option>25</option>
+                                                        <option>26</option>
+                                                        <option>27</option>
+                                                        <option>28</option>
+                                                        <option>29</option>
+                                                        <option>30</option>
+                                                        <option>31</option>
+                                                </select>
+                                </div>
+                                </div>
+                                <div class="control-group">
+                                        {% if vue == "customer" or vue == "dest_customer" %}
+                                        <label for="company" class="control-label">{% trans "customer"|title %} :</label>
+                                        {% elif vue == "provider" or vue == "dest_provider" %}
+                                        <label for="company" class="control-label">{% trans "provider"|title %} :</label>
+                                        {% endif %}
 
-            			<input type="company" name="company" class="form-control"></input>
-            			<i class="help icon-question-sign" data-content="The filter will search company names that contain your entry" data-original-title="Help text :"></i>
+                                <input type="company" name="company" class="form-control"></input>
+                                <i class="help icon-question-sign" data-content="The filter will search company names that contain your entry" data-original-title="Help text :"></i>
 
-					<label for="dest_num" class="control-label">{% trans "Destination"|title %} :</label>
+                                        <label for="dest_num" class="control-label">{% trans "Destination"|title %} :</label>
 
-            			<input type="dest_num" name="dest_num" class="form-control"></input>
-            			<i class="help icon-question-sign" data-content="The filter will search destinations that contain your entry" data-original-title="Help text :"></i>
+                                <input type="dest_num" name="dest_num" class="form-control"></input>
+                                <i class="help icon-question-sign" data-content="The filter will search destinations that contain your entry" data-original-title="Help text :"></i>
 
-        		</div>
-				<div class="submit-row">
-					<button type="submit" class="button" name="Search">{% trans "search"|title %}</button>
-				</div>
+                        </div>
+                                <div class="submit-row">
+                                        <button type="submit" class="button" name="Search">{% trans "search"|title %}</button>
+                                </div>
 
-			</form>
-		</div>
-	</div>
+                        </form>
+                </div>
+        </div>
 
-	<div><center>- {% trans "statistics"|title %} -
-		<br><br>
-		{% if start_date %} {% trans "from"|title %} <b>{{ start_date|date:"D d M Y" }}</b> {% endif %}
-		{% if end_date %}{% trans "to"|title %} <b>{{ end_date|date:"D d M Y" }}</b> --{% endif %}
-		{% trans "company"|title %} : <b>{% if company %}{{ company }} {% else %}ALL{% endif %}</b> --
-		{% trans "destination"|title %} : <b>{% if dest_num %}{{ dest_num }} {% else %}ALL{% endif %}</b></center>
-		<br>
-	</div>
+        <div><center>- {% trans "statistics"|title %} -
+                <br><br>
+                {% if start_date %} {% trans "from"|title %} <b>{{ start_date|date:"D d M Y" }}</b> {% endif %}
+                {% if end_date %}{% trans "to"|title %} <b>{{ end_date|date:"D d M Y" }}</b> --{% endif %}
+                {% trans "company"|title %} : <b>{% if company %}{{ company }} {% else %}ALL{% endif %}</b> --
+                {% trans "destination"|title %} : <b>{% if dest_num %}{{ dest_num }} {% else %}ALL{% endif %}</b></center>
+                <br>
+        </div>
 
     <div id="out">
 
@@ -247,20 +245,20 @@
         {% endblock table.tbody %}
         {% block table.tfoot %}
             <tfoot>
-				<tr>
-	          		<td><b>SUMMARY</b></td>
-	          		{% if vue == 'customer' or vue == 'dest_customer' %}<td><b>Sell: {{ total_table.total_sell }}</b></td>{% else %}
-	          		<td><b>Cost: {{ total_table.total_cost }}</td></b>{% endif %}
-	          		<td><b>{{ total_table.total_sell|sub:total_table.total_cost }}</b></td>
-	          		{% if vue == 'customer' or vue == 'provider' %}<td><b>N/A</b></td>{% endif %}
-	          		<td><b>{{ total_table.total_calls }}</b></td>
-	          		<td><b>{{ total_table.success_calls }}</b></td>
-	          		<td><b>{% if total_table.total_calls %}{{ total_table.success_calls|mul:100|intdiv:total_table.total_calls }}%{% else %}N/A{% endif %}</b></td>
-	          		<td><b>{{ total_table.total_duration|intdiv:60 }} min</b></td>
-	          		<td><b>{% if total_table.total_calls %}{{ total_table.total_duration|intdiv:total_table.success_calls }} sec{% else %}N/A{% endif %}</b></td>
-	          		<td><b>N/A</b></td>
-	          		</b>
-				</tr>
+                                <tr>
+                                <td><b>SUMMARY</b></td>
+                                {% if vue == 'customer' or vue == 'dest_customer' %}<td><b>Sell: {{ total_table.total_sell }}</b></td>{% else %}
+                                <td><b>Cost: {{ total_table.total_cost }}</td></b>{% endif %}
+                                <td><b>{{ total_table.total_sell|sub:total_table.total_cost }}</b></td>
+                                {% if vue == 'customer' or vue == 'provider' %}<td><b>N/A</b></td>{% endif %}
+                                <td><b>{{ total_table.total_calls }}</b></td>
+                                <td><b>{{ total_table.success_calls }}</b></td>
+                                <td><b>{% if total_table.total_calls %}{{ total_table.success_calls|mul:100|intdiv:total_table.total_calls }}%{% else %}N/A{% endif %}</b></td>
+                                <td><b>{{ total_table.total_duration|intdiv:60 }} min</b></td>
+                                <td><b>{% if total_table.total_calls %}{{ total_table.total_duration|intdiv:total_table.success_calls }} sec{% else %}N/A{% endif %}</b></td>
+                                <td><b>N/A</b></td>
+                                </b>
+                                </tr>
 
             </tfoot>
         {% endblock table.tfoot %}
@@ -269,7 +267,7 @@
 
 {% if table.page %}
     {% block pagination %}
-        {{ table.page|pagination }}
+
     {% endblock pagination %}
 {% endif %}
 
@@ -277,7 +275,7 @@
 
 
 {% if table.page %}
-	</div>
+        </div>
 {% endif %}
 
     </div>

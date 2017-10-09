@@ -24,40 +24,40 @@ from django.core.urlresolvers import reverse
 from django.contrib.admin.views.decorators import staff_member_required
 from django import forms
 
-from simple_import.models import ImportSetting
-from simple_import.views import match_columns
-from simple_import.models import ImportLog
+#from simple_import.models import ImportSetting
+#from simple_import.views import match_columns
+#from simple_import.models import ImportLog
 
 
-class ImportForm(forms.ModelForm):
-    class Meta:
-        model = ImportLog
-        fields = ('name', 'import_file', 'import_type')
+#class ImportForm(forms.ModelForm):
+    #class Meta:
+        #model = ImportLog
+        #fields = ('name', 'import_file', 'import_type')
 
 
-@staff_member_required
-def start_import(request):
-    """ View to create a new import record
-    """
-    if request.method == 'POST':
-        form = ImportForm(request.POST, request.FILES)
-        if form.is_valid():
-            import_log = form.save(commit=False)
-            import_log.user = request.user
-            import_log.import_setting, created = ImportSetting.objects.get_or_create(
-                user=request.user,
-                content_type=ContentType.objects.get(model='did'),
-            )
-            import_log.save()
-            return HttpResponseRedirect(reverse(match_columns,
-                                        kwargs={'import_log_id': import_log.id}))
-    else:
-        form = ImportForm()
-    if not request.user.is_superuser:
-        form.fields["model"].queryset = ContentType.objects.filter(
-            Q(permission__group__user=request.user, permission__codename__startswith="change_") |
-            Q(permission__user=request.user, permission__codename__startswith="change_")).distinct()
+#@staff_member_required
+#def start_import(request):
+    #""" View to create a new import record
+    #"""
+    #if request.method == 'POST':
+        #form = ImportForm(request.POST, request.FILES)
+        #if form.is_valid():
+            #import_log = form.save(commit=False)
+            #import_log.user = request.user
+            #import_log.import_setting, created = ImportSetting.objects.get_or_create(
+                #user=request.user,
+                #content_type=ContentType.objects.get(model='did'),
+            #)
+            #import_log.save()
+            #return HttpResponseRedirect(reverse(match_columns,
+                                        #kwargs={'import_log_id': import_log.id}))
+    #else:
+        #form = ImportForm()
+    #if not request.user.is_superuser:
+        #form.fields["model"].queryset = ContentType.objects.filter(
+            #Q(permission__group__user=request.user, permission__codename__startswith="change_") |
+            #Q(permission__user=request.user, permission__codename__startswith="change_")).distinct()
 
-    return render_to_response('admin/did/did/simple_import/import.html',
-                              {'form': form, },
-                              RequestContext(request, {}), )
+    #return render_to_response('admin/did/did/simple_import/import.html',
+                              #{'form': form, },
+                              #RequestContext(request, {}), )
