@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling. If not, see <http://www.gnu.org/licenses/>
 # coding=UTF-8
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template import RequestContext, Context
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
@@ -54,8 +54,7 @@ def fs_status_view(request):
     except IOError:
         messages.error(request, """FS does not respond !""")
 
-    return render_to_response('admin/fs_status.html', locals(),
-        context_instance=RequestContext(request))
+    return render(request, 'admin/fs_status.html', locals())
 
 
 @staff_member_required
@@ -65,8 +64,8 @@ def fs_registry_view(request):
     except IOError:
         messages.error(request, """FS does not respond !""")
 
-    return render_to_response('admin/fs_status.html', locals(),
-        context_instance=RequestContext(request))
+    return render(request, 'admin/fs_status.html', locals(),
+        context)
 
 
 @staff_member_required
@@ -76,8 +75,7 @@ def fs_bcalls_view(request):
     except IOError:
         messages.error(request, """FS does not respond !""")
 
-    return render_to_response('admin/fs_status.html', locals(),
-        context_instance=RequestContext(request))
+    return render_to_response('admin/fs_status.html', locals())
 
 # @staff_member_required
 # def cpu_per(request):
@@ -107,5 +105,4 @@ def server_status_view(request):
     disks = psdash.get_disks()
     cpu = psdash.get_cpu()
     users = psdash.get_users()
-    return render_to_response('admin/server_status.html', locals(),
-        context_instance=RequestContext(request))
+    return render(request, 'admin/server_status.html', locals())

@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
-from django.shortcuts import render_to_response, render
+from django.shortcuts import render
 from django.template import RequestContext, Context, loader
 from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
@@ -157,8 +157,7 @@ def global_stats_view(request, vue):
         table = TopDestProvTable(stats_table)
     RequestConfig(request, paginate={"per_page": 100}).configure(table)
     #import pdb; pdb.set_trace()
-    return render_to_response('admin/customers_stats.html', locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'admin/customers_stats.html', locals())
 
 
 @staff_member_required
@@ -256,8 +255,7 @@ def admin_status_view(request):
     # print status page
     # pfb_version = settings.PFB_VERSION
     pfb_version = __version__
-    return render_to_response('admin/admin_status.html', locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'admin/admin_status.html', locals())
 
 
 @staff_member_required
@@ -370,8 +368,7 @@ def live_report_view(request):
     request.session['msg'] = ''
     request.session['error_msg'] = ''
 
-    return render_to_response('admin/live_report.html', locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'admin/live_report.html', locals())
 
 
 class ChartData(object):
@@ -593,8 +590,8 @@ def general_stats(request):
     company_list = Company.objects.all()
     # filter(customer_enabled=True)
     datas['companies'] = company_list
-    return render_to_response('snippets/general_stats.html',
-                              context_instance=RequestContext(request, datas))
+    context = datas
+    return render(request, 'snippets/general_stats.html', context)
 
 
 @staff_member_required
@@ -632,5 +629,4 @@ def admin_report_view(request):
         qs_d, 'date__date', [firstday, today], func=Sum('total_cost'))
     ts_total_margin = _margin_series(ts_total_sell, ts_total_cost)
 
-    return render_to_response('admin/admin_report.html', locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'admin/admin_report.html', locals())

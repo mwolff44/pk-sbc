@@ -59,11 +59,11 @@ urlpatterns = [
         include('pyfreebilling.customerportal.urls',
                 namespace='customerportal')
     ),
-    url(
-        r'^',
-        include('pyfreebilling.did.urls',
-                namespace='did')
-    ),
+    #url(
+        #r'^',
+        #include('pyfreebilling.did.urls',
+                #namespace='did')
+    #),
     url(
         r'^',
         include('pyfreebilling.pyfreebill.urls',
@@ -97,9 +97,9 @@ if settings.DEBUG:
     if 'debug_toolbar' in settings.INSTALLED_APPS:
         import debug_toolbar
 
-        urlpatterns += [
+        urlpatterns = [
             url(r'^__debug__/', include(debug_toolbar.urls)),
-        ]
+        ] + urlpatterns
 
 # urlpatterns += patterns(
 #     '',
