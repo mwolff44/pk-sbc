@@ -20,7 +20,7 @@ django-currencies==0.4.0
 django-datetime-widget==0.9.3
 django-import-export==0.5.1
 django-mathfilters==0.4.0
-django-qsstats-magic==0.7.2
+django-qsstats-magic==1.0.0
 django-secure==1.0.1
 django-simple-import==1.17
 django-tables2==1.1.2
