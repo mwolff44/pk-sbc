@@ -12,7 +12,7 @@ django-bootstrap-pagination==1.6.3
 django-bootstrap-toolkit==2.15.0
 django-bootstrap3==9.0.0
 django-braces==1.11.0
-django-chroniker==0.9.3
+django-chroniker==1.0.8
 django-clear-cache==0.3
 django-countries==3.4.1
 django-crispy-forms==1.6.0
