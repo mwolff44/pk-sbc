@@ -8,7 +8,7 @@
 # https://docs.djangoproject.com/en/1.9/
 # BSD
 # py3
-django==1.10.8
+django==1.11.6
 
 # Honeypot
 # https://github.com/dmpayton/django-admin-honeypot/
