@@ -43,7 +43,7 @@ python-stdnum==1.7        # via vatnumber
 pytz==2017.2
 rsa==3.4.2                # via oauth2client
 six==1.11.0               # via django-chroniker, django-tables2, oauth2client, python-dateutil
-tablib==0.11.2            # via django-import-export
+tablib==0.12.1            # via django-import-export
 toposort==1.4             # via django-chroniker
 vatnumber==1.2
 xlrd==1.0.0               # via django-simple-import
