@@ -92,3 +92,5 @@ pyfreebilling/priv*
 # Vagrant
 #########
 .vagrant/
+/.idea/pyfreebilling.iml
+/.idea/vcs.xml
