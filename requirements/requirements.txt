@@ -23,7 +23,7 @@ django-mathfilters==0.4.0
 django-qsstats-magic==1.0.0
 django-secure==1.0.1
 django-simple-import==2.0.2
-django-tables2==1.1.2
+django-tables2==1.12.0
 Django==1.7.11            # via django-chroniker, django-clear-cache, django-currencies, django-datetime-widget, django-secure, django-simple-import, django-tables2
 et-xmlfile==1.0.1         # via openpyxl
 FreeSWITCH-ESL-Python==1.2
