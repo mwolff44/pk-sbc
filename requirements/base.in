@@ -118,8 +118,8 @@ django-model-utils==3.0.0
 # aggregate statistics of querysets
 # https://github.com/PetrDlouhy/django-qsstats-magic
 # BSD
-# NO PY3 => WIP
-django-qsstats-magic==0.7.2 # 1.0.0 need testing
+# py3
+django-qsstats-magic==1.0.0
 
 # a CSV exporter for django querysets 
 # https://github.com/azavea/django-queryset-csv
