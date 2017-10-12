@@ -8,8 +8,8 @@
 
 # WSGI utility library with powerful debugger
 # http://werkzeug.pocoo.org/
-werkzeug==0.12
-pyOpenSSL==16.2.0
+werkzeug==0.12.2
+pyOpenSSL==17.3.0
 
 # Debug information in a toolbar
 # http://django-debug-toolbar.readthedocs.org/
