@@ -357,9 +357,9 @@ def live_report_view(request):
                 query_string = return_query_string(query_string, dstnum_string)
 
             if query_string:
-                query_answer = '/extranet/pyfreebill/cdr/?' + str(query_string)
+                query_answer = '/extranet/cdr/cdr/?' + str(query_string)
             else:
-                query_answer = '/extranet/pyfreebill/cdr/'
+                query_answer = '/extranet/cdr/cdr/'
 
             return HttpResponseRedirect(query_answer)
     else:

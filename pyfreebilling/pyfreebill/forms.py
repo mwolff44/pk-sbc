@@ -48,7 +48,7 @@ class CDRSearchForm(forms.Form):
         cust_list = []
         cust_list.append((0, _(u'all').upper()))
         customer_list = Company.objects.values_list('id', 'name')\
-                    .filter(customer_enabled='true')\
+                    .filter(customer_enabled='True')\
                     .order_by('name')
 
         for i in customer_list:
@@ -60,7 +60,7 @@ class CDRSearchForm(forms.Form):
         prov_list = []
         prov_list.append((0, _(u'all').upper()))
         provider_list = Company.objects.values_list('id', 'name')\
-                    .filter(supplier_enabled='true')\
+                    .filter(supplier_enabled='True')\
                     .order_by('name')
 
         for i in provider_list:
