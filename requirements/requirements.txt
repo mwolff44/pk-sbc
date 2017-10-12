@@ -39,7 +39,7 @@ psycopg2==2.7.3.1
 pyasn1-modules==0.1.5     # via oauth2client
 pyasn1==0.3.7             # via oauth2client, pyasn1-modules, rsa
 python-dateutil==2.6.1    # via django-chroniker
-python-stdnum==1.4        # via vatnumber
+python-stdnum==1.7        # via vatnumber
 pytz==2016.7
 rsa==3.4.2                # via oauth2client
 six==1.10.0               # via django-chroniker, django-tables2, oauth2client, python-dateutil
