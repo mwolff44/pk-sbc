@@ -15,8 +15,8 @@ django-axes==2.3.3
 django-bootstrap-pagination==1.6.3
 django-bootstrap3==9.0.0
 django-braces==1.11.0
-django-chroniker==1.0.3
-django-countries==4.6.2
+django-chroniker==1.0.8
+django-countries==5.0
 django-crispy-forms==1.6.1
 django-currencies==0.4.0
 django-datetime-widget==0.9.3
@@ -31,7 +31,7 @@ django-qsstats-magic==0.7.2
 django-queryset-csv==1.0.0
 django-render-block==0.5  # via django-templated-email
 django-solo==1.1.2
-django-tables2==1.11.0
+django-tables2==1.12.0
 django-templated-email==2.2.0
 django==1.10.8
 enum34==1.1.6             # via cryptography

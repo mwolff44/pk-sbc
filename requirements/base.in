@@ -51,13 +51,13 @@ django-braces==1.11.0
 # https://github.com/chrisspen/django-chroniker/
 # BSD
 # py3
-django-chroniker==1.0.3
+django-chroniker==1.0.8
 
 # countries app
 # https://github.com/smileychris/django-countries/
 # MIT
 # py3
-django-countries==4.6.2
+django-countries==5.0
 
 # forms tools
 # https://github.com/maraujop/django-crispy-forms/
@@ -136,7 +136,7 @@ django-solo==1.1.2
 # https://github.com/bradleyayers/django-tables2/
 # Simplified BSD
 # py3
-django-tables2==1.11.0
+django-tables2==1.12.0
 
 # Templated email
 # https://github.com/vintasoftware/django-templated-email/
@@ -144,14 +144,34 @@ django-tables2==1.11.0
 # py3
 django-templated-email==2.2.0
 
+# get feed
+# https://github.com/kurtmckee/feedparser/
+# permisive 
+# py3
 feedparser==5.2.1
 
+# ESL FS
+# https://github.com/victor-torres/freeswitch-esl-python
+# nothing
+# py3 ?
 FreeSWITCH-ESL-Python==1.2
 
+# Markdown extension
+# https://github.com/python-markdown/markdown/
+# BSD
+# py3
 Markdown==2.6.9
 
+# A network address manipulation library for Python
+# https://github.com/drkjam/netaddr/
+# BSD
+# py3
 netaddr==0.7.19
 
+# lib network interfaces
+# https://bitbucket.org/al45tair/netifaces/
+# MIT
+# py3
 netifaces==0.10.6
 
 # PostgreSQL adapter
@@ -162,12 +182,18 @@ psycopg2==2.7.3.1
 
 # World timezone definitions
 # http://pytz.sourceforge.net/
+# MIT
+# py3
 pytz==2017.02
 
 # HTTP request API
 # http://docs.python-requests.org/en/latest/
+# Apache 2.0
+# py3
 requests==2.18.4
 
+# verify vatnumber
+# https://code.google.com/archive/p/vatnumber/
 # GPL v3
 # py3
 vatnumber==1.2
