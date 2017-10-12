@@ -1,5 +1,5 @@
 -r requirements.txt
 django-extensions==1.9.1
 django-debug-toolbar==1.8
-Werkzeug
+Werkzeug==0.12.2
 selenium
