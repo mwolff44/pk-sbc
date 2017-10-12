@@ -1,8 +1,10 @@
 # requirements.in
 # To be installed before : pip - pip-tools==1.7.0
-# pip-compile -v requirements/base.in
+# pip-compile -vrU requirements/base.in
+# option -r > reset cache ; option U > update dependencies latest version
 # pip-sync requirements/base.txt
 # pip list --outdated
+
 
 # Current framework
 # https://docs.djangoproject.com/en/1.9/
@@ -173,6 +175,12 @@ netaddr==0.7.19
 # MIT
 # py3
 netifaces==0.10.6
+
+# Cross-platform lib for process and system monitoring in Python 
+# https://github.com/giampaolo/psutil/
+# BSD
+# py3
+psutil==5.4.0
 
 # PostgreSQL adapter
 # http://pythonhosted.org/psycopg2/
