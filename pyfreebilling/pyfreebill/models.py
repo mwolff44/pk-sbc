@@ -1736,6 +1736,13 @@ class DimCustomerDestination(models.Model):
     margin = property(_get_margin)
 
 
+class SaleSummary(DimCustomerDestination):
+    class Meta:
+        proxy = True
+        verbose_name = 'Sale Summary'
+        verbose_name_plural = 'Sales Summary'
+
+
 class DimProviderDestination(models.Model):
     """ Dimension Provider / Destination Model """
     provider = models.ForeignKey(Company, verbose_name=_(u"provider"))
