@@ -22,7 +22,7 @@ DBENGINE=PGSQL
 DBHOST=10.1.5.6
 
 ## database name (for ORACLE this is TNS name)
-DBNAME=kamailiopyfb
+DBNAME=pyfreebilling
 
 # database path used by dbtext, db_berkeley or sqlite
 # DB_PATH="/usr/local/etc/kamailio/dbtext"

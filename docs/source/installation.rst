@@ -54,7 +54,6 @@ Sip server installation
     apt-get install libpq5 libpq-dev
     apt-get install kamailio kamailio-tls-modules kamailio-postgres-modules kamailio-outbound-modules kamailio-extra-modules kamailio-xml-modules
 
-// kamailio-carrierroute-modules kamailio-outbound-modules
 
 * After finishing the installation, you have to edit  /etc/default/kamailio file:
 
@@ -108,6 +107,10 @@ Sip server installation
     */10 * * * * /usr/sbin/kamcmd dialplan.reload>> /var/log/cron.log 2>&1
     */10 * * * * /usr/sbin/kamcmd dispatcher.reload>> /var/log/cron.log 2>&1
     */10 * * * * /usr/sbin/kamcmd permissions.addressReload>> /var/log/cron.log 2>&1
+    
+* Install Kamailio DB with db name pyfreebilling and drop these tables : usr_preferences, subscriber, address, dbaliases and dialplan.
+
+
 
 SBC installation
 =======================
@@ -336,8 +339,8 @@ Pyfreebilling installation
 ::
 
         cd /usr/local/pyfreebilling/install/resources/fs/config
-        cp -av conf/autoload_configs/* /etc/freeswitch/conf/autoload_config/
-        cp -av conf/dialplan/* /etc/freeswitch/conf/dialplan/
+        cp -av conf/autoload_configs/* /etc/freeswitch/autoload_config/
+        cp -av conf/dialplan/* /etc/freeswitch/dialplan/
         cp -av scripts/* /usr/share/freeswitch/scripts/
 
 
@@ -347,7 +350,7 @@ Pyfreebilling installation
 
 ::
 
-        rm -f /etc/freeswitch/conf/directory/default/*
+        rm -f /etc/freeswitch/directory/default/*
         chown freeswitch:www-data -R /usr/local/freeswitch/
         mkdir /tmp/cdr-csv/
         chmod 777 -R /tmp/cdr-csv
@@ -355,6 +358,16 @@ Pyfreebilling installation
         chmod 600 /tmp/cdr-csv/Master.csv
         chown freeswitch:freeswitch /tmp/cdr-csv/Master.csv
         chown -R freeswitch:daemon /tmp/cdr-csv/
+        
+You need to adapt acl_conf.xml to accept sip requests from kamailio.
+        
+* configure Kamailio :
+
+::
+
+        cp /usr/local/pyfreebilling/install/resources/kam/config/* /etc/kamailio/
+        
+Adapt the data in kamctlrc and kamailio-local.cfg (do not touch kamailio.cfg)
 
 
 * set apache config :
