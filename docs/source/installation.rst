@@ -276,12 +276,15 @@ Pyfreebilling installation
 ::
 
         # -*- coding: utf-8 -*-
-        from .settings import *
+        from .base import *
 
-        DEBUG = False
+        #  ######### DEBUG CONFIGURATION
+        DEBUG = True
+        #  ######### END DEBUG CONFIGURATION
 
         MANAGERS = ADMINS
 
+        #  ######### DATABASE CONFIGURATION
         DATABASES = {
             'default': {
                 'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -292,19 +295,34 @@ Pyfreebilling installation
                 'PORT': '',                      # Set to empty string for default.
             }
         }
+        #  ######### END DATABASE CONFIGURATION
 
+        #  ######### HOST CONFIGURATION
+        #  Add your IP and domain
         ALLOWED_HOSTS = ['*']
+        #  ######### END HOST CONFIGURATION
 
-        SECRET_KEY = 'securitykeymustbechanged'  # very important - put your key for security - any string
+        #  ######### SECRET CONFIGURATION
+        # Note: very important - put your key for security - any string
+        SECRET_KEY = 'securitykeymustbechanged'
+        #  ######### END SECRET CONFIGURATION
 
+        #  ######### COUNTRY SPECIFIC
         TIME_ZONE = 'Europe/Paris'
+        # LANGUAGE_CODE = 'it' # uncomment do change webinterface language
+        #  ######### END COUNTRY SPECIFIC
 
+        #  ######### SPECIFIC SETTINGS
+        
         OPENEXCHANGERATES_APP_ID = "Your API Key"
 
         #-- Nb days of CDR to show
         PFB_NB_ADMIN_CDR = 3
         PFB_NB_CUST_CDR = 30
-
+        
+        #  ######### END SPECIFIC SETTINGS
+        
+        #  ######### EMAIL CONFIGURATION
         # EMAIL SETUP
         TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
         TEMPLATED_EMAIL_TEMPLATE_DIR = 'templated_email/'
@@ -318,6 +336,7 @@ Pyfreebilling installation
         #EMAIL_USE_TLS = True
         EMAIL_USE_SSL = True
         EMAIL_SIGNATURE = ''
+        #  ######### END EMAIL CONFIGURATION
 
 * and now, enter the following commands without sudo (IMPORTANT). At the step "syncdb", you will fave a prompt asking you to enter a username and a password. They are very important, as thez are the admin one !
 
