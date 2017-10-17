@@ -376,7 +376,7 @@ Pyfreebilling installation
 ::
 
         rm -f /etc/freeswitch/directory/default/*
-        chown freeswitch:www-data -R /usr/local/freeswitch/
+        chown freeswitch:www-data -R /etc/freeswitch/
         mkdir /tmp/cdr-csv/
         chmod 777 -R /tmp/cdr-csv
         touch /tmp/cdr-csv/Master.csv
