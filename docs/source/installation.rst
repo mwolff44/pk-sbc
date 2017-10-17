@@ -287,8 +287,8 @@ Pyfreebilling installation
             # ('Your Name', 'your_email@example.com'),
         )
 
-MANAGERS = ADMINS
-#  ######### END MANAGER CONFIGURATION
+        MANAGERS = ADMINS
+        #  ######### END MANAGER CONFIGURATION
 
         #  ######### DATABASE CONFIGURATION
         DATABASES = {
