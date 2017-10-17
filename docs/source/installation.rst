@@ -390,7 +390,7 @@ You need to adapt acl_conf.xml to accept sip requests from kamailio.
 
 ::
 
-        cp /usr/local/pyfreebilling/install/resources/kam/config/* /etc/kamailio/
+        cp /usr/local/venv/pyfreebilling/install/resources/kam/config/* /etc/kamailio/
         
 Adapt the data in kamctlrc and kamailio-local.cfg (do not touch kamailio.cfg)
 
@@ -424,7 +424,7 @@ Adapt the data in kamctlrc and kamailio-local.cfg (do not touch kamailio.cfg)
 
 ::
 
-    sudo /etc/init.d/freeswitch restart
+    systemctl restart freeswitch
 
 
 
