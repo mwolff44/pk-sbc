@@ -363,7 +363,7 @@ Pyfreebilling installation
 
 ::
 
-        cd /usr/local/pyfreebilling/install/resources/fs/config
+        cd /usr/local/venv/pyfreebilling/install/resources/fs/config
         cp -av conf/autoload_configs/* /etc/freeswitch/autoload_config/
         cp -av conf/dialplan/* /etc/freeswitch/dialplan/
         cp -av scripts/* /usr/share/freeswitch/scripts/
