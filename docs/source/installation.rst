@@ -282,7 +282,13 @@ Pyfreebilling installation
         DEBUG = True
         #  ######### END DEBUG CONFIGURATION
 
-        MANAGERS = ADMINS
+        #  ######### MANAGER CONFIGURATION
+        ADMINS = (
+            # ('Your Name', 'your_email@example.com'),
+        )
+
+MANAGERS = ADMINS
+#  ######### END MANAGER CONFIGURATION
 
         #  ######### DATABASE CONFIGURATION
         DATABASES = {
