@@ -83,7 +83,7 @@ class CustomMenu(Menu):
                             ),
                             items.MenuItem(_('Provider statistics'),
                                 children=[
-                                    items.MenuItem(_('Statistics'), reverse('pyfreebill:providers_stats')),
+                                    items.MenuItem(_('Statistics'), reverse('admin:pyfreebill_costsummary_changelist')),
                                     items.MenuItem(_('Destinations statistics'), reverse('pyfreebill:dest_providers_stats')),
                                 ]
                             ),
@@ -147,7 +147,7 @@ class CustomMenu(Menu):
                     ),
                     items.MenuItem(_('Provider statistics'),
                         children=[
-                            items.MenuItem(_('Statistics'), reverse('pyfreebill:providers_stats')),
+                            items.MenuItem(_('Statistics'), reverse('admin:pyfreebill_costsummary_changelist')),
                             items.MenuItem(_('Destinations statistics'), reverse('pyfreebill:dest_providers_stats')),
                         ]
                     ),

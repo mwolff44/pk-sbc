@@ -18,8 +18,8 @@
 from django.contrib import admin
 from django.contrib import messages
 from django.contrib.contenttypes.admin import GenericTabularInline, GenericStackedInline
-from django.db.models.functions import Trunc
-from django.db.models import DateTimeField
+from django.db.models.functions import Trunc, Coalesce
+from django.db.models import DateTimeField, Sum, Avg, Count, Max, Min, Value as V
 from django.utils.html import escape
 from django.core.urlresolvers import reverse
 from django.contrib.admin.views.main import ChangeList
@@ -1119,14 +1119,14 @@ class SaleSummaryAdmin(admin.ModelAdmin):
             return response
 
         metrics = {
-            'total': Count('id'),  # not OK
-            'total_sales': Sum('total_sell'),
-            'margin': Sum('total_sell') - Sum('total_cost'), #false
-            'total_calls': Sum('total_calls'),
-            'success_calls': Sum('success_calls'),
-            'total_duration': Sum('total_duration'),
-            'max_duration': Max('max_duration'),
-            'min_duration': Min('min_duration'),
+            'total': Coalesce(Count('id'), V(0)),  # not OK
+            'total_sales': Coalesce(Sum('total_sell'), V(0)),
+            'margin': Coalesce(Sum('total_sell'), V(0)) - Coalesce(Sum('total_cost'), V(0)),
+            'total_calls': Coalesce(Sum('total_calls'), V(0)),
+            'success_calls': Coalesce(Sum('success_calls'), V(0)),
+            'total_duration': Coalesce(Sum('total_duration'), V(0)),
+            'max_duration': Coalesce(Max('max_duration'), V(0)),
+            'min_duration': Coalesce(Min('min_duration'), V(0)),
         }
 
         summary_stats = qs\
@@ -1147,13 +1147,12 @@ class SaleSummaryAdmin(admin.ModelAdmin):
         )
         response.context_data['period'] = period
         
-        # generate period data for graph
         metrics2 = {
-            'total_sales': Sum('total_sell'),
-            'margin': Sum('total_sell') - Sum('total_cost'),
-            'total_calls': Sum('total_calls'),
-            'success_calls': Sum('success_calls'),
-            'total_duration': Sum('total_duration'),
+            'total_sales': Coalesce(Sum('total_sell'), V(0)),
+            'margin': Coalesce(Sum('total_sell'), V(0)) - Coalesce(Sum('total_cost'), V(0)),
+            'total_calls': Coalesce(Sum('total_calls'), V(0)),
+            'success_calls': Coalesce(Sum('success_calls'), V(0)),
+            'total_duration': Coalesce(Sum('total_duration'), V(0)),
         }
         
         summary_over_time = qs.annotate(
@@ -1216,7 +1215,147 @@ class SaleSummaryAdmin(admin.ModelAdmin):
         response.context_data['summary_over_time'] = period
 
         return response
+
+
+class CostSummaryAdmin(admin.ModelAdmin):
+    change_list_template = 'admin/cost_summary_change_list.html'
+    date_hierarchy = 'date__date'
+    search_fields = ('^provider__name',)
+    
+    # orderable
+    
+    list_filter = (
+        'destination',
+    )
+    
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+    
+    def changelist_view(self, request, extra_context=None):
+        response = super(CostSummaryAdmin, self).changelist_view(
+            request,
+            extra_context=extra_context,
+        )
         
+        def get_next_in_date_hierarchy(request, date_hierarchy):
+            if date_hierarchy + '__day' in request.GET:
+                return 'day'
+
+            if date_hierarchy + '__month' in request.GET:
+                return 'day'
+
+            if date_hierarchy + '__year' in request.GET:
+                return 'week'
+
+            return 'month'
+
+        try:
+            qs = response.context_data['cl'].queryset
+        except (AttributeError, KeyError):
+            return response
+
+        metrics = {
+            'total': Coalesce(Count('id'), V(0)),  # not OK
+            'total_buy': Coalesce(Sum('total_cost'), V(0)),
+            'margin': Coalesce(Sum('total_sell'), V(0)) - Coalesce(Sum('total_cost'), V(0)),
+            'total_calls': Coalesce(Sum('total_calls'), V(0)),
+            'success_calls': Coalesce(Sum('success_calls'), V(0)),
+            'total_duration': Coalesce(Sum('total_duration'), V(0)),
+            'max_duration': Coalesce(Max('max_duration'), V(0)),
+            'min_duration': Coalesce(Min('min_duration'), V(0)),
+        }
+
+        summary_stats = qs\
+            .values('provider__name')\
+            .annotate(**metrics)\
+            .order_by('-total_buy')
+            
+        response.context_data['summary'] = list(summary_stats)
+        
+        # Calculate total line
+        summary_totals = dict(
+            qs.aggregate(**metrics)
+        )
+        response.context_data['summary_total'] = summary_totals
+        
+        period = get_next_in_date_hierarchy(
+            request,
+            self.date_hierarchy,
+        )
+        response.context_data['period'] = period
+        
+        # generate period data for graph
+        metrics2 = {
+            'total_buy': Coalesce(Sum('total_cost'), V(0)),
+            'margin': Coalesce(Sum('total_sell'), V(0)) - Coalesce(Sum('total_cost'), V(0)),
+            'total_calls': Coalesce(Sum('total_calls'), V(0)),
+            'success_calls': Coalesce(Sum('success_calls'), V(0)),
+            'total_duration': Coalesce(Sum('total_duration'), V(0)),
+        }
+        
+        summary_over_time = qs.annotate(
+            period=Trunc(
+                'date__date',
+                period,
+                output_field=DateTimeField()
+            )
+        ).values('period').annotate(**metrics2).order_by('period')
+
+        # generate data for graph
+
+        # revenue repartition / 5 customers
+        chart_label = []
+        chart_data = []
+        top5sales = 0
+        if len(summary_stats) < 5:
+            max_cust = len(summary_stats)
+        else:
+            max_cust = 5
+        for i in range(max_cust):
+            chart_label.append(summary_stats[i]['provider__name'])
+            chart_data.append(int(summary_stats[i]['total_buy']))
+            top5sales = top5sales + int(summary_stats[i]['total_buy'])
+            
+        # Add others to graphs
+        chart_label.append(_(u'others'))
+        chart_data.append(int(summary_totals['total_buy']) - top5sales)
+            
+        # transform unicode text to strings
+        response.context_data['chart_label'] = map(str, chart_label)
+        # Example of datas ["Africa", "Asia", "Europe", "Latin America", "North America"]
+        response.context_data['chart_data'] = chart_data
+        # Example of datas [2478,5267,734,784,433]
+                # response.context_data['chart_color'] = ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"]
+        
+        # timeseries stats  
+        callvolume_data = []
+        successcallvolume_data = []
+        timeserie_data = []
+        revenue_data = []
+        margin_data = []
+        for j in range(len(summary_over_time)):
+            callvolume_data.append(int(summary_over_time[j]['total_calls']))
+            successcallvolume_data.append(int(summary_over_time[j]['success_calls']))
+            revenue_data.append(int(summary_over_time[j]['total_buy']))
+            margin_data.append(int(summary_over_time[j]['margin']))
+            if period == 'day':
+                timeserie_data.append(summary_over_time[j]['period'].strftime('%Y-%m-%d'))
+            elif period == 'week':
+                timeserie_data.append(summary_over_time[j]['period'].strftime('%W'))
+            else:
+                timeserie_data.append(summary_over_time[j]['period'].strftime('%Y-%b'))
+            
+        response.context_data['callvolume_data'] = callvolume_data
+        response.context_data['successcallvolume_data'] = successcallvolume_data
+        response.context_data['revenue_data'] = revenue_data
+        response.context_data['margin_data'] = margin_data
+        response.context_data['timeserie_data'] = timeserie_data
+        response.context_data['summary_over_time'] = period
+
+        return response
 
 
 #----------------------------------------
@@ -1256,3 +1395,4 @@ admin.site.register(DestinationNumberRules, DestinationNumberRulesAdmin)
 admin.site.register(DimCustomerDestination, DimCustomerDestinationAdmin)
 admin.site.register(DimProviderDestination, DimProviderDestinationAdmin)
 admin.site.register(SaleSummary, SaleSummaryAdmin)
+admin.site.register(CostSummary, CostSummaryAdmin)

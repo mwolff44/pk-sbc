@@ -1781,3 +1781,10 @@ class DimProviderDestination(models.Model):
         qs = DimProviderDestination.objects.all()
         day_qs = qs.values('date').annotate(day_total_calls=Sum('total_calls'), day_success_calls=Sum('success_calls'), day_total_duration=Sum('total_duration'), day_total_sell=Sum('total_sell'), day_total_cost=Sum('total_cost')).order_by('date')
         return [t[1] for t in day_qs]
+
+
+class CostSummary(DimProviderDestination):
+    class Meta:
+        proxy = True
+        verbose_name = 'Cost Summary'
+        verbose_name_plural = 'Cost Summary'
