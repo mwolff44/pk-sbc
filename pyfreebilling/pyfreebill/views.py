@@ -569,8 +569,7 @@ class ChartData(object):
 
 @staff_member_required
 def chart_stats_general_json(request):
-    # if not request.method == "POST":
-    #     raise PermissionDenied
+    # Function to get stats for graphics
     data = []
     params = request.GET
     name = params.get('name', '')

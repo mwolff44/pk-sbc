@@ -32,6 +32,8 @@ from django.utils.translation import ugettext_lazy as _
 from import_export.admin import ImportExportMixin, ImportMixin
 from import_export.formats import base_formats
 
+import datetime
+
 from pyfreebilling.antifraud.models import Fraud
 
 from pyfreebilling.switch import esl
@@ -1081,6 +1083,8 @@ class SaleSummaryAdmin(admin.ModelAdmin):
     date_hierarchy = 'date__date'
     search_fields = ('^customer__name',)
     
+    # orderable
+    
     list_filter = (
         'destination',
     )
@@ -1099,7 +1103,7 @@ class SaleSummaryAdmin(admin.ModelAdmin):
         
         def get_next_in_date_hierarchy(request, date_hierarchy):
             if date_hierarchy + '__day' in request.GET:
-                return 'hour'
+                return 'day'
 
             if date_hierarchy + '__month' in request.GET:
                 return 'day'
@@ -1115,25 +1119,27 @@ class SaleSummaryAdmin(admin.ModelAdmin):
             return response
 
         metrics = {
-            'total': Count('id'),
+            'total': Count('id'),  # not OK
             'total_sales': Sum('total_sell'),
             'margin': Sum('total_sell') - Sum('total_cost'), #false
             'total_calls': Sum('total_calls'),
             'success_calls': Sum('success_calls'),
             'total_duration': Sum('total_duration'),
-            
+            'max_duration': Max('max_duration'),
+            'min_duration': Min('min_duration'),
         }
 
-        response.context_data['summary'] = list(
-            qs
-            .values('customer__name')
-            .annotate(**metrics)
+        summary_stats = qs\
+            .values('customer__name')\
+            .annotate(**metrics)\
             .order_by('-total_sales')
-        )
+            
+        response.context_data['summary'] = list(summary_stats)
         
-        response.context_data['summary_total'] = dict(
+        summary_totals = dict(
             qs.aggregate(**metrics)
         )
+        response.context_data['summary_total'] = summary_totals
         
         period = get_next_in_date_hierarchy(
             request,
@@ -1142,29 +1148,72 @@ class SaleSummaryAdmin(admin.ModelAdmin):
         response.context_data['period'] = period
         
         # generate period data for graph
+        metrics2 = {
+            'total_sales': Sum('total_sell'),
+            'margin': Sum('total_sell') - Sum('total_cost'),
+            'total_calls': Sum('total_calls'),
+            'success_calls': Sum('success_calls'),
+            'total_duration': Sum('total_duration'),
+        }
+        
         summary_over_time = qs.annotate(
             period=Trunc(
                 'date__date',
                 period,
                 output_field=DateTimeField()
             )
-        ).values('period').annotate(total=Sum('total_sell')).order_by('period')
+        ).values('period').annotate(**metrics2).order_by('period')
 
-        # generate sales data for graph
-        summary_range = summary_over_time.aggregate(
-            low=Min('total_sell'),
-            high=Max('total_sell'),
-        )
-        high = summary_range.get('high', 0)
-        low = summary_range.get('low', 0)
+        # generate data for graph
 
-        response.context_data['summary_over_time'] = [{
-            'period': x['period'],
-            'total': x['total'] or 0,
-            'pct': \
-               ((x['total'] or 0) - low) / (high - low) * 100 
-               if high > low else 0,
-        } for x in summary_over_time]
+        # revenue repartition / 5 customers
+        chart_label = []
+        chart_data = []
+        top5sales = 0
+        if len(summary_stats) < 5:
+            max_cust = len(summary_stats)
+        else:
+            max_cust = 5
+        for i in range(max_cust):
+            chart_label.append(summary_stats[i]['customer__name'])
+            chart_data.append(int(summary_stats[i]['total_sales']))
+            top5sales = top5sales + int(summary_stats[i]['total_sales'])
+            
+        # Add others to graphs
+        chart_label.append(_(u'others'))
+        chart_data.append(int(summary_totals['total_sales']) - top5sales)
+            
+        # transform unicode text to strings
+        response.context_data['chart_label'] = map(str, chart_label)
+        # Example of datas ["Africa", "Asia", "Europe", "Latin America", "North America"]
+        response.context_data['chart_data'] = chart_data
+        # Example of datas [2478,5267,734,784,433]
+                # response.context_data['chart_color'] = ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"]
+        
+        # timeseries stats  
+        callvolume_data = []
+        successcallvolume_data = []
+        timeserie_data = []
+        revenue_data = []
+        margin_data = []
+        for j in range(len(summary_over_time)):
+            callvolume_data.append(int(summary_over_time[j]['total_calls']))
+            successcallvolume_data.append(int(summary_over_time[j]['success_calls']))
+            revenue_data.append(int(summary_over_time[j]['total_sales']))
+            margin_data.append(int(summary_over_time[j]['margin']))
+            if period == 'day':
+                timeserie_data.append(summary_over_time[j]['period'].strftime('%Y-%m-%d'))
+            elif period == 'week':
+                timeserie_data.append(summary_over_time[j]['period'].strftime('%W'))
+            else:
+                timeserie_data.append(summary_over_time[j]['period'].strftime('%Y-%b'))
+            
+        response.context_data['callvolume_data'] = callvolume_data
+        response.context_data['successcallvolume_data'] = successcallvolume_data
+        response.context_data['revenue_data'] = revenue_data
+        response.context_data['margin_data'] = margin_data
+        response.context_data['timeserie_data'] = timeserie_data
+        response.context_data['summary_over_time'] = period
 
         return response
         
