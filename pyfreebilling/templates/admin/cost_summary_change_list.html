@@ -261,7 +261,7 @@
         <td> {{ row.total_duration |intdiv:60|intcomma }} </td>
         <td>
           <strong>
-          {% if summary_total.total_sales %}{{ row.total_sales | default:0 | percentof:summary_total.total_sales }}{% else %}N/A{% endif %}
+          {% if summary_total.total_buy %}{{ row.total_buy | default:0 | percentof:summary_total.total_buy }}{% else %}N/A{% endif %}
           </strong>
         </td>
       </tr>
