@@ -253,7 +253,7 @@
       <tr class="{% cycle 'row1' 'row2' %}">
         <td> {{ row.provider__name }} </td>
         <td> {{ row.total | intcomma }} </td>
-        <td> {{ row.total_sales | default:0 | intcomma }} </td>
+        <td> {{ row.total_buy | default:0 | intcomma }} </td>
         <td> {{ row.margin | intcomma }} </td>
         <td> {{ row.total_calls | intcomma }} </td>
         <td> {% if row.total_calls %}{{ row.success_calls|mul:100|intdiv:row.total_calls }}%{% else %}N/A{% endif %} </td>
@@ -270,7 +270,7 @@
       <tr style="font-weight:bold; border-top:2px solid #DDDDDD;">
             <td> Total </td>
             <td> {{ summary_total.total | intcomma }} </td>
-            <td> {{ summary_total.total_sales | default:0 }} </td>
+            <td> {{ summary_total.total_buy | default:0 }} </td>
             <td> {{ summary_total.margin | intcomma }} </td>
             <td> {{ summary_total.total_calls | intcomma }} </td>
             <td>{% if summary_total.total_calls %}{{ summary_total.success_calls|mul:100|intdiv:summary_total.total_calls }}%{% else %}N/A{% endif %}</td>
