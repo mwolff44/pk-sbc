@@ -1087,6 +1087,7 @@ class SaleSummaryAdmin(admin.ModelAdmin):
     
     list_filter = (
         'destination',
+        'customer__name',
     )
     
     def has_add_permission(self, request, obj=None):
@@ -1226,6 +1227,7 @@ class CostSummaryAdmin(admin.ModelAdmin):
     
     list_filter = (
         'destination',
+        'provider__name',
     )
     
     def has_add_permission(self, request, obj=None):
