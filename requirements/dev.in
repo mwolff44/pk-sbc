@@ -18,3 +18,7 @@ django-debug-toolbar==1.8
 # How rotten are your requirements?
 # https://github.com/sesh/piprot
 piprot
+
+# Translation tool
+# https://docs.transifex.com/client/installing-the-client
+transifex-client
