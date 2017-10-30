@@ -769,6 +769,7 @@ if (session:ready() == true) then
   lcr_gwname = {}
   lcr_gwusername = {}
   lcr_gwpassword = {}
+  lcr_gwtransport = {}
   lcr_gwregister = {}
   lcr_gwproxy = {}
   lcr_gwrealm = {}
@@ -853,6 +854,7 @@ if (session:ready() == true) then
           s.username AS gwusername,
           s.password AS gwpassword,
           s.register AS gwregister,
+          s.transport AS gwtransport,
           s.proxy AS gwproxy,
           s.realm AS gwrealm,
           s.from_domain AS gwfrom_domain,
@@ -925,6 +927,9 @@ if (session:ready() == true) then
         lcr_gwid[lcrok] = row.gwid
         lcr_remove_prefix[lcrok] = row.remove_prefix
         lcr_add_prefix[lcrok] = row.add_prefix
+        lcr_gwusername[lcrok] = row.gwusername
+        lcr_gwpassword[lcrok] = row.gwpassword
+        lcr_gwtransport[lcrok] = row.gwtransport
         lcrok = lcrok + 1
       end))
   end
@@ -1075,7 +1080,8 @@ if (session:ready() == true) then
       myvarbridge = myvarbridge .. ",ratecard_id="..rate["ratecard_id"]
       if channel["call-type"] == "PSTN" or channel["call-type"] == "EMERGENCY" then
           myvarbridge = myvarbridge .. ",caller-id-in-from="..lcr_gwcaller_id_in_from[i]
-          -- ToDo myvarbridge = myvarbridge .. ",username="..lcr_gwusername[i]
+          myvarbridge = myvarbridge .. ",sip_auth_username="..lcr_gwusername[i]
+          myvarbridge = myvarbridge .. ",sip_auth_password="..lcr_gwpassword[i]
           myvarbridge = myvarbridge .. ",expire_seconds="..lcr_gwexprire_seconds[i]
           myvarbridge = myvarbridge .. ",retry_seconds="..lcr_gwretry_seconds[i]
           if lcr_gwfrom_domain then
@@ -1089,7 +1095,7 @@ if (session:ready() == true) then
       if mydialbridge == "" then
           mydialbridge = "{ignore_early_media=" .. channel["ignore_early_media"] .. "}[" .. myvarbridge .. "]sofia/"..myprofile.."/" .. called_number
           if channel["call-type"] == "PSTN" or channel["call-type"] == "EMERGENCY" then
-              mydialbridge = mydialbridge  .. "@" .. lcr_gwproxy[i]
+              mydialbridge = mydialbridge  .. "@" .. lcr_gwproxy[i]..";transport="..lcr_gwtransport[i]
           else
               mydialbridge = mydialbridge  .. "@" .. channel["internal_kam_ip"] .. ":5060"
               -- end boucle
@@ -1097,7 +1103,7 @@ if (session:ready() == true) then
           end
 
       else
-        mydialbridge = mydialbridge .. "|[" .. myvarbridge .. "]sofia/"..myprofile.."/" .. called_number .. "@" .. lcr_gwproxy[i]
+        mydialbridge = mydialbridge .. "|[" .. myvarbridge .. "]sofia/"..myprofile.."/" .. called_number .. "@" .. lcr_gwproxy[i]..";transport="..lcr_gwtransport[i]
       end
       log("construction bridge : ", mydialbridge, "debug")
 -- set call limit
