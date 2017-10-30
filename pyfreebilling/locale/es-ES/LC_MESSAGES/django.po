@@ -4226,7 +4226,7 @@ msgstr "Elegir"
 msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
 msgstr[0] "Por favor corregir el error que sigue"
-msgstr[1] ""
+msgstr[1] "Por favor corregir los errorer que siguen"
 
 #: pyfreebilling/templates/admin/live_report.html:37
 msgid "search option"
@@ -5038,8 +5038,8 @@ msgstr ""
 
 #~ msgid "%(counter)s result"
 #~ msgid_plural "%(counter)s results"
-#~ msgstr[0] "%(counter)s resultado/s"
-#~ msgstr[1] ""
+#~ msgstr[0] "%(counter)s resultado"
+#~ msgstr[1] "%(counter)s resultados"
 
 #~ msgid "%(full_result_count)s total"
 #~ msgstr "%(full_result_count)s total"
@@ -5748,7 +5748,7 @@ msgstr ""
 #~ msgid "%(count)d non-default language was deleted"
 #~ msgid_plural "%(count)d non-default languages were deleted"
 #~ msgstr[0] "%(count)d el idioma no predefinido será borrado"
-#~ msgstr[1] ""
+#~ msgstr[1] "%(count)d los idiomas no predefinido seran borrado"
 
 #~ msgid "Delete selected languages"
 #~ msgstr "Borrar idiomas seleccionados"
