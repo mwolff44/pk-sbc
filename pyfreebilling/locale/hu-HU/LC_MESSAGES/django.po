@@ -863,7 +863,6 @@ msgid ""
 "                                                      caught.\n"
 "                                                      "
 msgstr ""
-"\n"
 " Azt szabályozza, hogy a hívás visszatér a korai média, vagy sem. Az "
 "alapértelmezett érték false. Az érték \"ring_ready\" ugyanúgy működik, mint "
 "ignore_early_media = true hanem küld egy SIP 180 a bejövő lábát, amikor az "
@@ -4402,7 +4401,7 @@ msgstr "SIP auth type"
 
 #: templates/customer/sip_account.html:59
 msgid "Username"
-msgstr "Felhasználó név\n"
+msgstr "Felhasználó név"
 
 #: templates/customer/sip_account.html:61
 msgid "Max calls"

@@ -4485,7 +4485,7 @@ msgstr "Report CDR giornaliero (Ultimi 7 giorni)"
 
 #: templates/customer/report.html:58
 msgid "Monthly CDR reports (Last 3 Months)"
-msgstr "Report CDR Mensile (Ultimi 3 mesi)\n"
+msgstr "Report CDR Mensile (Ultimi 3 mesi)"
 
 #: templates/customer/sip_account.html:5
 #, fuzzy

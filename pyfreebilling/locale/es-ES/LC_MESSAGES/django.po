@@ -1023,7 +1023,7 @@ msgstr "Tarifas del Proveedor"
 
 #: did/models/did.py:45
 msgid "provider channels"
-msgstr "Canales del Proveedor\n"
+msgstr "Canales del Proveedor"
 
 #: did/models/did.py:47 did/models/did.py:69
 #, fuzzy
