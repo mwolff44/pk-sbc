@@ -94,3 +94,17 @@ pyfreebilling/priv*
 .vagrant/
 /.idea/pyfreebilling.iml
 /.idea/vcs.xml
+/docs/build/html/_sources/index.txt.py
+/docs/build/html/genindex.html.py
+/docs/build/html/index.html.py
+/docs/build/html/search.html.py
+/docs/source/_templates/layout.html.py
+/install/resources/fs/config/crontab.txt.py
+/requirements.txt.py
+/requirements/base.txt.py
+/requirements/ci.txt.py
+/requirements/dev.txt.py
+/requirements/external_lib.txt.py
+/requirements/prod.txt.py
+/requirements/test.txt.py
+/setup/cron.txt.py
