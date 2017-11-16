@@ -15,7 +15,6 @@ General prerequisites
 =====================
 
 In order to run pyfreebilling, you need the following configured,
-secured and working Basic Operating System (Linux or BSD, but also
-windows).
+secured and working Basic Operating System (Linux or BSD).
 
-The project uses freeswitch, PostgreSQL and Django.
+The project uses Kamailio, Freeswitch, PostgreSQL and Django.
