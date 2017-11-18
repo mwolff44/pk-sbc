@@ -46,4 +46,4 @@ six==1.10.0               # via django-chroniker, django-tables2, oauth2client, 
 tablib==0.11.2            # via django-import-export
 toposort==1.4             # via django-chroniker
 vatnumber==1.2
-xlrd==1.0.0               # via django-simple-import
+xlrd==1.1.0               # via django-simple-import
