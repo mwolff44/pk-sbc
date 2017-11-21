@@ -629,7 +629,7 @@ if (session:ready() == true) then
     session:hangup("BEARERCAPABILITY_NOTAVAIL")
   else
     rate["rate"] = tonumber(rate["rate"])*(1-tonumber(rate["discount"])/100)
-    rate["minimal"] = tonumber(rate["minimal_time"]) * tonumber(rate["rate"] / 60) + tonumber(rate["init_block"])
+    rate["minimal"] = tonumber(rate["minimal_time"]) * tonumber(rate["rate"] / 60)
     log("Rate", "OK")
     set_variable("sell_rate", tonumber(rate["rate"]))
     set_variable("sell_increment", rate["block_min_duration"])
@@ -1116,6 +1116,7 @@ if (session:ready() == true) then
   -- execute("bridge", mydialbridge)
   --session:hangup()
   assert(dbh:release())
+  session:execute("export", "execute_on_answer=nibblebill adjust "..tonumber(rate["init_block"]*-1))
   session:execute("set", "pyfb_bridge="..mydialbridge)
 end
 if dbh:connected() == true then
