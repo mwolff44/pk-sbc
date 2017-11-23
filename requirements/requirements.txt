@@ -18,7 +18,7 @@ django-countries==3.4.1
 django-crispy-forms==1.6.0
 django-currencies==0.4.0
 django-datetime-widget==0.9.3
-django-import-export==0.5.1
+django-import-export==0.6.0
 django-mathfilters==0.4.0
 django-qsstats-magic==0.7.2
 django-secure==1.0.1
