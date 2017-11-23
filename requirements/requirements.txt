@@ -7,7 +7,7 @@
 -e git+https://github.com/mwolff44/yawd-admin.git@0.7.2#egg=yawd-admin
 diff-match-patch==20121119  # via django-import-export
 django-admin-honeypot==1.0.0
-django-axes==1.6.0
+django-axes==3.0.3
 django-bootstrap-pagination==1.6.2
 django-bootstrap-toolkit==2.15.0
 django-bootstrap3==6.2.2
