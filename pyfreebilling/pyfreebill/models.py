@@ -832,15 +832,10 @@ class CustomerRates(models.Model):
                                help_text=_(u"to block the prefix, put -1"))
     block_min_duration = models.IntegerField(_(u'Increment'),
                                              default=1)
-<<<<<<< HEAD:pyfreebilling/pyfreebill/models.py
     minimal_time = models.IntegerField(
         _(u'Minimal time'),
        default=0,
        help_text=_(u"minimal time to be billed in seconds"))
-=======
-    minimal_time = models.IntegerField(_(u'Minimal time'),
-                                       default=0)
->>>>>>> 571e9a9572802c823d0d765812b770786b5f74bd:pyfreebill/models.py
     init_block = models.DecimalField(_(u'Connection fee'),
                                      max_digits=11,
                                      decimal_places=5,
