@@ -55,7 +55,7 @@ pycparser==2.18           # via cffi
 pyOpenSSL==17.5.0
 python-dateutil==2.6.1    # via django-chroniker
 python-stdnum==1.7        # via vatnumber
-pytz==2017.02
+pytz==2017.3
 pyyaml==3.12              # via tablib
 requests-futures==0.9.7   # via piprot
 requests==2.18.4
