@@ -20,11 +20,14 @@ from templated_email import send_templated_mail
 from django.conf import settings
 
 class Command(BaseCommand):
-    args = '<date>'
     help = 'Alert messages - balance, balance status - lowbalance, alert low balance - custom '
 
+
+    def add_arguments(self, parser):
+        parser.add_argument('message_type', nargs='+')
+
     def handle(self, *args, **options):
-        for var in args:
+        for var in options['message_type']:
 #            try:
 
                 if var == "balance":
