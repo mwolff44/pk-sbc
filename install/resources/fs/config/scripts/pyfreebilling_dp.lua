@@ -91,7 +91,7 @@ function execute(application, data)
   local application = application
   local data = data or ""
   if application then
-    log("Executing dialplan application : ", application.." - "..data)
+    log("Executing dialplan application : ", application.." - "..data, "debug")
     session:execute(application, data)
   end
 end
@@ -132,7 +132,7 @@ end
 -----------------------------------------------
 -----------------------------------------------
 function SessionHangupHook(s, status, arg)
-  freeswitch.consoleLog("INFO", "wholesale: Call ended! " .. status .. "\n")
+  log("wholesale: Call ended! ", status .. "\n", "notice")
   assert(dbh:release())
 end
 -----------------------------------------------
@@ -157,9 +157,9 @@ end
 function codec_test(type)
   local codecs = { "G729", "PCMA", "PCMU", "G722" }
   local codec_status = "NOK"
-  log("customer codec test", "--start--", "info")
+  log("customer codec test", "--start--", "debug")
   for key, value in ipairs(codecs) do
-    log("codecs_customer: ", channel["customer_codecs"], "info")
+    log("codecs_customer: ", channel["customer_codecs"], "debug")
     log("codec value test: ", value, "debug")
     if string.find(channel["customer_codecs"], string.format("%s", value)) then
       if string.find(string.upper(channel["ep_codec_string"]), string.format("%s", value)) then
@@ -167,23 +167,23 @@ function codec_test(type)
         codec_status = "OK"
         log("codec status: ", codec_status, "info")
       else
-        log("codec leg A mismatch with customer codec: ", value,"info")
+        log("codec leg A mismatch with customer codec: ", value,"warning")
         channel["customer_codecs"] = string.gsub(channel["customer_codecs"], string.format("%s%s", ",", value), "", 1)
         channel["customer_codecs"] = string.gsub(channel["customer_codecs"], string.format("%s%s", value, ","), "", 1)
         channel["customer_codecs"] = string.gsub(channel["customer_codecs"], string.format("%s", value), "", 1)
-        log("New customer codec list available : ", channel["customer_codecs"], "info")
+        log("New customer codec list available : ", channel["customer_codecs"], "debug")
       end
     else
-      log("codec not available for this sip account: ", value, "info")
+      log("codec not available for this sip account: ", value, "warning")
     end
   end
   if codec_status == "OK" then
-    log("codec leg A match with customer codec", "", "info")
-    log("codec available : ", channel["customer_codecs"], "info")
+    log("codec leg A match with customer codec", "", "debug")
+    log("codec available : ", channel["customer_codecs"], "debug")
     execute("export", "nolocal:absolute_codec_string="..channel["customer_codecs"])
   else
     set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_CODEC_ERROR")
-    log("codec leg A mismatch with customer codec! ","Exiting","info")
+    log("codec leg A mismatch with customer codec! ","Exiting" ,"warning")
     session:hangup("BEARERCAPABILITY_NOTAVAIL")
     return
   end
@@ -285,14 +285,14 @@ if session:ready() then
     dbh = freeswitch.Dbh("odbc://freeswitch")
     if dbh:connected() == false then
       set_variable("proto_specific_hangup_cause", "PFB_DB_ERROR")
-      log("Dbh : ", "Database error - Hangup call", "ERROR")
+      log("Dbh : ", "Database error - Hangup call", "err")
       session:hangup("BEARERCAPABILITY_NOTAVAIL")
       return
     else
-      log("Dbh : ", "Database connected")
+      log("Dbh : ", "Database connected", "debug")
     end
   else
-    log("Customer not authorized")
+    log("Customer not authorized", " NOK ", "warning")
     set_variable("proto_specific_hangup_cause", "PFB_NOT_AUTH", "INFO")
     if dbh:connected() == true then
       log("DBH Connected : releasing","","debug")
@@ -395,10 +395,10 @@ if session:ready() then
   log("Customer data - num of records", custok, "debug")
   if custok == 0 then
     set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_NOT_FOUND")
-    log("CUSTOMER NOT FOUND!","Exiting")
+    log("CUSTOMER NOT FOUND!","Exiting", "warning")
     session:hangup("BEARERCAPABILITY_NOTAVAIL")
   end
-  log("Prepaid / Balance / Credit limit : ".. customer["prepaid"] .." /  ".. tonumber(customer["customer_balance"]) .." / " .. tonumber(customer["credit_limit"]),"")
+  log("Prepaid / Balance / Credit limit : ".. customer["prepaid"] .." /  ".. tonumber(customer["customer_balance"]) .." / " .. tonumber(customer["credit_limit"]),"", "debug")
 else
   if dbh:connected() == true then
     log("DBH Connected : releasing","","debug")
@@ -414,7 +414,7 @@ end
   channel["ep_codec_string"] = get_Variable("ep_codec_string")
   if channel["ep_codec_string"] == nil then
     set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_CODEC_ERROR")
-    log("codec leg A provides no codec! ","Exiting","info")
+    log("codec leg A provides no codec! ", "Exiting", "warning")
     session:hangup("BEARERCAPABILITY_NOTAVAIL")
     return
   end
@@ -429,27 +429,27 @@ end
 
 if (session:ready() == true) then
   if customer["prepaid"] == "0" then
-    log("Customer...: postpaid","")
+    log("Customer...: postpaid", "", "debug")
     if tonumber(customer["customer_balance"]) < tonumber(customer["credit_limit"]) then
       set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_POSTPAID_CREDIT_LIMIT")
-      log("CUSTOMER " .. customer["name"] .. " has reach credit limit... rejecting","")
+      log("CUSTOMER " .. customer["name"] .. " has reach credit limit... rejecting", "", "warning")
       session:hangup("BEARERCAPABILITY_NOTAVAIL");
     else
-      log("Credit limit : ","OK")
+      log("Credit limit : ","OK", "debug")
     end
   elseif customer["prepaid"] == "1" then
-    log("Customer...: prepaid","")
+    log("Customer...: prepaid", "", "debug")
     if tonumber(customer["customer_balance"]) < 0 then
       set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_PREPAID_NO_MONEY")
-      log("CUSTOMER " .. customer["name"] .. " has no money... rejecting","")
+      log("CUSTOMER " .. customer["name"] .. " has no money... rejecting", "", "warning")
       session:hangup("BEARERCAPABILITY_NOTAVAIL")
     else
-      log("balance : ","OK")
+      log("balance : ","OK", "debug")
     end
   end
 else
   if dbh:connected() == true then
-    log("DBH Connected : releasing","","debug")
+    log("DBH Connected : releasing", "", "debug")
     assert(dbh:release())
   end
 end
@@ -469,14 +469,14 @@ if (session:ready() == true) then
 
    -- test format destination number
   if customer["dnr_format_num"] == nil then
-    log("Not Destination Number format rule"," : continue","debug")
+    log("Not Destination Number format rule", " : continue", "debug")
   else
     if string.match(channel["destination_number"],customer["dnr_format_num"]) == nil then
       set_variable("proto_specific_hangup_cause", "PFB_DESTINATION_NUMBER_WRONG_FORMAT")
       log("Destination number wrong format :","NOK!", "debug")
       session:hangup("UNALLOCATED_NUMBER")
     else
-      log("Destination number well formated :","OK!")
+      log("Destination number well formated :", "OK!", "debug")
     end
   end
 
@@ -500,10 +500,10 @@ if (session:ready() == true) then
     log("CallerID Norm - callerID num / rem_prefix / add_prefix : ", channel["caller_id_number"].." / "..customer["ccnr_remove_prefix"].." / "..customer["ccnr_add_prefix"], "debug")
   end
   pyfb_caller_id_number = string.gsub(channel["caller_id_number"], "+", "", 1)
-  log("Customer CallerID : ", channel["caller_id_number"])
+  log("Customer CallerID : ", channel["caller_id_number"], "debug")
 else
   if dbh:connected() == true then
-    log("DBH Connected : releasing","","debug")
+    log("DBH Connected : releasing", "", "debug")
     assert(dbh:release())
   end
 end
@@ -516,7 +516,7 @@ if (session:ready() == true) then
   local rateprio = 1
   rateok = 0
   while rateok == 0 do
-    log("rateprio / rateok :", rateprio.." / "..rateok)
+    log("rateprio / rateok :", rateprio.." / "..rateok, "debug")
     if rateprio == 8 then
       break
     else
@@ -598,22 +598,22 @@ if (session:ready() == true) then
         end
         -- log("Callerid filter value", rate["callerid_filter"] .. " / " .. rate["cip_prefix"])
         if rate["callerid_filter"] == "1" then
-          log("CallerID filter : ", "OFF")
+          log("CallerID filter : ", "OFF", "debug")
           rateok = 1
         elseif rate["callerid_filter"] == "2" then
           if rate["cip_prefix"] == "" then
-            log("CallerID filter : ", "prefix authorized not in list - NOK")
+            log("CallerID filter : ", "prefix authorized not in list - NOK", "warning")
             rateok = 0
           else
-            log("CallerID filter : ", "prefix authorized in list - OK")
+            log("CallerID filter : ", "prefix authorized in list - OK", "debug")
             rateok = 1
           end
         elseif rate["callerid_filter"] == "3" then
           if rate["cip_prefix"] == "" then
-            log("CallerID filter : ", "prefix prohibited not in list - OK")
+            log("CallerID filter : ", "prefix prohibited not in list - OK", "debug")
             rateok = 1
           else
-            log("CallerID filter : ", "prefix prohibited in list - NOK")
+            log("CallerID filter : ", "prefix prohibited in list - NOK", "warning")
             rateok = 0
           end
         end
@@ -622,15 +622,15 @@ if (session:ready() == true) then
     end
   end
   log("Customer rate - num of records", rateok, "debug")
-  log("Customer rate OK: ", rateok)
+  log("Customer rate OK: ", rateok, "debug")
   if rateok == 0 then
     set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_RATE_NOT_FOUND")
-    log("RATE NOT FOUND! : ", "Exiting")
+    log("RATE NOT FOUND! : ", "Exiting", "warning")
     session:hangup("BEARERCAPABILITY_NOTAVAIL")
   else
     rate["rate"] = tonumber(rate["rate"])*(1-tonumber(rate["discount"])/100)
     rate["minimal"] = tonumber(rate["minimal_time"]) * tonumber(rate["rate"] / 60) + tonumber(rate["init_block"])
-    log("Rate", "OK")
+    log("Rate", "OK", "debug")
     set_variable("sell_rate", tonumber(rate["rate"]))
     set_variable("sell_increment", rate["block_min_duration"])
     set_variable("prefix", rate["prefix"])
@@ -642,7 +642,7 @@ if (session:ready() == true) then
   end
     -- test block prefix with rate -1
   if rate["rate"] == -1 then
-    log("Blocked prefix ! : ", "Exiting")
+    log("Blocked prefix ! : ", "Exiting", "warning")
     set_variable("proto_specific_hangup_cause", "PFB_CUSTOMER_PREFIX_BLOCKED")
     session:hangup("BEARERCAPABILITY_NOTAVAIL")
   else
@@ -699,10 +699,10 @@ if channel["call-type"] == "EMERGENCY" then
     if inseecode["insee_code"] == '' or inseecode["insee_code"] == nil then
       -- no inseecode found
       set_variable("proto_specific_hangup_cause", "PFB_EMERGENCY_INSEECODE_NOT_FOUND")
-      log("EMERGENCY CALL - INSEE CODE NOT FOUND! : ", "Exiting")
+      log("EMERGENCY CALL - INSEE CODE NOT FOUND! : ", "Exiting", "warning")
       session:hangup("BEARERCAPABILITY_NOTAVAIL")
     else
-      log("EMERGENCY CALL - INSEE CODE FOUND! : ", inseecode["insee_code"])
+      log("EMERGENCY CALL - INSEE CODE FOUND! : ", inseecode["insee_code"], "debug")
     end
     -- Get corresponding long number
     urgency = {}
@@ -729,7 +729,7 @@ if channel["call-type"] == "EMERGENCY" then
     if urgency["long_number"] == '' or urgency["long_number"] == nil then
         -- no inssecode found
         set_variable("proto_specific_hangup_cause", "PFB_EMERGENCY_LONG_NUMBER_NOT_FOUND")
-        log("REMERGENCY CALL - LONG NUMBER NOT FOUND! : ", "Exiting")
+        log("REMERGENCY CALL - LONG NUMBER NOT FOUND! : ", "Exiting", "warning")
         session:hangup("BEARERCAPABILITY_NOTAVAIL")
     else
         -- remove +
@@ -742,19 +742,19 @@ end
 --        SELECT LCR TYPE
 -----------------------------------------------
 if (session:ready() == true) then
-  log("LCR Type : ", rate["lcrtype"])
+  log("LCR Type : ", rate["lcrtype"], "debug")
   if rate["lcrtype"] == "p" then
     ratefilter = "cost_rate ASC, random()"
-    log("LCR Type : ", "Price")
+    log("LCR Type : ", "Price", "debug")
   elseif rate["lcrtype"] == "q" then
     ratefilter = "quality DESC, random()"
-    log("LCR Type : ", "Quality")
+    log("LCR Type : ", "Quality", "debug")
   elseif rate["lcrtype"] == "r" then
     ratefilter = "reliability DESC, random()"
-    log("LCR Type : ", "Reliability")
+    log("LCR Type : ", "Reliability", "debug")
   elseif rate["lcrtype"] == "l" then
     ratefilter = "random()"
-    log("LCR Type : ", "LoadBalancing")
+    log("LCR Type : ", "LoadBalancing", "debug")
   end
 -----------------------------------------------
 --        Get LCR / Gateway
@@ -940,7 +940,7 @@ if (session:ready() == true) then
     set_variable("proto_specific_hangup_cause", "PFB_PROVIDER_RATE_NOT_FOUND")
     session:hangup("BEARERCAPABILITY_NOTAVAIL")
   else
-    log("lcr", "OK")
+    log("lcr", "OK", "debug")
   end
 else
   if dbh:connected() == true then
@@ -993,21 +993,21 @@ if (session:ready() == true) then
           if lcr_lead_strip[i] == "" then
             lcr_lead_strip[i]  = "^"
           end
-          log("WS CALL strip:", lcr_lead_strip[i])
-          log("WS CALL prefix:", lcr_prefix[i])
-          log("WS CALL dest number:", channel["destination_number"])
-          log("WS CALL gwprefix :", lcr_gwprefix[i])
+          log("WS CALL strip:", lcr_lead_strip[i], "debug")
+          log("WS CALL prefix:", lcr_prefix[i], "debug")
+          log("WS CALL dest number:", channel["destination_number"], "debug")
+          log("WS CALL gwprefix :", lcr_gwprefix[i], "debug")
           called_number = string.gsub(channel["destination_number"], lcr_lead_strip[i], lcr_gwprefix[i]..lcr_prefix[i], 1)
-          log("WS CALL CallerID strip prefix:", lcr_remove_prefix[i])
-          log("WS CALL CallerID number:", channel["caller_id_number"])
-          log("WS CALL CallerID add prefix :", lcr_add_prefix[i])
+          log("WS CALL CallerID strip prefix:", lcr_remove_prefix[i], "debug")
+          log("WS CALL CallerID number:", channel["caller_id_number"], "debug")
+          log("WS CALL CallerID add prefix :", lcr_add_prefix[i], "debug")
           -- test if the callerID start with a + and the gw prefix is a + to avoid ++
           if lcr_add_prefix[i] == "+" then
               channel["caller_id_number"] = string.gsub(channel["caller_id_number"], "+", "", 1)
           end
           caller_id = string.gsub(channel["caller_id_number"], lcr_remove_prefix[i], lcr_add_prefix[i], 1)
-          log("WS CALL CallerID sent to provider: ", caller_id)
-          log("WS CALL dest num with prefix/suffix/strip : ", called_number)
+          log("WS CALL CallerID sent to provider: ", caller_id, "debug")
+          log("WS CALL dest num with prefix/suffix/strip : ", called_number, "debug")
       else
           called_number = channel["destination_number"]
           caller_id = channel["caller_id_number"]
@@ -1053,7 +1053,7 @@ if (session:ready() == true) then
             end
           end))
           if dnsipcode["name"] == '' or dnsipcode["name"] == 'nil' then
-              log("No corresponding destnum sip account found for didout")
+              log("No corresponding destnum sip account found for didout", "warning")
           else
               execute("set", "sip_h_X-PyFB-SIPAccountId=" .. dnsipcode["name"])
               myvarbridge = myvarbridge .. ",sip_account_id="..dnsipcode["name"]
@@ -1091,7 +1091,7 @@ if (session:ready() == true) then
           -- ToDo myvarbridge = myvarbridge .. ",realm="..lcr_gwrealm[i]
       end
 
-      log("WS CALL my variables bridge : ", myvarbridge)
+      log("WS CALL my variables bridge : ", myvarbridge, "debug")
       if mydialbridge == "" then
           mydialbridge = "{ignore_early_media=" .. channel["ignore_early_media"] .. "}[" .. myvarbridge .. "]sofia/"..myprofile.."/" .. called_number
           if channel["call-type"] == "PSTN" or channel["call-type"] == "EMERGENCY" then
