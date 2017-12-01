@@ -20,7 +20,7 @@ django-countries==5.0
 django-crispy-forms==1.6.1
 django-currencies==0.4.0
 django-datetime-widget==0.9.3
-django-extensions==1.9.1
+django-extensions==1.9.7
 django-filter==1.0.4
 django-import-export==0.5.1
 django-mathfilters==0.4.0
