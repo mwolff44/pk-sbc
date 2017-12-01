@@ -15,7 +15,7 @@ django-bootstrap3==9.0.0
 django-braces==1.11.0
 django-chroniker==1.0.8
 django-countries==5.0
-django-crispy-forms==1.6.1
+django-crispy-forms==1.7.0
 django-currencies==0.4.0
 django-datetime-widget==0.9.3
 django-extensions==1.9.1
