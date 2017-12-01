@@ -39,7 +39,7 @@ enum34==1.1.6             # via cryptography
 et-xmlfile==1.0.1         # via openpyxl
 feedparser==5.2.1
 FreeSWITCH-ESL-Python==1.2
-futures==3.1.1            # via requests-futures
+futures==3.2.0            # via requests-futures
 idna==2.6                 # via cryptography, requests
 ipaddress==1.0.18         # via cryptography
 jdcal==1.3                # via openpyxl
