@@ -19,7 +19,7 @@ django-crispy-forms==1.6.1
 django-currencies==0.4.0
 django-datetime-widget==0.9.3
 django-extensions==1.9.1
-django-filter==1.0.4
+django-filter==1.1.0
 django-import-export==0.5.1
 django-mathfilters==0.4.0
 django-migrate-sql==0.1.1
