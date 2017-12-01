@@ -39,7 +39,7 @@ et-xmlfile==1.0.1         # via openpyxl
 factory-boy==2.9.2
 Faker==0.8.4              # via factory-boy
 feedparser==5.2.1
-flake8==3.4.1
+flake8==3.5.0
 FreeSWITCH-ESL-Python==1.2
 idna==2.6                 # via requests
 ipaddress==1.0.18         # via faker
