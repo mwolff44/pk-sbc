@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file requirements/test.txt requirements/test.in
 #
-certifi==2017.7.27.1      # via requests
+certifi==2017.11.5      # via requests
 chardet==3.0.4            # via requests
 configparser==3.5.0       # via flake8
 coverage==4.4.1
