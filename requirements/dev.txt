@@ -34,7 +34,7 @@ django-render-block==0.5  # via django-templated-email
 django-solo==1.1.2
 django-tables2==1.12.0
 django-templated-email==2.2.0
-django==1.11.6
+django==1.11.7
 enum34==1.1.6             # via cryptography
 et-xmlfile==1.0.1         # via openpyxl
 feedparser==5.2.1
