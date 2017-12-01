@@ -45,7 +45,7 @@ Vagrant.configure("2") do |config|
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
-  # config.vm.network "public_network", ip: "192.168.1.221"
+  # config.vm.network "public_network", ip: "172.16.43.221"
   config.vm.network "public_network", ip: "10.0.3.221"
   # config.vm.network "public_network", ip: "10.0.2.15"
 
