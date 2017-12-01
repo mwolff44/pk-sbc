@@ -63,7 +63,7 @@ six==1.11.0               # via cryptography, django-chroniker, django-extension
 sqlparse==0.2.4           # via django-debug-toolbar
 tablib==0.12.1            # via django-import-export
 toposort==1.5             # via django-chroniker
-transifex-client==0.12.4
+transifex-client==0.12.5
 unicodecsv==0.14.1        # via django-queryset-csv, tablib
 urllib3==1.22             # via requests, transifex-client
 vatnumber==1.2
