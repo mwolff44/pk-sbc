@@ -52,7 +52,7 @@ piprot==0.9.7
 psutil==5.4.0
 psycopg2==2.7.3.1
 pycparser==2.18           # via cffi
-pyOpenSSL==17.3.0
+pyOpenSSL==17.5.0
 python-dateutil==2.6.1    # via django-chroniker
 python-stdnum==1.7        # via vatnumber
 pytz==2017.02
