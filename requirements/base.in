@@ -10,7 +10,7 @@
 # https://docs.djangoproject.com/en/1.9/
 # BSD
 # py3
-django==1.11.6
+django==1.11.7
 
 # Honeypot
 # https://github.com/dmpayton/django-admin-honeypot/
@@ -28,7 +28,7 @@ django-admin-tools==0.8.1
 # https://github.com/jazzband/django-axes
 # MIT
 # py3
-django-axes==2.3.3
+django-axes==3.0.3
 
 # bootstrap pagination
 # https://github.com/jmcclell/django-bootstrap-pagination/
@@ -180,19 +180,19 @@ netifaces==0.10.6
 # https://github.com/giampaolo/psutil/
 # BSD
 # py3
-psutil==5.4.0
+psutil==5.4.1
 
 # PostgreSQL adapter
 # http://pythonhosted.org/psycopg2/
 # LGPL
 # py3
-psycopg2==2.7.3.1
+psycopg2==2.7.3.2
 
 # World timezone definitions
 # http://pytz.sourceforge.net/
 # MIT
 # py3
-pytz==2017.02
+pytz==2017.03
 
 # HTTP request API
 # http://docs.python-requests.org/en/latest/

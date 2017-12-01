@@ -9,16 +9,16 @@
 # WSGI utility library with powerful debugger
 # http://werkzeug.pocoo.org/
 werkzeug==0.12.2
-pyOpenSSL==17.3.0
+pyOpenSSL==17.5.0
 
 # Debug information in a toolbar
 # http://django-debug-toolbar.readthedocs.org/
-django-debug-toolbar==1.8
+django-debug-toolbar==1.9.1
 
 # How rotten are your requirements?
 # https://github.com/sesh/piprot
-piprot
+piprot==0.9.7
 
 # Translation tool
 # https://docs.transifex.com/client/installing-the-client
-transifex-client
+transifex-client==0.12.5

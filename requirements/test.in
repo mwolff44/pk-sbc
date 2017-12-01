@@ -3,7 +3,7 @@
 
 # Measures code coverage
 # http://nedbatchelder.com/code/coverage/
-coverage==4.4.1
+coverage==4.4.2
 
 # Easily specify directories to be excluded from testing
 # https://github.com/kgrandis/nose-exclude/
@@ -19,4 +19,4 @@ factory-boy==2.9.2
 
 # Python style checker
 # http://flake8.readthedocs.org/en/latest/
-flake8==3.4.1
+flake8==3.5.0
