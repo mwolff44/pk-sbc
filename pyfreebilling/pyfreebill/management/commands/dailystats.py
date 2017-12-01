@@ -31,11 +31,14 @@ import pytz
 
 
 class Command(BaseCommand):
-    args = '<date>'
     help = 'calculate stats - lastday, for last day stats - past, for past stats - custom + options for specific stats - first = [2013, 06, 14, 00, 00, 00], last = [2013, 06, 18, 00, 00, 00] '
 
+    def add_arguments(self, parser):
+        parser.add_argument('period_type', nargs='+')
+
+
     def handle(self, *args, **options):
-        for var in args:
+        for var in options['period_type']:
             try:
 
                 # date filter

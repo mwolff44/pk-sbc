@@ -26,11 +26,15 @@ import decimal
 import pytz
 
 class Command(BaseCommand):
-    args = '<date>'
     help = 'delete old cdr from database - failed : delete failed cdr older than 3 days -'
 
+
+    def add_arguments(self, parser):
+        parser.add_argument('cdr_type', nargs='+')
+
+
     def handle(self, *args, **options):
-        for var in args:
+        for var in options['cdr_type']:
             try:
 
                 current_tz = pytz.utc
