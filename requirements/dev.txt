@@ -24,7 +24,7 @@ django-datetime-widget==0.9.3
 django-debug-toolbar==1.9.1
 django-extensions==1.9.1
 django-filter==1.0.4
-django-import-export==0.5.1
+django-import-export==0.6.1
 django-mathfilters==0.4.0
 django-migrate-sql==0.1.1
 django-model-utils==3.0.0
