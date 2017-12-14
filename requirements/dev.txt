@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file requirements/dev.txt requirements/dev.in
 #
-asn1crypto==0.23.0        # via cryptography
+asn1crypto==0.24.0        # via cryptography
 certifi==2017.7.27.1      # via requests
 cffi==1.11.2              # via cryptography
 chardet==3.0.4            # via requests
