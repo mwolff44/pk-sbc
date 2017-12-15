@@ -20,6 +20,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from netaddr import IPNetwork
 import re
+import random
+import string
 
 from pyfreebilling.pyfreebill.models import Company
 from pyfreebilling.pyfreebill.validators import validate_cidr
@@ -60,12 +62,21 @@ class Subscriber(models.Model):
 #     FROM customer_directory c WHERE c.enabled=True and c.registration=True
 
 
+def random_string():
+    # Alphanumeric + special characters
+    chars = string.letters + string.digits + string.punctuation
+
+    pwdSize = 25
+
+    return str(''.join((random.choice(chars)) for _ in range(pwdSize)))
+
+
 class CustomerDirectory(models.Model):
     """ Customer Directory Model """
     company = models.ForeignKey(Company,
                                 verbose_name=_(u"company"))
     registration = models.BooleanField(_(u"Registration"),
-                                       default=False,
+                                       default=True,
                                        help_text=_(u"""Is registration needed
                                        for calling ? True, the phone needs to
                                        register with correct username/password.
@@ -74,6 +85,7 @@ class CustomerDirectory(models.Model):
     password = models.CharField(_(u"password"),
                                 max_length=100,
                                 blank=True,
+                                default=random_string,
                                 help_text=_(u"""It's recommended to use strong
                                 passwords for the endpoint."""))
     description = models.TextField(_(u'description'),
