@@ -42,7 +42,7 @@ feedparser==5.2.1
 flake8==3.5.0
 FreeSWITCH-ESL-Python==1.2
 idna==2.6                 # via requests
-ipaddress==1.0.18         # via faker
+ipaddress==1.0.19         # via faker
 jdcal==1.3                # via openpyxl
 Markdown==2.6.9
 mccabe==0.6.1             # via flake8
