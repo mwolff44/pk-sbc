@@ -265,7 +265,7 @@ Pyfreebilling installation
         chown -R www-data:www-data pyfreebilling
         cd pyfreebilling
 
-* create a new file in pyfreebilling directory called local_settings.py
+* create a new file in pyfreebilling directory called local.py (**delete the existing one**)
 
 ::
 
@@ -323,7 +323,7 @@ Pyfreebilling installation
         OPENEXCHANGERATES_APP_ID = "Your API Key"
 
         #-- Nb days of CDR to show
-        PFB_NB_ADMIN_CDR = 3
+        PFB_NB_ADMIN_CDR = 30
         PFB_NB_CUST_CDR = 30
         
         #  ######### END SPECIFIC SETTINGS
@@ -352,7 +352,7 @@ Pyfreebilling installation
         python manage.py migrate
         python manage.py createsuperuser
         - (IMPORTANT : enter your username and password) --
-        python manage.py loaddata switch 0001_fixtures.json
+
         python manage.py loaddata 0001_initial_SipProfile.json
         python manage.py loaddata 0001_initial_ReccurentTasks.json
         python manage.py updatecurrencies (if you have set your Openexchange API key)
