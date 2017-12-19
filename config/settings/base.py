@@ -367,6 +367,10 @@ ADMIN_DISABLE_APP_INDEX = 'True'
 ADMIN_TOOLS_THEMING_CSS = 'css/theming.css'
 ADMIN_TOOLS_MENU = 'config.menu.CustomMenu'
 
+# ---------
+# Currency settings
+# ---------
+CURRENCIES_BASE = 'EUR'
 
 # ----------
 # Chroniker
