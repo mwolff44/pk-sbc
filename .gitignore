@@ -75,7 +75,7 @@ htmlcov
 # SPECIFIC FILES
 #################
 # User config files
-config/settings/local_settings.py
+config/settings/local.py
 config/settings/local*
 freeswitch/scripts/myconfig.pm
 # User-uploaded media
