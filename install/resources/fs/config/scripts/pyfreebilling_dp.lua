@@ -1056,7 +1056,7 @@ if (session:ready() == true) then
               log("No corresponding destnum sip account found for didout", "warning")
           else
               execute("set", "sip_h_X-PyFB-SIPAccountId=" .. dnsipcode["name"])
-              myvarbridge = myvarbridge .. ",sip_account_id="..dnsipcode["name"]
+              myvarbridge = myvarbridge .. ",sip_account_id="..dnsipcode["trunk_id"]
           end
       end
       myvarbridge = myvarbridge .. ",nibble_increment="..rate["block_min_duration"]
