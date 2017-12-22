@@ -389,6 +389,10 @@ PFB_NB_CUST_CDR = 30
 
 # -----#
 
+
+# --- Import export settings
+IMPORT_EXPORT_SKIP_ADMIN_LOG = True
+
 # -----
 # -- Upload settings
 FILE_UPLOAD_MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10MB
