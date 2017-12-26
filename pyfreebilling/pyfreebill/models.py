@@ -309,13 +309,13 @@ class PhoneNumber(models.Model):
         verbose_name = _(u'phone number')
         verbose_name_plural = _(u'phone numbers')
 
-
-LOCATION_CHOICES = (
+EMAIL_LOCATION_CHOICES = (
     ('work', _(u'Work')),
     ('home', _(u'Home')),
-    ('mobile', _(u'Mobile')),
-    ('fax', _(u'Fax')),
-    ('person', _(u'Personal')),
+    ('billing', _(u'Billing')),
+    ('cdr_month', _(u'CDR (Monthly)')),
+    ('cdr_week', _(u'CDR (Weekly)')),
+    ('cdr_day', _(u'CDR (Daily)')),
     ('other', _(u'Other'))
 )
 
@@ -328,8 +328,8 @@ class EmailAddress(models.Model):
     content_object = GenericForeignKey('content_type', 'object_id')
     email_address = models.EmailField(_(u'email address'))
     location = models.CharField(_(u'location'),
-                                max_length=6,
-                                choices=LOCATION_CHOICES,
+                                max_length=10,
+                                choices=EMAIL_LOCATION_CHOICES,
                                 default='work')
     date_added = models.DateTimeField(_(u'date added'),
                                       auto_now_add=True)
@@ -346,18 +346,12 @@ class EmailAddress(models.Model):
         verbose_name_plural = _(u'email addresses')
 
 
-IM_SERVICE_CHOICES = (
-    ('aim', 'AIM'),
-    ('msn', 'MSN'),
-    ('icq', 'ICQ'),
-    ('jabber', 'Jabber'),
-    ('yahoo', 'Yahoo'),
-    ('skype', 'Skype'),
-    ('qq', 'QQ'),
-    ('sametime', 'Sametime'),
-    ('gadu-gadu', 'Gadu-Gadu'),
-    ('google-talk', 'Google Talk'),
-    ('twitter', 'Twitter'),
+LOCATION_CHOICES = (
+    ('work', _(u'Work')),
+    ('home', _(u'Home')),
+    ('mobile', _(u'Mobile')),
+    ('fax', _(u'Fax')),
+    ('person', _(u'Personal')),
     ('other', _(u'Other'))
 )
 
