@@ -143,7 +143,6 @@ FIXTURE_DIRS = (
 TIME_ZONE = 'Europe/Paris'
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
-LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
@@ -185,7 +184,7 @@ TEMPLATES = [
 LOCALE_PATHS = (
     normpath(join(APP_DIR, 'locale')),
 )
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en_US'
 #  ######### END LOCALE FILE CONFIGURATION
 
 #  ######### MEDIA CONFIGURATION
