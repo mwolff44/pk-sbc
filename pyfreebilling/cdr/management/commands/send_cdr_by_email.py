@@ -61,14 +61,14 @@ class Command(BaseCommand):
                     p_start = CDR_PERIODS[period][0].replace(tzinfo=tz)
                     p_end = CDR_PERIODS[period][1].replace(tzinfo=tz)
                     #p_end = datetime.now().replace(tzinfo=tz) # DEBUG
-                    list = CDR.objects.all().filter(end_stamp__gte=p_start, end_stamp__lt=p_end).filter(billsec__gt=0)
+                    list = CDR.objects.all().filter(end_stamp__gte=p_start, end_stamp__lt=p_end, customer_id=cust.id, billsec__gt=0)
                     csvfile = StringIO()
                     csvwriter = csv.writer(csvfile)
-                    csvwriter.writerow(['direction', 'start', 'end', 'real_length', 'from', 'to', 'ip', 'destination', 'price', 'uuid'])
+                    csvwriter.writerow(['direction', 'start', 'end', 'billed_sec', 'from', 'to', 'ip', 'destination', 'price', 'uuid'])
                     for l in list:
-                        if l.ratecard_id in rc_emerg:
+                        if l.ratecard_id_id in rc_emerg:
                             continue
-                        if l.ratecard_id in rc_didin:
+                        if l.ratecard_id_id in rc_didin:
                             csvwriter.writerow(['IN',
                                                 timezone.localtime(l.start_stamp),
                                                 timezone.localtime(l.end_stamp),
@@ -76,7 +76,7 @@ class Command(BaseCommand):
                                                 l.caller_id_number.lstrip("+"),
                                                 l.destination_number.lstrip("+"),
                                                 None,
-                                                l.sell_destination,
+                                                l.sell_destination.encode('ascii',errors='ignore'),
                                                 l.total_sell,
                                                 l.bleg_uuid
                                               ])
@@ -88,7 +88,7 @@ class Command(BaseCommand):
                                                 l.caller_id_number.lstrip("+"),
                                                 l.destination_number.lstrip("+"),
                                                 l.customer_ip,
-                                                l.sell_destination,
+                                                l.sell_destination.encode('ascii',errors='ignore'),
                                                 l.total_sell,
                                                 l.uuid
                                               ])
