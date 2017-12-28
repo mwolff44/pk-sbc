@@ -5,12 +5,18 @@
 # pip-sync requirements/base.txt
 # pip list --outdated
 
+# bcrypt librairy
+# https://github.com/pyca/bcrypt/
+# Apache 2.0
+# py3
+# Debian packages : build-essential libffi-dev python-dev
+bcrypt==3.1.4
 
 # Current framework
 # https://docs.djangoproject.com/en/1.9/
 # BSD
 # py3
-django==1.11.7
+django[argon2]==1.11.8
 
 # Honeypot
 # https://github.com/dmpayton/django-admin-honeypot/
@@ -28,7 +34,7 @@ django-admin-tools==0.8.1
 # https://github.com/jazzband/django-axes
 # MIT
 # py3
-django-axes==3.0.3
+django-axes==4.0.1
 
 # bootstrap pagination
 # https://github.com/jmcclell/django-bootstrap-pagination/
@@ -138,7 +144,7 @@ django-solo==1.1.2
 # https://github.com/bradleyayers/django-tables2/
 # Simplified BSD
 # py3
-django-tables2==1.12.0
+django-tables2==1.17.1
 
 # Templated email
 # https://github.com/vintasoftware/django-templated-email/
@@ -162,7 +168,7 @@ FreeSWITCH-ESL-Python==1.2
 # https://github.com/python-markdown/markdown/
 # BSD
 # py3
-Markdown==2.6.9
+Markdown==2.6.10
 
 # A network address manipulation library for Python
 # https://github.com/drkjam/netaddr/
@@ -180,7 +186,7 @@ netifaces==0.10.6
 # https://github.com/giampaolo/psutil/
 # BSD
 # py3
-psutil==5.4.1
+psutil==5.4.2
 
 # PostgreSQL adapter
 # http://pythonhosted.org/psycopg2/
