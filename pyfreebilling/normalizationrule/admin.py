@@ -38,6 +38,7 @@ class NormalizationRuleAdmin(admin.ModelAdmin):
 
 class NormalizationGroupAdmin(admin.ModelAdmin):
     inlines = [NormalizationRuleGroupInline, ]
+    list_display = ['id', 'name', 'date_modified']
     ordering = ['name', ]
     search_filter = ['^name']
     save_on_top = True

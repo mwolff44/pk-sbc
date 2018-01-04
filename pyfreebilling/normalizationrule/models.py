@@ -225,7 +225,8 @@ class CallMappingRule(models.Model):
         verbose_name_plural = _(u'Call Mapping Rules')
 
     def __unicode__(self):
-        return u"%s %s (%s/%s) %s" % (
+        return u"%s- %s %s (%s/%s) %s" % (
+            self.id,
             self.name,
             self.pr,
             self.match_op,
