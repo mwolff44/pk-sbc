@@ -54,7 +54,7 @@ psycopg2==2.7.3.2
 pycparser==2.18           # via cffi
 pyOpenSSL==17.5.0
 python-dateutil==2.6.1    # via django-chroniker
-python-stdnum==1.7        # via vatnumber
+python-stdnum==1.8.1        # via vatnumber
 pytz==2017.3
 pyyaml==3.12              # via tablib
 requests-futures==0.9.7   # via piprot
