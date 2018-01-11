@@ -6,7 +6,7 @@
 #
 asn1crypto==0.23.0        # via cryptography
 certifi==2017.7.27.1      # via requests
-cffi==1.11.2              # via cryptography
+cffi==1.11.3              # via cryptography
 chardet==3.0.4            # via requests
 cryptography==2.1.4       # via pyopenssl
 diff-match-patch==20121119  # via django-import-export
