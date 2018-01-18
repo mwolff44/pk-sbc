@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file requirements/prod.txt requirements/prod.in
 #
-certifi==2017.7.27.1      # via requests
+certifi==2018.1.18      # via requests
 chardet==3.0.4            # via requests
 diff-match-patch==20121119  # via django-import-export
 django-admin-honeypot==1.0.0
