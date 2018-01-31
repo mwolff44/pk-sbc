@@ -234,7 +234,7 @@ if session:ready() then
 --  channel["FreeSWITCH-IPv4"] = get_Variable("FreeSWITCH-IPv4")
 --  channel["FreeSWITCH-Switchname"] = get_Variable("FreeSWITCH-Switchname")
   log("Get session variable :", "done", "debug")
-  
+
   -- Clean + in callerID
   pyfb_caller_id_number = string.gsub(channel["caller_id_number"], "+", "", 1)
   log("CallerID num", " - clean plus sign : " .. pyfb_caller_id_number, "debug", 1)
@@ -246,7 +246,7 @@ if session:ready() then
       channel["caller_id_number"] = "Anonymous"
       log("CallerID num", " - clean alphanum : " .. pyfb_caller_id_number, "debug", 1)
   end
-  
+
   set_variable("user_agent", channel["sip_user_agent"])
   set_variable("customer_ip", channel["sip_received_ip"])
   set_variable("cost_rate", "0.000000")
@@ -1030,7 +1030,11 @@ if (session:ready() == true) then
       myvarbridge = myvarbridge .. ",nibble_rate="..tonumber(rate["rate"])
       myvarbridge = myvarbridge .. ",nibble_minimum="..tonumber(rate["minimal"])
       myvarbridge = myvarbridge .. ",nibble_account="..channel["accountcode"]
-      myvarbridge = myvarbridge .. ",sip_account_id="..channel["sipaccountcode"]
+      if channel["call-type"] == "DIDIN" then
+        myvarbridge = myvarbridge .. ",sip_account_id=".. customer["sipname"]
+      else
+        myvarbridge = myvarbridge .. ",sip_account_id="..channel["sipaccountcode"]
+      end
       if channel["call-type"] == "DIDIN" then
           execute("set", "sip_h_X-PyFB-SIPAccountId=" .. customer["sipname"])
       elseif channel["call-type"] == "DIDOUT" then
