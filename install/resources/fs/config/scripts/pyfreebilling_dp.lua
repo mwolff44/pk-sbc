@@ -812,7 +812,7 @@ if (session:ready() == true) then
                 AND pt.enabled = TRUE
                 AND now() > pt.date_start
                 AND now() < pt.date_end
-              ORDER BY LENGTH(pr.digits) DESC]]
+              ORDER BY LENGTH(pr.digits) DESC LIMIT 1]]
 
       assert(dbh:query(query_cost_sql, function(row)
         lcr_digits[lcrok] = tonumber(row.digits)
