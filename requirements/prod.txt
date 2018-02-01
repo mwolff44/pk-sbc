@@ -30,7 +30,7 @@ django-render-block==0.5  # via django-templated-email
 django-solo==1.1.2
 django-tables2==1.12.0
 django-templated-email==2.2.0
-django==1.11.7
+django==2.0.2
 et-xmlfile==1.0.1         # via openpyxl
 feedparser==5.2.1
 FreeSWITCH-ESL-Python==1.2
