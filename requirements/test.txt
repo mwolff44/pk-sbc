@@ -7,7 +7,7 @@
 certifi==2017.7.27.1      # via requests
 chardet==3.0.4            # via requests
 configparser==3.5.0       # via flake8
-coverage==4.4.2
+coverage==4.5
 diff-match-patch==20121119  # via django-import-export
 django-admin-honeypot==1.0.0
 django-admin-tools==0.8.1
