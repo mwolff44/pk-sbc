@@ -13,7 +13,7 @@ diff-match-patch==20121119  # via django-import-export
 django-admin-honeypot==1.0.0
 django-admin-tools==0.8.1
 django-axes==3.0.3
-django-bootstrap-pagination==1.6.3
+django-bootstrap-pagination==1.6.4
 django-bootstrap3==9.0.0
 django-braces==1.12.0
 django-chroniker==1.0.8
