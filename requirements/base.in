@@ -47,19 +47,19 @@ django-bootstrap-pagination==1.6.4
 # https://github.com/dyve/django-bootstrap3
 # BSD - 3 clause
 # py3
-django-bootstrap3==9.0.0
+django-bootstrap3==9.1.0
 
 # Lots of custom mixins
 # http://django-braces.readthedocs.org/en/latest/
 # BSD
 # py3
-django-braces==1.11.0
+django-braces==1.12.0
 
 # cron tasks
 # https://github.com/chrisspen/django-chroniker/
 # BSD
 # py3
-django-chroniker==1.0.8
+django-chroniker==1.0.10
 
 # countries app
 # https://github.com/smileychris/django-countries/
@@ -71,7 +71,7 @@ django-countries==5.1.1
 # https://github.com/maraujop/django-crispy-forms/
 # MIT
 # py3
-django-crispy-forms==1.6.1
+django-crispy-forms==1.7.0
 
 # Currencies management
 # https://github.com/panosl/django-currencies/
@@ -95,7 +95,7 @@ django-extensions==1.9.9
 # https://github.com/carltongibson/django-filter
 # BSD
 # py3
-django-filter==1.0.4
+django-filter==1.1.0
 
 # import export functions
 # https://github.com/bmihelac/django-import-export/
