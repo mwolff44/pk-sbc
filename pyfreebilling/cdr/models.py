@@ -236,8 +236,8 @@ class CDR(models.Model):
         max_length=10,
         help_text=_(u"""Postal code, INSEE code ... for routing
           urgency number to the right urgency call center."""))
-    customerdirectory_id = models.ForeignKey(
-        CustomerDirectory,
+    customerdirectory_id = models.CharField(
+        max_length=50,
         null=True,
         verbose_name=_(u"sip account"))
     rctype = models.CharField(
@@ -251,6 +251,9 @@ class CDR(models.Model):
         db_table = 'cdr'
         app_label = 'cdr'
         ordering = ('start_stamp', 'customer')
+        indexes = [
+            models.Index(fields=['customerdirectory_id']),
+        ]
         verbose_name = _(u"CDR")
         verbose_name_plural = _(u"CDRs")
 
