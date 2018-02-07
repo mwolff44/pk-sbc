@@ -1,0 +1,19 @@
+#!KAMAILIO
+#
+# Kamailio (OpenSER) SIP Server v4.4 - PyFreeBilling v2.0
+# v2.0
+#
+#-- AGPL License
+
+include_file "vars.cfg"
+include_file "kamailio-local.cfg"
+include_file "modules.cfg"
+include_file "request_route.cfg"
+include_file "registrar.cfg"
+include_file "location.cfg"
+include_file "presence.cfg"
+include_file "auth.cfg"
+include_file "nat.cfg"
+include_file "pstn.cfg"
+include_file "freeswitch.cfg"
+
