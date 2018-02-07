@@ -16,7 +16,7 @@ bcrypt==3.1.4
 # https://docs.djangoproject.com/en/1.9/
 # BSD
 # py3
-django[argon2]==1.11.8
+django[argon2]==1.11.10
 
 # Honeypot
 # https://github.com/dmpayton/django-admin-honeypot/
@@ -34,14 +34,14 @@ django-admin-tools==0.8.1
 # https://github.com/jazzband/django-axes
 # MIT
 # py3
-django-axes==4.0.1
+django-axes==4.0.2
 
 # bootstrap pagination
 # https://github.com/jmcclell/django-bootstrap-pagination/
 # Bootstrap 3.x only
 # MIT
 # py3
-django-bootstrap-pagination==1.6.3
+django-bootstrap-pagination==1.6.4
 
 # Bootstrap3 for django
 # https://github.com/dyve/django-bootstrap3
@@ -65,7 +65,7 @@ django-chroniker==1.0.8
 # https://github.com/smileychris/django-countries/
 # MIT
 # py3
-django-countries==5.0
+django-countries==5.1.1
 
 # forms tools
 # https://github.com/maraujop/django-crispy-forms/
@@ -89,7 +89,7 @@ django-datetime-widget==0.9.3
 # http://django-extensions.readthedocs.org/en/latest/
 # MIT
 # py3
-django-extensions==1.9.1
+django-extensions==1.9.9
 
 # Filtering queryset
 # https://github.com/carltongibson/django-filter
@@ -101,7 +101,7 @@ django-filter==1.0.4
 # https://github.com/bmihelac/django-import-export/
 # BSD
 # py3
-django-import-export==0.5.1
+django-import-export==0.7.0
 
 # set of simple math filters
 # https://github.com/dbrgn/django-mathfilters/
@@ -119,7 +119,7 @@ django-migrate-sql==0.1.1
 # https://django-model-utils.readthedocs.org/en/latest/
 # BSD
 # py3
-django-model-utils==3.0.0
+django-model-utils==3.1.1
 
 # aggregate statistics of querysets
 # https://github.com/PetrDlouhy/django-qsstats-magic
@@ -127,7 +127,7 @@ django-model-utils==3.0.0
 # py3
 django-qsstats-magic==1.0.0
 
-# a CSV exporter for django querysets 
+# a CSV exporter for django querysets
 # https://github.com/azavea/django-queryset-csv
 # GPL v3
 # py3
@@ -138,13 +138,13 @@ django-queryset-csv==1.0.0
 # Creative Commons Attribution 3.0 Unported
 # py3 ?
 ### NEED REVIEW !
-django-solo==1.1.2
+django-solo==1.1.3
 
 # app for creating HTML tables
 # https://github.com/bradleyayers/django-tables2/
 # Simplified BSD
 # py3
-django-tables2==1.17.1
+django-tables2==1.19
 
 # Templated email
 # https://github.com/vintasoftware/django-templated-email/
@@ -154,7 +154,7 @@ django-templated-email==2.2.0
 
 # get feed
 # https://github.com/kurtmckee/feedparser/
-# permisive 
+# permisive
 # py3
 feedparser==5.2.1
 
@@ -168,7 +168,7 @@ FreeSWITCH-ESL-Python==1.2
 # https://github.com/python-markdown/markdown/
 # BSD
 # py3
-Markdown==2.6.10
+Markdown==2.6.11
 
 # A network address manipulation library for Python
 # https://github.com/drkjam/netaddr/
@@ -182,11 +182,11 @@ netaddr==0.7.19
 # py3
 netifaces==0.10.6
 
-# Cross-platform lib for process and system monitoring in Python 
+# Cross-platform lib for process and system monitoring in Python
 # https://github.com/giampaolo/psutil/
 # BSD
 # py3
-psutil==5.4.2
+psutil==5.4.3
 
 # PostgreSQL adapter
 # http://pythonhosted.org/psycopg2/
@@ -211,4 +211,3 @@ requests==2.18.4
 # GPL v3
 # py3
 vatnumber==1.2
-

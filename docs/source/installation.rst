@@ -88,11 +88,66 @@ Sip server installation
         # to get a dump. Look into the kamailio init file for an example configuration.
         DUMP_CORE=yes
 
-* Restart kamailio :
+* Configration files are located in /etc/kamailio/ folder.
+
+The /etc/kamailio/kamctlrc is the configuration file for kamctl and kamdbctl tools. You need to edit it and set the SIP_DOMAIN to your SIP service domain (or IP address if you don't have a DNS hostname associated with your SIP service).
+
+Set also the DBENGINE to be PGSQL and adjust other setting as you want. Very important are the passwords to connect to PostgreSSQL server, respectively DBRWPW and DBROPW. By default, their values are kamailiorw and kamailioro. You should change them before executing kamdbctl create (step detailed the section Create Database).
+
+::
+  
+    sed "/^[# ]*SIP_DOMAIN/cSIP_DOMAIN=sip.<DOMAIN>.net" -i /etc/kamailio/kamctlrc
+    sed '/^[# ]*DBENGINE/cDBENGINE=PGSQL' -i /etc/kamailio/kamctlrc
+    sed '/^[# ]*DBHOST/cDBHOST=localhost' -i /etc/kamailio/kamctlrc
+    sed '/^[# ]*DBNAME/cDBNAME=kamailio' -i /etc/kamailio/kamctlrc
+    sed '/^[# ]*DBRWUSER/cDBRWUSER=kamailio' -i /etc/kamailio/kamctlrc
+    sed '/^[# ]*DBRWPW/cDBRWPW="kamailio"' -i /etc/kamailio/kamctlrc
+    sed '/^[# ]*DBROUSER/cDBROUSER=kamailioro' -i /etc/kamailio/kamctlrc
+    sed '/^[#]*DBROPW/cDBROPW=kamailioro' -i /etc/kamailio/kamctlrc
+    sed '/^[# ]*DBROOTUSER/cDBROOTUSER="postgres" ' -i /etc/kamailio/kamctlrc
+
+
+* Create DB :
+  Install Kamailio DB with db name pyfreebilling and drop these tables : usr_preferences, subscriber, address, dbaliases and dialplan.
+
+To create the database structure needed by Kamailio, run:
 
 ::
 
-    service kamailio restart
+    echo :*:*:pyfreebilling:mypasswd > /root/.pgpass
+    # Change **mypasswd** by  kamailiorw db password
+    chmod 600 /root/.pgpass
+    kamdbctl create
+
+The database name created in PostgreSQL is kamailio. Two access users to PostgreSQL server were created:
+
+* kamailio - (with password set by DBRWPW in kamctlrc) - user which has full access rights to kamailio database
+* kamailioro - (with password set by DBROPW in kamctlrc) - user which has read-only access rights to kamailio database
+
+And drop uneeded tables (on DB server) :
+
+::
+
+    su postgres
+    psql kamailiopyfb
+    kamailiopyfb=# drop table usr_preferences;
+    kamailiopyfb=# drop table subscriber;
+    kamailiopyfb=# drop table address;
+    kamailiopyfb=# drop table dbaliases;
+    kamailiopyfb=# drop table dialplan;
+
+
+* Start / stop kamailio :
+
+If the default startup system is systemd, then kamailio can be managed via systemctl:
+
+::
+
+    systemctl start kamailio
+    systemctl stop kamailio
+
+First you may also need to edit /etc/default/kamailio and adjust the setting for kamailio startup script, in particular the one that enables kamailio to start.
+
 
 * Check if it is ok :
 
@@ -108,7 +163,6 @@ Sip server installation
     */10 * * * * /usr/sbin/kamcmd dispatcher.reload>> /var/log/cron.log 2>&1
     */10 * * * * /usr/sbin/kamcmd permissions.addressReload>> /var/log/cron.log 2>&1
     
-* Install Kamailio DB with db name pyfreebilling and drop these tables : usr_preferences, subscriber, address, dbaliases and dialplan.
 
 
 
@@ -138,7 +192,7 @@ Postgresql configuration
 
 ::
 
-    sudo -i -u postgres
+    su postgres
 
 ::
 

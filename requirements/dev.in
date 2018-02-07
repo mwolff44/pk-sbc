@@ -8,7 +8,7 @@
 
 # WSGI utility library with powerful debugger
 # http://werkzeug.pocoo.org/
-werkzeug==0.13
+werkzeug==0.14.1
 pyOpenSSL==17.5.0
 
 # Debug information in a toolbar
@@ -21,4 +21,4 @@ piprot==0.9.7
 
 # Translation tool
 # https://docs.transifex.com/client/installing-the-client
-transifex-client==0.12.5
+transifex-client==0.13.0
