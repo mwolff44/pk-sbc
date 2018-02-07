@@ -1,0 +1,4616 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-30 16:29+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Pengecske Penge <pengecske@hotmail.com>, 2017\n"
+"Language-Team: Hungarian (Hungary) (https://www.transifex.com/celea-consulting/teams/80032/hu_HU/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hu_HU\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: config/dashboard.py:12 pyfreebilling/dashboard.py:55
+#: pyfreebilling/dashboard.py:87 pyfreebilling/templates/admin/_index.html:138
+#: pyfreebilling/templates/reporting/admin/index.html:53
+msgid "Recent Actions"
+msgstr "Legutóbbi Módosítás(ok)"
+
+#: config/dashboard.py:20
+msgid "Latest PyFreebilling News"
+msgstr "Legfrissebb PyFreebilling hírek"
+
+#: config/menu.py:33 pyfreebilling/menu.py:44 pyfreebilling/menu.py:162
+#: pyfreebilling/templates/admin/_index.html:21
+msgid "Dashboard"
+msgstr "Vezérlőpült"
+
+#: config/menu.py:34 pyfreebilling/menu.py:46 pyfreebilling/menu.py:48
+#: pyfreebilling/pyfreebill/models.py:146
+msgid "Companies"
+msgstr "Cégek"
+
+#: config/menu.py:36 pyfreebilling/menu.py:53
+#: pyfreebilling/templates/admin/_base.html:186
+msgid "Customers"
+msgstr "Ügyfelek"
+
+#: config/menu.py:38 config/menu.py:71 pyfreebilling/menu.py:50
+#: pyfreebilling/menu.py:83 pyfreebilling/menu.py:89
+msgid "List"
+msgstr "Lista"
+
+#: config/menu.py:40 config/menu.py:73 pyfreebilling/menu.py:52
+#: pyfreebilling/menu.py:55
+msgid "All"
+msgstr "Összes"
+
+#: config/menu.py:41 pyfreebilling/menu.py:56
+msgid "Prepaid Account"
+msgstr "Kártyás ügyfél"
+
+#: config/menu.py:42 pyfreebilling/menu.py:57
+msgid "Postpaid account"
+msgstr "Előfizetéses ügyfél"
+
+#: config/menu.py:43
+msgid "Add new customer"
+msgstr "Új ügyfél hozzáadása"
+
+#: config/menu.py:46 pyfreebilling/menu.py:64
+#: pyfreebilling/templates/customer/base.html:27
+msgid "Balance history"
+msgstr "Számlatörténet/egyenleg"
+
+#: config/menu.py:47 config/menu.py:127 pyfreebilling/menu.py:65
+#: pyfreebilling/templates/admin/_base.html:336
+msgid "Add payment"
+msgstr "Válasz Pénznemet"
+
+#: config/menu.py:48
+msgid "Customer management"
+msgstr "Ügyfélkezelés"
+
+#: config/menu.py:50 pyfreebilling/menu.py:68
+msgid "Customer SIP accounts"
+msgstr "Ügyfél SIP accounts"
+
+#: config/menu.py:51 config/menu.py:115
+#: pyfreebilling/templates/admin/_base.html:291
+msgid "DIDs management"
+msgstr "DIDs management"
+
+#: config/menu.py:53
+msgid "DIDs list"
+msgstr "DIDs list"
+
+#: config/menu.py:54
+msgid "DIDs routing"
+msgstr "DIDs routing"
+
+#: config/menu.py:61 config/menu.py:142
+#: pyfreebilling/templates/admin/_base.html:373
+msgid "Customer statistics"
+msgstr "Ügyfél statisztika"
+
+#: config/menu.py:63 config/menu.py:86 config/menu.py:144 config/menu.py:150
+msgid "Statistics"
+msgstr "Statisztika"
+
+#: config/menu.py:64 config/menu.py:87 config/menu.py:145 config/menu.py:151
+msgid "Destinations statistics"
+msgstr "Destinations statisztika"
+
+#: config/menu.py:69 pyfreebilling/menu.py:60
+#: pyfreebilling/templates/admin/_base.html:223
+msgid "Providers"
+msgstr "Szolgáltatók"
+
+#: config/menu.py:74
+msgid "Add new provider"
+msgstr "Új szolgáltató hozzáadása"
+
+#: config/menu.py:77 pyfreebilling/menu.py:73
+msgid "provider management"
+msgstr "szolgáltató kezelés"
+
+#: config/menu.py:79 pyfreebilling/menu.py:75
+#: pyfreebilling/templates/admin/_base.html:238
+msgid "Provider gateways"
+msgstr "Szolgáltató gateways"
+
+#: config/menu.py:80
+msgid "CalleeID Normalization Rules"
+msgstr "CalleeID normalizálás Rules"
+
+#: config/menu.py:81 pyfreebilling/menu.py:70 pyfreebilling/menu.py:76
+msgid "CallerID Normalization Rules"
+msgstr "CallerID normalizálás szabályok"
+
+#: config/menu.py:84 config/menu.py:148
+#: pyfreebilling/templates/admin/_base.html:389
+msgid "Provider statistics"
+msgstr "Szolgáltatók statisztikája"
+
+#: config/menu.py:94 config/menu.py:100 pyfreebilling/menu.py:95
+#: pyfreebilling/menu.py:101 pyfreebilling/menu.py:132
+#: pyfreebilling/pyfreebill/models.py:802
+#: pyfreebilling/templates/admin/_base.html:217
+#: pyfreebilling/templates/admin/_base.html:254
+#: pyfreebilling/templates/customer/home.html:130
+msgid "Rates"
+msgstr "Tarifák/Árak"
+
+#: config/menu.py:96 pyfreebilling/menu.py:97
+msgid "Sell rates"
+msgstr "Eladási árak"
+
+#: config/menu.py:98 pyfreebilling/menu.py:99
+#: pyfreebilling/templates/admin/_base.html:209
+#: pyfreebilling/templates/admin/_base.html:246
+#: pyfreebilling/templates/customer/home.html:86
+#: pyfreebilling/templates/customer/home.html:103
+msgid "Ratecards"
+msgstr "Díjtáblázatok"
+
+#: config/menu.py:99
+msgid "CallerID prefix list for filtering"
+msgstr "CallerID prefix list for filtering"
+
+#: config/menu.py:101
+msgid "Customer - ratecard association"
+msgstr "Ügyfél - tarifa (díj) kezelés"
+
+#: config/menu.py:104 config/menu.py:107 pyfreebilling/menu.py:105
+#: pyfreebilling/menu.py:108
+msgid "Provider rates"
+msgstr "Szolgáltató árak"
+
+#: config/menu.py:106 pyfreebilling/menu.py:107
+msgid "Provider tariffs"
+msgstr "Szolgáltató tarifák"
+
+#: config/menu.py:112 pyfreebilling/templates/admin/_base.html:276
+msgid "Routing"
+msgstr "Routing"
+
+#: config/menu.py:114 pyfreebilling/menu.py:104
+#: pyfreebilling/pyfreebill/models.py:704
+msgid "LCRs"
+msgstr "LCRs"
+
+#: config/menu.py:116 pyfreebilling/templates/admin/_base.html:299
+msgid "Route mapping rules"
+msgstr "Route mapping rules"
+
+#: config/menu.py:117
+msgid "Number normalization management"
+msgstr "Number normalization management"
+
+#: config/menu.py:119 pyfreebilling/templates/admin/_base.html:307
+msgid "Number normalization groups"
+msgstr "Number normalization groups"
+
+#: config/menu.py:120 pyfreebilling/templates/admin/_base.html:315
+msgid "Number normalization rules"
+msgstr "Number normalization rules"
+
+#: config/menu.py:125 pyfreebilling/templates/admin/_base.html:329
+msgid "Finance"
+msgstr "Pénzügy"
+
+#: config/menu.py:128 pyfreebilling/templates/admin/_base.html:344
+#: pyfreebilling/templates/admin/pyfreebill/company/change_form.html:8
+msgid "History"
+msgstr "Előzmény"
+
+#: config/menu.py:129 pyfreebilling/templates/admin/_base.html:352
+msgid "Currency management"
+msgstr "Alapértelmezett pénznem"
+
+#: config/menu.py:132 pyfreebilling/templates/admin/_base.html:358
+msgid "Stats and reports"
+msgstr "Statisztika és riport"
+
+#: config/menu.py:134 pyfreebilling/cdr/models.py:255
+#: pyfreebilling/menu.py:115
+#: pyfreebilling/templates/admin/pyfreebill/company/change_form.html:23
+msgid "CDRs"
+msgstr "CDRs"
+
+#: config/menu.py:136 pyfreebilling/menu.py:117
+msgid "CDRs view"
+msgstr "CDR  view"
+
+#: config/menu.py:137 pyfreebilling/menu.py:118
+msgid "Successfull CDRs"
+msgstr "Sikeres CDR"
+
+#: config/menu.py:138 pyfreebilling/menu.py:119
+msgid "Failed CDRs"
+msgstr "Sikertelen CDR"
+
+#: config/menu.py:154 pyfreebilling/templates/admin/_base.html:405
+msgid "Server status"
+msgstr "Szerver státusz"
+
+#: config/menu.py:157 pyfreebilling/menu.py:126
+#: pyfreebilling/templates/admin/_base.html:411
+msgid "Admin"
+msgstr "Admin"
+
+#: config/menu.py:159 pyfreebilling/menu.py:128 pyfreebilling/menu.py:131
+#: pyfreebilling/templates/admin/_base.html:418
+#: pyfreebilling/templates/admin/server_status.html:65
+msgid "Users"
+msgstr "User"
+
+#: config/menu.py:161
+msgid "Users list"
+msgstr "Felhasználók Listája"
+
+#: config/menu.py:162
+msgid "Groups list"
+msgstr "Csoportok Listája"
+
+#: config/menu.py:165 pyfreebilling/templates/admin/_base.html:456
+msgid "Configuration"
+msgstr "Konfiguráció"
+
+#: config/menu.py:167 pyfreebilling/menu.py:135 pyfreebilling/menu.py:137
+msgid "VoIP switches"
+msgstr "Voip switchek"
+
+#: config/menu.py:168 pyfreebilling/templates/admin/_base.html:471
+msgid "FS SIP profiles"
+msgstr "FS SIP profiles"
+
+#: config/menu.py:169 pyfreebilling/switch/models/Domain.py:66
+msgid "SIP domains"
+msgstr "SIP domainek"
+
+#: config/menu.py:170 pyfreebilling/templates/admin/_base.html:487
+msgid "PDAU"
+msgstr "PDAU"
+
+#: config/menu.py:173 pyfreebilling/menu.py:143
+msgid "Logs"
+msgstr "Logok"
+
+#: config/menu.py:175 pyfreebilling/menu.py:145
+#: pyfreebilling/templates/admin/_base.html:426
+msgid "Access logs"
+msgstr "Hozzáférések/bejelentkezések logjai"
+
+#: config/menu.py:176 pyfreebilling/menu.py:146
+msgid "Access attemps"
+msgstr "Hozzáférés/bejelentkezés kísérletek"
+
+#: config/menu.py:177 pyfreebilling/menu.py:147
+msgid "Honeypot access attemps"
+msgstr "Honeypot access attemps "
+
+#: config/menu.py:178 pyfreebilling/menu.py:148
+msgid "Recurring tasks logs"
+msgstr "Recurring tasks logs"
+
+#: config/menu.py:181 pyfreebilling/templates/admin/admin_status.html:10
+msgid "PyFreeBilling version"
+msgstr "PyFreeBilling verzió"
+
+#: config/menu.py:182 pyfreebilling/templates/admin/license.html:11
+#: pyfreebilling/templates/admin/license.html:16
+msgid "PyFreeBilling license"
+msgstr "PyFreeBilling licensz"
+
+#: menu.py:22
+msgid "Dashboard**"
+msgstr "Vezérlőpult"
+
+#: menu.py:25 pyfreebilling/dashboard.py:51
+#: pyfreebilling/templates/admin/_base.html:533
+msgid "Applications"
+msgstr "Alkalmazások"
+
+#: menu.py:29
+msgid "Administration"
+msgstr "Adminisztráció"
+
+#: pyfreebilling/antifraud/models.py:39
+msgid "Activate amount fraud system"
+msgstr "Activate amount fraud system"
+
+#: pyfreebilling/antifraud/models.py:41
+msgid ""
+"If checked, this account will be protected by threshold fraud system by "
+"checking daily consumption."
+msgstr ""
+"If checked, this account will be protected by threshold fraud system by "
+"checking daily consumption."
+
+#: pyfreebilling/antifraud/models.py:43
+msgid "Amount - alert"
+msgstr ""
+
+#: pyfreebilling/antifraud/models.py:47
+msgid "Daily consumption allowed before alerting."
+msgstr ""
+
+#: pyfreebilling/antifraud/models.py:49
+msgid "Amount - block"
+msgstr ""
+
+#: pyfreebilling/antifraud/models.py:53
+msgid "Daily consumption allowed before blocking."
+msgstr ""
+
+#: pyfreebilling/antifraud/models.py:55
+msgid "Fraud alert ON (based on daily consumption)"
+msgstr ""
+
+#: pyfreebilling/antifraud/models.py:59
+msgid "Activate minutes fraud system"
+msgstr ""
+
+#: pyfreebilling/antifraud/models.py:61
+msgid ""
+"If checked, this account will be protected by threshold fraud system by "
+"checking daily minutes consumption."
+msgstr ""
+
+#: pyfreebilling/antifraud/models.py:63
+msgid "Nb minutes - alert"
+msgstr "Nb minutes - alert"
+
+#: pyfreebilling/antifraud/models.py:65
+msgid "Daily minutes consumption allowed before alerting."
+msgstr ""
+
+#: pyfreebilling/antifraud/models.py:67
+msgid "Nb minutes - Block"
+msgstr "Nb minutes - Block"
+
+#: pyfreebilling/antifraud/models.py:69
+msgid "Daily minutes consumption allowed before blocking."
+msgstr ""
+
+#: pyfreebilling/antifraud/models.py:71
+msgid "Fraud alert ON (based on daily minutes consumption)"
+msgstr ""
+
+#: pyfreebilling/antifraud/models.py:75
+msgid "Account blocked - Fraud alert ON"
+msgstr ""
+
+#: pyfreebilling/antifraud/models.py:77
+#: pyfreebilling/customerdirectory/models.py:248
+#: pyfreebilling/did/models/did.py:80 pyfreebilling/did/models/ratesDid.py:39
+#: pyfreebilling/did/models/ratesDid.py:71
+#: pyfreebilling/did/models/routesDid.py:54
+#: pyfreebilling/normalizationrule/models.py:31
+#: pyfreebilling/normalizationrule/models.py:97
+#: pyfreebilling/normalizationrule/models.py:129
+#: pyfreebilling/normalizationrule/models.py:213
+#: pyfreebilling/pyfreebill/models.py:136
+#: pyfreebilling/pyfreebill/models.py:223
+#: pyfreebilling/pyfreebill/models.py:259
+#: pyfreebilling/pyfreebill/models.py:298
+#: pyfreebilling/pyfreebill/models.py:334
+#: pyfreebilling/pyfreebill/models.py:376
+#: pyfreebilling/pyfreebill/models.py:416
+#: pyfreebilling/pyfreebill/models.py:467
+#: pyfreebilling/pyfreebill/models.py:495
+#: pyfreebilling/pyfreebill/models.py:525
+#: pyfreebilling/pyfreebill/models.py:602
+#: pyfreebilling/pyfreebill/models.py:650
+#: pyfreebilling/pyfreebill/models.py:694
+#: pyfreebilling/pyfreebill/models.py:716
+#: pyfreebilling/pyfreebill/models.py:783
+#: pyfreebilling/pyfreebill/models.py:847
+#: pyfreebilling/pyfreebill/models.py:903
+#: pyfreebilling/pyfreebill/models.py:935
+#: pyfreebilling/pyfreebill/models.py:967
+#: pyfreebilling/pyfreebill/models.py:1002
+#: pyfreebilling/pyfreebill/models.py:1037
+#: pyfreebilling/pyfreebill/models.py:1071
+#: pyfreebilling/pyfreebill/models.py:1103
+#: pyfreebilling/pyfreebill/models.py:1136
+#: pyfreebilling/pyfreebill/models.py:1177
+#: pyfreebilling/pyfreebill/models.py:1402
+#: pyfreebilling/pyfreebill/models.py:1556
+#: pyfreebilling/pyfreebill/models.py:1591
+#: pyfreebilling/switch/models/Domain.py:55
+#: pyfreebilling/switch/models/Switch.py:100
+#: pyfreebilling/switch/models/Switch.py:168
+#: pyfreebilling/urgencyfr/models.py:72 pyfreebilling/urgencyfr/models.py:98
+#: pyfreebilling/urgencyfr/models.py:144 pyfreebilling/urgencyfr/models.py:186
+msgid "date added"
+msgstr "Dátum hozzáadás"
+
+#: pyfreebilling/antifraud/models.py:79
+#: pyfreebilling/customerdirectory/models.py:250
+#: pyfreebilling/did/models/did.py:82 pyfreebilling/did/models/ratesDid.py:41
+#: pyfreebilling/did/models/ratesDid.py:73
+#: pyfreebilling/did/models/routesDid.py:56
+#: pyfreebilling/normalizationrule/models.py:34
+#: pyfreebilling/normalizationrule/models.py:100
+#: pyfreebilling/normalizationrule/models.py:132
+#: pyfreebilling/normalizationrule/models.py:216
+#: pyfreebilling/pyfreebill/models.py:138
+#: pyfreebilling/pyfreebill/models.py:225
+#: pyfreebilling/pyfreebill/models.py:261
+#: pyfreebilling/pyfreebill/models.py:300
+#: pyfreebilling/pyfreebill/models.py:336
+#: pyfreebilling/pyfreebill/models.py:378
+#: pyfreebilling/pyfreebill/models.py:418
+#: pyfreebilling/pyfreebill/models.py:469
+#: pyfreebilling/pyfreebill/models.py:497
+#: pyfreebilling/pyfreebill/models.py:527
+#: pyfreebilling/pyfreebill/models.py:604
+#: pyfreebilling/pyfreebill/models.py:651
+#: pyfreebilling/pyfreebill/models.py:696
+#: pyfreebilling/pyfreebill/models.py:718
+#: pyfreebilling/pyfreebill/models.py:785
+#: pyfreebilling/pyfreebill/models.py:849
+#: pyfreebilling/pyfreebill/models.py:905
+#: pyfreebilling/pyfreebill/models.py:937
+#: pyfreebilling/pyfreebill/models.py:969
+#: pyfreebilling/pyfreebill/models.py:1004
+#: pyfreebilling/pyfreebill/models.py:1039
+#: pyfreebilling/pyfreebill/models.py:1073
+#: pyfreebilling/pyfreebill/models.py:1105
+#: pyfreebilling/pyfreebill/models.py:1138
+#: pyfreebilling/pyfreebill/models.py:1179
+#: pyfreebilling/pyfreebill/models.py:1404
+#: pyfreebilling/pyfreebill/models.py:1558
+#: pyfreebilling/pyfreebill/models.py:1593
+#: pyfreebilling/switch/models/Domain.py:58
+#: pyfreebilling/switch/models/Switch.py:103
+#: pyfreebilling/switch/models/Switch.py:171
+#: pyfreebilling/urgencyfr/models.py:75 pyfreebilling/urgencyfr/models.py:101
+#: pyfreebilling/urgencyfr/models.py:147 pyfreebilling/urgencyfr/models.py:189
+msgid "date modified"
+msgstr "Módosított dátum"
+
+#: pyfreebilling/antifraud/models.py:85 pyfreebilling/antifraud/models.py:86
+msgid "antifraud"
+msgstr ""
+
+#: pyfreebilling/cdr/admin.py:98 pyfreebilling/customerdirectory/admin.py:89
+#: pyfreebilling/pyfreebill/admin.py:195 pyfreebilling/pyfreebill/admin.py:432
+msgid "General"
+msgstr "General"
+
+#: pyfreebilling/cdr/admin.py:106
+msgid "Advanced date / duration infos"
+msgstr "Részletes dátum / időtartama a következők"
+
+#: pyfreebilling/cdr/admin.py:112
+msgid "Financial infos"
+msgstr "Pénzügyi Információ"
+
+#: pyfreebilling/cdr/admin.py:117
+msgid "LCR infos"
+msgstr "LCR info"
+
+#: pyfreebilling/cdr/admin.py:122
+msgid "Call detailed infos"
+msgstr "Call detailed infos"
+
+#: pyfreebilling/cdr/models.py:34 pyfreebilling/pyfreebill/models.py:954
+#: pyfreebilling/pyfreebill/models.py:1024
+#: pyfreebilling/pyfreebill/models.py:1632
+#: pyfreebilling/pyfreebill/models.py:1651
+#: pyfreebilling/pyfreebill/models.py:1708
+#: pyfreebilling/templates/admin/customers_stats.html:175
+msgid "customer"
+msgstr "ügyfél"
+
+#: pyfreebilling/cdr/models.py:38
+msgid "customer IP address"
+msgstr "ügyfél IP cím"
+
+#: pyfreebilling/cdr/models.py:41
+msgid "Customer IP address."
+msgstr "Ügyfél IP cím"
+
+#: pyfreebilling/cdr/models.py:43
+msgid "UUID"
+msgstr "UUID"
+
+#: pyfreebilling/cdr/models.py:47
+msgid "b leg UUID"
+msgstr "b leg UUID"
+
+#: pyfreebilling/cdr/models.py:52
+msgid "SIP Server unique call-ID"
+msgstr "SIP Server unique call-ID"
+
+#: pyfreebilling/cdr/models.py:56
+msgid "caller ID num"
+msgstr "hívó ID num"
+
+#: pyfreebilling/cdr/models.py:60
+#: pyfreebilling/templates/customer/cdr_view.html:241
+msgid "Dest. number"
+msgstr "Hivott szám"
+
+#: pyfreebilling/cdr/models.py:64
+msgid "channel name"
+msgstr "csatorna (channel) név"
+
+#: pyfreebilling/cdr/models.py:68
+msgid "start time"
+msgstr "start time"
+
+#: pyfreebilling/cdr/models.py:72
+msgid "answered time"
+msgstr "answered time"
+
+#: pyfreebilling/cdr/models.py:75
+msgid "hangup time"
+msgstr "hangup time"
+
+#: pyfreebilling/cdr/models.py:78
+msgid "global duration"
+msgstr "globális időtartam"
+
+#: pyfreebilling/cdr/models.py:81 pyfreebilling/pyfreebill/models.py:1713
+#: pyfreebilling/pyfreebill/models.py:1753
+msgid "total duration"
+msgstr "teljes időtartam"
+
+#: pyfreebilling/cdr/models.py:84
+msgid "Global call duration since call has been received by the switch in ms."
+msgstr "Global hívás időtartama, hívás érkezett a switch ms."
+
+#: pyfreebilling/cdr/models.py:86
+msgid "effective duration"
+msgstr "tényleges időtartam"
+
+#: pyfreebilling/cdr/models.py:88
+msgid "real call duration in s."
+msgstr "megvalósult hívás(ok) időtartama."
+
+#: pyfreebilling/cdr/models.py:90
+msgid "billed duration"
+msgstr "számlázott időtartam"
+
+#: pyfreebilling/cdr/models.py:92
+msgid "billed call duration in s."
+msgstr "számlázott hívás(ok) időtartama"
+
+#: pyfreebilling/cdr/models.py:94
+msgid "read codec"
+msgstr "read codec"
+
+#: pyfreebilling/cdr/models.py:98
+msgid "write codec"
+msgstr "write codec"
+
+#: pyfreebilling/cdr/models.py:102
+msgid "hangup cause"
+msgstr "hangup ok"
+
+#: pyfreebilling/cdr/models.py:107
+msgid "q.850"
+msgstr "q.850"
+
+#: pyfreebilling/cdr/models.py:111
+msgid "gateway"
+msgstr "gateway"
+
+#: pyfreebilling/cdr/models.py:114
+msgid "buy rate"
+msgstr "vételi árfolyam"
+
+#: pyfreebilling/cdr/models.py:120 pyfreebilling/pyfreebill/models.py:1717
+#: pyfreebilling/pyfreebill/models.py:1757
+msgid "total sell"
+msgstr "összesen eladni"
+
+#: pyfreebilling/cdr/models.py:126 pyfreebilling/pyfreebill/models.py:1718
+#: pyfreebilling/pyfreebill/models.py:1758
+msgid "total cost"
+msgstr "összköltség"
+
+#: pyfreebilling/cdr/models.py:132
+#: pyfreebilling/templates/customer/cdr_view.html:266
+#: pyfreebilling/templates/customer/rates.html:49
+msgid "Prefix"
+msgstr "Prefix"
+
+#: pyfreebilling/cdr/models.py:136
+msgid "Country"
+msgstr "Ország"
+
+#: pyfreebilling/cdr/models.py:140 pyfreebilling/pyfreebill/models.py:829
+msgid "sell rate"
+msgstr "eladási árfolyam"
+
+#: pyfreebilling/cdr/models.py:145 pyfreebilling/pyfreebill/models.py:839
+#: pyfreebilling/templates/customer/rates.html:72
+msgid "Connection fee"
+msgstr "Connection fee"
+
+#: pyfreebilling/cdr/models.py:150
+msgid "increment"
+msgstr "increment"
+
+#: pyfreebilling/cdr/models.py:154 pyfreebilling/did/models/ratesDid.py:35
+#: pyfreebilling/pyfreebill/models.py:989
+#: pyfreebilling/pyfreebill/models.py:1058
+#: pyfreebilling/pyfreebill/models.py:1670
+#: pyfreebilling/pyfreebill/models.py:1689
+#: pyfreebilling/pyfreebill/models.py:1748
+#: pyfreebilling/templates/admin/customers_stats.html:177
+msgid "provider"
+msgstr "szolgáltató"
+
+#: pyfreebilling/cdr/models.py:160 pyfreebilling/pyfreebill/models.py:814
+#: pyfreebilling/pyfreebill/models.py:869
+msgid "ratecard"
+msgstr "számlák"
+
+#: pyfreebilling/cdr/models.py:164
+msgid "lcr group"
+msgstr "Icr csoport"
+
+#: pyfreebilling/cdr/models.py:166
+msgid "sip user agent"
+msgstr "sip user ügynök"
+
+#: pyfreebilling/cdr/models.py:170
+msgid "sip rtp rx stat"
+msgstr "sip rtp rx stat"
+
+#: pyfreebilling/cdr/models.py:174
+msgid "sip rtp tx stat"
+msgstr "sip rtp tx stat "
+
+#: pyfreebilling/cdr/models.py:178
+msgid "Media server name"
+msgstr "Média szerver neve"
+
+#: pyfreebilling/cdr/models.py:183
+msgid "FSIP server name"
+msgstr "FSIP szerver neve"
+
+#: pyfreebilling/cdr/models.py:188
+msgid "switch ipv4"
+msgstr "switch ipv4"
+
+#: pyfreebilling/cdr/models.py:193
+msgid "hangup disposition"
+msgstr "Hangup"
+
+#: pyfreebilling/cdr/models.py:198
+msgid ""
+"Interpretation of these values differs on incoming and\n"
+"            outgoing calls since FreeSWITCH is at different ends of the\n"
+"            session.\n"
+"\n"
+"            <b>Incoming :</b>\n"
+"            send_bye    FS sent BYE to the caller (we hung up)\n"
+"            recv_bye    FS received BYE from the caller (they hung up)\n"
+"            send_refuse FS rejected the call (e.g. 4xx or 5xx)\n"
+"            send_cancel n/a\n"
+"\n"
+"            <b>Outgoing :</b>\n"
+"            send_bye    FS sent BYE to the endpoint (we hung up)\n"
+"            recv_bye    FS received BYE from the endpoint (they hung up)\n"
+"            send_refuse Endpoint rejected the call (e.g. 4xx or 5xx)\n"
+"            send_cancel FS aborted the call (we sent CANCEL)"
+msgstr ""
+
+#: pyfreebilling/cdr/models.py:214
+msgid "SIP hangup cause"
+msgstr "SIP hangup ok"
+
+#: pyfreebilling/cdr/models.py:219
+msgid "sell destination"
+msgstr "Sell cél"
+
+#: pyfreebilling/cdr/models.py:226
+msgid "cost destination"
+msgstr "Költség számla"
+
+#: pyfreebilling/cdr/models.py:233
+#: pyfreebilling/customerdirectory/models.py:206
+#: pyfreebilling/did/models/did.py:72
+msgid "Special code for routing urgency numbers"
+msgstr "Special code for routing urgency numbers"
+
+#: pyfreebilling/cdr/models.py:237
+#: pyfreebilling/customerdirectory/models.py:210
+#: pyfreebilling/did/models/did.py:76
+msgid ""
+"Postal code, INSEE code ... for routing\n"
+"          urgency number to the right urgency call center."
+msgstr "Irányító szám"
+
+#: pyfreebilling/cdr/models.py:242
+msgid "sip account"
+msgstr "sip account"
+
+#: pyfreebilling/cdr/models.py:244
+msgid "Type of call"
+msgstr "Type of call"
+
+#: pyfreebilling/cdr/models.py:248
+msgid "Type of calls."
+msgstr "Type of calls."
+
+#: pyfreebilling/cdr/models.py:254
+#: pyfreebilling/templates/customer/base.html:29
+msgid "CDR"
+msgstr "CDR"
+
+#: pyfreebilling/customerdirectory/admin.py:96
+msgid "General sip account informations"
+msgstr "General sip account informations"
+
+#: pyfreebilling/customerdirectory/admin.py:98
+msgid "Registration settings"
+msgstr "Registration settings"
+
+#: pyfreebilling/customerdirectory/admin.py:103
+msgid "If registration, you must set a password"
+msgstr "Regisztrációhoz, be kell állítania egy jelszót"
+
+#: pyfreebilling/customerdirectory/admin.py:105
+msgid "IP Settings"
+msgstr "Ip Settings"
+
+#: pyfreebilling/customerdirectory/admin.py:110
+msgid "If no registration, SIP IP CIDR is needed"
+msgstr "no registration, SIP IP CIDR is needed"
+
+#: pyfreebilling/customerdirectory/admin.py:112
+msgid "Caller/Callee settings"
+msgstr ""
+
+#: pyfreebilling/customerdirectory/admin.py:119
+msgid "Caller/Callee parameters"
+msgstr ""
+
+#: pyfreebilling/customerdirectory/admin.py:121
+#: pyfreebilling/customerdirectory/admin.py:125
+msgid "Limit settings"
+msgstr "Limit beállítások"
+
+#: pyfreebilling/customerdirectory/admin.py:127
+msgid "Advanced settings"
+msgstr "Advanced beállítások"
+
+#: pyfreebilling/customerdirectory/admin.py:132
+msgid "Advanced parameters"
+msgstr "Advanced paraméterek"
+
+#: pyfreebilling/customerdirectory/admin.py:134
+msgid "Urgency settings"
+msgstr ""
+
+#: pyfreebilling/customerdirectory/admin.py:138
+msgid "Urgency routing numbers parameters"
+msgstr ""
+
+#: pyfreebilling/customerdirectory/admin.py:140
+#: pyfreebilling/switch/models/Switch.py:94
+#: pyfreebilling/switch/models/Switch.py:162
+#: pyfreebilling/urgencyfr/models.py:95
+msgid "Description"
+msgstr "Leírás - tartalom"
+
+#: pyfreebilling/customerdirectory/admin.py:143
+msgid "Description informations"
+msgstr "Leírás - tartalom informácó"
+
+#: pyfreebilling/customerdirectory/admin.py:151
+#: pyfreebilling/customerdirectory/models.py:67
+#: pyfreebilling/pyfreebill/admin.py:930
+#: pyfreebilling/templates/customer/sip_account.html:28
+#: pyfreebilling/templates/customer/sip_account.html:69
+msgid "Registration"
+msgstr "Regisztráció"
+
+#: pyfreebilling/customerdirectory/admin.py:152
+msgid "registration"
+msgstr "regisztráció"
+
+#: pyfreebilling/customerdirectory/admin.py:158
+#: pyfreebilling/pyfreebill/admin.py:556 pyfreebilling/pyfreebill/admin.py:591
+#: pyfreebilling/pyfreebill/admin.py:703 pyfreebilling/pyfreebill/admin.py:772
+#: pyfreebilling/pyfreebill/admin.py:848
+#: pyfreebilling/pyfreebill/models.py:845
+#: pyfreebilling/pyfreebill/models.py:1400
+#: pyfreebilling/pyfreebill/models.py:1451
+#: pyfreebilling/switch/models/Switch.py:77
+#: pyfreebilling/templates/customer/sip_account.html:63
+#: pyfreebilling/templates/customer/sip_account.html:74
+#: pyfreebilling/urgencyfr/models.py:141 pyfreebilling/urgencyfr/models.py:183
+msgid "Enabled"
+msgstr "Engedélyezett"
+
+#: pyfreebilling/customerdirectory/admin.py:159
+#: pyfreebilling/pyfreebill/admin.py:557 pyfreebilling/pyfreebill/admin.py:592
+#: pyfreebilling/pyfreebill/admin.py:704 pyfreebilling/pyfreebill/admin.py:773
+#: pyfreebilling/pyfreebill/admin.py:849
+msgid "enabled"
+msgstr "engedélyezve"
+
+#: pyfreebilling/customerdirectory/admin.py:165
+#: pyfreebilling/customerdirectory/models.py:234
+msgid "Fake ring"
+msgstr "Fake ring"
+
+#: pyfreebilling/customerdirectory/admin.py:166
+msgid "fake_ring"
+msgstr "fake_ring"
+
+#: pyfreebilling/customerdirectory/admin.py:172
+#: pyfreebilling/customerdirectory/admin.py:173
+msgid "cli_debug"
+msgstr "cli_debug"
+
+#: pyfreebilling/customerdirectory/models.py:66
+#: pyfreebilling/pyfreebill/models.py:434
+#: pyfreebilling/pyfreebill/models.py:867
+#: pyfreebilling/pyfreebill/models.py:1122
+#: pyfreebilling/templates/admin/customers_stats.html:201
+msgid "company"
+msgstr "cégnév"
+
+#: pyfreebilling/customerdirectory/models.py:69
+msgid ""
+"Is registration needed\n"
+"                                       for calling ? True, the phone needs to\n"
+"                                       register with correct username/password.\n"
+"                                       If false, you must specify a CIDR in SIP\n"
+"                                       IP CIDR !"
+msgstr ""
+"Van regisztrációs szükséges hív? Igaz, hogy a telefon kell regisztrálnia "
+"magát a helyes felhasználónév / jelszó. Ha hamis, akkor meg kell adni egy "
+"CIDR SIP IP CIDR!"
+
+#: pyfreebilling/customerdirectory/models.py:74
+#: pyfreebilling/pyfreebill/models.py:1490
+msgid "password"
+msgstr "Jelszó"
+
+#: pyfreebilling/customerdirectory/models.py:77
+msgid ""
+"It's recommended to use strong\n"
+"                                passwords for the endpoint."
+msgstr ""
+"Azt javasoljuk, hogy használjon erős\n"
+"                                 jelszavakat."
+
+#: pyfreebilling/customerdirectory/models.py:79
+#: pyfreebilling/did/models/did.py:78 pyfreebilling/did/models/routesDid.py:52
+#: pyfreebilling/normalizationrule/models.py:28
+#: pyfreebilling/normalizationrule/models.py:94
+#: pyfreebilling/normalizationrule/models.py:126
+#: pyfreebilling/normalizationrule/models.py:210
+#: pyfreebilling/pyfreebill/models.py:493
+#: pyfreebilling/pyfreebill/models.py:570
+#: pyfreebilling/pyfreebill/models.py:682
+#: pyfreebilling/pyfreebill/models.py:759
+#: pyfreebilling/pyfreebill/models.py:928
+#: pyfreebilling/pyfreebill/models.py:957
+#: pyfreebilling/pyfreebill/models.py:992
+#: pyfreebilling/pyfreebill/models.py:1027
+#: pyfreebilling/pyfreebill/models.py:1061
+#: pyfreebilling/pyfreebill/models.py:1589
+msgid "description"
+msgstr "Leírás"
+
+#: pyfreebilling/customerdirectory/models.py:81
+msgid "SIP username"
+msgstr "SIP username"
+
+#: pyfreebilling/customerdirectory/models.py:84
+msgid "Ex.: customer SIP username, etc..."
+msgstr "Pl .: ügyfél SIP felhasználónév, stb ..."
+
+#: pyfreebilling/customerdirectory/models.py:87
+#: pyfreebilling/pyfreebill/models.py:1435
+#: pyfreebilling/switch/models/Domain.py:32
+#: pyfreebilling/switch/models/Domain.py:65
+msgid "SIP domain"
+msgstr "SIP domain"
+
+#: pyfreebilling/customerdirectory/models.py:88
+msgid ""
+"A sip account must belong to a domain.\n"
+"            This domain must be used in SIP message"
+msgstr ""
+"A sip-fióknak egy domainhez kell tartoznia. Ezt a tartományt SIP-üzenetben "
+"kell használni"
+
+#: pyfreebilling/customerdirectory/models.py:90
+msgid "RTP IP CIDR"
+msgstr "RTP IP CIDR"
+
+#: pyfreebilling/customerdirectory/models.py:93
+msgid ""
+"Internal IP address/mask to bind\n"
+"                              to for RTP. Format : CIDR Ex. 192.168.1.0/32"
+msgstr ""
+"Belső IP-cím / maszk \n"
+"                               Ahhoz, hogy az RTP. Formátuma: CIDR Ex. 192.168.1.0/32"
+
+#: pyfreebilling/customerdirectory/models.py:95
+msgid "SIP IP CIDR"
+msgstr "SIP IP CIDR"
+
+#: pyfreebilling/customerdirectory/models.py:100
+msgid ""
+"Internal IP address/mask to bind\n"
+"                              to for SIP. Format : CIDR. Ex. 192.168.1.0/32\n"
+"                              "
+msgstr ""
+"Belső IP-cím / maszk\n"
+"                               Ahhoz, hogy a SIP. Formátuma: CIDR Ex. 192.168.1.0/32"
+
+#: pyfreebilling/customerdirectory/models.py:103
+#: pyfreebilling/pyfreebill/models.py:1231
+msgid "SIP port"
+msgstr "SIP Prot"
+
+#: pyfreebilling/customerdirectory/models.py:105
+msgid "max calls"
+msgstr "Maximális hívás"
+
+#: pyfreebilling/customerdirectory/models.py:107
+msgid ""
+"max simultaneous\n"
+"                                            calls allowed for this customer\n"
+"                                            account."
+msgstr "max egyidejű hívást lehet ebben a ügyfélszámla. "
+
+#: pyfreebilling/customerdirectory/models.py:110
+#: pyfreebilling/pyfreebill/models.py:117
+msgid "max calls per second"
+msgstr "max hívás másodpercenként"
+
+#: pyfreebilling/customerdirectory/models.py:112
+msgid ""
+"maximum\n"
+"                                                   calls per second allowed for\n"
+"                                                   this customer account."
+msgstr "Maximális engedélyezett hívás az ügyfélnek másodpercenként"
+
+#: pyfreebilling/customerdirectory/models.py:115
+#: pyfreebilling/pyfreebill/models.py:1264
+msgid "log auth failures"
+msgstr "log hibák"
+
+#: pyfreebilling/customerdirectory/models.py:117
+msgid ""
+"It true, the server\n"
+"                                            will log authentication failures.\n"
+"                                            Required for Fail2ban."
+msgstr ""
+"a szerver (igen)\n"
+"                                             naplózza a hitelesítési hibákat.\n"
+"                                             Szükséges fail2ban."
+
+#: pyfreebilling/customerdirectory/models.py:121
+#: pyfreebilling/pyfreebill/models.py:1271
+#: pyfreebilling/pyfreebill/models.py:1462
+msgid "PCMA,PCMU,G729"
+msgstr "PCMA,PCMU,G729"
+
+#: pyfreebilling/customerdirectory/models.py:122
+#: pyfreebilling/pyfreebill/models.py:1272
+#: pyfreebilling/pyfreebill/models.py:1463
+msgid "PCMU,PCMA,G729"
+msgstr "PCMU,PCMA,G729"
+
+#: pyfreebilling/customerdirectory/models.py:123
+#: pyfreebilling/pyfreebill/models.py:1273
+#: pyfreebilling/pyfreebill/models.py:1464
+msgid "G729,PCMA,PCMU"
+msgstr "G729,PCMA,PCMU"
+
+#: pyfreebilling/customerdirectory/models.py:124
+#: pyfreebilling/pyfreebill/models.py:1274
+#: pyfreebilling/pyfreebill/models.py:1465
+msgid "G729,PCMU,PCMA"
+msgstr "G729,PCMU,PCMA"
+
+#: pyfreebilling/customerdirectory/models.py:125
+#: pyfreebilling/pyfreebill/models.py:1275
+#: pyfreebilling/pyfreebill/models.py:1466
+msgid "PCMA,G729"
+msgstr "PCMA,G729"
+
+#: pyfreebilling/customerdirectory/models.py:126
+#: pyfreebilling/pyfreebill/models.py:1276
+#: pyfreebilling/pyfreebill/models.py:1467
+msgid "PCMU,G729"
+msgstr "PCMU,G729"
+
+#: pyfreebilling/customerdirectory/models.py:127
+#: pyfreebilling/pyfreebill/models.py:1277
+#: pyfreebilling/pyfreebill/models.py:1468
+msgid "G729,PCMA"
+msgstr "G729,PCMA"
+
+#: pyfreebilling/customerdirectory/models.py:128
+#: pyfreebilling/pyfreebill/models.py:1278
+#: pyfreebilling/pyfreebill/models.py:1469
+msgid "G729,PCMU"
+msgstr "G729,PCMU"
+
+#: pyfreebilling/customerdirectory/models.py:129
+#: pyfreebilling/pyfreebill/models.py:1279
+#: pyfreebilling/pyfreebill/models.py:1470
+msgid "PCMA,PCMU"
+msgstr "PCMA,PCMU"
+
+#: pyfreebilling/customerdirectory/models.py:130
+#: pyfreebilling/pyfreebill/models.py:1280
+#: pyfreebilling/pyfreebill/models.py:1471
+msgid "PCMU,PCMA"
+msgstr "PCMU,PCMA"
+
+#: pyfreebilling/customerdirectory/models.py:131
+#: pyfreebilling/pyfreebill/models.py:1281
+#: pyfreebilling/pyfreebill/models.py:1472
+msgid "G722,PCMA,PCMU"
+msgstr "G722,PCMA,PCMU"
+
+#: pyfreebilling/customerdirectory/models.py:132
+#: pyfreebilling/pyfreebill/models.py:1282
+#: pyfreebilling/pyfreebill/models.py:1473
+msgid "G722,PCMU,PCMA"
+msgstr "G722,PCMU,PCMA"
+
+#: pyfreebilling/customerdirectory/models.py:133
+#: pyfreebilling/pyfreebill/models.py:1283
+#: pyfreebilling/pyfreebill/models.py:1474
+msgid "G722"
+msgstr "G722"
+
+#: pyfreebilling/customerdirectory/models.py:134
+#: pyfreebilling/pyfreebill/models.py:1284
+#: pyfreebilling/pyfreebill/models.py:1475
+msgid "G729"
+msgstr "G729"
+
+#: pyfreebilling/customerdirectory/models.py:135
+#: pyfreebilling/pyfreebill/models.py:1285
+#: pyfreebilling/pyfreebill/models.py:1476
+msgid "PCMU"
+msgstr "PCMU"
+
+#: pyfreebilling/customerdirectory/models.py:136
+#: pyfreebilling/pyfreebill/models.py:1286
+#: pyfreebilling/pyfreebill/models.py:1477
+msgid "PCMA"
+msgstr "PCMA"
+
+#: pyfreebilling/customerdirectory/models.py:137
+#: pyfreebilling/pyfreebill/models.py:1287
+#: pyfreebilling/pyfreebill/models.py:1478
+msgid "ALL"
+msgstr "ALL"
+
+#: pyfreebilling/customerdirectory/models.py:139
+#: pyfreebilling/pyfreebill/models.py:1480
+msgid "Codecs"
+msgstr "Codec"
+
+#: pyfreebilling/customerdirectory/models.py:143
+#: pyfreebilling/pyfreebill/models.py:1484
+msgid ""
+"Codecs allowed - beware about\n"
+"                              order, 1st has high priority "
+msgstr ""
+"Codec engedélyezett - 1. magas priority␣ \n"
+"(Codec engedélyezett - 1. magas priority␣)"
+
+#: pyfreebilling/customerdirectory/models.py:146
+msgid "Call-id"
+msgstr "Call-id"
+
+#: pyfreebilling/customerdirectory/models.py:147
+msgid "Contact"
+msgstr "Contact"
+
+#: pyfreebilling/customerdirectory/models.py:148
+msgid "False"
+msgstr "Téves"
+
+#: pyfreebilling/customerdirectory/models.py:149
+msgid "True"
+msgstr "Igaz"
+
+#: pyfreebilling/customerdirectory/models.py:150
+msgid "multiple registrations"
+msgstr "többszörös regisztrációk"
+
+#: pyfreebilling/customerdirectory/models.py:154
+msgid ""
+"Used to allow to\n"
+"                                              call one extension and ring\n"
+"                                              several phones."
+msgstr ""
+"Használt, hogy hívni egy kiterjesztése és a gyűrű több telefonnal. \n"
+"Használt, hogy hívni egy kiterjesztése és a gyűrű több telefonnal. "
+
+#: pyfreebilling/customerdirectory/models.py:157
+msgid "CallerID name"
+msgstr "CallerID név"
+
+#: pyfreebilling/customerdirectory/models.py:160
+msgid ""
+"Caller ID name\n"
+"                                               sent to provider on outbound\n"
+"                                               calls."
+msgstr "Caller ID név, a kimenő hívásokat. "
+
+#: pyfreebilling/customerdirectory/models.py:163
+msgid ""
+"CallerID\n"
+"                                                   num"
+msgstr "a hívó azonosító szám"
+
+#: pyfreebilling/customerdirectory/models.py:167
+msgid ""
+"Caller ID\n"
+"                                                 number sent to provider on\n"
+"                                                 outbound calls."
+msgstr "Hívó azonosító a kimenő hívásokat."
+
+#: pyfreebilling/customerdirectory/models.py:175
+msgid "CallerID normalization rules for outbound call"
+msgstr ""
+
+#: pyfreebilling/customerdirectory/models.py:181
+msgid "Destination number normalization rules for outbound call"
+msgstr ""
+
+#: pyfreebilling/customerdirectory/models.py:187
+msgid "CallerID normalization rules for inbound call"
+msgstr ""
+
+#: pyfreebilling/customerdirectory/models.py:193
+msgid "Destination number normalization rules for inbound call"
+msgstr ""
+
+#: pyfreebilling/customerdirectory/models.py:195
+msgid "Force callerID"
+msgstr ""
+
+#: pyfreebilling/customerdirectory/models.py:198
+msgid "Masq callerID"
+msgstr ""
+
+#: pyfreebilling/customerdirectory/models.py:201
+msgid "Allow urgency numbers"
+msgstr ""
+
+#: pyfreebilling/customerdirectory/models.py:203
+msgid ""
+"You have also to allow global routing option\n"
+"          and define an urgency ratecard"
+msgstr ""
+
+#: pyfreebilling/customerdirectory/models.py:213
+msgid "false"
+msgstr "téves"
+
+#: pyfreebilling/customerdirectory/models.py:214
+#: pyfreebilling/pyfreebill/models.py:1332
+msgid "true"
+msgstr "igaz"
+
+#: pyfreebilling/customerdirectory/models.py:215
+msgid "ring_ready"
+msgstr "ring_ready"
+
+#: pyfreebilling/customerdirectory/models.py:216
+msgid "Ignore early media"
+msgstr "Figyelmen kívül hagyja"
+
+#: pyfreebilling/customerdirectory/models.py:220
+msgid ""
+"Controls if the call\n"
+"                                                      returns on early media\n"
+"                                                      or not. Default is false.\n"
+"                                                      Setting the value to\n"
+"                                                      \"ring_ready\" will work\n"
+"                                                      the same as\n"
+"                                                      ignore_early_media=true\n"
+"                                                      but also send a SIP 180\n"
+"                                                      to the inbound leg when\n"
+"                                                      the first SIP 183 is\n"
+"                                                      caught.\n"
+"                                                      "
+msgstr ""
+" Azt szabályozza, hogy a hívás visszatér a korai média, vagy sem. Az "
+"alapértelmezett érték false. Az érték \"ring_ready\" ugyanúgy működik, mint "
+"ignore_early_media = true hanem küld egy SIP 180 a bejövő lábát, amikor az "
+"első SIP 183 fogott."
+
+#: pyfreebilling/customerdirectory/models.py:232
+#: pyfreebilling/did/models/ratesDid.py:37
+#: pyfreebilling/did/models/ratesDid.py:69
+#: pyfreebilling/pyfreebill/models.py:600
+#: pyfreebilling/pyfreebill/models.py:649
+#: pyfreebilling/pyfreebill/models.py:779
+msgid "Enabled / Disabled"
+msgstr "Enabled / Disabled"
+
+#: pyfreebilling/customerdirectory/models.py:236
+msgid ""
+"Fake ring : Enabled /\n"
+"                                    Disabled - Send a fake ring to the\n"
+"                                    caller."
+msgstr "Fake Eabled / Disabled"
+
+#: pyfreebilling/customerdirectory/models.py:239
+msgid "CLI debug"
+msgstr "CLI debug"
+
+#: pyfreebilling/customerdirectory/models.py:241
+msgid ""
+"CLI debug : Enabled /\n"
+"                                    Disabled - Permit to see all debug\n"
+"                                    messages on cli."
+msgstr ""
+"CLI debug: Enabled / Disabled - Lehetővé teszi, hogy a hibakeresési üzenetek"
+" cli. "
+
+#: pyfreebilling/customerdirectory/models.py:244
+msgid "Voicemail detection : Enabled / Disabled"
+msgstr "Voicemail detection : Enabled / Disabled"
+
+#: pyfreebilling/customerdirectory/models.py:246
+msgid ""
+"Be carefull with this option, as\n"
+"                              it takes a lot of ressources !."
+msgstr "Legyen óvatos ezzel a lehetőséggel, mert sok erőforrást használ fel!."
+
+#: pyfreebilling/customerdirectory/models.py:257
+msgid "Customer sip account"
+msgstr "Customer sip account"
+
+#: pyfreebilling/customerdirectory/models.py:258
+msgid "Customer sip accounts"
+msgstr "Customer sip accounts"
+
+#: pyfreebilling/customerdirectory/models.py:266
+msgid ""
+"You have to specify a password if you\n"
+"                                  want to allow registration"
+msgstr ""
+"Meg kell adnia egy jelszót, ha\n"
+"                                   szeretné, hogy nyilvántartásba"
+
+#: pyfreebilling/customerdirectory/models.py:270
+msgid ""
+"You must specify a SIP IP CIDR if you do\n"
+"                                  not want to use registration"
+msgstr ""
+"Meg kell adni a SIP IP CIDR ha nem\n"
+"                                   nem akarja használni regisztrációs"
+
+#: pyfreebilling/customerdirectory/models.py:276
+#, python-format
+msgid ""
+"The password must be at least %d\n"
+"                                      characters long."
+msgstr ""
+
+#: pyfreebilling/customerdirectory/models.py:280
+msgid ""
+"The new password must contain\n"
+"                                            at least one letter and at least\n"
+"                                            one digit"
+msgstr ""
+"Az új jelszónak tartalmaznia kell\n"
+"                                             legalább egy betűt és legalább\n"
+"                                             egy számot"
+
+#: pyfreebilling/customerportal/forms.py:105
+#: pyfreebilling/pyfreebill/forms.py:34
+msgid "From"
+msgstr "from"
+
+#: pyfreebilling/customerportal/forms.py:111
+#: pyfreebilling/pyfreebill/forms.py:36
+msgid "To"
+msgstr "To"
+
+#: pyfreebilling/customerportal/forms.py:117
+#: pyfreebilling/pyfreebill/forms.py:42
+msgid "Destination Number"
+msgstr "Destination száma"
+
+#: pyfreebilling/customerportal/forms.py:119
+#: pyfreebilling/pyfreebill/forms.py:43
+msgid "Enter the full number or the first part"
+msgstr "Írja be a teljes számot, vagy az első részét"
+
+#: pyfreebilling/customerportal/views.py:88
+#: pyfreebilling/customerportal/views.py:128
+#: pyfreebilling/customerportal/views.py:206
+#: pyfreebilling/customerportal/views.py:235
+#: pyfreebilling/customerportal/views.py:273
+#: pyfreebilling/customerportal/views.py:295
+#: pyfreebilling/customerportal/views.py:348
+#: pyfreebilling/customerportal/views.py:358
+msgid "This user is not linked to a customer !"
+msgstr "This user is not linked to a customer!"
+
+#: pyfreebilling/customerportal/views.py:187
+msgid "Welcome"
+msgstr "Üdvözöljük"
+
+#: pyfreebilling/customerportal/views.py:194
+#, python-format
+msgid "ALERT : Low balance (credit alert level : %s)"
+msgstr "Riasztás: Alacsony egyleg (credit riasztás szint:% s)"
+
+#: pyfreebilling/customerportal/views.py:197
+msgid ""
+"ALERT : Account blocked - no remaining credit - Please make an urgent "
+"payment"
+msgstr ""
+"Riaszztás: Fiók korlátozva - teljesen felhasznált egyenleg - Kérem, hogy "
+"tőltse fel egyenlegét"
+
+#: pyfreebilling/dashboard.py:36
+msgid "Quick links"
+msgstr "Gyors linkek"
+
+#: pyfreebilling/dashboard.py:42
+msgid "Return to site"
+msgstr "Vissza a webhelyre"
+
+#: pyfreebilling/dashboard.py:43 pyfreebilling/templates/admin/_base.html:75
+msgid "Change password"
+msgstr "Jelszó Változtatás"
+
+#: pyfreebilling/dashboard.py:45 pyfreebilling/templates/admin/_base.html:77
+#: pyfreebilling/templates/customer/base.html:30
+msgid "Log out"
+msgstr "Kijelentkezés"
+
+#: pyfreebilling/dashboard.py:61
+msgid "PyFreeBilling Support"
+msgstr "PyFreeBilling Support"
+
+#: pyfreebilling/dashboard.py:64
+msgid "PyFreeBilling documentation"
+msgstr "PyFreeBilling documentació"
+
+#: pyfreebilling/did/models/did.py:27
+msgid "DID number"
+msgstr "DID number"
+
+#: pyfreebilling/did/models/did.py:35 pyfreebilling/pyfreebill/admin.py:237
+#: pyfreebilling/pyfreebill/forms.py:39 pyfreebilling/pyfreebill/models.py:549
+#: pyfreebilling/pyfreebill/models.py:1444
+msgid "Provider"
+msgstr "Szolgáltató"
+
+#: pyfreebilling/did/models/did.py:40
+msgid "provider rate plan"
+msgstr "Szolgáltató díjszabás"
+
+#: pyfreebilling/did/models/did.py:45
+msgid "provider channels"
+msgstr "Szolgáltató channels"
+
+#: pyfreebilling/did/models/did.py:47 pyfreebilling/did/models/did.py:69
+msgid ""
+"maximum simultaneous calls allowed\n"
+"            for this did. 0 means no limit"
+msgstr ""
+
+#: pyfreebilling/did/models/did.py:53 pyfreebilling/pyfreebill/admin.py:230
+#: pyfreebilling/pyfreebill/forms.py:38
+msgid "Customer"
+msgstr "Ügyfél"
+
+#: pyfreebilling/did/models/did.py:60
+msgid "Customer rate plan"
+msgstr ""
+
+#: pyfreebilling/did/models/did.py:65
+msgid "customer channels"
+msgstr "ügyfél csatornák"
+
+#: pyfreebilling/did/models/did.py:89
+msgid "DID"
+msgstr "DID"
+
+#: pyfreebilling/did/models/did.py:90
+msgid "DIDs"
+msgstr "DIDs"
+
+#: pyfreebilling/did/models/ratesDid.py:24
+#: pyfreebilling/did/models/ratesDid.py:61
+#: pyfreebilling/pyfreebill/models.py:48
+#: pyfreebilling/pyfreebill/models.py:245
+#: pyfreebilling/pyfreebill/models.py:490
+#: pyfreebilling/pyfreebill/models.py:546
+#: pyfreebilling/pyfreebill/models.py:679
+#: pyfreebilling/pyfreebill/models.py:743
+#: pyfreebilling/pyfreebill/models.py:1093
+#: pyfreebilling/pyfreebill/models.py:1430
+msgid "name"
+msgstr "Név"
+
+#: pyfreebilling/did/models/ratesDid.py:25
+#: pyfreebilling/did/models/ratesDid.py:62
+#: pyfreebilling/templates/customer/cdr_view.html:268
+#: pyfreebilling/templates/customer/rates.html:69
+msgid "Rate"
+msgstr "Díjszabás"
+
+#: pyfreebilling/did/models/ratesDid.py:28
+#: pyfreebilling/did/models/ratesDid.py:65
+#: pyfreebilling/pyfreebill/models.py:640
+msgid "block min duration"
+msgstr "block minimális időtartam"
+
+#: pyfreebilling/did/models/ratesDid.py:30
+#: pyfreebilling/did/models/ratesDid.py:67
+msgid "Interval duration"
+msgstr "szakasz időtartama"
+
+#: pyfreebilling/did/models/ratesDid.py:49
+msgid "DID provider rate"
+msgstr "DID szolgáltató tarifa"
+
+#: pyfreebilling/did/models/ratesDid.py:50
+msgid "DID provider rates"
+msgstr "DID szolgáltató tarifa"
+
+#: pyfreebilling/did/models/ratesDid.py:80
+msgid "DID customer rate"
+msgstr "DID ügyfél tarifa"
+
+#: pyfreebilling/did/models/ratesDid.py:81
+msgid "DID customer rates"
+msgstr "DID ügyfél aránya"
+
+#: pyfreebilling/did/models/routesDid.py:31
+msgid "SIP Trunk"
+msgstr "SIP Trunk"
+
+#: pyfreebilling/did/models/routesDid.py:32
+msgid "External number"
+msgstr "Külső szám"
+
+#: pyfreebilling/did/models/routesDid.py:34
+msgid "Route type"
+msgstr "Route type"
+
+#: pyfreebilling/did/models/routesDid.py:38
+msgid ""
+"Routing type : sip trunk (s) or\n"
+"                                external number (e)."
+msgstr ""
+
+#: pyfreebilling/did/models/routesDid.py:47
+msgid "destination number"
+msgstr "Célállomás száma"
+
+#: pyfreebilling/did/models/routesDid.py:64
+msgid "DID route"
+msgstr "DID route"
+
+#: pyfreebilling/did/models/routesDid.py:65
+msgid "DID routes"
+msgstr "DID routes"
+
+#: pyfreebilling/did/signals.py:36
+msgid ""
+"did config xml file update failed.\n"
+"            Can not load template file !"
+msgstr ""
+"A konfigurációs XML fájl frissítése nem sikerült.\n"
+"             Nem tudta betölteni sablon fájlt!"
+
+#: pyfreebilling/did/signals.py:47
+msgid "FS successfully reload"
+msgstr "FS sikeresen újratöltve"
+
+#: pyfreebilling/did/signals.py:49
+msgid ""
+"DID config xml file update failed.\n"
+"                    FS update failed ! Try manually"
+msgstr ""
+"A konfigurációs XML fájl frissítése nem sikerült.\n"
+"                     FS frissítés nem sikerült! vagy Próbálja meg manuálisan"
+
+#: pyfreebilling/did/signals.py:53
+msgid "DID config xml file update success"
+msgstr "A konfigurációs XML fájl frissítése sikeresen megtörtént"
+
+#: pyfreebilling/did/signals.py:55
+msgid ""
+"DID config xml file update failed. Can not\n"
+"            create file !"
+msgstr ""
+"A konfigurációs XML fájl frissítése nem sikerült. Nem lehet\n"
+"             a Fájlt létrehozni!"
+
+#: pyfreebilling/menu.py:61
+msgid "Add new company"
+msgstr "új Cégnév hozzáadása"
+
+#: pyfreebilling/menu.py:66
+msgid "customer management"
+msgstr "ügyfélkezelés"
+
+#: pyfreebilling/menu.py:69
+msgid "Destination number normalization rules"
+msgstr "Ügyfél számla normalizálás szabályok"
+
+#: pyfreebilling/menu.py:81
+#: pyfreebilling/templates/admin/pyfreebill/company/change_form.html:33
+msgid "Contacts"
+msgstr "Adatok"
+
+#: pyfreebilling/menu.py:84 pyfreebilling/menu.py:90
+#: pyfreebilling/templates/admin/_index.html:107
+#: pyfreebilling/templates/admin/list_models.html:76
+#: pyfreebilling/templates/reporting/admin/index.html:29
+msgid "Add"
+msgstr "Hozzáad"
+
+#: pyfreebilling/menu.py:87 pyfreebilling/menu.py:130
+msgid "Groups"
+msgstr "Csoport"
+
+#: pyfreebilling/menu.py:100 pyfreebilling/pyfreebill/models.py:793
+msgid "Customer ratecards"
+msgstr "Ügyfél számlák"
+
+#: pyfreebilling/menu.py:113 pyfreebilling/menu.py:123
+#: pyfreebilling/templates/model_report/report_list.html:11
+#: pyfreebilling/templates/model_report/report_list.html:12
+#: pyfreebilling/templates/reporting/admin/index.html:80
+msgid "Reports"
+msgstr "Riportok"
+
+#: pyfreebilling/menu.py:120
+msgid "Hangup Cause"
+msgstr "Vonalbontás OK Hangup OK"
+
+#: pyfreebilling/menu.py:138 pyfreebilling/pyfreebill/models.py:1413
+msgid "SIP profiles"
+msgstr "SIP profiles"
+
+#: pyfreebilling/menu.py:139 pyfreebilling/pyfreebill/models.py:945
+msgid "Destination Number Normalization Rules"
+msgstr "Destination Number normalizálás szabályzat"
+
+#: pyfreebilling/menu.py:140
+msgid "ACL"
+msgstr "ACL"
+
+#: pyfreebilling/menu.py:151
+msgid "Databases"
+msgstr "Adatbázisok"
+
+#: pyfreebilling/menu.py:153
+msgid "Database size"
+msgstr "Adatbázis méret"
+
+#: pyfreebilling/menu.py:156
+msgid "Status"
+msgstr "Státusz"
+
+#: pyfreebilling/menu.py:163
+msgid "My Account"
+msgstr "Profilom"
+
+#: pyfreebilling/menu.py:164
+msgid "My CDR"
+msgstr "My CDR"
+
+#: pyfreebilling/normalizationrule/models.py:25
+msgid "Rule Group name"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:41
+#: pyfreebilling/normalizationrule/models.py:118
+msgid "Normalization Group"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:42
+msgid "Normalization Groups"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:51
+#: pyfreebilling/normalizationrule/models.py:152
+#: pyfreebilling/pyfreebill/models.py:955
+msgid "rule title"
+msgstr "szabály megnevezése"
+
+#: pyfreebilling/normalizationrule/models.py:54
+#: pyfreebilling/normalizationrule/models.py:165
+msgid "Equal"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:55
+#: pyfreebilling/normalizationrule/models.py:166
+msgid "Regex"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:58
+#: pyfreebilling/normalizationrule/models.py:169
+msgid "Type of match (equal or regex)"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:62
+#: pyfreebilling/normalizationrule/models.py:173
+msgid "match expression"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:66
+#: pyfreebilling/normalizationrule/models.py:177
+msgid "Example : ^(33)[0-9].*"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:68
+#: pyfreebilling/normalizationrule/models.py:179
+msgid "match length"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:71
+msgid "substitution expression"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:75
+#: pyfreebilling/normalizationrule/models.py:186
+msgid "Example : ^(33)([0-9].*)"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:77
+msgid "replacement expression"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:81
+#: pyfreebilling/normalizationrule/models.py:192
+msgid "Example : 0033"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:83
+#: pyfreebilling/normalizationrule/models.py:194
+msgid "N/A"
+msgstr "N/A"
+
+#: pyfreebilling/normalizationrule/models.py:86
+#: pyfreebilling/normalizationrule/models.py:202
+msgid "attributes"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:91
+msgid ""
+"Rule to map specific route -\n"
+"            Default set to nothing : N/A - not used"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:107
+#: pyfreebilling/normalizationrule/models.py:124
+msgid "Normalization Rule"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:108
+msgid "Normalization Rules"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:120
+#: pyfreebilling/pyfreebill/models.py:888
+#: pyfreebilling/switch/models/Switch.py:84
+#: pyfreebilling/switch/models/Switch.py:150
+msgid "priority"
+msgstr "Prioritás (kiemelten fontos)"
+
+#: pyfreebilling/normalizationrule/models.py:121
+msgid "Rule order"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:140
+msgid "Normalization Rule-Group"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:141
+msgid "Normalization Rules-Groups"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:155
+msgid "Dialplan id"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:157
+msgid ""
+"Need to be 0, instead of the rule\n"
+"            will not be used"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:160
+msgid "Priority rule"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:162
+msgid "Priority of rule"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:182
+msgid "subst prefix"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:188
+msgid "replacement prefix"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:195
+msgid "PSTN"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:196
+msgid "EMERGENCY NUMBER"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:197
+msgid "OWN NUMBERS"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:198
+msgid "SPEED DIAL"
+msgstr "GYORS HÍVÁS (speed dial)"
+
+#: pyfreebilling/normalizationrule/models.py:199
+msgid "DROP NUMBERS"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:207
+msgid ""
+"Rule to map specific route -\n"
+"            Default set to nothing : N/A"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:224
+msgid "Call Mapping Rule"
+msgstr ""
+
+#: pyfreebilling/normalizationrule/models.py:225
+msgid "Call Mapping Rules"
+msgstr ""
+
+#: pyfreebilling/pyfreebill/admin.py:49
+#: pyfreebilling/templates/admin/_base.html:365
+msgid "CDR report"
+msgstr "CDR riport"
+
+#: pyfreebilling/pyfreebill/admin.py:126
+msgid "AntiFraud system parameters"
+msgstr ""
+
+#: pyfreebilling/pyfreebill/admin.py:164
+msgid ""
+"select the Ratecards affected to customer account. Order is important !"
+msgstr ""
+"válasszon díjtáblázatot hogy alkalmazza az ügyfél számlájára. Sorrend "
+"fontos!"
+
+#: pyfreebilling/pyfreebill/admin.py:201
+msgid "General company informations"
+msgstr "Általános cég információk"
+
+#: pyfreebilling/pyfreebill/admin.py:203
+msgid "Customer settings"
+msgstr "Ügyfél beállítások"
+
+#: pyfreebilling/pyfreebill/admin.py:210
+msgid "Customer alerts"
+msgstr "Ügyfél értesítések"
+
+#: pyfreebilling/pyfreebill/admin.py:216
+msgid "All the customer alert parameters"
+msgstr "Minden ügyfél riasztási paraméterek"
+
+#: pyfreebilling/pyfreebill/admin.py:218
+msgid "Provider settings"
+msgstr "Szolgáltató beállításai"
+
+#: pyfreebilling/pyfreebill/admin.py:222
+msgid ""
+"If this company is your provider, this is right place to manage its "
+"parameters"
+msgstr "Szolgáltató adatainak beállítása"
+
+#: pyfreebilling/pyfreebill/admin.py:231
+msgid "customer_enabled"
+msgstr "ugyfel_enabled"
+
+#: pyfreebilling/pyfreebill/admin.py:238
+msgid "provider_enabled"
+msgstr "szolgáltató_enabled"
+
+#: pyfreebilling/pyfreebill/admin.py:244
+#: pyfreebilling/templates/customer/balance.html:39
+#: pyfreebilling/templates/customer/home.html:66
+msgid "Prepaid"
+msgstr "Kártyás"
+
+#: pyfreebilling/pyfreebill/admin.py:245
+msgid "prepaid"
+msgstr "kártyás"
+
+#: pyfreebilling/pyfreebill/admin.py:251
+msgid "VAT"
+msgstr "Áfa"
+
+#: pyfreebilling/pyfreebill/admin.py:252
+msgid "vat"
+msgstr "áfa"
+
+#: pyfreebilling/pyfreebill/admin.py:258
+msgid "VIES"
+msgstr "VIES"
+
+#: pyfreebilling/pyfreebill/admin.py:259
+msgid "vies"
+msgstr "vies"
+
+#: pyfreebilling/pyfreebill/admin.py:411
+msgid "No need to update balance"
+msgstr "Nem kell frissíteni az egyenleg"
+
+#: pyfreebilling/pyfreebill/admin.py:428
+msgid "balance updated"
+msgstr "egyenleg frisítve"
+
+#: pyfreebilling/pyfreebill/admin.py:437
+#: pyfreebilling/templates/customer/cdr_view.html:269
+msgid "Amount"
+msgstr "Összeg"
+
+#: pyfreebilling/pyfreebill/admin.py:440
+msgid "Balances"
+msgstr "Egyenlegek"
+
+#: pyfreebilling/pyfreebill/admin.py:603 pyfreebilling/pyfreebill/admin.py:612
+#: pyfreebilling/pyfreebill/admin.py:715 pyfreebilling/pyfreebill/admin.py:725
+msgid "1 item was"
+msgstr "1 db volt"
+
+#: pyfreebilling/pyfreebill/admin.py:605 pyfreebilling/pyfreebill/admin.py:614
+#: pyfreebilling/pyfreebill/admin.py:717 pyfreebilling/pyfreebill/admin.py:727
+#, python-format
+msgid "%s items were"
+msgstr ""
+
+#: pyfreebilling/pyfreebill/admin.py:606 pyfreebilling/pyfreebill/admin.py:719
+#, python-format
+msgid "%s successfully marked as enabled."
+msgstr "%s a kijelölt sikeresen engedélyezve."
+
+#: pyfreebilling/pyfreebill/admin.py:607 pyfreebilling/pyfreebill/admin.py:720
+msgid "mark selected items as enabled"
+msgstr "mark kiválasztott elemek enabled"
+
+#: pyfreebilling/pyfreebill/admin.py:615 pyfreebilling/pyfreebill/admin.py:729
+#, python-format
+msgid "%s successfully marked as disabled."
+msgstr "%s a kijelölt sikeresen tiltva."
+
+#: pyfreebilling/pyfreebill/admin.py:616 pyfreebilling/pyfreebill/admin.py:730
+msgid "mark selected items as disabled"
+msgstr "mark kiválasztott elemek disabled"
+
+#: pyfreebilling/pyfreebill/admin.py:855
+msgid "Register"
+msgstr "Register"
+
+#: pyfreebilling/pyfreebill/admin.py:856
+#: pyfreebilling/pyfreebill/models.py:1494
+msgid "register"
+msgstr "register"
+
+#: pyfreebilling/pyfreebill/admin.py:882
+msgid "Basic settings"
+msgstr "Basic beállítás (settings)"
+
+#: pyfreebilling/pyfreebill/admin.py:887
+msgid "General sip profile informations"
+msgstr "General sip profile informations"
+
+#: pyfreebilling/pyfreebill/admin.py:894
+msgid "Codecs Related Options"
+msgstr "Codecs Related Options "
+
+#: pyfreebilling/pyfreebill/admin.py:898
+msgid "Manage Codecs Related Options"
+msgstr "Manage Codecs Related Options "
+
+#: pyfreebilling/pyfreebill/admin.py:900
+msgid "NAT"
+msgstr "NAT"
+
+#: pyfreebilling/pyfreebill/admin.py:906
+msgid "NAT management"
+msgstr "NAT kezelése"
+
+#: pyfreebilling/pyfreebill/admin.py:908
+msgid "DTMF Related options"
+msgstr "DTMF Related options"
+
+#: pyfreebilling/pyfreebill/admin.py:911
+msgid "DTMF management"
+msgstr "DTMF kezelése"
+
+#: pyfreebilling/pyfreebill/admin.py:913
+msgid "SIP Related Options"
+msgstr "SIP Related Options"
+
+#: pyfreebilling/pyfreebill/admin.py:916
+msgid "Manage SIP Related Options"
+msgstr "SIP Related beállítása"
+
+#: pyfreebilling/pyfreebill/admin.py:918
+msgid "RTP Related Options"
+msgstr "RTP Related Options"
+
+#: pyfreebilling/pyfreebill/admin.py:921
+msgid "Manage RTP Related Options"
+msgstr "RTP Related beállítása"
+
+#: pyfreebilling/pyfreebill/admin.py:923
+msgid "Authentification Authorization"
+msgstr "Engedélyezett Hitelesítés"
+
+#: pyfreebilling/pyfreebill/admin.py:928
+msgid "Authentification Authorization management"
+msgstr "Engedélyezett Hitelesítés beállítása"
+
+#: pyfreebilling/pyfreebill/admin.py:934
+msgid "Registration settings management"
+msgstr "Regisztráció beállítás kezelése"
+
+#: pyfreebilling/pyfreebill/admin.py:936
+msgid "Others"
+msgstr "Egyébb"
+
+#: pyfreebilling/pyfreebill/admin.py:939
+msgid "Others parameters"
+msgstr "Egyébb paraméter"
+
+#: pyfreebilling/pyfreebill/admin.py:1183
+#: pyfreebilling/pyfreebill/admin.py:1325
+msgid "others"
+msgstr "egyebek"
+
+#: pyfreebilling/pyfreebill/base_modules.py:32
+msgid "Stats chart"
+msgstr "Tatisztikák (chart)"
+
+#: pyfreebilling/pyfreebill/base_modules.py:77
+msgid "Stats"
+msgstr "Statisztikák"
+
+#: pyfreebilling/pyfreebill/base_modules.py:87
+msgid "By Day"
+msgstr "Naponta"
+
+#: pyfreebilling/pyfreebill/base_modules.py:88
+msgid "By Week"
+msgstr "Hetente"
+
+#: pyfreebilling/pyfreebill/base_modules.py:89
+msgid "By Month"
+msgstr "Havonta"
+
+#: pyfreebilling/pyfreebill/fields.py:32 pyfreebilling/switch/fields.py:34
+msgid "This value must be an integer or a FreeSWITCH variable."
+msgstr "Ez az érték csak egész szám lehet, vagy egy FreeSWITCH változó."
+
+#: pyfreebilling/pyfreebill/fields.py:34 pyfreebilling/switch/fields.py:36
+msgid "Integer or FreeSWITCH variable"
+msgstr "FreeSWITCH változó"
+
+#: pyfreebilling/pyfreebill/fields.py:58 pyfreebilling/switch/fields.py:60
+msgid ""
+"Enter a valid IPv4 address (dot-decimal or CIDR notation) or a FreeSWITCH "
+"variable."
+msgstr ""
+"Adjon meg egy érvényes IPv4-cím (dot-decimális vagy CIDR jelölés), vagy egy "
+"FreeSWITCH változó."
+
+#: pyfreebilling/pyfreebill/fields.py:61 pyfreebilling/switch/fields.py:63
+msgid "IPv4 address, in dot-decimal or CIDR notation, or FreeSWITCH variable"
+msgstr "IPv4-cím, a dot-decimális vagy CIDR jelölés, vagy FreeSWITCH változó"
+
+#: pyfreebilling/pyfreebill/forms.py:40
+msgid "Customer Ratecard"
+msgstr "Ügyfél díjtáblázat"
+
+#: pyfreebilling/pyfreebill/forms.py:41
+msgid "LCR Group"
+msgstr "LCR Group"
+
+#: pyfreebilling/pyfreebill/forms.py:49 pyfreebilling/pyfreebill/forms.py:61
+#: pyfreebilling/pyfreebill/forms.py:73 pyfreebilling/pyfreebill/forms.py:84
+msgid "all"
+msgstr "all"
+
+#: pyfreebilling/pyfreebill/models.py:51
+#: pyfreebilling/pyfreebill/models.py:202
+msgid "nickname"
+msgstr "nick név"
+
+#: pyfreebilling/pyfreebill/models.py:55
+#: pyfreebilling/pyfreebill/models.py:205
+#: pyfreebilling/pyfreebill/models.py:248
+msgid "slug"
+msgstr "Slug"
+
+#: pyfreebilling/pyfreebill/models.py:58
+#: pyfreebilling/pyfreebill/models.py:214
+#: pyfreebilling/pyfreebill/models.py:251
+msgid "about"
+msgstr "About"
+
+#: pyfreebilling/pyfreebill/models.py:66
+msgid "Account number"
+msgstr "Account number"
+
+#: pyfreebilling/pyfreebill/models.py:69
+msgid "VAT Applicable / Not applicable"
+msgstr "ÁFA Alkalmazható / Nem alkalmazható"
+
+#: pyfreebilling/pyfreebill/models.py:71
+msgid "if checked, VAT is applicable."
+msgstr "Ha be van jelölve, az ÁFA alkalmazható."
+
+#: pyfreebilling/pyfreebill/models.py:72
+msgid "VAT number"
+msgstr "VAT - Adószám"
+
+#: pyfreebilling/pyfreebill/models.py:76
+msgid "VAT Vies Validated."
+msgstr "beállítja az ÁFA mértékét."
+
+#: pyfreebilling/pyfreebill/models.py:78
+msgid ""
+"If on, it means that VAT is validated through <a target='_blank' "
+"href='http://ec.europa.eu/taxation_customs/vies/vatRequest.html'>Vies</a>."
+msgstr ""
+"Ha, az azt jelenti, hogy a HÉA érvényesítik <a target='_blank' href='http://ec.europa.eu/taxation_customs/vies/vatRequest.html'> Vies </a>. \n"
+"Ha, az azt jelenti, hogy a HÉA érvényesítik <a target='_blank' href='http://ec.europa.eu/taxation_customs/vies/vatRequest.html'> Vies </a>. "
+
+#: pyfreebilling/pyfreebill/models.py:81
+msgid "Prepaid / Postpaid"
+msgstr "Kártyás / Előfizetéses"
+
+#: pyfreebilling/pyfreebill/models.py:83
+msgid "If checked, this account customer is prepaid."
+msgstr "Ha be van jelölve, ez a ügyfél fiók Kártyás."
+
+#: pyfreebilling/pyfreebill/models.py:84
+msgid "credit limit"
+msgstr "hitelkeret"
+
+#: pyfreebilling/pyfreebill/models.py:88
+msgid "Credit limit for postpaid account."
+msgstr "Hitelkeret előfizetéses ügyfél"
+
+#: pyfreebilling/pyfreebill/models.py:89
+msgid "low credit level alert"
+msgstr "Alacsony egyenleg riasztás"
+
+#: pyfreebilling/pyfreebill/models.py:93
+msgid "Low credit limit alert."
+msgstr "Alacsony egyenleg jelzés"
+
+#: pyfreebilling/pyfreebill/models.py:94
+msgid "low credit alert ON"
+msgstr "Csonyegyenleg figyelmeztetés"
+
+#: pyfreebilling/pyfreebill/models.py:96
+msgid "Customer account blocked - low balance - ON"
+msgstr "Ügyfélszámla blokkolt - alacsony egyenleg - ON "
+
+#: pyfreebilling/pyfreebill/models.py:98
+msgid "alert email address"
+msgstr "figyelmeztető e-mail címet"
+
+#: pyfreebilling/pyfreebill/models.py:101
+#: pyfreebilling/pyfreebill/models.py:441
+msgid "customer balance"
+msgstr "ügyfél egyenleg"
+
+#: pyfreebilling/pyfreebill/models.py:105
+msgid "Actual customer balance."
+msgstr "Ügyfél aktuális egyenlege."
+
+#: pyfreebilling/pyfreebill/models.py:107
+#: pyfreebilling/pyfreebill/models.py:553
+#: pyfreebilling/pyfreebill/models.py:763
+#: pyfreebilling/templates/customer/home.html:117
+#: pyfreebilling/templates/customer/rates.html:24
+msgid "Currency"
+msgstr "Pénznem, valuta"
+
+#: pyfreebilling/pyfreebill/models.py:108
+msgid "supplier balance"
+msgstr "szolgáltató egyenleg"
+
+#: pyfreebilling/pyfreebill/models.py:112
+msgid "Actual supplier balance."
+msgstr "Aktuális szolgáltató egyenleg"
+
+#: pyfreebilling/pyfreebill/models.py:113
+msgid "max simultaneous calls"
+msgstr "max egyidejű hívások"
+
+#: pyfreebilling/pyfreebill/models.py:115
+msgid "maximum simultaneous calls allowed for this customer account."
+msgstr "az ügyfélszámlán engedélyezett maximális egyidejű hívás száma."
+
+#: pyfreebilling/pyfreebill/models.py:119
+msgid "maximum calls per seconds allowed for this customer account."
+msgstr "az ügyfél számláján engedélyezett maximális hívások másodpercenként."
+
+#: pyfreebilling/pyfreebill/models.py:122
+msgid "weekly"
+msgstr "heti"
+
+#: pyfreebilling/pyfreebill/models.py:123
+msgid "monthly"
+msgstr "havi"
+
+#: pyfreebilling/pyfreebill/models.py:126
+msgid "billing cycle"
+msgstr "számlázási ciklus"
+
+#: pyfreebilling/pyfreebill/models.py:130
+msgid "billinng cycle for invoice generation."
+msgstr "számlázási ciklus számla generálás"
+
+#: pyfreebilling/pyfreebill/models.py:132
+msgid "Customer Enabled / Disabled"
+msgstr "Ügyfél Enabled / Disabled"
+
+#: pyfreebilling/pyfreebill/models.py:134
+msgid "Supplier Enabled / Disabled"
+msgstr "Szolgáltató Enabled / Disabled"
+
+#: pyfreebilling/pyfreebill/models.py:145
+msgid "Company"
+msgstr "Cégnév"
+
+#: pyfreebilling/pyfreebill/models.py:153
+#, python-format
+msgid "Wrong VAT number - validation made throw VIES services. %s"
+msgstr "Hibás adószám - Nem haznáható VIES szolgáltatások. %s"
+
+#: pyfreebilling/pyfreebill/models.py:185
+msgid "balance history"
+msgstr "számla egyenleg"
+
+#: pyfreebilling/pyfreebill/models.py:190
+msgid "first name"
+msgstr "Vezeték Név"
+
+#: pyfreebilling/pyfreebill/models.py:192
+msgid "last name"
+msgstr "Kereszt Név"
+
+#: pyfreebilling/pyfreebill/models.py:194
+msgid "middle name"
+msgstr "Középső Név"
+
+#: pyfreebilling/pyfreebill/models.py:198
+#: pyfreebilling/pyfreebill/models.py:566
+#: pyfreebilling/pyfreebill/models.py:1457
+msgid "suffix"
+msgstr "Név előtag (dr.)"
+
+#: pyfreebilling/pyfreebill/models.py:208
+msgid "title"
+msgstr "Cím"
+
+#: pyfreebilling/pyfreebill/models.py:221
+msgid "user"
+msgstr "User"
+
+#: pyfreebilling/pyfreebill/models.py:232
+msgid "person"
+msgstr "személy"
+
+#: pyfreebilling/pyfreebill/models.py:233
+#: pyfreebilling/pyfreebill/models.py:254
+msgid "people"
+msgstr "ember"
+
+#: pyfreebilling/pyfreebill/models.py:257
+msgid "companies"
+msgstr "vállalat, cég"
+
+#: pyfreebilling/pyfreebill/models.py:268
+msgid "group"
+msgstr "Csoport"
+
+#: pyfreebilling/pyfreebill/models.py:269
+msgid "groups"
+msgstr "Csoportok"
+
+#: pyfreebilling/pyfreebill/models.py:276
+#: pyfreebilling/pyfreebill/models.py:314
+msgid "Work"
+msgstr "Dolgozom"
+
+#: pyfreebilling/pyfreebill/models.py:277
+#: pyfreebilling/pyfreebill/models.py:316
+msgid "Mobile"
+msgstr "Mobil"
+
+#: pyfreebilling/pyfreebill/models.py:278
+#: pyfreebilling/pyfreebill/models.py:317
+msgid "Fax"
+msgstr "Fax"
+
+#: pyfreebilling/pyfreebill/models.py:279
+msgid "Pager"
+msgstr "Személyhívó, csipogó"
+
+#: pyfreebilling/pyfreebill/models.py:280
+#: pyfreebilling/pyfreebill/models.py:315
+#: pyfreebilling/templates/admin/_base.html:86
+#: pyfreebilling/templates/admin/_base.html:159
+#: pyfreebilling/templates/admin/_index.html:12
+#: pyfreebilling/templates/admin/admin_status.html:9
+#: pyfreebilling/templates/admin/customers_stats.html:14
+#: pyfreebilling/templates/admin/license.html:10
+#: pyfreebilling/templates/admin/server_status.html:12
+#: pyfreebilling/templates/customer/base.html:25
+msgid "Home"
+msgstr "Kezdőlap"
+
+#: pyfreebilling/pyfreebill/models.py:281
+#: pyfreebilling/pyfreebill/models.py:319
+#: pyfreebilling/pyfreebill/models.py:361
+msgid "Other"
+msgstr "Egyébb"
+
+#: pyfreebilling/pyfreebill/models.py:292
+msgid "number"
+msgstr "Szám"
+
+#: pyfreebilling/pyfreebill/models.py:294
+#: pyfreebilling/pyfreebill/models.py:330
+#: pyfreebilling/pyfreebill/models.py:372
+#: pyfreebilling/pyfreebill/models.py:412
+msgid "location"
+msgstr "Település"
+
+#: pyfreebilling/pyfreebill/models.py:309
+msgid "phone number"
+msgstr "Telefonszám"
+
+#: pyfreebilling/pyfreebill/models.py:310
+msgid "phone numbers"
+msgstr "telefonszám"
+
+#: pyfreebilling/pyfreebill/models.py:318
+msgid "Personal"
+msgstr "Személyes"
+
+#: pyfreebilling/pyfreebill/models.py:329
+#: pyfreebilling/pyfreebill/models.py:345
+msgid "email address"
+msgstr "E-mail cím"
+
+#: pyfreebilling/pyfreebill/models.py:346
+msgid "email addresses"
+msgstr "e-mail cím"
+
+#: pyfreebilling/pyfreebill/models.py:371
+#: pyfreebilling/templates/admin/_base.html:594
+msgid "URL"
+msgstr "URL"
+
+#: pyfreebilling/pyfreebill/models.py:387
+msgid "web site"
+msgstr "Web oldal"
+
+#: pyfreebilling/pyfreebill/models.py:388
+msgid "web sites"
+msgstr "Web oldalak"
+
+#: pyfreebilling/pyfreebill/models.py:400
+msgid "street"
+msgstr "Utca"
+
+#: pyfreebilling/pyfreebill/models.py:402
+msgid "city"
+msgstr "Város"
+
+#: pyfreebilling/pyfreebill/models.py:405
+msgid "province"
+msgstr "tartomány"
+
+#: pyfreebilling/pyfreebill/models.py:408
+msgid "postal code"
+msgstr "Irányító szám"
+
+#: pyfreebilling/pyfreebill/models.py:411
+msgid "country"
+msgstr "Ország"
+
+#: pyfreebilling/pyfreebill/models.py:427
+msgid "street address"
+msgstr "Utca házszám"
+
+#: pyfreebilling/pyfreebill/models.py:428
+msgid "street addresses"
+msgstr "Utca házszám"
+
+#: pyfreebilling/pyfreebill/models.py:435
+msgid "amount debited"
+msgstr "levont (terhelt) összeg"
+
+#: pyfreebilling/pyfreebill/models.py:438
+msgid "amount refund"
+msgstr "túlfizetés"
+
+#: pyfreebilling/pyfreebill/models.py:445
+msgid ""
+"Resulting customer\n"
+"                                           balance."
+msgstr ""
+"Fennmaradó ügyfél\n"
+"                egyenleg."
+
+#: pyfreebilling/pyfreebill/models.py:447
+msgid "provider balance"
+msgstr "szolgáltató egyenleg"
+
+#: pyfreebilling/pyfreebill/models.py:451
+msgid ""
+"Resulting provider\n"
+"                                           balance."
+msgstr ""
+"Fennmaradó szolgáltató\n"
+"                       egyenleg."
+
+#: pyfreebilling/pyfreebill/models.py:454
+msgid "operation on customer account"
+msgstr "ügyfélszámla művelet"
+
+#: pyfreebilling/pyfreebill/models.py:455
+msgid "operation on provider account"
+msgstr "szolgáltató számla művelet"
+
+#: pyfreebilling/pyfreebill/models.py:457
+msgid "operation type"
+msgstr "művelet tipus"
+
+#: pyfreebilling/pyfreebill/models.py:461
+msgid "public description"
+msgstr "nyílvános leírás"
+
+#: pyfreebilling/pyfreebill/models.py:464
+msgid "internal description"
+msgstr "belső feljegyzés"
+
+#: pyfreebilling/pyfreebill/models.py:476
+#: pyfreebilling/pyfreebill/models.py:477
+msgid "Company balance history"
+msgstr "Cég számla történet"
+
+#: pyfreebilling/pyfreebill/models.py:504
+msgid "CallerID prefix list"
+msgstr "CallerID prefix list"
+
+#: pyfreebilling/pyfreebill/models.py:505
+msgid "CallerID prefix lists"
+msgstr "CallerID prefix lists"
+
+#: pyfreebilling/pyfreebill/models.py:514
+#: pyfreebilling/pyfreebill/models.py:562
+#: pyfreebilling/pyfreebill/models.py:990
+#: pyfreebilling/pyfreebill/models.py:1025
+#: pyfreebilling/pyfreebill/models.py:1059
+#: pyfreebilling/pyfreebill/models.py:1453
+msgid "prefix"
+msgstr "prefix"
+
+#: pyfreebilling/pyfreebill/models.py:521
+msgid "callerid prefix list"
+msgstr "callerid prefix list"
+
+#: pyfreebilling/pyfreebill/models.py:522
+#: pyfreebilling/pyfreebill/models.py:634
+#: pyfreebilling/pyfreebill/models.py:821
+#: pyfreebilling/pyfreebill/models.py:926
+msgid "numeric prefix"
+msgstr "numeric prefix"
+
+#: pyfreebilling/pyfreebill/models.py:535
+#: pyfreebilling/pyfreebill/models.py:536
+msgid "Callerid prefix"
+msgstr "Callerid prefix"
+
+#: pyfreebilling/pyfreebill/models.py:554
+msgid "lead strip"
+msgstr "Lead strip"
+
+#: pyfreebilling/pyfreebill/models.py:558
+msgid "tail strip"
+msgstr "Tail strip"
+
+#: pyfreebilling/pyfreebill/models.py:573
+#: pyfreebilling/pyfreebill/models.py:767
+msgid "No filter"
+msgstr "No filter"
+
+#: pyfreebilling/pyfreebill/models.py:574
+#: pyfreebilling/pyfreebill/models.py:768
+msgid "Prefix authorized"
+msgstr ""
+"prefix engedélyezett \n"
+"prefix engedélyezett"
+
+#: pyfreebilling/pyfreebill/models.py:575
+#: pyfreebilling/pyfreebill/models.py:769
+msgid "Prefix prohibited"
+msgstr "előtag tiltott "
+
+#: pyfreebilling/pyfreebill/models.py:577
+#: pyfreebilling/pyfreebill/models.py:771
+msgid "CallerID Prefix filter"
+msgstr "CallerID előtag szűrő "
+
+#: pyfreebilling/pyfreebill/models.py:582
+#: pyfreebilling/pyfreebill/models.py:776
+msgid "CallerID prefix List"
+msgstr ""
+"CallerID előtag listája \n"
+"CallerID előtag listája "
+
+#: pyfreebilling/pyfreebill/models.py:587
+msgid "quality"
+msgstr "minőség"
+
+#: pyfreebilling/pyfreebill/models.py:590
+msgid "Order by quality."
+msgstr "Rendezés minőség. "
+
+#: pyfreebilling/pyfreebill/models.py:591
+msgid "reliability"
+msgstr "megbízhatóság"
+
+#: pyfreebilling/pyfreebill/models.py:594
+msgid "Order by reliability."
+msgstr "Rendezés megbízhatóságát. "
+
+#: pyfreebilling/pyfreebill/models.py:595
+msgid "cid"
+msgstr "cid"
+
+#: pyfreebilling/pyfreebill/models.py:599
+msgid "Regex to modify CallerID number."
+msgstr "Regex módosítani CallerID számát."
+
+#: pyfreebilling/pyfreebill/models.py:613
+msgid "provider ratecard"
+msgstr "szolgáltató díjtáblázat"
+
+#: pyfreebilling/pyfreebill/models.py:614
+msgid "provider ratecards"
+msgstr "szolgáltatók díjtáblázatok"
+
+#: pyfreebilling/pyfreebill/models.py:623
+#: pyfreebilling/pyfreebill/models.py:734
+msgid "rates"
+msgstr "árak"
+
+#: pyfreebilling/pyfreebill/models.py:628
+#: pyfreebilling/pyfreebill/models.py:815
+#: pyfreebilling/pyfreebill/models.py:1633
+#: pyfreebilling/pyfreebill/models.py:1652
+#: pyfreebilling/pyfreebill/models.py:1671
+#: pyfreebilling/pyfreebill/models.py:1690
+#: pyfreebilling/pyfreebill/models.py:1709
+#: pyfreebilling/pyfreebill/models.py:1749
+#: pyfreebilling/templates/admin/customers_stats.html:202
+msgid "destination"
+msgstr "rendeltetési hely "
+
+#: pyfreebilling/pyfreebill/models.py:637
+msgid "Cost rate"
+msgstr "Költség arány"
+
+#: pyfreebilling/pyfreebill/models.py:642
+msgid "Init block rate"
+msgstr "Init blokk aránya "
+
+#: pyfreebilling/pyfreebill/models.py:661
+msgid "provider rate"
+msgstr "szolgáltató tarifa"
+
+#: pyfreebilling/pyfreebill/models.py:662
+msgid "provider rates"
+msgstr "szolgáltató tarifák"
+
+#: pyfreebilling/pyfreebill/models.py:685
+msgid "lower price"
+msgstr "olcsóbb ár"
+
+#: pyfreebilling/pyfreebill/models.py:686
+msgid "best quality"
+msgstr "legjobb minőség"
+
+#: pyfreebilling/pyfreebill/models.py:687
+msgid "best reliability"
+msgstr "legjobb megbízhatóság"
+
+#: pyfreebilling/pyfreebill/models.py:688
+msgid "load balance"
+msgstr "Egyenleg"
+
+#: pyfreebilling/pyfreebill/models.py:690
+msgid "lcr type"
+msgstr "lcr type"
+
+#: pyfreebilling/pyfreebill/models.py:703
+#: pyfreebilling/pyfreebill/models.py:713
+#: pyfreebilling/templates/admin/_base.html:283
+msgid "LCR"
+msgstr "LCR"
+
+#: pyfreebilling/pyfreebill/models.py:715
+msgid "Provider tariff"
+msgstr "Szolgáltató tarifa"
+
+#: pyfreebilling/pyfreebill/models.py:724
+msgid "LCR provider"
+msgstr "LCR szolgáltató"
+
+#: pyfreebilling/pyfreebill/models.py:725
+msgid "LCR providers"
+msgstr "LCR szolgáltatók"
+
+#: pyfreebilling/pyfreebill/models.py:747
+msgid "CALLS TO PSTN"
+msgstr "CALLS TO PSTN"
+
+#: pyfreebilling/pyfreebill/models.py:748
+msgid "DID - INBOUND CALLS"
+msgstr "DID - INBOUND CALLS"
+
+#: pyfreebilling/pyfreebill/models.py:749
+msgid "OUTBOUND CALLS TO INTERNAL DID"
+msgstr "OUTBOUND CALLS TO INTERNAL DID"
+
+#: pyfreebilling/pyfreebill/models.py:750
+msgid "EMERGENCY CALLS"
+msgstr "EMERGENCY CALLS"
+
+#: pyfreebilling/pyfreebill/models.py:753
+msgid "Type of ratecards"
+msgstr ""
+
+#: pyfreebilling/pyfreebill/models.py:757
+msgid ""
+"Select the right ratecard\n"
+"            regarding the type of calls. Default is PSTN"
+msgstr ""
+
+#: pyfreebilling/pyfreebill/models.py:765
+#: pyfreebilling/pyfreebill/models.py:808
+msgid "lcr"
+msgstr "lcr"
+
+#: pyfreebilling/pyfreebill/models.py:792
+msgid "Customer ratecard"
+msgstr "Ügyfél számlák"
+
+#: pyfreebilling/pyfreebill/models.py:825
+msgid "Destination number length"
+msgstr ""
+
+#: pyfreebilling/pyfreebill/models.py:827
+msgid "If value > 0, then destination number must match tsi length"
+msgstr ""
+
+#: pyfreebilling/pyfreebill/models.py:832
+msgid "to block the prefix, put -1"
+msgstr "blokkolja az előtag, tedd -1 "
+
+#: pyfreebilling/pyfreebill/models.py:833
+#: pyfreebilling/templates/customer/rates.html:70
+msgid "Increment"
+msgstr ""
+
+#: pyfreebilling/pyfreebill/models.py:836
+#: pyfreebilling/templates/customer/rates.html:71
+msgid "Minimal time"
+msgstr ""
+
+#: pyfreebilling/pyfreebill/models.py:838
+msgid "minimal time to be billed in seconds"
+msgstr ""
+
+#: pyfreebilling/pyfreebill/models.py:857
+msgid "customer rate"
+msgstr "ügyfél számla"
+
+#: pyfreebilling/pyfreebill/models.py:858
+msgid "customer rates"
+msgstr ""
+"ügyfél számlák\n"
+"(Vásárlók aránya)"
+
+#: pyfreebilling/pyfreebill/models.py:871
+#: pyfreebilling/templates/customer/balance.html:73
+msgid "Comment"
+msgstr "Comment"
+
+#: pyfreebilling/pyfreebill/models.py:874
+msgid "technical prefix"
+msgstr "technikai előtag (prefix)"
+
+#: pyfreebilling/pyfreebill/models.py:880
+msgid "1"
+msgstr "1"
+
+#: pyfreebilling/pyfreebill/models.py:881
+msgid "2"
+msgstr "3"
+
+#: pyfreebilling/pyfreebill/models.py:882
+msgid "3"
+msgstr "3"
+
+#: pyfreebilling/pyfreebill/models.py:883
+msgid "4"
+msgstr "4"
+
+#: pyfreebilling/pyfreebill/models.py:884
+msgid "5"
+msgstr "5"
+
+#: pyfreebilling/pyfreebill/models.py:885
+msgid "6"
+msgstr "6"
+
+#: pyfreebilling/pyfreebill/models.py:886
+msgid "7"
+msgstr "7"
+
+#: pyfreebilling/pyfreebill/models.py:890
+msgid ""
+"Priority order, 1 is the\n"
+"                                               higher priority and 3 the\n"
+"                                               lower one. Correct values\n"
+"                                               are : 1 to 7 !."
+msgstr ""
+
+#: pyfreebilling/pyfreebill/models.py:894
+msgid "discount"
+msgstr "Kedvezmény"
+
+#: pyfreebilling/pyfreebill/models.py:898
+#, python-format
+msgid ""
+"ratecard discount. For\n"
+"                                               10% discount, enter 10 !"
+msgstr ""
+
+#: pyfreebilling/pyfreebill/models.py:900
+msgid ""
+"Allow calls with\n"
+"                                                  negative margin"
+msgstr "hívásokat lehetővé tevő negatív különbözet"
+
+#: pyfreebilling/pyfreebill/models.py:912
+msgid "Customer Ratecard Allocation"
+msgstr "Ügyfelek Díjtáblázat Szerinti Eloszlása"
+
+#: pyfreebilling/pyfreebill/models.py:913
+msgid "Customer ratecard Allocations"
+msgstr "Ügyfél díjtáblázat szerinti eloszlása"
+
+#: pyfreebilling/pyfreebill/models.py:930
+msgid "Rule format"
+msgstr "Szabály formátum"
+
+#: pyfreebilling/pyfreebill/models.py:932
+#, python-format
+msgid ""
+"example for Tunisia :\n"
+"                                      ^216[%d][%d][%d][%d][%d][%d][%d][%d]\n"
+"                                      $"
+msgstr ""
+"example for Tunisia :\n"
+"                                      ^216[%d][%d][%d][%d][%d][%d][%d][%d]\n"
+"                                      $ "
+
+#: pyfreebilling/pyfreebill/models.py:944
+msgid "Destination Number Normalization Rule"
+msgstr "Destination Number normalizálás szabály "
+
+#: pyfreebilling/pyfreebill/models.py:959
+#: pyfreebilling/pyfreebill/models.py:994
+#: pyfreebilling/pyfreebill/models.py:1029
+#: pyfreebilling/pyfreebill/models.py:1063
+msgid "remove prefix"
+msgstr "remove prefix"
+
+#: pyfreebilling/pyfreebill/models.py:963
+#: pyfreebilling/pyfreebill/models.py:998
+#: pyfreebilling/pyfreebill/models.py:1033
+#: pyfreebilling/pyfreebill/models.py:1067
+msgid "add prefix"
+msgstr "add prefix"
+
+#: pyfreebilling/pyfreebill/models.py:976
+msgid "Customer Normalization Rule"
+msgstr "Ügyfél normalizálás szabály"
+
+#: pyfreebilling/pyfreebill/models.py:977
+msgid "Customer Normalization Rules"
+msgstr "Ügyfél normalizálás szabályok"
+
+#: pyfreebilling/pyfreebill/models.py:1011
+msgid "Provider Normalization Rule"
+msgstr "Szolgáltató normalizálás szabály "
+
+#: pyfreebilling/pyfreebill/models.py:1012
+msgid "Provider Normalization Rules"
+msgstr "Szolgáltató normalizálás szabályok"
+
+#: pyfreebilling/pyfreebill/models.py:1046
+msgid "Customer CallerID Normalization Rule"
+msgstr "Ügyfél CallerID normalizálás szabály"
+
+#: pyfreebilling/pyfreebill/models.py:1047
+msgid "Customer CallerID Normalization Rules"
+msgstr "Ügyfél CallerID normalizálás szabályzat"
+
+#: pyfreebilling/pyfreebill/models.py:1080
+msgid "Provider CallerID Normalization Rule"
+msgstr "Szolgáltó CallerID normalizálás szabály"
+
+#: pyfreebilling/pyfreebill/models.py:1081
+msgid "Provider CallerID Normalization Rules"
+msgstr "Szolgáltó CallerID normalizálás szabályzat"
+
+#: pyfreebilling/pyfreebill/models.py:1096
+#: pyfreebilling/pyfreebill/models.py:1127
+msgid "deny"
+msgstr "deny"
+
+#: pyfreebilling/pyfreebill/models.py:1097
+#: pyfreebilling/pyfreebill/models.py:1128
+msgid "allow"
+msgstr "allow"
+
+#: pyfreebilling/pyfreebill/models.py:1099
+msgid "default policy"
+msgstr "default policy"
+
+#: pyfreebilling/pyfreebill/models.py:1112
+msgid "ACL list"
+msgstr "ACL list"
+
+#: pyfreebilling/pyfreebill/models.py:1113
+msgid "ACL lists"
+msgstr "ACL lists"
+
+#: pyfreebilling/pyfreebill/models.py:1123
+msgid "ip/cidr Address"
+msgstr "ip/cidr Address"
+
+#: pyfreebilling/pyfreebill/models.py:1125
+msgid "Customer IP or cidr address."
+msgstr "Ügyfél IP vagy CIDR cím."
+
+#: pyfreebilling/pyfreebill/models.py:1130
+msgid "policy"
+msgstr "policy"
+
+#: pyfreebilling/pyfreebill/models.py:1135
+msgid "acl list"
+msgstr "acl list"
+
+#: pyfreebilling/pyfreebill/models.py:1145
+msgid "ACL node"
+msgstr "ACL node"
+
+#: pyfreebilling/pyfreebill/models.py:1146
+msgid "ACL nodes"
+msgstr "ACL nodes"
+
+#: pyfreebilling/pyfreebill/models.py:1156
+#: pyfreebilling/pyfreebill/models.py:1158
+#: pyfreebilling/switch/models/Switch.py:44
+#: pyfreebilling/switch/models/Switch.py:46
+msgid "Switch name"
+msgstr "Switch Név"
+
+#: pyfreebilling/pyfreebill/models.py:1159
+#: pyfreebilling/switch/models/Switch.py:58
+msgid "switch IP"
+msgstr "Switch IP"
+
+#: pyfreebilling/pyfreebill/models.py:1162
+#: pyfreebilling/switch/models/Switch.py:61
+msgid "Switch IP."
+msgstr "Switch IP"
+
+#: pyfreebilling/pyfreebill/models.py:1163
+#: pyfreebilling/switch/models/Switch.py:63
+msgid "event socket switch IP"
+msgstr "Esemény IP kapcsoló"
+
+#: pyfreebilling/pyfreebill/models.py:1166
+#: pyfreebilling/switch/models/Switch.py:66
+msgid "Event socket switch IP."
+msgstr "Esemény IP Kapcsoló"
+
+#: pyfreebilling/pyfreebill/models.py:1167
+msgid ""
+"event socket switch\n"
+"                                                    port"
+msgstr "Esemény switch port"
+
+#: pyfreebilling/pyfreebill/models.py:1170
+msgid ""
+"Event socket\n"
+"                                                              switch port."
+msgstr "Esemény switch port."
+
+#: pyfreebilling/pyfreebill/models.py:1172
+#: pyfreebilling/switch/models/Switch.py:72
+msgid "event socket switch password"
+msgstr "Jelszó"
+
+#: pyfreebilling/pyfreebill/models.py:1175
+msgid ""
+"Event socket switch\n"
+"                                                password."
+msgstr "Jelszó"
+
+#: pyfreebilling/pyfreebill/models.py:1186
+#: pyfreebilling/switch/models/Switch.py:110
+msgid "VoIP Switch"
+msgstr "VoIP Switch"
+
+#: pyfreebilling/pyfreebill/models.py:1187
+#: pyfreebilling/switch/models/Switch.py:111
+msgid "VoIP Switches"
+msgstr "VoIP Switchek"
+
+#: pyfreebilling/pyfreebill/models.py:1197
+msgid "SIP profile name"
+msgstr "SIP profil név"
+
+#: pyfreebilling/pyfreebill/models.py:1200
+msgid "E.g.: the name you want ..."
+msgstr "Pl: a kívánt nevet ... "
+
+#: pyfreebilling/pyfreebill/models.py:1201
+msgid "User agent name"
+msgstr "Felhasználói ügynök neve "
+
+#: pyfreebilling/pyfreebill/models.py:1204
+msgid ""
+"E.g.: the user agent\n"
+"                                              you want ... - take care\n"
+"                                              with certain characters\n"
+"                                              such as @ could cause others sip\n"
+"                                              proxies reject yours messages as\n"
+"                                              invalid ! "
+msgstr ""
+"Vigyázz a speciális karakterek használata nem engedélyezet, pl: @ stb...."
+
+#: pyfreebilling/pyfreebill/models.py:1210
+msgid "external RTP IP"
+msgstr "külső RTP IP"
+
+#: pyfreebilling/pyfreebill/models.py:1213
+msgid ""
+"External/public IP\n"
+"                                    address to bind to for RTP."
+msgstr ""
+"Külső / nyilvános IP\n"
+"                                     cím (to bind) az RTP."
+
+#: pyfreebilling/pyfreebill/models.py:1215
+msgid "external SIP IP"
+msgstr "külső SIP IP"
+
+#: pyfreebilling/pyfreebill/models.py:1218
+msgid ""
+"External/public IP\n"
+"                                              address to bind to for\n"
+"                                              SIP."
+msgstr "Külső nyilvános IP cim SIP"
+
+#: pyfreebilling/pyfreebill/models.py:1221
+msgid "RTP IP"
+msgstr "RTP IP"
+
+#: pyfreebilling/pyfreebill/models.py:1224
+msgid ""
+"Internal IP address to bind\n"
+"                                          to for RTP."
+msgstr "Belső IP cim RTP"
+
+#: pyfreebilling/pyfreebill/models.py:1226
+#: pyfreebilling/templates/customer/sip_account.html:60
+msgid "SIP IP"
+msgstr "SIP IP"
+
+#: pyfreebilling/pyfreebill/models.py:1229
+msgid ""
+"Internal IP address to bind\n"
+"                                          to for SIP."
+msgstr "Belső IP cim SIP"
+
+#: pyfreebilling/pyfreebill/models.py:1233
+msgid "disable transcoding"
+msgstr "disable transcoding"
+
+#: pyfreebilling/pyfreebill/models.py:1235
+msgid ""
+"If true, you\n"
+"                                                          can not use\n"
+"                                                          transcoding."
+msgstr "Ha ez igaz akkor nem használhatja az átkódolást"
+
+#: pyfreebilling/pyfreebill/models.py:1238
+msgid "accept blind registration"
+msgstr "Engedélyezett/engedélyezi regisztráció nélkül"
+
+#: pyfreebilling/pyfreebill/models.py:1240
+msgid ""
+"If true, anyone can\n"
+"                                                       register to the server\n"
+"                                                       and will not be\n"
+"                                                       challenged for\n"
+"                                                       username/password\n"
+"                                                       information."
+msgstr ""
+"Ha ez igaz, bárki regisztrálhat a szerver és nem ellenőrzi a felhasználónév "
+"/ jelszó információkat."
+
+#: pyfreebilling/pyfreebill/models.py:1246
+msgid "disable register"
+msgstr "regisztráció tiltás"
+
+#: pyfreebilling/pyfreebill/models.py:1248
+msgid ""
+"disable register\n"
+"                                                       which may be undesirable\n"
+"                                                       in a public switch "
+msgstr ""
+"regisztráció tiltás\n"
+"\n"
+"                                                  nem engedélyezett\n"
+"                                                       nyílvános switch␣"
+
+#: pyfreebilling/pyfreebill/models.py:1251
+msgid "Apply an inbound ACL"
+msgstr "Alkalmazza a bejövő ACL"
+
+#: pyfreebilling/pyfreebill/models.py:1253
+msgid ""
+"If true, FS will\n"
+"                                                      apply the default acl\n"
+"                                                      list : domains "
+msgstr ""
+"Ha ez igaz, FS\n"
+"                           alkalmazza az alapértelmezett ACL\n"
+"                           lista: domains␣"
+
+#: pyfreebilling/pyfreebill/models.py:1256
+msgid "authenticate calls"
+msgstr "Hitelesített Hívás"
+
+#: pyfreebilling/pyfreebill/models.py:1258
+msgid ""
+"If true, FreeeSWITCH will\n"
+"                                                 authorize all calls on this\n"
+"                                                 profile, i.e. challenge the\n"
+"                                                 other side for\n"
+"                                                 username/password information.\n"
+"                                                 "
+msgstr ""
+"Ha ez igaz, FreeSWITCH lesz\n"
+"                                                  engedélyezheti az összes hívás ezen\n"
+"                                                  profil, azaz (a kimenő hívás is) a\n"
+"                                                  másik oldalon\n"
+"                                                  felhasználónév / jelszó információkat."
+
+#: pyfreebilling/pyfreebill/models.py:1266
+msgid ""
+"It true, log\n"
+"                                                      authentication failures.\n"
+"                                                      Required for Fail2ban.\n"
+"                                                      "
+msgstr ""
+"Igaz, logolja a\n"
+"                                                       hitelesítési hibákat.\n"
+"                                                       Szükséges Fail2ban."
+
+#: pyfreebilling/pyfreebill/models.py:1289
+msgid "inbound codec prefs"
+msgstr "bejövő codec prefs"
+
+#: pyfreebilling/pyfreebill/models.py:1293
+msgid ""
+"Define allowed\n"
+"                                                       preferred codecs for\n"
+"                                                       inbound calls."
+msgstr "Adjuk engedélyezett kívánt kodeket bejövő hívásokat. "
+
+#: pyfreebilling/pyfreebill/models.py:1296
+msgid "outbound codec prefs"
+msgstr "kimenő codec prefs"
+
+#: pyfreebilling/pyfreebill/models.py:1300
+msgid ""
+"Define allowed\n"
+"                                                        preferred codecs for\n"
+"                                                        outbound calls."
+msgstr "Adjuk engedélyezett kívánt kodeket kimenő hívásokat. "
+
+#: pyfreebilling/pyfreebill/models.py:1303
+msgid ""
+"Agressive NAT\n"
+"                                                     detection"
+msgstr ""
+"Agresszív NAT\n"
+"                                                  érzékelés"
+
+#: pyfreebilling/pyfreebill/models.py:1306
+msgid ""
+"This will\n"
+"                                                               enable NAT mode\n"
+"                                                               if the network\n"
+"                                                               IP/port from\n"
+"                                                               which therequest\n"
+"                                                               was received\n"
+"                                                               differs from the\n"
+"                                                               IP/Port\n"
+"                                                               combination in\n"
+"                                                               the SIP Via:\n"
+"                                                               header, or if\n"
+"                                                               the Via: header\n"
+"                                                               contains the\n"
+"                                                               received\n"
+"                                                               parameter"
+msgstr ""
+"Ez engedélyezett\n"
+"                                                               engedélyezett NAT mód\n"
+"                                                               ha a hálózat\n"
+"                                                               IP / port\n"
+"                                                               amely kérés\n"
+"                                                               érkezett\n"
+"                                                               különbözik a\n"
+"                                                               IP / Port\n"
+"                                                               kombináció\n"
+"                                                               A SIP Via:\n"
+"                                                               fejléc, vagy ha\n"
+"                                                               Via: fejléc\n"
+"                                                               tartalmazza a\n"
+"                                                               kapott\n"
+"                                                               paraméter"
+
+#: pyfreebilling/pyfreebill/models.py:1321
+msgid ""
+"NDLB received\n"
+"                                                  in nat reg contact"
+msgstr ""
+"NDLB kapott\n"
+"                                                   in nat reg contact"
+
+#: pyfreebilling/pyfreebill/models.py:1324
+msgid ""
+"add a;received=\n"
+"                                                            \"ip:port\"\n"
+"                                                            to the contact when\n"
+"                                                            replying to\n"
+"                                                            register\n"
+"                                                            for nat handling\n"
+"                                                            "
+msgstr ""
+"adjunk hozzá egy; kapott =\n"
+"                                                             \"Ip: port\"\n"
+"                                                             Az érintkezés során\n"
+"                                                             válaszüzenet\n"
+"                                                             Regisztráció\n"
+"                                                             A nat kezelése"
+
+#: pyfreebilling/pyfreebill/models.py:1333
+msgid "safe"
+msgstr "Biztonságos"
+
+#: pyfreebilling/pyfreebill/models.py:1335
+msgid "NDLB Force rport"
+msgstr "NDLB Force rport"
+
+#: pyfreebilling/pyfreebill/models.py:1341
+msgid ""
+"This will force\n"
+"                                                    FreeSWITCH to send\n"
+"                                                    SIP responses to the\n"
+"                                                    network port from\n"
+"                                                    which they were received.\n"
+"                                                    Use at your own risk!"
+msgstr ""
+"Ez arra kényszeríti\n"
+"                                                     FreeSWITCH küldeni\n"
+"                                                     SIP válaszok\n"
+"                                                     hálózati port\n"
+"                                                     mellyel azokat fogadták.\n"
+"                                                     Csak saját felelősségre!"
+
+#: pyfreebilling/pyfreebill/models.py:1347
+msgid ""
+"NDLB broken auth hash\n"
+"                                                  "
+msgstr ""
+"NDLB törött auth hash ␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣ ␣␣␣␣ "
+
+#: pyfreebilling/pyfreebill/models.py:1350
+msgid ""
+"Used for when\n"
+"                                                            phones respond to a\n"
+"                                                            challenged ACK\n"
+"                                                            with method INVITE\n"
+"                                                            in the hash"
+msgstr ""
+"Használt, ha a telefon válaszoljon a kifogásolt ACK a módszer Meghívás a "
+"hash "
+
+#: pyfreebilling/pyfreebill/models.py:1355
+msgid "Enable timer"
+msgstr "Engedélyezett Időzítés"
+
+#: pyfreebilling/pyfreebill/models.py:1357
+msgid ""
+"This enables or disables\n"
+"                                                   support for RFC 4028 SIP\n"
+"                                                   Session Timers"
+msgstr ""
+"Ez lehetővé teszi, vagy letiltja a\n"
+"                                                    támogatása RFC 4028 SIP\n"
+"                                                    Session Időzítők"
+
+#: pyfreebilling/pyfreebill/models.py:1360
+msgid "Session timeout"
+msgstr "Munkamenet időtúllépés"
+
+#: pyfreebilling/pyfreebill/models.py:1362
+msgid ""
+"session\n"
+"                                                              timers for all\n"
+"                                                              call to expire\n"
+"                                                              after the\n"
+"                                                              specified seconds\n"
+"                                                              Then it will send\n"
+"                                                              another invite\n"
+"                                                              --re-invite. If\n"
+"                                                              not specified\n"
+"                                                              defaults to 30\n"
+"                                                              minutes. Some\n"
+"                                                              gateways may\n"
+"                                                              reject values\n"
+"                                                              less than 30\n"
+"                                                              minutes. This\n"
+"                                                              values refers to\n"
+"                                                              Session-Expires\n"
+"                                                              in RFC 4028 -The\n"
+"                                                              time at which\n"
+"                                                              an element will\n"
+"                                                              consider the\n"
+"                                                              session timed\n"
+"                                                              out, if no\n"
+"                                                              successful\n"
+"                                                              session refresh\n"
+"                                                              transaction\n"
+"                                                              occurs\n"
+"                                                              beforehand-\n"
+"                                                              "
+msgstr ""
+"munkamenet időzítő minden hívás után lejár a megadott másodpercig, majd küld"
+" egy másik meghívást --re meghívás. Ha nincs megadva alapértelmezés szerint "
+"30 perc alatt. Néhány átjárók elutasíthatja értékeket kevesebb, mint 30 perc"
+" alatt. Ezek az értékek utal Session-Lejár RFC 4028 -Az idő, amikor egy elem"
+" meg fogja vizsgálni a munkamenet időtúllépés, ha nem sikeres a munkamenet "
+"frissítési ügylet bekövetkezik beforehand- ␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣␣"
+
+#: pyfreebilling/pyfreebill/models.py:1391
+msgid "RTP rewrite timestamps"
+msgstr "RTP újraírása időbélyeggel"
+
+#: pyfreebilling/pyfreebill/models.py:1393
+msgid ""
+"If you don't want to pass\n"
+"                                           through timestampes from 1 RTP call\n"
+"                                           to another"
+msgstr ""
+"Ha nem akarja átadni\n"
+"                                            keresztül időbélyeggel 1 RTP hívás\n"
+"                                            másikba"
+
+#: pyfreebilling/pyfreebill/models.py:1396
+#: pyfreebilling/pyfreebill/models.py:1398
+msgid "pass rfc2833"
+msgstr "pass rfc2833"
+
+#: pyfreebilling/pyfreebill/models.py:1412
+#: pyfreebilling/pyfreebill/models.py:1439
+msgid "SIP profile"
+msgstr "SIP profile"
+
+#: pyfreebilling/pyfreebill/models.py:1436
+msgid ""
+"A gateway must belong to a domain.\n"
+"            This domain must be used in SIP message"
+msgstr ""
+
+#: pyfreebilling/pyfreebill/models.py:1440
+msgid ""
+"Which Sip Profile\n"
+"                                        communication with this gateway will\n"
+"                                        take place on."
+msgstr ""
+"Melyik SIP-profil\n"
+"                                         kommunikáció során átjáró\n"
+"                                         kerül sor."
+
+#: pyfreebilling/pyfreebill/models.py:1446
+msgid "channels number"
+msgstr "channels number"
+
+#: pyfreebilling/pyfreebill/models.py:1448
+msgid ""
+"maximum simultaneous\n"
+"                                               calls allowed for this gateway.\n"
+"                                               "
+msgstr ""
+"maximális egyidejű\n"
+"                                                kéri erre engedélyezett átjárót."
+
+#: pyfreebilling/pyfreebill/models.py:1486
+msgid "username"
+msgstr "username"
+
+#: pyfreebilling/pyfreebill/models.py:1496
+msgid "proxy"
+msgstr "Proxy"
+
+#: pyfreebilling/pyfreebill/models.py:1499
+msgid "IP if register is False."
+msgstr "IP ha regiszter Hamis."
+
+#: pyfreebilling/pyfreebill/models.py:1501
+msgid "UDP"
+msgstr "UDP"
+
+#: pyfreebilling/pyfreebill/models.py:1502
+msgid "TCP"
+msgstr "TCP"
+
+#: pyfreebilling/pyfreebill/models.py:1503
+msgid "TLS"
+msgstr "TLS"
+
+#: pyfreebilling/pyfreebill/models.py:1505
+msgid "SIP transport"
+msgstr "SIP transport"
+
+#: pyfreebilling/pyfreebill/models.py:1509
+msgid "Which transport to use for register"
+msgstr ""
+
+#: pyfreebilling/pyfreebill/models.py:1510
+msgid "extension number"
+msgstr "extension number"
+
+#: pyfreebilling/pyfreebill/models.py:1514
+msgid ""
+"Extension for inbound calls.\n"
+"                                     Same as username, if blank."
+msgstr ""
+"Extension bejövő hívásokat.\n"
+"                                      Ugyanaz, mint a felhasználónév, ha üres."
+
+#: pyfreebilling/pyfreebill/models.py:1516
+msgid "realm"
+msgstr "realm"
+
+#: pyfreebilling/pyfreebill/models.py:1520
+msgid ""
+"Authentication realm. Same as\n"
+"                                 gateway name, if blank."
+msgstr ""
+"Hitelesítési tartománynak. Ugyanaz, mint a\n"
+"                                  átjáró neve, ha üres."
+
+#: pyfreebilling/pyfreebill/models.py:1522
+msgid "from domain"
+msgstr "from domain"
+
+#: pyfreebilling/pyfreebill/models.py:1526
+msgid ""
+"Domain to use in from field.\n"
+"                                       Same as realm if blank."
+msgstr "Nt használni / engedélyezni"
+
+#: pyfreebilling/pyfreebill/models.py:1528
+msgid "expire seconds"
+msgstr "lejár (o) másodperc"
+
+#: pyfreebilling/pyfreebill/models.py:1531
+msgid "retry seconds"
+msgstr "újra másodperc"
+
+#: pyfreebilling/pyfreebill/models.py:1534
+msgid ""
+"How many\n"
+"                                                    seconds before a retry when\n"
+"                                                    a failure or timeout occurs\n"
+"                                                    "
+msgstr ""
+"(vár) ennyi\n"
+"                                                     másodpercet, mielőtt újra megkísérelni, amikor\n"
+"                                                     hiba vagy időtúllépés miatt (megszakadt)"
+
+#: pyfreebilling/pyfreebill/models.py:1538
+msgid "caller ID in From field"
+msgstr "hívóazonosító From mezőben"
+
+#: pyfreebilling/pyfreebill/models.py:1540
+msgid ""
+"Use the callerid of\n"
+"                                                an inbound call in the from\n"
+"                                                field on outbound calls via\n"
+"                                                this gateway."
+msgstr "Használja CallerID beérkező hivásknál és a kimenő hivásoknál egyaránt"
+
+#: pyfreebilling/pyfreebill/models.py:1545
+msgid "none"
+msgstr "Egyik sem"
+
+#: pyfreebilling/pyfreebill/models.py:1546
+msgid "default"
+msgstr "Alapértelmezett"
+
+#: pyfreebilling/pyfreebill/models.py:1547
+msgid "pid"
+msgstr "pid"
+
+#: pyfreebilling/pyfreebill/models.py:1548
+msgid "rpid"
+msgstr "rpid"
+
+#: pyfreebilling/pyfreebill/models.py:1550
+msgid "SIP CID type"
+msgstr "SIP CID type"
+
+#: pyfreebilling/pyfreebill/models.py:1554
+msgid ""
+"Modify callerID in SDP\n"
+"                                        Headers."
+msgstr "Módosít callerID in SDP"
+
+#: pyfreebilling/pyfreebill/models.py:1565
+msgid "Sofia gateway"
+msgstr "Sofia gateway"
+
+#: pyfreebilling/pyfreebill/models.py:1566
+msgid "Sofia gateways"
+msgstr "Sofia gateways"
+
+#: pyfreebilling/pyfreebill/models.py:1576
+msgid "Hangup code"
+msgstr "Hangup code"
+
+#: pyfreebilling/pyfreebill/models.py:1578
+msgid "ITU-T Q.850 Code."
+msgstr "ITU-T Q.850 Code."
+
+#: pyfreebilling/pyfreebill/models.py:1579
+msgid "enumeration"
+msgstr "Felsorolás"
+
+#: pyfreebilling/pyfreebill/models.py:1583
+msgid "enumeration."
+msgstr "felsorolás."
+
+#: pyfreebilling/pyfreebill/models.py:1584
+msgid "cause"
+msgstr "cause"
+
+#: pyfreebilling/pyfreebill/models.py:1588
+msgid "Cause."
+msgstr "Cause."
+
+#: pyfreebilling/pyfreebill/models.py:1600
+#: pyfreebilling/pyfreebill/models.py:1634
+#: pyfreebilling/pyfreebill/models.py:1672
+msgid "hangupcause"
+msgstr "hangup ok"
+
+#: pyfreebilling/pyfreebill/models.py:1601
+msgid "hangupcauses"
+msgstr "hangap ok"
+
+#: pyfreebilling/pyfreebill/models.py:1612
+#: pyfreebilling/templates/customer/cdr_view.html:48
+#: pyfreebilling/templates/customer/cdr_view.html:161
+msgid "day"
+msgstr "nap"
+
+#: pyfreebilling/pyfreebill/models.py:1613
+msgid "day of the week"
+msgstr "a hét napja"
+
+#: pyfreebilling/pyfreebill/models.py:1614
+msgid "hour"
+msgstr "óra"
+
+#: pyfreebilling/pyfreebill/models.py:1615
+#: pyfreebilling/templates/customer/cdr_view.html:31
+#: pyfreebilling/templates/customer/cdr_view.html:144
+msgid "month"
+msgstr "hónap"
+
+#: pyfreebilling/pyfreebill/models.py:1616
+msgid "quarter"
+msgstr "negyed (óra)"
+
+#: pyfreebilling/pyfreebill/models.py:1617
+#: pyfreebilling/templates/customer/cdr_view.html:19
+#: pyfreebilling/templates/customer/cdr_view.html:132
+msgid "year"
+msgstr "év"
+
+#: pyfreebilling/pyfreebill/models.py:1623
+msgid "date dimension"
+msgstr "dátum /dimenzió"
+
+#: pyfreebilling/pyfreebill/models.py:1624
+msgid "date dimensions"
+msgstr "dátum /dimenziók"
+
+#: pyfreebilling/pyfreebill/models.py:1635
+#: pyfreebilling/pyfreebill/models.py:1654
+#: pyfreebilling/pyfreebill/models.py:1673
+#: pyfreebilling/pyfreebill/models.py:1692
+#: pyfreebilling/pyfreebill/models.py:1710
+#: pyfreebilling/pyfreebill/models.py:1750
+msgid "date"
+msgstr "dátum"
+
+#: pyfreebilling/pyfreebill/models.py:1636
+#: pyfreebilling/pyfreebill/models.py:1655
+#: pyfreebilling/pyfreebill/models.py:1674
+#: pyfreebilling/pyfreebill/models.py:1693
+#: pyfreebilling/pyfreebill/models.py:1711
+#: pyfreebilling/pyfreebill/models.py:1751
+msgid "total calls"
+msgstr "összes hívás"
+
+#: pyfreebilling/pyfreebill/models.py:1642
+#: pyfreebilling/pyfreebill/models.py:1643
+msgid "Customer Hangupcause stats"
+msgstr "Ügyfél (SIP) Hangup statisztika"
+
+#: pyfreebilling/pyfreebill/models.py:1653
+#: pyfreebilling/pyfreebill/models.py:1691
+msgid "sip hangupcause"
+msgstr "sip hangupcause"
+
+#: pyfreebilling/pyfreebill/models.py:1661
+#: pyfreebilling/pyfreebill/models.py:1662
+msgid "Customer SIP Hangupcause stats"
+msgstr "Ügyfél (SIP) Hangup statisztika"
+
+#: pyfreebilling/pyfreebill/models.py:1680
+#: pyfreebilling/pyfreebill/models.py:1681
+msgid "Provider Hangupcause stats"
+msgstr "Szolgáltató hangup statisztika"
+
+#: pyfreebilling/pyfreebill/models.py:1699
+#: pyfreebilling/pyfreebill/models.py:1700
+msgid "Provider SIP Hangupcause stats"
+msgstr "Szolgáltató hangup statisztika"
+
+#: pyfreebilling/pyfreebill/models.py:1712
+#: pyfreebilling/pyfreebill/models.py:1752
+msgid "success calls"
+msgstr "sikeres hívások"
+
+#: pyfreebilling/pyfreebill/models.py:1714
+#: pyfreebilling/pyfreebill/models.py:1754
+msgid "average duration"
+msgstr "átlagos időtartam"
+
+#: pyfreebilling/pyfreebill/models.py:1715
+#: pyfreebilling/pyfreebill/models.py:1755
+msgid "max duration"
+msgstr "max időtartam"
+
+#: pyfreebilling/pyfreebill/models.py:1716
+#: pyfreebilling/pyfreebill/models.py:1756
+msgid "min duration"
+msgstr "minimális időtartama"
+
+#: pyfreebilling/pyfreebill/models.py:1724
+#: pyfreebilling/pyfreebill/models.py:1725
+msgid "Customer destination stats"
+msgstr "Ügyfél számla statisztika"
+
+#: pyfreebilling/pyfreebill/models.py:1764
+#: pyfreebilling/pyfreebill/models.py:1765
+msgid "Provider destination stats"
+msgstr "Szolgáltató számla statisztika"
+
+#: pyfreebilling/pyfreebill/modules.py:29
+msgid "Sales stats"
+msgstr "Eladási statisztika"
+
+#: pyfreebilling/pyfreebill/modules.py:40
+msgid "Sales"
+msgstr "Eladás"
+
+#: pyfreebilling/pyfreebill/validators.py:43
+#, python-format
+msgid "%s is not a valid VAT number"
+msgstr "%s Érvénytelen adószám"
+
+#: pyfreebilling/switch/models/Domain.py:30
+msgid "Domain"
+msgstr "Domain"
+
+#: pyfreebilling/switch/models/Domain.py:34
+msgid "Domain identifier"
+msgstr ""
+
+#: pyfreebilling/switch/models/Domain.py:36
+msgid "Unique identifier for the domain."
+msgstr ""
+
+#: pyfreebilling/switch/models/Domain.py:38
+msgid "Default"
+msgstr "Default"
+
+#: pyfreebilling/switch/models/Domain.py:39
+#: pyfreebilling/templates/customer/sip_account.html:74
+msgid "Disabled"
+msgstr "Disabled"
+
+#: pyfreebilling/switch/models/Domain.py:40
+msgid "Canonical"
+msgstr "Canonical"
+
+#: pyfreebilling/switch/models/Domain.py:41
+msgid "Allowed_to"
+msgstr "Allowed_to"
+
+#: pyfreebilling/switch/models/Domain.py:42
+msgid "Allowed_From"
+msgstr "Allowed_From"
+
+#: pyfreebilling/switch/models/Domain.py:43
+msgid "For_serweb"
+msgstr "For_serweb"
+
+#: pyfreebilling/switch/models/Domain.py:44
+msgid "Pending"
+msgstr "Pending (függőben lévő)"
+
+#: pyfreebilling/switch/models/Domain.py:45
+msgid "Deleted"
+msgstr "Törölve"
+
+#: pyfreebilling/switch/models/Domain.py:46
+msgid "Caller_deleted"
+msgstr "Caller_deleted"
+
+#: pyfreebilling/switch/models/Domain.py:47
+msgid "Calle_deleted"
+msgstr "Calle_deleted"
+
+#: pyfreebilling/switch/models/Domain.py:50
+#: pyfreebilling/switch/models/Switch.py:80
+msgid "flags"
+msgstr "flags"
+
+#: pyfreebilling/switch/models/Domain.py:53
+msgid "Kamailio flags."
+msgstr "Kamailio flags."
+
+#: pyfreebilling/switch/models/Switch.py:49
+msgid "KAMAILIO"
+msgstr "KAMAILIO"
+
+#: pyfreebilling/switch/models/Switch.py:50
+msgid "FREESWITCH FOR TECHNICAL VOICE MESSAGES"
+msgstr "FREESWITCH FOR TECHNICAL VOICE MESSAGES"
+
+#: pyfreebilling/switch/models/Switch.py:53
+msgid "Switch type"
+msgstr "Switch tipus"
+
+#: pyfreebilling/switch/models/Switch.py:56
+msgid "Select the switch type (Kamailio, FreeSwitch)"
+msgstr ""
+
+#: pyfreebilling/switch/models/Switch.py:68
+msgid "event socket switch port"
+msgstr "esemény socket switch port "
+
+#: pyfreebilling/switch/models/Switch.py:70
+msgid "Event socket switch port."
+msgstr "Esemény socket switch port. "
+
+#: pyfreebilling/switch/models/Switch.py:75
+msgid "Event socket switch password."
+msgstr "Esemény aljzat kapcsoló jelszót. "
+
+#: pyfreebilling/switch/models/Switch.py:82
+msgid "Flags."
+msgstr "Flags."
+
+#: pyfreebilling/switch/models/Switch.py:86
+#: pyfreebilling/switch/models/Switch.py:152
+msgid "Priority."
+msgstr "Priority."
+
+#: pyfreebilling/switch/models/Switch.py:88
+msgid "attrs"
+msgstr "attrs"
+
+#: pyfreebilling/switch/models/Switch.py:92
+msgid "Attrs."
+msgstr "Attrs."
+
+#: pyfreebilling/switch/models/Switch.py:98
+#: pyfreebilling/switch/models/Switch.py:166
+msgid "Description."
+msgstr "Description. (Leírás)"
+
+#: pyfreebilling/switch/models/Switch.py:125
+msgid "Sip profile"
+msgstr "Sip profile"
+
+#: pyfreebilling/switch/models/Switch.py:129
+msgid "FS server"
+msgstr "FS server"
+
+#: pyfreebilling/switch/models/Switch.py:137
+msgid "OUT"
+msgstr "OUT"
+
+#: pyfreebilling/switch/models/Switch.py:140
+msgid "Call direction"
+msgstr "Call direction"
+
+#: pyfreebilling/switch/models/Switch.py:143
+msgid "Select the direction of calls for this profile"
+msgstr ""
+
+#: pyfreebilling/switch/models/Switch.py:145
+msgid "context IP"
+msgstr "context IP"
+
+#: pyfreebilling/switch/models/Switch.py:148
+msgid "Sofia context IP address."
+msgstr "Sofia context IP address."
+
+#: pyfreebilling/switch/models/Switch.py:159
+msgid "Kamailio server"
+msgstr "Kamailio server"
+
+#: pyfreebilling/switch/models/Switch.py:178
+msgid "FS profile"
+msgstr "FS profile"
+
+#: pyfreebilling/switch/models/Switch.py:179
+msgid "FS profiles"
+msgstr "FS profiles"
+
+#: pyfreebilling/switch/validators.py:29
+msgid "Invalid FreeSWITCH variable."
+msgstr "Hibás FreeSWITCH beállítás"
+
+#: pyfreebilling/switch/validators.py:38
+msgid "Enter an integer or a FreeSWITCH variable."
+msgstr "Adjon meg egy egész számot, vagy egy FreeSWITCH változó."
+
+#: pyfreebilling/switch/validators.py:48
+msgid "Enter a valid IPv4 address, or a FreeSWITCH variable."
+msgstr "Adjon meg egy érvényes IPv4 cím vagy egy FreeSWITCH változó."
+
+#: pyfreebilling/templates/admin/_base.html:7
+msgid "Django site admin"
+msgstr "Django site admin"
+
+#: pyfreebilling/templates/admin/_base.html:61
+msgid "Welcome,"
+msgstr "Üdvözöljük,"
+
+#: pyfreebilling/templates/admin/_base.html:66
+msgid "View site"
+msgstr "View site (A webhely megtekintése)"
+
+#: pyfreebilling/templates/admin/_base.html:71
+#: pyfreebilling/templates/admin/_base.html:176
+msgid "Documentation"
+msgstr "Documentáció"
+
+#: pyfreebilling/templates/admin/_base.html:139
+msgid "back"
+msgstr "back"
+
+#: pyfreebilling/templates/admin/_base.html:167
+msgid "View customer site"
+msgstr ""
+
+#: pyfreebilling/templates/admin/_base.html:193
+msgid "Customers list"
+msgstr "Ügyfél lista"
+
+#: pyfreebilling/templates/admin/_base.html:201
+#: pyfreebilling/templates/customer/base.html:26
+msgid "SIP Accounts"
+msgstr "SIP Accounts"
+
+#: pyfreebilling/templates/admin/_base.html:230
+msgid "Providers list"
+msgstr "Szolgáltatók listája"
+
+#: pyfreebilling/templates/admin/_base.html:262
+msgid "CalleeID norm. rules"
+msgstr "CalleeID norm. rules"
+
+#: pyfreebilling/templates/admin/_base.html:270
+msgid "CallerId norm. rules"
+msgstr "CallerId norm. rules"
+
+#: pyfreebilling/templates/admin/_base.html:323
+msgid "CallerID prefix management"
+msgstr "CallerID előtag menedzsment"
+
+#: pyfreebilling/templates/admin/_base.html:381
+msgid "Destination customer statistics"
+msgstr ""
+
+#: pyfreebilling/templates/admin/_base.html:397
+msgid "Destination provider statistics"
+msgstr ""
+
+#: pyfreebilling/templates/admin/_base.html:434
+msgid "Access attempts"
+msgstr "Hozzáférési kisérletek"
+
+#: pyfreebilling/templates/admin/_base.html:442
+msgid "Honeypot logs"
+msgstr "Honeypot logs"
+
+#: pyfreebilling/templates/admin/_base.html:450
+msgid "Recurring tasl logs"
+msgstr ""
+
+#: pyfreebilling/templates/admin/_base.html:463
+msgid "FS switches"
+msgstr "FS switches"
+
+#: pyfreebilling/templates/admin/_base.html:479
+msgid "SIP Domain"
+msgstr "SIP Domain"
+
+#: pyfreebilling/templates/admin/_base.html:559
+msgid "Hide applications"
+msgstr ""
+
+#: pyfreebilling/templates/admin/_base.html:560
+msgid "Show hidden"
+msgstr ""
+
+#: pyfreebilling/templates/admin/_base.html:589
+#: pyfreebilling/templates/admin/_base.html:608
+msgid "Add bookmark"
+msgstr ""
+
+#: pyfreebilling/templates/admin/_base.html:592
+msgid "Title"
+msgstr "Title"
+
+#: pyfreebilling/templates/admin/_base.html:602
+msgid "Delete bookmark"
+msgstr ""
+
+#: pyfreebilling/templates/admin/_base.html:603
+msgid "Are you sure want to delete this bookmark?"
+msgstr ""
+
+#: pyfreebilling/templates/admin/_base.html:610
+msgid "bookmarks"
+msgstr ""
+
+#: pyfreebilling/templates/admin/_base.html:618
+#: pyfreebilling/templates/admin/_base.html:625
+msgid "Remove"
+msgstr "Eltávolít"
+
+#: pyfreebilling/templates/admin/_base.html:655
+msgid "Application page"
+msgstr ""
+
+#: pyfreebilling/templates/admin/_base.html:679
+msgid "current theme"
+msgstr ""
+
+#: pyfreebilling/templates/admin/_index.html:62
+#: pyfreebilling/templates/admin/list_models.html:31
+#, python-format
+msgid "'%(name)s' section links."
+msgstr ""
+
+#: pyfreebilling/templates/admin/_index.html:112
+#: pyfreebilling/templates/admin/list_models.html:81
+#: pyfreebilling/templates/reporting/admin/index.html:35
+msgid "Change"
+msgstr "Változtat"
+
+#: pyfreebilling/templates/admin/_index.html:140
+#: pyfreebilling/templates/reporting/admin/index.html:54
+msgid "My Actions"
+msgstr "My Actions "
+
+#: pyfreebilling/templates/admin/_index.html:142
+msgid "No history yet"
+msgstr "No history yet"
+
+#: pyfreebilling/templates/admin/_index.html:149
+#: pyfreebilling/templates/reporting/admin/index.html:72
+msgid "Unknown content"
+msgstr "Ismeretlen tartalom"
+
+#: pyfreebilling/templates/admin/admin_status.html:4
+msgid "PyFreeBilling : version"
+msgstr "PyFreeBilling: verzió"
+
+#: pyfreebilling/templates/admin/cdr/change_list.html:13
+msgid "Export"
+msgstr "Export"
+
+#: pyfreebilling/templates/admin/cdr/change_list.html:21
+msgid "Total Minutes"
+msgstr "Összes Perc"
+
+#: pyfreebilling/templates/admin/cdr/change_list.html:22
+msgid "Average Minutes"
+msgstr "Átlagos Perc"
+
+#: pyfreebilling/templates/admin/cdr/change_list.html:23
+msgid "Total Sell"
+msgstr "Összesen eladása"
+
+#: pyfreebilling/templates/admin/cdr/change_list.html:24
+msgid "Total Cost"
+msgstr "Összköltsége"
+
+#: pyfreebilling/templates/admin/cdr/change_list.html:25
+msgid "Margin"
+msgstr "Margin"
+
+#: pyfreebilling/templates/admin/cost_summary_change_list.html:71
+#: pyfreebilling/templates/admin/sale_summary_change_list.html:71
+msgid "Successfull"
+msgstr "Successfull"
+
+#: pyfreebilling/templates/admin/cost_summary_change_list.html:71
+#: pyfreebilling/templates/admin/sale_summary_change_list.html:71
+msgid "Failed"
+msgstr "Failed"
+
+#: pyfreebilling/templates/admin/cost_summary_change_list.html:124
+msgid "Cost vs. margin vs. Call Volume Over Time by "
+msgstr ""
+
+#: pyfreebilling/templates/admin/cost_summary_change_list.html:138
+msgid "Cost / Margin"
+msgstr "Cost / Margin"
+
+#: pyfreebilling/templates/admin/cost_summary_change_list.html:152
+#: pyfreebilling/templates/admin/sale_summary_change_list.html:152
+msgid "Nb of calls"
+msgstr "Nb of calls"
+
+#: pyfreebilling/templates/admin/cost_summary_change_list.html:175
+msgid "Cost Summary"
+msgstr ""
+
+#: pyfreebilling/templates/admin/cost_summary_change_list.html:181
+msgid "Top 5 providers"
+msgstr ""
+
+#: pyfreebilling/templates/admin/cost_summary_change_list.html:182
+#: pyfreebilling/templates/admin/sale_summary_change_list.html:182
+msgid "Successfull vs. Failed calls"
+msgstr ""
+
+#: pyfreebilling/templates/admin/customerdirectory/customerdirectory/change_list.html:12
+#: pyfreebilling/templates/admin/pyfreebill/sofiagateway/change_list.html:11
+#, python-format
+msgid "Add %(name)s"
+msgstr "Add %(name)s"
+
+#: pyfreebilling/templates/admin/customers_stats.html:8
+msgid "PyFreeBilling : stats"
+msgstr "PyFreeBilling: statisztikák"
+
+#: pyfreebilling/templates/admin/customers_stats.html:183
+#: pyfreebilling/templates/customer/cdr_view.html:267
+#: pyfreebilling/templates/customer/rates.html:43
+#: pyfreebilling/templates/customer/rates.html:67
+msgid "Destination"
+msgstr "Rendeltetési hely "
+
+#: pyfreebilling/templates/admin/customers_stats.html:190
+#: pyfreebilling/templates/admin/live_report.html:41
+msgid "search"
+msgstr "kereső"
+
+#: pyfreebilling/templates/admin/customers_stats.html:197
+msgid "statistics"
+msgstr ""
+
+#: pyfreebilling/templates/admin/customers_stats.html:199
+msgid "from"
+msgstr ""
+
+#: pyfreebilling/templates/admin/customers_stats.html:200
+msgid "to"
+msgstr ""
+
+#: pyfreebilling/templates/admin/did/did/simple_import/import.html:7
+msgid "Did import wizard"
+msgstr "Did import varázsló"
+
+#: pyfreebilling/templates/admin/did/did/simple_import/import.html:11
+msgid "Import"
+msgstr "Import"
+
+#: pyfreebilling/templates/admin/did/did/simple_import/import.html:21
+#: pyfreebilling/templates/simple_import/match_columns.html:85
+msgid "Next step"
+msgstr "Következő lépés"
+
+#: pyfreebilling/templates/admin/license.html:5
+msgid "PyFreeBilling : AGPL License"
+msgstr "PyFreeBilling: AGPL licensz"
+
+#: pyfreebilling/templates/admin/list_models.html:102
+#: pyfreebilling/templates/reporting/admin/index.html:45
+msgid "You don't have permission to edit anything."
+msgstr "Ön, nem jogosult szerkeszteni."
+
+#: pyfreebilling/templates/admin/live_report.html:16
+msgid "CDR selection form"
+msgstr "CDR kiválasztási űrlap"
+
+#: pyfreebilling/templates/admin/live_report.html:17
+msgid "Form"
+msgstr "Ürlap"
+
+#: pyfreebilling/templates/admin/live_report.html:21
+msgid "Select"
+msgstr "Választ"
+
+#: pyfreebilling/templates/admin/live_report.html:29
+#: pyfreebilling/templates/admin/login.html:26
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] "Kérjük javitsa kia hibát"
+msgstr[1] "Többes: Kérjük javítsa az alábbi hibákat."
+
+#: pyfreebilling/templates/admin/live_report.html:37
+msgid "search option"
+msgstr "keresési opciók"
+
+#: pyfreebilling/templates/admin/live_report.html:42
+msgid "reset"
+msgstr "reset"
+
+#: pyfreebilling/templates/admin/login.html:26
+msgid "Please correct the errors below."
+msgstr "Kérjük javítsa az alábbi hibákat."
+
+#: pyfreebilling/templates/admin/login.html:52
+msgid "Forgotten your password or username?"
+msgstr "Elfelejtette jelszavát vagy felhasználónevét?"
+
+#: pyfreebilling/templates/admin/login.html:56
+msgid "Log in"
+msgstr "Bejelentkezés"
+
+#: pyfreebilling/templates/admin/pyfreebill/company/change_form.html:12
+#: pyfreebilling/templates/customer/balance.html:59
+#: pyfreebilling/templates/customer/home.html:76
+msgid "Balance"
+msgstr "Egyenleg"
+
+#: pyfreebilling/templates/admin/pyfreebill/company/change_form.html:17
+msgid "Customer SIP"
+msgstr "Ügyfél SIP"
+
+#: pyfreebilling/templates/admin/pyfreebill/company/change_form.html:28
+msgid "Gateway"
+msgstr "Gateway"
+
+#: pyfreebilling/templates/admin/sale_summary_change_list.html:124
+msgid "Revenue vs. margin vs. Call Volume Over Time by "
+msgstr ""
+
+#: pyfreebilling/templates/admin/sale_summary_change_list.html:138
+msgid "Revenue / Margin"
+msgstr ""
+
+#: pyfreebilling/templates/admin/sale_summary_change_list.html:175
+msgid "Sales Summary"
+msgstr ""
+
+#: pyfreebilling/templates/admin/sale_summary_change_list.html:181
+msgid "Top 5 customers"
+msgstr ""
+
+#: pyfreebilling/templates/admin/server_status.html:7
+msgid "PyFreeBilling : serveur status"
+msgstr "PyFreeBilling : szerver státusz"
+
+#: pyfreebilling/templates/admin/server_status.html:13
+#: pyfreebilling/templates/admin/server_status.html:18
+msgid "Serveur status"
+msgstr "Szerver Státusz"
+
+#: pyfreebilling/templates/admin/server_status.html:30
+#: pyfreebilling/templates/admin/server_status.html:117
+msgid "System"
+msgstr "System"
+
+#: pyfreebilling/templates/admin/server_status.html:37
+msgid "OS"
+msgstr "OS"
+
+#: pyfreebilling/templates/admin/server_status.html:41
+msgid "Hostname"
+msgstr "Host név"
+
+#: pyfreebilling/templates/admin/server_status.html:45
+msgid "Uptime"
+msgstr "Uptime"
+
+#: pyfreebilling/templates/admin/server_status.html:49
+msgid "CPU Cores"
+msgstr "CPU Cores"
+
+#: pyfreebilling/templates/admin/server_status.html:65
+msgid "Logged in"
+msgstr "Bejelentkezve"
+
+#: pyfreebilling/templates/admin/server_status.html:73
+#: pyfreebilling/templates/admin/server_status.html:113
+msgid "User"
+msgstr "User"
+
+#: pyfreebilling/templates/admin/server_status.html:74
+msgid "Started"
+msgstr "Started"
+
+#: pyfreebilling/templates/admin/server_status.html:75
+msgid "Host"
+msgstr "Host"
+
+#: pyfreebilling/templates/admin/server_status.html:102
+msgid "CPU"
+msgstr "CPU"
+
+#: pyfreebilling/templates/admin/server_status.html:102
+msgid "cores"
+msgstr "Cores"
+
+#: pyfreebilling/templates/admin/server_status.html:109
+msgid "Load average"
+msgstr "Load average"
+
+#: pyfreebilling/templates/admin/server_status.html:121
+msgid "Idle"
+msgstr "Idle"
+
+#: pyfreebilling/templates/admin/server_status.html:125
+msgid "I/O wait"
+msgstr "I/O wait"
+
+#: pyfreebilling/templates/admin/server_status.html:141
+msgid "Memory"
+msgstr "Memory"
+
+#: pyfreebilling/templates/admin/server_status.html:148
+#: pyfreebilling/templates/admin/server_status.html:187
+#: pyfreebilling/templates/admin/server_status.html:268
+msgid "Total"
+msgstr "Total"
+
+#: pyfreebilling/templates/admin/server_status.html:152
+msgid "Available"
+msgstr "Elérhető"
+
+#: pyfreebilling/templates/admin/server_status.html:156
+#: pyfreebilling/templates/admin/server_status.html:160
+#: pyfreebilling/templates/admin/server_status.html:191
+#: pyfreebilling/templates/admin/server_status.html:269
+msgid "Used"
+msgstr "Used"
+
+#: pyfreebilling/templates/admin/server_status.html:156
+msgid "excl. cache and buffers"
+msgstr "nem tartalmaz. cache és pufferek"
+
+#: pyfreebilling/templates/admin/server_status.html:160
+msgid "incl. cache and buffers"
+msgstr "incl. cache és pufferek"
+
+#: pyfreebilling/templates/admin/server_status.html:164
+#: pyfreebilling/templates/admin/server_status.html:195
+#: pyfreebilling/templates/admin/server_status.html:270
+msgid "Free"
+msgstr "Free"
+
+#: pyfreebilling/templates/admin/server_status.html:180
+msgid "Swap"
+msgstr "Swap"
+
+#: pyfreebilling/templates/admin/server_status.html:199
+msgid "Swapped in"
+msgstr "Swapped in"
+
+#: pyfreebilling/templates/admin/server_status.html:203
+msgid "Swapped out"
+msgstr "Swapped out"
+
+#: pyfreebilling/templates/admin/server_status.html:221
+msgid "Network I/O"
+msgstr "Network I/O"
+
+#: pyfreebilling/templates/admin/server_status.html:229
+msgid "Name"
+msgstr "Név"
+
+#: pyfreebilling/templates/admin/server_status.html:230
+msgid "IP"
+msgstr "IP"
+
+#: pyfreebilling/templates/admin/server_status.html:231
+msgid "P. Dropped"
+msgstr "P. Dropped"
+
+#: pyfreebilling/templates/admin/server_status.html:232
+msgid "P. Error"
+msgstr "P. Error"
+
+#: pyfreebilling/templates/admin/server_status.html:258
+msgid "Disk usage"
+msgstr "Disk usage"
+
+#: pyfreebilling/templates/admin/server_status.html:266
+msgid "Device"
+msgstr "Device"
+
+#: pyfreebilling/templates/admin/server_status.html:267
+msgid "Mounted"
+msgstr "Mounted"
+
+#: pyfreebilling/templates/customer/404.html:3
+msgid "Page Not found"
+msgstr "Az oldal nem található"
+
+#: pyfreebilling/templates/customer/404.html:5
+msgid "Page not found"
+msgstr "Az oldal nem található"
+
+#: pyfreebilling/templates/customer/404.html:6
+msgid "This is not the page you were looking for"
+msgstr "Ez nem az az oldal, amit keresett"
+
+#: pyfreebilling/templates/customer/balance.html:5
+msgid "PyFreeBilling : Customer Portal Balance History"
+msgstr "PyFreeBilling: Ügyfél Számlatörténet (számlaegyenleg)"
+
+#: pyfreebilling/templates/customer/balance.html:13
+#: pyfreebilling/templates/customer/home.html:50
+msgid "Financial Summary"
+msgstr "Pénzügyi összefoglaló"
+
+#: pyfreebilling/templates/customer/balance.html:19
+#: pyfreebilling/templates/customer/home.html:56
+msgid "Active"
+msgstr "Actív"
+
+#: pyfreebilling/templates/customer/balance.html:21
+#: pyfreebilling/templates/customer/home.html:58
+msgid "Suspended"
+msgstr "Felfüggesztett"
+
+#: pyfreebilling/templates/customer/balance.html:23
+#: pyfreebilling/templates/customer/home.html:60
+msgid "Account status"
+msgstr "Account status"
+
+#: pyfreebilling/templates/customer/balance.html:39
+#: pyfreebilling/templates/customer/home.html:66
+msgid "Postpaid"
+msgstr "Előfizetés"
+
+#: pyfreebilling/templates/customer/balance.html:41
+#: pyfreebilling/templates/customer/home.html:68
+msgid "Payment type"
+msgstr "Fizetési mód"
+
+#: pyfreebilling/templates/customer/balance.html:69
+#: pyfreebilling/templates/customer/cdr_view.html:263
+msgid "Date"
+msgstr "Dátum"
+
+#: pyfreebilling/templates/customer/balance.html:70
+msgid "Amount refund"
+msgstr "Túlfizetés"
+
+#: pyfreebilling/templates/customer/balance.html:71
+msgid "Amount debited"
+msgstr "Hátralék"
+
+#: pyfreebilling/templates/customer/balance.html:72
+msgid "Resulting balance"
+msgstr "Egyenleg (túlfizetés - hátralék különbsége)"
+
+#: pyfreebilling/templates/customer/base.html:19
+msgid "PyFreeBilling : Customer portal"
+msgstr "PyFreeBilling: Ügyfél portál"
+
+#: pyfreebilling/templates/customer/base.html:28
+msgid "Report"
+msgstr "Riport"
+
+#: pyfreebilling/templates/customer/cdr_view.html:5
+msgid "PyFreeBilling : Customer Portal CDR"
+msgstr "PyFreeBilling: Ügyfélportál CDR"
+
+#: pyfreebilling/templates/customer/cdr_view.html:13
+msgid "CDR search"
+msgstr "CDR keresés"
+
+#: pyfreebilling/templates/customer/cdr_view.html:16
+msgid "From date"
+msgstr "Dátum -tól"
+
+#: pyfreebilling/templates/customer/cdr_view.html:129
+msgid "To date"
+msgstr "Dátum -ig"
+
+#: pyfreebilling/templates/customer/cdr_view.html:248
+#: pyfreebilling/templates/customer/rates.html:56
+msgid "Search"
+msgstr "Keresés"
+
+#: pyfreebilling/templates/customer/cdr_view.html:264
+msgid "Destination number"
+msgstr "célállomás számát "
+
+#: pyfreebilling/templates/customer/cdr_view.html:265
+msgid "Duration"
+msgstr "Időtartam"
+
+#: pyfreebilling/templates/customer/cdr_view.html:270
+msgid "Codec"
+msgstr "Codec"
+
+#: pyfreebilling/templates/customer/cdr_view.html:271
+msgid "SIP_UA IP"
+msgstr "SIP_UA IP"
+
+#: pyfreebilling/templates/customer/home.html:4
+msgid "PyFreeBilling : Customer Portal Home Page"
+msgstr "PyFreeBilling: Ügyfél Portál kezdőlap"
+
+#: pyfreebilling/templates/customer/home.html:9
+msgid "Admin interface : click here"
+msgstr "Admin felület: kattintson ide"
+
+#: pyfreebilling/templates/customer/home.html:17
+msgid "Account Summary"
+msgstr "Számlaösszegző"
+
+#: pyfreebilling/templates/customer/home.html:28
+msgid "Street Addresses"
+msgstr "Cím Utca"
+
+#: pyfreebilling/templates/customer/home.html:113
+#: pyfreebilling/templates/customer/rates.html:20
+msgid "Priority"
+msgstr ""
+
+#: pyfreebilling/templates/customer/home.html:114
+#: pyfreebilling/templates/customer/rates.html:21
+msgid "Ratecard"
+msgstr ""
+
+#: pyfreebilling/templates/customer/home.html:115
+#: pyfreebilling/templates/customer/rates.html:22
+msgid "Tech prefix"
+msgstr ""
+
+#: pyfreebilling/templates/customer/home.html:116
+msgid "Discount"
+msgstr ""
+
+#: pyfreebilling/templates/customer/home.html:118
+msgid "Rates details"
+msgstr ""
+
+#: pyfreebilling/templates/customer/home.html:119
+#: pyfreebilling/templates/customer/rates.html:25
+msgid "Rates download"
+msgstr ""
+
+#: pyfreebilling/templates/customer/home.html:131
+#: pyfreebilling/templates/customer/rates.html:36
+msgid "Download"
+msgstr ""
+
+#: pyfreebilling/templates/customer/login.html:4
+msgid "PyFreeBilling : Customer Portal Login Page"
+msgstr "PyFreeBilling: Ügyfél Portál Bjelentkezési oldal"
+
+#: pyfreebilling/templates/customer/login.html:15
+msgid "Please sign in"
+msgstr "Kérem jelentkezzen be"
+
+#: pyfreebilling/templates/customer/login.html:21
+msgid "Sign In"
+msgstr "Bejelentkezett"
+
+#: pyfreebilling/templates/customer/rates.html:5
+#: pyfreebilling/templates/customer/rates_table.html:11
+msgid "PyFreeBilling : Customer Portal Rates"
+msgstr "PyFreeBilling: Ügyfélkapu"
+
+#: pyfreebilling/templates/customer/rates.html:14
+msgid "Rates search"
+msgstr ""
+
+#: pyfreebilling/templates/customer/rates.html:23
+msgid "Ciscount"
+msgstr ""
+
+#: pyfreebilling/templates/customer/rates.html:68
+msgid "Numeric prefix"
+msgstr ""
+
+#: pyfreebilling/templates/customer/register.html:5
+msgid "PyFreeBilling : Customer Portal Register Page"
+msgstr "PyFreeBilling: Ügyfélkapu"
+
+#: pyfreebilling/templates/customer/report.html:4
+msgid "PyFreeBilling : Customer Portal Report"
+msgstr "PyFreeBilling: Ügyfélkapu jelentés"
+
+#: pyfreebilling/templates/customer/report.html:12
+msgid "Daily CDR Reports (Last 7 Days)"
+msgstr "Napi CDR Reports (az utolsó 7 napban)"
+
+#: pyfreebilling/templates/customer/report.html:58
+msgid "Monthly CDR reports (Last 3 Months)"
+msgstr "Havi CDR jelentések (utolsó 3 hónap)"
+
+#: pyfreebilling/templates/customer/sip_account.html:5
+msgid "PyFreeBilling : Customer Portal SIP Accounts"
+msgstr "PyFreeBilling : Customer Portal SIP Accounts"
+
+#: pyfreebilling/templates/customer/sip_account.html:13
+msgid "IP Authentification"
+msgstr "IP hitelesítés"
+
+#: pyfreebilling/templates/customer/sip_account.html:18
+msgid ""
+"You only need to specify our switch ip address in your system. To get it, "
+"please contact support"
+msgstr ""
+"Csak akkor kell megadni a switch IP-címét a rendszernek. Ahhoz, hogy ez, "
+"lépjen kapcsolatba az ügyfélszolgálatal"
+
+#: pyfreebilling/templates/customer/sip_account.html:33
+msgid ""
+"Your system needs to register with correct username/password. If you lost "
+"your password, please contact support"
+msgstr ""
+"Rendszer üzenet: regisztrálja magát a helyes felhasználónév / jelszó.\n"
+"Ha elfelejtette a jelszavát, lépjen kapcsolatba az ügyfélszolgálatal."
+
+#: pyfreebilling/templates/customer/sip_account.html:43
+msgid "Misc"
+msgstr "Egyébb"
+
+#: pyfreebilling/templates/customer/sip_account.html:48
+msgid ""
+"If you need to modify limits, adding, modifying or deleting a sip account, "
+"please contact support team"
+msgstr ""
+"Ha módosítania kell korlátokat, hozzátéve, módosítása vagy törlése a SIP-ről"
+" támogató csoport "
+
+#: pyfreebilling/templates/customer/sip_account.html:58
+msgid "SIP auth type"
+msgstr "SIP auth type"
+
+#: pyfreebilling/templates/customer/sip_account.html:59
+msgid "Username"
+msgstr "Felhasználó név"
+
+#: pyfreebilling/templates/customer/sip_account.html:61
+msgid "Max calls"
+msgstr "Max hívás"
+
+#: pyfreebilling/templates/customer/sip_account.html:62
+msgid "Calls/sec"
+msgstr "Calls/sec"
+
+#: pyfreebilling/templates/customer/sip_account.html:69
+msgid "IP Auth"
+msgstr "IP Auth"
+
+#: pyfreebilling/templates/model_report/report.html:15
+msgid "Click and drag in the plot area to zoom in"
+msgstr "Kattintson és húzza az egeret a terület nagyításához"
+
+#: pyfreebilling/templates/model_report/report.html:16
+msgid "Drag your finger over the plot to zoom in"
+msgstr "A nagyításhoz fogja és húzza"
+
+#: pyfreebilling/templates/model_report/report.html:96
+msgid "Go to..."
+msgstr "Go to..."
+
+#: pyfreebilling/templates/model_report/report_list.html:17
+msgid "Report list"
+msgstr "Riport lista"
+
+#: pyfreebilling/templates/reporting/admin/index.html:18
+#, python-format
+msgid "Models available in the %(name)s application."
+msgstr ""
+
+#: pyfreebilling/templates/reporting/admin/index.html:19
+#, python-format
+msgid "%(name)s"
+msgstr "%(name)s"
+
+#: pyfreebilling/templates/reporting/admin/index.html:58
+msgid "None available"
+msgstr "Nem elérhető"
+
+#: pyfreebilling/templates/reporting/admin/index.html:81
+msgid "View Reports"
+msgstr "Riport nézet"
+
+#: pyfreebilling/templates/simple_import/match_relations.html:58
+msgid "Run actual import"
+msgstr "Run aktuális import"
+
+#: pyfreebilling/templates/simple_import/match_relations.html:60
+msgid "Simulate import"
+msgstr "Simulate import"
+
+#: pyfreebilling/urgencyfr/models.py:48 pyfreebilling/urgencyfr/models.py:172
+msgid "Code INSEE"
+msgstr "Code INSEE"
+
+#: pyfreebilling/urgencyfr/models.py:51 pyfreebilling/urgencyfr/models.py:64
+msgid ""
+"Pour les communes appartenant à\n"
+"            un département dont le code commence par « 0 »,\n"
+"            il est nécessaire de saisir aussi le code insee\n"
+"            sur 5 chiffres."
+msgstr ""
+
+#: pyfreebilling/urgencyfr/models.py:56
+msgid "Ville"
+msgstr ""
+
+#: pyfreebilling/urgencyfr/models.py:59
+msgid "Nouveau Code INSEE"
+msgstr ""
+
+#: pyfreebilling/urgencyfr/models.py:82 pyfreebilling/urgencyfr/models.py:83
+msgid "code ville INSEE"
+msgstr "code ville INSEE"
+
+#: pyfreebilling/urgencyfr/models.py:92 pyfreebilling/urgencyfr/models.py:108
+#: pyfreebilling/urgencyfr/models.py:126
+msgid "Numéro court d'urgence"
+msgstr ""
+
+#: pyfreebilling/urgencyfr/models.py:109
+msgid "Numéros court d'urgence"
+msgstr ""
+
+#: pyfreebilling/urgencyfr/models.py:118
+msgid "id CAAU"
+msgstr "id CAAU"
+
+#: pyfreebilling/urgencyfr/models.py:120
+msgid ""
+"Sigle utilisé pour identifier les centres\n"
+"            d'accueil des appels d'urgence dans les tableaux.\n"
+"            Il doit correspondre à la spécification définie par\n"
+"            le GT399 « logiciel de sécurité civile » qui a défini\n"
+"            une nomenclature des centres sur 10 caractères."
+msgstr ""
+
+#: pyfreebilling/urgencyfr/models.py:130
+msgid "Nouveau numéro court d'urgence"
+msgstr ""
+
+#: pyfreebilling/urgencyfr/models.py:137
+msgid "new date"
+msgstr ""
+
+#: pyfreebilling/urgencyfr/models.py:154
+msgid "Centre d'accueil des appels d'urgence"
+msgstr ""
+
+#: pyfreebilling/urgencyfr/models.py:155
+msgid "Centres d'accueil des appels d'urgence"
+msgstr ""
+
+#: pyfreebilling/urgencyfr/models.py:165
+msgid "Numéro d'urgence"
+msgstr ""
+
+#: pyfreebilling/urgencyfr/models.py:169
+msgid "CAAU"
+msgstr "CAAU"
+
+#: pyfreebilling/urgencyfr/models.py:178
+msgid "Nouveau CAAU"
+msgstr ""
+
+#: pyfreebilling/urgencyfr/models.py:196
+msgid "Plan départemental d'acheminement des appels"
+msgstr ""
+
+#: pyfreebilling/urgencyfr/models.py:197
+msgid "Plans départemental d'acheminement des appels"
+msgstr ""
