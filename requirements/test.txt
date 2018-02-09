@@ -64,7 +64,7 @@ pycparser==2.18           # via cffi
 pyflakes==1.6.0           # via flake8
 python-dateutil==2.6.1    # via django-chroniker, faker
 python-stdnum==1.8.1      # via vatnumber
-pytz==2017.03
+pytz==2018.3
 pyyaml==3.12              # via tablib
 requests==2.18.4
 six==1.11.0               # via argon2-cffi, bcrypt, django-chroniker, django-extensions, django-templated-email, faker, python-dateutil
