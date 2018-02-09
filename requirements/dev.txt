@@ -60,7 +60,7 @@ pyOpenSSL==17.5.0
 python-dateutil==2.6.1    # via django-chroniker
 python-slugify==1.2.4     # via transifex-client
 python-stdnum==1.8.1      # via vatnumber
-pytz==2017.03
+pytz==2018.3
 pyyaml==3.12              # via tablib
 requests-futures==0.9.7   # via piprot
 requests==2.18.4
