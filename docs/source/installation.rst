@@ -95,7 +95,7 @@ The /etc/kamailio/kamctlrc is the configuration file for kamctl and kamdbctl too
 Set also the DBENGINE to be PGSQL and adjust other setting as you want. Very important are the passwords to connect to PostgreSSQL server, respectively DBRWPW and DBROPW. By default, their values are kamailiorw and kamailioro. You should change them before executing kamdbctl create (step detailed the section Create Database).
 
 ::
-  
+
     sed "/^[# ]*SIP_DOMAIN/cSIP_DOMAIN=sip.<DOMAIN>.net" -i /etc/kamailio/kamctlrc
     sed '/^[# ]*DBENGINE/cDBENGINE=PGSQL' -i /etc/kamailio/kamctlrc
     sed '/^[# ]*DBHOST/cDBHOST=localhost' -i /etc/kamailio/kamctlrc
@@ -162,7 +162,7 @@ First you may also need to edit /etc/default/kamailio and adjust the setting for
     */10 * * * * /usr/sbin/kamcmd dialplan.reload>> /var/log/cron.log 2>&1
     */10 * * * * /usr/sbin/kamcmd dispatcher.reload>> /var/log/cron.log 2>&1
     */10 * * * * /usr/sbin/kamcmd permissions.addressReload>> /var/log/cron.log 2>&1
-    
+
 
 
 
@@ -180,7 +180,7 @@ SBC installation
         # you may want to populate /etc/freeswitch at this point.
         # if /etc/freeswitch does not exist, the standard vanilla configuration is deployed
         apt-get update && apt-get install -y freeswitch-meta-bare freeswitch-mod-commands freeswitch-meta-codecs freeswitch-mod-console freeswitch-mod-logfile freeswitch-conf-vanilla freeswitch-mod-lua freeswitch-mod-cdr-csv freeswitch-mod-event-socket freeswitch-mod-sofia freeswitch-mod-sofia-dbg freeswitch-mod-loopback freeswitch-mod-db freeswitch-mod-dptools freeswitch-mod-hash freeswitch-mod-esl freeswitch-mod-dialplan-xml freeswitch-dbg freeswitch-mod-directory freeswitch-mod-nibblebill
-        apt-get install -f odbc-postgresql unixodbc-bin unixodbc-dev
+        apt-get install -f odbc-postgresql unixodbc-bin unixodbc-dev libdbd-pg-perl libtext-csv-perl
 
 * If you do not want to use snmp, comment the corresponding line in modules.conf.xml.
 
@@ -315,7 +315,7 @@ Pyfreebilling installation
 
 ::
 
-        git clone https://github.com/mwolff44/pyfreebilling.git -b 2.0-beta
+        git clone https://github.com/mwolff44/pyfreebilling.git -b v2.0
         chown -R www-data:www-data pyfreebilling
         cd pyfreebilling
 
@@ -373,15 +373,15 @@ Pyfreebilling installation
         #  ######### END COUNTRY SPECIFIC
 
         #  ######### SPECIFIC SETTINGS
-        
+
         OPENEXCHANGERATES_APP_ID = "Your API Key"
 
         #-- Nb days of CDR to show
         PFB_NB_ADMIN_CDR = 30
         PFB_NB_CUST_CDR = 30
-        
+
         #  ######### END SPECIFIC SETTINGS
-        
+
         #  ######### EMAIL CONFIGURATION
         # EMAIL SETUP
         TEMPLATED_EMAIL_BACKEND = 'templated_email.backends.vanilla_django.TemplateBackend'
@@ -409,7 +409,6 @@ Pyfreebilling installation
 
         python manage.py loaddata 0001_initial_SipProfile.json
         python manage.py loaddata 0001_initial_ReccurentTasks.json
-        python manage.py updatecurrencies (if you have set your Openexchange API key)
         python manage.py collectstatic (answer 'yes')
 
 
@@ -437,15 +436,15 @@ Pyfreebilling installation
         chmod 600 /tmp/cdr-csv/Master.csv
         chown freeswitch:freeswitch /tmp/cdr-csv/Master.csv
         chown -R freeswitch:daemon /tmp/cdr-csv/
-        
+
 You need to adapt acl_conf.xml to accept sip requests from kamailio.
-        
+
 * configure Kamailio :
 
 ::
 
         cp /usr/local/venv/pyfreebilling/install/resources/kam/config/* /etc/kamailio/
-        
+
 Adapt the data in kamctlrc and kamailio-local.cfg (do not touch kamailio.cfg)
 
 
