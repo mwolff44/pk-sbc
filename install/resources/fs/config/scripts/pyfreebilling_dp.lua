@@ -1083,6 +1083,14 @@ if (session:ready() == true) then
       end
       myvarbridge = myvarbridge .. ",ratecard_id="..rate["ratecard_id"]
       if channel["call-type"] == "PSTN" or channel["call-type"] == "EMERGENCY" then
+          if lcr_gwcaller_id_in_from[i] == '0' then
+              log("WS CALL callerid_in_from : false : ", lcr_gwcaller_id_in_from[i], "debug")
+              lcr_gwcaller_id_in_from[i] = "false"
+          elseif lcr_gwcaller_id_in_from[i] == '1' then
+              log("WS CALL callerid_in_from : true : ", lcr_gwcaller_id_in_from[i], "debug")
+              lcr_gwcaller_id_in_from[i] = "true"
+          end
+
           myvarbridge = myvarbridge .. ",caller-id-in-from="..lcr_gwcaller_id_in_from[i]
           myvarbridge = myvarbridge .. ",sip_auth_username="..lcr_gwusername[i]
           myvarbridge = myvarbridge .. ",sip_auth_password="..lcr_gwpassword[i]
