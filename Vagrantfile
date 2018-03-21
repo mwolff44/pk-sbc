@@ -97,7 +97,7 @@ Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
   config.vm.boot_timeout = 240
 
-  #config.vbguest.auto_update = true
-  #config.vbguest.auto_reboot = true
-  #config.vbguest.installer_arguments = ['--nox11']
+  config.vbguest.auto_update = true
+  config.vbguest.auto_reboot = true
+  config.vbguest.installer_arguments = ['--nox11']
 end
