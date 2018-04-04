@@ -49,7 +49,7 @@ Sip server installation
 
 ::
 
-    apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xfb40d3e6508ea4c8
+    wget -O- http://deb.kamailio.org/kamailiodebkey.gpg | sudo apt-key add -
     apt-get update
     apt-get install libpq5 libpq-dev
     apt-get install kamailio kamailio-tls-modules kamailio-postgres-modules kamailio-outbound-modules kamailio-extra-modules kamailio-xml-modules
