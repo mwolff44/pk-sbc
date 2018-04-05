@@ -308,6 +308,7 @@ Pyfreebilling installation
 
 ::
 
+        cd /usr/local/venv
         git clone https://github.com/mwolff44/pyfreebilling.git -b v2.0
         chown -R www-data:www-data pyfreebilling
         cd pyfreebilling
