@@ -410,6 +410,7 @@ Pyfreebilling installation
 
 ::
 
+        mkdir /usr/share/freeswitch/scripts
         cd /usr/local/venv/pyfreebilling/install/resources/fs/config
         cp -av conf/autoload_configs/* /etc/freeswitch/autoload_configs/
         cp -av conf/dialplan/* /etc/freeswitch/dialplan/
