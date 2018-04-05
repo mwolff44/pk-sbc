@@ -138,7 +138,7 @@ To create the database structure needed by Kamailio, run:
 
 ::
 
-    echo :*:*:pyfreebilling:mypasswd > /root/.pgpass
+    echo *:*:*:pyfreebilling:mypasswd > /root/.pgpass
     # Change **mypasswd** by  kamailiorw db password
     chmod 600 /root/.pgpass
     kamdbctl create
