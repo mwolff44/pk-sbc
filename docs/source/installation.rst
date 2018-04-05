@@ -27,6 +27,30 @@ First, you need to install these packages
 ::
 
     apt-get install git-core build-essential autoconf automake libtool libtool-bin libncurses5 libncurses5-dev gawk libjpeg-dev zlib1g-dev pkg-config libssl-dev libpq-dev unixodbc-dev odbc-postgresql postgresql postgresql-client libpq-dev libxml2-dev libxslt-dev ntp ntpdate libapache2-mod-wsgi apache2 gcc python-setuptools python-pip libdbd-pg-perl libtext-csv-perl sqlite3 libsqlite3-dev libcurl4-openssl-dev libpcre3-dev libspeex-dev libspeexdsp-dev libldns-dev libedit-dev libmemcached-dev python-psycopg2 python-dev libgeoip-dev libffi-dev
+    
+Postgresql configuration
+========================
+
+* create user and database :
+
+::
+
+    su postgres
+
+::
+
+    createuser -P pyfreebilling --interactive
+        Enter password for new role:
+        Enter it again:
+        Shall the new role be a superuser? (y/n) n
+        Shall the new role be allowed to create databases? (y/n) y
+        Shall the new role be allowed to create more new roles? (y/n) y
+
+::
+
+    createdb -O pyfreebilling -E UTF8 pyfreebilling
+    exit
+
 
 Sip server installation
 =======================
@@ -99,7 +123,7 @@ Set also the DBENGINE to be PGSQL and adjust other setting as you want. Very imp
     sed "/^[# ]*SIP_DOMAIN/cSIP_DOMAIN=sip.<DOMAIN>.net" -i /etc/kamailio/kamctlrc
     sed '/^[# ]*DBENGINE/cDBENGINE=PGSQL' -i /etc/kamailio/kamctlrc
     sed '/^[# ]*DBHOST/cDBHOST=localhost' -i /etc/kamailio/kamctlrc
-    sed '/^[# ]*DBNAME/cDBNAME=kamailio' -i /etc/kamailio/kamctlrc
+    sed '/^[# ]*DBNAME/cDBNAME=kamailiopyfb' -i /etc/kamailio/kamctlrc
     sed '/^[# ]*DBRWUSER/cDBRWUSER=kamailio' -i /etc/kamailio/kamctlrc
     sed '/^[# ]*DBRWPW/cDBRWPW="kamailio"' -i /etc/kamailio/kamctlrc
     sed '/^[# ]*DBROUSER/cDBROUSER=kamailioro' -i /etc/kamailio/kamctlrc
@@ -108,7 +132,7 @@ Set also the DBENGINE to be PGSQL and adjust other setting as you want. Very imp
 
 
 * Create DB :
-  Install Kamailio DB with db name pyfreebilling and drop these tables : usr_preferences, subscriber, address, dbaliases and dialplan.
+  Install Kamailio DB with db name kamailiopyfb and drop these tables : usr_preferences, subscriber, address, dbaliases and dialplan.
 
 To create the database structure needed by Kamailio, run:
 
@@ -123,18 +147,6 @@ The database name created in PostgreSQL is kamailio. Two access users to Postgre
 
 * kamailio - (with password set by DBRWPW in kamctlrc) - user which has full access rights to kamailio database
 * kamailioro - (with password set by DBROPW in kamctlrc) - user which has read-only access rights to kamailio database
-
-And drop uneeded tables (on DB server) :
-
-::
-
-    su postgres
-    psql kamailiopyfb
-    kamailiopyfb=# drop table usr_preferences;
-    kamailiopyfb=# drop table subscriber;
-    kamailiopyfb=# drop table address;
-    kamailiopyfb=# drop table dbaliases;
-    kamailiopyfb=# drop table dialplan;
 
 
 * Start / stop kamailio :
@@ -185,28 +197,9 @@ SBC installation
 * If you do not want to use snmp, comment the corresponding line in modules.conf.xml.
 
 
-Postgresql configuration
+ODBC configuration
 ========================
 
-* create user and database :
-
-::
-
-    su postgres
-
-::
-
-    createuser -P pyfreebilling --interactive
-        Enter password for new role:
-        Enter it again:
-        Shall the new role be a superuser? (y/n) n
-        Shall the new role be allowed to create databases? (y/n) y
-        Shall the new role be allowed to create more new roles? (y/n) y
-
-::
-
-    createdb -O pyfreebilling -E UTF8 pyfreebilling
-    exit
 
 * set odbc parameters; you need to create and edit /etc/odbc.ini file. Do not forget to specify your postgres password !
 
