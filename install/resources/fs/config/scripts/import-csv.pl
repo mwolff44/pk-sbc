@@ -151,15 +151,13 @@ foreach my $line (@LS) {
         my $insert_str = "insert into $pg_table (customer_id, customer_ip, uuid, caller_id_number, destination_number, chan_name, start_stamp, answered_stamp, end_stamp, duration, read_codec, write_codec, hangup_cause, hangup_cause_q850, gateway_id, cost_rate, prefix, country, rate, init_block, block_min_duration, lcr_carrier_id_id, ratecard_id_id, lcr_group_id_id, sip_user_agent, sip_rtp_rxstat, sip_rtp_txstat, bleg_uuid, switchname, switch_ipv4, hangup_disposition, effectiv_duration, sip_hangup_cause, effective_duration, billsec, total_sell, total_cost, sell_destination, cost_destination, customerdirectory_id) values ( \'".$fields[0]."\', \'".$fields[1]."\', \'".$fields[2]."\', \'".$fields[3]."\', \'".$fields[4]."\', \'".$fields[5]."\', \'".$fields[6]."\', ".$fields[7].", \'".$fields[8]."\', \'".$fields[9]."\', \'".$fields[10]."\', \'".$fields[11]."\', \'".$fields[12]."\', \'".$fields[13]."\', ".$fields[14].", \'".$fields[15]."\', \'".$fields[16]."\', \'".$fields[17]."\', \'".$fields[18]."\', \'".$fields[19]."\', \'".$fields[20]."\', ".$fields[21].", ".$fields[22].", ".$fields[23].", \'".$fields[24]."\', \'".$fields[25]."\', \'".$fields[26]."\', \'".$fields[27]."\', \'".$host."\', \'".$addr."\', \'".$fields[30]."\', \'".$fields[31]."\', \'".$fields[32]."\', \'".$effectiveduration."\', \'".$billsec."\', \'".$totalsell."\', \'".$totalcost."\', \'".$fields[33]."\', \'".$fields[34]."\', \'".$fields[35]."\');";
 #       print $insert_str."\n";
         my $sth = $dbh->prepare($insert_str) or die "$0: Couldn't prepare statement $insert_str: " . $dbh->errstr;;
-        #$sth->execute();
-        #$sth->finish();
+        $sth->execute();
+        $sth->finish();
         } else {
             my $err = $csv->error_input;
 #           print "Failed to parse line: $err";
         }
     }
-    $sth->execute();
-    $sth->finish();
     # $dbh->disconnect();
     close (cdr_log);
 
