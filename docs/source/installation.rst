@@ -132,7 +132,7 @@ Set also the DBENGINE to be PGSQL and adjust other setting as you want. Very imp
 
 
 * Create DB :
-  Install Kamailio DB with db name kamailiopyfb and drop these tables : usr_preferences, subscriber, address, dbaliases and dialplan.
+  Install Kamailio DB with db name kamailiopyfb (do not install extra tables) and drop these tables : usr_preferences, subscriber, address, dbaliases and dialplan.
 
 To create the database structure needed by Kamailio, run:
 
