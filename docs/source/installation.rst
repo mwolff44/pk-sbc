@@ -128,7 +128,7 @@ Set also the DBENGINE to be PGSQL and adjust other setting as you want. Very imp
     sed '/^[# ]*DBRWPW/cDBRWPW="kamailio"' -i /etc/kamailio/kamctlrc
     sed '/^[# ]*DBROUSER/cDBROUSER=kamailioro' -i /etc/kamailio/kamctlrc
     sed '/^[#]*DBROPW/cDBROPW=kamailioro' -i /etc/kamailio/kamctlrc
-    sed '/^[# ]*DBROOTUSER/cDBROOTUSER="postgres" ' -i /etc/kamailio/kamctlrc
+    sed '/^[# ]*DBROOTUSER/cDBROOTUSER="pyfreebilling" ' -i /etc/kamailio/kamctlrc
 
 
 * Create DB :
