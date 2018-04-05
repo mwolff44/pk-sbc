@@ -36,17 +36,6 @@ DATABASES = {
 }
 #  ######### END DATABASE CONFIGURATION
 
-#  ######### DEV SPECIFIC
-INSTALLED_APPS += (
-    'django_extensions',
-    'debug_toolbar',
-    'pyfreebilling.urgencyfr.apps.UrgencyfrConfig',
-)
-
-MIDDLEWARE_CLASSES += (
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-)
-
 INTERNAL_IPS = ('10.0.3.27', )
 
 RUNSERVERPLUS_SERVER_ADDRESS_PORT = '0.0.0.0:8000'
