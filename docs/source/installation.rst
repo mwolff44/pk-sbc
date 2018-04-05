@@ -327,7 +327,7 @@ Pyfreebilling installation
         from .base import *
 
         #  ######### DEBUG CONFIGURATION
-        DEBUG = True
+        DEBUG = False
         #  ######### END DEBUG CONFIGURATION
 
         #  ######### MANAGER CONFIGURATION
