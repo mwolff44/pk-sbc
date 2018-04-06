@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'kamailio_location_list' %}">Location Listing</a></p>
+<table class="table">
+<tr>
+<td>ID</td><td>Link</td>
+    <td>ruid</td>
+    <td>username</td>
+    <td>domain</td>
+    <td>contact</td>
+    <td>received</td>
+    <td>path</td>
+    <td>expires</td>
+    <td>q</td>
+    <td>callid</td>
+    <td>cseq</td>
+    <td>last_modified</td>
+    <td>flags</td>
+    <td>cfags</td>
+    <td>user_agent</td>
+    <td>socket</td>
+    <td>methods</td>
+    <td>instance</td>
+    <td>reg_id</td>
+    <td>server_id</td>
+    <td>connection_id</td>
+    <td>keepalive</td>
+    <td>partition</td>
+</tr>
+{% for object in object_list %}
+<tr>
+    <td>{{object.pk}}</td>
+    <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>
+    <td>{{ object.ruid }}</td>
+    <td>{{ object.username }}</td>
+    <td>{{ object.domain }}</td>
+    <td>{{ object.contact }}</td>
+    <td>{{ object.received }}</td>
+    <td>{{ object.path }}</td>
+    <td>{{ object.expires }}</td>
+    <td>{{ object.q }}</td>
+    <td>{{ object.callid }}</td>
+    <td>{{ object.cseq }}</td>
+    <td>{{ object.last_modified }}</td>
+    <td>{{ object.flags }}</td>
+    <td>{{ object.cfags }}</td>
+    <td>{{ object.user_agent }}</td>
+    <td>{{ object.socket }}</td>
+    <td>{{ object.methods }}</td>
+    <td>{{ object.instance }}</td>
+    <td>{{ object.reg_id }}</td>
+    <td>{{ object.server_id }}</td>
+    <td>{{ object.connection_id }}</td>
+    <td>{{ object.keepalive }}</td>
+    <td>{{ object.partition }}</td>
+</tr>
+{% endfor %}
+</table><a class="btn btn-primary" href="{% url 'kamailio_location_create' %}">Create new Location</a>
+{% endblock %}

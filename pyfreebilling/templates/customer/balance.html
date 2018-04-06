@@ -17,7 +17,7 @@
 	          		<li class="list-group-item">
 	          			{% if company.customer_enabled %}
 	          				<span class="badge">{% trans "Active" %}</span>
-	          			{% else %} 
+	          			{% else %}
 	          				<span class="badge alert-warning">{% trans "Suspended" %}</span>
 	          			{% endif %}
 	          			{% trans "Account status" %}
@@ -54,7 +54,7 @@
 	          	<ul class="list-group">
 	          		<li class="list-group-item">
 	          			<span class="badge">
-	          				{{ company.customer_balance|floatformat:2 }} {{ company.cb_currency }}
+	          				{{ company.customer_balance|floatformat:2 }}
 	          			</span>
 	          			{% trans "Balance" %}
 	          		</li>
@@ -77,9 +77,9 @@
 	{% for b in CustomerBalance %}
 		<tr>
 			<td>{{ b.date_modified|date:"D d M Y" }}</td>
-			<td class="text-right">{{ b.amount_refund|floatformat:2 }} {{ company.cb_currency }}</td>
-			<td class="text-right">{{ b.amount_debited|floatformat:2 }} {{ company.cb_currency }}</td>
-			<td class="text-right">{{ b.customer_balance|floatformat:2 }} {{ company.cb_currency }}</td>
+			<td class="text-right">{{ b.amount_refund|floatformat:2 }}</td>
+			<td class="text-right">{{ b.amount_debited|floatformat:2 }}</td>
+			<td class="text-right">{{ b.customer_balance|floatformat:2 }}</td>
 			<td>{{ b.reference }}</td>
 		</tr>
 	{% endfor %}

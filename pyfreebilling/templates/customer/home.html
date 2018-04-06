@@ -71,7 +71,7 @@
                 <ul class="list-group">
                     <li class="list-group-item">
                         <span class="badge">
-                            {{ company.customer_balance|floatformat:2 }} {{ company.cb_currency }}
+                            {{ company.customer_balance|floatformat:2 }}
                         </span>
                         {% trans "Balance" %}
                     </li>
@@ -114,7 +114,6 @@
                                 <th>{% trans "Ratecard" %}</th>
                                 <th>{% trans "Tech prefix" %}</th>
                                 <th>{% trans "Discount" %}</th>
-                                <th>{% trans "Currency" %}</th>
                                 <th>{% trans "Rates details" %}</th>
                                 <th>{% trans "Rates download" %}</th>
                             </tr>
@@ -126,7 +125,6 @@
                                 <td>{{ r.ratecard }}</td>
                                 <td>{{ r.tech_prefix }}</td>
                                 <td>{{ r.discount }}</td>
-                                <td>{{ r.ratecard.currency }}</td>
                                 <td><a href="{% url 'customerportal:list_rates' ratecard=r.ratecard_id %}">{% trans "Rates" %}</a></td>
                                 <td><a href="{% url 'customerportal:rates_download' ratecard=r.ratecard_id %}">{% trans "Download" %}</a></td>
                             </tr>

@@ -109,6 +109,7 @@ PROJECT_APPS = (
     'pyfreebilling.normalizationrule.apps.NormalizationRuleConfig',
     'pyfreebilling.cdr.apps.CDRConfig',
     'pyfreebilling.antifraud.apps.AntiFraudConfig',
+    'pyfreebilling.kamailio.apps.KamailioConfig',
 )
 
 EXTENSION_APPS = (

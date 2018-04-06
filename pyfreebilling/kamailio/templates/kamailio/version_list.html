@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'kamailio_version_list' %}">Version Listing</a></p>
+<table class="table">
+<tr>
+<td>ID</td><td>Link</td>
+    <td>table_name</td>
+    <td>table_version</td>
+</tr>
+{% for object in object_list %}
+<tr>
+    <td>{{object.pk}}</td>
+    <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>
+    <td>{{ object.table_name }}</td>
+    <td>{{ object.table_version }}</td>
+</tr>
+{% endfor %}
+</table><a class="btn btn-primary" href="{% url 'kamailio_version_create' %}">Create new Version</a>
+{% endblock %}

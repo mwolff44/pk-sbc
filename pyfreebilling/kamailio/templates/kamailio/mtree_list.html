@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'kamailio_mtree_list' %}">Mtree Listing</a></p>
+<table class="table">
+<tr>
+<td>ID</td><td>Link</td>
+    <td>tprefix</td>
+    <td>tvalue</td>
+</tr>
+{% for object in object_list %}
+<tr>
+    <td>{{object.pk}}</td>
+    <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>
+    <td>{{ object.tprefix }}</td>
+    <td>{{ object.tvalue }}</td>
+</tr>
+{% endfor %}
+</table><a class="btn btn-primary" href="{% url 'kamailio_mtree_create' %}">Create new Mtree</a>
+{% endblock %}

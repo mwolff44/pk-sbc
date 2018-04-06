@@ -27,7 +27,7 @@ First, you need to install these packages
 ::
 
     apt-get install git-core build-essential autoconf automake libtool libtool-bin libncurses5 libncurses5-dev gawk libjpeg-dev zlib1g-dev pkg-config libssl-dev libpq-dev unixodbc-dev odbc-postgresql postgresql postgresql-client libpq-dev libxml2-dev libxslt-dev ntp ntpdate libapache2-mod-wsgi apache2 gcc python-setuptools python-pip libdbd-pg-perl libtext-csv-perl sqlite3 libsqlite3-dev libcurl4-openssl-dev libpcre3-dev libspeex-dev libspeexdsp-dev libldns-dev libedit-dev libmemcached-dev python-psycopg2 python-dev libgeoip-dev libffi-dev
-    
+
 Postgresql configuration
 ========================
 
@@ -123,25 +123,13 @@ Set also the DBENGINE to be PGSQL and adjust other setting as you want. Very imp
     sed "/^[# ]*SIP_DOMAIN/cSIP_DOMAIN=sip.<DOMAIN>.net" -i /etc/kamailio/kamctlrc
     sed '/^[# ]*DBENGINE/cDBENGINE=PGSQL' -i /etc/kamailio/kamctlrc
     sed '/^[# ]*DBHOST/cDBHOST=localhost' -i /etc/kamailio/kamctlrc
-    sed '/^[# ]*DBNAME/cDBNAME=kamailiopyfb' -i /etc/kamailio/kamctlrc
+    sed '/^[# ]*DBNAME/cDBNAME=pyfreebilling' -i /etc/kamailio/kamctlrc
     sed '/^[# ]*DBRWUSER/cDBRWUSER=kamailio' -i /etc/kamailio/kamctlrc
     sed '/^[# ]*DBRWPW/cDBRWPW="kamailio"' -i /etc/kamailio/kamctlrc
     sed '/^[# ]*DBROUSER/cDBROUSER=kamailioro' -i /etc/kamailio/kamctlrc
     sed '/^[#]*DBROPW/cDBROPW=kamailioro' -i /etc/kamailio/kamctlrc
     sed '/^[# ]*DBROOTUSER/cDBROOTUSER="pyfreebilling" ' -i /etc/kamailio/kamctlrc
 
-
-* Create DB :
-  Install Kamailio DB with db name kamailiopyfb (do not install extra tables) and drop these tables : usr_preferences, subscriber, address, dbaliases and dialplan.
-
-To create the database structure needed by Kamailio, run:
-
-::
-
-    echo *:*:*:pyfreebilling:mypasswd > /root/.pgpass
-    # Change **mypasswd** by  kamailiorw db password
-    chmod 600 /root/.pgpass
-    kamdbctl create
 
 The database name created in PostgreSQL is kamailio. Two access users to PostgreSQL server were created:
 
@@ -403,6 +391,7 @@ Pyfreebilling installation
 
         python manage.py loaddata 0001_initial_SipProfile.json
         python manage.py loaddata 0001_initial_ReccurentTasks.json
+        python manage.py loaddata 0001_initial_Version.json
         python manage.py collectstatic (answer 'yes')
 
 
