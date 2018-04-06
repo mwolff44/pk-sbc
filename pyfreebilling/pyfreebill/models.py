@@ -36,8 +36,6 @@ from netaddr import IPNetwork, AddrFormatError
 
 import re
 
-from currencies.models import Currency
-
 from .validators import validate_cidr, check_vat
 
 from pyfreebilling.switch.models import Domain
@@ -103,8 +101,6 @@ class Company(models.Model):
                                            decimal_places=6,
                                            default=0,
                                            help_text=_(u"Actual customer balance."))
-    cb_currency = models.ForeignKey(Currency,
-                                verbose_name=_(u"Currency"))
     supplier_balance = models.DecimalField(_(u'supplier balance'),
                                            max_digits=12,
                                            decimal_places=6,
@@ -542,9 +538,6 @@ class ProviderTariff(models.Model):
     carrier = models.ForeignKey(Company,
                                 verbose_name=_(u"Provider"),
                                 limit_choices_to={'supplier_enabled': True})
-    currency = models.ForeignKey(
-        Currency,
-        verbose_name=_(u"Currency"))
     lead_strip = models.CharField(_(u'lead strip'),
                                   blank=True,
                                   default='',
@@ -752,9 +745,6 @@ class RateCard(models.Model):
             regarding the type of calls. Default is PSTN"""))
     description = models.TextField(_(u'description'),
                                    blank=True)
-    currency = models.ForeignKey(
-        Currency,
-        verbose_name=_(u"Currency"))
     lcrgroup = models.ForeignKey(LCRGroup,
                                  verbose_name=_(u"lcr"))
     CALLERID_FILTER_CHOICES = (

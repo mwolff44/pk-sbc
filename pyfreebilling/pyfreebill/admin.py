@@ -205,7 +205,7 @@ class CompanyAdmin(admin.ModelAdmin):
                        ('max_calls', 'calls_per_second'),
                        'billing_cycle',
                        ('prepaid', 'credit_limit'),
-                       ('customer_balance', 'cb_currency')),
+                       ('customer_balance',)),
         }),
         (_(u'Customer alerts'), {
             'fields': ('low_credit_alert',
@@ -295,7 +295,6 @@ class CompanyAdmin(admin.ModelAdmin):
                     'get_vat_number_validated_display',
                     'get_customer_enabled_display',
                     'customer_balance',
-                    'cb_currency',
                     'get_supplier_enabled_display',
                     'supplier_balance',
                     'balance_history')
@@ -537,7 +536,6 @@ class ProviderTariffAdmin(admin.ModelAdmin):
     list_display = ['id',
                     'name',
                     'carrier',
-                    'currency',
                     'prefix',
                     'quality',
                     'reliability',
@@ -742,7 +740,6 @@ class RateCardAdmin(admin.ModelAdmin):
     list_display = ['id',
                     'name',
                     'rctype',
-                    'currency',
                     'lcrgroup',
                     'lcr',
                     'get_boolean_display',
@@ -1082,26 +1079,26 @@ class SaleSummaryAdmin(admin.ModelAdmin):
     change_list_template = 'admin/sale_summary_change_list.html'
     date_hierarchy = 'date__date'
     search_fields = ('^customer__name',)
-    
+
     # orderable
-    
+
     list_filter = (
         'destination',
         'customer__name',
     )
-    
+
     def has_add_permission(self, request, obj=None):
         return False
 
     def has_delete_permission(self, request, obj=None):
         return False
-    
+
     def changelist_view(self, request, extra_context=None):
         response = super(SaleSummaryAdmin, self).changelist_view(
             request,
             extra_context=extra_context,
         )
-        
+
         def get_next_in_date_hierarchy(request, date_hierarchy):
             if date_hierarchy + '__day' in request.GET:
                 return 'day'
@@ -1134,20 +1131,20 @@ class SaleSummaryAdmin(admin.ModelAdmin):
             .values('customer__name')\
             .annotate(**metrics)\
             .order_by('-total_sales')
-            
+
         response.context_data['summary'] = list(summary_stats)
-        
+
         summary_totals = dict(
             qs.aggregate(**metrics)
         )
         response.context_data['summary_total'] = summary_totals
-        
+
         period = get_next_in_date_hierarchy(
             request,
             self.date_hierarchy,
         )
         response.context_data['period'] = period
-        
+
         metrics2 = {
             'total_sales': Coalesce(Sum('total_sell'), V(0)),
             'margin': Coalesce(Sum('total_sell'), V(0)) - Coalesce(Sum('total_cost'), V(0)),
@@ -1155,7 +1152,7 @@ class SaleSummaryAdmin(admin.ModelAdmin):
             'success_calls': Coalesce(Sum('success_calls'), V(0)),
             'total_duration': Coalesce(Sum('total_duration'), V(0)),
         }
-        
+
         summary_over_time = qs.annotate(
             period=Trunc(
                 'date__date',
@@ -1178,19 +1175,19 @@ class SaleSummaryAdmin(admin.ModelAdmin):
             chart_label.append(summary_stats[i]['customer__name'])
             chart_data.append(int(summary_stats[i]['total_sales']))
             top5sales = top5sales + int(summary_stats[i]['total_sales'])
-            
+
         # Add others to graphs
         chart_label.append(_(u'others'))
         chart_data.append(int(summary_totals['total_sales']) - top5sales)
-            
+
         # transform unicode text to strings
         response.context_data['chart_label'] = map(str, chart_label)
         # Example of datas ["Africa", "Asia", "Europe", "Latin America", "North America"]
         response.context_data['chart_data'] = chart_data
         # Example of datas [2478,5267,734,784,433]
                 # response.context_data['chart_color'] = ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"]
-        
-        # timeseries stats  
+
+        # timeseries stats
         callvolume_data = []
         successcallvolume_data = []
         timeserie_data = []
@@ -1207,7 +1204,7 @@ class SaleSummaryAdmin(admin.ModelAdmin):
                 timeserie_data.append(summary_over_time[j]['period'].strftime('%W'))
             else:
                 timeserie_data.append(summary_over_time[j]['period'].strftime('%Y-%b'))
-            
+
         response.context_data['callvolume_data'] = callvolume_data
         response.context_data['successcallvolume_data'] = successcallvolume_data
         response.context_data['revenue_data'] = revenue_data
@@ -1222,26 +1219,26 @@ class CostSummaryAdmin(admin.ModelAdmin):
     change_list_template = 'admin/cost_summary_change_list.html'
     date_hierarchy = 'date__date'
     search_fields = ('^provider__name',)
-    
+
     # orderable
-    
+
     list_filter = (
         'destination',
         'provider__name',
     )
-    
+
     def has_add_permission(self, request, obj=None):
         return False
 
     def has_delete_permission(self, request, obj=None):
         return False
-    
+
     def changelist_view(self, request, extra_context=None):
         response = super(CostSummaryAdmin, self).changelist_view(
             request,
             extra_context=extra_context,
         )
-        
+
         def get_next_in_date_hierarchy(request, date_hierarchy):
             if date_hierarchy + '__day' in request.GET:
                 return 'day'
@@ -1274,21 +1271,21 @@ class CostSummaryAdmin(admin.ModelAdmin):
             .values('provider__name')\
             .annotate(**metrics)\
             .order_by('-total_buy')
-            
+
         response.context_data['summary'] = list(summary_stats)
-        
+
         # Calculate total line
         summary_totals = dict(
             qs.aggregate(**metrics)
         )
         response.context_data['summary_total'] = summary_totals
-        
+
         period = get_next_in_date_hierarchy(
             request,
             self.date_hierarchy,
         )
         response.context_data['period'] = period
-        
+
         # generate period data for graph
         metrics2 = {
             'total_buy': Coalesce(Sum('total_cost'), V(0)),
@@ -1297,7 +1294,7 @@ class CostSummaryAdmin(admin.ModelAdmin):
             'success_calls': Coalesce(Sum('success_calls'), V(0)),
             'total_duration': Coalesce(Sum('total_duration'), V(0)),
         }
-        
+
         summary_over_time = qs.annotate(
             period=Trunc(
                 'date__date',
@@ -1320,19 +1317,19 @@ class CostSummaryAdmin(admin.ModelAdmin):
             chart_label.append(summary_stats[i]['provider__name'])
             chart_data.append(int(summary_stats[i]['total_buy']))
             top5sales = top5sales + int(summary_stats[i]['total_buy'])
-            
+
         # Add others to graphs
         chart_label.append(_(u'others'))
         chart_data.append(int(summary_totals['total_buy']) - top5sales)
-            
+
         # transform unicode text to strings
         response.context_data['chart_label'] = map(str, chart_label)
         # Example of datas ["Africa", "Asia", "Europe", "Latin America", "North America"]
         response.context_data['chart_data'] = chart_data
         # Example of datas [2478,5267,734,784,433]
                 # response.context_data['chart_color'] = ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"]
-        
-        # timeseries stats  
+
+        # timeseries stats
         callvolume_data = []
         successcallvolume_data = []
         timeserie_data = []
@@ -1349,7 +1346,7 @@ class CostSummaryAdmin(admin.ModelAdmin):
                 timeserie_data.append(summary_over_time[j]['period'].strftime('%W'))
             else:
                 timeserie_data.append(summary_over_time[j]['period'].strftime('%Y-%b'))
-            
+
         response.context_data['callvolume_data'] = callvolume_data
         response.context_data['successcallvolume_data'] = successcallvolume_data
         response.context_data['revenue_data'] = revenue_data

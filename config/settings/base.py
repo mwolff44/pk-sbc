@@ -90,7 +90,6 @@ THIRD_PARTY_APPS = (
     'django_countries',
     'datetimewidget',
     'bootstrap3',
-    'currencies',
     'django_tables2',
     'bootstrap_pagination',
     'mathfilters',
@@ -167,7 +166,6 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
-                'currencies.context_processors.currencies',
             ],
             'loaders': [
                 'django.template.loaders.filesystem.Loader',

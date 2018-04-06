@@ -47,12 +47,6 @@ urlpatterns = [
     # user management
     # url(r'^accounts/', include('allauth.urls')),
 
-    # Currencies management
-    url(
-        r'^currencies/',
-        include('currencies.urls')
-    ),
-
     # Pyfreebilling applications
     url(
         r'^',

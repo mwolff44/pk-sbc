@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
@@ -126,7 +127,6 @@ class CustomMenu(Menu):
                 children=[
                     items.MenuItem(_('Add payment'), reverse('admin:pyfreebill_companybalancehistory_add')),
                     items.MenuItem(_('History'), reverse('admin:pyfreebill_companybalancehistory_changelist')),
-                    items.MenuItem(_('Currency management'), reverse('admin:currencies_currency_changelist')),
                 ]
             ),
             items.MenuItem(_('Stats and reports'),
@@ -167,7 +167,8 @@ class CustomMenu(Menu):
                             items.MenuItem(_('VoIP switches'), reverse('admin:switch_voipswitch_changelist')),
                             items.MenuItem(_('FS SIP profiles'), reverse('admin:pyfreebill_sipprofile_changelist')),
                             items.MenuItem(_('SIP domains'), reverse('admin:switch_domain_changelist')),
-                            items.MenuItem(_('PDAU'), reverse('admin:urgencyfr_pdau_changelist')),
+                            #if settings.PFB_URGENCY:
+                            #    items.MenuItem(_('PDAU'), reverse('admin:urgencyfr_pdau_changelist')),
                         ]
                     ),
                     items.MenuItem(_('Logs'),

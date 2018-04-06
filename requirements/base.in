@@ -73,12 +73,6 @@ django-countries==5.1.1
 # py3
 django-crispy-forms==1.7.0
 
-# Currencies management
-# https://github.com/panosl/django-currencies/
-# BSD
-# py3
-django-currencies==0.4.0
-
 # widget for DateField, Timefiled and DateTimeField in Django framework.
 # https://github.com/asaglimbeni/django-datetime-widget/
 # BSD
