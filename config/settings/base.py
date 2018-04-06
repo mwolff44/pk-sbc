@@ -180,6 +180,20 @@ TEMPLATES = [
 ]
 #  ######### END TEMPLATE CONFIGURATION
 
+#  ######### CACHE
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    },
+    'axes_cache': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
+AXES_CACHE = 'axes_cache'
+
+#  ######### END CACHE
+
 #  ######### PASSWORD CONFIGURATION
 
 PASSWORD_HASHERS = [

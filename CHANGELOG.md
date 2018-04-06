@@ -4,7 +4,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.1]
+### Added
+- Kamailio is handled by PyFreeBilling now
+- Location table view in PyFB admin
+
+### Changed
+- Kamailio configuration has been split
+- PostgreSQL min version is 9.4
+
+### Removed
+- Currency management, as it not be really used
+- Gateway profile as it not used
+
+### Fixed
+- Possibility to use a different port form gateways than default
+- Many documention points have been fixed
+
+### Security
+- Django updated to 1.11.12
+- Django-axes updated
+
+## [2.0]
 ### Added
 - Proxy SIP is now Kamailio
 - Multi FreeSwitch support (load balancing)
@@ -48,4 +69,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - CallerID bug
 
 **Important** : we will keep only 2.0 changelog in the future since 2.0 will be released.  
-

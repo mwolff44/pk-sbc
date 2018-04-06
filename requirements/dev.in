@@ -21,4 +21,4 @@ piprot==0.9.7
 
 # Translation tool
 # https://docs.transifex.com/client/installing-the-client
-transifex-client==0.13.0
+transifex-client==0.13.2

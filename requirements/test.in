@@ -3,7 +3,7 @@
 
 # Measures code coverage
 # http://nedbatchelder.com/code/coverage/
-coverage==4.5
+coverage==4.5.1
 
 # Easily specify directories to be excluded from testing
 # https://github.com/kgrandis/nose-exclude/
