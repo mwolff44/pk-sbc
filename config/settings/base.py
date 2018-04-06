@@ -97,6 +97,7 @@ THIRD_PARTY_APPS = (
     'solo',
     'django_filters',
     'migrate_sql',
+    'currencies', # A virer
 )
 
 PROJECT_APPS = (

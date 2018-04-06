@@ -1419,11 +1419,6 @@ class SofiaGateway(models.Model):
         verbose_name=_(u"SIP domain"),
         help_text=_(u"""A gateway must belong to a domain.
             This domain must be used in SIP message"""))
-    sip_profile = models.ForeignKey('SipProfile',
-                                    verbose_name=_(u"SIP profile"),
-                                    help_text=_(u"""Which Sip Profile
-                                        communication with this gateway will
-                                        take place on."""))
     company = models.ForeignKey(Company,
                                 verbose_name=_(u"Provider"),
                                 db_index=True)
@@ -1491,6 +1486,10 @@ class SofiaGateway(models.Model):
                                  default="udp",
                                  choices=SIP_TRANSPORT_CHOICES,
                                  help_text=_(u"Which transport to use for register"))
+    sip_port = models.PositiveIntegerField(
+        _(u"""SIP port"""),
+        default="5060",
+        help_text=_(u"""Gateway SIP port (Default 5060)."""))
     extension = models.CharField(_(u"extension number"),
                                  max_length=50,
                                  blank=True,
@@ -1529,13 +1528,13 @@ class SofiaGateway(models.Model):
         ('none', _(u'none')),
         ('default', _(u'default')),
         ('pid', _(u'pid')),
-        ('rpid', _(u'rpid')),
+        ('rpid', _(u'P-Asserted-Identity')),
     )
     sip_cid_type = models.CharField(_(u'SIP CID type'),
                                     max_length=10,
                                     choices=SIP_CID_TYPE_CHOICES,
                                     default='rpid',
-                                    help_text=_(u"""Modify callerID in SDP
+                                    help_text=_(u"""Modify callerID in SIP
                                         Headers."""))
     date_added = models.DateTimeField(_(u'date added'),
                                       auto_now_add=True)

@@ -818,22 +818,19 @@ class VoipSwitchAdmin(admin.ModelAdmin):
 
 class SofiaGatewayAdmin(admin.ModelAdmin):
     list_display = ['name',
-                    'sip_profile',
                     'company',
                     'channels',
                     'proxy',
                     'transport',
+                    'sip_port',
                     'get_enabled_display',
                     'get_register_display',
-                    'date_added',
                     'date_modified']
     ordering = ['company',
                 'name',
                 'proxy']
     list_filter = ['company',
-                   'proxy',
-                   'enabled',
-                   'sip_profile']
+                   'enabled']
     search_fields = ['^company__name',
                      'proxy']
     # actions = [sofiaupdate]

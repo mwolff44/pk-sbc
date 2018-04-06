@@ -50,7 +50,7 @@ sql_items = [
         '  10 AS grp,'
         '  CAST(sg.proxy AS VARCHAR) AS ip_addr,'
         '  32 AS mask,'
-        '  5060 AS port,'
+        '  CAST(sg.sip_port AS INTEGER) AS port,'
         '  sg.name AS tag '
         'FROM sofia_gateway sg '
         'WHERE sg.enabled=True and sg.register=False) v;'
