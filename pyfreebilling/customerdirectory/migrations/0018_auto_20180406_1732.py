@@ -10,6 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('customerdirectory', '0017_auto_20180207_1116'),
+        ('pyfreebill', '0021_auto_20180406_1731'),
     ]
 
     operations = [
