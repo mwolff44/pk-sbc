@@ -26,8 +26,8 @@ class LocationAdminForm(forms.ModelForm):
 
 class LocationAdmin(admin.ModelAdmin):
     form = LocationAdminForm
-    list_display = ['ruid', 'username', 'domain', 'contact', 'received', 'path', 'expires', 'q', 'callid', 'cseq', 'last_modified', 'flags', 'cfags', 'user_agent', 'socket', 'methods', 'instance', 'reg_id', 'server_id', 'connection_id', 'keepalive', 'partition']
-    readonly_fields = ['ruid', 'username', 'domain', 'contact', 'received', 'path', 'expires', 'q', 'callid', 'cseq', 'last_modified', 'flags', 'cfags', 'user_agent', 'socket', 'methods', 'instance', 'reg_id', 'server_id', 'connection_id', 'keepalive', 'partition']
+    list_display = ['ruid', 'username', 'domain', 'contact', 'received', 'path', 'expires', 'q', 'callid', 'cseq', 'last_modified', 'flags', 'cflags', 'user_agent', 'socket', 'methods', 'instance', 'reg_id', 'server_id', 'connection_id', 'keepalive', 'partition']
+    readonly_fields = ['ruid', 'username', 'domain', 'contact', 'received', 'path', 'expires', 'q', 'callid', 'cseq', 'last_modified', 'flags', 'cflags', 'user_agent', 'socket', 'methods', 'instance', 'reg_id', 'server_id', 'connection_id', 'keepalive', 'partition']
 
 admin.site.register(Location, LocationAdmin)
 
@@ -150,5 +150,3 @@ class HtableAdmin(admin.ModelAdmin):
     readonly_fields = ['key_name', 'key_type', 'value_type', 'key_value', 'expires']
 
 admin.site.register(Htable, HtableAdmin)
-
-

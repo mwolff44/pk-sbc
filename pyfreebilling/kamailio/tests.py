@@ -50,7 +50,7 @@ def create_location(**kwargs):
     defaults["cseq"] = "cseq"
     defaults["last_modified"] = "last_modified"
     defaults["flags"] = "flags"
-    defaults["cfags"] = "cfags"
+    defaults["cflags"] = "cflags"
     defaults["user_agent"] = "user_agent"
     defaults["socket"] = "socket"
     defaults["methods"] = "methods"
@@ -212,7 +212,7 @@ class LocationViewTest(unittest.TestCase):
             "cseq": "cseq",
             "last_modified": "last_modified",
             "flags": "flags",
-            "cfags": "cfags",
+            "cflags": "cflags",
             "user_agent": "user_agent",
             "socket": "socket",
             "methods": "methods",
@@ -247,7 +247,7 @@ class LocationViewTest(unittest.TestCase):
             "cseq": "cseq",
             "last_modified": "last_modified",
             "flags": "flags",
-            "cfags": "cfags",
+            "cflags": "cflags",
             "user_agent": "user_agent",
             "socket": "socket",
             "methods": "methods",
@@ -603,5 +603,3 @@ class HtableViewTest(unittest.TestCase):
         url = reverse('kamailio_htable_update', args=[htable.pk,])
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 302)
-
-

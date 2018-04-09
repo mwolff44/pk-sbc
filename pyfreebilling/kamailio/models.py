@@ -60,7 +60,7 @@ class Location(models.Model):
     cseq = IntegerField(default=1, help_text=_(u"CSeq header field contains a single decimal sequence number and the request method."))
     last_modified = DateTimeField(default='2000-01-01 00:00:01', help_text=_(u"Date and time when this entry was last modified"))
     flags = IntegerField(default=0, help_text=_(u"Internal flags"))
-    cfags = IntegerField(default=0, help_text=_(u"Branch and contact flags"))
+    cflags = IntegerField(default=0, help_text=_(u"Branch and contact flags"))
     user_agent = CharField(max_length=255, default='', help_text=_(u"User-Agent header field contains information about the UAC originating the request."))
     socket = CharField(max_length=64, null=True, blank=True, help_text=_(u"Socket used to connect to Kamailio. For example: UDP:IP:PORT"))
     methods = IntegerField(null=True, blank=True, help_text=_(u"Flags that indicate the SIP Methods this contact will accept."))

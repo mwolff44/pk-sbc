@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [Next]
+### Added
+
+
+### Changed
+
+
+### Deprecated
+
+
+### Removed
+
+
+### Fixed
+- In location DB, typo in cflags fields
+- Specify order in DB migration
+
+### Security
+
+
+
 ## [2.1]
 ### Added
 - Kamailio is handled by PyFreeBilling now
@@ -24,6 +45,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 - Django updated to 1.11.12
 - Django-axes updated
+
 
 ## [2.0]
 ### Added

@@ -11,7 +11,7 @@ class VersionForm(forms.ModelForm):
 class LocationForm(forms.ModelForm):
     class Meta:
         model = Location
-        fields = ['ruid', 'username', 'domain', 'contact', 'received', 'path', 'expires', 'q', 'callid', 'cseq', 'last_modified', 'flags', 'cfags', 'user_agent', 'socket', 'methods', 'instance', 'reg_id', 'server_id', 'connection_id', 'keepalive', 'partition']
+        fields = ['ruid', 'username', 'domain', 'contact', 'received', 'path', 'expires', 'q', 'callid', 'cseq', 'last_modified', 'flags', 'cflags', 'user_agent', 'socket', 'methods', 'instance', 'reg_id', 'server_id', 'connection_id', 'keepalive', 'partition']
 
 
 class LocationAttrsForm(forms.ModelForm):
@@ -60,5 +60,3 @@ class HtableForm(forms.ModelForm):
     class Meta:
         model = Htable
         fields = ['key_name', 'key_type', 'value_type', 'key_value', 'expires']
-
-
