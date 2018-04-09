@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'sipdialog_dialogvar_list' %}">DialogVar Listing</a></p>
+<table class="table">
+<tr><td>hash_entry</td><td>{{ object.hash_entry }}</td></tr>
+<tr><td>hash_id</td><td>{{ object.hash_id }}</td></tr>
+<tr><td>dialog_key</td><td>{{ object.dialog_key }}</td></tr>
+<tr><td>dialog_value</td><td>{{ object.dialog_value }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit DialogVar</a>
+
+{% endblock %}
