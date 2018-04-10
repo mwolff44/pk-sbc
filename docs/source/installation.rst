@@ -403,6 +403,7 @@ Pyfreebilling installation
         cd /usr/local/venv/pyfreebilling/install/resources/fs/config
         cp -av conf/autoload_configs/* /etc/freeswitch/autoload_configs/
         cp -av conf/dialplan/* /etc/freeswitch/dialplan/
+        cp -av conf/vars.xml conf/freeswitch.xml /etc/freeswitch/
         cp -av scripts/* /usr/share/freeswitch/scripts/
 
 
@@ -428,8 +429,9 @@ You need to adapt acl_conf.xml to accept sip requests from kamailio.
 ::
 
         cp /usr/local/venv/pyfreebilling/install/resources/kam/config/* /etc/kamailio/
-
-Adapt the data in kamctlrc and kamailio-local.cfg (do not touch kamailio.cfg)
+        
+        
+Adapt the IP and database settings in /etc/kamailio/kamailio-local.cfg and /etc/kamailio/dispatcher.list to the correct ones  (do not touch kamailio.cfg)
 
 
 * set apache config :
