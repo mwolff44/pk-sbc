@@ -23,7 +23,7 @@
       <!-- domain= is special it scans the domain from the directory to build the ACL -->
       <node type="allow" domain="$${domain}"/>
       <!-- use cidr= if you wish to allow ip ranges to this domains acl. -->
-      <node type="allow" cidr="192.168.41.100/32"/>
+      <node type="allow" cidr="$${internal_kam_ip}/32"/>
 
     </list>
 

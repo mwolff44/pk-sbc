@@ -44,14 +44,14 @@
     </extension>
 
     <extension name="from_kamailio">
-      <condition field="network_addr" expression="^192\.168\.42\.100$" />
+      <condition field="network_addr" expression="^$${external_kam_ip}$" />
       <condition field="destination_number" expression="^(.+)$">
         <action application="transfer" data="$1 XML default"/>
       </condition>
     </extension>
 
     <extension name="from_kamailio-int">
-      <condition field="network_addr" expression="^192\.168\.100\.49$" />
+      <condition field="network_addr" expression="^$${internal_kam_ip}$" />
       <condition field="destination_number" expression="^(.+)$">
         <action application="transfer" data="$1 XML default"/>
       </condition>

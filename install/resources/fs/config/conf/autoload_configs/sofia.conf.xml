@@ -44,7 +44,7 @@
       </domains>
 
       <settings>
-        <param name="outbound-proxy" value="192.168.40.100:5060"/>
+        <param name="outbound-proxy" value="$${internal_kam_ip}:5060"/>
         <param name='sip-capture' value='yes'/>
         <param name='dialplan' value='XML'/>
         <param name='user-agent-string' value='pyfreebilling'/>
@@ -95,7 +95,7 @@
       </domains>
 
       <settings>
-        <param name="outbound-proxy" value="192.168.41.100:5060"/>
+        <param name="outbound-proxy" value="$${internal_kam_ip}:5060"/>
         <param name='sip-capture' value='yes'/>
         <param name='dialplan' value='XML'/>
         <param name='user-agent-string' value='pyfreebilling'/>
