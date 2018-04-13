@@ -111,6 +111,7 @@ PROJECT_APPS = (
     'pyfreebilling.antifraud.apps.AntiFraudConfig',
     'pyfreebilling.kamailio.apps.KamailioConfig',
     'pyfreebilling.sipdialog.apps.SipDialogConfig',
+    'pyfreebilling.accounting.apps.AccountingConfig',
 )
 
 EXTENSION_APPS = (
