@@ -6,7 +6,7 @@
 # will use their internal default values.
 
 ## your SIP domain
-SIP_DOMAIN=mondomain.com
+SIP_DOMAIN=example.com
 
 ## chrooted directory
 # $CHROOT_DIR="/path/to/chrooted/directory"
@@ -19,7 +19,7 @@ SIP_DOMAIN=mondomain.com
 DBENGINE=PGSQL
 
 ## database host
-DBHOST=10.1.5.6
+DBHOST=localhost
 
 ## database name (for ORACLE this is TNS name)
 DBNAME=pyfreebilling
@@ -37,7 +37,7 @@ DBRWPW="tobechanged"
 DBROUSER="pyfreebilling"
 
 ## password for database read only user
-# DBROPW="1t14RZWJJIhMRWIbzC4L"
+DBROPW="tobechanged"
 
 ## database access host (from where is kamctl used)
 # DBACCESSHOST=192.168.0.1
