@@ -51,6 +51,10 @@ Postgresql configuration
     createdb -O pyfreebilling -E UTF8 pyfreebilling
     exit
 
+    # create .pgpass file, replace password with the real one
+    echo "*:*:*:pyfreebilling:password" > ~/.pgpass
+    chmod 600 ~/.pgpass
+
 
 Sip server installation
 =======================
