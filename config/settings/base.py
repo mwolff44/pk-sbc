@@ -112,6 +112,7 @@ PROJECT_APPS = (
     'pyfreebilling.kamailio.apps.KamailioConfig',
     'pyfreebilling.sipdialog.apps.SipDialogConfig',
     'pyfreebilling.accounting.apps.AccountingConfig',
+    'pyfreebilling.endpoint.apps.EndpointConfig',
 )
 
 EXTENSION_APPS = (

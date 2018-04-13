@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'endpoint_trusted_list' %}">Trusted Listing</a></p>
+<table class="table">
+<tr>
+<td>ID</td><td>Link</td>
+    <td>src_ip</td>
+    <td>proto</td>
+    <td>from_pattern</td>
+    <td>ruri_pattern</td>
+    <td>tag</td>
+    <td>priority</td>
+</tr>
+{% for object in object_list %}
+<tr>
+    <td>{{object.pk}}</td>
+    <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>
+    <td>{{ object.src_ip }}</td>
+    <td>{{ object.proto }}</td>
+    <td>{{ object.from_pattern }}</td>
+    <td>{{ object.ruri_pattern }}</td>
+    <td>{{ object.tag }}</td>
+    <td>{{ object.priority }}</td>
+</tr>
+{% endfor %}
+</table><a class="btn btn-primary" href="{% url 'endpoint_trusted_create' %}">Create new Trusted</a>
+{% endblock %}

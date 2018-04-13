@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - In location DB, typo in cflags fields
 - Specify order in DB migration
+- Add uacreg and trusted tables for kamailio in PyFreeBilling base
 
 ### Security
 

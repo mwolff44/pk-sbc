@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'endpoint_trusted_list' %}">Trusted Listing</a></p>
+<table class="table">
+<tr><td>src_ip</td><td>{{ object.src_ip }}</td></tr>
+<tr><td>proto</td><td>{{ object.proto }}</td></tr>
+<tr><td>from_pattern</td><td>{{ object.from_pattern }}</td></tr>
+<tr><td>ruri_pattern</td><td>{{ object.ruri_pattern }}</td></tr>
+<tr><td>tag</td><td>{{ object.tag }}</td></tr>
+<tr><td>priority</td><td>{{ object.priority }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit Trusted</a>
+
+{% endblock %}
