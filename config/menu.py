@@ -162,6 +162,16 @@ class CustomMenu(Menu):
                             items.MenuItem(_('Groups list'), reverse('admin:auth_group_changelist')),
                         ]
                     ),
+                    items.MenuItem(_('Destinations and prefix management'),
+                        children=[
+                            items.MenuItem(_('Prefix'), reverse('admin:direction_prefix_changelist')),
+                            items.MenuItem(_('Destinations'), reverse('admin:direction_destination_changelist')),
+                            items.MenuItem(_('Countries'), reverse('admin:direction_country_changelist')),
+                            items.MenuItem(_('Regions'), reverse('admin:direction_region_changelist')),
+                            items.MenuItem(_('Carriers'), reverse('admin:direction_carrier_changelist')),
+                            items.MenuItem(_('Type of destination'), reverse('admin:direction_type_changelist')),
+                        ]
+                    ),
                     items.MenuItem(_('Configuration'),
                         children=[
                             items.MenuItem(_('VoIP switches'), reverse('admin:switch_voipswitch_changelist')),

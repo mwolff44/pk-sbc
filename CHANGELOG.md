@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Next]
 ### Added
 - log sip messages from kamailio into PyFreeBilling DB (acc module)
+- New coutntry / directions / prefix matching process
 
 ### Changed
 

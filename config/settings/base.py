@@ -113,6 +113,7 @@ PROJECT_APPS = (
     'pyfreebilling.sipdialog.apps.SipDialogConfig',
     'pyfreebilling.accounting.apps.AccountingConfig',
     'pyfreebilling.endpoint.apps.EndpointConfig',
+    'pyfreebilling.direction.apps.DirectionConfig',
 )
 
 EXTENSION_APPS = (
