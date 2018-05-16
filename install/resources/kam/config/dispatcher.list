@@ -6,7 +6,7 @@
 # setit(int) destination(sip uri) flags(int,opt) priority(int,opt) attributes(str,opt)
 
 # external FS profiles
-2 sip:1127.0.0.1:5092
+2 sip:127.0.0.1:5092
 
 # internal FS profiles
 1 sip:127.0.0.1:5090
