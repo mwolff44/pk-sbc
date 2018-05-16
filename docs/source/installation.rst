@@ -431,10 +431,12 @@ Pyfreebilling login
  
  And you need to create rule to allow outgoing calls using regex. This is an example that allow all prefixes. Go to menu routing and then call mapping rule and add a new one :
  
- .. image:: ../_static/pyfb_default_rule.png
+ .. image:: _static/pyfb_default_rule.png
    :scale: 50 %
    :alt: add default rule to allow all outgoing calls
    :align: center
+
+
 
  The customer portal url is : https://my-ip
 
