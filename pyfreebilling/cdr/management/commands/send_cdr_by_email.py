@@ -64,7 +64,7 @@ class Command(BaseCommand):
                     list = CDR.objects.all().filter(end_stamp__gte=p_start, end_stamp__lt=p_end, customer_id=cust.id, billsec__gt=0)
                     csvfile = StringIO()
                     csvwriter = csv.writer(csvfile)
-                    csvwriter.writerow(['direction', 'start', 'end', 'billed_sec', 'from', 'to', 'ip', 'destination', 'price', 'uuid'])
+                    csvwriter.writerow(['direction', 'start', 'end', 'billed_sec', 'from', 'to', 'ip', 'destination', 'price', 'uuid', 'charge_info'])
                     for l in list:
                         if l.ratecard_id_id in rc_emerg:
                             continue
@@ -78,7 +78,8 @@ class Command(BaseCommand):
                                                 None,
                                                 l.sell_destination.encode('ascii',errors='ignore'),
                                                 l.total_sell,
-                                                l.bleg_uuid
+                                                l.bleg_uuid,
+                                                None
                                               ])
                         else:
                             csvwriter.writerow(['OUT',
@@ -90,7 +91,8 @@ class Command(BaseCommand):
                                                 l.customer_ip,
                                                 l.sell_destination.encode('ascii',errors='ignore'),
                                                 l.total_sell,
-                                                l.uuid
+                                                l.uuid,
+                                                l.sip_charge_info
                                               ])
 
                     message = EmailMessage("%s - CDR for customer %s"%(settings.EMAIL_SIGNATURE, cust.name),

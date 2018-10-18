@@ -114,7 +114,8 @@ def csv_view(request, *args, **kwargs):
                             'block_min_duration',
                             'total_sell',
                             'customer_ip',
-                            'sip_user_agent'
+                            'sip_user_agent',
+                            'sip_charge_info'
                             )
 
     try:
