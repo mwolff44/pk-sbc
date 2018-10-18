@@ -162,6 +162,11 @@ class CDR(models.Model):
         LCRGroup,
         null=True,
         verbose_name=_(u"lcr group"))
+    sip_charge_info = models.CharField(
+        _(u'charge info'),
+        null=True,
+        max_length=100,
+        help_text=_(u"Contents of the P-Charge-Info header for billing purpose."))
     sip_user_agent = models.CharField(
         _(u'sip user agent'),
         null=True,
