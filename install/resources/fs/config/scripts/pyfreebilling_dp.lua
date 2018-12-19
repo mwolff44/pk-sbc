@@ -959,7 +959,7 @@ if (session:ready() == true) then
 
   set_variable("bypass_media", "false")
   set_variable("hangup_after_bridge", "true")
-  execute("set", "continue_on_fail=1,2,3,6,25,34,38,41,42,44,47,63,66,403,480,488,500,501,502,503")
+  execute("set", "continue_on_fail=6,25,34,38,41,42,44,47,63,66,403,480,488,500,501,502,503")
 --  execute("set", "continue_on_fail=true")
   execute("set", "bypass_media=false")
   execute("sched_hangup", "+36000 alloted_timeout")
