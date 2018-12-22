@@ -1,31 +1,33 @@
-version: '2'
+version: '3'
 
 volumes:
-  postgres_data_local: {}
-  postgres_backup_local: {}
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
 
 services:
   django:
     build:
       context: .
       dockerfile: ./compose/local/django/Dockerfile
+    image: pyfreebilling_local_django
     depends_on:
       - postgres
     volumes:
       - .:/app
-    environment:
-      - POSTGRES_USER=QEFBDGzWdpunPjDO
-      - USE_DOCKER=yes
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
     ports:
       - "8000:8000"
-    command: /start.sh
+    command: /start
 
   postgres:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
+    image: pyfreebilling_production_postgres
     volumes:
-      - postgres_data_local:/var/lib/postgresql/data
-      - postgres_backup_local:/backups
-    environment:
-      - POSTGRES_USER=QEFBDGzWdpunPjDO
+      - local_postgres_data:/var/lib/postgresql/data
+      - local_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.local/.postgres

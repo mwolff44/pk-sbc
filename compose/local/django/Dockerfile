@@ -1,33 +1,32 @@
-FROM python:2.7-jessie
+FROM python:3.6-alpine
 
 ENV PYTHONUNBUFFERED 1
 
-RUN apt-get update && apt-get upgrade -y \
+RUN apk update \
   # psycopg2 dependencies
-  && apt-get install -y build-essential gcc python-dev libssl-dev \
-  && apt-get install -y libpq-dev \
+  && apk add --virtual build-deps gcc python3-dev musl-dev \
+  && apk add postgresql-dev \
   # Pillow dependencies
-  && apt-get install -y libjpeg-dev zlib1g-dev tk-dev tcl-dev \
+  && apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev \
   # CFFI dependencies
-  && apt-get install -y libffi-dev \
+  && apk add libffi-dev py-cffi \
   # Translations dependencies
-  && apt-get install -y gettext \
-  # Import-export dependencies
-  && apt-get install -y libxml2-dev libxslt-dev
+  && apk add gettext \
+  # https://docs.djangoproject.com/en/dev/ref/django-admin/#dbshell
+  && apk add postgresql-client
 
-# Requirements have to be pulled and installed here, otherwise caching won't work
-RUN pip install pip-tools
+# Requirements are installed here to ensure they will be cached.
 COPY ./requirements /requirements
-RUN pip-sync /requirements/dev.txt
+RUN pip install -r /requirements/local.txt
 
-COPY ./compose/production/django/entrypoint.sh /entrypoint.sh
-RUN sed -i 's/\r//' /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+COPY ./compose/production/django/entrypoint /entrypoint
+RUN sed -i 's/\r//' /entrypoint
+RUN chmod +x /entrypoint
 
-COPY ./compose/local/django/start.sh /start.sh
-RUN sed -i 's/\r//' /start.sh
-RUN chmod +x /start.sh
+COPY ./compose/local/django/start /start
+RUN sed -i 's/\r//' /start
+RUN chmod +x /start
 
 WORKDIR /app
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint"]

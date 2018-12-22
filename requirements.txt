@@ -1,5 +1,3 @@
-# See more documentation in /docs/libraries.md
+# This file is expected by Heroku.
 
-# This file is here because many Platforms as a Service look for
-# requirements.txt in the root directory of a project.
--r requirements/prod.txt
+-r requirements/production.txt

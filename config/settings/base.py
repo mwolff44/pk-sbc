@@ -1,221 +1,125 @@
-# Copyright 2013 Mathias WOLFF
-# This file is part of pyfreebilling.
-#
-# pyfreebilling is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# pyfreebilling is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with pyfreebilling.  If not, see <http://www.gnu.org/licenses/>
+"""
+Base settings to build other settings files upon.
+"""
 
-# Django settings for pyfreebilling project.
-from __future__ import absolute_import, unicode_literals
+import environ
 
-# SECRET_KEY = 'securitykeymustbechanged
-#import django
-#django.setup()
+ROOT_DIR = environ.Path(__file__) - 3  # (pyfreebilling/config/settings/base.py - 3 = pyfreebilling/)
+APPS_DIR = ROOT_DIR.path('pyfreebilling')
 
-from os.path import abspath, basename, dirname, join, normpath
-from sys import path
+env = environ.Env()
 
+READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
+if READ_DOT_ENV_FILE:
+    # OS environment variables take precedence over variables from .env
+    env.read_env(str(ROOT_DIR.path('.env')))
 
-#  ######### PATH CONFIGURATION
-# Absolute filesystem path to the config directory:
-CONFIG_ROOT = dirname(dirname(abspath(__file__)))
+# GENERAL
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#debug
+DEBUG = env.bool('DJANGO_DEBUG', False)
+# Local time zone. Choices are
+# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+# though not all of them may be available with every OS.
+# In Windows, this must be set to your system time zone.
+TIME_ZONE = 'UTC'
+# https://docs.djangoproject.com/en/dev/ref/settings/#language-code
+LANGUAGE_CODE = 'en-us'
+# https://docs.djangoproject.com/en/dev/ref/settings/#site-id
+SITE_ID = 1
+# https://docs.djangoproject.com/en/dev/ref/settings/#use-i18n
+USE_I18N = True
+# https://docs.djangoproject.com/en/dev/ref/settings/#use-l10n
+USE_L10N = True
+# https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
+USE_TZ = True
 
-# Absolute filesystem path to the project directory:
-PROJECT_ROOT = dirname(CONFIG_ROOT)
-APP_DIR = normpath(join(PROJECT_ROOT, 'pyfreebilling'))
-APPS_DIR = APP_DIR
-
-# Absolute filesystem path to the django repo directory:
-DJANGO_ROOT = PROJECT_ROOT
-
-# Project name:
-PROJECT_NAME = basename(PROJECT_ROOT).capitalize()
-
-# Project folder:
-PROJECT_FOLDER = basename(PROJECT_ROOT)
-
-# Project domain:
-# PROJECT_DOMAIN = '%s.com' % PROJECT_NAME.lower()
-
-# Add our project to our pythonpath, this way we don't need to type our project
-# name in our dotted import paths:
-path.append(CONFIG_ROOT)
-#  ######### END PATH CONFIGURATION
-
+# DATABASES
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'pyfreebilling',
-        'USER': 'pyfreebilling',
-        'PASSWORD' : 'password',
-        'HOST': '127.0.0.1',
-        'PORT': '',  # Set to empty string for default.
-    }
+    'default': env.db('DATABASE_URL'),
 }
+DATABASES['default']['ATOMIC_REQUESTS'] = True
 
-#  ######### APP CONFIGURATION
-DJANGO_APPS = (
+# URLS
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
+ROOT_URLCONF = 'config.urls'
+# https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
+WSGI_APPLICATION = 'config.wsgi.application'
+
+# APPS
+# ------------------------------------------------------------------------------
+DJANGO_APPS = [
+    'fluent_dashboard',
+    'admin_tools',     # for staticfiles in Django 1.3
+    'admin_tools.theming',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.humanize',
-    'admin_tools',
-    'admin_tools.theming',
-    'admin_tools.menu',
-    #'admin_tools.dashboard ,
-    #'jet.dashboard ,
-    #'jet',
+    # 'django.contrib.humanize', # Handy template tags
     'django.contrib.admin',
-    'django.contrib.admindocs',
-)
-
-THIRD_PARTY_APPS = (
-    'import_export',
-    'admin_honeypot',
-    'chroniker',
-    'axes',
-    'qsstats',
-    'django_countries',
-    'datetimewidget',
-    'bootstrap3',
-    'django_tables2',
-    'bootstrap_pagination',
-    'mathfilters',
-    'crispy_forms',
-    'solo',
-    'django_filters',
-    'migrate_sql',
-    'currencies', # A virer
-)
-
-PROJECT_APPS = (
-    'pyfreebilling.pyfreebill.apps.PyfreebillConfig',
-    'pyfreebilling.did.apps.DidConfig',
-    'pyfreebilling.switch.apps.SwitchConfig',
-    'pyfreebilling.customerdirectory.apps.CustomerDirectoryConfig',
-    'pyfreebilling.customerportal.apps.CustomerPortalConfig',
-    'pyfreebilling.normalizationrule.apps.NormalizationRuleConfig',
-    'pyfreebilling.cdr.apps.CDRConfig',
-    'pyfreebilling.antifraud.apps.AntiFraudConfig',
-    'pyfreebilling.kamailio.apps.KamailioConfig',
-    'pyfreebilling.sipdialog.apps.SipDialogConfig',
-    'pyfreebilling.accounting.apps.AccountingConfig',
-    'pyfreebilling.endpoint.apps.EndpointConfig',
-)
-
-EXTENSION_APPS = (
-    #'extensions.authtools',
-    #'extensions.django_rq',
-    #'extensions.rq_scheduler',
-)
-
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS + EXTENSION_APPS
-#  ######### END APP CONFIGURATION
-
-#  ######### MIDDLEWARE CONFIGURATION
-MIDDLEWARE_CLASSES = (
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
-#  ######### END MIDDLEWARE CONFIGURATION
-
-#  ######### FIXTURE CONFIGURATION
-FIXTURE_DIRS = (
-    normpath(join(APP_DIR, 'fixtures')),
-)
-#  ######### END FIXTURE CONFIGURATION
-
-# ######### GENERAL CONFIGURATION
-# https://docs.djangoproject.com/en/dev/ref/settings/#time-zone
-TIME_ZONE = 'Europe/Paris'
-
-# https://docs.djangoproject.com/en/dev/ref/settings/#language-code
-SITE_ID = 1
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
-# ######### END GENERAL CONFIGURATION
-
-#  ######### TEMPLATE CONFIGURATION
-TEMPLATES = [
-    {
-        'BACKEND' : 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            normpath(join(APP_DIR, 'templates')),
-            normpath(join(APP_DIR, 'extensions')),
-        ],
-        'OPTIONS': {
-            'context_processors': [
-                'django.contrib.auth.context_processors.auth',
-                'django.template.context_processors.debug',
-                'django.template.context_processors.i18n',
-                'django.template.context_processors.media',
-                'django.template.context_processors.static',
-                'django.template.context_processors.tz',
-                'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.request',
-            ],
-            'loaders': [
-                'django.template.loaders.filesystem.Loader',
-                'django.template.loaders.app_directories.Loader',
-                'admin_tools.template_loaders.Loader',
-            ],
-            'string_if_invalid': 'NULL',
-        },
-    },
 ]
-#  ######### END TEMPLATE CONFIGURATION
+THIRD_PARTY_APPS = [
+    'django_extensions',
+    'crispy_forms',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'rest_framework',
+]
+LOCAL_APPS = [
+    'pyfreebilling.users.apps.UsersAppConfig',
+    # Your stuff: custom apps go here
+]
+# https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
-#  ######### CACHE
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    },
-    'axes_cache': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-    }
+# MIGRATIONS
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#migration-modules
+MIGRATION_MODULES = {
+    'sites': 'pyfreebilling.contrib.sites.migrations'
 }
-AXES_CACHE = 'axes_cache'
 
-#  ######### END CACHE
+# AUTHENTICATION
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+# https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
+AUTH_USER_MODEL = 'users.User'
+# https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
+LOGIN_REDIRECT_URL = 'users:redirect'
+# https://docs.djangoproject.com/en/dev/ref/settings/#login-url
+LOGIN_URL = 'account_login'
 
-#  ######### PASSWORD CONFIGURATION
-
+# PASSWORDS
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#password-hashers
 PASSWORD_HASHERS = [
+    # https://docs.djangoproject.com/en/dev/topics/auth/passwords/#using-argon2-with-django
     'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
     'django.contrib.auth.hashers.BCryptPasswordHasher',
 ]
-
+# https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': {
-            'min_length': 11,
-        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -225,258 +129,140 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# ########## END PASSWORD CONFIGURATION
-
-#  ######### LOCALE FILE CONFIGURATION
-LOCALE_PATHS = (
-    normpath(join(APP_DIR, 'locale')),
-)
-LANGUAGE_CODE = 'en_US'
-#  ######### END LOCALE FILE CONFIGURATION
-
-#  ######### MEDIA CONFIGURATION
-MEDIA_ROOT = normpath(join(PROJECT_ROOT, 'media'))
-
-MEDIA_URL = '/media/'
-#  ######### END MEDIA CONFIGURATION
-
-#  ######### STATIC FILE CONFIGURATION
-STATIC_ROOT = normpath(join(PROJECT_ROOT, 'staticfiles'))
-
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-    normpath(join(APP_DIR, 'static')),
-)
-
-STATICFILES_FINDERS_IGNORE = [
-    '*.scss',
-    '*.coffee',
-    '*.map',
-    '*.html',
-    '*.txt',
-    '*tests*',
-    '*uncompressed*',
+# MIDDLEWARE
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#middleware
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-STATICFILES_FINDERS = (
+# STATIC
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#static-root
+STATIC_ROOT = str(ROOT_DIR('staticfiles'))
+# https://docs.djangoproject.com/en/dev/ref/settings/#static-url
+STATIC_URL = '/static/'
+# https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
+STATICFILES_DIRS = [
+    str(APPS_DIR.path('static')),
+]
+# https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
+STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
+# MEDIA
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#media-root
+MEDIA_ROOT = str(APPS_DIR('media'))
+# https://docs.djangoproject.com/en/dev/ref/settings/#media-url
+MEDIA_URL = '/media/'
+
+# TEMPLATES
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#templates
+TEMPLATES = [
+    {
+        # https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
+        'DIRS': [
+            str(APPS_DIR.path('templates')),
+        ],
+        'OPTIONS': {
+            # https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
+            'debug': DEBUG,
+            # https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
+            # https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
+            'loaders': [
+                'admin_tools.template_loaders.Loader',
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ],
+            # https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+# http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# FIXTURES
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#fixture-dirs
+FIXTURE_DIRS = (
+    str(APPS_DIR.path('fixtures')),
 )
-#  ######### END STATIC FILE CONFIGURATION
 
-# ######### URL CONFIGURATION
-ROOT_URLCONF = 'config.urls'
-#  ######### END URL CONFIGURATION
-
-
-#  ######### LOGIN/LOGOUT CONFIGURATION
-# LOGIN_REDIRECT_URL = '/'
-# LOGIN_URL = '/login/'
-# LOGOUT_URL = '/logout/'
-#  ######### END LOGIN/LOGOUT CONFIGURATION
-
-
-#  ######### WSGI CONFIGURATION
-WSGI_APPLICATION = 'config.wsgi.application'
-#  ######### END WSGI CONFIGURATION
-
-
-#  ######### USER MODEL CONFIGURATION
-AUTH_USER_MODEL = 'auth.User'
-#  ######### END USER MODEL CONFIGURATION
-
-
-#  ######### TESTING CONFIGURATION
-TEST_RUNNER = 'django.test.runner.DiscoverRunner'
-#  ######### END TESTING CONFIGURATION
-
-#  ######### LOGGING CONFIGURATION
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'production_only': {
-            '()': 'django.utils.log.RequireDebugFalse',
-        },
-        'development_only': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
-    },
-    'formatters': {
-        'verbose': {
-            'format': '[%(asctime)s] %(levelname)-8s [%(name)s:%(lineno)s] %(message)s',
-            'datefmt': '%m/%d/%Y %H:%M:%S',
-        },
-        'simple': {
-            'format': '%(levelname)-8s [%(name)s:%(lineno)s] %(message)s',
-        },
-    },
-    'handlers': {
-        'null': {
-            'level': 'DEBUG',
-            'class': 'logging.NullHandler',
-        },
-        'default': {
-            'level': 'DEBUG',
-            'class': 'config.lib.colorstreamhandler.ColorStreamHandler',
-        },
-        'console_dev': {
-            'level': 'DEBUG',
-            'filters': ['development_only'],
-            'class': 'config.lib.colorstreamhandler.ColorStreamHandler',
-            'formatter': 'simple',
-        },
-        'console_prod': {
-            'level': 'INFO',
-            'filters': ['production_only'],
-            'class': 'config.lib.colorstreamhandler.ColorStreamHandler',
-            'formatter': 'simple',
-        },
-        # 'file_log': {
-        #     'level': 'DEBUG',
-        #     'filters': ['development_only'],
-        #     'class': 'logging.handlers.RotatingFileHandler',
-        #     'filename': join(DJANGO_ROOT, 'logs/log.log'),
-        #     'maxBytes': 1024 * 1024,
-        #     'backupCount': 3,
-        #     'formatter': 'verbose',
-        # },
-        # 'file_sql': {
-        #     'level': 'DEBUG',
-        #     'filters': ['development_only'],
-        #     'class': 'logging.handlers.RotatingFileHandler',
-        #     'filename': join(DJANGO_ROOT, 'logs/sql.log'),
-        #     'maxBytes': 1024 * 1024,
-        #     'backupCount': 3,
-        #     'formatter': 'verbose',
-        # },
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['production_only'],
-            'class': 'django.utils.log.AdminEmailHandler',
-            'include_html': True,
-        },
-    },
-    # Catch-all modules that use logging
-    # Writes to console and file on development, only to console on production
-    'root': {
-        'handlers': ['console_dev', 'console_prod'],
-        'level': 'DEBUG',
-    },
-    'loggers': {
-        # Write all SQL queries to a file
-        # 'django.db.backends': {
-        #     'handlers': ['file_sql'],
-        #     'level': 'DEBUG',
-        #     'propagate': False,
-        # },
-        # Email admins when 500 error occurs
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': False,
-        },
-    }
-}
-#  ######### END LOGGING CONFIGURATION
-
-
-#  ######### SECURITY CONFIGURATION
-SECRET_KEY = 'securitykeymustbechanged'
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_FRAME_DENY = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_HSTS_SECONDS = 60
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_AGE = 86400
-SESSION_COOKIE_SECURE = True
+# SECURITY
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-httponly
 SESSION_COOKIE_HTTPONLY = True
+# https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-httponly
+CSRF_COOKIE_HTTPONLY = True
+# https://docs.djangoproject.com/en/dev/ref/settings/#secure-browser-xss-filter
+SECURE_BROWSER_XSS_FILTER = True
+# https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
 X_FRAME_OPTIONS = 'DENY'
-AXES_LOGIN_FAILURE_LIMIT = 5
-ADMIN_HONEYPOT_EMAIL_ADMINS = False
-#  ######### END SECURITY CONFIGURATION
 
-# -----------------------------------
-COUNTRIES_FLAG_PATH = 'flags/%s.png'
+# EMAIL
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
+EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+
+# ADMIN
+# ------------------------------------------------------------------------------
+# Django Admin URL.
+ADMIN_URL = 'admin/'
+# https://docs.djangoproject.com/en/dev/ref/settings/#admins
+ADMINS = [
+    ("""Mathias WOLFF""", 'mathias@celea.org'),
+]
+# https://docs.djangoproject.com/en/dev/ref/settings/#managers
+MANAGERS = ADMINS
+
+
+# django-allauth
+# ------------------------------------------------------------------------------
+ACCOUNT_ALLOW_REGISTRATION = env.bool('DJANGO_ACCOUNT_ALLOW_REGISTRATION', True)
+# https://django-allauth.readthedocs.io/en/latest/configuration.html
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
+# https://django-allauth.readthedocs.io/en/latest/configuration.html
+ACCOUNT_EMAIL_REQUIRED = True
+# https://django-allauth.readthedocs.io/en/latest/configuration.html
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+# https://django-allauth.readthedocs.io/en/latest/configuration.html
+ACCOUNT_ADAPTER = 'pyfreebilling.users.adapters.AccountAdapter'
+# https://django-allauth.readthedocs.io/en/latest/configuration.html
+SOCIALACCOUNT_ADAPTER = 'pyfreebilling.users.adapters.SocialAccountAdapter'
+
+
+# Your stuff...
+# ------------------------------------------------------------------------------
+# Location of root django.contrib.admin URL
+HONEYPOT_URL = r'admin/'
+ADMIN_URL = r'extranet/'
 
 # ADMIN SETTINGS
-BOOTSTRAP_ADMIN_SIDEBAR_MENU = True
 ADMIN_SITE_NAME = 'PyFreeBilling'
 ADMIN_SITE_TITLE = 'PyFreeBilling administration'
 ADMIN_SITE_DESCRIPTION = 'Softswitch and billing application'
-ADMIN_SITE_LOGO_HTML = '<div id="myproject-logo hidden-phone">Logo</div>'
-ADMIN_DISABLE_APP_INDEX = 'True'
-ADMIN_TOOLS_THEMING_CSS = 'css/theming.css'
-ADMIN_TOOLS_MENU = 'config.menu.CustomMenu'
-
-# ---------
-# Currency settings
-# ---------
-CURRENCIES_BASE = 'EUR'
-
-# ----------
-# Chroniker
-# ----------
-CHRONIKER_USE_PID = False
-CHRONIKER_SELECT_FOR_UPDATE = False
-CHRONIKER_CHECK_LOCK_FILE = False
-
-
-# -- Nb days of CDR to show
-PFB_NB_ADMIN_CDR = 3
-PFB_NB_CUST_CDR = 30
-
-# -----#
-
-# try:
-#     from .local_settings import *
-# except ImportError:
-#     pass
-
-# -----#
-
-
-# --- Import export settings
-IMPORT_EXPORT_SKIP_ADMIN_LOG = True
-
-# -----
-# -- Upload settings
-FILE_UPLOAD_MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10MB
-FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
-FILE_UPLOAD_TEMP_DIR = '/tmp'
-# FILE_UPLOAD_PERMISSIONS = 0644
-# FILE_UPLOAD_DIRECTORY_PERMISSIONS
-# FILE_UPLOAD_HANDLERS
-
-# Crispy forms
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
-
-# Location of root django.contrib.admin URL
-HONEYPOT_URL = r'^admin/'
-ADMIN_URL = r'^extranet/'
-
-# -------------------------#
-# ANTIFRAUD SYSTEM SETTINGS
-# general settings
-antifraud_activate = False # to activate threshold antifraud system, set to True
-antifraud_activate_sip_blocking = False # mettre a YES pour activer le blocage sur seuil
-antifraud_activate_customer = False # mettre a YES pour activer l'antifraude sur les comptes clients
-antifraud_activate_customer_force = False # To force antifraud system for all customers using default settings, set to YES
-antifraud_activate_sipaccount = False # mettre a YES pour activer l'antifraude sur les comptes SIP
-
-# customer account default settings
-antifraud_cust_amount_alert = 100 # valeur en monnaie de consommation maximum d un compte client declenchant une alerte
-antifraud_cust_minutes_alert = 10000 # valeur en minutes de consommation maximum d un compte client declenchant une alerte
-antifraud_cust_amount_block = 200 # valeur en monnaie de consommation maximum d un compte client declenchant un blocage
-antifraud_cust_minutes_block = 20000 # valeur en minutes de consommation maximum d un compte client declenchant un blocage
-
-# SIP account default settings
-antifraud_sip_amount_alert = 100 # valeur en monnaie de consommation maximum d un compte client declenchant une alerte
-antifraud_sip_minutes_alert = 10000 # valeur en minutes de consommation maximum d un compte client declenchant une alerte
-antifraud_sip_amount_block = 200 # valeur en monnaie de consommation maximum d un compte client declenchant un blocage
-antifraud_sip_minutes_block = 20000 # valeur en minutes de consommation maximum d un compte client declenchant un blocage
-# -------------------------#
+ADMIN_TOOLS_INDEX_DASHBOARD = 'fluent_dashboard.dashboard.FluentIndexDashboard'
+ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'fluent_dashboard.dashboard.FluentAppIndexDashboard'
+ADMIN_TOOLS_MENU = 'fluent_dashboard.menu.FluentMenu'

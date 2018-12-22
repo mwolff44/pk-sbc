@@ -1,1 +1,0 @@
-[{"pk": 1, "model": "switch.voipswitch", "fields": {"name": "pyfreebilling", "date_modified": "2013-11-23T11:20:51.106Z", "ip": "127.0.0.1", "esl_listen_ip": "127.0.0.1", "esl_listen_port": 8021, "esl_password": "ClueCon", "date_added": "2013-11-23T11:20:51.106Z"}}]
