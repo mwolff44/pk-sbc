@@ -73,13 +73,25 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',
+    'import_export',
+    'django_countries',
+]
+PYFB_APPS = [
+    'pyfb_kamailio',
+    'pyfb_normalization',
+    'pyfb_company',
+    'pyfb_direction',
+    'pyfb_endpoint',
+    'pyfb_rating',
+    'pyfb_routing',
+    'pyfb_did',
 ]
 LOCAL_APPS = [
     'pyfreebilling.users.apps.UsersAppConfig',
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PYFB_APPS + LOCAL_APPS
 
 # MIGRATIONS
 # ------------------------------------------------------------------------------
@@ -265,5 +277,5 @@ ADMIN_SITE_TITLE = 'PyFreeBilling administration'
 ADMIN_SITE_DESCRIPTION = 'Softswitch and billing application'
 ADMIN_TOOLS_INDEX_DASHBOARD = 'fluent_dashboard.dashboard.FluentIndexDashboard'
 ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'fluent_dashboard.dashboard.FluentAppIndexDashboard'
-ADMIN_TOOLS_MENU = 'fluent_dashboard.menu.FluentMenu'
+ADMIN_TOOLS_MENU = 'config.menu.CustomMenu'
 ADMIN_TOOLS_THEMING_CSS = 'css/theming.css'
