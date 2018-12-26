@@ -76,6 +76,7 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'import_export',
     'django_countries',
+    'constance',
 ]
 PYFB_APPS = [
     'pyfb_kamailio',
@@ -271,6 +272,12 @@ SOCIALACCOUNT_ADAPTER = 'pyfreebilling.users.adapters.SocialAccountAdapter'
 # Location of root django.contrib.admin URL
 HONEYPOT_URL = r'admin/'
 ADMIN_URL = r'extranet/'
+
+# Settings in constance
+CONSTANCE_CONFIG = {
+    'THE_ANSWER': (42, 'Answer to the Ultimate Question of Life, '
+                       'The Universe, and Everything'),
+}
 
 # ADMIN SETTINGS
 ADMIN_SITE_NAME = 'PyFreeBilling'
