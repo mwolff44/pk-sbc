@@ -15,7 +15,7 @@ class CustomMenu(Menu):
     def __init__(self, **kwargs):
         Menu.__init__(self, **kwargs)
         self.children += [
-            items.MenuItem(_('Dashboard'), reverse('admin:index')),
+            items.MenuItem(_('PyFB'), reverse('admin:index')),
             items.MenuItem(_('Companies'), reverse('admin:pyfb_company_company_changelist'),
                 children=[
                     items.MenuItem(_('Customers'), reverse('admin:pyfb_company_customer_changelist'),
