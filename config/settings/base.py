@@ -1,6 +1,7 @@
 """
 Base settings to build other settings files upon.
 """
+from django.utils.translation import ugettext_lazy as _
 
 import environ
 
@@ -73,13 +74,26 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',
+    'import_export',
+    'django_countries',
+    'constance',
+]
+PYFB_APPS = [
+    'pyfb_kamailio',
+    'pyfb_normalization',
+    'pyfb_company',
+    'pyfb_direction',
+    'pyfb_endpoint',
+    'pyfb_rating',
+    'pyfb_routing',
+    'pyfb_did',
 ]
 LOCAL_APPS = [
     'pyfreebilling.users.apps.UsersAppConfig',
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PYFB_APPS + LOCAL_APPS
 
 # MIGRATIONS
 # ------------------------------------------------------------------------------
@@ -259,10 +273,85 @@ SOCIALACCOUNT_ADAPTER = 'pyfreebilling.users.adapters.SocialAccountAdapter'
 HONEYPOT_URL = r'admin/'
 ADMIN_URL = r'extranet/'
 
+# Settings in constance
+CONSTANCE_CONFIG = {
+    'THE_ANSWER': (42, 'Answer to the Ultimate Question of Life, '
+                       'The Universe, and Everything'),
+}
+
 # ADMIN SETTINGS
 ADMIN_SITE_NAME = 'PyFreeBilling'
 ADMIN_SITE_TITLE = 'PyFreeBilling administration'
 ADMIN_SITE_DESCRIPTION = 'Softswitch and billing application'
 ADMIN_TOOLS_INDEX_DASHBOARD = 'fluent_dashboard.dashboard.FluentIndexDashboard'
 ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'fluent_dashboard.dashboard.FluentAppIndexDashboard'
-ADMIN_TOOLS_MENU = 'fluent_dashboard.menu.FluentMenu'
+ADMIN_TOOLS_MENU = 'config.menu.CustomMenu'
+ADMIN_TOOLS_THEMING_CSS = 'css/theming.css'
+
+# dashboard
+FLUENT_DASHBOARD_APP_ICONS = {
+    'pyfb_company/customer': 'multiple25.png',
+    'pyfb_endpoint/customerendpoint': 'users7.png',
+    'pyfb_rating/customerratecard': 'music236.png',
+    'pyfb_routing/customerroutinggroup': 'documents56.png',
+    'pyfb_company/provider': 'network60.png',
+    'pyfb_endpoint/providerendpoint': 'world90.png',
+    'pyfb_rating/providerratecard': 'notebook24.png',
+    'pyfb_routing/routinggroup': 'connectivity2.png',
+    'pyfb_did/did': 'global45.png',
+    'pyfb_company/companybalancehistory': 'shopping102.png',
+    # ...
+}
+
+#FLUENT_DASHBOARD_ICON_THEME = 'flaticons'
+FLUENT_DASHBOARD_DEFAULT_ICON = 'chat.png'
+FLUENT_DASHBOARD_DEFAULT_MODULE = 'admin_tools.dashboard.modules.AppList'
+FLUENT_DASHBOARD_APP_GROUPS = (
+    (_('customer management'), {
+        'models': (
+            'pyfb_company.models.Customer',
+            'pyfb_endpoint.models.CustomerEndpoint',
+            'pyfb_rating.models.CustomerRatecard',
+            'pyfb_routing.models.CustomerRoutingGroup',
+        ),
+        'collapsible': False,
+        'deletable': False,
+    }),
+    (_('provider management'), {
+        'models': (
+            'pyfb_company.models.Provider',
+            'pyfb_endpoint.models.ProviderEndpoint',
+            'pyfb_rating.models.ProviderRatecard',
+        ),
+        'collapsible': False,
+        'deletable': False,
+    }),
+    (_('rating and routing management'), {
+        'models': (
+            'pyfb_rating.models.CustomerRatecard',
+            'pyfb_rating.models.ProviderRatecard',
+            'pyfb_routing.models.RoutingGroup',
+        ),
+        'collapsible': False,
+        'deletable': False,
+    }),
+    (_('did management'), {
+        'models': (
+            'pyfb_did.models.Did',
+        ),
+        'collapsible': False,
+        'deletable': False,
+    }),
+    (_('finance'), {
+        'models': (
+            'pyfb_company.models.CompanyBalanceHistory',
+        ),
+        'collapsible': False,
+        'deletable': False,
+    }),
+    (_('Applications'), {
+        'models': ('*',),
+        'module': FLUENT_DASHBOARD_DEFAULT_MODULE,
+        'collapsible': True,
+    }),
+)

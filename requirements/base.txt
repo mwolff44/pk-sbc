@@ -6,7 +6,7 @@ redis>=2.10.6, < 3  # pyup: < 3 # https://github.com/antirez/redis
 
 # Django
 # ------------------------------------------------------------------------------
-django==2.0.9  # pyup: < 2.1  # https://www.djangoproject.com/
+django==2.1.4  # pyup: < 2.2  # https://www.djangoproject.com/
 django-environ==0.4.5  # https://github.com/joke2k/django-environ
 django-model-utils==3.1.2  # https://github.com/jazzband/django-model-utils
 django-allauth==0.38.0  # https://github.com/pennersr/django-allauth
@@ -14,7 +14,20 @@ django-crispy-forms==1.7.2  # https://github.com/django-crispy-forms/django-cris
 django-redis==4.10.0  # https://github.com/niwinz/django-redis
 django-extensions==2.1.4  # https://github.com/django-extensions/django-extensions
 django-fluent-dashboard
+django-import-export # https://github.com/bmihelac/django-import-export/
+django-countries # https://github.com/smileychris/django-countries/
+django-constance # https://github.com/jazzband/django-constance
 
 # Django REST Framework
 djangorestframework==3.9.0  # https://github.com/encode/django-rest-framework
 coreapi==2.3.3  # https://github.com/core-api/python-client
+
+# PyFB packages
+pyfb-kamailio
+pyfb-normalization
+pyfb-company
+pyfb-direction
+pyfb-endpoint
+pyfb-rating
+pyfb-routing
+pyfb-did

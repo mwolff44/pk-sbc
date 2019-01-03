@@ -12,23 +12,23 @@ services:
       dockerfile: ./compose/production/django/Dockerfile
     image: pyfreebilling_production_django
     depends_on:
-      - postgres
+      #- postgres
       - redis
     env_file:
       - ./.envs/.production/.django
       - ./.envs/.production/.postgres
     command: /start
 
-  postgres:
-    build:
-      context: .
-      dockerfile: ./compose/production/postgres/Dockerfile
-    image: pyfreebilling_production_postgres
-    volumes:
-      - production_postgres_data:/var/lib/postgresql/data
-      - production_postgres_data_backups:/backups
-    env_file:
-      - ./.envs/.production/.postgres
+  # postgres:
+  #   build:
+  #     context: .
+  #     dockerfile: ./compose/production/postgres/Dockerfile
+  #   image: pyfreebilling_production_postgres
+  #   volumes:
+  #     - production_postgres_data:/var/lib/postgresql/data
+  #     - production_postgres_data_backups:/backups
+  #   env_file:
+  #     - ./.envs/.production/.postgres
 
   caddy:
     build:
