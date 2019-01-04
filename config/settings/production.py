@@ -69,32 +69,10 @@ AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': f'max-age={_AWS_EXPIRY}, s-maxage={_AWS_EXPIRY}, must-revalidate',
 }
 
-# STATIC
+# Static Assets
 # ------------------------
-
-#STATICFILES_STORAGE = 'config.settings.production.StaticRootS3Boto3Storage'
-#STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/static/'
-
-# MEDIA
-# ------------------------------------------------------------------------------
-
-# region http://stackoverflow.com/questions/10390244/
-# Full-fledge class: https://stackoverflow.com/a/18046120/104731
-#from storages.backends.s3boto3 import S3Boto3Storage  # noqa E402
-
-
-#class StaticRootS3Boto3Storage(S3Boto3Storage):
-#    location = 'static'
-
-
-#class MediaRootS3Boto3Storage(S3Boto3Storage):
-#    location = 'media'
-#    file_overwrite = False
-
-
-# endregion
-#DEFAULT_FILE_STORAGE = 'config.settings.production.MediaRootS3Boto3Storage'
-#MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/media/'
+MEDIA_ROOT = "/data/media"
+STATIC_ROOT = "/data/static"
 
 # TEMPLATES
 # ------------------------------------------------------------------------------
@@ -140,13 +118,6 @@ ANYMAIL = {
 # Gunicorn
 # ------------------------------------------------------------------------------
 INSTALLED_APPS += ['gunicorn']  # noqa F405
-
-# Collectfast
-# ------------------------------------------------------------------------------
-# https://github.com/antonagestam/collectfast#installation
-INSTALLED_APPS = ['collectfast'] + INSTALLED_APPS  # noqa F405
-AWS_PRELOAD_METADATA = True
-
 
 # LOGGING
 # ------------------------------------------------------------------------------

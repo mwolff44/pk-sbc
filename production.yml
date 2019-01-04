@@ -4,6 +4,8 @@ volumes:
   production_postgres_data: {}
   production_postgres_data_backups: {}
   production_caddy: {}
+  production_static: {}
+  production_media: {}
 
 services:
   django:
@@ -14,6 +16,9 @@ services:
     depends_on:
       - postgres
       - redis
+    volumes:
+      - production_static:/data/static
+      - production_media:/data/media
     env_file:
       - ./.envs/.production/.django
       - ./.envs/.production/.postgres
@@ -39,6 +44,8 @@ services:
       - django
     volumes:
       - production_caddy:/root/.caddy
+      - production_static:/data/static
+      - production_media:/data/media
     env_file:
       - ./.envs/.production/.caddy
     ports:

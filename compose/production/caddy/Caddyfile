@@ -13,3 +13,15 @@ www.{$DOMAIN_NAME} {
     errors stdout
     gzip
 }
+
+{$DOMAIN_NAME}/static {
+    root /data/static
+    header / Cache-Control "max-age=2592000"
+    gzip
+}
+
+{$DOMAIN_NAME}/media {
+    root /data/media
+    header / Cache-Control "max-age=2592000"
+    gzip
+}

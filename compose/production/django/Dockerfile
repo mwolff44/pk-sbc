@@ -37,4 +37,13 @@ USER django
 
 WORKDIR /app
 
+RUN mkdir /data \
+    && chown django.django /data
+
+RUN mkdir /data/static \
+    && chown django.django /data/static
+
+RUN mkdir /data/media \
+&& chown django.django /data/media
+
 ENTRYPOINT ["/entrypoint"]
