@@ -54,3 +54,18 @@ services:
 
   redis:
     image: redis:3.2
+
+  kamailio:
+    build:
+      context: .
+      dockerfile: ./compose/production/kamailio/Dockerfile
+    image: pyfreebilling_production_kamailio
+    depends_on:
+      - postgres
+    env_file:
+      - ./.envs/.production/.kamailio
+      - ./.envs/.production/.postgres
+    ports:
+      - "0.0.0.0:5060:5060/udp"
+      - "0.0.0.0:5060:5060/tcp"
+      - "0.0.0.0:12221:12221"
