@@ -31,3 +31,13 @@ services:
       - local_postgres_data_backups:/backups
     env_file:
       - ./.envs/.local/.postgres
+
+  adminer:
+    image: adminer
+    depends_on:
+      - postgres
+    restart: always
+    env_file:
+      - ./.envs/.local/.adminer
+    ports:
+      - 9090:8080
