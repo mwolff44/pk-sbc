@@ -9,7 +9,7 @@ RUN chmod 755 /usr/bin/dumb-init
 # Config files.
 ADD ./setup/kamailio/etc /etc/kamailio
 
-ADD run.sh /run.sh
+ADD ./compose/production/kamailio/run.sh /run.sh
 RUN chmod +x /run.sh
 RUN touch /env.sh
 ENTRYPOINT ["/run.sh"]
