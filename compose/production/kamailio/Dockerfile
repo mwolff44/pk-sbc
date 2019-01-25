@@ -7,7 +7,7 @@ RUN curl -k -L https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-i
 RUN chmod 755 /usr/bin/dumb-init
 
 # Config files.
-ADD ./setup/kamailio/etc/* /etc/kamailio
+ADD ./setup/kamailio/etc /etc/kamailio
 
 ADD run.sh /run.sh
 RUN chmod +x /run.sh
