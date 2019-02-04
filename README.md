@@ -107,6 +107,15 @@ To get free support, a dedicated forum is online : [PyFreeBilling community supp
 
 If you need paid support, specific features or consulting services, you will find support services prices on PyFreeBilling website : [http://www.pyfreebilling.com/shop/](http://www.pyfreebilling.com/shop/)
 
+### Contributing
+
+Separate proposed changes and PRs into small, distinct patches by type so that they can be merged faster into upstream and released quicker:
+
+* Feature
+* Bugfix
+* Code style
+* Documentation
+
 ### Donation
 
 If you want to support my developments you are welcome to buy me a cup of coffee :)
