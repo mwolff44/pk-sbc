@@ -77,6 +77,7 @@ THIRD_PARTY_APPS = [
     'import_export',
     'django_countries',
     'constance',
+    'migrate_sql',
 ]
 PYFB_APPS = [
     'pyfb_kamailio',
