@@ -42,6 +42,9 @@ pyfreebilling is under AGPLv3 license. You can read it in COPYING file.
 
 [![AGPLv3 License](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)](http://www.fsf.org)
 
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmwolff44%2Fpyfreebilling.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmwolff44%2Fpyfreebilling?ref=badge_large)
+
 ### Features
 
 There are a some features supported. Most of them are configurable via the web
@@ -98,6 +101,7 @@ Website: [http://www.pyfreebilling.com](http://www.pyfreebilling.com)
 
 ![Customer panel](http://www.pyfreebilling.com/wp-content/uploads/2014/12/pfb-th-sanstone-inv.png)
 ![Admin interface](http://www.pyfreebilling.com/wp-content/uploads/2014/03/pyfreebilling-customer-rates2.png)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmwolff44%2Fpyfreebilling.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmwolff44%2Fpyfreebilling?ref=badge_shield)
 
 And many more ... [PyFreeBilling gallery](http://www.pyfreebilling.com/portfolio/)
 
