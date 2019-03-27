@@ -27,7 +27,7 @@ coreapi==2.3.3  # https://github.com/core-api/python-client
 pyfb-kamailio==0.9.4
 pyfb-normalization==1.0.1
 pyfb-company
-pyfb-direction==1.0.1
+pyfb-direction==1.0.2
 pyfb-endpoint==0.9.2
 pyfb-rating
 pyfb-routing
