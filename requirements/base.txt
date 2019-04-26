@@ -6,7 +6,7 @@ redis>=2.10.6, < 3  # pyup: < 3 # https://github.com/antirez/redis
 
 # Django
 # ------------------------------------------------------------------------------
-django>=2.1.5  # pyup: < 2.2  # https://www.djangoproject.com/
+django==2.1.8  # pyup: < 2.2  # https://www.djangoproject.com/
 django-environ==0.4.5  # https://github.com/joke2k/django-environ
 django-model-utils==3.1.2  # https://github.com/jazzband/django-model-utils
 django-allauth==0.38.0  # https://github.com/pennersr/django-allauth
@@ -28,7 +28,7 @@ pyfb-kamailio==0.9.4
 pyfb-normalization==1.0.1
 pyfb-company
 pyfb-direction==1.0.2
-pyfb-endpoint==0.9.2
+pyfb-endpoint==0.9.3
 pyfb-rating
 pyfb-routing
 pyfb-did==1.0.0
