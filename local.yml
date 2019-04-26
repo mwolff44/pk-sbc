@@ -31,6 +31,8 @@ services:
       - local_postgres_data_backups:/backups
     env_file:
       - ./.envs/.local/.postgres
+    ports:
+      - 5433:5432
 
   adminer:
     image: adminer
@@ -41,3 +43,17 @@ services:
       - ./.envs/.local/.adminer
     ports:
       - 9090:8080
+
+  router:
+    build:
+      context .
+      dockerfile : https://raw.githubusercontent.com/mwolff44/pyfb-router/master/Dockerfile
+    image: pyfreebilling_local_router
+    depends_on:
+      - postgres
+    restart: always
+    env_file:
+      - ./.envs/.local/.router
+      - ./.envs/.local/.postgres
+    ports:
+      - 8001:8081
