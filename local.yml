@@ -45,9 +45,7 @@ services:
       - 9090:8080
 
   router:
-    build:
-      context .
-      dockerfile : https://raw.githubusercontent.com/mwolff44/pyfb-router/master/Dockerfile
+    build: https://github.com/mwolff44/pyfb-router.git
     image: pyfreebilling_local_router
     depends_on:
       - postgres
