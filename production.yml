@@ -71,3 +71,15 @@ services:
       - "0.0.0.0:5060:5060/udp"
       - "0.0.0.0:5060:5060/tcp"
       - "0.0.0.0:12221:12221"
+
+    router:
+      build: https://github.com/mwolff44/pyfb-router.git
+      image: pyfreebilling_local_router
+      depends_on:
+        - postgres
+      restart: always
+      env_file:
+        - ./.envs/.production/.router
+        - ./.envs/.production/.postgres
+      ports:
+        - 8001:8081
