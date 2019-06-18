@@ -71,6 +71,7 @@ class CustomMenu(Menu):
                 children=[
                     items.MenuItem(_('CDRs'), '/extranet/cdrform/',
                         children=[
+                            items.MenuItem(_('Call Detail Report'), reverse('admin:pyfb_reporting_cdr_changelist')),
                             items.MenuItem(_('CDRs view'), reverse('admin:pyfb_kamailio_acccdr_changelist')),
                             items.MenuItem(_('Successfull CDRs'), reverse('admin:pyfb_kamailio_acc_changelist')),
                             items.MenuItem(_('Failed CDRs'), reverse('admin:pyfb_kamailio_missedcall_changelist')),
@@ -112,6 +113,7 @@ class CustomMenu(Menu):
                     ),
                     items.MenuItem(_('Configuration'),
                         children=[
+                            items.MenuItem(_('Domain management'), reverse('admin:pyfb_kamailio_domain_changelist')),
                             items.MenuItem(_('RTP proxies'), reverse('admin:pyfb_kamailio_rtpengine_changelist')),
                             items.MenuItem(_('CallerID prefix list for filtering'), reverse('admin:pyfb_rating_callernumlist_changelist')),
                             items.MenuItem(_('Codecs'), reverse('admin:pyfb_endpoint_codec_changelist')),

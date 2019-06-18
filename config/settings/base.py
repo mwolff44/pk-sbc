@@ -88,6 +88,7 @@ PYFB_APPS = [
     'pyfb_rating',
     'pyfb_routing',
     'pyfb_did',
+    'pyfb_reporting',
 ]
 LOCAL_APPS = [
     'pyfreebilling.users.apps.UsersAppConfig',

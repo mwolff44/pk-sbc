@@ -82,4 +82,4 @@ services:
       - ./.envs/.production/.router
       - ./.envs/.production/.postgres
     ports:
-      - 8001:8081
+      - "8001:8081"
