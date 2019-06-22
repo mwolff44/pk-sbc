@@ -68,6 +68,7 @@ class CustomMenu(Menu):
                 ]
             ),
             items.MenuItem(_('Stats and reports'),
+                items.MenuItem(_('Live calls'), reverse('admin:pyfb_kamailio_dialog_changelist')),
                 children=[
                     items.MenuItem(_('CDRs'), '/extranet/cdrform/',
                         children=[
