@@ -1,5 +1,8 @@
 FROM debian:9
 
+RUN echo "deb http://deb.kamailio.org/kamailio52 stretch main" > /etc/apt/sources.list.d/kamailio.list
+RUN wget -O- http://deb.kamailio.org/kamailiodebkey.gpg | apt-key add -
+
 RUN apt-get update && apt-get install -y kamailio kamailio-extra-modules kamailio-outbound-modules kamailio-postgres-modules kamailio-tls-modules kamailio-redis-modules kamailio-xml-modules curl tcpdump
 
 #setup dumb-init
