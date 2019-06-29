@@ -1,4 +1,5 @@
 ![logo](http://www.pyfreebilling.com/wp-content/uploads/2014/12/PyFreeBilling-logo-small.png)
+Version 2
 -------------
 
 ![PyFB release](https://img.shields.io/badge/Release-2.2.2-ff69b4.svg)
