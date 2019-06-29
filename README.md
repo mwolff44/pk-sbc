@@ -92,24 +92,24 @@ Name: _Mathias WOLFF_
 Email: _website contact form_
 
 
-Website: [http://www.pyfreebilling.com](http://www.pyfreebilling.com)
+Website: [https://www.pyfreebilling.com](https://www.pyfreebilling.com)
 
 ### Screenshots
 
 ![Customer panel](http://www.pyfreebilling.com/wp-content/uploads/2014/12/pfb-th-sanstone-inv.png)
 ![Admin interface](http://www.pyfreebilling.com/wp-content/uploads/2014/03/pyfreebilling-customer-rates2.png)
 
-And many more ... [PyFreeBilling gallery](http://www.pyfreebilling.com/portfolio/)
+And many more ... [PyFreeBilling gallery](https://www.pyfreebilling.com/portfolio/)
 
 ### Support
 
 To get free support, a dedicated forum is online : [PyFreeBilling community support](https://www.pyfreebilling.org/forum/index.php)
 
-If you need paid support, specific features or consulting services, you will find support services prices on PyFreeBilling website : [http://www.pyfreebilling.com/shop/](http://www.pyfreebilling.com/shop/)
+If you need paid support, specific features or consulting services, you will find support services prices on PyFreeBilling website : [https://www.pyfreebilling.com/](https://www.pyfreebilling.com/)
 
 ### Donation
 
-If you want to support my developments you are welcome to buy me a cup of coffee :)
+If you want to support my developments you are welcome to offer me a cup of coffee :)
 
 [![Paypal donation](static/donate_button_red.jpg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FANG9JC63Q7DY&lc=FR&item_name=PyFreeBilling&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
 
