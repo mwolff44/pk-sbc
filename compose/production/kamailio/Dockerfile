@@ -1,5 +1,15 @@
 FROM debian:9
 
+MAINTAINER Mathias WOLFF <mathias@celea.org>
+
+# Important! Update this no-op ENV variable when this Dockerfile
+# is updated with the current date. It will force refresh of all
+# of the base images and things like 'apt-get update' won't be using
+# old cached versions when the Dockerfile is built.
+ENV REFRESHED_AT 2019-07-17
+
+RUN apt-get update && apt-get install -y wget gnupg
+
 RUN echo "deb http://deb.kamailio.org/kamailio52 stretch main" > /etc/apt/sources.list.d/kamailio.list
 RUN wget -O- http://deb.kamailio.org/kamailiodebkey.gpg | apt-key add -
 
