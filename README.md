@@ -30,10 +30,10 @@
 
 pyfreebilling is developed under python, LUA and PostgreSQL as the database layer.
 
-### Documentation
+### Documentation and FAQ
 
 
-Please visit : https://pyfreebilling.readthedocs.org/
+Please visit : https://www.pyfreebilling.com/knowledge-base/
 
 ### License
 
@@ -103,7 +103,7 @@ And many more ... [PyFreeBilling gallery](https://www.pyfreebilling.com/portfoli
 
 ### Support
 
-To get free support, a dedicated forum is online : [PyFreeBilling community support](https://www.pyfreebilling.org/forum/index.php)
+To get free support, use github issue tab.
 
 If you need paid support, specific features or consulting services, you will find support services prices on PyFreeBilling website : [https://www.pyfreebilling.com/](https://www.pyfreebilling.com/)
 
