@@ -3,7 +3,7 @@ version: '3'
 volumes:
   production_postgres_data: {}
   production_postgres_data_backups: {}
-  production_caddy: {}
+  production_traefik: {}
   production_static: {}
   production_media: {}
 
@@ -37,19 +37,15 @@ services:
     ports:
       - "0.0.0.0:5432:5432"
 
-  caddy:
+  traefik:
     build:
       context: .
-      dockerfile: ./compose/production/caddy/Dockerfile
-    image: pyfreebilling_production_caddy
+      dockerfile: ./compose/production/traefik/Dockerfile
+    image: pyfreebilling_production_traefik
     depends_on:
       - django
     volumes:
-      - production_caddy:/root/.caddy
-      - production_static:/data/static
-      - production_media:/data/media
-    env_file:
-      - ./.envs/.production/.caddy
+      - production_traefik:/etc/traefik/acme
     ports:
       - "0.0.0.0:80:80"
       - "0.0.0.0:443:443"
