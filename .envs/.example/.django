@@ -4,7 +4,7 @@
 DJANGO_SETTINGS_MODULE=config.settings.production
 DJANGO_SECRET_KEY=mysecretkey
 DJANGO_ADMIN_URL=extranet/
-DJANGO_ALLOWED_HOSTS=*
+DJANGO_ALLOWED_HOSTS=.example.com
 
 # Security
 # ------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ DJANGO_ACCOUNT_ALLOW_REGISTRATION=False
 
 # Gunicorn
 # ------------------------------------------------------------------------------
-#WEB_CONCURRENCY=4
+WEB_CONCURRENCY=4
 
 # Redis
 # ------------------------------------------------------------------------------
