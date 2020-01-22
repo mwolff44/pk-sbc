@@ -4,8 +4,6 @@ volumes:
   production_postgres_data: {}
   production_postgres_data_backups: {}
   production_traefik: {}
-  production_static: {}
-  production_media: {}
 
 services:
   django:
@@ -16,9 +14,6 @@ services:
     depends_on:
       - postgres
       - redis
-    volumes:
-      - production_static:/data/static
-      - production_media:/data/media
     env_file:
       - ./.envs/.production/.django
       - ./.envs/.production/.postgres
@@ -51,7 +46,7 @@ services:
       - "0.0.0.0:443:443"
 
   redis:
-    image: redis:3.2
+    image: redis:5.0
 
   kamailio:
     build:
