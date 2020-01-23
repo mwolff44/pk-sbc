@@ -44,11 +44,15 @@ CSRF_COOKIE_SECURE = True
 # TODO: set this to 60 seconds first and then to 518400 once you prove the former works
 SECURE_HSTS_SECONDS = 60
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-include-subdomains
-SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool('DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', default=True)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
+    'DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', default=True
+)
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-preload
 SECURE_HSTS_PRELOAD = env.bool('DJANGO_SECURE_HSTS_PRELOAD', default=True)
 # https://docs.djangoproject.com/en/dev/ref/middleware/#x-content-type-options-nosniff
-SECURE_CONTENT_TYPE_NOSNIFF = env.bool('DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', default=True)
+SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
+    'DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', default=True
+)
 
 # STORAGES
 # ------------------------------------------------------------------------------
@@ -68,24 +72,24 @@ _AWS_EXPIRY = 60 * 60 * 24 * 7
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': f'max-age={_AWS_EXPIRY}, s-maxage={_AWS_EXPIRY}, must-revalidate',
 }
+#  https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
+AWS_DEFAULT_ACL = None
+# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
+AWS_S3_REGION_NAME = env("DJANGO_AWS_S3_REGION_NAME", default=None)
 
-# Static Assets
-# ------------------------
-MEDIA_ROOT = "/data/media"
-STATIC_ROOT = "/data/static"
 
 # TEMPLATES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#templates
-#TEMPLATES[0]['OPTIONS']['loaders'] = [  # noqa F405
-#    (
-#        'django.template.loaders.cached.Loader',
-#        [
-#            'django.template.loaders.filesystem.Loader',
-#            'django.template.loaders.app_directories.Loader',
-#        ]
-#    ),
-#]
+TEMPLATES[-1]["OPTIONS"]["loaders"] = [  # type: ignore[index] # noqa F405
+    (
+        "django.template.loaders.cached.Loader",
+        [
+            "django.template.loaders.filesystem.Loader",
+            "django.template.loaders.app_directories.Loader",
+        ],
+    )
+]
 
 # EMAIL
 # ------------------------------------------------------------------------------
@@ -102,22 +106,19 @@ EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[pyfreebillin
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL regex.
-#ADMIN_URL = env('DJANGO_ADMIN_URL')
+ADMIN_URL = env('DJANGO_ADMIN_URL')
 
 # Anymail (Mailgun)
 # ------------------------------------------------------------------------------
 # https://anymail.readthedocs.io/en/stable/installation/#installing-anymail
-INSTALLED_APPS += ['anymail']  # noqa F405
-EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+#INSTALLED_APPS += ['anymail']  # noqa F405
+#EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
 # https://anymail.readthedocs.io/en/stable/installation/#anymail-settings-reference
-ANYMAIL = {
-    'MAILGUN_API_KEY': env('MAILGUN_API_KEY'),
-    'MAILGUN_SENDER_DOMAIN': env('MAILGUN_DOMAIN')
-}
-
-# Gunicorn
-# ------------------------------------------------------------------------------
-INSTALLED_APPS += ['gunicorn']  # noqa F405
+# ANYMAIL = {
+#     'MAILGUN_API_KEY': env('MAILGUN_API_KEY'),
+#     'MAILGUN_SENDER_DOMAIN': env('MAILGUN_DOMAIN')
+#     "MAILGUN_API_URL": env("MAILGUN_API_URL", default="https://api.mailgun.net/v3"),
+# }
 
 # LOGGING
 # ------------------------------------------------------------------------------
@@ -128,43 +129,40 @@ INSTALLED_APPS += ['gunicorn']  # noqa F405
 # See https://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
+    "version": 1,
+    "disable_existing_loggers": False,
+    "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
+    "formatters": {
+        "verbose": {
+            "format": "%(levelname)s %(asctime)s %(module)s "
+            "%(process)d %(thread)d %(message)s"
         }
     },
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s '
-                      '%(process)d %(thread)d %(message)s'
+    "handlers": {
+        "mail_admins": {
+            "level": "ERROR",
+            "filters": ["require_debug_false"],
+            "class": "django.utils.log.AdminEmailHandler",
+        },
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
         },
     },
-    'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
+    "root": {"level": "INFO", "handlers": ["console"]},
+    "loggers": {
+        "django.request": {
+            "handlers": ["mail_admins"],
+            "level": "ERROR",
+            "propagate": True,
         },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
+        "django.security.DisallowedHost": {
+            "level": "ERROR",
+            "handlers": ["console", "mail_admins"],
+            "propagate": True,
         },
     },
-    'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True
-        },
-        'django.security.DisallowedHost': {
-            'level': 'ERROR',
-            'handlers': ['console', 'mail_admins'],
-            'propagate': True
-        }
-    }
 }
 
 
