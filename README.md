@@ -1,7 +1,7 @@
 ![logo](http://www.pyfreebilling.com/wp-content/uploads/2014/12/PyFreeBilling-logo-small.png)
 -------------
 
-![PyFB release](https://img.shields.io/badge/Release-2.1.0-ff69b4.svg)
+![PyFB release](https://img.shields.io/badge/Release-3.0.0beta-ff69b4.svg)
 [![Documentation Status](https://readthedocs.org/projects/pyfreebilling/badge/?version=latest)](http://pyfreebilling.readthedocs.org/en/latest/?badge=latest)
 [![Code Health](https://landscape.io/github/mwolff44/pyfreebilling/master/landscape.svg?style=flat)](https://landscape.io/github/mwolff44/pyfreebilling/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/?branch=master)
@@ -26,14 +26,14 @@
 
 ### What is pyfreebilling
 
-*pyfreebilling* is an *open source wholesale billing platform* based on *Kamailio* and *FreeSwitch* .
+*pyfreebilling* is an *open source wholesale billing platform* based on *Kamailio* and *RTP Engine* .
 
-pyfreebilling is developed under python, LUA and PostgreSQL as the database layer.
+pyfreebilling is developed under python and PostgreSQL as the database layer.
 
 ### Documentation
 
 
-Please visit : https://pyfreebilling.readthedocs.org/
+Please visit : https://www.pyfreebilling.com/
 
 ### License
 
@@ -81,9 +81,9 @@ interface. A few of them are:
 ### Prerequisites
 
 In order to run pyfreebilling, you need the following configured, secured  and
-working Basic Operating System (Linux or BSD, but also windows).
+working Basic Operating System (Linux).
 
-The project uses freeswitch, PostgreSQL and Django.
+The project uses Kamailio, RTP Engine, PostgreSQL and Django.
 
 ### Contact Information
 
@@ -105,7 +105,7 @@ And many more ... [PyFreeBilling gallery](http://www.pyfreebilling.com/portfolio
 
 To get free support, a dedicated forum is online : [PyFreeBilling community support](https://www.pyfreebilling.org/forum/index.php)
 
-If you need paid support, specific features or consulting services, you will find support services prices on PyFreeBilling website : [http://www.pyfreebilling.com/shop/](http://www.pyfreebilling.com/shop/)
+If you need paid support, specific features or consulting services, you will find support services prices on PyFreeBilling website : [http://www.pyfreebilling.com/](http://www.pyfreebilling.com/)
 
 ### Contributing
 
