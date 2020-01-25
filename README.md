@@ -3,10 +3,9 @@
 
 ![PyFB release](https://img.shields.io/badge/Release-3.0.0beta-ff69b4.svg)
 [![Documentation Status](https://readthedocs.org/projects/pyfreebilling/badge/?version=latest)](http://pyfreebilling.readthedocs.org/en/latest/?badge=latest)
-[![Code Health](https://landscape.io/github/mwolff44/pyfreebilling/master/landscape.svg?style=flat)](https://landscape.io/github/mwolff44/pyfreebilling/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/?branch=master)
 [![AGPLv3 License](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)](http://www.fsf.org)
-[![Donate to this project using Paypal](https://img.shields.io/badge/paypal-donate-red.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FANG9JC63Q7DY&lc=FR&item_name=PyFreeBilling&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
+[![Donate to this project using Paypal](https://img.shields.io/badge/paypal-donate-red.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FANG9JC63Q7DY&lc=FR&item_name=PyFreeBilling&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted&pk_campaign=donation)
 
 ---
 
@@ -30,10 +29,10 @@
 
 pyfreebilling is developed under python and PostgreSQL as the database layer.
 
-### Documentation
+### Documentation and FAQ
 
 
-Please visit : https://www.pyfreebilling.com/
+Please visit : https://www.pyfreebilling.com/knowledge-base/
 
 ### License
 
@@ -92,18 +91,18 @@ Name: _Mathias WOLFF_
 Email: _website contact form_
 
 
-Website: [http://www.pyfreebilling.com](http://www.pyfreebilling.com)
+Website: [https://www.pyfreebilling.com](https://www.pyfreebilling.com)
 
 ### Screenshots
 
 ![Customer panel](http://www.pyfreebilling.com/wp-content/uploads/2014/12/pfb-th-sanstone-inv.png)
 ![Admin interface](http://www.pyfreebilling.com/wp-content/uploads/2014/03/pyfreebilling-customer-rates2.png)
 
-And many more ... [PyFreeBilling gallery](http://www.pyfreebilling.com/portfolio/)
+And many more ... [PyFreeBilling gallery](https://www.pyfreebilling.com/portfolio/)
 
 ### Support
 
-To get free support, a dedicated forum is online : [PyFreeBilling community support](https://www.pyfreebilling.org/forum/index.php)
+To get free support, use github issue tab.
 
 If you need paid support, specific features or consulting services, you will find support services prices on PyFreeBilling website : [http://www.pyfreebilling.com/](http://www.pyfreebilling.com/)
 
@@ -118,7 +117,7 @@ Separate proposed changes and PRs into small, distinct patches by type so that t
 
 ### Donation
 
-If you want to support my developments you are welcome to buy me a cup of coffee :)
+If you want to support my developments you are welcome to offer me a cup of coffee :)
 
 [![Paypal donation](static/donate_button_red.jpg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FANG9JC63Q7DY&lc=FR&item_name=PyFreeBilling&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
 
