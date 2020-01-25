@@ -247,7 +247,7 @@ Pyfreebilling installation
 ::
 
         cd /usr/local/venv
-        git clone https://github.com/mwolff44/pyfreebilling.git -b v2.1
+        git clone https://github.com/mwolff44/pyfreebilling.git -b v2.1.1
         chown -R www-data:www-data pyfreebilling
         cd pyfreebilling
 
@@ -428,6 +428,15 @@ Pyfreebilling login
 ==========================
 
  Got to the url https://my-ip/extranet and enter your username and password.
+ 
+ And you need to create rule to allow outgoing calls using regex. This is an example that allow all prefixes. Go to menu routing and then call mapping rule and add a new one :
+ 
+ .. image:: _static/pyfb_default_rule.png
+   :scale: 50 %
+   :alt: add default rule to allow all outgoing calls
+   :align: center
+
+
 
  The customer portal url is : https://my-ip
 

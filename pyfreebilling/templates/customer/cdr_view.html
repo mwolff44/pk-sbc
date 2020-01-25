@@ -261,6 +261,7 @@
 	<thead>
 		<tr>
 			<th>{% trans "Date" %}</th>
+			<th>{% trans "Caller number" %}</th>
 			<th>{% trans "Destination number" %}</th>
 			<th>{% trans "Duration" %}</th>
 			<th>{% trans "Prefix" %}</th>
@@ -274,7 +275,8 @@
 	<tbody>
 	{% for cdr in Cdr %}
 		<tr>
-			<td>{{ cdr.start_stamp }}</td>
+			<td>{{ cdr.start_stamp|date:"d M Y h:m:s" }}</td>
+			<td{% if cdr.sip_charge_info %} title="{% trans "Charge info" %}: {{ cdr.sip_charge_info }}"{% endif %}>{{ cdr.caller_id_number }}</td>
 			<td>{{ cdr.destination_number }}</td>
 			<td>{{ cdr.min_effective_duration }}</td>
 			<td>{{ cdr.prefix }}</td>
@@ -282,7 +284,7 @@
 			<td>{{ cdr.rate }}</td>
 			<td>{{ cdr.total_sell_py }}</td>
 			<td>{{ cdr.read_codec }}/{{ cdr.write_codec }}</td>
-			<td>{{ cdr.customer_ip }}</td>
+			<td title="{% trans "User-Agent" %}: {{ cdr.sip_user_agent }}">{{ cdr.customer_ip }}</td>
 		</tr>
 	{% endfor %}
 	</tbody>

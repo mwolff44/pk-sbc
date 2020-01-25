@@ -126,6 +126,7 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
                         'hangup_disposition',
                         'sip_hangup_cause'),
                        ('read_codec', 'write_codec'),
+                       'sip_charge_info',
                        'sip_user_agent',
                        'customer_ip',
                        ('uuid', 'bleg_uuid', 'chan_name', 'country'))
@@ -231,6 +232,7 @@ class CDRAdmin(ExportMixin, admin.ModelAdmin):
                     'chan_name',
                     'read_codec',
                     'write_codec',
+                    'sip_charge_info',
                     'sip_user_agent',
                     'hangup_disposition',
                     'effectiv_duration',
