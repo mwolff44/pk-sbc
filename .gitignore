@@ -108,3 +108,9 @@ pyfreebilling/priv*
 /requirements/prod.txt.py
 /requirements/test.txt.py
 /setup/cron.txt.py
+/.envs/.production/.caddy
+/.envs/.production/.django
+/.envs/.production/.kamailio
+/.envs/.production/.postgres
+/.ipython/profile_default/history.sqlite
+/.ipython/profile_default/startup/README
