@@ -1,0 +1,76 @@
+version: '3'
+
+volumes:
+  production_postgres_data: {}
+  production_postgres_data_backups: {}
+  production_traefik: {}
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/production/django/Dockerfile
+    image: pyfreebilling_production_django
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - ./.envs/.production/.django
+      - ./.envs/.production/.postgres
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: pyfreebilling_production_postgres
+    volumes:
+      - production_postgres_data:/var/lib/postgresql/data
+      - production_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.production/.postgres
+    ports:
+      - "0.0.0.0:5432:5432"
+
+  traefik:
+    build:
+      context: .
+      dockerfile: ./compose/production/traefik/Dockerfile
+    image: pyfreebilling_production_traefik
+    depends_on:
+      - django
+    volumes:
+      - production_traefik:/etc/traefik/acme
+    ports:
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+
+  redis:
+    image: redis:5.0
+
+  kamailio:
+    build:
+      context: .
+      dockerfile: ./compose/production/kamailio/Dockerfile
+    image: pyfreebilling_production_kamailio
+    depends_on:
+      - postgres
+    env_file:
+      - ./.envs/.production/.kamailio
+      - ./.envs/.production/.postgres
+    ports:
+      - "0.0.0.0:5060:5060/udp"
+      - "0.0.0.0:5060:5060/tcp"
+      - "0.0.0.0:12221:12221"
+
+  router:
+    build: https://github.com/mwolff44/pyfb-router.git
+    image: pyfreebilling_local_router
+    depends_on:
+      - postgres
+    restart: always
+    env_file:
+      - ./.envs/.production/.router
+      - ./.envs/.production/.postgres
+    ports:
+      - "8001:80"

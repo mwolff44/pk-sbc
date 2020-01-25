@@ -1,3 +1,5 @@
 [run]
-source = pyfreebilling
-omit = *settings.py*,*manage.py*
+include = pyfreebilling/*
+omit = *migrations*, *tests*
+plugins =
+    django_coverage_plugin

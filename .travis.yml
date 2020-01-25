@@ -1,32 +1,17 @@
+dist: xenial
+services:
+  - postgresql
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq build-essential gettext python-dev zlib1g-dev libpq-dev xvfb
+  - sudo apt-get install -qq libjpeg8-dev libfreetype6-dev libwebp-dev
+  - sudo apt-get install -qq graphviz-dev python-setuptools python3-dev python-virtualenv python-pip
+  - sudo apt-get install -qq firefox automake libtool libreadline6 libreadline6-dev libreadline-dev
+  - sudo apt-get install -qq libsqlite3-dev libxml2 libxml2-dev libssl-dev libbz2-dev wget curl llvm
 language: python
 python:
-    - "2.7"
-    - "3.3"
-    
-env:
-    - DJANGO_VERSION=1.7
-
+  - "3.7"
 install:
-    - pip install argparse
-
-    - pip install -U setuptools
-    
-    - pip install -q Django==$DJANGO_VERSION
-    
-    - pip install coverage
-
-    - pip install pep8
-    - pip install pyflakes
-
-before_script:
-    - "pep8 --ignore=E501,E127,E128,E123,E226,E502 pyfreebilling"
-    
+  - pip install -r requirements/local.txt
 script:
-    - coverage run quicktest.py  
-    
-    - pip install -r requirements/requirements.txt
-    - python manage.py migrate
-    
-after_success:
-    - pip install coveralls
-    - coveralls
+  - "pytest"

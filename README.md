@@ -1,7 +1,7 @@
 ![logo](http://www.pyfreebilling.com/wp-content/uploads/2014/12/PyFreeBilling-logo-small.png)
 -------------
 
-![PyFB release](https://img.shields.io/badge/Release-2.2.2-ff69b4.svg)
+![PyFB release](https://img.shields.io/badge/Release-3.0.0beta-ff69b4.svg)
 [![Documentation Status](https://readthedocs.org/projects/pyfreebilling/badge/?version=latest)](http://pyfreebilling.readthedocs.org/en/latest/?badge=latest)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/?branch=master)
 [![AGPLv3 License](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)](http://www.fsf.org)
@@ -25,9 +25,9 @@
 
 ### What is pyfreebilling
 
-*pyfreebilling* is an *open source wholesale billing platform* based on *Kamailio* and *FreeSwitch* .
+*pyfreebilling* is an *open source wholesale billing platform* based on *Kamailio* and *RTP Engine* .
 
-pyfreebilling is developed under python, LUA and PostgreSQL as the database layer.
+pyfreebilling is developed under python and PostgreSQL as the database layer.
 
 ### Documentation and FAQ
 
@@ -80,9 +80,9 @@ interface. A few of them are:
 ### Prerequisites
 
 In order to run pyfreebilling, you need the following configured, secured  and
-working Basic Operating System (Linux or BSD, but also windows).
+working Basic Operating System (Linux).
 
-The project uses freeswitch, PostgreSQL and Django.
+The project uses Kamailio, RTP Engine, PostgreSQL and Django.
 
 ### Contact Information
 
@@ -104,7 +104,16 @@ And many more ... [PyFreeBilling gallery](https://www.pyfreebilling.com/portfoli
 
 To get free support, use github issue tab.
 
-If you need paid support, specific features or consulting services, you will find support services prices on PyFreeBilling website : [https://www.pyfreebilling.com/](https://www.pyfreebilling.com/)
+If you need paid support, specific features or consulting services, you will find support services prices on PyFreeBilling website : [http://www.pyfreebilling.com/](http://www.pyfreebilling.com/)
+
+### Contributing
+
+Separate proposed changes and PRs into small, distinct patches by type so that they can be merged faster into upstream and released quicker:
+
+* Feature
+* Bugfix
+* Code style
+* Documentation
 
 ### Donation
 

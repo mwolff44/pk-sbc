@@ -1,33 +1,30 @@
-FROM python:2.7-jessie
+FROM python:3.7-slim-buster
 
 ENV PYTHONUNBUFFERED 1
 
-RUN apt-get update && apt-get upgrade -y \
+RUN apt-get update \
+  # dependencies for building Python packages
+  && apt-get install -y build-essential \
   # psycopg2 dependencies
-  && apt-get install -y build-essential gcc python-dev libssl-dev \
   && apt-get install -y libpq-dev \
-  # Pillow dependencies
-  && apt-get install -y libjpeg-dev zlib1g-dev tk-dev tcl-dev \
-  # CFFI dependencies
-  && apt-get install -y libffi-dev \
   # Translations dependencies
   && apt-get install -y gettext \
-  # Import-export dependencies
-  && apt-get install -y libxml2-dev libxslt-dev
+  # cleaning up unused files
+  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+  && rm -rf /var/lib/apt/lists/*
 
-# Requirements have to be pulled and installed here, otherwise caching won't work
-RUN pip install pip-tools
+# Requirements are installed here to ensure they will be cached.
 COPY ./requirements /requirements
-RUN pip-sync /requirements/dev.txt
+RUN pip install -r /requirements/local.txt
 
-COPY ./compose/production/django/entrypoint.sh /entrypoint.sh
-RUN sed -i 's/\r//' /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+COPY ./compose/production/django/entrypoint /entrypoint
+RUN sed -i 's/\r$//g' /entrypoint
+RUN chmod +x /entrypoint
 
-COPY ./compose/local/django/start.sh /start.sh
-RUN sed -i 's/\r//' /start.sh
-RUN chmod +x /start.sh
+COPY ./compose/local/django/start /start
+RUN sed -i 's/\r$//g' /start
+RUN chmod +x /start
 
 WORKDIR /app
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint"]

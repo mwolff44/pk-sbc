@@ -1,1 +1,0 @@
-*/1 * * * * perl /usr/share/freeswitch/scripts/import-csv.pl>> /var/log/cron.log 2>&1

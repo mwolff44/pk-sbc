@@ -1,31 +1,73 @@
-version: '2'
+version: '3'
 
 volumes:
-  postgres_data_local: {}
-  postgres_backup_local: {}
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
 
 services:
   django:
     build:
       context: .
       dockerfile: ./compose/local/django/Dockerfile
+    image: pyfreebilling_local_django
     depends_on:
       - postgres
     volumes:
       - .:/app
-    environment:
-      - POSTGRES_USER=QEFBDGzWdpunPjDO
-      - USE_DOCKER=yes
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
     ports:
       - "8000:8000"
-    command: /start.sh
+    command: /start
 
   postgres:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
+    image: pyfreebilling_production_postgres
     volumes:
-      - postgres_data_local:/var/lib/postgresql/data
-      - postgres_backup_local:/backups
-    environment:
-      - POSTGRES_USER=QEFBDGzWdpunPjDO
+      - local_postgres_data:/var/lib/postgresql/data
+      - local_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.local/.postgres
+    ports:
+      - 5433:5432
+
+  adminer:
+    image: adminer
+    depends_on:
+      - postgres
+    restart: always
+    env_file:
+      - ./.envs/.local/.adminer
+    ports:
+      - 9090:8080
+
+  kamailio:
+    build:
+      context: .
+      dockerfile: ./compose/production/kamailio/Dockerfile
+    image: pyfreebilling_production_kamailio
+    depends_on:
+      - postgres
+    env_file:
+      - ./.envs/.production/.kamailio
+      - ./.envs/.production/.postgres
+    ports:
+      - "0.0.0.0:5060:5060/udp"
+      - "0.0.0.0:5060:5060/tcp"
+      - "0.0.0.0:12221:12221"
+
+
+  router:
+    build: https://github.com/mwolff44/pyfb-router.git
+    image: pyfreebilling_local_router
+    depends_on:
+      - postgres
+    restart: always
+    env_file:
+      - ./.envs/.local/.router
+      - ./.envs/.local/.postgres
+    ports:
+      - 8001:8081
