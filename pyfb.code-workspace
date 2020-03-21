@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "deploy/kubernetes/testing"
 		}
 	],
 	"settings": {
