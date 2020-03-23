@@ -265,6 +265,9 @@ Session.vim
 tags
 
 
+# Local deploy compose file
+deploy.yml
+
 ### Project template
 
 pyfreebilling/media/
