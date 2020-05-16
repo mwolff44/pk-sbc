@@ -10,6 +10,7 @@ services:
       context: .
       dockerfile: ./compose/local/django/Dockerfile
     image: pyfreebilling_local_django
+    container_name: pyfb-extranet
     depends_on:
       - postgres
     volumes:
@@ -26,6 +27,7 @@ services:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
     image: pyfreebilling_production_postgres
+    container_name: pyfb-db
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
       - local_postgres_data_backups:/backups
@@ -36,6 +38,7 @@ services:
 
   adminer:
     image: adminer
+    container_name: adminer
     depends_on:
       - postgres
     restart: always
@@ -49,6 +52,7 @@ services:
       context: .
       dockerfile: ./compose/production/kamailio/Dockerfile
     image: pyfreebilling_production_kamailio
+    container_name: pyfb-proxy
     depends_on:
       - postgres
     env_file:
@@ -59,10 +63,10 @@ services:
       - "0.0.0.0:5060:5060/tcp"
       - "0.0.0.0:12221:12221"
 
-
   router:
     build: https://github.com/mwolff44/pyfb-router.git
     image: pyfreebilling_local_router
+    container_name: pyfb-router
     depends_on:
       - postgres
     restart: always
