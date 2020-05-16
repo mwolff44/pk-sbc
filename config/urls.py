@@ -20,6 +20,7 @@ urlpatterns = [
         include("pyfreebilling.users.urls", namespace="users"),
     ),
     path("accounts/", include("allauth.urls")),
+    path("health/", include("health_check.urls")),
     # Your stuff: custom urls includes go here
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

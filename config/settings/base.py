@@ -82,6 +82,10 @@ THIRD_PARTY_APPS = [
     'django_countries',
     'constance',
     'migrate_sql',
+    'health_check',
+    'health_check.db',
+    'health_check.cache',
+    'health_check.storage',
 ]
 PYFB_APPS = [
     'pyfb_kamailio',

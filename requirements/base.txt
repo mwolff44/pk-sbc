@@ -12,6 +12,7 @@ django-model-utils==4.0.0  # https://github.com/jazzband/django-model-utils
 django-allauth==0.41.0  # https://github.com/pennersr/django-allauth
 django-crispy-forms==1.8.1  # https://github.com/django-crispy-forms/django-crispy-forms
 django-redis==4.11.0  # https://github.com/niwinz/django-redis
+django-health-check==3.10.2 # https://github.com/KristianOellegaard/django-health-check
 
 django-extensions==2.2.6  # https://github.com/django-extensions/django-extensions
 django-fluent-dashboard
