@@ -2,6 +2,8 @@
 import os
 import sys
 
+from pathlib import Path
+
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
 
@@ -24,7 +26,7 @@ if __name__ == "__main__":
 
     # This allows easy placement of apps within the interior
     # pyfreebilling directory.
-    current_path = os.path.dirname(os.path.abspath(__file__))
-    sys.path.append(os.path.join(current_path, "pyfreebilling"))
+    current_path = Path(__file__).parent.resolve()
+    sys.path.append(str(current_path / "pyfreebilling"))
 
     execute_from_command_line(sys.argv)
