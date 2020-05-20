@@ -10,8 +10,6 @@ services:
       context: .
       dockerfile: ./compose/local/django/Dockerfile
     image: pyfreebilling_local_django
-    depends_on:
-      - postgres
     volumes:
       - .:/app
     env_file:
@@ -21,36 +19,34 @@ services:
       - "8000:8000"
     command: /start
 
-  postgres:
-    build:
-      context: .
-      dockerfile: ./compose/production/postgres/Dockerfile
-    image: pyfreebilling_production_postgres
-    volumes:
-      - local_postgres_data:/var/lib/postgresql/data
-      - local_postgres_data_backups:/backups
-    env_file:
-      - ./.envs/.local/.postgres
-    ports:
-      - 5433:5432
+#  postgres:
+#    build:
+#      context: .
+#      dockerfile: ./compose/production/postgres/Dockerfile
+#    image: pyfreebilling_production_postgres
+#    volumes:
+#      - local_postgres_data:/var/lib/postgresql/data
+#      - local_postgres_data_backups:/backups
+#    env_file:
+#      - ./.envs/.local/.postgres
+#    ports:
+#      - 5433:5432
 
-  adminer:
-    image: adminer
-    depends_on:
-      - postgres
-    restart: always
-    env_file:
-      - ./.envs/.local/.adminer
-    ports:
-      - 9090:8080
+#  adminer:
+#    image: adminer
+#    depends_on:
+#      - postgres
+#    restart: always
+#    env_file:
+#      - ./.envs/.local/.adminer
+#    ports:
+#      - 9090:8080
 
   kamailio:
     build:
       context: .
       dockerfile: ./compose/production/kamailio/Dockerfile
     image: pyfreebilling_production_kamailio
-    depends_on:
-      - postgres
     env_file:
       - ./.envs/.production/.kamailio
       - ./.envs/.production/.postgres
@@ -63,8 +59,6 @@ services:
   router:
     build: https://github.com/mwolff44/pyfb-router.git
     image: pyfreebilling_local_router
-    depends_on:
-      - postgres
     restart: always
     env_file:
       - ./.envs/.local/.router
