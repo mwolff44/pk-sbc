@@ -379,3 +379,7 @@ FLUENT_DASHBOARD_APP_GROUPS = (
         'collapsible': True,
     }),
 )
+
+# Countries
+
+COUNTRIES_OVERRIDE = {'XK', _('Kosovo')}
