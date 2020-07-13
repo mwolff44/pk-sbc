@@ -1,0 +1,58 @@
+<div id="chart-combination" class="chart-lg" style="min-height: 240px;"></div>
+             <script>
+                require(['c3', 'jquery'], function(c3, $) {
+                    $(document).ready(function(){
+                        var chart = c3.generate({
+                            bindto: '#chart-combination', // id of chart wrapper
+                            data: {
+                                columns: [
+                                    // each columns data
+                                    ['data1', 301, 201, 501, 401, 601, 501, 1501],
+                                    ['data2', 2002, 1301, 901, 2401, 1301, 2201, 2521],
+                                    ['data3', 3003, 2001, 1601, 4001, 2501, 2501, 2501],
+                                    ['data4', 2001, 1301, 901, 2401, 1301, 2201, 3001]
+                                ],
+                                type: 'bar', // default type of chart
+                                groups: [
+                                    [ 'data1', 'data2', 'data3', 'data4']
+                                ],
+                                colors: {
+                                    'data1': tabler.colors["orange"],
+                                    'data2': tabler.colors["red"],
+                                    'data3': tabler.colors["blue"],
+                                    'data4': tabler.colors["green"]
+                                },
+                                names: {
+                                    // name of each serie
+                                    'data1': 'Failed inbound',
+                                    'data2': 'Failed outbound',
+                                    'data3': 'Success inbound',
+                                    'data4': 'Success outbound'
+                                }
+                            },
+                            axis: {
+                                x: {
+                                    type: 'category',
+                                    // name of each category
+                                    categories: ['January', 'February', 'March', 'April', 'May', 'June', 'July']
+                                },
+                                y : {
+						            tick: {
+						                format: d3.format("s")
+						            }
+						        },
+                            },
+                            bar: {
+                                width: 16
+                            },
+                            legend: {
+                                show: true, //hide legend
+                            },
+                            padding: {
+                                bottom: 0,
+                                top: 0
+                            },
+                        });
+                    });
+                });
+              </script>

@@ -1,0 +1,69 @@
+{% load i18n %}
+{% load static %}
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
+            <thead>
+                <tr>
+                    <th class="text-left">{% trans "Endpoint" %}</th>
+                    <th class="text-center">{% trans "Auth type" %}</th>
+                    <th class="text-center">{% trans "SIP IP" %}</th>
+                    <th class="text-center">{% trans "Max calls" %}</th>
+                    <th class="text-center">{% trans "Enabled" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% if endpoints %}
+                    {% for endpoint in endpoints %}
+                        <tr>
+                            <td class="text-left">
+                                <div><a href="{% url 'customerportal:customerendpoint_detail' endpoint.pk %}">{{ endpoint.name }}</a></div>
+                             </td>
+                            <td class="small text-center">
+                                <div>
+                                    {% if endpoint.registration %}
+                                        {% trans "Credentials" %}
+                                    {% else %}
+                                        {% trans "IP auth" %}
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div>
+                                    {% if endpoint.sip_ip %}
+                                        {{ endpoint.sip_ip }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div>{{ endpoint.max_calls }}</div>
+                            </td>
+                            <td class="text-center">
+                                <div>
+                                    {% if endpoint.enabled > 0 %}
+                                        <i class="text-green fe fe-phone-call" data-toggle="tooltip" data-original-title="endpoint_enabled"></i>
+                                    {% else %}
+                                        <i class="text-red fe fe-phone-off" data-toggle="tooltip" data-original-title="endpoint_disabled"></i>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center small text-muted">
+                            <br/>
+                            {% trans "No endpoint configured !" %}
+                            
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <br/><br/>
+    </div>
+</div>

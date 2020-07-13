@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load humanize %}
+
+{% block title %}{% trans "PyFreeBilling : Customer Detail" %}{% endblock %}
+
+{% block content %}
+
+<div class="my-3 my-md-5">
+
+	<div class="container">
+		<div class"page-header">
+		    <div class="row align-items-center">
+		        <div class="col-auto">
+		            <h2 class="page-title">
+		                {% trans "" %}
+		            </h2>
+		        </div>
+		    </div>
+		</div>
+		 <div class="row row-deck row-cards">
+
+			<div class="card col-md-3">
+			   <div class="card-body">
+			      <div class="row align-items-center mb-4">
+			         <div class="col-auto">
+			            <div class="avatar avatar-lg rounded d-block"
+			                 style="background-image: url(https://logo.clearbit.com/amazon.com?size=100)">{{ customer.company.name|slice:"2"|upper }}</div>
+			         </div>
+			         <div class="col">
+			            <div class="h3 m-0 font-weight-normal">
+			            	{{ customer|upper }}
+			            	{% if customer.customer_enabled %}
+                                <i class="text-green fe fe-unlock" data-toggle="tooltip" data-original-title="customer_enabled"></i>
+                            {% else %}
+                                <i class="text-red fe fe-lock" data-toggle="tooltip" data-original-title="customer_disabled"></i>
+                            {% endif %}
+			            </div>
+			            <div class="small text-muted">
+                            {{ customer.account_number }}
+                        </div>
+			         </div>
+			     </div>
+			     
+
+			      <div class="row">
+			         
+			         <div class="col">
+			            <h5 class="mb-1 mt-1">{% trans "Address" %}</h5>
+			            <div class="small text-muted"><span class="text-secondary">●</span> {{ customer.company.address }}</div>
+			         </div>
+
+			      </div>
+			      <div class="row"> 
+			      </div>
+			      <div class="row">
+			         
+			         <div class="col">
+			            <h5 class="mb-1 mt-3">{% trans "Contact Name" %}</h5>
+			            <div class="small text-muted"><span class="text-secondary">●</span> {{ customer.company.contact_name }}</div>
+			         </div>
+
+			      </div>
+			      <div class="row">
+			         
+			         <div class="col">
+			            <h5 class="mb-1 mt-3">{% trans "Contact Phone" %}</h5>
+			            <div class="d-block small text-muted"><span class="text-secondary">●</span> {{ customer.company.contact_phone }}</div>
+			         </div>
+
+			      </div>
+			   </div>
+			   <!-- Card footer -->
+			    <div class="card-footer small text-muted text-center mt-4">
+			      {% trans "Created" %} : {{ customer.created|date }}
+			    </div>
+			</div>
+			<div class="col-9">
+				<div class="row">
+			        <div class="col-md-5">
+		                <div class="card">
+
+		                  <div class="card-body">
+
+		                  	<div class="row">
+		                  		<div class="col-md-2">
+					            	{% if customer.company.customer_balance > customer.credit_limit %}
+		                                <i class="text-green fe fe-thumbs-up" data-toggle="tooltip" data-original-title="customer_balance"></i>
+		                            {% else %}
+		                                <i class="text-red fe fe-thumbs-down" data-toggle="tooltip" data-original-title="customer_balance"></i>
+		                            {% endif %}
+	                            </div>
+			                    <div class="col">
+						            <h5 class="mb-1">{% trans "Actual balance" %}</h5>
+						            <div class="text-muted-dark text-rigth">{{ customer.company.customer_balance |floatformat:2|intcomma }}</div>
+						         </div>
+						         <div class="col">
+						            <h5 class="mb-1">{% trans "Credit Limit" %}</h5>
+						            <div class="text-muted-dark">{{ customer.credit_limit |floatformat:2|intcomma }}</div>
+						         </div>
+
+		                    </div>
+		                </div>
+		              </div>
+		          </div>
+		          <div class="col-md-5">
+						{% include 'pages/cards/routing_rule_list.html' %}
+					</div>
+			        <div class="col-md-2">
+			            <button class="btn btn-secondary btn-sm" type="button" data-toggle="modal" data-target="#modalcdr{{ cdr.id }}">{% trans "View CDR" %}</button>
+			        </div>
+			     </div>
+				{% include 'pages/cards/top-destinations.html' %}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				
+			</div>
+			<div class="col-md-9">
+				<h3>{% trans "Ratecards" %}</h3>
+				{% include 'pages/cards/ratecard_allocated_list.html' %}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<h3 class="mb-3">{% trans "Enpoints" %}</h3>
+				{% include 'pages/cards/endpoint_list.html' %}
+			</div>
+			<div class="col-md-6">
+				<h3>{% trans "DIDs" %}</h3>
+				{% include 'pages/cards/did_list.html' %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock content%}

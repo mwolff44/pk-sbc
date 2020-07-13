@@ -4,6 +4,9 @@
 {% load account socialaccount %}
 {% load crispy_forms_tags %}
 
+
+{% block title %}{% trans "PyFreeBilling : Customer Portal Login Page" %}{% endblock %}
+
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block inner %}
@@ -45,4 +48,5 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
 </form>
 
 {% endblock %}
+
 

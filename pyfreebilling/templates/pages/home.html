@@ -1,1 +1,58 @@
 {% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "PyFreeBilling : Customer Portal Home Page" %}{% endblock %}
+
+{% block content %}
+
+<div class="my-3 my-md-5">
+
+	<div class="container">
+		<div class"page-header">
+		    <div class="row align-items-center">
+		        <div class="col-auto">
+		            <h2 class="page-title">
+		                Main dashboard
+		            </h2>
+		        </div>
+		    </div>
+		</div>
+		 <div class="row row-deck row-cards">
+			<div class="col-sm-6 col-lg-3">
+				{% include 'pages/cards/charts/sales.html' %}
+			</div>
+			<div class="col-sm-6 col-lg-3">
+				{% include 'pages/cards/charts/calls.html' %}
+			</div>
+			<div class="col-sm-6 col-lg-3">
+				{% include 'pages/cards/charts/acd.html' %}
+			</div>
+
+			<div class="col-sm-6 col-lg-3">
+                {% include 'pages/cards/charts/registered.html' %}
+			</div>
+
+			<div class="col-lg-7">
+				<div class="card">
+					<div class="card-body">
+						<h3 class="card-title">Call traffic summary</h3>
+						{% include 'pages/cards/call-traffic.html' %}
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-5">
+				{% include 'pages/cards/map.html' %}
+			</div>
+
+            <div class="col-12">
+                {% include 'pages/cards/customers.html' %}
+            </div>
+
+
+
+		</div>
+	</div>
+</div>
+
+{% endblock content%}

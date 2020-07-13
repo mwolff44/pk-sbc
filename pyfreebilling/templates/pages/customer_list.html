@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "PyFreeBilling : Customer List" %}{% endblock %}
+
+{% block content %}
+
+<div class="my-3 my-md-5">
+
+	<div class="container">
+		<div class"page-header">
+		    <div class="row align-items-center">
+		        <div class="col-auto">
+		            <h2 class="page-title">
+		                {% trans "Customers" %}
+		            </h2>
+		        </div>
+		    </div>
+		</div>
+		 <div class="row row-deck row-cards">
+
+            <div class="col-12">
+                {% include 'pages/cards/customers.html' %}
+            </div>
+
+
+
+		</div>
+	</div>
+</div>
+
+{% endblock content%}

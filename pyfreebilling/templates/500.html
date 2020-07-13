@@ -3,11 +3,16 @@
 {% block title %}Server Error{% endblock %}
 
 {% block content %}
-<h1>Ooops!!! 500</h1>
 
-<h3>Looks like something went wrong!</h3>
+    <div class="container text-center">
+        <div class="display-1 text-muted mb-5"><i class="si si-exclamation"></i> 500</div>
+        <h1 class="h2 mb-3">Oops.. You just found an error page..</h1>
+        <p class="h4 text-muted font-weight-normal mb-7">We are sorry but your request contains bad syntax and cannot be fulfilled&hellip;</p>
+        <a class="btn btn-primary" href="/">
+          <i class="fe fe-arrow-left mr-2"></i>Go Home
+        </a>
+    </div>
 
-<p>We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing.</p>
 {% endblock content %}
 
 
