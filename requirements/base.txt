@@ -6,7 +6,7 @@ redis==3.3.11  # https://github.com/antirez/redis
 
 # Django
 # ------------------------------------------------------------------------------
-django==2.2.9,<3  # pyup: < 3  # https://www.djangoproject.com/
+django==2.2.14,<3  # pyup: < 3  # https://www.djangoproject.com/
 django-environ==0.4.5  # https://github.com/joke2k/django-environ
 django-model-utils==4.0.0  # https://github.com/jazzband/django-model-utils
 django-allauth==0.41.0  # https://github.com/pennersr/django-allauth
