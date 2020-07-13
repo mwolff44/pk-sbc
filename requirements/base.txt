@@ -25,10 +25,10 @@ djangorestframework==3.11.0  # https://github.com/encode/django-rest-framework
 coreapi==2.3.3  # https://github.com/core-api/python-client
 
 # PyFB packages
-pyfb-kamailio>=1.2.1
-pyfb-normalization>=1.0.1
+pyfb-kamailio>=1.2.2
+pyfb-normalization>=1.0.2
 pyfb-company>=1.0.0
-pyfb-direction>=1.0.2
+pyfb-direction>=1.0.4
 pyfb-endpoint>=1.1.0
 pyfb-rating>=1.0.0
 pyfb-routing>=1.0.1
