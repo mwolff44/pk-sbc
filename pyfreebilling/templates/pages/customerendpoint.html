@@ -13,7 +13,6 @@
 		    <div class="row align-items-center">
 		        <div class="col-auto">
 		            <h2 class="page-title">
-		                {% trans "" %}
 		            </h2>
 		        </div>
 		    </div>
@@ -44,31 +43,26 @@
 			     
 
 			      <div class="row">
-			         
-			         <div class="col">
-			            <h5 class="mb-1 mt-1">{% trans "Customer" %}</h5>
-			            <div class="small text-muted"><span class="text-secondary">●</span> {{ endpoint.customer.company.name }}</div>
-			         </div>
+		            {% if endpoint.registration %}<label class="col-sm-6">{% trans "Credential authentication" %} : </label><div class="col-sm-6 text-muted"></div>
+                    <label class="col-sm-6">{% trans "Username" %} :</label><div class="col-sm-6 text-muted"> {{ endpoint.name }}</div>
+                    <label class="col-sm-6">{% trans "Password" %} :</label><div class="col-sm-6 dropdown"> 
+                    	<button type="button" class="btn btn-outline-danger mr-auto dropdown-toggle" data-toggle="dropdown">
+						    <!-- SVG icon code -->
+						    {% trans "Show password" %}
+						  </button>
+						  <div class="dropdown-menu">
+						    <a class="dropdown-item" href="#">
+						      {{ endpoint.password }}
+						    </a>
 
-			      </div>
-			      <div class="row"> 
-			      </div>
-			      <div class="row">
-			         
-			         <div class="col">
-			            <h5 class="mb-1 mt-3">{% trans "Contact Name" %}</h5>
-			            <div class="small text-muted"><span class="text-secondary">●</span> {{ endpoint.customer.company.contact_name }}</div>
-			         </div>
+						  </div>
+					</div>
 
-			      </div>
-			      <div class="row">
-			         
-			         <div class="col">
-			            <h5 class="mb-1 mt-3">{% trans "Contact Phone" %}</h5>
-			            <div class="d-block small text-muted"><span class="text-secondary">●</span> {{ endpoint.customer.company.contact_phone }}</div>
-			         </div>
-
-			      </div>
+                    {% else %}
+                    <label class="col-sm-6">{% trans "IP authentication" %} : </label><div class="col-sm-6 text-muted"></div>
+                    <label class="col-sm-6">{% trans "SIP IP" %} :</label><div class="col-sm-6 text-muted"> {{ endpoint.sip_ip }}</div>
+		            {% endif %}
+		         </div>
 			   </div>
 			   <!-- Card footer -->
 			    <div class="card-footer small text-muted text-center mt-4">
@@ -82,22 +76,22 @@
 		</div>
 		<div class="row">
 			<div class="col-md-6">
-				<h3>{% trans "CallerID management" %}</h3>
-				{% include 'pages/cards/did_endpoint_list.html' %}
+				<h3>{% trans "Numbers management" %}</h3>
+				{% include 'pages/cards/callerid_endpoint_list.html' %}
 			</div>
 			<div class="col-md-6">
 				<h3>{% trans "Limitations" %}</h3>
-				{% include 'pages/cards/did_endpoint_list.html' %}
+				{% include 'pages/cards/limitations_endpoint_list.html' %}
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-6">
 				<h3>{% trans "Recording" %}</h3>
-				{% include 'pages/cards/did_endpoint_list.html' %}
+				{% include 'pages/cards/recording_endpoint_list.html' %}
 			</div>
 			<div class="col-md-6">
 				<h3>{% trans "Advanced" %}</h3>
-				{% include 'pages/cards/did_endpoint_list.html' %}
+				{% include 'pages/cards/advanced_endpoint_list.html' %}
 			</div>
 		</div>
 	</div>

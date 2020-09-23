@@ -1,0 +1,27 @@
+{% load i18n %}
+{% load static %}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">{% trans "Calls" %}</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <label class="col-sm-6">{% trans "Max calls" %} :</label><div class="col-sm-6 text-muted"> {{ endpoint.max_calls }}</div>
+            <label class="col-sm-6">{% trans "Max calls per second" %} :</label><div class="col-sm-6 text-muted"> {{ endpoint.calls_per_second }}</div>
+        </div>
+   </div>
+
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">{% trans "Outbound destinations" %}</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+
+        </div>
+   </div>
+
+</div>

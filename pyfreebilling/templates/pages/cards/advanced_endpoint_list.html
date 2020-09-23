@@ -1,0 +1,31 @@
+{% load i18n %}
+{% load static %}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">{% trans "SIP settings" %}</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <label class="col-sm-6">{% trans "SIP Port" %} :</label><div class="col-sm-6 text-muted"> {{ endpoint.sip_port }}</div>
+            <label class="col-sm-6">{% trans "SIP Transport" %} :</label><div class="col-sm-6 text-muted"> {{ endpoint.sip_transport }}</div>
+            <label class="col-sm-6">{% trans "Caller ID in PAI field" %} :</label><div class="col-sm-6 text-muted"> {{ endpoint.pai }}</div>
+            <label class="col-sm-6">{% trans "Caller ID in PID field" %} :</label><div class="col-sm-6 text-muted"> {{ endpoint.pid }}</div>
+            <label class="col-sm-6">{% trans "Caller ID in PPD field" %} :</label><div class="col-sm-6 text-muted"> {{ endpoint.ppi }}</div>
+        </div>
+   </div>
+
+</div>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">{% trans "RTP settings" %}</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <label class="col-sm-6">{% trans "RTP Transport" %} :</label><div class="col-sm-6 text-muted"> {{ endpoint.rtp_transport }}</div>
+            <label class="col-sm-6">{% trans "TOS" %} :</label><div class="col-sm-6 text-muted"> {{ endpoint.rtp_tos }}</div>
+            <label class="col-sm-6">{% trans "Allow transcoding calls" %} :</label><div class="col-sm-6 text-muted"> {{ endpoint.transcoding_allowed}}</div>
+        </div>
+   </div>
+
+</div>
