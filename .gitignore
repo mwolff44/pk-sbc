@@ -67,6 +67,7 @@ target/
 # Environments
 .venv
 venv/
+venv-pyfb/
 ENV/
 
 # Rope project settings
