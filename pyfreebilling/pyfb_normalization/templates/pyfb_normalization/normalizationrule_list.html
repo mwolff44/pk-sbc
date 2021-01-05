@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-normalization:pyfb_normalization_normalizationrule_list' %}">{% trans "normalization rule listing" %}</a></p>
+<table class="table">
+<tr>
+<td>ID</td><td>{% trans "Link" %}</td>
+    <td>{% trans "name" %}</td>
+    <td>match_op</td>
+    <td>match_exp</td>
+    <td>match_len</td>
+    <td>subst_exp</td>
+    <td>repl_exp</td>
+    <td>attrs</td>
+    <td>{% trans "description" %}</td>
+    <td>{% trans "created" %}</td>
+    <td>{% trans "modified" %}</td>
+</tr>
+{% for object in object_list %}
+<tr>
+    <td>{{object.pk}}</td>
+    <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>
+    <td>{{ object.name }}</td>
+    <td>{{ object.match_op }}</td>
+    <td>{{ object.match_exp }}</td>
+    <td>{{ object.match_len }}</td>
+    <td>{{ object.subst_exp }}</td>
+    <td>{{ object.repl_exp }}</td>
+    <td>{{ object.attrs }}</td>
+    <td>{{ object.description }}</td>
+    <td>{{ object.created }}</td>
+    <td>{{ object.modified }}</td>
+</tr>
+{% endfor %}
+</table><a class="btn btn-primary" href="{% url 'pyfb-normalization:pyfb_normalization_normalizationrule_create' %}">{% trans "create new normalization rule" %}</a>
+{% endblock %}

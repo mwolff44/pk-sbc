@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-normalization:pyfb_normalization_normalizationgrp_list' %}">{% trans "normalization group listing" %}</a></p>
+<table class="table">
+<tr><td>{% trans "name" %}</td><td>{{ object.name }}</td></tr>
+<tr><td>{% trans "description" %}</td><td>{{ object.description }}</td></tr>
+<tr><td>{% trans "created" %}</td><td>{{ object.created }}</td></tr>
+<tr><td>{% trans "modified" %}</td><td>{{ object.modified }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">{% trans "edit normalization group" %}</a>
+
+{% endblock %}
