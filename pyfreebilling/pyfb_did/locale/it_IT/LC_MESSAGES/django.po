@@ -1,0 +1,198 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-12-21 16:35+0000\n"
+"PO-Revision-Date: 2018-12-21 16:37+0000\n"
+"Language-Team: Italian (Italy) (https://www.transifex.com/celea-consulting/teams/80032/it_IT/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it_IT\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: pyfb_did/models.py:19
+msgid "DID number"
+msgstr ""
+
+#: pyfb_did/models.py:20
+msgid "provider channels"
+msgstr ""
+
+#: pyfb_did/models.py:20 pyfb_did/models.py:22
+msgid "maximum simultaneous calls allowed for this did. 0 means no limit"
+msgstr ""
+
+#: pyfb_did/models.py:21
+msgid "Free from provider"
+msgstr ""
+
+#: pyfb_did/models.py:22
+msgid "customer channels"
+msgstr ""
+
+#: pyfb_did/models.py:23
+msgid "Free for customer"
+msgstr ""
+
+#: pyfb_did/models.py:24
+msgid "Special code for routing urgency numbers"
+msgstr ""
+
+#: pyfb_did/models.py:24
+msgid ""
+"Postal code, INSEE code ... for routing urgency number to the right urgency "
+"call center."
+msgstr ""
+
+#: pyfb_did/models.py:25 pyfb_did/models.py:63
+#: pyfb_did/templates/pyfb_did/did_detail.html:10
+#: pyfb_did/templates/pyfb_did/routesdid_detail.html:10
+msgid "description"
+msgstr ""
+
+#: pyfb_did/models.py:28
+msgid "Provider"
+msgstr ""
+
+#: pyfb_did/models.py:29
+msgid "Customer"
+msgstr ""
+
+#: pyfb_did/models.py:35
+msgid "DID"
+msgstr ""
+
+#: pyfb_did/models.py:36
+msgid "DIDs"
+msgstr ""
+
+#: pyfb_did/models.py:54
+msgid "SIP Trunk"
+msgstr ""
+
+#: pyfb_did/models.py:55
+msgid "External number"
+msgstr ""
+
+#: pyfb_did/models.py:60
+msgid "Route type"
+msgstr ""
+
+#: pyfb_did/models.py:60
+msgid "Routing type : sip trunk (s) orexternal number (e)."
+msgstr ""
+
+#: pyfb_did/models.py:61
+msgid "destination number"
+msgstr ""
+
+#: pyfb_did/models.py:62 pyfb_did/templates/pyfb_did/routesdid_detail.html:11
+#: pyfb_did/templates/pyfb_did/routesdid_list.html:12
+msgid "weight"
+msgstr ""
+
+#: pyfb_did/models.py:74
+msgid "DID route"
+msgstr ""
+
+#: pyfb_did/models.py:75
+msgid "DID routes"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/did_detail.html:5
+#: pyfb_did/templates/pyfb_did/did_form.html:6
+#: pyfb_did/templates/pyfb_did/did_list.html:5
+msgid "did listing"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/did_detail.html:7
+#: pyfb_did/templates/pyfb_did/did_list.html:9
+#: pyfb_did/templates/pyfb_did/routesdid_detail.html:9
+#: pyfb_did/templates/pyfb_did/routesdid_list.html:11
+msgid "number"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/did_detail.html:8
+#: pyfb_did/templates/pyfb_did/did_list.html:10
+msgid "provider max channels"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/did_detail.html:9
+#: pyfb_did/templates/pyfb_did/did_list.html:11
+msgid "customer max channels"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/did_detail.html:11
+msgid "provider free call"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/did_detail.html:12
+msgid "customer free call"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/did_detail.html:13
+#: pyfb_did/templates/pyfb_did/routesdid_detail.html:12
+msgid "created"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/did_detail.html:14
+#: pyfb_did/templates/pyfb_did/routesdid_detail.html:13
+msgid "modified"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/did_detail.html:16
+msgid "edit did"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/did_form.html:10
+#: pyfb_did/templates/pyfb_did/routesdid_form.html:10
+msgid "submit"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/did_list.html:8
+#: pyfb_did/templates/pyfb_did/routesdid_list.html:8
+msgid "link"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/did_list.html:12
+msgid "free from provider"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/did_list.html:13
+msgid "free for customer"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/did_list.html:26
+msgid "create new did"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/routesdid_detail.html:5
+#: pyfb_did/templates/pyfb_did/routesdid_form.html:6
+#: pyfb_did/templates/pyfb_did/routesdid_list.html:5
+msgid "did routing"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/routesdid_detail.html:7
+#: pyfb_did/templates/pyfb_did/routesdid_list.html:9
+msgid "order"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/routesdid_detail.html:8
+#: pyfb_did/templates/pyfb_did/routesdid_list.html:10
+msgid "type"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/routesdid_detail.html:15
+msgid "edit"
+msgstr ""
+
+#: pyfb_did/templates/pyfb_did/routesdid_list.html:24
+msgid "create new did routing rule"
+msgstr ""
