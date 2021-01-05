@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-endpoint:pyfb_endpoint_customerendpoint_list' %}">CustomerEndpoint Listing</a></p>
+<table class="table">
+<tr>
+<td>ID</td><td>Link</td>
+    <td>registration</td>
+    <td>password</td>
+    <td>description</td>
+    <td>name</td>
+    <td>rtp_ip</td>
+    <td>sip_ip</td>
+    <td>sip_port</td>
+    <td>max_calls</td>
+    <td>calls_per_second</td>
+    <td>outbound_caller_id_name</td>
+    <td>outbound_caller_id_number</td>
+    <td>force_caller_id</td>
+    <td>masq_caller_id</td>
+    <td>urgency_number</td>
+    <td>insee_code</td>
+    <td>enabled</td>
+    <td>fake_ring</td>
+    <td>cli_debug</td>
+    <td>created</td>
+    <td>modified</td>
+    <td>transcoding_allowed</td>
+    <td>recording_allowed</td>
+    <td>recording_always</td>
+    <td>recording_limit</td>
+    <td>recording_retention</td>
+    <td>sip_transport</td>
+    <td>rtp_transport</td>
+    <td>rtp_tos</td>
+    <td>pai</td>
+    <td>pid</td>
+    <td>ha1</td>
+    <td>ha1b</td>
+</tr>
+{% for object in object_list %}
+<tr>
+    <td>{{object.pk}}</td>
+    <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>
+    <td>{{ object.registration }}</td>
+    <td>{{ object.password }}</td>
+    <td>{{ object.description }}</td>
+    <td>{{ object.name }}</td>
+    <td>{{ object.rtp_ip }}</td>
+    <td>{{ object.sip_ip }}</td>
+    <td>{{ object.sip_port }}</td>
+    <td>{{ object.max_calls }}</td>
+    <td>{{ object.calls_per_second }}</td>
+    <td>{{ object.outbound_caller_id_name }}</td>
+    <td>{{ object.outbound_caller_id_number }}</td>
+    <td>{{ object.force_caller_id }}</td>
+    <td>{{ object.masq_caller_id }}</td>
+    <td>{{ object.urgency_number }}</td>
+    <td>{{ object.insee_code }}</td>
+    <td>{{ object.enabled }}</td>
+    <td>{{ object.fake_ring }}</td>
+    <td>{{ object.cli_debug }}</td>
+    <td>{{ object.created }}</td>
+    <td>{{ object.modified }}</td>
+    <td>{{ object.transcoding_allowed }}</td>
+    <td>{{ object.recording_allowed }}</td>
+    <td>{{ object.recording_always }}</td>
+    <td>{{ object.recording_limit }}</td>
+    <td>{{ object.recording_retention }}</td>
+    <td>{{ object.sip_transport }}</td>
+    <td>{{ object.rtp_transport }}</td>
+    <td>{{ object.rtp_tos }}</td>
+    <td>{{ object.pai }}</td>
+    <td>{{ object.pid }}</td>
+    <td>{{ object.ha1 }}</td>
+    <td>{{ object.ha1b }}</td>
+</tr>
+{% endfor %}
+</table><a class="btn btn-primary" href="{% url 'pyfb-endpoint:pyfb_endpoint_customerendpoint_create' %}">Create new CustomerEndpoint</a>
+{% endblock %}
