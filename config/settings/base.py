@@ -91,13 +91,15 @@ PYFB_APPS = [
     'pyfb_direction',
     'pyfb_endpoint',
     'pyfb_rating',
-    'pyfb_routing',
+    #'pyfb_routing',
     'pyfb_did',
-    'pyfb_reporting',
+    #'pyfb_reporting',
 ]
 LOCAL_APPS = [
     'pyfreebilling.users.apps.UsersAppConfig',
     'pyfreebilling.customerportal.apps.CustomerPortalAppConfig',
+    'pyfreebilling.pyfb_reporting.apps.PyfbReportingAppConfig',
+    'pyfreebilling.pyfb_routing.apps.PyfbRoutingAppConfig',
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
