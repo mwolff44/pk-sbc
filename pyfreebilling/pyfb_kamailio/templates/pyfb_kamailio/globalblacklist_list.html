@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-kamailio:pyfb_kamailio_globalblacklist_list' %}">GlobalBlackList Listing</a></p>
+<table class="table">
+<tr>
+<td>ID</td><td>Link</td>
+    <td>prefix</td>
+    <td>whitelist</td>
+    <td>description</td>
+</tr>
+{% for object in object_list %}
+<tr>
+    <td>{{object.pk}}</td>
+    <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>
+    <td>{{ object.prefix }}</td>
+    <td>{{ object.whitelist }}</td>
+    <td>{{ object.description }}</td>
+</tr>
+{% endfor %}
+</table><a class="btn btn-primary" href="{% url 'pyfb-kamailio:pyfb_kamailio_globalblacklist_create' %}">Create new GlobalBlackList</a>
+{% endblock %}

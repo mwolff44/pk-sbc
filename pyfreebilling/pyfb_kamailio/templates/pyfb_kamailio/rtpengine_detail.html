@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-kamailio:pyfb_kamailio_rtpengine_list' %}">RtpEngine Listing</a></p>
+<table class="table">
+<tr><td>setid</td><td>{{ object.setid }}</td></tr>
+<tr><td>url</td><td>{{ object.url }}</td></tr>
+<tr><td>weight</td><td>{{ object.weight }}</td></tr>
+<tr><td>disabled</td><td>{{ object.disabled }}</td></tr>
+<tr><td>stamp</td><td>{{ object.stamp }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit RtpEngine</a>
+
+{% endblock %}

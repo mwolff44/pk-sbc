@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-kamailio:pyfb_kamailio_htable_list' %}">Htable Listing</a></p>
+<table class="table">
+<tr><td>key_name</td><td>{{ object.key_name }}</td></tr>
+<tr><td>key_type</td><td>{{ object.key_type }}</td></tr>
+<tr><td>value_type</td><td>{{ object.value_type }}</td></tr>
+<tr><td>key_value</td><td>{{ object.key_value }}</td></tr>
+<tr><td>expires</td><td>{{ object.expires }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit Htable</a>
+
+{% endblock %}

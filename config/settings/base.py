@@ -85,7 +85,7 @@ THIRD_PARTY_APPS = [
     'migrate_sql',
 ]
 PYFB_APPS = [
-    'pyfb_kamailio',
+    #'pyfb_kamailio',
     #'pyfb_normalization',
     'pyfb_company',
     'pyfb_direction',
@@ -98,6 +98,7 @@ PYFB_APPS = [
 LOCAL_APPS = [
     'pyfreebilling.users.apps.UsersAppConfig',
     'pyfreebilling.customerportal.apps.CustomerPortalAppConfig',
+    'pyfreebilling.pyfb_kamailio.apps.PyfbKamailioAppConfig',
     'pyfreebilling.pyfb_normalization.apps.PyfbNormalizationAppConfig',
     'pyfreebilling.pyfb_reporting.apps.PyfbReportingAppConfig',
     'pyfreebilling.pyfb_rating.apps.PyfbRatingAppConfig',
