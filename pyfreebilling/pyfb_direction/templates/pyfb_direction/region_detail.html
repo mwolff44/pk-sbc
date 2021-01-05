@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-direction:pyfb-direction_region_list' %}">{% trans "Region Listing" %}</a></p>
+<table class="table">
+<tr><td>{% trans "name" %}</td><td>{{ object.name }}</td></tr>
+<tr><td>{% trans "created" %}</td><td>{{ object.created }}</td></tr>
+<tr><td>{% trans "modified" %}</td><td>{{ object.modified }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">{% trans "Edit Region" %}</a>
+
+{% endblock %}

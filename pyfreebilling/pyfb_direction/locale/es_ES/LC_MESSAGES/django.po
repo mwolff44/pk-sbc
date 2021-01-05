@@ -1,0 +1,214 @@
+# Translators:
+# Mathias WOLFF <mathias@celea.org>, 2018
+# Dagoberto Rodriguez <dagors3@gmail.com>, 2018
+# 
+msgid ""
+msgstr ""
+"Last-Translator: Dagoberto Rodriguez <dagors3@gmail.com>, 2018\n"
+"Language-Team: Spanish (Spain) (https://www.transifex.com/celea-consulting/teams/80032/es_ES/)\n"
+"Language: es_ES\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: pyfb_direction/models.py:20
+msgid "carrier name"
+msgstr "nombre del operador"
+
+#: pyfb_direction/models.py:43
+msgid "type of destination"
+msgstr "tipo de destino"
+
+#: pyfb_direction/models.py:66
+msgid "region name"
+msgstr "nombre de la región"
+
+#: pyfb_direction/models.py:89 pyfb_direction/models.py:122
+#: pyfb_direction/templates/pyfb_direction/country_detail.html:7
+#: pyfb_direction/templates/pyfb_direction/country_list.html:9
+msgid "country"
+msgstr "país"
+
+#: pyfb_direction/models.py:93
+msgid "region"
+msgstr "región"
+
+#: pyfb_direction/models.py:116
+msgid "name of destination"
+msgstr "nombre de destino"
+
+#: pyfb_direction/models.py:129
+msgid "carrier"
+msgstr "operador"
+
+#: pyfb_direction/models.py:132
+msgid "Type of destination"
+msgstr "Tipo de destino"
+
+#: pyfb_direction/models.py:155
+#: pyfb_direction/templates/pyfb_direction/prefix_detail.html:7
+#: pyfb_direction/templates/pyfb_direction/prefix_list.html:9
+msgid "prefix"
+msgstr "prefijo"
+
+#: pyfb_direction/models.py:155
+msgid "International public telecommunication prefix (maximum 15 digits)"
+msgstr ""
+"Prefijo internacional de telecomunicaciones públicas (máximo 15 dígitos)"
+
+#: pyfb_direction/models.py:160
+msgid "destination"
+msgstr "destino"
+
+#: pyfb_direction/templates/pyfb_direction/carrier_detail.html:5
+#: pyfb_direction/templates/pyfb_direction/carrier_form.html:6
+#: pyfb_direction/templates/pyfb_direction/carrier_list.html:5
+msgid "Carrier Listing"
+msgstr "Listado de Operadores"
+
+#: pyfb_direction/templates/pyfb_direction/carrier_detail.html:7
+#: pyfb_direction/templates/pyfb_direction/carrier_list.html:9
+#: pyfb_direction/templates/pyfb_direction/destination_detail.html:7
+#: pyfb_direction/templates/pyfb_direction/destination_list.html:9
+#: pyfb_direction/templates/pyfb_direction/region_detail.html:7
+#: pyfb_direction/templates/pyfb_direction/region_list.html:9
+#: pyfb_direction/templates/pyfb_direction/type_detail.html:7
+#: pyfb_direction/templates/pyfb_direction/type_list.html:9
+msgid "name"
+msgstr "nombre"
+
+#: pyfb_direction/templates/pyfb_direction/carrier_detail.html:8
+#: pyfb_direction/templates/pyfb_direction/carrier_list.html:10
+#: pyfb_direction/templates/pyfb_direction/country_detail.html:8
+#: pyfb_direction/templates/pyfb_direction/country_list.html:10
+#: pyfb_direction/templates/pyfb_direction/destination_detail.html:8
+#: pyfb_direction/templates/pyfb_direction/destination_list.html:10
+#: pyfb_direction/templates/pyfb_direction/prefix_detail.html:8
+#: pyfb_direction/templates/pyfb_direction/prefix_list.html:10
+#: pyfb_direction/templates/pyfb_direction/region_detail.html:8
+#: pyfb_direction/templates/pyfb_direction/region_list.html:10
+#: pyfb_direction/templates/pyfb_direction/type_detail.html:8
+#: pyfb_direction/templates/pyfb_direction/type_list.html:10
+msgid "created"
+msgstr "creado"
+
+#: pyfb_direction/templates/pyfb_direction/carrier_detail.html:9
+#: pyfb_direction/templates/pyfb_direction/carrier_list.html:11
+#: pyfb_direction/templates/pyfb_direction/country_detail.html:9
+#: pyfb_direction/templates/pyfb_direction/country_list.html:11
+#: pyfb_direction/templates/pyfb_direction/destination_detail.html:9
+#: pyfb_direction/templates/pyfb_direction/destination_list.html:11
+#: pyfb_direction/templates/pyfb_direction/region_detail.html:9
+#: pyfb_direction/templates/pyfb_direction/region_list.html:11
+#: pyfb_direction/templates/pyfb_direction/type_detail.html:9
+#: pyfb_direction/templates/pyfb_direction/type_list.html:11
+msgid "modified"
+msgstr "modificado"
+
+#: pyfb_direction/templates/pyfb_direction/carrier_detail.html:11
+msgid "Edit Carrier"
+msgstr "Editar Operador"
+
+#: pyfb_direction/templates/pyfb_direction/carrier_form.html:10
+#: pyfb_direction/templates/pyfb_direction/country_form.html:10
+#: pyfb_direction/templates/pyfb_direction/destination_form.html:10
+#: pyfb_direction/templates/pyfb_direction/prefix_form.html:10
+#: pyfb_direction/templates/pyfb_direction/region_form.html:10
+#: pyfb_direction/templates/pyfb_direction/type_form.html:10
+msgid "Submit"
+msgstr "Enviar"
+
+#: pyfb_direction/templates/pyfb_direction/carrier_list.html:8
+#: pyfb_direction/templates/pyfb_direction/country_list.html:8
+#: pyfb_direction/templates/pyfb_direction/destination_list.html:8
+#: pyfb_direction/templates/pyfb_direction/prefix_list.html:8
+#: pyfb_direction/templates/pyfb_direction/region_list.html:8
+#: pyfb_direction/templates/pyfb_direction/type_list.html:8
+msgid "ID"
+msgstr "Identificación"
+
+#: pyfb_direction/templates/pyfb_direction/carrier_list.html:8
+#: pyfb_direction/templates/pyfb_direction/country_list.html:8
+#: pyfb_direction/templates/pyfb_direction/destination_list.html:8
+#: pyfb_direction/templates/pyfb_direction/prefix_list.html:8
+#: pyfb_direction/templates/pyfb_direction/region_list.html:8
+#: pyfb_direction/templates/pyfb_direction/type_list.html:8
+msgid "Link"
+msgstr "Enlace"
+
+#: pyfb_direction/templates/pyfb_direction/carrier_list.html:22
+msgid "Create new Carrier"
+msgstr "Crear Nuevo Operador"
+
+#: pyfb_direction/templates/pyfb_direction/country_detail.html:5
+#: pyfb_direction/templates/pyfb_direction/country_form.html:6
+#: pyfb_direction/templates/pyfb_direction/country_list.html:5
+msgid "Country Listing"
+msgstr "Listado de Países"
+
+#: pyfb_direction/templates/pyfb_direction/country_detail.html:11
+msgid "Edit Country"
+msgstr "Editar País"
+
+#: pyfb_direction/templates/pyfb_direction/country_list.html:22
+msgid "Create new Country"
+msgstr "Crear Nuevo País"
+
+#: pyfb_direction/templates/pyfb_direction/destination_detail.html:5
+#: pyfb_direction/templates/pyfb_direction/destination_form.html:6
+#: pyfb_direction/templates/pyfb_direction/destination_list.html:5
+msgid "Destination Listing"
+msgstr "Listado de Destinos"
+
+#: pyfb_direction/templates/pyfb_direction/destination_detail.html:11
+msgid "Edit Destination"
+msgstr "Editar Destino"
+
+#: pyfb_direction/templates/pyfb_direction/destination_list.html:22
+msgid "Create new Destination"
+msgstr "Crear Nuevo Destino"
+
+#: pyfb_direction/templates/pyfb_direction/prefix_detail.html:5
+#: pyfb_direction/templates/pyfb_direction/prefix_form.html:6
+#: pyfb_direction/templates/pyfb_direction/prefix_list.html:5
+msgid "Prefix Listing"
+msgstr "Listado de Prefijos"
+
+#: pyfb_direction/templates/pyfb_direction/prefix_detail.html:9
+#: pyfb_direction/templates/pyfb_direction/prefix_list.html:11
+msgid "modifed"
+msgstr "modificado"
+
+#: pyfb_direction/templates/pyfb_direction/prefix_detail.html:11
+msgid "Edit Prefix"
+msgstr "Editar Prefijo"
+
+#: pyfb_direction/templates/pyfb_direction/prefix_list.html:22
+msgid "Create new Prefix"
+msgstr "Crear Nuevo Prefijo"
+
+#: pyfb_direction/templates/pyfb_direction/region_detail.html:5
+#: pyfb_direction/templates/pyfb_direction/region_form.html:6
+#: pyfb_direction/templates/pyfb_direction/region_list.html:5
+msgid "Region Listing"
+msgstr "Listado de Regiones"
+
+#: pyfb_direction/templates/pyfb_direction/region_detail.html:11
+msgid "Edit Region"
+msgstr "Editar Región"
+
+#: pyfb_direction/templates/pyfb_direction/region_list.html:22
+msgid "Create new Region"
+msgstr "Crear Nueva Región"
+
+#: pyfb_direction/templates/pyfb_direction/type_detail.html:5
+#: pyfb_direction/templates/pyfb_direction/type_form.html:6
+#: pyfb_direction/templates/pyfb_direction/type_list.html:5
+msgid "Type Listing"
+msgstr "Listado de Tipos"
+
+#: pyfb_direction/templates/pyfb_direction/type_detail.html:11
+msgid "Edit Type"
+msgstr "Editar Tipo"
+
+#: pyfb_direction/templates/pyfb_direction/type_list.html:22
+msgid "Create new Type"
+msgstr "Crear Nuevo Tipo"
