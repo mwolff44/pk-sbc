@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-rating:pyfb_rating_providerratecard_list' %}">ProviderRatecard Listing</a></p>
+<table class="table">
+<tr><td>name</td><td>{{ object.name }}</td></tr>
+<tr><td>slug</td><td>{{ object.slug }}</td></tr>
+<tr><td>rc_type</td><td>{{ object.rc_type }}</td></tr>
+<tr><td>provider_prefix</td><td>{{ object.provider_prefix }}</td></tr>
+<tr><td>estimated_quality</td><td>{{ object.estimated_quality }}</td></tr>
+<tr><td>status</td><td>{{ object.status }}</td></tr>
+<tr><td>status_changed</td><td>{{ object.status_changed }}</td></tr>
+<tr><td>created</td><td>{{ object.created }}</td></tr>
+<tr><td>modified</td><td>{{ object.modified }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit ProviderRatecard</a>
+
+{% endblock %}
