@@ -5,57 +5,84 @@ volumes:
   production_postgres_data_backups: {}
   production_traefik: {}
 
+networks:
+  web:
+    external: true
+  internal:
+    external: false
+
 services:
-  django:
+  web:
     build:
       context: .
       dockerfile: ./compose/production/django/Dockerfile
     image: pyfreebilling_production_django
     depends_on:
-      - postgres
+      - db
       - redis
     env_file:
       - ./.envs/.production/.django
       - ./.envs/.production/.postgres
+    labels:
+      - traefik.backend=web
+      - traefik.frontend.rule=Host:10.0.3.10
+      - traefik.docker.network=web
+      - traefik.port=8080
+    networks:
+      - internal
+      - web
     command: /start
 
-  postgres:
+  db:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
+    container_name: postgres
+    hostname: postgres
     image: pyfreebilling_production_postgres
     volumes:
-      - production_postgres_data:/var/lib/postgresql/data
-      - production_postgres_data_backups:/backups
+      - production_postgres_data:/var/lib/postgresql/data:z
+      - production_postgres_data_backups:/backups:z
     env_file:
       - ./.envs/.production/.postgres
-    ports:
-      - "0.0.0.0:5432:5432"
+    networks:
+      - internal
+    labels:
+      - traefik.enable=false
+    restart: always
 
   traefik:
-    build:
-      context: .
-      dockerfile: ./compose/production/traefik/Dockerfile
-    image: pyfreebilling_production_traefik
-    depends_on:
-      - django
-    volumes:
-      - production_traefik:/etc/traefik/acme
-    ports:
-      - "0.0.0.0:80:80"
-      - "0.0.0.0:443:443"
+      container_name: traefik
+      image: traefik:v2.0
+      command:
+          - "--api.insecure=true"
+          - "--providers.docker=true"
+          - "--entryPoints.web.address=:80"
+          - "--entryPoints.websecure.address=:443"
+          - "--certificatesResolvers.le.acme.email=<YOUR_EMAIL>"
+          - "--certificatesResolvers.le.acme.storage=acme.json"
+          - "--certificatesResolvers.le.acme.tlsChallenge=true"
+          - "--certificatesResolvers.le.acme.httpChallenge=true"
+          - "--certificatesResolvers.le.acme.httpChallenge.entryPoint=web"
+      restart: always
+      depends_on:
+        - web
+      ports:
+          - 443:443
+          - 8080:8080
+      networks:
+          - web
+      volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - ./acme.json:/acme.json
+      labels:
+          # Redirect all HTTP to HTTPS permanently
+          - traefik.http.routers.http_catchall.rule=HostRegexp(`{any:.+}`)
+          - traefik.http.routers.http_catchall.entrypoints=web
+          - traefik.http.routers.http_catchall.middlewares=https_redirect
+          - traefik.http.middlewares.https_redirect.redirectscheme.scheme=https
+          - traefik.http.middlewares.https_redirect.redirectscheme.permanent=true
 
   redis:
     image: redis:5.0
 
-  router:
-    build: https://github.com/mwolff44/pyfb-router.git
-    image: pyfreebilling_local_router
-    depends_on:
-      - postgres
-    restart: always
-    env_file:
-      - ./.envs/.production/.router
-      - ./.envs/.production/.postgres
-    ports:
-      - "8001:80"

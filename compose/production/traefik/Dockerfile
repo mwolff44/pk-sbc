@@ -1,12 +1,21 @@
-FROM traefik:v2.0
-RUN mkdir -p /etc/traefik/acme
-RUN touch /etc/traefik/acme/acme.json
-RUN chmod 600 /etc/traefik/acme/acme.json
-COPY ./compose/production/traefik/traefik.yml /etc/traefik
+FROM traefik:v2.3
 
-RUN addgroup -g 101 -S traefik
-RUN adduser -S -D -H -u 101 -s /sbin/nologin -G traefik -g traefik traefik
-RUN chown -R traefik /etc/traefik
+WORKDIR /etc/traefik/
+
+RUN addgroup --system traefik \
+  && adduser \
+  --disabled-password \
+  --gecos '' \
+  --no-create-home \
+  --ingroup traefik \
+  traefik \
+  && mkdir acme/ \
+  && touch acme/acme.json \
+  && chmod 0600 acme/acme.json \
+  && chown -R traefik:traefik .
+
+EXPOSE 8080/tcp 8443/tcp
+
+VOLUME /etc/traefik/acme/
 
 USER traefik
-EXPOSE 8080/tcp 8443/tcp
