@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-company:pyfb_company_customer_list' %}">{% trans "customer listing" %}</a></p>
+<table class="table">
+<tr>
+<td>ID</td><td>{% trans "link" %}</td>
+    <td>{% trans "credit_limit" %}</td>
+    <td>{% trans "max_calls" %}</td>
+    <td>{% trans "calls_per_second" %}</td>
+    <td>{% trans "customer_enabled" %}</td>
+</tr>
+{% for object in object_list %}
+<tr>
+    <td>{{object.pk}}</td>
+    <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>
+    <td>{{ object.credit_limit }}</td>
+    <td>{{ object.low_credit_alert }}</td>
+    <td>{{ object.max_calls }}</td>
+    <td>{{ object.calls_per_second }}</td>
+    <td>{{ object.customer_enabled }}</td>
+</tr>
+{% endfor %}
+</table><a class="btn btn-primary" href="{% url 'pyfb-company:pyfb_company_customer_create' %}">{% trans "create new customer" %}</a>
+{% endblock %}

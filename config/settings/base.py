@@ -87,7 +87,7 @@ THIRD_PARTY_APPS = [
 PYFB_APPS = [
     #'pyfb_kamailio',
     #'pyfb_normalization',
-    'pyfb_company',
+    #'pyfb_company',
     #'pyfb_direction',
     #'pyfb_endpoint',
     #'pyfb_rating',
@@ -100,6 +100,7 @@ LOCAL_APPS = [
     'pyfreebilling.customerportal.apps.CustomerPortalAppConfig',
     'pyfreebilling.pyfb_kamailio.apps.PyfbKamailioAppConfig',
     'pyfreebilling.pyfb_normalization.apps.PyfbNormalizationAppConfig',
+    'pyfreebilling.pyfb_company.apps.PyfbCompanyAppConfig',
     'pyfreebilling.pyfb_direction.apps.PyfbDirectionAppConfig',
     'pyfreebilling.pyfb_endpoint.apps.PyfbEndpointAppConfig',
     'pyfreebilling.pyfb_reporting.apps.PyfbReportingAppConfig',
