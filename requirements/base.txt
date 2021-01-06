@@ -1,19 +1,20 @@
-pytz==2019.3  # https://github.com/stub42/pytz
-python-slugify==4.0.0  # https://github.com/un33k/python-slugify
-Pillow==7.0.0 # https://github.com/python-pillow/Pillow
-argon2-cffi==19.2.0  # https://github.com/hynek/argon2_cffi
-redis==3.3.11  # https://github.com/antirez/redis
+pytz==2020.5  # https://github.com/stub42/pytz
+python-slugify==4.0.1  # https://github.com/un33k/python-slugify
+Pillow==8.1.0 # https://github.com/python-pillow/Pillow
+argon2-cffi==20.1.0  # https://github.com/hynek/argon2_cffi
+redis==3.5.3  # https://github.com/antirez/redis
+hiredis==1.1.0  # https://github.com/redis/hiredis-py
 
 # Django
 # ------------------------------------------------------------------------------
-django==2.2.16,<3  # pyup: < 3  # https://www.djangoproject.com/
+django==2.2.17,<3  # pyup: < 3  # https://www.djangoproject.com/
 django-environ==0.4.5  # https://github.com/joke2k/django-environ
-django-model-utils==4.0.0  # https://github.com/jazzband/django-model-utils
-django-allauth==0.41.0  # https://github.com/pennersr/django-allauth
-django-crispy-forms==1.8.1  # https://github.com/django-crispy-forms/django-crispy-forms
-django-redis==4.11.0  # https://github.com/niwinz/django-redis
+django-model-utils==4.1.1  # https://github.com/jazzband/django-model-utils
+django-allauth==0.44.0  # https://github.com/pennersr/django-allauth
+django-crispy-forms==1.10.0  # https://github.com/django-crispy-forms/django-crispy-forms
+django-redis==4.12.1  # https://github.com/niwinz/django-redis
 
-django-extensions==2.2.6  # https://github.com/django-extensions/django-extensions
+django-extensions==3.1.0  # https://github.com/django-extensions/django-extensions
 django-fluent-dashboard
 django-import-export # https://github.com/bmihelac/django-import-export/
 django-countries # https://github.com/smileychris/django-countries/
@@ -22,8 +23,8 @@ django-migrate-sql-deux # https://github.com/festicket/django-migrate-sql
 django-partial-index>=0.5.2 # https://github.com/mattiaslinnap/django-partial-index
 
 # Django REST Framework
-djangorestframework==3.11.0  # https://github.com/encode/django-rest-framework
-coreapi==2.3.3  # https://github.com/core-api/python-client
+djangorestframework==3.12.2  # https://github.com/encode/django-rest-framework
+django-cors-headers==3.6.0 # https://github.com/adamchainz/django-cors-headers
 
 # Others
 netaddr>=0.7.19
