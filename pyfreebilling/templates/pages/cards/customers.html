@@ -25,11 +25,11 @@
                             </td>
                             <td class="text-center">
                                 <div>
-                                    {% if customer.company.customer_balance > customer.credit_limit %}
-                                        {{ customer.company.customer_balance|floatformat:2 }}
+                                    {% if customer.customer_balance > customer.credit_limit %}
+                                        {{ customer.customer_balance|floatformat:2 }}
                                         <i class="text-green fe fe-unlock" data-toggle="tooltip" data-original-title="customer_balance"></i>
                                     {% else %}
-                                        {{ customer.company.customer_balance|floatformat:2 }}
+                                        {{ customer.customer_balance|floatformat:2 }}
                                         <i class="text-red fe fe-lock" data-toggle="tooltip" data-original-title="customer_balance"></i>
                                     {% endif %}
                                 </div>

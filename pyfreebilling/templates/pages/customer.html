@@ -84,7 +84,7 @@
 
 		                  	<div class="row">
 		                  		<div class="col-md-2">
-					            	{% if customer.company.customer_balance > customer.credit_limit %}
+					            	{% if customer.customer_balance > customer.credit_limit %}
 		                                <i class="text-green fe fe-thumbs-up" data-toggle="tooltip" data-original-title="customer_balance"></i>
 		                            {% else %}
 		                                <i class="text-red fe fe-thumbs-down" data-toggle="tooltip" data-original-title="customer_balance"></i>
@@ -92,7 +92,7 @@
 	                            </div>
 			                    <div class="col">
 						            <h5 class="mb-1">{% trans "Actual balance" %}</h5>
-						            <div class="text-muted-dark text-rigth">{{ customer.company.customer_balance |floatformat:2|intcomma }}</div>
+						            <div class="text-muted-dark text-rigth">{{ customer.customer_balance |floatformat:2|intcomma }}</div>
 						         </div>
 						         <div class="col">
 						            <h5 class="mb-1">{% trans "Credit Limit" %}</h5>
@@ -110,15 +110,6 @@
 			            <button class="btn btn-secondary btn-sm" type="button" data-toggle="modal" data-target="#modalcdr{{ cdr.id }}">{% trans "View CDR" %}</button>
 			        </div>
 			     </div>
-				{% include 'pages/cards/top-destinations.html' %}
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-3">
-				
-			</div>
-			<div class="col-md-9">
-				<h3>{% trans "Ratecards" %}</h3>
 				{% include 'pages/cards/ratecard_allocated_list.html' %}
 			</div>
 		</div>
