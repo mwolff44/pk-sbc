@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-endpoint:pyfb_endpoint_providerendpoint_list' %}">ProviderEndpoint Listing</a></p>
+<table class="table">
+<tr>
+<td>ID</td><td>Link</td>
+    <td>name</td>
+    <td>created</td>
+    <td>modified</td>
+    <td>max_calls</td>
+    <td>enabled</td>
+    <td>prefix</td>
+    <td>suffix</td>
+    <td>username</td>
+    <td>password</td>
+    <td>register</td>
+    <td>sip_proxy</td>
+    <td>sip_transport</td>
+    <td>sip_port</td>
+    <td>realm</td>
+    <td>from_domain</td>
+    <td>expire_seconds</td>
+    <td>retry_seconds</td>
+    <td>caller_id_in_from</td>
+    <td>add_plus_in_caller</td>
+    <td>pid</td>
+    <td>pai</td>
+    <td>calls_per_second</td>
+    <td>rtp_transport</td>
+    <td>rtp_tos</td>
+</tr>
+{% for object in object_list %}
+<tr>
+    <td>{{object.pk}}</td>
+    <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>
+    <td>{{ object.name }}</td>
+    <td>{{ object.created }}</td>
+    <td>{{ object.modified }}</td>
+    <td>{{ object.max_calls }}</td>
+    <td>{{ object.enabled }}</td>
+    <td>{{ object.prefix }}</td>
+    <td>{{ object.suffix }}</td>
+    <td>{{ object.username }}</td>
+    <td>{{ object.password }}</td>
+    <td>{{ object.register }}</td>
+    <td>{{ object.sip_proxy }}</td>
+    <td>{{ object.sip_transport }}</td>
+    <td>{{ object.sip_port }}</td>
+    <td>{{ object.realm }}</td>
+    <td>{{ object.from_domain }}</td>
+    <td>{{ object.expire_seconds }}</td>
+    <td>{{ object.retry_seconds }}</td>
+    <td>{{ object.caller_id_in_from }}</td>
+    <td>{{ object.add_plus_in_caller }}</td>
+    <td>{{ object.pid }}</td>
+    <td>{{ object.pai }}</td>
+    <td>{{ object.calls_per_second }}</td>
+    <td>{{ object.rtp_transport }}</td>
+    <td>{{ object.rtp_tos }}</td>
+</tr>
+{% endfor %}
+</table><a class="btn btn-primary" href="{% url 'pyfb-endpoint:pyfb_endpoint_providerendpoint_create' %}">Create new ProviderEndpoint</a>
+{% endblock %}

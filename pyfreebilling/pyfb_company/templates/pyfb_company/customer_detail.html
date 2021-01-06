@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-company:pyfb_company_customer_list' %}">{% trans "customer listing" %}</a></p>
+<table class="table">
+<tr><td>{% trans "account number" %}</td><td>{{ object.account_number }}</td></tr>
+<tr><td>{% trans "credit limit" %}</td><td>{{ object.credit_limit }}</td></tr>
+<tr><td>{% trans "low credit alert" %}</td><td>{{ object.low_credit_alert }}</td></tr>
+<tr><td>{% trans "max simultaneous calls" %}</td><td>{{ object.max_calls }}</td></tr>
+<tr><td>{% trans "calls per second limit" %}</td><td>{{ object.calls_per_second }}</td></tr>
+<tr><td>{% trans "enabled" %}</td><td>{{ object.customer_enabled }}</td></tr>
+<tr><td>{% trans "created" %}</td><td>{{ object.created }}</td></tr>
+<tr><td>{% trans "modified" %}</td><td>{{ object.modified }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">{% trans "edit customer" %}</a>
+
+{% endblock %}

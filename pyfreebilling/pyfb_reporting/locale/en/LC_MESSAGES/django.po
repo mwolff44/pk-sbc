@@ -1,0 +1,302 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-20 12:05-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: pyfb_reporting/models.py:10
+msgid "Outbound calls"
+msgstr ""
+
+#: pyfb_reporting/models.py:11
+msgid "DID - Inbound calls"
+msgstr ""
+
+#: pyfb_reporting/models.py:12
+msgid "Outbound calls to internal DID"
+msgstr ""
+
+#: pyfb_reporting/models.py:13
+msgid "Emergency calls"
+msgstr ""
+
+#: pyfb_reporting/models.py:20
+msgid "customer IP address"
+msgstr ""
+
+#: pyfb_reporting/models.py:20
+msgid "Customer IP address."
+msgstr ""
+
+#: pyfb_reporting/models.py:21
+msgid "a leg call-ID"
+msgstr ""
+
+#: pyfb_reporting/models.py:22
+msgid "b leg call-ID"
+msgstr ""
+
+#: pyfb_reporting/models.py:23
+msgid "media call-ID"
+msgstr ""
+
+#: pyfb_reporting/models.py:24
+msgid "caller ID num"
+msgstr ""
+
+#: pyfb_reporting/models.py:25
+msgid "Dest. number"
+msgstr ""
+
+#: pyfb_reporting/models.py:26
+msgid "channel name"
+msgstr ""
+
+#: pyfb_reporting/models.py:27
+msgid "start time"
+msgstr ""
+
+#: pyfb_reporting/models.py:28
+msgid "answered time"
+msgstr ""
+
+#: pyfb_reporting/models.py:29
+msgid "hangup time"
+msgstr ""
+
+#: pyfb_reporting/models.py:30
+msgid "global duration"
+msgstr ""
+
+#: pyfb_reporting/models.py:31 pyfb_reporting/models.py:284
+#: pyfb_reporting/models.py:326
+msgid "total duration"
+msgstr ""
+
+#: pyfb_reporting/models.py:31
+msgid "Global call duration since call has been received by the switch in ms."
+msgstr ""
+
+#: pyfb_reporting/models.py:32
+msgid "effective duration"
+msgstr ""
+
+#: pyfb_reporting/models.py:32
+msgid "real call duration in s."
+msgstr ""
+
+#: pyfb_reporting/models.py:33
+msgid "billed duration"
+msgstr ""
+
+#: pyfb_reporting/models.py:33
+msgid "billed call duration in s."
+msgstr ""
+
+#: pyfb_reporting/models.py:34
+msgid "read codec"
+msgstr ""
+
+#: pyfb_reporting/models.py:35
+msgid "write codec"
+msgstr ""
+
+#: pyfb_reporting/models.py:36
+msgid "hangup SIP code"
+msgstr ""
+
+#: pyfb_reporting/models.py:37
+msgid "hangup SIP reason"
+msgstr ""
+
+#: pyfb_reporting/models.py:38
+msgid "buy rate"
+msgstr ""
+
+#: pyfb_reporting/models.py:39 pyfb_reporting/models.py:288
+#: pyfb_reporting/models.py:330
+msgid "total sell"
+msgstr ""
+
+#: pyfb_reporting/models.py:40 pyfb_reporting/models.py:289
+#: pyfb_reporting/models.py:331
+msgid "total cost"
+msgstr ""
+
+#: pyfb_reporting/models.py:41
+msgid "sell rate"
+msgstr ""
+
+#: pyfb_reporting/models.py:42
+msgid "Connection fee"
+msgstr ""
+
+#: pyfb_reporting/models.py:43
+msgid "increment"
+msgstr ""
+
+#: pyfb_reporting/models.py:44
+msgid "charge info"
+msgstr ""
+
+#: pyfb_reporting/models.py:44
+msgid "Contents of the P-Charge-Info header for billing purpose."
+msgstr ""
+
+#: pyfb_reporting/models.py:45
+msgid "sip user agent"
+msgstr ""
+
+#: pyfb_reporting/models.py:46
+msgid "sip rtp rx stat"
+msgstr ""
+
+#: pyfb_reporting/models.py:47
+msgid "sip rtp tx stat"
+msgstr ""
+
+#: pyfb_reporting/models.py:48
+msgid "SIP server"
+msgstr ""
+
+#: pyfb_reporting/models.py:49
+msgid "hangup disposition"
+msgstr ""
+
+#: pyfb_reporting/models.py:50
+msgid "SIP hangup cause"
+msgstr ""
+
+#: pyfb_reporting/models.py:51 pyfb_reporting/models.py:140
+#: pyfb_reporting/models.py:176 pyfb_reporting/models.py:212
+#: pyfb_reporting/models.py:248 pyfb_reporting/models.py:290
+#: pyfb_reporting/models.py:332
+msgid "Type of call"
+msgstr ""
+
+#: pyfb_reporting/models.py:51 pyfb_reporting/models.py:140
+#: pyfb_reporting/models.py:176 pyfb_reporting/models.py:212
+#: pyfb_reporting/models.py:248 pyfb_reporting/models.py:290
+#: pyfb_reporting/models.py:332
+msgid "Type of calls."
+msgstr ""
+
+#: pyfb_reporting/models.py:56 pyfb_reporting/models.py:145
+#: pyfb_reporting/models.py:181 pyfb_reporting/models.py:295
+msgid "customer"
+msgstr ""
+
+#: pyfb_reporting/models.py:60
+msgid "provider endpoint"
+msgstr ""
+
+#: pyfb_reporting/models.py:64 pyfb_reporting/models.py:217
+#: pyfb_reporting/models.py:253 pyfb_reporting/models.py:337
+msgid "provider"
+msgstr ""
+
+#: pyfb_reporting/models.py:68
+msgid "ratecard"
+msgstr ""
+
+#: pyfb_reporting/models.py:72
+msgid "routing group"
+msgstr ""
+
+#: pyfb_reporting/models.py:76
+msgid "caller destination"
+msgstr ""
+
+#: pyfb_reporting/models.py:80
+msgid "calle destination"
+msgstr ""
+
+#: pyfb_reporting/models.py:84
+msgid "customer endpoint"
+msgstr ""
+
+#: pyfb_reporting/models.py:88
+msgid "Media server name"
+msgstr ""
+
+#: pyfb_reporting/models.py:94
+msgid "cdr"
+msgstr ""
+
+#: pyfb_reporting/models.py:95
+msgid "cdrs"
+msgstr ""
+
+#: pyfb_reporting/models.py:112
+msgid "day"
+msgstr ""
+
+#: pyfb_reporting/models.py:113
+msgid "day of the week"
+msgstr ""
+
+#: pyfb_reporting/models.py:114
+msgid "hour"
+msgstr ""
+
+#: pyfb_reporting/models.py:115
+msgid "month"
+msgstr ""
+
+#: pyfb_reporting/models.py:116
+msgid "quarter"
+msgstr ""
+
+#: pyfb_reporting/models.py:117
+msgid "year"
+msgstr ""
+
+#: pyfb_reporting/models.py:138 pyfb_reporting/models.py:210
+msgid "hangupcause"
+msgstr ""
+
+#: pyfb_reporting/models.py:139 pyfb_reporting/models.py:175
+#: pyfb_reporting/models.py:211 pyfb_reporting/models.py:247
+#: pyfb_reporting/models.py:282 pyfb_reporting/models.py:324
+msgid "total calls"
+msgstr ""
+
+#: pyfb_reporting/models.py:149 pyfb_reporting/models.py:185
+#: pyfb_reporting/models.py:221 pyfb_reporting/models.py:257
+#: pyfb_reporting/models.py:299 pyfb_reporting/models.py:341
+msgid "date"
+msgstr ""
+
+#: pyfb_reporting/models.py:174 pyfb_reporting/models.py:246
+msgid "sip hangupcause"
+msgstr ""
+
+#: pyfb_reporting/models.py:283 pyfb_reporting/models.py:325
+msgid "success calls"
+msgstr ""
+
+#: pyfb_reporting/models.py:285 pyfb_reporting/models.py:327
+msgid "average duration"
+msgstr ""
+
+#: pyfb_reporting/models.py:286 pyfb_reporting/models.py:328
+msgid "max duration"
+msgstr ""
+
+#: pyfb_reporting/models.py:287 pyfb_reporting/models.py:329
+msgid "min duration"
+msgstr ""

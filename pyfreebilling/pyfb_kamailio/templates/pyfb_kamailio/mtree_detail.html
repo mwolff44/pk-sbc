@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-kamailio:pyfb_kamailio_mtree_list' %}">Mtree Listing</a></p>
+<table class="table">
+<tr><td>tprefix</td><td>{{ object.tprefix }}</td></tr>
+<tr><td>tvalue</td><td>{{ object.tvalue }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit Mtree</a>
+
+{% endblock %}

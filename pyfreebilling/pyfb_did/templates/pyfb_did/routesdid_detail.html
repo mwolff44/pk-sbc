@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-did:pyfb_did_routesdid_list' %}">{% trans "did routing" %}</a></p>
+<table class="table">
+<tr><td>{% trans "order" %}</td><td>{{ object.order }}</td></tr>
+<tr><td>{% trans "type" %}</td><td>{{ object.type }}</td></tr>
+<tr><td>{% trans "number" %}</td><td>{{ object.number }}</td></tr>
+<tr><td>{% trans "description" %}</td><td>{{ object.description }}</td></tr>
+<tr><td>{% trans "weight" %}</td><td>{{ object.weight }}</td></tr>
+<tr><td>{% trans "created" %}</td><td>{{ object.created }}</td></tr>
+<tr><td>{% trans "modified" %}</td><td>{{ object.modified }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">{% trans "edit" %}</a>
+
+{% endblock %}

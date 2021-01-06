@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-endpoint:pyfb_endpoint_customerendpoint_list' %}">CustomerEndpoint Listing</a></p>
+<table class="table">
+<tr><td>registration</td><td>{{ object.registration }}</td></tr>
+<tr><td>password</td><td>{{ object.password }}</td></tr>
+<tr><td>description</td><td>{{ object.description }}</td></tr>
+<tr><td>name</td><td>{{ object.name }}</td></tr>
+<tr><td>rtp_ip</td><td>{{ object.rtp_ip }}</td></tr>
+<tr><td>sip_ip</td><td>{{ object.sip_ip }}</td></tr>
+<tr><td>sip_port</td><td>{{ object.sip_port }}</td></tr>
+<tr><td>max_calls</td><td>{{ object.max_calls }}</td></tr>
+<tr><td>calls_per_second</td><td>{{ object.calls_per_second }}</td></tr>
+<tr><td>outbound_caller_id_name</td><td>{{ object.outbound_caller_id_name }}</td></tr>
+<tr><td>outbound_caller_id_number</td><td>{{ object.outbound_caller_id_number }}</td></tr>
+<tr><td>force_caller_id</td><td>{{ object.force_caller_id }}</td></tr>
+<tr><td>masq_caller_id</td><td>{{ object.masq_caller_id }}</td></tr>
+<tr><td>urgency_number</td><td>{{ object.urgency_number }}</td></tr>
+<tr><td>insee_code</td><td>{{ object.insee_code }}</td></tr>
+<tr><td>enabled</td><td>{{ object.enabled }}</td></tr>
+<tr><td>fake_ring</td><td>{{ object.fake_ring }}</td></tr>
+<tr><td>cli_debug</td><td>{{ object.cli_debug }}</td></tr>
+<tr><td>created</td><td>{{ object.created }}</td></tr>
+<tr><td>modified</td><td>{{ object.modified }}</td></tr>
+<tr><td>transcoding_allowed</td><td>{{ object.transcoding_allowed }}</td></tr>
+<tr><td>recording_allowed</td><td>{{ object.recording_allowed }}</td></tr>
+<tr><td>recording_always</td><td>{{ object.recording_always }}</td></tr>
+<tr><td>recording_limit</td><td>{{ object.recording_limit }}</td></tr>
+<tr><td>recording_retention</td><td>{{ object.recording_retention }}</td></tr>
+<tr><td>sip_transport</td><td>{{ object.sip_transport }}</td></tr>
+<tr><td>rtp_transport</td><td>{{ object.rtp_transport }}</td></tr>
+<tr><td>rtp_tos</td><td>{{ object.rtp_tos }}</td></tr>
+<tr><td>pai</td><td>{{ object.pai }}</td></tr>
+<tr><td>pid</td><td>{{ object.pid }}</td></tr>
+<tr><td>ha1</td><td>{{ object.ha1 }}</td></tr>
+<tr><td>ha1b</td><td>{{ object.ha1b }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit CustomerEndpoint</a>
+
+{% endblock %}

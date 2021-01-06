@@ -1,0 +1,533 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Dagoberto Rodriguez <dagors3@gmail.com>, 2019
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-12-18 19:00+0000\n"
+"PO-Revision-Date: 2018-12-18 19:00+0000\n"
+"Last-Translator: Dagoberto Rodriguez <dagors3@gmail.com>, 2019\n"
+"Language-Team: Spanish (Spain) (https://www.transifex.com/celea-consulting/teams/80032/es_ES/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_ES\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: pyfb_endpoint/admin.py:27 pyfb_endpoint/admin.py:121
+msgid "general"
+msgstr "general"
+
+#: pyfb_endpoint/admin.py:34 pyfb_endpoint/admin.py:130
+msgid "general sip account informations"
+msgstr "información general de cuenta SIP"
+
+#: pyfb_endpoint/admin.py:36
+msgid "IP Settings"
+msgstr "ajustes de IP"
+
+#: pyfb_endpoint/admin.py:40 pyfb_endpoint/admin.py:136
+msgid "If no registration, SIP IP CIDR is needed"
+msgstr "Si no hay registro, se necesita SIP IP CIDR"
+
+#: pyfb_endpoint/admin.py:42 pyfb_endpoint/admin.py:138
+msgid "caller/callee settings"
+msgstr "configuración de la persona que llama / llamada"
+
+#: pyfb_endpoint/admin.py:50 pyfb_endpoint/admin.py:143
+msgid "caller/callee parameters"
+msgstr "parámetros de la persona que llama / persona llamada"
+
+#: pyfb_endpoint/admin.py:52 pyfb_endpoint/admin.py:56
+#: pyfb_endpoint/admin.py:145 pyfb_endpoint/admin.py:149
+msgid "limit settings"
+msgstr "ajustar limites"
+
+#: pyfb_endpoint/admin.py:58
+msgid "recording settings"
+msgstr "ajustes de grabación"
+
+#: pyfb_endpoint/admin.py:64
+msgid "recording parameters"
+msgstr "parámetros de grabación"
+
+#: pyfb_endpoint/admin.py:66
+msgid "advanced settings"
+msgstr "ajustes avanzados"
+
+#: pyfb_endpoint/admin.py:70
+msgid "advanced parameters"
+msgstr "parámetros avanzados"
+
+#: pyfb_endpoint/admin.py:78 pyfb_endpoint/admin.py:151
+msgid "more"
+msgstr "más"
+
+#: pyfb_endpoint/admin.py:82 pyfb_endpoint/admin.py:154
+msgid "more informations"
+msgstr "más información"
+
+#: pyfb_endpoint/admin.py:132
+msgid "protocol settings"
+msgstr "configuración de protocolo"
+
+#: pyfb_endpoint/models.py:36 pyfb_endpoint/models.py:203
+msgid "name"
+msgstr "nombre"
+
+#: pyfb_endpoint/models.py:37
+msgid "payload number"
+msgstr "número de carga útil"
+
+#: pyfb_endpoint/models.py:37
+msgid "payload types (PT) for audio encodings"
+msgstr "Tipos de carga útil (PT) para codificaciones de audio"
+
+#: pyfb_endpoint/models.py:38
+msgid "ptime"
+msgstr "ptime"
+
+#: pyfb_endpoint/models.py:39
+msgid "is stereo ?"
+msgstr "¿es estéreo?"
+
+#: pyfb_endpoint/models.py:40
+msgid "rfc name"
+msgstr "nombre rfc"
+
+#: pyfb_endpoint/models.py:40
+msgid "format is important !."
+msgstr "El formato es importante!"
+
+#: pyfb_endpoint/models.py:41 pyfb_endpoint/models.py:106
+msgid "description"
+msgstr "descripción"
+
+#: pyfb_endpoint/models.py:77 pyfb_endpoint/models.py:206
+msgid "username"
+msgstr "nombre de usuario"
+
+#: pyfb_endpoint/models.py:77
+msgid "Ex.: customer SIP username, etc..."
+msgstr "Ej .: nombre de usuario SIP del cliente, etc ..."
+
+#: pyfb_endpoint/models.py:78 pyfb_endpoint/models.py:204
+msgid "enabled / disabled"
+msgstr "Habilitado / Deshabilitado"
+
+#: pyfb_endpoint/models.py:79
+msgid "registration"
+msgstr "registro"
+
+#: pyfb_endpoint/models.py:79
+msgid ""
+"Is registration needed for calling ? True, the phone needs to register with "
+"correct username/password. If false, you must specify a CIDR in SIP IP CIDR "
+"!"
+msgstr ""
+"¿Es necesario registrarse para llamar? Verdadero, el teléfono debe "
+"registrarse con el nombre de usuario / contraseña correctos. Si es falso, "
+"debe especificar un CIDR en SIP IP CIDR!"
+
+#: pyfb_endpoint/models.py:80 pyfb_endpoint/models.py:207
+msgid "password"
+msgstr "contraseña"
+
+#: pyfb_endpoint/models.py:80
+msgid "It's recommended to use strong passwords for the endpoint."
+msgstr "Se recomienda utilizar contraseñas seguras para el punto final."
+
+#: pyfb_endpoint/models.py:81
+msgid "ha1"
+msgstr "ha1"
+
+#: pyfb_endpoint/models.py:81
+msgid ""
+"It's recommended to use strong passwords for the endpoint. "
+"md5(username:realm:password)"
+msgstr ""
+"Se recomienda utilizar contraseñas seguras para el punto final. md5 (nombre "
+"de usuario: dominio: contraseña)"
+
+#: pyfb_endpoint/models.py:82
+msgid "ha1b"
+msgstr "ha1b"
+
+#: pyfb_endpoint/models.py:82
+msgid ""
+"It's recommended to use strong passwords for the endpoint. "
+"md5(username@domain:realm:password)"
+msgstr ""
+"Se recomienda utilizar contraseñas seguras para el punto final. md5 (nombre "
+"de usuario@dominio: dominio: contraseña)"
+
+#: pyfb_endpoint/models.py:83
+msgid "RTP IP CIDR"
+msgstr "RTP IP CIDR"
+
+#: pyfb_endpoint/models.py:83
+msgid ""
+"Internal IP address/mask to bindto for RTP. Format : CIDR Ex. 192.168.1.0/32"
+msgstr ""
+"Dirección IP interna / máscara a enlazar para RTP. Formato: CIDR Ej. "
+"192.168.1.0/32"
+
+#: pyfb_endpoint/models.py:84
+msgid "SIP IP CIDR"
+msgstr "SIP IP CIDR"
+
+#: pyfb_endpoint/models.py:84
+msgid ""
+"Internal IP address/mask to bind to for SIP. Format : CIDR. Ex. "
+"192.168.1.0/32"
+msgstr ""
+"Dirección IP interna / máscara a enlazar para SIP. Formato: CIDR Ej. "
+"192.168.1.0/32"
+
+#: pyfb_endpoint/models.py:85 pyfb_endpoint/models.py:216
+msgid "SIP port"
+msgstr "puerto SIP"
+
+#: pyfb_endpoint/models.py:86 pyfb_endpoint/models.py:215
+msgid "SIP transport protocol"
+msgstr "protocolo de transporte SIP"
+
+#: pyfb_endpoint/models.py:86
+msgid "Which transport protocol to use for SIP messages"
+msgstr "Qué protocolo de transporte utilizar para los mensajes SIP"
+
+#: pyfb_endpoint/models.py:87 pyfb_endpoint/models.py:217
+msgid "RTP transport protocol"
+msgstr "Protocolo de transporte RTP"
+
+#: pyfb_endpoint/models.py:87 pyfb_endpoint/models.py:217
+msgid "Which transport protocol to use for RTP packets"
+msgstr "Qué protocolo de transporte utilizar para los paquetes RTP"
+
+#: pyfb_endpoint/models.py:88 pyfb_endpoint/models.py:218
+msgid "TOS value for RTP streams"
+msgstr "Valor TOS para flujos RTP"
+
+#: pyfb_endpoint/models.py:88 pyfb_endpoint/models.py:218
+msgid "Which TOS value to use for RTP packets"
+msgstr "Qué valor de TOS usar para los paquetes RTP"
+
+#: pyfb_endpoint/models.py:89 pyfb_endpoint/models.py:212
+msgid "max calls"
+msgstr "llamadas máximas"
+
+#: pyfb_endpoint/models.py:89 pyfb_endpoint/models.py:212
+msgid "max simultaneous calls allowed for this customer account."
+msgstr "llamadas simultaneas máximas permitidas para esta cuenta de cliente."
+
+#: pyfb_endpoint/models.py:90 pyfb_endpoint/models.py:213
+msgid "max calls per second"
+msgstr "llamadas máximas por segundo"
+
+#: pyfb_endpoint/models.py:90
+msgid "maximum calls per second allowed for this customer endpoint."
+msgstr ""
+"llamadas simultaneas máximas permitidas para este punto final de cliente."
+
+#: pyfb_endpoint/models.py:91
+msgid "callerID name"
+msgstr "nombre de identificador de llamada"
+
+#: pyfb_endpoint/models.py:91
+msgid "Caller ID name sent to provider on outbound calls."
+msgstr ""
+"nombre de identificador de llamada enviado al proveedor en llamadas "
+"salientes."
+
+#: pyfb_endpoint/models.py:92
+msgid "callerID num"
+msgstr "número de identificador de llamada"
+
+#: pyfb_endpoint/models.py:92
+msgid "Caller ID number sent to provider on outbound calls."
+msgstr ""
+"número de identificador de llamada enviado al proveedor en llamadas "
+"salientes."
+
+#: pyfb_endpoint/models.py:93
+msgid "force callerID"
+msgstr "forzar identificador de llamada"
+
+#: pyfb_endpoint/models.py:94
+msgid "masq callerID"
+msgstr "enmascarar identificador de llamada"
+
+#: pyfb_endpoint/models.py:95 pyfb_endpoint/models.py:223
+msgid "caller ID in PAI field"
+msgstr "identificador de llamada en el campo PAI"
+
+#: pyfb_endpoint/models.py:95 pyfb_endpoint/models.py:223
+msgid "put callerid in SIP PAI field if enabled"
+msgstr "poner identificador de llamada en el campo PAI SIP si está habilitado"
+
+#: pyfb_endpoint/models.py:96 pyfb_endpoint/models.py:222
+msgid "caller ID in PID field"
+msgstr "identificador de llamada en el campo PID"
+
+#: pyfb_endpoint/models.py:96 pyfb_endpoint/models.py:222
+msgid "put callerid in SIP PID field if enabled"
+msgstr "poner identificador de llamada en el campo PID SIP si está habilitado"
+
+#: pyfb_endpoint/models.py:97
+msgid "allow urgency numbers"
+msgstr "permitir números de emergencia"
+
+#: pyfb_endpoint/models.py:97
+msgid ""
+"You have also to allow global routing option and define an urgency ratecard"
+msgstr ""
+"También tiene que permitir la opción de enrutamiento global y definir un "
+"precio de lista de emergencia"
+
+#: pyfb_endpoint/models.py:98
+msgid "special code for routing urgency numbers"
+msgstr "código especial para enrutamiento de números de emergencia"
+
+#: pyfb_endpoint/models.py:98
+msgid ""
+"Postal code, INSEE code ... for routing urgency number to the right urgency "
+"call center."
+msgstr ""
+"Código postal, código INSEE ... para enviar el número de emergencia al "
+"centro de llamadas de emergencia correcto."
+
+#: pyfb_endpoint/models.py:99
+msgid "fake ring"
+msgstr "timbrado falso"
+
+#: pyfb_endpoint/models.py:99
+msgid "Fake ring : Enabled / Disabled - Send a fake ring to the caller."
+msgstr ""
+"Timbrado falso : Habilitado / Deshabilitado - Enviar un timbrado falso a la "
+"persona que llama."
+
+#: pyfb_endpoint/models.py:100
+msgid "CLI debug"
+msgstr "CLI depurar"
+
+#: pyfb_endpoint/models.py:100
+msgid ""
+"CLI debug : Enabled / Disabled - Permit to see all debug messages on cli."
+msgstr ""
+"CLI depurar : Habilitado / Deshabilitado - Permite ver todos los mensajes de"
+" depuración en el CLI."
+
+#: pyfb_endpoint/models.py:101
+msgid "allow transcoding calls"
+msgstr "permitir transcodificar llamadas"
+
+#: pyfb_endpoint/models.py:101
+msgid ""
+"If enabled, calls could be transcoded. be careful, as it is an expensive cpu"
+" task."
+msgstr ""
+"Si está habilitado, las llamadas podrían ser transcodificadas. Ten cuidado, "
+"ya que es una tarea cara de la CPU."
+
+#: pyfb_endpoint/models.py:102
+msgid "allow recording calls"
+msgstr "permitir la grabación de llamadas"
+
+#: pyfb_endpoint/models.py:102
+msgid "If enabled, calls could be recorded. be careful on available space."
+msgstr ""
+"Si está habilitado, las llamadas podrían ser grabadas. Tenga cuidado con el "
+"espacio disponible."
+
+#: pyfb_endpoint/models.py:103
+msgid "record all calls"
+msgstr "grabar todas las llamadas"
+
+#: pyfb_endpoint/models.py:103
+msgid "If enabled, all calls will be recorded. be careful on available space."
+msgstr ""
+"Si está habilitado, las llamadas podrían ser grabadas. Tenga cuidado con el "
+"espacio disponible."
+
+#: pyfb_endpoint/models.py:104
+msgid "recording space storage"
+msgstr "espacio de almacenamiento de grabación"
+
+#: pyfb_endpoint/models.py:104
+msgid "how many Mo will be available for recording storage."
+msgstr "Cuántos Mo estarán disponibles para el almacenamiento de grabación."
+
+#: pyfb_endpoint/models.py:105
+msgid "retention days for recording"
+msgstr "días de retención para la grabación"
+
+#: pyfb_endpoint/models.py:105
+msgid ""
+"how many days a recording will be available. After, it will be deleted by "
+"automatic job"
+msgstr ""
+"Cuántos días estará disponible una grabación. Posteriormente, será eliminado"
+" por trabajo automático."
+
+#: pyfb_endpoint/models.py:111
+msgid "customer"
+msgstr "cliente"
+
+#: pyfb_endpoint/models.py:115 pyfb_endpoint/models.py:232
+msgid "CallerID normalization rules for outbound call"
+msgstr ""
+"Reglas de normalización del identificador de llamadas para llamadas "
+"salientes"
+
+#: pyfb_endpoint/models.py:119 pyfb_endpoint/models.py:236
+msgid "Destination number normalization rules for outbound call"
+msgstr "Reglas de normalización del número de destino para llamadas salientes"
+
+#: pyfb_endpoint/models.py:123 pyfb_endpoint/models.py:240
+msgid "CallerID normalization rules for inbound call"
+msgstr ""
+"Reglas de normalización del identificador de llamadas para llamadas "
+"entrantes"
+
+#: pyfb_endpoint/models.py:127 pyfb_endpoint/models.py:244
+msgid "Destination number normalization rules for inbound call"
+msgstr "Reglas de normalización del número de destino para llamadas entrantes"
+
+#: pyfb_endpoint/models.py:137
+msgid "customer endpoint"
+msgstr "punto final del cliente"
+
+#: pyfb_endpoint/models.py:138
+msgid "customer endpoints"
+msgstr "puntos finales del cliente"
+
+#: pyfb_endpoint/models.py:158
+msgid ""
+"You have to specify a password if you\n"
+"                                  want to allow registration"
+msgstr ""
+"Tienes que especificar una contraseña si\n"
+"quiere permitir el registro"
+
+#: pyfb_endpoint/models.py:162
+msgid ""
+"You must specify a SIP IP CIDR if you do\n"
+"                                  not want to use registration"
+msgstr ""
+"Debe especificar un SIP IP CIDR si lo hace\n"
+"no quiere usar registro"
+
+#: pyfb_endpoint/models.py:168
+#, python-format
+msgid ""
+"The password must be at least %d\n"
+"                                      characters long."
+msgstr ""
+"La contraseña debe ser al menos %d\n"
+"caracteres de largo."
+
+#: pyfb_endpoint/models.py:172
+msgid ""
+"The new password must contain\n"
+"                                            at least one letter and at least\n"
+"                                            one digit"
+msgstr ""
+"La nueva contraseña debe contener\n"
+"al menos una letra y al menos\n"
+"un dígito"
+
+#: pyfb_endpoint/models.py:205
+msgid "register"
+msgstr "registro"
+
+#: pyfb_endpoint/models.py:208
+msgid "realm"
+msgstr "reino"
+
+#: pyfb_endpoint/models.py:208
+msgid "Authentication realm. Same as gateway name, if blank."
+msgstr ""
+"Autenticación por reino. Igual que el nombre de la puerta de enlace, si está"
+" en blanco."
+
+#: pyfb_endpoint/models.py:209
+msgid "from domain"
+msgstr "del dominio"
+
+#: pyfb_endpoint/models.py:209
+msgid "Domain to use in from field. Same as realm if blank."
+msgstr ""
+"Dominio para usar desde el campo. Igual que el reino si está en blanco."
+
+#: pyfb_endpoint/models.py:210
+msgid "expire seconds"
+msgstr "expirar segundos"
+
+#: pyfb_endpoint/models.py:211
+msgid "retry seconds"
+msgstr "reintentar segundos"
+
+#: pyfb_endpoint/models.py:211
+msgid "How many seconds before a retry when a failure or timeout occurs"
+msgstr ""
+"Cuántos segundos antes de un reintento cuando se produce un error o un "
+"tiempo de espera agotado"
+
+#: pyfb_endpoint/models.py:213
+msgid "maximum calls per second allowed for this gateway."
+msgstr "Máximo de llamadas por segundo permitido para esta puerta de enlace."
+
+#: pyfb_endpoint/models.py:214
+msgid "proxy"
+msgstr "proxy"
+
+#: pyfb_endpoint/models.py:214
+msgid "IP if register is False."
+msgstr "IP si el registro es Falso."
+
+#: pyfb_endpoint/models.py:215
+msgid "Which transport to use for SIP messages"
+msgstr "Qué transporte utilizar para mensajes SIP."
+
+#: pyfb_endpoint/models.py:216
+msgid "Gateway SIP port - Default 5060 -."
+msgstr "Puerta de enlace SIP puerto - Predeterminado 5060 -."
+
+#: pyfb_endpoint/models.py:219
+msgid "prefix"
+msgstr "prefijo"
+
+#: pyfb_endpoint/models.py:220
+msgid "suffix"
+msgstr "sufijo"
+
+#: pyfb_endpoint/models.py:221
+msgid "caller ID in From field"
+msgstr "identificador de llamadas en el campo Desde"
+
+#: pyfb_endpoint/models.py:221
+msgid ""
+"Use the callerid of an inbound call in the from field on outbound calls via "
+"this gateway."
+msgstr ""
+"Use el identificador de llamadas de una llamada entrante en el campo desde "
+"las llamadas salientes a través de esta puerta de enlace."
+
+#: pyfb_endpoint/models.py:228
+msgid "Provider"
+msgstr "Proveedor"
+
+#: pyfb_endpoint/models.py:254
+msgid "provider endpoint"
+msgstr "punto final proveedor"
+
+#: pyfb_endpoint/models.py:255
+msgid "provider endpoints"
+msgstr "puntos finales proveedor"

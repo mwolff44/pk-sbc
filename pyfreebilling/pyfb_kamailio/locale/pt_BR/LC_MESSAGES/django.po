@@ -1,0 +1,485 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-12-04 10:34-0600\n"
+"PO-Revision-Date: 2018-12-04 16:35+0000\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/celea-consulting/teams/80032/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: pyfb_kamailio/models.py:10 pyfb_kamailio/models.py:58
+msgid "Number of the hash entry in the dialog hash table"
+msgstr ""
+
+#: pyfb_kamailio/models.py:11 pyfb_kamailio/models.py:59
+msgid "The ID on the hash entry"
+msgstr ""
+
+#: pyfb_kamailio/models.py:12
+msgid "Call-ID of the dialog"
+msgstr ""
+
+#: pyfb_kamailio/models.py:13
+msgid "The URI of the FROM header (as per INVITE)"
+msgstr ""
+
+#: pyfb_kamailio/models.py:14 pyfb_kamailio/models.py:16
+#: pyfb_kamailio/models.py:88 pyfb_kamailio/models.py:89
+#: pyfb_kamailio/models.py:140 pyfb_kamailio/models.py:141
+msgid ""
+"The tag parameter serves as a general mechanism to identify a dialog, which "
+"is the combination of the Call-ID along with two tags, one from participant "
+"in the dialog."
+msgstr ""
+
+#: pyfb_kamailio/models.py:15
+msgid "The URI of the TO header (as per INVITE)"
+msgstr ""
+
+#: pyfb_kamailio/models.py:17
+msgid "Last Cseq number on the caller side."
+msgstr ""
+
+#: pyfb_kamailio/models.py:18
+msgid "Last Cseq number on the callee side."
+msgstr ""
+
+#: pyfb_kamailio/models.py:19
+msgid "Route set on the caller side."
+msgstr ""
+
+#: pyfb_kamailio/models.py:20
+msgid "Route set on the callee side."
+msgstr ""
+
+#: pyfb_kamailio/models.py:21
+msgid "Caller's contact uri."
+msgstr ""
+
+#: pyfb_kamailio/models.py:22
+msgid "Callee's contact uri."
+msgstr ""
+
+#: pyfb_kamailio/models.py:23
+msgid "Local socket used to communicate with caller"
+msgstr ""
+
+#: pyfb_kamailio/models.py:24
+msgid "Local socket used to communicate with callee"
+msgstr ""
+
+#: pyfb_kamailio/models.py:25
+msgid "The state of the dialog."
+msgstr ""
+
+#: pyfb_kamailio/models.py:26
+msgid "The timestamp (unix time) when the dialog was confirmed."
+msgstr ""
+
+#: pyfb_kamailio/models.py:27
+msgid "The timestamp (unix time) when the dialog will expire."
+msgstr ""
+
+#: pyfb_kamailio/models.py:28
+msgid "The flags to set for dialog and accesible from config file."
+msgstr ""
+
+#: pyfb_kamailio/models.py:29
+msgid "The internal flags for dialog."
+msgstr ""
+
+#: pyfb_kamailio/models.py:30
+msgid "The name of route to be executed at dialog timeout."
+msgstr ""
+
+#: pyfb_kamailio/models.py:31
+msgid "The URI of initial request in dialog"
+msgstr ""
+
+#: pyfb_kamailio/models.py:32
+msgid "Extra data associated to the dialog (e.g., serialized profiles)."
+msgstr ""
+
+#: pyfb_kamailio/models.py:38
+msgid "SIP dialog"
+msgstr ""
+
+#: pyfb_kamailio/models.py:39
+msgid "SIP dialogs"
+msgstr ""
+
+#: pyfb_kamailio/models.py:60
+msgid "The key of the dialog variable"
+msgstr ""
+
+#: pyfb_kamailio/models.py:61
+msgid "The value of the dialog variable"
+msgstr ""
+
+#: pyfb_kamailio/models.py:67 pyfb_kamailio/models.py:68
+msgid "SIP dialog vars"
+msgstr ""
+
+#: pyfb_kamailio/models.py:87 pyfb_kamailio/models.py:139
+msgid ""
+"A method is the primary function that a request is meant to invoke on a "
+"server."
+msgstr ""
+
+#: pyfb_kamailio/models.py:90 pyfb_kamailio/models.py:142
+msgid ""
+"Call-ID header field uniquely identifies a particular invitation or all "
+"registrations of a particular client."
+msgstr ""
+
+#: pyfb_kamailio/models.py:91 pyfb_kamailio/models.py:143
+msgid "SIP reply code."
+msgstr ""
+
+#: pyfb_kamailio/models.py:92 pyfb_kamailio/models.py:144
+msgid "SIP reply reason"
+msgstr ""
+
+#: pyfb_kamailio/models.py:93 pyfb_kamailio/models.py:145
+msgid "Date and time when this record was written."
+msgstr ""
+
+#: pyfb_kamailio/models.py:94
+msgid "Unix timestamp"
+msgstr ""
+
+#: pyfb_kamailio/models.py:95
+msgid "extended value related to the time of event"
+msgstr ""
+
+#: pyfb_kamailio/models.py:116
+msgid "Start date and time"
+msgstr ""
+
+#: pyfb_kamailio/models.py:117
+msgid "End date and time"
+msgstr ""
+
+#: pyfb_kamailio/models.py:118
+msgid "Duration"
+msgstr ""
+
+#: pyfb_kamailio/models.py:166
+msgid "Local unique id used to build and match contact addresses."
+msgstr ""
+
+#: pyfb_kamailio/models.py:167
+msgid "Local username"
+msgstr ""
+
+#: pyfb_kamailio/models.py:168
+msgid "Local domain"
+msgstr ""
+
+#: pyfb_kamailio/models.py:169
+msgid "Remote username"
+msgstr ""
+
+#: pyfb_kamailio/models.py:170
+msgid "Remote domain"
+msgstr ""
+
+#: pyfb_kamailio/models.py:171
+msgid "realm"
+msgstr ""
+
+#: pyfb_kamailio/models.py:172
+msgid "Auth username"
+msgstr ""
+
+#: pyfb_kamailio/models.py:173
+msgid "Auth password"
+msgstr ""
+
+#: pyfb_kamailio/models.py:174
+msgid "Hashed (HA1) auth password"
+msgstr ""
+
+#: pyfb_kamailio/models.py:175
+msgid "Outbound proxy SIP address"
+msgstr ""
+
+#: pyfb_kamailio/models.py:176
+msgid "Expiration time in seconds, 0 means disabled"
+msgstr ""
+
+#: pyfb_kamailio/models.py:177
+msgid "Flags to control the behaviour"
+msgstr ""
+
+#: pyfb_kamailio/models.py:178
+msgid "initial registration delay"
+msgstr ""
+
+#: pyfb_kamailio/models.py:208
+msgid "Source address is equal to source address of request"
+msgstr ""
+
+#: pyfb_kamailio/models.py:209
+msgid ""
+"Transport protocol is either any or equal to transport protocol of request"
+msgstr ""
+
+#: pyfb_kamailio/models.py:210
+msgid "Regular expression matches From URI of request."
+msgstr ""
+
+#: pyfb_kamailio/models.py:211
+msgid "Regular expression matches Request URI of request."
+msgstr ""
+
+#: pyfb_kamailio/models.py:212
+msgid "Tag"
+msgstr ""
+
+#: pyfb_kamailio/models.py:213
+msgid "Priority of rule"
+msgstr ""
+
+#: pyfb_kamailio/models.py:255 pyfb_kamailio/models.py:301
+msgid "Record internal unique id"
+msgstr ""
+
+#: pyfb_kamailio/models.py:256 pyfb_kamailio/models.py:302
+#: pyfb_kamailio/models.py:396
+msgid "Username / phone number"
+msgstr ""
+
+#: pyfb_kamailio/models.py:257
+msgid "Doamin name"
+msgstr ""
+
+#: pyfb_kamailio/models.py:258
+msgid ""
+"Contact header field value provides a URI whoses meaning depends on the type"
+" of request or response it is in."
+msgstr ""
+
+#: pyfb_kamailio/models.py:259
+msgid "Received IP:PORT in the format SIP:IP:PORT"
+msgstr ""
+
+#: pyfb_kamailio/models.py:260
+msgid "Path Header(s) per RFC 3327"
+msgstr ""
+
+#: pyfb_kamailio/models.py:261
+msgid "Date and time when this entry expires."
+msgstr ""
+
+#: pyfb_kamailio/models.py:262
+msgid "Value used for preferential routing."
+msgstr ""
+
+#: pyfb_kamailio/models.py:263
+msgid ""
+"\t Call-ID header field uniquely identifies a particular invitation or all "
+"registrations of a particular client."
+msgstr ""
+
+#: pyfb_kamailio/models.py:264
+msgid ""
+"CSeq header field contains a single decimal sequence number and the request "
+"method."
+msgstr ""
+
+#: pyfb_kamailio/models.py:265 pyfb_kamailio/models.py:307
+msgid "Date and time when this entry was last modified"
+msgstr ""
+
+#: pyfb_kamailio/models.py:266
+msgid "Internal flags"
+msgstr ""
+
+#: pyfb_kamailio/models.py:267
+msgid "Branch and contact flags"
+msgstr ""
+
+#: pyfb_kamailio/models.py:268
+msgid ""
+"User-Agent header field contains information about the UAC originating the "
+"request."
+msgstr ""
+
+#: pyfb_kamailio/models.py:269
+msgid "Socket used to connect to Kamailio. For example: UDP:IP:PORT"
+msgstr ""
+
+#: pyfb_kamailio/models.py:270
+msgid "Flags that indicate the SIP Methods this contact will accept."
+msgstr ""
+
+#: pyfb_kamailio/models.py:271
+msgid "The value of SIP instance parameter for GRUU."
+msgstr ""
+
+#: pyfb_kamailio/models.py:272
+msgid "The value of reg-id contact parameter"
+msgstr ""
+
+#: pyfb_kamailio/models.py:273
+msgid "The value of server_id from configuration file"
+msgstr ""
+
+#: pyfb_kamailio/models.py:274
+msgid "The value of connection id for location record"
+msgstr ""
+
+#: pyfb_kamailio/models.py:275
+msgid "The value to control sending keep alive requests"
+msgstr ""
+
+#: pyfb_kamailio/models.py:276
+msgid "The value to of the partition for keep alive requests"
+msgstr ""
+
+#: pyfb_kamailio/models.py:282
+msgid "user location"
+msgstr ""
+
+#: pyfb_kamailio/models.py:303 pyfb_kamailio/models.py:397
+msgid "Domain name"
+msgstr ""
+
+#: pyfb_kamailio/models.py:304
+msgid "Attribute name"
+msgstr ""
+
+#: pyfb_kamailio/models.py:305
+msgid "Attribute type"
+msgstr ""
+
+#: pyfb_kamailio/models.py:306
+msgid "Attribute value"
+msgstr ""
+
+#: pyfb_kamailio/models.py:334
+msgid "The user that is used for the blacklist lookup"
+msgstr ""
+
+#: pyfb_kamailio/models.py:335
+msgid "The domain that is used for the blacklist lookup"
+msgstr ""
+
+#: pyfb_kamailio/models.py:336 pyfb_kamailio/models.py:369
+msgid "The prefix that is matched for the blacklist"
+msgstr ""
+
+#: pyfb_kamailio/models.py:341 pyfb_kamailio/models.py:374
+msgid "Specify if this a blacklist (0) or a whitelist (1) entry"
+msgstr ""
+
+#: pyfb_kamailio/models.py:376
+msgid "A comment for the entry"
+msgstr ""
+
+#: pyfb_kamailio/models.py:398
+msgid "Speed dial username"
+msgstr ""
+
+#: pyfb_kamailio/models.py:399
+msgid "Speed dial domain"
+msgstr ""
+
+#: pyfb_kamailio/models.py:400
+msgid "New URI"
+msgstr ""
+
+#: pyfb_kamailio/models.py:401
+msgid "First name"
+msgstr ""
+
+#: pyfb_kamailio/models.py:402
+msgid "Last name"
+msgstr ""
+
+#: pyfb_kamailio/models.py:403
+msgid "Description"
+msgstr ""
+
+#: pyfb_kamailio/models.py:433
+msgid "Unique ID for pipe"
+msgstr ""
+
+#: pyfb_kamailio/models.py:438
+msgid ""
+"Algorithm to be used for pipe limits. See the readme of the module for "
+"description of available options: NOP, RED, TAILDROP, FEEDBACK, NETWORK"
+msgstr ""
+
+#: pyfb_kamailio/models.py:439
+msgid "Pipe limit (hits per second)"
+msgstr ""
+
+#: pyfb_kamailio/models.py:459 pyfb_kamailio/models.py:481
+msgid ""
+"Key to be used to index the values in the tree, usually a DID or prefix"
+msgstr ""
+
+#: pyfb_kamailio/models.py:460 pyfb_kamailio/models.py:482
+#: pyfb_kamailio/models.py:508
+msgid "The value of the key"
+msgstr ""
+
+#: pyfb_kamailio/models.py:480
+msgid "Name of shared memory tree"
+msgstr ""
+
+#: pyfb_kamailio/models.py:505
+msgid "Name of the hash key"
+msgstr ""
+
+#: pyfb_kamailio/models.py:506
+msgid "Type of the key"
+msgstr ""
+
+#: pyfb_kamailio/models.py:507
+msgid "Type of the value"
+msgstr ""
+
+#: pyfb_kamailio/models.py:509
+msgid "The epoch at which the key expires"
+msgstr ""
+
+#: pyfb_kamailio/models.py:529
+msgid "disabled"
+msgstr ""
+
+#: pyfb_kamailio/models.py:530
+msgid "enabled"
+msgstr ""
+
+#: pyfb_kamailio/models.py:533
+msgid "RTPEngine instance socket ID"
+msgstr ""
+
+#: pyfb_kamailio/models.py:534
+msgid "RTPEngine instance socket URL. Example : udp:rtpengine1.domain:8800"
+msgstr ""
+
+#: pyfb_kamailio/models.py:535
+msgid "RTPEngine instance weight on startup"
+msgstr ""
+
+#: pyfb_kamailio/models.py:536
+msgid "RTPEngine instance state on startup"
+msgstr ""
+
+#: pyfb_kamailio/models.py:537
+msgid "RTPEngine instance add timestamp"
+msgstr ""

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-rating:pyfb_rating_customercountrytyperate_list' %}">CustomerCountryTypeRate Listing</a></p>
+<table class="table">
+<tr>
+<td>ID</td><td>Link</td>
+</tr>
+{% for object in object_list %}
+<tr>
+    <td>{{object.pk}}</td>
+    <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>
+</tr>
+{% endfor %}
+</table><a class="btn btn-primary" href="{% url 'pyfb-rating:pyfb_rating_customercountrytyperate_create' %}">Create new CustomerCountryTypeRate</a>
+{% endblock %}

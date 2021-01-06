@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-kamailio:pyfb_kamailio_missedcall_list' %}">MissedCall Listing</a></p>
+<table class="table">
+<tr><td>method</td><td>{{ object.method }}</td></tr>
+<tr><td>from_tag</td><td>{{ object.from_tag }}</td></tr>
+<tr><td>to_tag</td><td>{{ object.to_tag }}</td></tr>
+<tr><td>callid</td><td>{{ object.callid }}</td></tr>
+<tr><td>sip_code</td><td>{{ object.sip_code }}</td></tr>
+<tr><td>sip_reason</td><td>{{ object.sip_reason }}</td></tr>
+<tr><td>time</td><td>{{ object.time }}</td></tr>
+</table>
+<a class="btn btn-primary" href="{{object.get_update_url}}">Edit MissedCall</a>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-did:pyfb_did_did_list' %}">{% trans "did listing" %}</a></p>
+<table class="table">
+<tr>
+<td>ID</td><td>{% trans "link" %}</td>
+    <td>{% trans "number" %}</td>
+    <td>{% trans "provider max channels" %}</td>
+    <td>{% trans "customer max channels" %}</td>
+    <td>{% trans "free from provider" %}</td>
+    <td>{% trans "free for customer" %}</td>
+</tr>
+{% for object in object_list %}
+<tr>
+    <td>{{object.pk}}</td>
+    <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>
+    <td>{{ object.number }}</td>
+    <td>{{ object.prov_max_channels }}</td>
+    <td>{{ object.cust_max_channels }}</td>
+    <td>{{ object.provider_free }}</td>
+    <td>{{ object.customer_free }}</td>
+</tr>
+{% endfor %}
+</table><a class="btn btn-primary" href="{% url 'pyfb-did:pyfb_did_did_create' %}">{% trans "create new did" %}</a>
+{% endblock %}

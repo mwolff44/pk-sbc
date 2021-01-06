@@ -1,0 +1,336 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Dagoberto Rodriguez <dagors3@gmail.com>, 2018
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-12-11 09:38-0600\n"
+"PO-Revision-Date: 2018-12-11 15:41+0000\n"
+"Last-Translator: Dagoberto Rodriguez <dagors3@gmail.com>, 2018\n"
+"Language-Team: Spanish (Spain) (https://www.transifex.com/celea-consulting/teams/80032/es_ES/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_ES\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: pyfb_company/admin.py:84
+msgid "no need to update balance"
+msgstr "no hay necesidad de actualizar el balance"
+
+#: pyfb_company/admin.py:101
+msgid "balance updated"
+msgstr "saldo actualizado"
+
+#: pyfb_company/admin.py:105
+msgid "general"
+msgstr "general"
+
+#: pyfb_company/admin.py:110
+msgid "amount"
+msgstr "monto"
+
+#: pyfb_company/admin.py:113
+msgid "balances"
+msgstr "saldos"
+
+#: pyfb_company/models.py:14
+#: pyfb_company/templates/pyfb_company/company_detail.html:7
+#: pyfb_company/templates/pyfb_company/company_list.html:9
+msgid "name"
+msgstr "nombre"
+
+#: pyfb_company/models.py:14
+msgid "company name - must be unique"
+msgstr "nombre de la empresa - debe ser único"
+
+#: pyfb_company/models.py:16
+#: pyfb_company/templates/pyfb_company/company_detail.html:10
+msgid "address"
+msgstr "dirección"
+
+#: pyfb_company/models.py:17
+#: pyfb_company/templates/pyfb_company/company_detail.html:11
+#: pyfb_company/templates/pyfb_company/company_list.html:10
+msgid "contact name"
+msgstr "nombre de contacto"
+
+#: pyfb_company/models.py:18
+#: pyfb_company/templates/pyfb_company/company_detail.html:12
+#: pyfb_company/templates/pyfb_company/company_list.html:11
+msgid "contact phone"
+msgstr "teléfono de contacto"
+
+#: pyfb_company/models.py:18
+msgid "contact phone number"
+msgstr "número de teléfono de contacto"
+
+#: pyfb_company/models.py:19 pyfb_company/models.py:128
+#: pyfb_company/templates/pyfb_company/company_detail.html:13
+#: pyfb_company/templates/pyfb_company/company_list.html:12
+#: pyfb_company/templates/pyfb_company/companybalancehistory_detail.html:9
+#: pyfb_company/templates/pyfb_company/companybalancehistory_list.html:11
+msgid "customer balance"
+msgstr "saldo de cliente"
+
+#: pyfb_company/models.py:19
+msgid "actual customer balance."
+msgstr "saldo real del cliente."
+
+#: pyfb_company/models.py:20 pyfb_company/models.py:129
+msgid "provider balance"
+msgstr "saldo del proveedor"
+
+#: pyfb_company/models.py:20
+msgid "actual provider balance."
+msgstr "saldo actual del proveedor."
+
+#: pyfb_company/models.py:26 pyfb_company/models.py:137
+msgid "company"
+msgstr "empresa"
+
+#: pyfb_company/models.py:27
+msgid "companies"
+msgstr "compañías"
+
+#: pyfb_company/models.py:43
+#: pyfb_company/templates/pyfb_company/customer_detail.html:7
+msgid "account number"
+msgstr "número de cuenta"
+
+#: pyfb_company/models.py:44
+#: pyfb_company/templates/pyfb_company/customer_detail.html:8
+msgid "credit limit"
+msgstr "límite de crédito"
+
+#: pyfb_company/models.py:44
+msgid "Credit limit - Negative value to allow discovery."
+msgstr "Límite de crédito - Valor negativo para permitir el descubrimiento."
+
+#: pyfb_company/models.py:45
+msgid "low credit level alert"
+msgstr "alerta de bajo nivel de crédito"
+
+#: pyfb_company/models.py:45
+msgid "Low credit limit alert."
+msgstr "Alerta de bajo nivel de crédito."
+
+#: pyfb_company/models.py:46
+#: pyfb_company/templates/pyfb_company/customer_detail.html:10
+msgid "max simultaneous calls"
+msgstr "max llamadas simultaneas"
+
+#: pyfb_company/models.py:46
+msgid "maximum simultaneous calls allowed for this customer account."
+msgstr ""
+"máximo de llamadas simultáneas permitidas para esta cuenta de cliente."
+
+#: pyfb_company/models.py:47
+msgid "max calls per second"
+msgstr "max llamadas por segundo"
+
+#: pyfb_company/models.py:47
+msgid "maximum calls per seconds allowed for this customer account."
+msgstr "máximo de llamadas por segundo permitido para esta cuenta de cliente."
+
+#: pyfb_company/models.py:48
+msgid "customer enabled / disabled"
+msgstr "cliente habilitado / deshabilitado"
+
+#: pyfb_company/models.py:59
+msgid "customer"
+msgstr "cliente"
+
+#: pyfb_company/models.py:60
+msgid "customers"
+msgstr "clientes"
+
+#: pyfb_company/models.py:84
+msgid "provider enabled / disabled"
+msgstr "proveedor habilitado / deshabilitado"
+
+#: pyfb_company/models.py:95
+msgid "provider"
+msgstr "proveedor"
+
+#: pyfb_company/models.py:96
+msgid "providers"
+msgstr "proveedores"
+
+#: pyfb_company/models.py:121
+msgid "operation on customer account"
+msgstr "operación en cuenta de cliente"
+
+#: pyfb_company/models.py:122
+msgid "operation on provider account"
+msgstr "operación en cuenta de proveedor"
+
+#: pyfb_company/models.py:126
+#: pyfb_company/templates/pyfb_company/companybalancehistory_detail.html:7
+#: pyfb_company/templates/pyfb_company/companybalancehistory_list.html:9
+msgid "amount debited"
+msgstr "monto debitado"
+
+#: pyfb_company/models.py:127
+#: pyfb_company/templates/pyfb_company/companybalancehistory_detail.html:8
+#: pyfb_company/templates/pyfb_company/companybalancehistory_list.html:10
+msgid "amount refund"
+msgstr "monto reembolsado"
+
+#: pyfb_company/models.py:128
+msgid "resulting customer balance."
+msgstr "saldo de cliente resultante."
+
+#: pyfb_company/models.py:129
+msgid "resulting provider balance."
+msgstr "saldo de proveedor resultante"
+
+#: pyfb_company/models.py:130
+#: pyfb_company/templates/pyfb_company/companybalancehistory_detail.html:11
+#: pyfb_company/templates/pyfb_company/companybalancehistory_list.html:13
+msgid "operation type"
+msgstr "tipo de operación"
+
+#: pyfb_company/models.py:131
+msgid "public description"
+msgstr "descripción publica"
+
+#: pyfb_company/models.py:132
+#: pyfb_company/templates/pyfb_company/companybalancehistory_detail.html:13
+#: pyfb_company/templates/pyfb_company/companybalancehistory_list.html:15
+msgid "internal description"
+msgstr "descripción interna"
+
+#: pyfb_company/models.py:143 pyfb_company/models.py:144
+msgid "company balance history"
+msgstr "historial de saldo de la empresa"
+
+#: pyfb_company/templates/pyfb_company/company_detail.html:5
+#: pyfb_company/templates/pyfb_company/company_form.html:6
+#: pyfb_company/templates/pyfb_company/company_list.html:5
+msgid "company listing"
+msgstr "listado de empresas"
+
+#: pyfb_company/templates/pyfb_company/company_detail.html:8
+#: pyfb_company/templates/pyfb_company/company_detail.html:15
+#: pyfb_company/templates/pyfb_company/companybalancehistory_detail.html:14
+#: pyfb_company/templates/pyfb_company/customer_detail.html:13
+#: pyfb_company/templates/pyfb_company/provider_detail.html:8
+msgid "created"
+msgstr "creado"
+
+#: pyfb_company/templates/pyfb_company/company_detail.html:9
+#: pyfb_company/templates/pyfb_company/company_detail.html:16
+#: pyfb_company/templates/pyfb_company/companybalancehistory_detail.html:15
+#: pyfb_company/templates/pyfb_company/customer_detail.html:14
+#: pyfb_company/templates/pyfb_company/provider_detail.html:9
+msgid "modified"
+msgstr "modificado"
+
+#: pyfb_company/templates/pyfb_company/company_detail.html:14
+#: pyfb_company/templates/pyfb_company/company_list.html:13
+#: pyfb_company/templates/pyfb_company/companybalancehistory_detail.html:10
+#: pyfb_company/templates/pyfb_company/companybalancehistory_list.html:12
+msgid "supplier balance"
+msgstr "saldo de proveedores"
+
+#: pyfb_company/templates/pyfb_company/company_detail.html:18
+msgid "edit company"
+msgstr "editar empresa"
+
+#: pyfb_company/templates/pyfb_company/company_form.html:10
+#: pyfb_company/templates/pyfb_company/companybalancehistory_form.html:10
+#: pyfb_company/templates/pyfb_company/customer_form.html:10
+#: pyfb_company/templates/pyfb_company/provider_form.html:10
+msgid "submit"
+msgstr "enviar"
+
+#: pyfb_company/templates/pyfb_company/company_list.html:8
+#: pyfb_company/templates/pyfb_company/companybalancehistory_list.html:8
+#: pyfb_company/templates/pyfb_company/customer_list.html:8
+#: pyfb_company/templates/pyfb_company/provider_list.html:8
+msgid "link"
+msgstr "enlace"
+
+#: pyfb_company/templates/pyfb_company/company_list.html:26
+msgid "create new company"
+msgstr "crear nueva empresa"
+
+#: pyfb_company/templates/pyfb_company/companybalancehistory_detail.html:5
+#: pyfb_company/templates/pyfb_company/companybalancehistory_form.html:6
+msgid "balance history"
+msgstr "historia de saldo"
+
+#: pyfb_company/templates/pyfb_company/companybalancehistory_detail.html:12
+#: pyfb_company/templates/pyfb_company/companybalancehistory_list.html:14
+msgid "external description"
+msgstr "descripción externa"
+
+#: pyfb_company/templates/pyfb_company/companybalancehistory_detail.html:17
+msgid "edit"
+msgstr "editar"
+
+#: pyfb_company/templates/pyfb_company/customer_detail.html:5
+#: pyfb_company/templates/pyfb_company/customer_form.html:6
+#: pyfb_company/templates/pyfb_company/customer_list.html:5
+msgid "customer listing"
+msgstr "listado de clientes"
+
+#: pyfb_company/templates/pyfb_company/customer_detail.html:9
+msgid "low credit alert"
+msgstr "alerta de crédito bajo"
+
+#: pyfb_company/templates/pyfb_company/customer_detail.html:11
+msgid "calls per second limit"
+msgstr "límite de llamadas por segundo"
+
+#: pyfb_company/templates/pyfb_company/customer_detail.html:12
+#: pyfb_company/templates/pyfb_company/provider_detail.html:7
+#: pyfb_company/templates/pyfb_company/provider_list.html:9
+msgid "enabled"
+msgstr "habilitado"
+
+#: pyfb_company/templates/pyfb_company/customer_detail.html:16
+msgid "edit customer"
+msgstr "editar cliente"
+
+#: pyfb_company/templates/pyfb_company/customer_list.html:9
+msgid "credit_limit"
+msgstr "crédito_límite"
+
+#: pyfb_company/templates/pyfb_company/customer_list.html:10
+msgid "max_calls"
+msgstr "max_llamadas"
+
+#: pyfb_company/templates/pyfb_company/customer_list.html:11
+msgid "calls_per_second"
+msgstr "llamadas_por_segundo"
+
+#: pyfb_company/templates/pyfb_company/customer_list.html:12
+msgid "customer_enabled"
+msgstr "cliente_habilitado"
+
+#: pyfb_company/templates/pyfb_company/customer_list.html:25
+msgid "create new customer"
+msgstr "crear nuevo cliente"
+
+#: pyfb_company/templates/pyfb_company/provider_detail.html:5
+#: pyfb_company/templates/pyfb_company/provider_form.html:6
+#: pyfb_company/templates/pyfb_company/provider_list.html:5
+msgid "provider listing"
+msgstr "listado de proveedores"
+
+#: pyfb_company/templates/pyfb_company/provider_detail.html:11
+msgid "edit provider"
+msgstr "editar proveedores"
+
+#: pyfb_company/templates/pyfb_company/provider_list.html:18
+msgid "create new provider"
+msgstr "crear nuevo proveedor"

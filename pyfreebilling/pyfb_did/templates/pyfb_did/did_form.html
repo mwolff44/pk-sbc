@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb-did:pyfb_did_did_list' %}">{% trans "did listing" %}</a></p>
+<form method="post">
+{% csrf_token %}
+{{form|crispy}}
+<button class="btn btn-primary" type="submit">{% trans "submit" %}</button>
+</form>
+{% endblock %}

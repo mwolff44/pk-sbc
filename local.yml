@@ -9,7 +9,8 @@ services:
     build:
       context: .
       dockerfile: ./compose/local/django/Dockerfile
-    image: pyfreebilling_local_django
+    image: pyfb_local_django
+    container_name: pyfb_web
     depends_on:
       - postgres
     volumes:
@@ -25,12 +26,11 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
-    image: pyfreebilling_production_postgres
+    image: pyfb_production_postgres
+    container_name: pyfb_db
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
       - local_postgres_data_backups:/backups
     env_file:
       - ./.envs/.local/.postgres
-    ports:
-      - 5433:5432
 

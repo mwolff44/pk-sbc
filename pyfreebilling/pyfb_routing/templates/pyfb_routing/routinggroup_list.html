@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<p><a class="btn btn-default" href="{% url 'pyfb_routing_routinggroup_list' %}">RoutingGroup Listing</a></p>
+<table class="table">
+<tr>
+<td>ID</td><td>Link</td>
+    <td>slug</td>
+    <td>name</td>
+    <td>status</td>
+    <td>status_changed</td>
+    <td>created</td>
+    <td>modified</td>
+    <td>description</td>
+</tr>
+{% for object in object_list %}
+<tr>
+    <td>{{object.pk}}</td>
+    <td><a href="{{object.get_absolute_url}}">{{object}}</a></td>
+    <td>{{ object.slug }}</td>
+    <td>{{ object.name }}</td>
+    <td>{{ object.status }}</td>
+    <td>{{ object.status_changed }}</td>
+    <td>{{ object.created }}</td>
+    <td>{{ object.modified }}</td>
+    <td>{{ object.description }}</td>
+</tr>
+{% endfor %}
+</table><a class="btn btn-primary" href="{% url 'pyfb_routing_routinggroup_create' %}">Create new RoutingGroup</a>
+{% endblock %}

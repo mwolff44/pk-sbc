@@ -20,6 +20,20 @@ certificatesResolvers:
       httpChallenge:
         entryPoint: web
 
+tls:
+  # https://docs.traefik.io/https/tls/#tls-options
+  options:
+    default:
+      # see https://caniuse.com/tls1-2 for browsers that support TLS 1.2
+      minVersion: VersionTLS12
+      # see https://caniuse.com/sni for browsers that support SNI
+      sniStrict: true
+      # https://wiki.mozilla.org/Security/Server_Side_TLS
+      cipherSuites: # use only elliptic curve (the strongest) ciphers
+        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+
 http:
   routers:
     web-router:

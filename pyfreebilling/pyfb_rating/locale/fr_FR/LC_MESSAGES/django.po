@@ -1,0 +1,150 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-12-06 05:45-0600\n"
+"PO-Revision-Date: 2018-12-06 11:50+0000\n"
+"Language-Team: French (France) (https://www.transifex.com/celea-consulting/teams/80032/fr_FR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr_FR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: pyfb_rating/admin.py:93 pyfb_rating/admin.py:193
+msgid "Ratecard details"
+msgstr ""
+
+#: pyfb_rating/admin.py:101 pyfb_rating/admin.py:200
+msgid "More -- view description and event dates"
+msgstr ""
+
+#: pyfb_rating/models.py:28
+msgid "No filter"
+msgstr ""
+
+#: pyfb_rating/models.py:29
+msgid "Prefix authorized"
+msgstr ""
+
+#: pyfb_rating/models.py:30
+msgid "Prefix prohibited"
+msgstr ""
+
+#: pyfb_rating/models.py:36
+msgid "CallerID Prefix filter"
+msgstr ""
+
+#: pyfb_rating/models.py:66
+msgid "description"
+msgstr ""
+
+#: pyfb_rating/models.py:85 pyfb_rating/models.py:128
+msgid "Outbound calls"
+msgstr ""
+
+#: pyfb_rating/models.py:86 pyfb_rating/models.py:129
+msgid "DID - Inbound calls"
+msgstr ""
+
+#: pyfb_rating/models.py:87 pyfb_rating/models.py:130
+msgid "Outbound calls to internal DID"
+msgstr ""
+
+#: pyfb_rating/models.py:88 pyfb_rating/models.py:131
+msgid "Emergency calls"
+msgstr ""
+
+#: pyfb_rating/models.py:91 pyfb_rating/models.py:134
+#: pyfb_rating/models.py:171
+msgid "Enabled"
+msgstr ""
+
+#: pyfb_rating/models.py:92 pyfb_rating/models.py:135
+#: pyfb_rating/models.py:173
+msgid "Disabled"
+msgstr ""
+
+#: pyfb_rating/models.py:96
+msgid "name"
+msgstr ""
+
+#: pyfb_rating/models.py:98 pyfb_rating/models.py:141
+msgid "Type of ratecards"
+msgstr ""
+
+#: pyfb_rating/models.py:98 pyfb_rating/models.py:141
+msgid "Select the right ratecard regarding the type of calls. Default is PSTN"
+msgstr ""
+
+#: pyfb_rating/models.py:142
+msgid "tech prefix"
+msgstr ""
+
+#: pyfb_rating/models.py:143
+msgid "quality"
+msgstr ""
+
+#: pyfb_rating/models.py:143
+msgid "Estimated quality. Number between 0 to 10"
+msgstr ""
+
+#: pyfb_rating/models.py:172
+msgid "Enabled allowing negative margin"
+msgstr ""
+
+#: pyfb_rating/models.py:174
+msgid "Blocked"
+msgstr ""
+
+#: pyfb_rating/models.py:178
+msgid "sell rate"
+msgstr ""
+
+#: pyfb_rating/models.py:178
+msgid "rate per minute"
+msgstr ""
+
+#: pyfb_rating/models.py:179
+msgid "Increment"
+msgstr ""
+
+#: pyfb_rating/models.py:180
+msgid "Minimal time"
+msgstr ""
+
+#: pyfb_rating/models.py:180
+msgid "minimal time to be billed in seconds"
+msgstr ""
+
+#: pyfb_rating/models.py:181
+msgid "Connection fee"
+msgstr ""
+
+#: pyfb_rating/models.py:182
+msgid "Status"
+msgstr ""
+
+#: pyfb_rating/models.py:182
+msgid ""
+"State of the rate : enabled / blocked - calls to this destination are "
+"blocked / disabled"
+msgstr ""
+
+#: pyfb_rating/models.py:193 pyfb_rating/models.py:227
+msgid "numeric prefix"
+msgstr ""
+
+#: pyfb_rating/models.py:194 pyfb_rating/models.py:228
+msgid "Destination number length"
+msgstr ""
+
+#: pyfb_rating/models.py:194 pyfb_rating/models.py:228
+msgid "If value > 0, then destination number must match tsi length"
+msgstr ""

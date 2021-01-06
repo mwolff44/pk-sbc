@@ -1,0 +1,289 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-30 02:09-0600\n"
+"PO-Revision-Date: 2018-11-30 08:10+0000\n"
+"Language-Team: Greek (Greece) (https://www.transifex.com/celea-consulting/teams/80032/el_GR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el_GR\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: pyfb_normalization/models.py:12
+msgid "Rule Group name"
+msgstr ""
+
+#: pyfb_normalization/models.py:15 pyfb_normalization/models.py:83
+#: pyfb_normalization/models.py:111 pyfb_normalization/models.py:213
+#: pyfb_normalization/templates/pyfb_normalization/callmappingrule_detail.html:16
+#: pyfb_normalization/templates/pyfb_normalization/callmappingrule_list.html:18
+#: pyfb_normalization/templates/pyfb_normalization/normalizationgrp_detail.html:8
+#: pyfb_normalization/templates/pyfb_normalization/normalizationgrp_list.html:10
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrule_detail.html:14
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrule_list.html:16
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrulegrp_detail.html:8
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrulegrp_list.html:10
+msgid "description"
+msgstr ""
+
+#: pyfb_normalization/models.py:21 pyfb_normalization/models.py:119
+msgid "Normalization Group"
+msgstr ""
+
+#: pyfb_normalization/models.py:22
+msgid "Normalization Groups"
+msgstr ""
+
+#: pyfb_normalization/models.py:40 pyfb_normalization/models.py:155
+msgid "rule title"
+msgstr ""
+
+#: pyfb_normalization/models.py:43 pyfb_normalization/models.py:168
+msgid "Equal"
+msgstr ""
+
+#: pyfb_normalization/models.py:44 pyfb_normalization/models.py:169
+msgid "Regex"
+msgstr ""
+
+#: pyfb_normalization/models.py:47 pyfb_normalization/models.py:172
+msgid "Type of match (equal or regex)"
+msgstr ""
+
+#: pyfb_normalization/models.py:51 pyfb_normalization/models.py:176
+msgid "match expression"
+msgstr ""
+
+#: pyfb_normalization/models.py:55 pyfb_normalization/models.py:180
+msgid "Example : ^(33)[0-9].*"
+msgstr ""
+
+#: pyfb_normalization/models.py:57 pyfb_normalization/models.py:182
+msgid "match length"
+msgstr ""
+
+#: pyfb_normalization/models.py:60
+msgid "substitution expression"
+msgstr ""
+
+#: pyfb_normalization/models.py:64 pyfb_normalization/models.py:189
+msgid "Example : ^(33)([0-9].*)"
+msgstr ""
+
+#: pyfb_normalization/models.py:66
+msgid "replacement expression"
+msgstr ""
+
+#: pyfb_normalization/models.py:70 pyfb_normalization/models.py:195
+msgid "Example : 0033"
+msgstr ""
+
+#: pyfb_normalization/models.py:72 pyfb_normalization/models.py:197
+msgid "N/A"
+msgstr ""
+
+#: pyfb_normalization/models.py:75 pyfb_normalization/models.py:205
+msgid "attributes"
+msgstr ""
+
+#: pyfb_normalization/models.py:80
+msgid ""
+"Rule to map specific route -\n"
+"            Default set to nothing : N/A - not used"
+msgstr ""
+
+#: pyfb_normalization/models.py:89 pyfb_normalization/models.py:125
+msgid "Normalization Rule"
+msgstr ""
+
+#: pyfb_normalization/models.py:90
+msgid "Normalization Rules"
+msgstr ""
+
+#: pyfb_normalization/models.py:108
+msgid "priority"
+msgstr ""
+
+#: pyfb_normalization/models.py:109
+msgid "Rule order"
+msgstr ""
+
+#: pyfb_normalization/models.py:132
+msgid "Normalization Rule-Group"
+msgstr ""
+
+#: pyfb_normalization/models.py:133
+msgid "Normalization Rules-Groups"
+msgstr ""
+
+#: pyfb_normalization/models.py:158
+msgid "Dialplan id"
+msgstr ""
+
+#: pyfb_normalization/models.py:160
+msgid ""
+"Need to be 0, instead of the rule\n"
+"            will not be used"
+msgstr ""
+
+#: pyfb_normalization/models.py:163
+msgid "Priority rule"
+msgstr ""
+
+#: pyfb_normalization/models.py:165
+msgid "Priority of rule"
+msgstr ""
+
+#: pyfb_normalization/models.py:185
+msgid "subst prefix"
+msgstr ""
+
+#: pyfb_normalization/models.py:191
+msgid "replacement prefix"
+msgstr ""
+
+#: pyfb_normalization/models.py:198
+msgid "PSTN"
+msgstr ""
+
+#: pyfb_normalization/models.py:199
+msgid "EMERGENCY NUMBER"
+msgstr ""
+
+#: pyfb_normalization/models.py:200
+msgid "OWN NUMBERS"
+msgstr ""
+
+#: pyfb_normalization/models.py:201
+msgid "SPEED DIAL"
+msgstr ""
+
+#: pyfb_normalization/models.py:202
+msgid "DROP NUMBERS"
+msgstr ""
+
+#: pyfb_normalization/models.py:210
+msgid ""
+"Rule to map specific route -\n"
+"            Default set to nothing : N/A"
+msgstr ""
+
+#: pyfb_normalization/models.py:220
+msgid "Call Mapping Rule"
+msgstr ""
+
+#: pyfb_normalization/models.py:221
+msgid "Call Mapping Rules"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/callmappingrule_detail.html:5
+#: pyfb_normalization/templates/pyfb_normalization/callmappingrule_form.html:6
+#: pyfb_normalization/templates/pyfb_normalization/callmappingrule_list.html:5
+msgid "call mapping rule listing"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/callmappingrule_detail.html:7
+#: pyfb_normalization/templates/pyfb_normalization/callmappingrule_list.html:9
+#: pyfb_normalization/templates/pyfb_normalization/normalizationgrp_detail.html:7
+#: pyfb_normalization/templates/pyfb_normalization/normalizationgrp_list.html:9
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrule_detail.html:7
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrule_list.html:9
+msgid "name"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/callmappingrule_detail.html:17
+#: pyfb_normalization/templates/pyfb_normalization/callmappingrule_list.html:19
+#: pyfb_normalization/templates/pyfb_normalization/normalizationgrp_detail.html:9
+#: pyfb_normalization/templates/pyfb_normalization/normalizationgrp_list.html:11
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrule_detail.html:15
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrule_list.html:17
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrulegrp_detail.html:9
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrulegrp_list.html:11
+msgid "created"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/callmappingrule_detail.html:18
+#: pyfb_normalization/templates/pyfb_normalization/callmappingrule_list.html:20
+#: pyfb_normalization/templates/pyfb_normalization/normalizationgrp_detail.html:10
+#: pyfb_normalization/templates/pyfb_normalization/normalizationgrp_list.html:12
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrule_detail.html:16
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrule_list.html:18
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrulegrp_detail.html:10
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrulegrp_list.html:12
+msgid "modified"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/callmappingrule_detail.html:20
+msgid "edit call mapping rule"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/callmappingrule_form.html:10
+#: pyfb_normalization/templates/pyfb_normalization/normalizationgrp_form.html:10
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrule_form.html:10
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrulegrp_form.html:10
+msgid "submit"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/callmappingrule_list.html:8
+#: pyfb_normalization/templates/pyfb_normalization/normalizationgrp_list.html:8
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrule_list.html:8
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrulegrp_list.html:8
+msgid "Link"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/callmappingrule_list.html:40
+msgid "create new call mapping rule"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/normalizationgrp_detail.html:5
+#: pyfb_normalization/templates/pyfb_normalization/normalizationgrp_form.html:6
+#: pyfb_normalization/templates/pyfb_normalization/normalizationgrp_list.html:5
+msgid "normalization group listing"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/normalizationgrp_detail.html:12
+msgid "edit normalization group"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/normalizationgrp_list.html:24
+msgid "create new normalization group"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrule_detail.html:5
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrule_form.html:6
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrule_list.html:5
+msgid "normalization rule listing"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrule_detail.html:18
+msgid "edit normalization rule"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrule_list.html:36
+msgid "create new normalization rule"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrulegrp_detail.html:5
+msgid "normalization rule group Listing"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrulegrp_detail.html:12
+msgid "edit normalization rule group"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrulegrp_form.html:6
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrulegrp_list.html:5
+msgid "normalization rule group listing"
+msgstr ""
+
+#: pyfb_normalization/templates/pyfb_normalization/normalizationrulegrp_list.html:24
+msgid "create new normalization rule group"
+msgstr ""
