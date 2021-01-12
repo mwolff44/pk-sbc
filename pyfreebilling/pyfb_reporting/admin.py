@@ -14,7 +14,7 @@ DEFAULT_FORMATS = (base_formats.CSV, )
 
 
 class CDRAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['start_time', 'customer', 'direction', 'caller_number', 'callee_number', 'min_effective_duration', 'provider', 'call_class', 'sip_rtp_rxstat', 'margin', 'sip_code_colored']
+    list_display = ['start_time', 'customer', 'direction', 'caller_number', 'callee_number', 'min_effective_duration', 'provider', 'call_class', 'sip_rtp_rxstat', 'margin']
     search_fields = ('caller_number', 'callee_number', '^customer__company__name', '^provider__company__name')
     ordering = ('-start_time',)
     list_filter = ('start_time',)

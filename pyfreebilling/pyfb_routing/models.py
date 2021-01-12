@@ -47,7 +47,7 @@ class RoutingGroup(StatusModel, TimeStampedModel):
     def get_update_url(self):
         return reverse('pyfb-routing:route_routinggroup_update', args=(self.slug,))
 
-### TODO
+
 class CustomerRoutingGroup(TimeStampedModel):
     """ Customer routing group Model """
 

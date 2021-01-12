@@ -30,9 +30,9 @@ EMAIL_BACKEND = env(
     "DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend"
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-host
-#EMAIL_HOST = 'localhost'
+# EMAIL_HOST = 'localhost'
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-port
-#EMAIL_PORT = 1025
+# EMAIL_PORT = 1025
 
 # django-debug-toolbar
 # ------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TEMPLATE_CONTEXT': True,
 }
 # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#internal-ips
-INTERNAL_IPS = ['127.0.0.1', '10.0.3.10']
+INTERNAL_IPS = ['127.0.0.1', '10.0.3.0/24']
 if env('USE_DOCKER') == 'yes':
     import socket
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())

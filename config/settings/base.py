@@ -1,9 +1,8 @@
 """
 Base settings to build other settings files upon.
 """
-from pathlib import Path
-
 from django.utils.translation import ugettext_lazy as _
+from pathlib import Path
 
 import environ
 
@@ -13,7 +12,7 @@ APPS_DIR = ROOT_DIR / "pyfreebilling"
 
 env = environ.Env()
 
-READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
+READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=True)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(ROOT_DIR / ".env"))
@@ -63,6 +62,7 @@ DJANGO_APPS = [
     'admin_tools.theming',
     'admin_tools.menu',
     'admin_tools.dashboard',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -70,8 +70,6 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    # 'django.contrib.humanize', # Handy template tags
-    'django.contrib.admin',
 ]
 THIRD_PARTY_APPS = [
     'django_extensions',
@@ -215,7 +213,7 @@ TEMPLATES = [
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#form-renderer
-#FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
+# FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_TEMPLATE_PACK = "bootstrap4"
@@ -234,7 +232,7 @@ CSRF_COOKIE_HTTPONLY = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-browser-xss-filter
 SECURE_BROWSER_XSS_FILTER = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
-X_FRAME_OPTIONS = 'DENY'
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 # EMAIL
 # ------------------------------------------------------------------------------
@@ -248,7 +246,7 @@ EMAIL_TIMEOUT = 5
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL.
-ADMIN_URL = 'admin/'
+ADMIN_URL = r'extranet/'
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [
     ("""Mathias WOLFF""", 'mathias@celea.org'),
@@ -312,9 +310,9 @@ CORS_URLS_REGEX = r"^/api/.*$"
 
 # Your stuff...
 # ------------------------------------------------------------------------------
-# Location of root django.contrib.admin URL
+# Location of Honeypot
 HONEYPOT_URL = r'admin/'
-ADMIN_URL = r'extranet/'
+
 
 # Settings in constance
 CONSTANCE_CONFIG = {
@@ -343,10 +341,9 @@ FLUENT_DASHBOARD_APP_ICONS = {
     'pyfb_routing/routinggroup': 'connectivity2.png',
     'pyfb_did/did': 'global45.png',
     'pyfb_company/companybalancehistory': 'shopping102.png',
-    # ...
 }
 
-#FLUENT_DASHBOARD_ICON_THEME = 'flaticons'
+# FLUENT_DASHBOARD_ICON_THEME = 'flaticons'
 FLUENT_DASHBOARD_DEFAULT_ICON = 'chat.png'
 FLUENT_DASHBOARD_DEFAULT_MODULE = 'admin_tools.dashboard.modules.AppList'
 FLUENT_DASHBOARD_APP_GROUPS = (

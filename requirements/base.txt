@@ -15,12 +15,12 @@ django-crispy-forms==1.10.0  # https://github.com/django-crispy-forms/django-cri
 django-redis==4.12.1  # https://github.com/niwinz/django-redis
 
 django-extensions==3.1.0  # https://github.com/django-extensions/django-extensions
-django-fluent-dashboard
-django-import-export # https://github.com/bmihelac/django-import-export/
-django-countries # https://github.com/smileychris/django-countries/
+django-fluent-dashboard==1.0.1
+django-import-export==2.5.0 # https://github.com/bmihelac/django-import-export/
+django-countries==7.0 # https://github.com/smileychris/django-countries/
 django-constance # https://github.com/jazzband/django-constance
-django-migrate-sql-deux # https://github.com/festicket/django-migrate-sql
-django-partial-index>=0.5.2 # https://github.com/mattiaslinnap/django-partial-index
+django-migrate-sql-deux==0.5.0 # https://github.com/festicket/django-migrate-sql
+django-partial-index==0.6.0 # https://github.com/mattiaslinnap/django-partial-index
 
 # Django REST Framework
 djangorestframework==3.12.2  # https://github.com/encode/django-rest-framework

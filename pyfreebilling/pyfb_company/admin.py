@@ -4,7 +4,9 @@ from django.contrib import messages
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from .models import Company, Customer, Provider, CompanyBalanceHistory
+from .models import Company, Customer, Provider, CompanyBalanceHistory, CustomerDestinationRisk
+from pyfb_rating.models import CustomerRcAllocation
+from pyfb_routing.models import CustomerRoutingGroup
 
 class CompanyAdminForm(forms.ModelForm):
 
@@ -30,10 +32,34 @@ class CustomerAdminForm(forms.ModelForm):
         fields = '__all__'
 
 
+class CustomerDestinationRiskInline(admin.TabularInline):
+    model = CustomerDestinationRisk
+    extra = 0
+
+
+class CustomerRAllocationInline(admin.TabularInline):
+    model = CustomerRoutingGroup
+    fields = ['customer', 'routinggroup', 'description']
+    description = _(u'select the Routing group to be affected to customer account !')
+    max_num = 1
+    extra = 0
+    modal = True
+
+
+class CustomerRcAllocationInline(admin.TabularInline):
+    model = CustomerRcAllocation
+    fields = ['priority', 'ratecard', 'discount', 'allow_negative_margin', 'tech_prefix', 'description']
+    description = _(u'select the Ratecards affected to customer account. Order is important !')
+    max_num = 7
+    extra = 0
+    modal = True
+
+
 class CustomerAdmin(admin.ModelAdmin):
     # form = CustomerAdminForm
     list_display = ['company', 'customer_balance', 'customer_balance_update', 'credit_limit', 'blocking_credit_limit', 'max_calls', 'customer_enabled']
     readonly_fields = ['customer_balance', 'created', 'modified']
+    inlines = [CustomerRcAllocationInline, CustomerRAllocationInline, CustomerDestinationRiskInline]
 
 admin.site.register(Customer, CustomerAdmin)
 

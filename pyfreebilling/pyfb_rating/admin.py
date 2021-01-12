@@ -182,22 +182,6 @@ class CustomerDefaultRateInline(admin.TabularInline):
     extra = 0
 
 
-class CustomerRcAllocationInline(admin.TabularInline):
-    model = CustomerRcAllocation
-    fields = ['priority', 'ratecard', 'discount', 'allow_negative_margin', 'tech_prefix', 'description']
-    description = _(u'select the Ratecards affected to customer account. Order is important !')
-    max_num = 7
-    extra = 0
-    modal = True
-
-
-class CustomerRCAdmin(CustomerAdmin):
-    inlines = [CustomerRcAllocationInline]
-
-admin.site.unregister(Customer)
-admin.site.register(Customer, CustomerRCAdmin)
-
-
 class CustomerRatecardAdminForm(forms.ModelForm):
 
     class Meta:

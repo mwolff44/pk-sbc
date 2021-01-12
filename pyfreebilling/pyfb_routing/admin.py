@@ -7,25 +7,8 @@ from pyfb_company.models import Customer
 from pyfb_company.admin import CustomerAdmin
 
 from pyfb_rating.models import ProviderRatecard
-from pyfb_rating.admin import CustomerRCAdmin, CustomerRcAllocationInline
 
 from .models import CustomerRoutingGroup, RoutingGroup, PrefixRule, DestinationRule, CountryTypeRule, CountryRule, RegionTypeRule, RegionRule, DefaultRule
-
-
-class CustomerRAllocationInline(admin.TabularInline):
-    model = CustomerRoutingGroup
-    fields = ['customer', 'routinggroup', 'description']
-    description = _(u'select the Routing group to be affected to customer account !')
-    max_num = 1
-    extra = 0
-    modal = True
-
-
-class CustomerRAdmin(CustomerAdmin):
-    inlines = [CustomerRcAllocationInline, CustomerRAllocationInline]
-
-admin.site.unregister(Customer)
-admin.site.register(Customer, CustomerRAdmin)
 
 
 class CustomerRoutingGroupAdminForm(forms.ModelForm):

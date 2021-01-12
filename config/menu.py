@@ -1,11 +1,7 @@
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from django.template import Context, loader, RequestContext
-from django.http import HttpResponse, HttpResponseRedirect
-
 from admin_tools.menu import items, Menu
-from admin_tools.utils import get_admin_site_name
 
 
 class CustomMenu(Menu):
@@ -110,6 +106,7 @@ class CustomMenu(Menu):
                             items.MenuItem(_('Regions'), reverse('admin:pyfb_direction_region_changelist')),
                             items.MenuItem(_('Carriers'), reverse('admin:pyfb_direction_carrier_changelist')),
                             items.MenuItem(_('Type of destination'), reverse('admin:pyfb_direction_type_changelist')),
+                            items.MenuItem(_('Risks'), reverse('admin:pyfb_direction_risk_changelist')),
                         ]
                     ),
                     items.MenuItem(_('Configuration'),

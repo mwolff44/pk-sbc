@@ -7,6 +7,8 @@ from django_extensions.db.fields import AutoSlugField
 
 from model_utils.models import TimeStampedModel
 
+from pyfb_direction.models import Region, Risk
+
 
 class Company(TimeStampedModel):
 
@@ -161,3 +163,30 @@ class CompanyBalanceHistory(TimeStampedModel):
 
     def get_update_url(self):
         return reverse('pyfb-company:pyfb_company_companybalancehistory_update', args=(self.pk,))
+
+
+class CustomerDestinationRisk(TimeStampedModel):
+    """ Customer destination risk Model """
+
+     # Relationship Fields
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name=_(u"customer"))
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, verbose_name=_(u"region"))
+    risk = models.ForeignKey(Risk, on_delete=models.CASCADE, verbose_name=_(u"risk"))
+
+    class Meta:
+        db_table = 'pyfb_company_c_risk'
+        ordering = ('customer', 'region')
+        unique_together = [
+            ['customer', 'region'],
+        ]
+        verbose_name = _(u'Customer Destination Risk')
+        verbose_name_plural = _(u'Customer Destination Risks')
+
+    def __str__(self):
+        return u"%s - %s - %s" % (self.customer, self.region, self.risk)
+
+    def get_absolute_url(self):
+        return reverse('pyfb-routing:pyfb_routing_customerdestinationrisk_detail', args=(self.pk,))
+
+    def get_update_url(self):
+        return reverse('pyfb-routing:pyfb_routing_customerdestinationrisk_update', args=(self.pk,))
