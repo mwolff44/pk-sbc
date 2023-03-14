@@ -1,0 +1,92 @@
+body {
+    padding-top: 2rem;
+}
+header {
+    background-color: #a15088;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 2rem;
+    display: flex;
+}
+nav {
+    margin: 0.5rem;
+}
+header * {
+    display: inline;
+}
+header li {
+    margin: 1rem;
+}
+header li a {
+    color: #d4d06a;
+    text-decoration: none;
+}
+
+.gateways {
+    list-style: none;
+}
+.gateway {
+    margin-bottom: 1.5rem;
+}
+.name {
+    font-size: larger;
+    font-weight: 600;
+}
+.cidr {
+    font-size: smaller;
+    font-weight: 200;
+    display: block;
+    margin-left: 1rem;
+}
+
+.labeled-input {
+    margin-bottom: 1rem;
+}
+.labeled-input label,
+.labeled-input input {
+    display: inline-block;
+}
+.labeled-input label {
+    width: 5rem;
+}
+.submit-button {
+    margin-top: 0.5rem;
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+    width: 5rem;
+    background-color: #70b45a;
+    color: #111111;
+    border-radius: 10px;
+}
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #a15088;
+    width: 100%;
+    height: 2rem;
+}
+footer div {
+    margin: 0.5rem;
+}
+
+.error-messages {
+    margin-top: 1.5em;
+    margin-bottom: 2em;
+}
+.error-message {
+    font-weight: bolder;
+    color: red;
+    margin-bottom: 1em;
+}
+
+.flash-message {
+    font-weight: bolder;
+    color: #222222;
+    margin-bottom: 1em;
+    background-color: #f5f2aa;
+    padding: 0.75em;
+}

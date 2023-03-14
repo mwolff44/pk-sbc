@@ -1,0 +1,22 @@
+{{define "partial:nav"}}
+<nav>
+    <div>
+        <a href='/'>Home</a>
+         {{if .IsAuthenticated}}
+            <a href='/snippet/create'>Create snippet</a>
+        {{end}}
+    </div>
+    <div>
+        {{if .IsAuthenticated}}
+            <form action='/user/logout' method='POST'>
+                <!-- Include the CSRF token -->
+                <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
+                <button>Logout</button>
+            </form>
+        {{else}}
+            <a href='/user/signup'>Signup</a>
+            <a href='/user/login'>Login</a>
+        {{end}}
+    </div>
+</nav>
+{{end}}

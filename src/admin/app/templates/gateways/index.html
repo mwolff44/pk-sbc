@@ -1,0 +1,38 @@
+{{ define "gateways/index.html" }}
+{{ template "base/header.html" . }}
+
+<h2>My Gateways</h2>
+
+<div>
+  Page {{ .p.Page }}/{{ .p.Count }}
+</div>
+  
+<ul class="gateways">
+  {{ range .gateways }}
+  <li class="gateway">
+    <span class="name">{{ .Name }}</span>
+    <span class="cidr">{{ .IpAddress }}:{{ .Port }}</span>
+  </li>
+  {{ end }}
+</ul>
+
+<div>
+  Pages: 
+  {{ if ne .p.Prev 0 }}
+  <a href="/gateways/?page={{ .p.Prev }}">&laquo;</a>
+  {{ end }}
+  
+  {{ range .p.Pages }}
+  {{ if eq . $.p.Page }}<strong>{{ . }}</strong>
+  {{ else }}<a href="/gateways/?page={{ . }}">{{ . }}</a>
+  {{ end }}
+  {{ end }}
+  
+  {{ if ne .p.Next 0 }}
+  <a href="/gateways/?page={{ .p.Next }}">&raquo;</a>
+  {{ end }}
+</div>
+
+  
+{{ template "base/footer.html" . }}
+{{ end }}
