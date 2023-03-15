@@ -9,31 +9,19 @@ import (
 	"github.com/go-playground/validator"
 	"pks.pyfreebilling.com/flashmessage"
 	"pks.pyfreebilling.com/models"
-	"pks.pyfreebilling.com/navigation"
 	"pks.pyfreebilling.com/services"
 )
 
 func GatewayIndex(c *gin.Context) {
 	pageStr := c.DefaultQuery("page", "1")
-	var gatewayCount int64
-	gatewayCount, err := models.CountGateways()
+	const gatewaysPerPage = 5
+
+	gateways, p, err := services.GatewaysService.ListGateways(pageStr, gatewaysPerPage)
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
-		return
-	}
-	const gatewaysPerPage = 15
-	p, paginateErr := navigation.Paginate(pageStr, int(gatewayCount), gatewaysPerPage)
-	if paginateErr != nil {
-		c.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 
-	gateways := models.Gateways{}
-	err = models.GetGateways(&gateways, gatewaysPerPage, p.Offset)
-	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
-		return
-	}
 	c.HTML(http.StatusOK, "gateways/index.html", gin.H{
 		"gateways": gateways,
 		"messages": flashmessage.Flashes(c),
@@ -63,8 +51,6 @@ func GatewayNewPost(c *gin.Context) {
 		return
 	}
 
-	//db := c.Value("database").(*gorm.DB)
-	//if err := db.Create(&gateway).Error; err != nil {
 	newGateway, saverr := services.GatewaysService.CreateGateway(gateway)
 	if saverr != nil {
 		log.Printf("error in flashes saving session: %s", saverr)
