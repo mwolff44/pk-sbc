@@ -14,6 +14,8 @@ type gatewaysService struct{}
 
 type gatewaysServiceInterface interface {
 	CreateGateway(models.Gateway) (*models.Gateway, error)
+	UpdateGateway(models.Gateway) (*models.Gateway, error)
+	DeleteGateway(gatewayId string) error
 	ListGateways(pageStr string, gatewaysPerPage int) (*models.Gateways, *navigation.Pagination, error)
 }
 
@@ -24,6 +26,24 @@ func (s *gatewaysService) CreateGateway(gateway models.Gateway) (*models.Gateway
 	}
 
 	return &gateway, nil
+}
+
+// UpdateGateway updates the gateway object and returns the updated object
+func (s *gatewaysService) UpdateGateway(gateway models.Gateway) (*models.Gateway, error) {
+	if err := models.UpdateGateway(&gateway); err != nil {
+		return nil, err
+	}
+
+	return &gateway, nil
+}
+
+// DeleteGateway deletes the gateway object
+func (s *gatewaysService) DeleteGateway(id string) error {
+	if err := models.DeleteGateway(id); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // ListGateways returns a paginated list of gateways

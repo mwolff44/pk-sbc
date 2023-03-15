@@ -54,15 +54,15 @@ func CreateGateway(gateway *Gateway) error {
 
 // UpdateGateway updates a gateway
 func UpdateGateway(gateway *Gateway) error {
-	if err := DB.Save(gateway).Error; err != nil {
+	if err := DB.Save(&gateway).Error; err != nil {
 		return err
 	}
 	return nil
 }
 
 // DeleteGateway deletes a gateway
-func DeleteGateway(gateway *Gateway, id string) error {
-	if err := DB.Delete(gateway, id).Error; err != nil {
+func DeleteGateway(id string) error {
+	if err := DB.Delete(&Gateway{}, id).Error; err != nil {
 		return err
 	}
 	return nil
