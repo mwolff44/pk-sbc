@@ -7,15 +7,20 @@ import (
 // mapUrls function lists the project urls
 func mapUrls() {
 
-	// Handle the GET requests at /balance/some_customer_id
-	// Handle the balance status route
+	// Handle GET requests
 
-	r.GET("/gateways/", controllers.GatewayIndex)
-	r.GET("/gateways/new", controllers.GatewayNewGet)
-	r.POST("/gateways/new", controllers.GatewayNewPost)
+	// Handle defaut route
 	r.GET("/", controllers.Home)
 
-	// Handle the GET requests at /health
-	// Handle the health check route
+	// Handle the gateway's routes
+	r.GET("/gateways/", controllers.GatewayIndex)
+	r.GET("/gateways/new", controllers.GatewayNewGet)
+
+	// Handle health route
 	r.GET("/health", controllers.HealthCheck)
+
+	// Handle POST requests
+
+	// Handle the gateway's routes
+	r.POST("/gateways/new", controllers.GatewayNewPost)
 }
