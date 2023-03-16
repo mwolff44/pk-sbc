@@ -3,6 +3,7 @@ package services
 import (
 	"pks.pyfreebilling.com/models"
 	"pks.pyfreebilling.com/navigation"
+	"pks.pyfreebilling.com/utils/api_errors"
 )
 
 // GatewayService
@@ -13,10 +14,21 @@ var (
 type gatewaysService struct{}
 
 type gatewaysServiceInterface interface {
+	GetGateway(id string) (*models.Gateway, *api_errors.ApiError)
 	CreateGateway(models.Gateway) (*models.Gateway, error)
 	UpdateGateway(models.Gateway) (*models.Gateway, error)
 	DeleteGateway(gatewayId string) error
 	ListGateways(pageStr string, gatewaysPerPage int) (*models.Gateways, *navigation.Pagination, error)
+}
+
+// GetGateway gets the gateway object by id
+func (s *gatewaysService) GetGateway(id string) (*models.Gateway, *api_errors.ApiError) {
+	var gateway models.Gateway
+	if err := models.GetGateway(&gateway, id); err != nil {
+		return nil, api_errors.NewInternalServerError("error when tying to get gateway : database error")
+	}
+
+	return &gateway, nil
 }
 
 // SaveGateway saves the gateway object and returns the saved object

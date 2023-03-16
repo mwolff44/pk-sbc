@@ -1,0 +1,139 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is the documentation API for P-KISS-SBC.",
+        "title": "P-KISS-SBC API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Mathias WOLFF",
+            "url": "https://www.pyfreebilling.com"
+        },
+        "license": {
+            "name": "AGPL 3.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
+    "paths": {
+        "/gateways": {
+            "get": {
+                "description": "Responds with the list of gateways as JSON.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateways"
+                ],
+                "summary": "Get a paginated list of gateways",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Gateway"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/gateways/": {
+            "post": {
+                "description": "Takes a gateway JSON and stores in DB. Return saved JSON.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateways"
+                ],
+                "summary": "Creates a new gateway object",
+                "parameters": [
+                    {
+                        "description": "gateway object",
+                        "name": "gateway",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Gateway"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Gateway"
+                        }
+                    }
+                }
+            }
+        },
+        "/gateways/{id}": {
+            "get": {
+                "description": "Returns the gateway whose id matches the id.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateways"
+                ],
+                "summary": "Gets a gateway by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "search gateway by id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Gateway"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Gateway": {
+            "type": "object",
+            "required": [
+                "ipaddress",
+                "name",
+                "port"
+            ],
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "ipaddress": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BasicAuth": {
+            "type": "basic"
+        }
+    }
+}

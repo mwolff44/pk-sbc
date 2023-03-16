@@ -2,16 +2,17 @@ package models
 
 import (
 	"fmt"
-
-	"gorm.io/gorm"
+	"time"
 )
 
 // Gateway is the main gateway model
 type Gateway struct {
-	gorm.Model
-	Name      string `form:"name" binding:"required"`
-	IpAddress string `form:"ipaddress" binding:"required"`
-	Port      string `form:"port"  binding:"required"`
+	ID        uint `json:"id" gorm:"primarykey"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	Name      string `json:"name" binding:"required"`
+	IpAddress string `json:"ipaddress" binding:"required"`
+	Port      string `json:"port"  binding:"required"`
 	//Protocol UDP/TCP/TLS
 }
 

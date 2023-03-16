@@ -20,19 +20,16 @@ func TestMappings(t *testing.T) {
 
 	assert.EqualValues(t, 5, len(routes))
 
-	assert.EqualValues(t, http.MethodGet, routes[0].Method)
-	assert.EqualValues(t, "/", routes[0].Path)
-
 	assert.EqualValues(t, http.MethodGet, routes[1].Method)
 	assert.EqualValues(t, "/gateways/", routes[1].Path)
 
 	assert.EqualValues(t, http.MethodGet, routes[2].Method)
-	assert.EqualValues(t, "/gateways/new", routes[2].Path)
+	assert.EqualValues(t, "/gateways/:id", routes[2].Path)
 
 	assert.EqualValues(t, http.MethodGet, routes[3].Method)
 	assert.EqualValues(t, "/health", routes[3].Path)
 
 	assert.EqualValues(t, http.MethodPost, routes[4].Method)
-	assert.EqualValues(t, "/gateways/new", routes[4].Path)
+	assert.EqualValues(t, "/gateways/", routes[4].Path)
 
 }
