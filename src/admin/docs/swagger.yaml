@@ -1,18 +1,33 @@
 basePath: /api/v1
 definitions:
+  api_errors.ApiError:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
   models.Gateway:
     properties:
-      createdAt:
+      created_at:
+        description: Creation time
         type: string
       id:
+        description: Gateway ID
         type: integer
       ipaddress:
+        description: IP Address of the gateway
         type: string
       name:
+        description: Name of the gateway
         type: string
       port:
+        description: SIP Port of the gateway
         type: string
-      updatedAt:
+      updated_at:
+        description: Updated time
         type: string
     required:
     - ipaddress
@@ -30,7 +45,7 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
   title: P-KISS-SBC API
-  version: "1.0"
+  version: 1.0.0
 paths:
   /gateways:
     get:
@@ -44,6 +59,18 @@ paths:
             items:
               $ref: '#/definitions/models.Gateway'
             type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api_errors.ApiError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api_errors.ApiError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api_errors.ApiError'
       summary: Get a paginated list of gateways
       tags:
       - gateways
@@ -69,9 +96,9 @@ paths:
       - gateways
   /gateways/{id}:
     get:
-      description: Returns the gateway whose id matches the id.
+      description: Get gateway by ID
       parameters:
-      - description: search gateway by id
+      - description: Gateway ID
         in: path
         name: id
         required: true
@@ -83,7 +110,37 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.Gateway'
-      summary: Gets a gateway by ID
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api_errors.ApiError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api_errors.ApiError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api_errors.ApiError'
+      summary: Show a gateway
+      tags:
+      - gateways
+    put:
+      description: update gateway.
+      parameters:
+      - description: id of the gateway
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Gateway'
+      summary: Update a gateway
       tags:
       - gateways
 securityDefinitions:

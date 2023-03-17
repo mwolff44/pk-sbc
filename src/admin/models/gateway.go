@@ -7,13 +7,13 @@ import (
 
 // Gateway is the main gateway model
 type Gateway struct {
-	ID        uint `json:"id" gorm:"primarykey"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	Name      string `json:"name" binding:"required"`
-	IpAddress string `json:"ipaddress" binding:"required"`
-	Port      string `json:"port"  binding:"required"`
-	//Protocol UDP/TCP/TLS
+	ID        uint      `json:"id" gorm:"primarykey"`                                                     // Gateway ID
+	CreatedAt time.Time `json:"created_at"`                                                               // Creation time
+	UpdatedAt time.Time `json:"updated_at"`                                                               // Updated time
+	Name      string    `json:"name" binding:"required" gorm:"not null:true"`                             // Name of the gateway
+	IpAddress string    `json:"ipaddress" binding:"required,ip" gorm:"not null:true"`                     // IP Address of the gateway
+	Port      string    `json:"port"  binding:"required,numeric,max=5" gorm:"not null:true,default:5060"` // SIP Port of the gateway
+	Protocol  string    `json:"protocol"  binding:"required,oneof=udp tcp tls" gorm:"default:udp"`        // Protocol used by the gateway
 }
 
 // Getaways represents many gateways

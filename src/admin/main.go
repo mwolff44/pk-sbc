@@ -7,7 +7,7 @@ import (
 )
 
 // @title           P-KISS-SBC API
-// @version         1.0
+// @version         1.0.0
 // @description     This is the documentation API for P-KISS-SBC.
 // @termsOfService  http://swagger.io/terms/
 
@@ -19,6 +19,9 @@ import (
 
 // @host      localhost:8080
 // @BasePath  /api/v1
+
+// @consumes application/json
+// @produces application/json
 
 // @securityDefinitions.basic  BasicAuth
 

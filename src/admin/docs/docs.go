@@ -42,6 +42,24 @@ const docTemplate = `{
                                 "$ref": "#/definitions/models.Gateway"
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api_errors.ApiError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api_errors.ApiError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api_errors.ApiError"
+                        }
                     }
                 }
             }
@@ -79,18 +97,63 @@ const docTemplate = `{
         },
         "/gateways/{id}": {
             "get": {
-                "description": "Returns the gateway whose id matches the id.",
+                "description": "Get gateway by ID",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "gateways"
                 ],
-                "summary": "Gets a gateway by ID",
+                "summary": "Show a gateway",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "search gateway by id",
+                        "description": "Gateway ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Gateway"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api_errors.ApiError"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/api_errors.ApiError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/api_errors.ApiError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "update gateway.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateways"
+                ],
+                "summary": "Update a gateway",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id of the gateway",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -108,6 +171,20 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "api_errors.ApiError": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
         "models.Gateway": {
             "type": "object",
             "required": [
@@ -116,22 +193,28 @@ const docTemplate = `{
                 "port"
             ],
             "properties": {
-                "createdAt": {
+                "created_at": {
+                    "description": "Creation time",
                     "type": "string"
                 },
                 "id": {
+                    "description": "Gateway ID",
                     "type": "integer"
                 },
                 "ipaddress": {
+                    "description": "IP Address of the gateway",
                     "type": "string"
                 },
                 "name": {
+                    "description": "Name of the gateway",
                     "type": "string"
                 },
                 "port": {
+                    "description": "SIP Port of the gateway",
                     "type": "string"
                 },
-                "updatedAt": {
+                "updated_at": {
+                    "description": "Updated time",
                     "type": "string"
                 }
             }
@@ -146,7 +229,7 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "1.0",
+	Version:          "1.0.0",
 	Host:             "localhost:8080",
 	BasePath:         "/api/v1",
 	Schemes:          []string{},
