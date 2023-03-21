@@ -13,8 +13,8 @@ func mapUrls() {
 	api := r.Group("api/v1")
 	{
 		// Handle the gateway's routes
-		api.GET("/gateways/", controllers.GetGateways)
-		api.POST("/gateways/", controllers.CreateGateway)
+		api.GET("/gateways", controllers.GetGateways)
+		api.POST("/gateways", controllers.CreateGateway)
 		api.GET("/gateways/:id", controllers.GetGatewayByID)
 		api.PUT("/gateways/:id", controllers.UpdateGateway)
 		api.DELETE("/gateways/:id", controllers.DeleteGateway)

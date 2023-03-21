@@ -3,6 +3,7 @@ package controllers
 import (
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -60,7 +61,9 @@ func CreateGateway(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, newGateway)
+	c.Header("Location", c.FullPath()+"/"+strconv.Itoa(int(newGateway.ID)))
+
+	c.JSON(http.StatusCreated, gin.H{"gateway": newGateway})
 }
 
 // GetGatewayByID  godoc
@@ -82,6 +85,8 @@ func GetGatewayByID(c *gin.Context) {
 		c.JSON(apiErr.Status, apiErr)
 		return
 	}
+
+	c.Header("Last-Modified", gateway.UpdatedAt.String())
 
 	c.JSON(http.StatusOK, gateway)
 }
