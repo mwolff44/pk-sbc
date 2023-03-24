@@ -16,7 +16,7 @@ const docTemplate = `{
         },
         "license": {
             "name": "AGPL 3.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+            "url": "https://www.gnu.org/licenses/agpl-3.0.en.html"
         },
         "version": "{{.Version}}"
     },
@@ -33,13 +33,48 @@ const docTemplate = `{
                     "gateways"
                 ],
                 "summary": "Get a paginated list of gateways",
+                "parameters": [
+                    {
+                        "maximum": 10000000,
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "int valid",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "maximum": 100,
+                        "minimum": 5,
+                        "type": "integer",
+                        "description": "int valid",
+                        "name": "page_size",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            "id",
+                            "name",
+                            "ip_address",
+                            "-id",
+                            "-name",
+                            "-ip_address"
+                        ],
+                        "type": "string",
+                        "description": "string enums",
+                        "name": "sort",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.Gateway"
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/models.Gateway"
+                                }
                             }
                         }
                     },
@@ -119,6 +154,12 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/models.Gateway"
+                        },
+                        "headers": {
+                            "Location": {
+                                "type": "string",
+                                "description": "/gateway/1"
+                            }
                         }
                     },
                     "400": {
@@ -168,6 +209,30 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/health": {
+            "get": {
+                "description": "get the status of server.",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "root"
+                ],
+                "summary": "Show the status of server.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -190,7 +255,8 @@ const docTemplate = `{
             "required": [
                 "ipaddress",
                 "name",
-                "port"
+                "port",
+                "protocol"
             ],
             "properties": {
                 "created_at": {
@@ -211,7 +277,19 @@ const docTemplate = `{
                 },
                 "port": {
                     "description": "SIP Port of the gateway",
-                    "type": "string"
+                    "type": "integer",
+                    "maximum": 65535,
+                    "minimum": 1
+                },
+                "protocol": {
+                    "description": "Protocol used by the gateway",
+                    "type": "string",
+                    "enum": [
+                        "udp",
+                        "tcp",
+                        "tls",
+                        "any"
+                    ]
                 },
                 "updated_at": {
                     "description": "Updated time",
@@ -230,7 +308,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0.0",
-	Host:             "localhost:8080",
+	Host:             "localhost:3000",
 	BasePath:         "/api/v1",
 	Schemes:          []string{},
 	Title:            "P-KISS-SBC API",

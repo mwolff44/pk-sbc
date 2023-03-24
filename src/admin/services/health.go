@@ -25,7 +25,7 @@ func init() {
 	HealthService = &healthService{}
 }
 
-// HandleHealth returns ok information
+// Health returns the service state
 func (s *healthService) Health() (string, *api_errors.ApiError) {
 	fmt.Println("Working fine !")
 	return health, nil

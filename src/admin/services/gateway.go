@@ -1,9 +1,13 @@
 package services
 
 import (
+	"errors"
+	"log"
+
+	"gorm.io/gorm"
 	"pks.pyfreebilling.com/models"
-	"pks.pyfreebilling.com/navigation"
 	"pks.pyfreebilling.com/utils/api_errors"
+	"pks.pyfreebilling.com/utils/filters"
 )
 
 // GatewayService
@@ -14,17 +18,20 @@ var (
 type gatewaysService struct{}
 
 type gatewaysServiceInterface interface {
-	GetGateway(id string) (*models.Gateway, *api_errors.ApiError)
+	GetGateway(id int64) (*models.Gateway, *api_errors.ApiError)
 	CreateGateway(models.Gateway) (*models.Gateway, error)
 	UpdateGateway(models.Gateway) (*models.Gateway, error)
-	DeleteGateway(gatewayId string) error
-	ListGateways(pageStr string, gatewaysPerPage int) (*models.Gateways, *navigation.Pagination, error)
+	DeleteGateway(id int64) error
+	ListGateways(filter filters.Filters) (*models.Gateways, *filters.Pagination, error)
 }
 
 // GetGateway gets the gateway object by id
-func (s *gatewaysService) GetGateway(id string) (*models.Gateway, *api_errors.ApiError) {
+func (s *gatewaysService) GetGateway(id int64) (*models.Gateway, *api_errors.ApiError) {
 	var gateway models.Gateway
 	if err := models.GetGateway(&gateway, id); err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, api_errors.NewNotFoundError("Id does not exists in DB")
+		}
 		return nil, api_errors.NewInternalServerError("error when tying to get gateway : database error")
 	}
 
@@ -50,7 +57,7 @@ func (s *gatewaysService) UpdateGateway(gateway models.Gateway) (*models.Gateway
 }
 
 // DeleteGateway deletes the gateway object
-func (s *gatewaysService) DeleteGateway(id string) error {
+func (s *gatewaysService) DeleteGateway(id int64) error {
 	if err := models.DeleteGateway(id); err != nil {
 		return err
 	}
@@ -59,7 +66,7 @@ func (s *gatewaysService) DeleteGateway(id string) error {
 }
 
 // ListGateways returns a paginated list of gateways
-func (s *gatewaysService) ListGateways(pageStr string, gatewaysPerPage int) (*models.Gateways, *navigation.Pagination, error) {
+func (s *gatewaysService) ListGateways(filter filters.Filters) (*models.Gateways, *filters.Pagination, error) {
 	// Count total og gatesways in DB
 	gatewayCount, err := models.CountGateways()
 	if err != nil {
@@ -67,15 +74,16 @@ func (s *gatewaysService) ListGateways(pageStr string, gatewaysPerPage int) (*mo
 	}
 
 	// Get pagination informations
-	p, paginateErr := navigation.Paginate(pageStr, int(gatewayCount), gatewaysPerPage)
+	p, paginateErr := filters.Paginate(filter.Page, int(gatewayCount), filter.PageSize)
 	if paginateErr != nil {
 		// c.AbortWithStatus(http.StatusBadRequest)
+		log.Printf("Pagination error : %s", paginateErr)
 		return nil, nil, paginateErr
 	}
 
 	// Get gateways list
 	var gateways models.Gateways
-	if err := models.GetGateways(&gateways, gatewaysPerPage, p.Offset); err != nil {
+	if err := models.GetGateways(&gateways, filter); err != nil {
 		return nil, nil, err
 	}
 

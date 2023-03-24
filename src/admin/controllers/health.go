@@ -8,7 +8,14 @@ import (
 	"pks.pyfreebilling.com/utils/api_errors"
 )
 
-// HealthCheck function responds that the app is working
+// HealthCheck godoc
+//	@Summary		Show the status of server.
+//	@Description	get the status of server.
+//	@Tags			root
+//	@Accept			*/*
+//	@Produce		json
+//	@Success		200	{object}	map[string]interface{}
+//	@Router			/health [get]
 func HealthCheck(c *gin.Context) {
 	result, err := services.HealthService.Health()
 	if err != nil {

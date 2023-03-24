@@ -25,6 +25,16 @@ definitions:
         type: string
       port:
         description: SIP Port of the gateway
+        maximum: 65535
+        minimum: 1
+        type: integer
+      protocol:
+        description: Protocol used by the gateway
+        enum:
+        - udp
+        - tcp
+        - tls
+        - any
         type: string
       updated_at:
         description: Updated time
@@ -33,8 +43,9 @@ definitions:
     - ipaddress
     - name
     - port
+    - protocol
     type: object
-host: localhost:8080
+host: localhost:3000
 info:
   contact:
     name: Mathias WOLFF
@@ -42,7 +53,7 @@ info:
   description: This is the documentation API for P-KISS-SBC.
   license:
     name: AGPL 3.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    url: https://www.gnu.org/licenses/agpl-3.0.en.html
   termsOfService: http://swagger.io/terms/
   title: P-KISS-SBC API
   version: 1.0.0
@@ -50,6 +61,30 @@ paths:
   /gateways:
     get:
       description: Responds with the list of gateways as JSON.
+      parameters:
+      - description: int valid
+        in: query
+        maximum: 10000000
+        minimum: 1
+        name: page
+        type: integer
+      - description: int valid
+        in: query
+        maximum: 100
+        minimum: 5
+        name: page_size
+        type: integer
+      - description: string enums
+        enum:
+        - id
+        - name
+        - ip_address
+        - -id
+        - -name
+        - -ip_address
+        in: query
+        name: sort
+        type: string
       produces:
       - application/json
       responses:
@@ -57,7 +92,9 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.Gateway'
+              items:
+                $ref: '#/definitions/models.Gateway'
+              type: array
             type: array
         "400":
           description: Bad Request
@@ -108,6 +145,10 @@ paths:
       responses:
         "200":
           description: OK
+          headers:
+            Location:
+              description: /gateway/1
+              type: string
           schema:
             $ref: '#/definitions/models.Gateway'
         "400":
@@ -143,6 +184,22 @@ paths:
       summary: Update a gateway
       tags:
       - gateways
+  /health:
+    get:
+      consumes:
+      - '*/*'
+      description: get the status of server.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Show the status of server.
+      tags:
+      - root
 securityDefinitions:
   BasicAuth:
     type: basic
