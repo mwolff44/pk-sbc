@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"strconv"
 	"testing"
 	"time"
@@ -76,16 +77,16 @@ func TestGetGateways(t *testing.T) {
 				},
 			},
 			svcPagination: &filters.Pagination{
-				CurrentPage:  1,
-				PageSize:     5,
+				CurrentPage:  2,
+				PageSize:     10,
 				LastPage:     1,
 				TotalRecords: 1,
 			},
 			svcError: nil,
 			filter: &filters.Filters{
-				Page:     1,
-				PageSize: 5,
-				Sort:     "id",
+				Page:     2,
+				PageSize: 10,
+				Sort:     "-id",
 			},
 			expectedResponseCode: http.StatusOK,
 			expectedResponse: utils.PaginatedResponseHTTP{
@@ -128,6 +129,40 @@ func TestGetGateways(t *testing.T) {
 			},
 		},
 		{
+			description:   "Invalid page number",
+			svcModel:      nil,
+			svcPagination: nil,
+			svcError:      errors.New("invalid page number"),
+			filter: &filters.Filters{
+				Page:     10,
+				PageSize: 5,
+				Sort:     "id",
+			},
+			expectedResponseCode: http.StatusBadRequest,
+			expectedResponse: utils.PaginatedResponseHTTP{
+				Error:   true,
+				Message: "Pagination error : invalid page number",
+				Data:    nil,
+			},
+		},
+		{
+			description:   "Generic service error",
+			svcModel:      nil,
+			svcPagination: nil,
+			svcError:      errors.New("not invalid page number"),
+			filter: &filters.Filters{
+				Page:     10,
+				PageSize: 5,
+				Sort:     "id",
+			},
+			expectedResponseCode: http.StatusInternalServerError,
+			expectedResponse: utils.PaginatedResponseHTTP{
+				Error:   true,
+				Message: "Error in getting gateway list",
+				Data:    nil,
+			},
+		},
+		{
 			description: "Wrong param : sort data => get default",
 			svcModel: &models.Gateways{
 				{
@@ -142,14 +177,14 @@ func TestGetGateways(t *testing.T) {
 			},
 			svcPagination: &filters.Pagination{
 				CurrentPage:  1,
-				PageSize:     5,
+				PageSize:     10,
 				LastPage:     1,
 				TotalRecords: 1,
 			},
 			svcError: nil,
 			filter: &filters.Filters{
 				Page:     1,
-				PageSize: 1,
+				PageSize: 10,
 				Sort:     "z",
 			},
 			expectedResponseCode: http.StatusOK,
@@ -206,11 +241,18 @@ func TestGetGateways(t *testing.T) {
 
 			c.Request, _ = http.NewRequest(http.MethodGet, "/", nil)
 
-			c.Params = gin.Params{
+			/* c.Params = gin.Params{
 				{Key: "page", Value: strconv.Itoa(test.filter.Page)},
 				{Key: "page_size", Value: strconv.Itoa(test.filter.PageSize)},
 				{Key: "sort", Value: test.filter.Sort},
-			}
+			} */
+
+			// set query params
+			u := url.Values{}
+			u.Add("page", strconv.Itoa(test.filter.Page))
+			u.Add("page_size", strconv.Itoa(test.filter.PageSize))
+			u.Add("sort", test.filter.Sort)
+			c.Request.URL.RawQuery = u.Encode()
 
 			fmt.Printf("params : %v", c.Params)
 

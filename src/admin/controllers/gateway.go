@@ -38,6 +38,7 @@ func GetGateways(c *gin.Context) {
 		})
 		return
 	}
+	fmt.Printf("Filters OK : %v", filter)
 	filter.Sort = filter.GetSort()
 	filter.SortSafelist = []string{"id", "name", "ip_address", "-id", "-name", "-ip_address"}
 	fmt.Printf("Filters OK : %v", filter)
@@ -51,7 +52,10 @@ func GetGateways(c *gin.Context) {
 			})
 			return
 		}
-		c.AbortWithStatus(http.StatusInternalServerError)
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error":   true,
+			"message": "Error in getting gateway list",
+		})
 		return
 	}
 
