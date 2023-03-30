@@ -357,38 +357,40 @@ func TestCreateGateway(t *testing.T) {
 	// Mock GatewayService methods
 
 	for _, test := range tests {
-		createGatewayFunc = func(gw models.Gateway) (*models.Gateway, error) {
-			return test.svcModel, test.svcError
-		}
-		services.GatewaysService = &gatewayServiceMock{}
+		t.Run(test.description, func(t *testing.T) {
+			createGatewayFunc = func(gw models.Gateway) (*models.Gateway, error) {
+				return test.svcModel, test.svcError
+			}
+			services.GatewaysService = &gatewayServiceMock{}
 
-		response := httptest.NewRecorder()
-		c, _ := gin.CreateTestContext(response)
+			response := httptest.NewRecorder()
+			c, _ := gin.CreateTestContext(response)
 
-		body, _ := json.Marshal(test.g)
+			body, _ := json.Marshal(test.g)
 
-		c.Request, _ = http.NewRequest(http.MethodPost, "/", bytes.NewBuffer(body))
+			c.Request, _ = http.NewRequest(http.MethodPost, "/", bytes.NewBuffer(body))
 
-		/* 	body, _ := json.Marshal(test.g)
-		c.Request.Body, _ = io.ReadCloser(body) */
+			/* 	body, _ := json.Marshal(test.g)
+			c.Request.Body, _ = io.ReadCloser(body) */
 
-		CreateGateway(c)
+			CreateGateway(c)
 
-		assert.EqualValues(t, test.expectedResponseCode, response.Code)
+			assert.EqualValues(t, test.expectedResponseCode, response.Code)
 
-		var gwResp utils.ResponseHTTP
-		err := json.Unmarshal(response.Body.Bytes(), &gwResp)
-		assert.Nil(t, err)
+			var gwResp utils.ResponseHTTP
+			err := json.Unmarshal(response.Body.Bytes(), &gwResp)
+			assert.Nil(t, err)
 
-		assert.EqualValues(t, test.expectedResponse.Error, gwResp.Error)
-		assert.EqualValues(t, test.expectedResponse.Message, gwResp.Message)
+			assert.EqualValues(t, test.expectedResponse.Error, gwResp.Error)
+			assert.EqualValues(t, test.expectedResponse.Message, gwResp.Message)
 
-		if test.expectedResponse.Data != nil {
-			assert.Contains(t, response.Header(), "Location")
-			dataJson, _ := json.Marshal(test.expectedResponse.Data)
-			respJson, _ := json.Marshal(gwResp.Data)
-			assert.JSONEq(t, string(dataJson), string(respJson))
-		}
+			if test.expectedResponse.Data != nil {
+				assert.Contains(t, response.Header(), "Location")
+				dataJson, _ := json.Marshal(test.expectedResponse.Data)
+				respJson, _ := json.Marshal(gwResp.Data)
+				assert.JSONEq(t, string(dataJson), string(respJson))
+			}
+		})
 	}
 }
 
@@ -496,36 +498,38 @@ func TestGetGatewayByID(t *testing.T) {
 	// Mock GatewayService methods
 
 	for _, test := range tests {
-		getGatewayByIDFunc = func(id int64) (*models.Gateway, error) {
-			return test.g, test.svcError
-		}
-		services.GatewaysService = &gatewayServiceMock{}
+		t.Run(test.description, func(t *testing.T) {
+			getGatewayByIDFunc = func(id int64) (*models.Gateway, error) {
+				return test.g, test.svcError
+			}
+			services.GatewaysService = &gatewayServiceMock{}
 
-		response := httptest.NewRecorder()
-		c, _ := gin.CreateTestContext(response)
+			response := httptest.NewRecorder()
+			c, _ := gin.CreateTestContext(response)
 
-		c.Request, _ = http.NewRequest(http.MethodGet, "/", nil)
+			c.Request, _ = http.NewRequest(http.MethodGet, "/", nil)
 
-		c.Params = gin.Params{
-			{Key: "id", Value: test.param},
-		}
+			c.Params = gin.Params{
+				{Key: "id", Value: test.param},
+			}
 
-		GetGatewayByID(c)
+			GetGatewayByID(c)
 
-		assert.EqualValues(t, test.expectedResponseCode, response.Code)
+			assert.EqualValues(t, test.expectedResponseCode, response.Code)
 
-		var gwResp utils.ResponseHTTP
-		err := json.Unmarshal(response.Body.Bytes(), &gwResp)
-		assert.Nil(t, err)
+			var gwResp utils.ResponseHTTP
+			err := json.Unmarshal(response.Body.Bytes(), &gwResp)
+			assert.Nil(t, err)
 
-		assert.EqualValues(t, test.expectedResponse.Error, gwResp.Error)
-		assert.EqualValues(t, test.expectedResponse.Message, gwResp.Message)
+			assert.EqualValues(t, test.expectedResponse.Error, gwResp.Error)
+			assert.EqualValues(t, test.expectedResponse.Message, gwResp.Message)
 
-		if test.expectedResponse.Data != nil {
-			dataJson, _ := json.Marshal(test.expectedResponse.Data)
-			respJson, _ := json.Marshal(gwResp.Data)
-			assert.JSONEq(t, string(dataJson), string(respJson))
-		}
+			if test.expectedResponse.Data != nil {
+				dataJson, _ := json.Marshal(test.expectedResponse.Data)
+				respJson, _ := json.Marshal(gwResp.Data)
+				assert.JSONEq(t, string(dataJson), string(respJson))
+			}
+		})
 	}
 }
 
@@ -672,41 +676,43 @@ func TestUpdateGateway(t *testing.T) {
 	// Mock GatewayService methods
 
 	for _, test := range tests {
-		updateGatewayFunc = func(gw models.Gateway) (*models.Gateway, error) {
-			return test.svcModel, test.svcError
-		}
-		getGatewayByIDFunc = func(id int64) (*models.Gateway, error) {
-			return nil, test.svcGetError
-		}
-		services.GatewaysService = &gatewayServiceMock{}
+		t.Run(test.description, func(t *testing.T) {
+			updateGatewayFunc = func(gw models.Gateway) (*models.Gateway, error) {
+				return test.svcModel, test.svcError
+			}
+			getGatewayByIDFunc = func(id int64) (*models.Gateway, error) {
+				return nil, test.svcGetError
+			}
+			services.GatewaysService = &gatewayServiceMock{}
 
-		response := httptest.NewRecorder()
-		c, _ := gin.CreateTestContext(response)
+			response := httptest.NewRecorder()
+			c, _ := gin.CreateTestContext(response)
 
-		body, _ := json.Marshal(test.g)
+			body, _ := json.Marshal(test.g)
 
-		c.Request, _ = http.NewRequest(http.MethodPut, "/", bytes.NewBuffer(body))
+			c.Request, _ = http.NewRequest(http.MethodPut, "/", bytes.NewBuffer(body))
 
-		c.Params = gin.Params{
-			{Key: "id", Value: test.param},
-		}
+			c.Params = gin.Params{
+				{Key: "id", Value: test.param},
+			}
 
-		UpdateGateway(c)
+			UpdateGateway(c)
 
-		assert.EqualValues(t, test.expectedResponseCode, response.Code)
+			assert.EqualValues(t, test.expectedResponseCode, response.Code)
 
-		var gwResp utils.ResponseHTTP
-		err := json.Unmarshal(response.Body.Bytes(), &gwResp)
-		assert.Nil(t, err)
+			var gwResp utils.ResponseHTTP
+			err := json.Unmarshal(response.Body.Bytes(), &gwResp)
+			assert.Nil(t, err)
 
-		assert.EqualValues(t, test.expectedResponse.Error, gwResp.Error)
-		assert.EqualValues(t, test.expectedResponse.Message, gwResp.Message)
+			assert.EqualValues(t, test.expectedResponse.Error, gwResp.Error)
+			assert.EqualValues(t, test.expectedResponse.Message, gwResp.Message)
 
-		if test.expectedResponse.Data != nil {
-			dataJson, _ := json.Marshal(test.expectedResponse.Data)
-			respJson, _ := json.Marshal(gwResp.Data)
-			assert.JSONEq(t, string(dataJson), string(respJson))
-		}
+			if test.expectedResponse.Data != nil {
+				dataJson, _ := json.Marshal(test.expectedResponse.Data)
+				respJson, _ := json.Marshal(gwResp.Data)
+				assert.JSONEq(t, string(dataJson), string(respJson))
+			}
+		})
 	}
 }
 
@@ -790,29 +796,31 @@ func TestDeleteGateway(t *testing.T) {
 	// Mock GatewayService methods
 
 	for _, test := range tests {
-		deleteGatewayFunc = func(id int64) error {
-			return test.svcError
-		}
-		services.GatewaysService = &gatewayServiceMock{}
+		t.Run(test.description, func(t *testing.T) {
+			deleteGatewayFunc = func(id int64) error {
+				return test.svcError
+			}
+			services.GatewaysService = &gatewayServiceMock{}
 
-		response := httptest.NewRecorder()
-		c, _ := gin.CreateTestContext(response)
+			response := httptest.NewRecorder()
+			c, _ := gin.CreateTestContext(response)
 
-		c.Request, _ = http.NewRequest(http.MethodDelete, "/", nil)
+			c.Request, _ = http.NewRequest(http.MethodDelete, "/", nil)
 
-		c.Params = gin.Params{
-			{Key: "id", Value: test.param},
-		}
+			c.Params = gin.Params{
+				{Key: "id", Value: test.param},
+			}
 
-		DeleteGateway(c)
+			DeleteGateway(c)
 
-		assert.EqualValues(t, test.expectedResponseCode, response.Code)
+			assert.EqualValues(t, test.expectedResponseCode, response.Code)
 
-		var gwResp utils.ResponseHTTP
-		err := json.Unmarshal(response.Body.Bytes(), &gwResp)
-		assert.Nil(t, err)
+			var gwResp utils.ResponseHTTP
+			err := json.Unmarshal(response.Body.Bytes(), &gwResp)
+			assert.Nil(t, err)
 
-		assert.EqualValues(t, test.expectedResponse.Error, gwResp.Error)
-		assert.EqualValues(t, test.expectedResponse.Message, gwResp.Message)
+			assert.EqualValues(t, test.expectedResponse.Error, gwResp.Error)
+			assert.EqualValues(t, test.expectedResponse.Message, gwResp.Message)
+		})
 	}
 }
