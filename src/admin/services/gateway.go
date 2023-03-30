@@ -6,7 +6,6 @@ import (
 
 	"gorm.io/gorm"
 	"pks.pyfreebilling.com/models"
-	"pks.pyfreebilling.com/utils/api_errors"
 	"pks.pyfreebilling.com/utils/filters"
 )
 
@@ -18,7 +17,7 @@ var (
 type gatewaysService struct{}
 
 type gatewaysServiceInterface interface {
-	GetGateway(id int64) (*models.Gateway, *api_errors.ApiError)
+	GetGateway(id int64) (*models.Gateway, error)
 	CreateGateway(models.Gateway) (*models.Gateway, error)
 	UpdateGateway(models.Gateway) (*models.Gateway, error)
 	DeleteGateway(id int64) error
@@ -26,13 +25,13 @@ type gatewaysServiceInterface interface {
 }
 
 // GetGateway gets the gateway object by id
-func (s *gatewaysService) GetGateway(id int64) (*models.Gateway, *api_errors.ApiError) {
+func (s *gatewaysService) GetGateway(id int64) (*models.Gateway, error) {
 	var gateway models.Gateway
 	if err := models.GetGateway(&gateway, id); err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, api_errors.NewNotFoundError("Id does not exists in DB")
+			return nil, err
 		}
-		return nil, api_errors.NewInternalServerError("error when tying to get gateway : database error")
+		return nil, errors.New("error when tying to get gateway : database error")
 	}
 
 	return &gateway, nil

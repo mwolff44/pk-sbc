@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -9,24 +10,24 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	"pks.pyfreebilling.com/services"
-	"pks.pyfreebilling.com/utils/api_errors"
+	"pks.pyfreebilling.com/utils"
 )
 
 var (
-	healthFunc func() (string, *api_errors.ApiError)
+	healthFunc func() (string, error)
 )
 
 type healthServiceMock struct{}
 
-func (*healthServiceMock) Health() (string, *api_errors.ApiError) {
+func (*healthServiceMock) Health() (string, error) {
 	return healthFunc()
 }
 
 func TestHealthWithError(t *testing.T) {
 	// init
 	// Mock HealthService methods
-	healthFunc = func() (string, *api_errors.ApiError) {
-		return "", &api_errors.ApiError{Status: http.StatusInternalServerError, Message: "Error executing health"}
+	healthFunc = func() (string, error) {
+		return "", errors.New("Error executing health")
 	}
 	services.HealthService = &healthServiceMock{}
 
@@ -38,7 +39,7 @@ func TestHealthWithError(t *testing.T) {
 
 	assert.EqualValues(t, http.StatusInternalServerError, response.Code)
 
-	var apiErr api_errors.ApiError
+	var apiErr utils.ResponseErrorHTTP
 	err := json.Unmarshal(response.Body.Bytes(), &apiErr)
 	assert.Nil(t, err)
 
@@ -47,7 +48,7 @@ func TestHealthWithError(t *testing.T) {
 
 func TestHealthNoError(t *testing.T) {
 	// init
-	healthFunc = func() (string, *api_errors.ApiError) {
+	healthFunc = func() (string, error) {
 		return "Working fine !", nil
 	}
 	services.HealthService = &healthServiceMock{}

@@ -36,9 +36,11 @@ func GetGateway(gateway *Gateway, id int64) error {
 
 // GetGateways queries the DB to find gateways with offset and limit
 func GetGateways(gateways *Gateways, filter filters.Filters) error {
-	sort := fmt.Sprintf(`"%s %s"`, filter.SortColumn(), filter.SortDirection())
-	log.Printf("Sort : %s", sort)
-	if err := DB.Limit(filter.Limit()).Offset(filter.Offset()).Order(filter.SortOrder()).Find(&gateways).Error; err != nil {
+	sortOrder, err := filter.SortOrder()
+	if err != nil {
+		sortOrder = "id"
+	}
+	if err := DB.Limit(filter.Limit()).Offset(filter.Offset()).Order(sortOrder).Find(&gateways).Error; err != nil {
 		return err
 	}
 	return nil

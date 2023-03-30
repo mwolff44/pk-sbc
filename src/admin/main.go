@@ -18,15 +18,15 @@ import (
 //	@license.url	https://www.gnu.org/licenses/agpl-3.0.en.html
 
 //	@host		localhost:3000
-//	@BasePath	/api/v1
+//	@BasePath	/v1
 
 //	@consumes	application/json
 //	@produces	application/json
 
 //	@securityDefinitions.basic	BasicAuth
 
-//	@externalDocs.description	OpenAPI
-//	@externalDocs.url			https://swagger.io/resources/open-api/
+// @externalDocs.description	OpenAPI
+// @externalDocs.url			https://swagger.io/resources/open-api/
 func main() {
 	log.Println("Starting PKS-admin server...")
 

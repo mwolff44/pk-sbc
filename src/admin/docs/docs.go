@@ -38,6 +38,7 @@ const docTemplate = `{
                         "maximum": 10000000,
                         "minimum": 1,
                         "type": "integer",
+                        "default": 1,
                         "description": "int valid",
                         "name": "page",
                         "in": "query"
@@ -46,6 +47,7 @@ const docTemplate = `{
                         "maximum": 100,
                         "minimum": 5,
                         "type": "integer",
+                        "default": 5,
                         "description": "int valid",
                         "name": "page_size",
                         "in": "query"
@@ -60,6 +62,7 @@ const docTemplate = `{
                             "-ip_address"
                         ],
                         "type": "string",
+                        "default": "id",
                         "description": "string enums",
                         "name": "sort",
                         "in": "query"
@@ -69,31 +72,28 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/definitions/models.Gateway"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.PaginatedResponseHTTP"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/models.Gateway"
+                                            }
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/api_errors.ApiError"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/api_errors.ApiError"
+                            ]
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/api_errors.ApiError"
+                            "$ref": "#/definitions/utils.ResponseErrorHTTP"
                         }
                     }
                 }
@@ -124,7 +124,25 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Gateway"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.ResponseHTTP"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.Gateway"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseErrorHTTP"
                         }
                     }
                 }
@@ -142,7 +160,7 @@ const docTemplate = `{
                 "summary": "Show a gateway",
                 "parameters": [
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "Gateway ID",
                         "name": "id",
                         "in": "path",
@@ -153,7 +171,19 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Gateway"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.ResponseHTTP"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.Gateway"
+                                        }
+                                    }
+                                }
+                            ]
                         },
                         "headers": {
                             "Location": {
@@ -162,22 +192,10 @@ const docTemplate = `{
                             }
                         }
                     },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/api_errors.ApiError"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/api_errors.ApiError"
-                        }
-                    },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/api_errors.ApiError"
+                            "$ref": "#/definitions/utils.ResponseErrorHTTP"
                         }
                     }
                 }
@@ -193,7 +211,7 @@ const docTemplate = `{
                 "summary": "Update a gateway",
                 "parameters": [
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "id of the gateway",
                         "name": "id",
                         "in": "path",
@@ -204,7 +222,46 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Gateway"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/utils.ResponseHTTP"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/models.Gateway"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete gateway.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateways"
+                ],
+                "summary": "Delete a gateway",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id of the gateway",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ResponseHTTP"
                         }
                     }
                 }
@@ -236,16 +293,25 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "api_errors.ApiError": {
+        "filters.Pagination": {
             "type": "object",
             "properties": {
-                "error": {
-                    "type": "string"
+                "current_page": {
+                    "type": "integer"
                 },
-                "message": {
-                    "type": "string"
+                "last_page": {
+                    "type": "integer"
                 },
-                "status": {
+                "next_page": {
+                    "type": "integer"
+                },
+                "page_size": {
+                    "type": "integer"
+                },
+                "prev_page": {
+                    "type": "integer"
+                },
+                "total_records": {
                     "type": "integer"
                 }
             }
@@ -253,7 +319,7 @@ const docTemplate = `{
         "models.Gateway": {
             "type": "object",
             "required": [
-                "ipaddress",
+                "ip_address",
                 "name",
                 "port",
                 "protocol"
@@ -267,7 +333,7 @@ const docTemplate = `{
                     "description": "Gateway ID",
                     "type": "integer"
                 },
-                "ipaddress": {
+                "ip_address": {
                     "description": "IP Address of the gateway",
                     "type": "string"
                 },
@@ -296,6 +362,47 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
+        },
+        "utils.PaginatedResponseHTTP": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "error": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "message": {
+                    "type": "string"
+                },
+                "pagination": {
+                    "$ref": "#/definitions/filters.Pagination"
+                }
+            }
+        },
+        "utils.ResponseErrorHTTP": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "utils.ResponseHTTP": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "error": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
         }
     },
     "securityDefinitions": {
@@ -309,7 +416,7 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0.0",
 	Host:             "localhost:3000",
-	BasePath:         "/api/v1",
+	BasePath:         "/v1",
 	Schemes:          []string{},
 	Title:            "P-KISS-SBC API",
 	Description:      "This is the documentation API for P-KISS-SBC.",

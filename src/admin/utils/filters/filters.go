@@ -8,8 +8,8 @@ import (
 
 // Filters defines the struct of query
 type Filters struct {
-	Page         int    `form:"page,default=1" binding:"omitempty,min=1,max=10_000_000"`
-	PageSize     int    `form:"page_size,default=5" binding:"omitempty,min=5,max=100"`
+	Page         int    `form:"page,default=1" binding:"min=1,max=10_000_000"`
+	PageSize     int    `form:"page_size,default=5" binding:"min=5,max=100"`
 	Sort         string `form:"sort"`
 	SortSafelist []string
 }
@@ -32,14 +32,14 @@ func (f *Filters) Offset() int {
 	return (f.Page - 1) * f.PageSize
 }
 
-func (f Filters) SortColumn() string {
+func (f Filters) SortColumn() (string, error) {
 	for _, safeValue := range f.SortSafelist {
 		if f.Sort == safeValue {
-			return strings.TrimPrefix(f.Sort, "-")
+			return strings.TrimPrefix(f.Sort, "-"), nil
 		}
 	}
 
-	panic("unsafe sort parameter: " + f.Sort)
+	return "", errors.New("unsafe sort parameter: " + f.Sort)
 }
 
 func (f Filters) SortDirection() string {
@@ -50,8 +50,12 @@ func (f Filters) SortDirection() string {
 	return "asc"
 }
 
-func (f Filters) SortOrder() string {
-	return f.SortColumn() + " " + f.SortDirection()
+func (f Filters) SortOrder() (string, error) {
+	sortColumn, err := f.SortColumn()
+	if err != nil {
+		return "", err
+	}
+	return sortColumn + " " + f.SortDirection(), nil
 }
 
 func (f *Filters) GetSort() string {

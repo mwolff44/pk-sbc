@@ -10,18 +10,20 @@ import (
 // mapUrls function lists the project urls
 func mapUrls() {
 
-	api := r.Group("api/v1")
+	api := r.Group("v1")
+
+	// Handle the gateway's routes
+	gr := api.Group("gateways")
 	{
-		// Handle the gateway's routes
-		api.GET("/gateways", controllers.GetGateways)
-		api.POST("/gateways", controllers.CreateGateway)
-		api.GET("/gateways/:id", controllers.GetGatewayByID)
-		api.PUT("/gateways/:id", controllers.UpdateGateway)
-		api.DELETE("/gateways/:id", controllers.DeleteGateway)
+		gr.GET("", controllers.GetGateways)
+		gr.POST("", controllers.CreateGateway)
+		gr.GET("/:id", controllers.GetGatewayByID)
+		gr.PUT("/:id", controllers.UpdateGateway)
+		gr.DELETE("/:id", controllers.DeleteGateway)
 	}
 
 	// Handle health route
-	r.GET("/health", controllers.HealthCheck)
+	api.GET("/health", controllers.HealthCheck)
 
 	//Register handler for Swagger
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

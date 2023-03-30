@@ -1,12 +1,18 @@
-basePath: /api/v1
+basePath: /v1
 definitions:
-  api_errors.ApiError:
+  filters.Pagination:
     properties:
-      error:
-        type: string
-      message:
-        type: string
-      status:
+      current_page:
+        type: integer
+      last_page:
+        type: integer
+      next_page:
+        type: integer
+      page_size:
+        type: integer
+      prev_page:
+        type: integer
+      total_records:
         type: integer
     type: object
   models.Gateway:
@@ -17,7 +23,7 @@ definitions:
       id:
         description: Gateway ID
         type: integer
-      ipaddress:
+      ip_address:
         description: IP Address of the gateway
         type: string
       name:
@@ -40,10 +46,38 @@ definitions:
         description: Updated time
         type: string
     required:
-    - ipaddress
+    - ip_address
     - name
     - port
     - protocol
+    type: object
+  utils.PaginatedResponseHTTP:
+    properties:
+      data: {}
+      error:
+        example: false
+        type: boolean
+      message:
+        type: string
+      pagination:
+        $ref: '#/definitions/filters.Pagination'
+    type: object
+  utils.ResponseErrorHTTP:
+    properties:
+      error:
+        example: true
+        type: boolean
+      message:
+        type: string
+    type: object
+  utils.ResponseHTTP:
+    properties:
+      data: {}
+      error:
+        example: false
+        type: boolean
+      message:
+        type: string
     type: object
 host: localhost:3000
 info:
@@ -62,19 +96,22 @@ paths:
     get:
       description: Responds with the list of gateways as JSON.
       parameters:
-      - description: int valid
+      - default: 1
+        description: int valid
         in: query
         maximum: 10000000
         minimum: 1
         name: page
         type: integer
-      - description: int valid
+      - default: 5
+        description: int valid
         in: query
         maximum: 100
         minimum: 5
         name: page_size
         type: integer
-      - description: string enums
+      - default: id
+        description: string enums
         enum:
         - id
         - name
@@ -91,23 +128,18 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              items:
-                $ref: '#/definitions/models.Gateway'
-              type: array
-            type: array
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/api_errors.ApiError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/api_errors.ApiError'
+            allOf:
+            - $ref: '#/definitions/utils.PaginatedResponseHTTP'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/models.Gateway'
+                  type: array
+              type: object
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/api_errors.ApiError'
+            $ref: '#/definitions/utils.ResponseErrorHTTP'
       summary: Get a paginated list of gateways
       tags:
       - gateways
@@ -127,11 +159,38 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Gateway'
+            allOf:
+            - $ref: '#/definitions/utils.ResponseHTTP'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Gateway'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ResponseErrorHTTP'
       summary: Creates a new gateway object
       tags:
       - gateways
   /gateways/{id}:
+    delete:
+      description: delete gateway.
+      parameters:
+      - description: id of the gateway
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.ResponseHTTP'
+      summary: Delete a gateway
+      tags:
+      - gateways
     get:
       description: Get gateway by ID
       parameters:
@@ -139,7 +198,7 @@ paths:
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       produces:
       - application/json
       responses:
@@ -150,19 +209,16 @@ paths:
               description: /gateway/1
               type: string
           schema:
-            $ref: '#/definitions/models.Gateway'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/api_errors.ApiError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/api_errors.ApiError'
+            allOf:
+            - $ref: '#/definitions/utils.ResponseHTTP'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Gateway'
+              type: object
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/api_errors.ApiError'
+            $ref: '#/definitions/utils.ResponseErrorHTTP'
       summary: Show a gateway
       tags:
       - gateways
@@ -173,14 +229,19 @@ paths:
         in: path
         name: id
         required: true
-        type: string
+        type: integer
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Gateway'
+            allOf:
+            - $ref: '#/definitions/utils.ResponseHTTP'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.Gateway'
+              type: object
       summary: Update a gateway
       tags:
       - gateways

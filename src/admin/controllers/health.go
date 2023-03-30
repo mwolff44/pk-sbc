@@ -5,10 +5,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"pks.pyfreebilling.com/services"
-	"pks.pyfreebilling.com/utils/api_errors"
 )
 
 // HealthCheck godoc
+//
 //	@Summary		Show the status of server.
 //	@Description	get the status of server.
 //	@Tags			root
@@ -19,8 +19,10 @@ import (
 func HealthCheck(c *gin.Context) {
 	result, err := services.HealthService.Health()
 	if err != nil {
-		apiErr := api_errors.NewInternalServerError("Error executing health")
-		c.JSON(http.StatusInternalServerError, apiErr)
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error":   true,
+			"message": "Error executing health",
+		})
 		return
 	}
 	c.JSON(http.StatusOK, result)

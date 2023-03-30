@@ -2,8 +2,6 @@ package services
 
 import (
 	"fmt"
-
-	"pks.pyfreebilling.com/utils/api_errors"
 )
 
 const (
@@ -13,7 +11,7 @@ const (
 type healthService struct{}
 
 type healthServiceInterface interface {
-	Health() (string, *api_errors.ApiError)
+	Health() (string, error)
 }
 
 // HealthService
@@ -26,7 +24,7 @@ func init() {
 }
 
 // Health returns the service state
-func (s *healthService) Health() (string, *api_errors.ApiError) {
+func (s *healthService) Health() (string, error) {
 	fmt.Println("Working fine !")
 	return health, nil
 }
