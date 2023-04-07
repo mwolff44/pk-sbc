@@ -1,0 +1,8 @@
+# setit(int) destination(sip uri) flags(int,opt) priority(int,opt) attributes(str,opt)
+
+# external proxies : provider
+2 sip:xx.210.21.217:5060
+2 sip:xx.105.246.121:5060
+
+# internal proxies : IPBX
+1 sip:10.2.0.221:5060

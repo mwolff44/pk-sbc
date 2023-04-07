@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  iaf-kamailio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./kamailio.cfg:/etc/kamailio/kamailio.cfg
+      - ./db:/db
+    ports:
+      - "5060:5060/udp"
+    networks:
+      main:
+        aliases:
+          - pks-kamailio
+
+networks:
+  main:
