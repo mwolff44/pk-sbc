@@ -25,5 +25,9 @@ func HealthCheck(c *gin.Context) {
 		})
 		return
 	}
-	c.JSON(http.StatusOK, result)
+	c.JSON(http.StatusOK, gin.H{
+		"error":   false,
+		"message": result,
+		"data":    nil,
+	})
 }

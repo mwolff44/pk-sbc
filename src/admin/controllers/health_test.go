@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"errors"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -61,9 +62,7 @@ func TestHealthNoError(t *testing.T) {
 
 	assert.EqualValues(t, http.StatusOK, response.Code)
 
-	var body string
-	err := json.Unmarshal(response.Body.Bytes(), &body)
-	assert.Nil(t, err)
+	body, _ := io.ReadAll(response.Body)
 
-	assert.EqualValues(t, "Working fine !", body)
+	assert.JSONEq(t, `{"data":null,"error":false,"message":"Working fine !"}`, string(body))
 }

@@ -11,10 +11,10 @@ import (
 var DB *gorm.DB
 
 // SetupDatabase migrates and sets up the database.
-func SetupDatabase() {
+func SetupDatabase(dbTarget string) {
 
 	// Connect to the database.
-	db, err := gorm.Open(sqlite.Open("pyfb.db"), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open(dbTarget), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %s", err)
 	}

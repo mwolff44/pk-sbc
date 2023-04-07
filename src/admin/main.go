@@ -30,5 +30,7 @@ import (
 func main() {
 	log.Println("Starting PKS-admin server...")
 
-	app.StartApp()
+	dbTarget := "pyfb.db"
+
+	app.StartApp(dbTarget)
 }

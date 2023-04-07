@@ -28,10 +28,10 @@ func SetupRouter() *gin.Engine {
 }
 
 // StartApp function starts the whole application
-func StartApp() {
+func StartApp(dbTarget string) {
 
 	// Initialize database
-	models.SetupDatabase()
+	models.SetupDatabase(dbTarget)
 
 	// Define router info
 	r := SetupRouter()
