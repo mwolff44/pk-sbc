@@ -1,0 +1,4 @@
+id(int,auto) dpid(int) pr(int) match_op(int) match_exp(string) match_len(int) subst_exp(string) repl_exp(string) attrs(string) 
+1|1|1|1|^3320202020[0-9]+$|11|1|1|100|
+2|2|1|1|^33[1-9][0-9]+$|12|1|1|200|
+3|1|1|0|100|3|1|1|100|

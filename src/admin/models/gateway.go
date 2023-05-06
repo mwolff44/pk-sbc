@@ -26,6 +26,8 @@ type Gateway struct {
 // Getaways represents many gateways
 type Gateways []Gateway
 
+// SQL implementation
+
 // GetGateway queries the DB to find a user by ID
 func GetGateway(gateway *Gateway, id int64) error {
 	if err := DB.Take(&gateway, id).Error; err != nil {

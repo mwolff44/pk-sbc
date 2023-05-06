@@ -1,0 +1,16 @@
+<include>
+  <extension name="match_toto">
+    <condition field="${sip_h_X-Tenant}" 
+              expression="^toto$">
+      <action application="answer"/>
+      <action application="playback" data="tone_stream://%(251,0,1004);loops=-1"/>
+    </condition>
+  </extension>
+  <extension name="match_tutu">
+    <condition field="${sip_h_X-Tenant}" 
+              expression="^tutu$">
+      <action application="answer"/>
+      <action application="playback" data="tone_stream://path=${base_dir}/conf/tetris.ttml;loops=1"/>
+    </condition>
+  </extension>
+</include>

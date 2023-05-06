@@ -6,8 +6,8 @@ MAINTAINER Mathias WOLFF <mathias@celea.org>
 # is updated with the current date. It will force refresh of all
 # of the base images and things like 'apt-get update' won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2022-08-01
-ENV VERSION 1.0.0
+ENV REFRESHED_AT 2023-04-29
+ENV VERSION 1.0.1
 
 # avoid httpredir errors
 RUN sed -i 's/httpredir/deb/g' /etc/apt/sources.list
@@ -19,10 +19,12 @@ RUN echo "deb http://deb.kamailio.org/kamailio56 bullseye main" >   /etc/apt/sou
 RUN wget -O- http://deb.kamailio.org/kamailiodebkey.gpg | apt-key add -
 
 RUN apt-get update && apt-get install --assume-yes \
+libhiredis0.14 \
 kamailio \
 kamailio-extra-modules \
 kamailio-json-modules \
 kamailio-utils-modules \
+kamailio-redis-modules \
 kamailio-xml-modules
 
 # clean
@@ -30,6 +32,6 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Add config file
 VOLUME /etc/kamailio
-ADD ./src/kamailio.cfg /etc/kamailio/kamailio.cfg
+ADD ./kamailio.cfg /etc/kamailio/kamailio.cfg
 
 CMD ["/usr/sbin/kamailio", "-c", "/etc/kamailio/kamailio.cfg"]

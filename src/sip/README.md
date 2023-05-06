@@ -75,6 +75,7 @@ Un exemple de la table `dialplan` avec des données pour illustrer ce principe :
 id(int,auto) dpid(int) pr(int) match_op(int) match_exp(string) match_len(int) subst_exp(string) repl_exp(string) attrs(string) 
 1 1 1 1 ^3320202020[0-9]$ 1 0 0 23
 2 2 1 1 +33[1-9][0-9]+$ 12 0 0 21
+3 2 1 1 ^\\+33[1-9][0-9]+$ 12 1 1 201
 ```
 > Explications : 
 > Cette table est plus complexe que la table `address`, mais une fois apprivoisée, on comprend sa puissance. Tout d'abord une explication des champs est nécessaire : 
