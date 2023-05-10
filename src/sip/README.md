@@ -8,6 +8,8 @@ Le projet permet d'interconnecter des IPBX et des opérateurs télécoms dans le
 
 ## Fonctionnement
 
+=> PRECISER LES INFOS LORS DE LA CREATION D'UN CLIENT
+
 ## Process de routage des appels
 
 Le routage des appels vers leur destinataire est réalisé en 3 étapes distinctes : 

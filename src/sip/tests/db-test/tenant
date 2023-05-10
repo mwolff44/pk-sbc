@@ -1,0 +1,4 @@
+id(int,auto) key_name(string) key_type(int) value_type(int) key_value(int) expires(int)
+1|toto|0|0|200|0|
+2|tutu|0|0|200|0|
+3|riri|0|0|300|0|
