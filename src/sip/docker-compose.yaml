@@ -6,48 +6,52 @@ services:
     hostname: sip.pks.local
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.mysql
+    restart: unless-stopped
     volumes:
       #- ./kamailio.cfg:/etc/kamailio/kamailio.cfg
-      - ./tests/db-test:/etc/kamailio/db
+      - ./tests/db-test:/etc/kamailio/db:ro
     environment:
-      #LISTEN_PUBLIC: localhost:5060
-      #LISTEN_PRIVATE: localhost:5061
-      ENVIRONMENT: dev
-      LISTEN_ADVERTISE: 82.122.151.12:5060
-      KAMAILIO_LOG_LEVEL: info
-      RTPENGINE_URL: rtp.pks.local
-      REDIS_URL: redis.pks.local
-      ALIAS: sip.pks.local
+      ENVIRONMENT: ${ENVIRONMENT:-dev}
+      LISTEN_ADVERTISE: ${LISTEN_ADVERTISE}
+      KAMAILIO_LOG_LEVEL: ${KAMAILIO_LOG_LEVEL:-info}
+      RTPENGINE_URL: ${RTPENGINE_URL:-rtp.pks.local}
+      REDIS_URL: ${REDIS_URL:-redis.pks.local}
+      ALIAS: ${ALIAS:-sip.pks.local}
+      DB_URL: ${DB_URL}
     depends_on:
       - pks-redis
       - pks-rtp
       - pks-fs-1
     ports:
       - "5060:5060/udp"
-      - "5061:5061/udp"
+      - "5070:5070/udp"
     networks:
       main:
         aliases:
           - pks-sip
+
   pks-redis:
     container_name: pks-redis
     hostname: redis.pks.local
     image: redis:7-alpine
+    restart: unless-stopped
     networks:
       main:
         aliases:
           - pks-redis
+
   pks-rtp:
     container_name: pks-rtp
     hostname: rtp.pks.local
     image: registry.gitlab.com/mwolff44/pyfb-rtpproxy:latest
+    restart: unless-stopped
     privileged: true
     environment:
-      BIND_NG_PORT: 22222
-      PUBLIC_IP: 82.122.151.12
-      PORT_MIN: 16384
-      PORT_MAX: 16485
+      BIND_NG_PORT: ${BIND_NG_PORT:-22222}
+      PUBLIC_IP: ${PUBLIC_IP}
+      PORT_MIN: ${PORT_MIN:-16384}
+      PORT_MAX: ${PORT_MAX:-16485}
     networks:
       main:
         aliases:
@@ -59,11 +63,12 @@ services:
     build:
       context: ./tests/freeswitch
       dockerfile: Dockerfile
+    restart: unless-stopped
     logging:
        options:
          max-size: 50m
     volumes:
-      - ./tests/freeswitch/conf:/usr/local/freeswitch/conf
+      - ./tests/freeswitch/conf:/usr/local/freeswitch/conf:ro
     networks:
       main:
         aliases:

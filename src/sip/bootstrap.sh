@@ -48,8 +48,8 @@ if [ -n "$LISTEN_PRIVATE" ]; then
   echo -n 'LISTEN_PRIVATE is: '; echo "$LISTEN_PRIVATE"
   echo "#!define LISTEN_PRIVATE $LISTEN_PRIVATE" >> /etc/kamailio/kamailio-local.cfg
 else
-  echo -n 'LISTEN_PRIVATE is: '; echo "$LOCAL_IP:5061"
-  echo "#!define LISTEN_PRIVATE $LOCAL_IP:5061" >> /etc/kamailio/kamailio-local.cfg
+  echo -n 'LISTEN_PRIVATE is: '; echo "$LOCAL_IP:5070"
+  echo "#!define LISTEN_PRIVATE $LOCAL_IP:5070" >> /etc/kamailio/kamailio-local.cfg
 fi
 
 if [ -n "$LISTEN_PUBLIC" ]; then
@@ -72,6 +72,15 @@ else
   fi
 fi
 
+if [ -n "$DB_MYSQL" ]; then
+  echo -n 'DB_MYSQL is: '; echo "$DB_MYSQL"
+  mysql=$(echo '#!define DB_URL "MYSQL_URL"' | sed "s/MYSQL_URL/$DB_MYSQL/")
+  echo "#!define WITH_MYSQL" >> /etc/kamailio/kamailio-local.cfg
+  echo "$mysql" >> /etc/kamailio/kamailio-local.cfg
+else
+  echo "#!define WITH_DBTEXT" >> /etc/kamailio/kamailio-local.cfg
+fi
+
 if [ -n "$RTPENGINE_URL" ]; then
   echo -n 'RTPENGINE_URL is: '; echo "$RTPENGINE_URL"
   rtpengine=$(echo '#!define RTPENGINE_LIST "udp:RTPENGINE_URL:22222=1"' | sed "s/RTPENGINE_URL/$RTPENGINE_URL/")
@@ -82,6 +91,11 @@ if [ -n "$REDIS_URL" ]; then
   echo -n 'REDIS_URL is: '; echo "$REDIS_URL"
   redis=$(echo '#!define REDIS "name=srv8;addr=REDIS_URL;port=6379;db=8"' | sed "s/REDIS_URL/$REDIS_URL/")
   echo "$redis" >> /etc/kamailio/kamailio-local.cfg
+fi
+
+if [ -n "$ANTIFLOOD" ]; then
+  echo -n 'ANTIFLOOD is: '; echo "$ANTIFLOOD"
+  echo "#!define WITH_ANTIFLOOD" >> /etc/kamailio/kamailio-local.cfg
 fi
 
 # Test the syntax.

@@ -18,7 +18,7 @@ confirm:
 # DEVELOPMENT
 # ==================================================================================== #
 
-DOCKER_COMPOSE := docker-compose -f docker-compose.yaml
+DOCKER_COMPOSE := docker-compose -f docker-compose.yaml --env-file .envrc
 
 ## check/proxy: check the kamailio file
 .PHONY: check/proxy
@@ -26,6 +26,13 @@ check/proxy:
 	docker build -f Dockerfile.test -t pks-proxy-test .
 	docker run --name pks-proxy-test pks-proxy-test
 	docker rm pks-proxy-test
+
+## build/proxy-mysql: build the MySQL kamailio image
+.PHONY: build/proxy-mysql
+build/proxy-mysql:
+	docker build -f Dockerfile.mysql -t pks-proxy-mysql .
+	docker run --name pks-proxy-mysql pks-proxy-mysql
+	docker rm pks-proxy-mysql
 
 ## check/removecontainer: remove the remaining container used for checking the kamailio file
 .PHONY: check/removecontainer
