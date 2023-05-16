@@ -1,0 +1,27 @@
+  pks-sip:
+    depends_on:
+      - pks-redis
+      - pks-rtp
+      - pks-fs-1
+      - pks_postgres
+    environment:
+      - DB_URL: postgres://postgres:mypass@pks-postgres/pks
+  
+  pks-mysql:
+    container_name: pks-postgres
+    hostname: postgres.pks.local
+    image: image: postgres
+    restart: unless-stopped
+    volumes:
+      - pks-pgsql-data:/var/lib/postgresql/data
+      - ./db/postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mypass
+    networks:
+      main:
+        aliases:
+          - pks-postgres
+
+volumes:
+  pks-pgsql-data:
