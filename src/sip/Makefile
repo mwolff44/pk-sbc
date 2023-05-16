@@ -18,7 +18,7 @@ confirm:
 # DEVELOPMENT
 # ==================================================================================== #
 
-DOCKER_COMPOSE := docker-compose -f docker-compose.yaml --env-file .envrc
+DOCKER_COMPOSE := docker compose -f docker-compose.yml --env-file .env
 
 ## check/proxy: check the kamailio file
 .PHONY: check/proxy

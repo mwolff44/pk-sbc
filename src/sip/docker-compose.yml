@@ -22,7 +22,6 @@ services:
     depends_on:
       - pks-redis
       - pks-rtp
-      - pks-fs-1
     ports:
       - "5060:5060/udp"
       - "5070:5070/udp"
@@ -56,23 +55,6 @@ services:
       main:
         aliases:
           - pks-rtp
-
-  pks-fs-1:
-    container_name: pks-fs-1
-    hostname: fs1.pks.local
-    build:
-      context: ./tests/freeswitch
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    logging:
-       options:
-         max-size: 50m
-    volumes:
-      - ./tests/freeswitch/conf:/usr/local/freeswitch/conf:ro
-    networks:
-      main:
-        aliases:
-          - pks-fs-1
 
 networks:
   main:

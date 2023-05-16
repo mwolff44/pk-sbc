@@ -1,0 +1,28 @@
+  pks-sip:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      #- ./kamailio.cfg:/etc/kamailio/kamailio.cfg
+      - ./tests/db-test:/etc/kamailio/db:ro
+    depends_on:
+      - pks-redis
+      - pks-rtp
+      - pks-fs-1
+
+  pks-fs-1:
+    container_name: pks-fs-1
+    hostname: fs1.pks.local
+    build:
+      context: ./tests/freeswitch
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    logging:
+       options:
+         max-size: 50m
+    volumes:
+      - ./tests/freeswitch/conf:/usr/local/freeswitch/conf:ro
+    networks:
+      main:
+        aliases:
+          - pks-fs-1

@@ -78,7 +78,22 @@ if [ -n "$DB_MYSQL" ]; then
   echo "#!define WITH_MYSQL" >> /etc/kamailio/kamailio-local.cfg
   echo "$mysql" >> /etc/kamailio/kamailio-local.cfg
 else
-  echo "#!define WITH_DBTEXT" >> /etc/kamailio/kamailio-local.cfg
+  if [ -n "$DB_SQLITE" ]; then
+    echo -n 'DB_SQLITE is: '; echo "$DB_SQLITE"
+    sqlite=$(echo '#!define DB_URL "SQLITE_URL"' | sed "s/SQLITE_URL/$SQLITE/")
+    echo "#!define WITH_SQLITE" >> /etc/kamailio/kamailio-local.cfg
+    echo "$sqlite" >> /etc/kamailio/kamailio-local.cfg
+  else
+    if [ -n "$DB_PGSQL" ]; then
+      echo -n 'DB_PGSQL is: '; echo "$DB_PGSQL"
+      pgsql=$(echo '#!define DB_URL "PGSQL_URL"' | sed "s/PGSQL_URL/$DB_PGSQL/")
+      echo "#!define WITH_PGSQL" >> /etc/kamailio/kamailio-local.cfg
+      echo "$pgsql" >> /etc/kamailio/kamailio-local.cfg
+    else
+      echo -n 'DB is DB_TEXT'
+      echo "#!define WITH_DBTEXT" >> /etc/kamailio/kamailio-local.cfg
+    fi
+  fi
 fi
 
 if [ -n "$RTPENGINE_URL" ]; then
