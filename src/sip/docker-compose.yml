@@ -46,7 +46,7 @@ services:
   pks-rtp:
     container_name: pks-rtp
     hostname: rtp.pks.local
-    image: registry.gitlab.com/mwolff44/pyfb-rtpproxy:latest
+    image: registry.gitlab.com/mwolff44/pyfb-rtpproxy:1.2.0
     restart: unless-stopped
     privileged: true
     environment:
