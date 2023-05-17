@@ -10,7 +10,8 @@ services:
     restart: unless-stopped
     volumes:
       #- ./kamailio.cfg:/etc/kamailio/kamailio.cfg
-      - ./tests/db-test:/etc/kamailio/db:ro
+      # - ./tests/db-test:/etc/kamailio/db:ro
+      - pks-db-data:/etc/kamailio/db:ro
     environment:
       ENVIRONMENT: ${ENVIRONMENT:-dev}
       LISTEN_ADVERTISE: ${LISTEN_ADVERTISE}
@@ -39,6 +40,8 @@ services:
       main:
         aliases:
           - pks-redis
+    volumes:
+      - pks-redis-data:/data
 
   pks-rtp:
     container_name: pks-rtp
@@ -58,3 +61,17 @@ services:
 
 networks:
   main:
+
+volumes:
+  pks-redis-data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/srv/redis'
+  pks-db-data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/srv/db'
