@@ -13,6 +13,12 @@ else
     ln -s /etc/kamailio/bootstrap.sh /bootstrap.sh
 fi
 
+
+if test -f "/etc/kamailio/kamailio-local.cfg"; then
+    rm /etc/kamailio/kamailio-local.cfg
+fi
+
+
 case $CLOUD in 
   gcp)
     LOCAL_IP=$(curl -s -H "Metadata-Flavor: Google" http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/ip)

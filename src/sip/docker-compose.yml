@@ -52,12 +52,10 @@ services:
     environment:
       BIND_NG_PORT: ${BIND_NG_PORT:-22222}
       PUBLIC_IP: ${PUBLIC_IP}
+      INTERNAL_IP: ${INTERNAL_IP}
       PORT_MIN: ${PORT_MIN:-16384}
       PORT_MAX: ${PORT_MAX:-16485}
-    networks:
-      main:
-        aliases:
-          - pks-rtp
+    network_mode: host
 
 networks:
   main:
