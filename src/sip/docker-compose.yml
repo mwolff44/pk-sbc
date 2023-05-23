@@ -29,9 +29,9 @@ services:
     depends_on:
       - pks-redis
       - pks-rtp
-    ports:
-      - "5060:5060/udp"
-      - "5070:5070/udp"
+    #ports:
+    #  - "5060:5060/udp"
+    #  - "5070:5070/udp"
     network_mode: host
 
   pks-redis:
