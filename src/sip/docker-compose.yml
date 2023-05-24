@@ -39,6 +39,8 @@ services:
     hostname: redis.pks.local
     image: redis:7-alpine
     restart: unless-stopped
+    expose:
+      - '6379'
     logging:
       driver: "json-file"
       options:
@@ -68,7 +70,7 @@ services:
       INTERNAL_IP: ${INTERNAL_IP}
       PORT_MIN: ${PORT_MIN:-16384}
       PORT_MAX: ${PORT_MAX:-16485}
-      LOG_LEVEL: ${LOG_LEVEL:-2}
+      LOG_LEVEL: ${LOG_LEVEL:-6}
     network_mode: host
 
 networks:
