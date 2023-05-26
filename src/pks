@@ -13,24 +13,24 @@ ENV_FILE="/srv/.env"
 DC_FILE="/usr/src/pyfreebilling/src/sip/docker-compose.yml"
 DOCKER_COMPOSE=(docker compose -f ${DC_FILE} --env-file ${ENV_FILE})
 
-#----------------------------------------------------
-# wait for a yes or no answer
-#----------------------------------------------------
-confirmFunc(){
-  echo -e "Are you sure? \c"
-  while true
-  do
-    read x
-    case "$x" in
-      y | yes | Y | Yes | YES )
-        return 0;;
-      n | no  | N | No  | NO )
-        echo
-        echo "Cancelled"
-        exit 1;;
-      *) echo "Please enter yes or no" ;;
-    esac
-  done
+colorFunc(){
+  COL_BOLD=$'\e[0;1m'
+  COL_ULINE=$'\e[0;4m'
+  COL_NC=$'\e[0;0m'
+  COL_GRAY=$'\e[0;90m'
+  COL_RED=$'\e[0;91m'
+  COL_GREEN=$'\e[0;92m'
+  COL_YELLOW=$'\e[0;93m'
+  COL_BLUE=$'\e[0;94m'
+  COL_PURPLE=$'\e[0;95m'
+  COL_CYAN=$'\e[0;96'
+
+  TICK="[${COL_GREEN}✓${COL_NC}]"
+  CROSS="[${COL_RED}✗${COL_NC}]"
+  INFO="[i]"
+  QST="[?]"
+  DONE="${COL_GREEN} done!${COL_NC}"
+  OVER="\\r[K"
 }
 
 test_prerequesites(){
@@ -66,40 +66,40 @@ Select_db(){
 }
 
 startFunc(){
-  echo -e "Start PKS ..."
+  echo -e "  ${INFO} Start PKS ..."
   "${DOCKER_COMPOSE[@]}" up -d
   exit 1
 }
 
 stopFunc(){
-  echo -e "Stop PKS ..."
+  echo -e "  ${INFO} Stop PKS ..."
   "${DOCKER_COMPOSE[@]}" down
   exit 1
 }
 
 restartFunc(){
-    echo -e "Stop PKS ..."
+    echo -e "  ${INFO} Stop PKS ..."
   "${DOCKER_COMPOSE[@]}" down
   sleep 1
-  echo -e "Start PKS ..."
+  echo -e "  ${INFO} Start PKS ..."
   "${DOCKER_COMPOSE[@]}" up -d
   exit 1
 }
 
 reloadFunc(){
   echo "PKS will reload data from database"
-  echo " ... reload address table ..."
+  echo "  ${INFO} Reload address table ..."
   docker exec -it pks-sip kamcmd permissions.addressDump
   sleep 1
-  echo " ... reload dialplan table ..."
+  echo "  ${INFO} Reload dialplan table ..."
   docker exec -it pks-sip kamcmd dialplan.reload
   sleep 1
-  echo " ... reload tenant table ..."
+  echo "  ${INFO} Reload tenant table ..."
   docker exec -it pks-sip kamcmd htable.reload tenantmap
   sleep 1
-  echo " ... reload dispatcher table ..."
+  echo "  ${INFO} Reload dispatcher table ..."
   docker exec -it pks-sip kamcmd dispatcher.reload
-  echo "PKS has been refreshed with latest data"
+  echo "  ${INFO} PKS has been refreshed with latest data"
 }
 
 debugFunc(){
@@ -150,11 +150,14 @@ uninstallFunc(){
 }
 
 updateFunc(){
-  echo "PKS will be updated. PKS will be retarded, are you sure ?"
-  confirmFunc
-  echo "Starting update ..."
+  read -rp "  ${QST} PKS will be updated. ${COL_BOLD}${COL_RED}PKS will be retarded${COL_NC}, are you sure ? [y/N]" answer
+  case ${answer} in
+    [Yy]* ) echo -e "  ${INFO} Starting update ...";;
+    * ) echo -e "${OVER}  ${COL_GREEN}Update has been canceled${COL_NC}"; exit 0;;
+  esac
+  
   "${DOCKER_COMPOSE[@]}" build
-  echo "Update successfully done."
+  echo -e "  ${TICK} Update successfully ${DONE}"
   restartFunc
   exit 0
 }
@@ -165,6 +168,8 @@ installFunc(){
 }
 
 ###### MAIN #####
+
+colorFunc
 
 if [[ $# = 0 ]]; then
   helpFunc
