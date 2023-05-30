@@ -29,6 +29,8 @@ services:
       DB_SQLITE: ${DB_SQLITE}
       DB_PGSQL: ${DB_PGSQL}
       LOCAL_IP: ${LOCAL_IP}
+      SIP_DOMAIN_KEEPALIVE: ${SIP_DOMAIN_KEEPALIVE:-proxy@pks}
+      NOT_PROBING: ${NOT_PROBING}
     depends_on:
       - pks-redis
       - pks-rtp
