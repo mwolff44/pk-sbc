@@ -79,19 +79,19 @@ fi
 
 if [ -n "$DB_MYSQL" ]; then
   echo -n 'DB_MYSQL is: '; echo "$DB_MYSQL"
-  mysql=$(echo '#!define DB_URL "MYSQL_URL"' | sed "s/MYSQL_URL/$DB_MYSQL/")
+  mysql=$(echo '#!define DB_URL "MYSQL_URL"' | sed "s|MYSQL_URL|$DB_MYSQL|")
   echo "#!define WITH_MYSQL" >> /etc/kamailio/kamailio-local.cfg
   echo "$mysql" >> /etc/kamailio/kamailio-local.cfg
 else
   if [ -n "$DB_SQLITE" ]; then
     echo -n 'DB_SQLITE is: '; echo "$DB_SQLITE"
-    sqlite=$(echo '#!define DB_URL "SQLITE_URL"' | sed "s/SQLITE_URL/$SQLITE/")
+    sqlite=$(echo '#!define DB_URL "SQLITE_URL"' | sed "s|SQLITE_URL|$SQLITE|")
     echo "#!define WITH_SQLITE" >> /etc/kamailio/kamailio-local.cfg
     echo "$sqlite" >> /etc/kamailio/kamailio-local.cfg
   else
     if [ -n "$DB_PGSQL" ]; then
       echo -n 'DB_PGSQL is: '; echo "$DB_PGSQL"
-      pgsql=$(echo '#!define DB_URL "PGSQL_URL"' | sed "s/PGSQL_URL/$DB_PGSQL/")
+      pgsql=$(echo '#!define DB_URL "PGSQL_URL"' | sed "s|PGSQL_URL|$DB_PGSQL|")
       echo "#!define WITH_PGSQL" >> /etc/kamailio/kamailio-local.cfg
       echo "$pgsql" >> /etc/kamailio/kamailio-local.cfg
     else
