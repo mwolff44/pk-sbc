@@ -25,6 +25,9 @@ services:
       REDIS_URL: ${REDIS_URL:-redis.pks.local}
       ALIAS: ${ALIAS:-sip.pks.local}
       DB_URL: ${DB_URL}
+      DB_MYSQL: ${DB_MYSQL}
+      DB_SQLITE: ${DB_SQLITE}
+      DB_PGSQL: ${DB_PGSQL}
       LOCAL_IP: ${LOCAL_IP}
     depends_on:
       - pks-redis

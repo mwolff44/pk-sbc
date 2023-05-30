@@ -85,7 +85,7 @@ if [ -n "$DB_MYSQL" ]; then
 else
   if [ -n "$DB_SQLITE" ]; then
     echo -n 'DB_SQLITE is: '; echo "$DB_SQLITE"
-    sqlite=$(echo '#!define DB_URL "SQLITE_URL"' | sed "s|SQLITE_URL|$SQLITE|")
+    sqlite=$(echo '#!define DB_URL "SQLITE_URL"' | sed "s|SQLITE_URL|$DB_SQLITE|")
     echo "#!define WITH_SQLITE" >> /etc/kamailio/kamailio-local.cfg
     echo "$sqlite" >> /etc/kamailio/kamailio-local.cfg
   else
