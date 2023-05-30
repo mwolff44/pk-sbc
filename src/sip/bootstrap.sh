@@ -119,13 +119,13 @@ if [ -n "$ANTIFLOOD" ]; then
 fi
 
 if [ -n "SIP_DOMAIN_KEEPALIVE" ]; then
-  echo -n "SIP DOMAIN KEEPALIVE is: '; echo "$SIP_DOMAIN_KEEPALIVE"
+  echo -n 'SIP DOMAIN KEEPALIVE is: '; echo "$SIP_DOMAIN_KEEPALIVE"
   pingfrom= $(echo '#!substdef "!PING_FROM!sip:$SIP_DNS_KEEPALIVE!g"' | sed "s/SIP_DNS_KEEPALIVE/$SIP_DOMAIN_KEEPALIVE")
   echo "$pingfrom" >> /etc/kamailio/kamailio-local.cfg
 fi
 
 if [ -n "NOT_PROBING" ]; then
-  echo -n "NOT_PROBING is: '; echo "TRUE"
+  echo -n 'NOT_PROBING is: '; echo "TRUE"
   echo "#!define PROBING_MODE 3" >> /etc/kamailio/kamailio-local.cfg
 fi
 
