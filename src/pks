@@ -118,30 +118,30 @@ dbFunc(){
 
   select db in Dispatcher Tenant Dialplan Address Quit
   do
-    case $lng in
+    case $db in
       "Dispatcher")
-          echo "  ${INFO}Content of $lng :"
+          echo "  ${INFO}Content of $db :"
           docker exec -t pks-sip kamcmd dispatcher.list | less;;
       "Tenant")
-          echo "  ${INFO}Content of $lng :"
+          echo "  ${INFO}Content of $db :"
           docker exec -t pks-sip kamcmd htable.dump tenantmap | less;;
       "Dialplan")
           read -rp "  ${QST} Do you want to see DID or external routes [dD/eE] : " answer
             case ${answer} in
-              [Dd]* ) echo "  ${INFO}Content of DID $lng :"
+              [Dd]* ) echo "  ${INFO}Content of DID $db :"
                       docker exec -t pks-sip kamcmd dialplan.dump 1;;
-              [Ee]* ) echo "  ${INFO}Content of DID $lng :"
+              [Ee]* ) echo "  ${INFO}Content of DID $db :"
                       docker exec -t pks-sip kamcmd dialplan.dump 2;;
-              * ) echo -e "${OVER}  ${COL_GREEN}Update has been canceled${COL_NC}"; exit 0;;
+              * ) echo -e "${OVER}  ${COL_YELLOW}Ooops - unknown choice${COL_NC}";;
             esac;;
       "Address")
-          echo "  ${INFO}Content of $lng :"
-          docker exec -ti pks-sip kamcmd permissions.addressDump | less;;
+          echo "  ${INFO}Content of $db :"
+          docker exec -t pks-sip kamcmd permissions.addressDump | less;;
       "Quit")
           echo "  ${INFO}We're done"
           break;;
       *)
-          echo "Ooops";;
+          echo "Ooops - unknown choice";;
     esac
   done
 }
