@@ -89,16 +89,16 @@ restartFunc(){
 reloadFunc(){
   echo "PKS will reload data from database"
   echo "  ${INFO} Reload address table ..."
-  docker exec -it pks-sip kamcmd permissions.addressDump
+  docker exec -t pks-sip kamcmd permissions.addressReload
   sleep 1
   echo "  ${INFO} Reload dialplan table ..."
-  docker exec -it pks-sip kamcmd dialplan.reload
+  docker exec -t pks-sip kamcmd dialplan.reload
   sleep 1
   echo "  ${INFO} Reload tenant table ..."
-  docker exec -it pks-sip kamcmd htable.reload tenantmap
+  docker exec -t pks-sip kamcmd htable.reload tenantmap
   sleep 1
   echo "  ${INFO} Reload dispatcher table ..."
-  docker exec -it pks-sip kamcmd dispatcher.reload
+  docker exec -t pks-sip kamcmd dispatcher.reload
   echo "  ${INFO} PKS has been refreshed with latest data"
 }
 
@@ -110,6 +110,40 @@ debugFunc(){
 statusFunc(){
   "${DOCKER_COMPOSE[@]}" ps
   exit 1
+}
+
+dbFunc(){
+  # Menu
+  PS3="Select the table to view please: "
+
+  select db in Dispatcher Tenant Dialplan Address Quit
+  do
+    case $lng in
+      "Dispatcher")
+          echo "  ${INFO}Content of $lng :"
+          docker exec -t pks-sip kamcmd dispatcher.list | less;;
+      "Tenant")
+          echo "  ${INFO}Content of $lng :"
+          docker exec -t pks-sip kamcmd htable.dump tenantmap | less;;
+      "Dialplan")
+          read -rp "  ${QST} Do you want to see DID or external routes [dD/eE] : " answer
+            case ${answer} in
+              [Dd]* ) echo "  ${INFO}Content of DID $lng :"
+                      docker exec -t pks-sip kamcmd dialplan.dump 1;;
+              [Ee]* ) echo "  ${INFO}Content of DID $lng :"
+                      docker exec -t pks-sip kamcmd dialplan.dump 2;;
+              * ) echo -e "${OVER}  ${COL_GREEN}Update has been canceled${COL_NC}"; exit 0;;
+            esac;;
+      "Address")
+          echo "  ${INFO}Content of $lng :"
+          docker exec -ti pks-sip kamcmd permissions.addressDump | less;;
+      "Quit")
+          echo "  ${INFO}We're done"
+          break;;
+      *)
+          echo "Ooops";;
+    esac
+  done
 }
 
 helpFunc(){
@@ -125,7 +159,8 @@ helpFunc(){
 
   Debugging Options:
     -d, debug          View the live output of the PKS log
-    -s, status         status ok PKS containers
+    -s, status         PKS containers status
+    db                 Database internal data
 
   Options:
     -h, --help, help   Show this help dialog  
@@ -182,6 +217,7 @@ case "${1}" in
   "-r" | "reload"               ) reloadFunc "$@";;
   "-d" | "debug"                ) debugFunc "$@";;
   "-s" | "status"               ) statusFunc "$@";;
+  "db"                          ) dbFunc "$@";;
   "-h" | "help" | "--help"      ) helpFunc;;
   "-v" | "version"              ) versionFunc "$@";;
   "uninstall"                   ) uninstallFunc "$@";;

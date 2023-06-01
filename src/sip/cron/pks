@@ -1,0 +1,4 @@
+PATH=/usr/sbin
+
+* 07 * * * root /usr/src/pyfreebilling/src/pks reload >> /var/log/cron.log
+
