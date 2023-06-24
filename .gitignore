@@ -54,3 +54,6 @@ Temporary Items
 
 build/*
 !build/.gitkeep
+
+# Node
+node_modules

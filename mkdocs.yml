@@ -1,0 +1,66 @@
+# Project information
+site_name: P-KISS-SBC
+site_description: >-
+  Simple, high performance, robust and reliable SIP Border Controller (SBC)
+site_url: https://www.pyfreebilling.com/
+site_author: Mathias WOLFF
+
+# Repository
+repo_name: mwolff44/pyfreebilling
+repo_url: https://gitlab.com/mwolff44/pyfreebilling
+edit_uri: ''
+
+# Copyright
+copyright: Copyright &copy; 2011 - 2023 Mathias WOLFF
+
+# Configuration
+theme:
+  name: material
+  palette:
+    primary: deep purple
+  icon:
+    repo: fontawesome/brands/gitlab
+
+# Extensions
+markdown_extensions:
+- abbr
+- admonition
+- attr_list
+- def_list
+- footnotes
+- md_in_html
+- pymdownx.emoji:
+    emoji_index: !!python/name:materialx.emoji.twemoji 
+    emoji_generator: !!python/name:materialx.emoji.to_svg
+- pymdownx.smartsymbols
+- toc:
+    permalink: true
+
+# Plugins
+plugins:
+  - search
+  - render_swagger
+
+# Page tree
+nav:
+  - Welcome: index.md
+  - Getting Started:
+    - Overview: getting-started.md
+    - Prerequisites: prerequisites.md
+    - Quick Start: install.md
+  - User Guide:
+    - User Guide: user-guide/index.md
+  - FAQs: faq/index.md
+  - Troubleshooting: troubleshooting.md
+  - Best Practices: bestpractices.md
+  - Developer API: api.md
+  - Stay up date:
+    - Release Notes: changelog/index.md
+    - How to Upgrade: upgrade.md
+  - Contributing:
+    - contributing/index.md
+    - Reporting a bug: contributing/reporting-a-bug.md
+    - Reporting a docs issue: contributing/reporting-a-docs-issue.md
+    - Requesting a change: contributing/requesting-a-change.md
+    - Asking a question: https://gitlab.com/mwolff44/pyfreebilling/discussions
+  - License: license.md

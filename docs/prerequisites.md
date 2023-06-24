@@ -1,0 +1,7 @@
+# Prerequisites
+
+## General
+
+## Skills
+
+## Tools
