@@ -40,6 +40,9 @@ markdown_extensions:
 plugins:
   - search
   - render_swagger
+  - git-revision-date-localized:
+        enable_creation_date: true
+        type: iso_date
 
 # Page tree
 nav:
