@@ -7,13 +7,12 @@ This page explains the design principles anchored in P-KISS-SBC.
 ## Design principles
 
 - __KISS__: Focus on simplicity and deploy a SBC in minutes.
-  No need to SIP, RTP, databases ...
-  – let P-KISS-SBC do the heavy lifting for you.
+  No need to have technical knowledge about SIP, RTP, databases ...
+  :octicons-arrow-right-24: let P-KISS-SBC do the heavy lifting for you.
 
 - __Made to be reliable__: Run your SBC with confidence. P-KISS-SBC is a fire and forget application.
 
-- __Fast and lightweight__: P-KISS-SBC is built to be run with
-  excellent performance.
+- __Fast and lightweight__: P-KISS-SBC is built to be run with excellent performance.
 
 - __Open Source__: Choose a mature and well-funded
   solution built with state-of-the-art Open Source technologies. Keep ownership

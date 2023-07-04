@@ -30,10 +30,12 @@ markdown_extensions:
 - def_list
 - footnotes
 - md_in_html
+- pymdownx.details
 - pymdownx.emoji:
     emoji_index: !!python/name:materialx.emoji.twemoji 
     emoji_generator: !!python/name:materialx.emoji.to_svg
 - pymdownx.smartsymbols
+- pymdownx.superfences
 - toc:
     permalink: true
 
@@ -52,6 +54,10 @@ plugins:
         fr:
           Welcome: Bienvenue
           Getting Started: Commencer
+          Use Cases: Cas d'Utilisation
+          Philosophy: Philosophie
+          User Guide: Guide Utilisateur
+          Backup and Recovery: Sauvegarde et Restauration
   - git-revision-date-localized:
         enable_creation_date: true
         type: iso_date
@@ -59,18 +65,21 @@ plugins:
 # Page tree
 nav:
   - Welcome: index.md
+  - Use Cases: usecases.md
   - Getting Started:
     - Overview: getting-started.md
+    - Philosophy: philosophy.md
     - Prerequisites: prerequisites.md
     - Quick Start: install.md
     - Setup: setup.md
   - User Guide:
     - User Guide: user-guide/index.md
+    - Backup and Recovery: backup-recovery.md
   - FAQs: faq/index.md
   - Troubleshooting: troubleshooting.md
   - Best Practices: bestpractices.md
   - Developer API: api.md
-  - Stay up date:
+  - Stay up to date:
     - Release Notes: changelog/index.md
     - How to Upgrade: upgrade.md
   - Contributing:
