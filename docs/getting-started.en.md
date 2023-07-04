@@ -1,11 +1,5 @@
 # Overview
 
-## First steps
-
-    1. To start making an app, see Quick start.
-    2. To explore example apps, check out the starter kit.
-    3. If you have any questions, create a support ticket.
-
 ## Why P-KISS-SBC ?
 
 Numerous SIP / SBC Proxy or even SIP gateway solutions exist. 
