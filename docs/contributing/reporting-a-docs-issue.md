@@ -4,7 +4,7 @@ If you find an inconsistency
 or see room for clarification or improvement, please submit an issue to
 our public [issue tracker] by following this guide.
 
-  [issue tracker]: https://gitlab.com/mwolff44/pyfreebilling/issues
+  [issue tracker]: https://github.com/mwolff44/pyfreebilling/issues
 
 ## Issue template
 

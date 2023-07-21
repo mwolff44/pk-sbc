@@ -5,7 +5,7 @@ to improve. If you
 think you have discovered a bug, you can help us by submitting an issue in our
 public [issue tracker] by following this guide.
 
-  [issue tracker]: https://gitlab.com/mwolff44/pyfreebilling/issues
+  [issue tracker]: https://github.com/mwolff44/pyfreebilling/issues
 
 ## Before creating an issue
 
@@ -44,8 +44,7 @@ problems.__
 
   [latest version]: ../changelog/index.md
   [upgrade guide]: ../upgrade.md
-  [discussion board]: https://gitlab.com/mwolff44/pyfreebilling/discussions
-  [StackOverflow]: https://stackoverflow.com
+  [discussion board]: https://github.com/mwolff44/pyfreebilling/discussions
 
 
 ### Search for solutions

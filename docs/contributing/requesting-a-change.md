@@ -10,7 +10,7 @@ This guide is our best effort to explain the criteria and reasoning behind our
 decisions when evaluating change requests and considering them for
 implementation. 
 
-  [issue tracker]: https://gitlab.com/mwolff44/pyfreebilling/issues
+  [issue tracker]: https://github.com/mwolff44/pyfreebilling/issues
 
 ## Before creating an issue
 
@@ -50,8 +50,8 @@ that benefits a large number of users.
 
 [:octicons-comment-discussion-16:&nbsp; Start a discussion][Start a discussion]{ .md-button .md-button--primary }
 
-  [discussion board]: https://gitlab.com/mwolff44/pyfreebilling/discussions
-  [Start a discussion]: https://gitlab.com/mwolff44/pyfreebilling/discussions
+  [discussion board]: https://github.com/mwolff44/pyfreebilling/discussions
+  [Start a discussion]: https://github.com/mwolff44/pyfreebilling/discussions
 
 ## Issue template
 

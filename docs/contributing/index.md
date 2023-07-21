@@ -12,7 +12,7 @@ We have invested quite a lot of time in creating better templates for our
 features or changes, contribute to the project, or exchange with our community. 
 This section of the documentation explains each process.
 
-  [issue tracker]: https://gitlab.com/mwolff44/pyfreebilling/issues
+  [issue tracker]: https://github.com/mwolff44/pyfreebilling/issues
 
 ### Creating an issue
 
@@ -55,4 +55,4 @@ This section of the documentation explains each process.
   [report a bug]: reporting-a-bug.md
   [report a docs issue]: reporting-a-docs-issue.md
   [request a change]: requesting-a-change.md
-  [ask a question]: https://gitlab.com/mwolff44/pyfreebilling/discussions
+  [ask a question]: https://github.com/mwolff44/pyfreebilling/discussions
