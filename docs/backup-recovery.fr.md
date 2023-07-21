@@ -16,3 +16,11 @@ La stratégie de sauvegarde optimale peut être résumée en 3 points :
 * Effectuer des sauvegardes fréquentes (les sauvegardes automatiques sont les meilleures).
 * Conserver plusieurs copies des sauvegardes dans un endroit sûr en dehors du système.
 * Tester périodiquement les sauvegardes
+
+## Disposition des données du projet
+
+Le répertoire principal est /srv .
+
+    .env    # Le fichier de configuration.
+    redis/  # Le dossier redis.
+    db/     # Le dossier de la base de données.

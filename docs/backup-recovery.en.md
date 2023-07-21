@@ -17,3 +17,10 @@ The optimal backup strategy can be summarized in 3 points :
 * Keep multiple copies of backups in a safe location off the system
 * Periodically test the backups
 
+## Project layout
+
+The root directory is /srv .
+
+    .env    # The configuration file.
+    redis/  # The redis directory.
+    db/     # The database directory.

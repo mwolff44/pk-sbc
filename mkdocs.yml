@@ -53,9 +53,9 @@ plugins:
       nav_translations:
         fr:
           Welcome: Bienvenue
-          Getting Started: Commencer
-          Use Cases: Cas d'Utilisation
           Philosophy: Philosophie
+          Use Cases: Cas d'Utilisation
+          Getting Started: Démarrage rapide
           User Guide: Guide Utilisateur
           Backup and Recovery: Sauvegarde et Restauration
   - git-revision-date-localized:
@@ -65,20 +65,15 @@ plugins:
 # Page tree
 nav:
   - Welcome: index.md
+  - Philosophy: philosophy.md
   - Use Cases: usecases.md
-  - Getting Started:
-    - Overview: getting-started.md
-    - Philosophy: philosophy.md
-    - Prerequisites: prerequisites.md
-    - Quick Start: install.md
-    - Setup: setup.md
+  - Getting Started: getting-started.md
   - User Guide:
     - User Guide: user-guide/index.md
     - Backup and Recovery: backup-recovery.md
   - FAQs: faq/index.md
   - Troubleshooting: troubleshooting.md
   - Best Practices: bestpractices.md
-  - Developer API: api.md
   - Stay up to date:
     - Release Notes: changelog/index.md
     - How to Upgrade: upgrade.md

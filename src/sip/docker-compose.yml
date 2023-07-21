@@ -6,7 +6,7 @@ services:
     hostname: sip.pks.local
     build:
       context: .
-      dockerfile: Dockerfile.mysql
+      dockerfile: Dockerfile${DB}
     restart: unless-stopped
     volumes:
       #- ./kamailio.cfg:/etc/kamailio/kamailio.cfg
