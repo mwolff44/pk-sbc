@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
 # PKS P-KISS-SBC
-# (c) 2022 Mathias WOLFF
+# (c) 2022-2023 Mathias WOLFF (mathias@celea.org)
 #
 # This file is copyright under the latest version of the EUPL.
 # Please see LICENSE file for your rights under this license.
 
-VERSION="1.0.0"
+VERSION="4.0.0"
 APP_NAME="PKS"
 SCRIPT_NAME=$(basename "$0")
-ENV_FILE="/srv/.env"
+ENV_FILE="/srv/pks/.env"
 DC_FILE="/usr/src/pyfreebilling/src/sip/docker-compose.yml"
 DOCKER_COMPOSE=(docker compose -f ${DC_FILE} --env-file ${ENV_FILE})
 

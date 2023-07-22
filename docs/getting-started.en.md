@@ -11,7 +11,7 @@
 Use the following steps to install P-KISS-SBC : 
 
 1. Install docker, docker-compose and git
-2. create 2 folders in /srv redis and db
+2. create folders in /srv for P-KISS-SBC datas
 3. download the PKS code
 
 ## Requirements
@@ -35,7 +35,7 @@ apt install git make
 2 folders must be created to host the P-KISS-SBC data: 
 
 ```
-mkdir /src/redis /srv/db
+mkdir /src/pks/redis /srv/pks/db
 ```
 
 and download the PKS script and run it :
@@ -73,7 +73,7 @@ docker info --format '{{.LoggingDriver}}'
 
 ### Initial configuration
 
-create file in directory /srv
+create file in directory /srv/pks
 
 ```
 touch .env

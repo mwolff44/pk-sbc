@@ -88,10 +88,10 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/srv/redis'
+      device: '/srv/pks/redis'
   pks-db-data:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/srv/db'
+      device: '/srv/pks/db'
