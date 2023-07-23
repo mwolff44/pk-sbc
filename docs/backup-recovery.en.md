@@ -19,7 +19,7 @@ The optimal backup strategy can be summarized in 3 points :
 
 ## Project layout
 
-The root directory is /srv .
+The root directory is /srv/pks .
 
     .env    # The configuration file.
     redis/  # The redis directory.

@@ -33,6 +33,11 @@ colorFunc(){
   OVER="\\r[K"
 }
 
+unsupportedFunc(){
+  echo "Function not supported"
+  exit 0
+}
+
 test_prerequesites(){
   echo "test if prerequesites are respected"
 }
@@ -180,7 +185,19 @@ versionFunc(){
 }
 
 uninstallFunc(){
-  echo "Not available, sorry"
+  while true; do
+      read -rp "  ${QST} Are you sure you would like to remove ${COL_WHITE}P-KISS-SBC${COL_NC}? [y/N] " answer
+      case ${answer} in
+          [Yy]* ) break;;
+          * ) echo -e "${OVER}  ${COL_LIGHT_GREEN}Uninstall has been canceled${COL_NC}"; exit 0;;
+      esac
+  done
+  stopFunc
+  "${DOCKER_COMPOSE[@]}" rm
+  "${DOCKER_COMPOSE[@]}" rmi
+  rm -rf /srv/pks* &> /dev/null
+  rm -rf /usr/src/pyfreebilling* &> /dev/null
+  echo -e "  ${TICK} Removed config files"
   exit 0
 }
 

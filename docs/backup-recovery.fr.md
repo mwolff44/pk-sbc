@@ -19,7 +19,7 @@ La stratégie de sauvegarde optimale peut être résumée en 3 points :
 
 ## Disposition des données du projet
 
-Le répertoire principal est /srv .
+Le répertoire principal est /srv/pks .
 
     .env    # Le fichier de configuration.
     redis/  # Le dossier redis.
