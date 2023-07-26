@@ -3,7 +3,7 @@
 ![logo](http://www.pyfreebilling.com/wp-content/uploads/2014/12/PyFreeBilling-logo-small.png)
 -------------
 
-![PyFB release](https://img.shields.io/badge/Release-PKS-1.0.0-ff69b4.svg)
+![PyFB release](https://img.shields.io/badge/PKS_version-4.0.0beta-8A2BE2)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/?branch=master)
 [![AGPLv3 License](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)](http://www.fsf.org)
 [![Donate to this project using Paypal](https://img.shields.io/badge/paypal-donate-red.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FANG9JC63Q7DY&lc=FR&item_name=PyFreeBilling&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted&pk_campaign=donation)
@@ -25,7 +25,7 @@
 
 ## What is pyfreebilling
 
-The new flavor of*pyfreebilling*, P-KISS-SBC, is an *open source simple and stupid SBC* based on *Kamailio* and *RTP Engine* .
+The new flavor of *pyfreebilling*, P-KISS-SBC, is an *open source simple and stupid SBC* based on *Kamailio* and *RTP Engine* .
 
 ## License
 
@@ -75,9 +75,9 @@ Website: [https://www.pyfreebilling.com](https://www.pyfreebilling.com)
 
 ## Support
 
-To get free support, use gitlab issue tab.
+To get free support, use github issue tab.
 
-If you need paid support, specific features or consulting services, you will find support services prices on PyFreeBilling website : [http://www.pyfreebilling.com/](http://www.pyfreebilling.com/)
+If you need paid support, specific features or consulting services, you will find support services prices on PyFreeBilling website : [https://www.pyfreebilling.com/](https://www.pyfreebilling.com/)
 
 ## Contributing
 
