@@ -1,7 +1,0 @@
-# PostgreSQL
-# ------------------------------------------------------------------------------
-POSTGRES_HOST=10.0.3.36
-POSTGRES_PORT=5432
-POSTGRES_DB=pyfb-dev2
-POSTGRES_USER=pyfreebilling
-POSTGRES_PASSWORD=password

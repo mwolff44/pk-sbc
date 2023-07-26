@@ -1,0 +1,97 @@
+version: "3"
+
+services:
+  pks-sip:
+    container_name: pks-sip
+    hostname: sip.pks.local
+    build:
+      context: .
+      dockerfile: Dockerfile${DB}
+    restart: unless-stopped
+    volumes:
+      #- ./kamailio.cfg:/etc/kamailio/kamailio.cfg
+      # - ./tests/db-test:/etc/kamailio/db:ro
+      - pks-db-data:/etc/kamailio/db:ro
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-dev}
+      LISTEN_ADVERTISE: ${LISTEN_ADVERTISE}
+      KAMAILIO_LOG_LEVEL: ${KAMAILIO_LOG_LEVEL:-info}
+      RTPENGINE_URL: ${RTPENGINE_URL:-rtp.pks.local}
+      REDIS_URL: ${REDIS_URL:-redis.pks.local}
+      ALIAS: ${ALIAS:-sip.pks.local}
+      DB: ${DB}
+      DB_URL: ${DB_URL}
+      DB_MYSQL: ${DB_MYSQL}
+      DB_SQLITE: ${DB_SQLITE}
+      DB_PGSQL: ${DB_PGSQL}
+      LOCAL_IP: ${LOCAL_IP}
+      SIP_DOMAIN_KEEPALIVE: ${SIP_DOMAIN_KEEPALIVE:-proxy@pks}
+      NOT_PROBING: ${NOT_PROBING}
+    depends_on:
+      - pks-redis
+      - pks-rtp
+    #ports:
+    #  - "5060:5060/udp"
+    #  - "5070:5070/udp"
+    network_mode: host
+
+  pks-redis:
+    container_name: pks-redis
+    hostname: redis.pks.local
+    image: redis:7-alpine
+    restart: unless-stopped
+    expose:
+      - '6379'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    network_mode: host
+    volumes:
+      - pks-redis-data:/data
+
+  pks-rtp:
+    container_name: pks-rtp
+    hostname: rtp.pks.local
+    image: registry.gitlab.com/mwolff44/pyfb-rtpproxy:1.2.2
+    restart: unless-stopped
+    privileged: true
+    expose:
+      - "22222/udp"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    environment:
+      BIND_NG_PORT: ${BIND_NG_PORT:-22222}
+      PUBLIC_IP: ${PUBLIC_IP}
+      LOCAL_IP: ${LOCAL_IP}
+      INTERNAL_IP: ${INTERNAL_IP}
+      PORT_MIN: ${PORT_MIN:-16384}
+      PORT_MAX: ${PORT_MAX:-16485}
+      LOG_LEVEL: ${LOG_LEVEL:-6}
+    network_mode: host
+
+networks:
+  main:
+
+volumes:
+  pks-redis-data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/srv/pks/redis'
+  pks-db-data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/srv/pks/db'

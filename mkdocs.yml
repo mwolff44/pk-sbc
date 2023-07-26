@@ -1,0 +1,86 @@
+# Project information
+site_name: P-KISS-SBC
+site_description: >-
+  Simple, high performance, robust and reliable SIP Border Controller (SBC)
+site_url: https://www.pyfreebilling.com/
+site_author: Mathias WOLFF
+
+# Repository
+repo_name: mwolff44/pyfreebilling
+repo_url: https://github.com/mwolff44/pyfreebilling
+edit_uri: ''
+
+# Copyright
+copyright: Copyright &copy; 2011 - 2023 Mathias WOLFF
+
+# Configuration
+theme:
+  name: material
+  palette:
+    primary: deep purple
+  icon:
+    repo: fontawesome/brands/git-alt
+  language: en
+
+# Extensions
+markdown_extensions:
+- abbr
+- admonition
+- attr_list
+- def_list
+- footnotes
+- md_in_html
+- pymdownx.details
+- pymdownx.emoji:
+    emoji_index: !!python/name:materialx.emoji.twemoji 
+    emoji_generator: !!python/name:materialx.emoji.to_svg
+- pymdownx.smartsymbols
+- pymdownx.superfences
+- toc:
+    permalink: true
+
+# Plugins
+plugins:
+  - search
+  - render_swagger
+  - i18n:
+      default_language: en
+      default_language_only: false
+      docs_structure: suffix
+      languages:
+        en: '<img style="height: 10px; border: 0px;" alt="en" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f1ec-1f1e7.svg" title="english" /> English'
+        fr: '<img style="height: 10px; border: 0px;" alt="fr" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f1eb-1f1f7.svg" title="français" /> Français'
+      nav_translations:
+        fr:
+          Welcome: Bienvenue
+          Philosophy: Philosophie
+          Use Cases: Cas d'Utilisation
+          Getting Started: Démarrage rapide
+          User Guide: Guide Utilisateur
+          Backup and Recovery: Sauvegarde et Restauration
+  - git-revision-date-localized:
+        enable_creation_date: false
+        type: iso_date
+
+# Page tree
+nav:
+  - Welcome: index.md
+  - Philosophy: philosophy.md
+  - Use Cases: usecases.md
+  - Getting Started: getting-started.md
+  - User Guide:
+    - User Guide: user-guide/index.md
+    - Backup and Recovery: backup-recovery.md
+  - FAQs: faq/index.md
+  - Troubleshooting: troubleshooting.md
+  - Best Practices: bestpractices.md
+  - Stay up to date:
+    - Release Notes: changelog/index.md
+    - How to Upgrade: upgrade.md
+  - Contributing:
+    - contributing/index.md
+    - Reporting a bug: contributing/reporting-a-bug.md
+    - Reporting a docs issue: contributing/reporting-a-docs-issue.md
+    - Requesting a change: contributing/requesting-a-change.md
+    - Asking a question: https://github.com/mwolff44/pyfreebilling/discussions
+  - License: license.md

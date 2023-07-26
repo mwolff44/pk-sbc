@@ -1,0 +1,11 @@
+<include>
+  <context name="default">
+
+    <extension name="ext">
+      <condition>
+        <action application="bridge" data="sofia/gateway/pks/33123456789"/>
+      </condition>
+    </extension>
+
+  </context>
+</include>

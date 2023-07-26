@@ -1,8 +1,0 @@
-Developer documentation
-=======================
-
-
-pyfreebill
-----------
- ToDo
- 

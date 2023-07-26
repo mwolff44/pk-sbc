@@ -4,28 +4,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Next]
+
+## [PKS-1.0.0]
 ### Added
-- log sip messages from kamailio into PyFreeBilling DB (acc module)
-- New coutntry / directions / prefix matching process
+- Connect IPBX and provider SIP trunks - only IP auth are supported
+- DID routing
+- PSTN routing
+- Loadbalancing routing features
+- Commandline to manage the solution
 
 ### Changed
-
+New version dropping ratings to focus on security
 
 ### Deprecated
-
+N/A
 
 ### Removed
-
+- PyFreeBilling v2 features are removed
 
 ### Fixed
-- In location DB, typo in cflags fields
-- Specify order in DB migration
-- Add uacreg and trusted tables for kamailio in PyFreeBilling base
+N/A
 
 ### Security
-
-
 
 ## [2.1]
 ### Added

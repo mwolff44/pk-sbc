@@ -1,0 +1,29 @@
+  pks-sip:
+    depends_on:
+      - pks-redis
+      - pks-rtp
+      - pks-fs-1
+      - pks_mysql
+    environment:
+      - DB_URL: mysql://root:mypass@pks-mysql/pks
+  
+  pks-mysql:
+    container_name: pks-mysql
+    hostname: mysql.pks.local
+    image: image: mysql:7.0
+    cap_add:
+      - SYS_NICE
+    restart: unless-stopped
+    volumes:
+      - pks-mysql-data:/var/lib/mysql
+      - ./db/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment: 
+      MYSQL_ROOT_PASSWORD: mypass
+      MYSQL_DATABASE: pks
+    networks:
+      main:
+        aliases:
+          - pks-mysql
+
+volumes:
+  pks-mysql-data:

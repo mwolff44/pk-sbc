@@ -1,0 +1,7 @@
+<include>
+  <gateway name="pks">
+    <param name="proxy" value="sip.pks.local:5070"/>
+    <param name="register" value="false"/>
+    <param name="caller-id-in-from" value="true"/>
+  </gateway> -->
+</include>

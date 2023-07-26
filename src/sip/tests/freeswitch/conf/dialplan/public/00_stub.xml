@@ -1,0 +1,29 @@
+<include>
+  <extension name="match_toto">
+    <condition field="${sip_h_X-Tenant}" 
+              expression="^toto$">
+      <action application="log" data="INFO toto tenant matched!"/>
+      <action application="unset" data="sip_h_X-Tenant"/>
+      <action application="set" data="sip_h_X-Tenant=riri"/>
+      <action application="answer"/>
+      <action application="transfer" data="0240003472 XML default"/>
+      <action application="echo" data=""/>
+    </condition>
+  </extension>
+  <extension name="match_tutu">
+    <condition field="${sip_h_X-Tenant}" 
+              expression="^tutu$">
+      <action application="log" data="INFO tutu tenant matched!"/>
+      <action application="unset" data="sip_h_X-Tenant"/>
+      <action application="answer"/>
+      <action application="echo" data=""/>
+    </condition>
+  </extension>
+  <extension name="match_all">
+    <condition>
+      <action application="log" data="INFO no tenant matched!"/>
+      <action application="answer"/>
+      <action application="echo" data=""/>
+    </condition>
+  </extension>
+</include>
