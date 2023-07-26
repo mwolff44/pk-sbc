@@ -118,13 +118,13 @@ if [ -n "$ANTIFLOOD" ]; then
   echo "#!define WITH_ANTIFLOOD" >> /etc/kamailio/kamailio-local.cfg
 fi
 
-if [ -n "SIP_DOMAIN_KEEPALIVE" ]; then
+if [ -n "$SIP_DOMAIN_KEEPALIVE" ]; then
   echo -n 'SIP DOMAIN KEEPALIVE is: '; echo "$SIP_DOMAIN_KEEPALIVE"
   pingfrom=$(echo '#!substdef "!PING_FROM!sip:SIP_DNS_KEEPALIVE!g"' | sed "s/SIP_DNS_KEEPALIVE/$SIP_DOMAIN_KEEPALIVE/")
   echo "$pingfrom" >> /etc/kamailio/kamailio-local.cfg
 fi
 
-if [ -n "NOT_PROBING" ]; then
+if [ -n "$NOT_PROBING" ]; then
   echo -n 'NOT_PROBING is: '; echo "TRUE"
   echo "#!define PROBING_MODE 3" >> /etc/kamailio/kamailio-local.cfg
 fi
@@ -134,10 +134,10 @@ echo 'kamailio-local.cfg : '
 cat /etc/kamailio/kamailio-local.cfg
 $kamailio -f $PATH_KAMAILIO_CFG -c
 echo 'Kamailio will be called using the following environment variables:'
-echo -n '$DUMP_CORE is: ' ; echo "${DUMP_CORE}"
-echo -n '$SHM_MEM is: ' ; echo "${SHM_MEM}"
-echo -n '$PKG_MEM is: ' ; echo "${PKG_MEM}"
-echo -n '$ENVIRONMENT is: ' ; echo "${ENVIRONMENT}"
+echo -n "$DUMP_CORE is: " ; echo "${DUMP_CORE}"
+echo -n "$SHM_MEM is: " ; echo "${SHM_MEM}"
+echo -n "$PKG_MEM is: " ; echo "${PKG_MEM}"
+echo -n "$ENVIRONMENT is: " ; echo "${ENVIRONMENT}"
 
 # Run kamailio
 if [ "$1" = 'kamailio' ]; then
@@ -145,4 +145,4 @@ if [ "$1" = 'kamailio' ]; then
   exec $kamailio -f $PATH_KAMAILIO_CFG -m "${SHM_MEM}" -M "${PKG_MEM}" -DD -E -e
 fi
 
-exec $@
+exec "$@"

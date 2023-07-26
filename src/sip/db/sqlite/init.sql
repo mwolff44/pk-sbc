@@ -1,3 +1,5 @@
+BEGIN TRANSACTION;
+
 CREATE TABLE IF NOT EXISTS version (
     id INTEGER PRIMARY KEY NOT NULL,
     table_name VARCHAR(32) NOT NULL,
@@ -115,3 +117,4 @@ CREATE TABLE IF NOT EXISTS rtpengine (
 
 INSERT INTO version (table_name, table_version) values ('rtpengine','1');
 
+COMMIT;

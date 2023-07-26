@@ -6,23 +6,56 @@
 # This file is copyright under the latest version of the EUPL.
 # Please see LICENSE file for your rights under this license.
 
+# Append common folders to the PATH to ensure that all basic commands are available.
+export PATH+=':/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+# Variables
 VERSION="4.0.0"
-APP_NAME="PKS"
-SCRIPT_NAME=$(basename "$0")
+readonly PKS_GIT_URL="https://github.com/mwolff44/pyfreebilling"
+readonly DATA_DIR="/srv"
 ENV_FILE="/srv/pks/.env"
-DC_FILE="/usr/src/pyfreebilling/src/sip/docker-compose.yml"
-DOCKER_COMPOSE=(docker compose -f ${DC_FILE} --env-file ${ENV_FILE})
+DC_FILE_SOURCE="/usr/src/pyfreebilling/src/sip/docker-compose.yml"
+DC_FILE="/srv/pks/docker-compose.yml"
+DOCKER_COMPOSE=(docker compose -f "${DC_FILE}" --env-file "${ENV_FILE}")
+DBschema="/usr/src/pyfreebilling/src/sip/db/sqlite/init.sql"
+
+# Test for empty string. Use standard path in this case.
+if [ -z "$DBFILE" ]; then
+    DBFILE="/srv/pks/db/pks.db"
+fi
+
+# A simple function that just echoes out our name in ASCII format
+# This lets users know that it is a P-KISS-SBC                                                                                                                                                                                  
+show_ascii_pks() {
+    echo -e "                                                                                                                                                                                     
+
+ ${COL_LIGHT_RED} _____      _     _ _____ _______ _______     _______ ______  _______
+ |_____] ___ |____/    |   |______ |______ ___ |______ |_____] |      
+ |           |    \_ __|__ ______| ______|     ______| |_____] |_____ 
+ ${COL_NC}                                                                     
+ "                                                                                                                                                                                     
+}                                                                                                                                                                                    
+                                                                                                                                                                                      
+                                                                                                                                                                                      
+                                                                                                                                                                                      
+                                                                                                                                                                                      
+                                                                                                                                                                                      
 
 colorFunc(){
   COL_BOLD=$'\e[0;1m'
+  # shellcheck disable=SC2034
   COL_ULINE=$'\e[0;4m'
   COL_NC=$'\e[0;0m'
+  # shellcheck disable=SC2034
   COL_GRAY=$'\e[0;90m'
   COL_RED=$'\e[0;91m'
   COL_GREEN=$'\e[0;92m'
   COL_YELLOW=$'\e[0;93m'
+  # shellcheck disable=SC2034
   COL_BLUE=$'\e[0;94m'
+  # shellcheck disable=SC2034
   COL_PURPLE=$'\e[0;95m'
+  # shellcheck disable=SC2034
   COL_CYAN=$'\e[0;96'
 
   TICK="[${COL_GREEN}✓${COL_NC}]"
@@ -38,12 +71,178 @@ unsupportedFunc(){
   exit 0
 }
 
-test_prerequesites(){
-  echo "test if prerequesites are respected"
+osCheckFunc() {
+  # shellcheck disable=SC2034
+  detected_os=$(grep '^ID=' /etc/os-release | cut -d '=' -f2 | tr -d '"')
+  # shellcheck disable=SC2034
+  detected_version=$(grep VERSION_ID /etc/os-release | cut -d '=' -f2 | tr -d '"')
 }
 
-install_prerequesites(){
+validIP4Func() {
+    # Local, named variables
+    local ip=${1}
+    local stat=1
+
+    # Regex matching one IPv4 component, i.e. an integer from 0 to 255.
+    # See https://tools.ietf.org/html/rfc1340
+    local ipv4elem="(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]?|0)";
+    # Regex matching an optional port (starting with '#') range of 1-65536
+    local portelem="(#(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{0,3}|0))?";
+    # Build a full IPv4 regex from the above subexpressions
+    local regex="^${ipv4elem}\\.${ipv4elem}\\.${ipv4elem}\\.${ipv4elem}${portelem}$"
+
+    # Evaluate the regex, and return the result
+    [[ $ip =~ ${regex} ]]
+
+    stat=$?
+    return "${stat}"
+}
+
+validIP6Func() {
+    local ip=${1}
+    local stat=1
+
+    # Regex matching one IPv6 element, i.e. a hex value from 0000 to FFFF
+    local ipv6elem="[0-9a-fA-F]{1,4}"
+    # Regex matching an IPv6 CIDR, i.e. 1 to 128
+    local v6cidr="(\\/([1-9]|[1-9][0-9]|1[0-1][0-9]|12[0-8])){0,1}"
+    # Regex matching an optional port (starting with '#') range of 1-65536
+    local portelem="(#(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{0,3}|0))?";
+    # Build a full IPv6 regex from the above subexpressions
+    local regex="^(((${ipv6elem}))*((:${ipv6elem}))*::((${ipv6elem}))*((:${ipv6elem}))*|((${ipv6elem}))((:${ipv6elem})){7})${v6cidr}${portelem}$"
+
+    # Evaluate the regex, and return the result
+    [[ ${ip} =~ ${regex} ]]
+
+    stat=$?
+    return "${stat}"
+}
+
+getAvailableInterfaces() {
+    # There may be more than one so it's all stored in a variable
+    # shellcheck disable=SC2034
+    availableInterfaces=$(ip --oneline link show up | grep -v "lo" | awk '{print $2}' | cut -d':' -f1 | cut -d'@' -f1)
+}
+
+findIPv4Func() {
+    # Detects IPv4 address used for communication to WAN addresses.
+
+    # Named, local variables
+    local route
+    local IPv4bare
+
+    # Find IP used to route to outside world by checking the the route to Google's public DNS server
+    route=$(ip route get 8.8.8.8)
+
+    # Get just the interface IPv4 address
+    # shellcheck disable=SC2059,SC2086
+    # disabled as we intentionally want to split on whitespace and have printf populate
+    # the variable with just the first field.
+    printf -v IPv4bare "$(printf ${route#*src })"
+    # Get the default gateway IPv4 address (the way to reach the Internet)
+    # shellcheck disable=SC2059,SC2086
+    # shellcheck disable=SC2034
+    printf -v IPv4gw "$(printf ${route#*via })"
+
+    if ! valid_ip "${IPv4bare}" ; then
+        IPv4bare="127.0.0.1"
+    fi
+
+    # Append the CIDR notation to the IP address, if valid_ip fails this should return 127.0.0.1/8
+    # shellcheck disable=SC2034
+    IPV4_ADDRESS=$(ip -oneline -family inet address show | grep "${IPv4bare}/" |  awk '{print $4}' | awk 'END {print}')
+}
+
+testDockerFunc(){
+  output=$(docker --version | grep "Docker version")
+  if [[ $(which docker) && "${output}" ]];
+  then
+      echo -e "  ${INFO} ${output}"
+  else
+      echo -e "${OVER}  ${COL_RED}Please, install docker${COL_NC}"
+      exit 1
+  fi
+  output=$(docker compose version)
+  if [[ "${output}" ]];
+  then
+      echo -e "  ${INFO} ${output}"
+  else
+      echo -e "${OVER}  ${COL_RED}Please, install docker compose v2${COL_NC}"
+      exit 1
+  fi
+}
+
+testPrerequesitesFunc(){
+  echo "test if prerequesites are respected"
+  # This gives the machine architecture which may be different from the OS architecture...
+  local machine
+  machine=$(uname -m)
+  local l_binary
+
+  local str="Detecting processor"
+  printf "  %b %s..." "${INFO}" "${str}"
+
+  # If the machine is arm or aarch
+  if [[ "${machine}" == "arm"* || "${machine}" == *"aarch"* ]]; then
+    printf "%b  %b Detected ARM* or AArch*\\n" "${OVER}" "${TICK}"
+    printf "  %b %bAutomatic installed is not supported%b\\n" "${INFO}" "${COL_LIGHT_RED}" "${COL_NC}"
+    exit 1
+  elif [[ "${machine}" == "x86_64" ]]; then
+    # This gives the processor of packages dpkg installs (for example, "i386")
+    local dpkgarch
+    dpkgarch=$(dpkg --print-processor 2> /dev/null || dpkg --print-architecture 2> /dev/null)
+
+    # Special case: This is a 32 bit OS, installed on a 64 bit machine
+    # -> change machine processor to download the 32 bit executable
+    # We only check this for Debian-based systems as this has been an issue
+    # in the past (see https://github.com/pi-hole/pi-hole/pull/2004)
+    if [[ "${dpkgarch}" == "i386" ]]; then
+      printf "%b  %b Detected 32bit (i686) processor\\n" "${OVER}" "${TICK}"
+      printf "  %b %bAutomatic installed is not supported%b\\n" "${INFO}" "${COL_LIGHT_RED}" "${COL_NC}"
+      exit 1
+    else
+      # 64bit
+      printf "%b  %b Detected x86_64 processor\\n" "${OVER}" "${TICK}"
+      # set the binary to be used
+      l_binary="linux-x86_64"
+    fi
+  elif [[ "${machine}" == "riscv64" ]]; then
+    printf "%b  %b Detected riscv64 processor\\n" "${OVER}" "${TICK}"
+    printf "  %b %bAutomatic installed is not supported%b\\n" "${INFO}" "${COL_LIGHT_RED}" "${COL_NC}"
+    exit 1
+  else
+    # Something else - we try to use 32bit executable and warn the user
+    if [[ ! "${machine}" == "i686" ]]; then
+      printf "%b  %b %s...\\n" "${OVER}" "${CROSS}" "${str}"
+      printf "  %b %bNot able to detect processor (unknown: %s), trying x86 (32bit) executable%b\\n" "${INFO}" "${COL_LIGHT_RED}" "${machine}" "${COL_NC}"
+      printf "  %b %bAutomatic installed is not supported%b\\n" "${INFO}" "${COL_LIGHT_RED}" "${COL_NC}"
+      exit 1
+    else
+      printf "%b  %b Detected 32bit (i686) processor\\n" "${OVER}" "${TICK}"
+      printf "  %b %bAutomatic installed is not supported%b\\n" "${INFO}" "${COL_LIGHT_RED}" "${COL_NC}"
+      exit 1
+    fi
+  fi
+}
+
+installPrerequesitesFunc(){
   echo "Install prerequesites"
+  unsupportedFunc
+}
+
+getRepoFunc() {
+  local directory="/usr/src"
+
+  # The message to display when this function is running
+  str="Clone ${PKS_GIT_URL} into ${directory} (it takes a while)"
+  # Display the message and use the color table to preface the message with an "info" indicator
+  printf "  %b %s..." "${INFO}" "${str}"
+
+  mkdir "${directory}"/pyfreebilling
+  git clone "${PKS_GIT_URL}" "${directory}"/pyfreebilling &> /dev/null
+
+  # Show a colored message showing it's status
+  printf "%b  %b %s\\n" "${OVER}" "${TICK}" "${str}"
 }
 
 Select_db(){
@@ -180,7 +379,8 @@ helpFunc(){
 }
 
 versionFunc(){
-  echo -e "PKS version ${VERSION}"
+  echo -e "  ${INFO} P-KISS-SBC version ${VERSION}"
+  testDockerFunc
   exit 0
 }
 
@@ -215,13 +415,62 @@ updateFunc(){
 }
 
 installFunc(){
-  echo "Not available, sorry"
+
+  testPrerequesitesFunc
+
+  # Get repository
+  getRepoFunc
+
+  # Create necessary directories
+  mkdir -p "${DATA_DIR}/pks/db"
+  mkdir -p "${DATA_DIR}/pks/redis"
+
+  # Create env file for configuration
+  if [ ! -f "${DATA_DIR}/pks/.env" ]; then
+    touch "${DATA_DIR}/pks/.env"
+  fi
+
+  ## Define env variables
+  # Set SQLite3 as DB
+  echo "DB=.sqlite3" >> "${DATA_DIR}/pks/.env"
+  echo "DB_SQLITE=sqlite:///srv/pks/db/pks.db" >> "${DATA_DIR}/pks/.env"
+  read -p "Enter public ip address: " PUBLIC_IP_ADDRESS
+  read -p "Enter private ip address: " LOCAL_IP_ADDRESS
+  echo "PUBLIC_IP=$PUBLIC_IP_ADDRESS" >> "${DATA_DIR}/pks/.env"
+  echo "LISTEN_ADVERTISE=$PUBLIC_IP_ADDRESS:5060" >> "${DATA_DIR}/pks/.env"
+  echo "LOCAL_IP=$LOCAL_IP_ADDRESS" >> "${DATA_DIR}/pks/.env"
+
+  echo "PORT_MIN=16000" >> "${DATA_DIR}/pks/.env"
+  echo "PORT_MAX=18000" >> "${DATA_DIR}/pks/.env"
+  echo "ENVIRONMENT=prod" >> "${DATA_DIR}/pks/.env"
+  echo "RTPENGINE_URL=127.0.0.1" >> "${DATA_DIR}/pks/.env"
+  echo "BIND_HTTP_IP=127.0.0.1" >> "${DATA_DIR}/pks/.env"
+  echo "REDIS_URL=127.0.0.1" >> "${DATA_DIR}/pks/.env"
+  echo "NOT_PROBING=true" >> "${DATA_DIR}/pks/.env"
+
+  # Copy docker compose file
+  cp "${DC_FILE_SOURCE}" "${DATA_DIR}/pks/"
+
+  # Create database file only if not present
+  if [ ! -e "${DBFILE}" ]; then
+    # Create new database file
+    echo -e "  ${INFO} Creating new PKS database"
+    if ! sqlite3 "${DBFILE}" < "${DBschema}"; then
+      echo -e "   ${CROSS} Error creating new PKS database. Please contact support."
+      return 1
+    fi
+  fi
+
+  printf "  %b %b Installation complete! %b\\n" "${TICK}" "${COL_LIGHT_GREEN}" "${COL_NC}"
+
   exit 0
 }
 
 ###### MAIN #####
 
 colorFunc
+
+show_ascii_pks
 
 if [[ $# = 0 ]]; then
   helpFunc
