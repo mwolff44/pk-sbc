@@ -11,7 +11,7 @@ In vast majority of cases, this file and directory can be used to restore a syst
 
 ## Backup Strategies
 
-The optimal backup strategy can be summarized in 3 points : 
+The optimal backup strategy can be summarized in 3 points :
 
 * Take frequent backup (automatic ones are the best)
 * Keep multiple copies of backups in a safe location off the system

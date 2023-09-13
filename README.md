@@ -1,7 +1,6 @@
 # PyFB project
 
 ![logo](http://www.pyfreebilling.com/wp-content/uploads/2014/12/PyFreeBilling-logo-small.png)
--------------
 
 ![PyFB release](https://img.shields.io/badge/PKS_version-4.0.0beta-8A2BE2)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/?branch=master)
@@ -48,7 +47,7 @@ There are some features supported. A few of them are:
   - Routing decision based on load balancing
   - Limit max channels by each provider gateway (TBD)
 
--Security
+- Security
   - Blocking SIP scanner attemps
   - Blocking fraudulent connection attempts
   - SQL injection detection
@@ -67,9 +66,9 @@ The project uses Kamailio, RTP Engine, Redis and a Database (by default, SQLITE 
 
 ## Contact Information
 
-Name: _Mathias WOLFF_
+Name: *Mathias WOLFF*
 
-Email: _website contact form_
+Email: *website contact form*
 
 Website: [https://www.pyfreebilling.com](https://www.pyfreebilling.com)
 

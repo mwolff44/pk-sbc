@@ -11,7 +11,7 @@ Dans la grande majorité des cas, ce fichier et ce répertoire peuvent être uti
 
 ## Stratégies de sauvegarde
 
-La stratégie de sauvegarde optimale peut être résumée en 3 points : 
+La stratégie de sauvegarde optimale peut être résumée en 3 points :
 
 * Effectuer des sauvegardes fréquentes (les sauvegardes automatiques sont les meilleures).
 * Conserver plusieurs copies des sauvegardes dans un endroit sûr en dehors du système.

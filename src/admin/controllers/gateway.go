@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 	"gorm.io/gorm"
 	"pks.pyfreebilling.com/models"
 	"pks.pyfreebilling.com/services"
@@ -52,6 +53,7 @@ func GetGateways(c *gin.Context) {
 			})
 			return
 		}
+		//c.AbortWithStatus(http.StatusInternalServerError)
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error":   true,
 			"message": "Error in getting gateway list",
@@ -59,12 +61,25 @@ func GetGateways(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"error":      false,
-		"message":    "Gateway list",
-		"data":       gateways,
-		"pagination": p,
-	})
+	switch c.Request.Header.Get("Accept") {
+	case "application/json":
+		c.JSON(http.StatusOK, gin.H{
+			"error":      false,
+			"message":    "Gateway list",
+			"data":       gateways,
+			"pagination": p,
+		})
+	default:
+		c.HTML(http.StatusOK, "gateways/index.html", gin.H{
+			"title":      "Gateways list",
+			"gateways":   gateways,
+			"pagination": p,
+		})
+	}
+}
+
+func CreateGatewayGet(c *gin.Context) {
+	c.HTML(http.StatusOK, "gateways/new.html", gin.H{})
 }
 
 // CreateGateways  godoc
@@ -80,19 +95,39 @@ func GetGateways(c *gin.Context) {
 //	@Router			/gateways/ [post]
 func CreateGateway(c *gin.Context) {
 	var gateway models.Gateway
-	if err := c.ShouldBindJSON(&gateway); err != nil {
-		fmt.Printf("invalid json body: %s", err)
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error":   true,
-			"message": "Invalid json body. Please check your inputs",
-		})
-		return
+
+	switch c.Request.Header.Get("Accept") {
+	case "application/json":
+		if err := c.ShouldBindJSON(&gateway); err != nil {
+			fmt.Printf("invalid json body: %s", err)
+			//c.AbortWithStatus(http.StatusBadRequest)
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error":   true,
+				"message": "Invalid json body. Please check your inputs",
+			})
+			return
+		}
+	default:
+		if err := c.ShouldBind(&gateway); err != nil {
+			verrs := err.(validator.ValidationErrors)
+			messages := make([]string, len(verrs))
+			for i, verr := range verrs {
+				messages[i] = fmt.Sprintf(
+					"%s is required, but was empty.",
+					verr.Field())
+			}
+			c.HTML(http.StatusBadRequest, "gateways/index.html",
+				gin.H{"errors": messages})
+			return
+		}
 	}
+
 	gateway.CreatedAt = time.Now()
 
 	newGateway, saverr := services.GatewaysService.CreateGateway(gateway)
 	if saverr != nil {
 		fmt.Printf("error in creating gateway: %s", saverr)
+		//c.AbortWithStatus(http.StatusInternalServerError)
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error":   true,
 			"message": "Error in creating gateway",
@@ -102,11 +137,17 @@ func CreateGateway(c *gin.Context) {
 
 	c.Header("Location", c.FullPath()+"/"+strconv.Itoa(int(newGateway.ID)))
 
-	c.JSON(http.StatusCreated, gin.H{
-		"error":   false,
-		"message": "Gateway created",
-		"data":    newGateway,
-	})
+	switch c.Request.Header.Get("Accept") {
+	case "application/json":
+		c.JSON(http.StatusCreated, gin.H{
+			"error":   false,
+			"message": "Gateway created",
+			"data":    newGateway,
+		})
+	default:
+		//c.Redirect(http.StatusFound, "/gateways/")
+		c.HTML(200, "gateways/new.html", newGateway)
+	}
 }
 
 // GetGatewayByID  godoc
@@ -130,6 +171,7 @@ func GetGatewayByID(c *gin.Context) {
 			"error":   true,
 			"message": "Invalid input. Please check your inputs",
 		})
+		// c.AbortWithStatus(http.StatusNotFound)
 		return
 	}
 
@@ -144,16 +186,25 @@ func GetGatewayByID(c *gin.Context) {
 			"error":   true,
 			"message": apiErr.Error(),
 		})
+		// c.AbortWithError(http.StatusNotFound, err)
 		return
 	}
 
 	c.Header("Last-Modified", gateway.UpdatedAt.String())
 
-	c.JSON(http.StatusOK, gin.H{
-		"error":   false,
-		"message": "Requested gateway",
-		"data":    gateway,
-	})
+	switch c.Request.Header.Get("Accept") {
+	case "application/json":
+		c.JSON(http.StatusOK, gin.H{
+			"error":   false,
+			"message": "Requested gateway",
+			"data":    gateway,
+		})
+	default:
+		c.HTML(http.StatusOK, "gateway.html", gin.H{
+			"title":   gateway.Name,
+			"payload": gateway,
+		})
+	}
 }
 
 // UpdateGateway  godoc
@@ -246,10 +297,15 @@ func DeleteGateway(c *gin.Context) {
 			"message": dbErr.Error(),
 		})
 	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"error":   false,
-			"message": "Gateway successfully deleted",
-			"data":    nil,
-		})
+		switch c.Request.Header.Get("Accept") {
+		case "application/json":
+			c.JSON(http.StatusOK, gin.H{
+				"error":   false,
+				"message": "Gateway successfully deleted",
+				"data":    nil,
+			})
+		default:
+			c.HTML(http.StatusOK, "base/errors.html", nil)
+		}
 	}
 }

@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "DavidAnson.vscode-markdownlint",
+        "timonwong.ShellCheck",
+        "golang.Go"
+    ]
+  }

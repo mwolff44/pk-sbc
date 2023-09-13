@@ -177,7 +177,6 @@ testPrerequesitesFunc(){
   # This gives the machine architecture which may be different from the OS architecture...
   local machine
   machine=$(uname -m)
-  local l_binary
 
   local str="Detecting processor"
   printf "  %b %s..." "${INFO}" "${str}"
@@ -203,8 +202,6 @@ testPrerequesitesFunc(){
     else
       # 64bit
       printf "%b  %b Detected x86_64 processor\\n" "${OVER}" "${TICK}"
-      # set the binary to be used
-      l_binary="linux-x86_64"
     fi
   elif [[ "${machine}" == "riscv64" ]]; then
     printf "%b  %b Detected riscv64 processor\\n" "${OVER}" "${TICK}"

@@ -2,7 +2,7 @@
 
 ## Sécurisation d'un système de téléphonie
 
-Ce premier cas d'usage est le plus simple : utiliser P-KISS-SBC entre le monde extérieur et l'IPBX afin de protéger celui-ci. Le schéma sera le suivant : 
+Ce premier cas d'usage est le plus simple : utiliser P-KISS-SBC entre le monde extérieur et l'IPBX afin de protéger celui-ci. Le schéma sera le suivant :
 
 SIP Provider ==== P-KISS-SBC ===== IPBX
 
@@ -12,9 +12,9 @@ TODO : détailler les fonctionnalités de sécurité ainsi que la mise en oeuvre
 
 ## Fail over d'un IPBX principal à un secondaire
 
-Une autre cas d'usage simple à mettre en oeuvre avec P-KISS-SBC est la haute disponibilité d'IPBX. 2 scénarios sont alors possibles. Tout d'abord le failover permettant d'envoyer les requêtes lors de la parter de l'IPBX principal à l'IPBX secondaire sans aucune action manuelle. Le ou les opérateurs télécoms ne voient aucun changement et n'ont aucune connaissance de l'infrastructure téléphonique interne. 
+Une autre cas d'usage simple à mettre en oeuvre avec P-KISS-SBC est la haute disponibilité d'IPBX. 2 scénarios sont alors possibles. Tout d'abord le failover permettant d'envoyer les requêtes lors de la parter de l'IPBX principal à l'IPBX secondaire sans aucune action manuelle. Le ou les opérateurs télécoms ne voient aucun changement et n'ont aucune connaissance de l'infrastructure téléphonique interne.
 
-Fonctionnement nominal : 
+Fonctionnement nominal :
 
 SIP PROVIDER ==== P-KISS-SBC ==== IPBX principal
                              ---- IPBX secondaire
@@ -28,22 +28,21 @@ Le retour au fonctionnement nominal est automatique dès que P-KISS-SBC détecte
 
 ## Haute disponibilité d'un IPBX avec 2 ou plus instances
 
-En plus du fail over, P-KISS-SBC supporte aussi la haute disponibilité ou l'IPBX fonctionne avec 2 ou plus instances actives simultannément. Dans ce cas, P-KISS-SBC route les requêtes équitablement entre les instances : 
+En plus du fail over, P-KISS-SBC supporte aussi la haute disponibilité ou l'IPBX fonctionne avec 2 ou plus instances actives simultannément. Dans ce cas, P-KISS-SBC route les requêtes équitablement entre les instances :
 
 SIP PROVIDER ==== P-KISS-SBC ==50%== IPBX instance 1
                              ==50%== IPBX instance 2
 
-
 ## Répartition géographique d'IPBX avec connexion opérateur télécom centralisé
 
-POur des raisons d'optimisation de flux, de disponibilité ou de répartition de charge, les instances de IPBX peuvent-être déployées sur des sites différents. P-KISS-SBC permet une connexion unique à un opérateur et de router silmplement les appels à l'instance souhaitée : 
+POur des raisons d'optimisation de flux, de disponibilité ou de répartition de charge, les instances de IPBX peuvent-être déployées sur des sites différents. P-KISS-SBC permet une connexion unique à un opérateur et de router silmplement les appels à l'instance souhaitée :
 
-Appel à destination du site 1 : 
+Appel à destination du site 1 :
 
 SIP PROVIDER ==== P-KISS-SBC ==== IPBX 1
                              ---- IPBX 2
 
-Appel à destination du site 2 : 
+Appel à destination du site 2 :
 
 SIP PROVIDER ==== P-KISS-SBC ---- IPBX 1
                              ==== IPBX 2
@@ -54,7 +53,6 @@ Dans le cadre d'administrations ou de sites hébergeant plusieurs entreprises, i
 
 SIP PROVIDER ==== P-KISS-SBC ==tenant 1== IPBX tenant 1
                              ==tenant 2== IPBX tenant 2
-
 
 ## Raccordement d'un IPBX à plus d'un opérateur
 

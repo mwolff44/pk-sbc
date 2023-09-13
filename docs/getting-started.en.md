@@ -8,7 +8,7 @@
 
 ## Prerequisites
 
-Use the following steps to install P-KISS-SBC : 
+Use the following steps to install P-KISS-SBC :
 
 1. Install docker, docker-compose and git
 2. create folders in /srv for P-KISS-SBC datas
@@ -24,9 +24,9 @@ To deploy P-KISS-SBC, docker and docker compose must be installed.
 
     To install docker and docker compose on debian, follow this guide : [https://docs.docker.com/engine/install/debian/](https://docs.docker.com/engine/install/debian/)
 
-To download the PKS code, you need to have installed git and make commands. On debian/ubuntu : 
+To download the PKS code, you need to have installed git and make commands. On debian/ubuntu :
 
-```
+```bash
 apt install git make
 ```
 
@@ -34,13 +34,13 @@ apt install git make
 
 2 folders must be created to host the P-KISS-SBC data: 
 
-```
+```bash
 mkdir /src/pks/redis /srv/pks/db
 ```
 
 and download the PKS script and run it :
 
-```
+```bash
 cd /usr/src
 git clone https://gitlab.com/mwolff44/pyfreebilling
 ln -s /usr/src/pyfreebilling/src/pks /usr/local/bin/pks
@@ -51,7 +51,7 @@ ln -s /usr/src/pyfreebilling/src/pks /usr/local/bin/pks
 The *local* logging driver is recommended as it performs log-rotation by default, and uses a more efficient file format.
 To configure the Docker daemon to default to a specific logging driver, set the value of log-driver to the name of the logging driver in the daemon.json /etc/docker/daemon.json
 
-```
+```bash
 {
 “log-driver”: “local”
 }
@@ -59,13 +59,13 @@ To configure the Docker daemon to default to a specific logging driver, set the 
 
 Restart Docker for the changes to take effect
 
-```
+```bash
 sudo systemctl restart docker.service
 ```
 
 And to check
 
-```
+```bash
 docker info --format '{{.LoggingDriver}}'
 ```
 
@@ -75,13 +75,13 @@ docker info --format '{{.LoggingDriver}}'
 
 create file in directory /srv/pks
 
-```
+```bash
 touch .env
 ```
 
 And add values corresponding to your installation. This is an example : 
 
-```
+```text
 # Public IP of my VM
 PUBLIC_IP=1.1.1.1
 LISTEN_ADVERTISE=1.1.1.1:5060
@@ -108,7 +108,7 @@ NOT_PROBING=true
 
 To add a SIP Provider, use the commandline PKS to declare the IP/PORT of the provider gateway and add a default route to route all calls coming from IPBX to this SIP Provider.
 
-```
+```bash
 pks admin add provider
 ```
 
@@ -116,7 +116,7 @@ pks admin add provider
 
 To add an IPBX, use the commandline PKS to declare the IP/PORT of the IPBX and add DIDs to route incoming calls to thid IPBX.
 
-```
+```bash
 pks admin add ipbx
 
 pks admin add did
@@ -126,7 +126,7 @@ pks admin add did
 
 To lauch P-KISS-SBC and manage it, you will use the simple but effective commandline PKS.
 
-```
+```bash
 # To start
 pks start
 

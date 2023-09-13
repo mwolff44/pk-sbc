@@ -16,6 +16,9 @@ func SetupRouter() *gin.Engine {
 	// Set the router as the default one provided by Gin
 	r = gin.Default()
 
+	r.Static("/static", "./static/")
+	r.LoadHTMLGlob("templates/**/*.html")
+
 	p := ginprom.New(
 		ginprom.Engine(r),
 		ginprom.Namespace("pyfb"),

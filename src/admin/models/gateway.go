@@ -14,13 +14,13 @@ type GetGatewayRequest struct {
 
 // Gateway is the main gateway model
 type Gateway struct {
-	ID        int64     `json:"id" gorm:"primarykey"`                                                                                                 // Gateway ID
-	CreatedAt time.Time `json:"created_at"`                                                                                                           // Creation time
-	UpdatedAt time.Time `json:"updated_at"`                                                                                                           // Updated time
-	Name      string    `json:"name" binding:"required" gorm:"unique,not null:true"`                                                                  // Name of the gateway
-	IpAddress string    `json:"ip_address" binding:"required,ip" gorm:"uniqueIndex:idx_gw_ip_port_proto,not null:true"`                               // IP Address of the gateway
-	Port      int       `json:"port"  binding:"required,gte=1,lte=65535" gorm:"uniqueIndex:idx_gw_ip_port_proto,not null:true,default:5060"`          // SIP Port of the gateway
-	Protocol  string    `json:"protocol"  binding:"required,oneof=udp tcp tls any" gorm:"uniqueIndex:idx_gw_ip_port_proto,not null:true,default:udp"` // Protocol used by the gateway
+	ID        int64     `json:"id" gorm:"primarykey"`                                                                                                                 // Gateway ID
+	CreatedAt time.Time `json:"created_at"`                                                                                                                           // Creation time
+	UpdatedAt time.Time `json:"updated_at"`                                                                                                                           // Updated time
+	Name      string    `form:"name" json:"name" binding:"required" gorm:"unique,not null:true"`                                                                      // Name of the gateway
+	IpAddress string    `form:"ipaddress" json:"ip_address" binding:"required,ip" gorm:"uniqueIndex:idx_gw_ip_port_proto,not null:true"`                              // IP Address of the gateway
+	Port      int       `form:"port" json:"port"  binding:"required,gte=1,lte=65535" gorm:"uniqueIndex:idx_gw_ip_port_proto,not null:true,default:5060"`              // SIP Port of the gateway
+	Protocol  string    `form:"protocol" json:"protocol"  binding:"required,oneof=udp tcp tls any" gorm:"uniqueIndex:idx_gw_ip_port_proto,not null:true,default:udp"` // Protocol used by the gateway
 }
 
 // Getaways represents many gateways

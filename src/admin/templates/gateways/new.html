@@ -1,0 +1,13 @@
+{{ define "gateways/new.html" }}
+
+<tr>
+  <td>{{ .ID }}</td>
+  <td>{{ .Name }}</td>
+  <td>{{ .IpAddress }}:{{ .Port}}</td>
+  <td>
+    <button class="btn btn-danger" hx-delete="/gateways/{{ .ID }}">
+      Delete
+    </button>
+  </td>
+</tr>
+{{ end }}
