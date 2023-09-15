@@ -1,4 +1,5 @@
-# ginprom
+<h1 align="center">Ginprom</h1>
+<h2 align="center">
 
 Gin Prometheus metrics exporter inspired by [github.com/zsais/go-gin-prometheus](https://github.com/zsais/go-gin-prometheus)
 
@@ -8,6 +9,25 @@ Gin Prometheus metrics exporter inspired by [github.com/zsais/go-gin-prometheus]
 [![codecov](https://codecov.io/gh/Depado/ginprom/branch/master/graph/badge.svg)](https://codecov.io/gh/Depado/ginprom)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Depado/bfchroma/blob/master/LICENSE)
 [![godoc](https://godoc.org/github.com/Depado/ginprom?status.svg)](https://godoc.org/github.com/Depado/ginprom)
+
+</h2>
+
+- [Install](#install)
+- [Differences with go-gin-prometheus](#differences-with-go-gin-prometheus)
+- [Usage](#usage)
+- [Options](#options)
+	- [Custom Counters](#custom-counters)
+	- [Custom gauges](#custom-gauges)
+	- [Path](#path)
+	- [Namespace](#namespace)
+	- [Subsystem](#subsystem)
+	- [Engine](#engine)
+	- [Prometheus Registry](#prometheus-registry)
+	- [Ignore](#ignore)
+	- [Token](#token)
+	- [Bucket size](#bucket-size)
+- [Troubleshooting](#troubleshooting)
+	- [The instrumentation doesn't seem to work](#the-instrumentation-doesnt-seem-to-work)
 
 ## Install
 
@@ -47,6 +67,24 @@ func main() {
 ```
 
 ## Options
+
+### Custom Counters
+
+Add custom counters to add own values to the metrics
+
+```go
+r := gin.New()
+p := ginprom.New(
+	ginprom.Engine(r),
+)
+p.AddCustomCounter("custom", "Some help text to provide", []string{"label"})
+r.Use(p.Instrument())
+```
+
+Save `p` and use the following functions:
+
+- IncrementCounterValue
+- AddCounterValue
 
 ### Custom gauges
 
@@ -140,6 +178,48 @@ registry := prometheus.NewRegistry() // creates new prometheus metric registry
 r := gin.New()
 p := ginprom.New(
     ginprom.Registry(registry),
+)
+r.Use(p.Instrument())
+```
+
+### HandlerNameFunc
+
+Change the way the `handler` label is computed. By default, the `(*gin.Context).HandlerName`
+function is used.
+This option is useful when wanting to group different functions under
+the same `handler` label or when using `gin` with decorated handlers.
+
+```go
+r := gin.Default()
+p := ginprom.New(
+	HandlerNameFunc(func (c *gin.Context) string {
+		return "my handler"
+	}),
+)
+r.Use(p.Instrument())
+```
+
+### RequestPathFunc
+
+Change how the `path` label is computed. By default, the `(*gin.Context).FullPath` function 
+is used.
+This option is useful when wanting to group different requests under the same `path`
+label or when wanting to process unknown routes (the default `(*gin.Context).FullPath` returns
+an empty string for unregistered routes). Note that requests for which `f` returns the empty
+string are ignored.
+
+To specifically ignore certain paths, see the [Ignore](#ignore) option.
+
+```go
+r := gin.Default()
+p := ginprom.New(
+	// record a metric for unregistered routes under the path label "<unknown>"
+	RequestPathFunc(func (c *gin.Context) string {
+		if fullpath := c.FullPath(); fullpath != "" {
+			return fullpath
+		}
+		return "<unknown>"
+	}),
 )
 r.Use(p.Instrument())
 ```

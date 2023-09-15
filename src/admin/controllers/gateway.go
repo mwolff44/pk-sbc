@@ -3,8 +3,10 @@ package controllers
 import (
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -70,7 +72,7 @@ func GetGateways(c *gin.Context) {
 			"pagination": p,
 		})
 	default:
-		c.HTML(http.StatusOK, "gateways/index.html", gin.H{
+		c.HTML(http.StatusOK, "gateways.html", gin.H{
 			"title":      "Gateways list",
 			"gateways":   gateways,
 			"pagination": p,
@@ -79,7 +81,7 @@ func GetGateways(c *gin.Context) {
 }
 
 func CreateGatewayGet(c *gin.Context) {
-	c.HTML(http.StatusOK, "gateways/new.html", gin.H{})
+	c.HTML(http.StatusOK, "gateways/add.html", gin.H{})
 }
 
 // CreateGateways  godoc
@@ -100,7 +102,6 @@ func CreateGateway(c *gin.Context) {
 	case "application/json":
 		if err := c.ShouldBindJSON(&gateway); err != nil {
 			fmt.Printf("invalid json body: %s", err)
-			//c.AbortWithStatus(http.StatusBadRequest)
 			c.JSON(http.StatusBadRequest, gin.H{
 				"error":   true,
 				"message": "Invalid json body. Please check your inputs",
@@ -116,7 +117,7 @@ func CreateGateway(c *gin.Context) {
 					"%s is required, but was empty.",
 					verr.Field())
 			}
-			c.HTML(http.StatusBadRequest, "gateways/index.html",
+			c.HTML(http.StatusBadRequest, "base/errors.html",
 				gin.H{"errors": messages})
 			return
 		}
@@ -124,15 +125,28 @@ func CreateGateway(c *gin.Context) {
 
 	gateway.CreatedAt = time.Now()
 
-	newGateway, saverr := services.GatewaysService.CreateGateway(gateway)
-	if saverr != nil {
-		fmt.Printf("error in creating gateway: %s", saverr)
+	newGateway, savErr := services.GatewaysService.CreateGateway(gateway)
+	if savErr != nil {
+		fmt.Printf("error in creating gateway: %s", savErr)
 		//c.AbortWithStatus(http.StatusInternalServerError)
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error":   true,
-			"message": "Error in creating gateway",
-		})
-		return
+		switch c.Request.Header.Get("Accept") {
+		case "application/json":
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error":   true,
+				"message": "Error in creating gateway",
+			})
+			return
+		default:
+			if strings.Contains(fmt.Sprint(savErr), "UNIQUE constraint failed") {
+				log.Printf("DB duplicate key : %v", savErr)
+				c.HTML(http.StatusBadRequest, "base/errors.html",
+					gin.H{"error": "Unique constraint failed"})
+				return
+			}
+			c.HTML(http.StatusBadRequest, "base/errors.html",
+				gin.H{"error": "Unexpected error when saving in DB"})
+			return
+		}
 	}
 
 	c.Header("Location", c.FullPath()+"/"+strconv.Itoa(int(newGateway.ID)))

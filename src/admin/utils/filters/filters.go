@@ -9,7 +9,7 @@ import (
 // Filters defines the struct of query
 type Filters struct {
 	Page         int    `form:"page,default=1" binding:"min=1,max=10_000_000"`
-	PageSize     int    `form:"page_size,default=5" binding:"min=5,max=100"`
+	PageSize     int    `form:"page_size,default=10" binding:"min=5,max=100"`
 	Sort         string `form:"sort"`
 	SortSafelist []string
 }

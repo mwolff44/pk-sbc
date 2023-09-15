@@ -1,3 +1,19 @@
+/*
+ * Copyright 2022 ByteDance Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package ast
 
 import (
@@ -204,7 +220,7 @@ func decodeFloat64(src string, pos int) (ret int, v float64, err error) {
     return ret, v, nil
 }
 
-func decodeValue(src string, pos int) (ret int, v types.JsonState) {
+func decodeValue(src string, pos int, skipnum bool) (ret int, v types.JsonState) {
     pos = skipBlank(src, pos)
     if pos < 0 {
         return pos, types.JsonState{Vt: types.ValueType(pos)}
@@ -240,20 +256,30 @@ func decodeValue(src string, pos int) (ret int, v types.JsonState) {
         }
         return ret, types.JsonState{Vt: types.V_FALSE}
     case '-', '+', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
-        var iv int64
-        ret, iv, _ = decodeInt64(src, pos)
-        if ret >= 0 {
-            return ret, types.JsonState{Vt: types.V_INTEGER, Iv: iv, Ep: pos}
-        } else if ret != -int(types.ERR_INVALID_NUMBER_FMT) {
-            return ret, types.JsonState{Vt: types.ValueType(ret)}
-        }
-        var fv float64
-        ret, fv, _ = decodeFloat64(src, pos)
-        if ret >= 0 {
-            return ret, types.JsonState{Vt: types.V_DOUBLE, Dv: fv, Ep: pos}
+        if skipnum {
+            ret = skipNumber(src, pos)
+            if ret >= 0 {
+                return ret, types.JsonState{Vt: types.V_DOUBLE, Iv: 0, Ep: pos}
+            } else {
+                return ret, types.JsonState{Vt: types.ValueType(ret)}
+            }
         } else {
-            return ret, types.JsonState{Vt: types.ValueType(ret)}
+            var iv int64
+            ret, iv, _ = decodeInt64(src, pos)
+            if ret >= 0 {
+                return ret, types.JsonState{Vt: types.V_INTEGER, Iv: iv, Ep: pos}
+            } else if ret != -int(types.ERR_INVALID_NUMBER_FMT) {
+                return ret, types.JsonState{Vt: types.ValueType(ret)}
+            }
+            var fv float64
+            ret, fv, _ = decodeFloat64(src, pos)
+            if ret >= 0 {
+                return ret, types.JsonState{Vt: types.V_DOUBLE, Dv: fv, Ep: pos}
+            } else {
+                return ret, types.JsonState{Vt: types.ValueType(ret)}
+            }
         }
+        
     default:
         return -int(types.ERR_INVALID_CHAR), types.JsonState{Vt:-types.ValueType(types.ERR_INVALID_CHAR)}
     }
@@ -286,7 +312,7 @@ func skipNumber(src string, pos int) (ret int) {
         } else if nextNeedDigit {
             return -int(types.ERR_INVALID_CHAR)
         } else if c == '.' {
-            if !lastIsDigit || pointer || sp == ss {
+            if !lastIsDigit || pointer || exponent || sp == ss {
                 return -int(types.ERR_INVALID_CHAR)
             }
             pointer = true
@@ -408,7 +434,7 @@ func skipPair(src string, pos int, lchar byte, rchar byte) (ret int) {
     return int(uintptr(sp) - uintptr((*rt.GoString)(unsafe.Pointer(&src)).Ptr))
 }
 
-func skipValue(src string, pos int) (ret int, start int) {
+func skipValueFast(src string, pos int) (ret int, start int) {
     pos = skipBlank(src, pos)
     if pos < 0 {
         return pos, -1
@@ -432,4 +458,128 @@ func skipValue(src string, pos int) (ret int, start int) {
         ret = -int(types.ERR_INVALID_CHAR)
     }
     return ret, pos
+}
+
+func skipValue(src string, pos int) (ret int, start int) {
+    pos = skipBlank(src, pos)
+    if pos < 0 {
+        return pos, -1
+    }
+    switch c := src[pos]; c {
+    case 'n':
+        ret = decodeNull(src, pos)
+    case '"':
+        ret, _ = skipString(src, pos)
+    case '{':
+        ret, _ = skipObject(src, pos)
+    case '[':
+        ret, _ = skipArray(src, pos)
+    case 't':
+        ret = decodeTrue(src, pos)
+    case 'f':
+        ret = decodeFalse(src, pos)
+    case '-', '+', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
+        ret = skipNumber(src, pos)
+    default:
+        ret = -int(types.ERR_INVALID_CHAR)
+    }
+    return ret, pos
+}
+
+func skipObject(src string, pos int) (ret int, start int) {
+    start = skipBlank(src, pos)
+    if start < 0 {
+        return start, -1
+    }
+
+    if src[start] != '{' {
+        return -int(types.ERR_INVALID_CHAR), -1
+    }
+
+    pos = start + 1
+    pos = skipBlank(src, pos)
+    if pos < 0 {
+        return pos, -1
+    }
+    if src[pos] == '}' {
+        return pos + 1, start
+    }
+
+    for {
+        pos, _ = skipString(src, pos)
+        if pos < 0 {
+            return pos, -1
+        }
+
+        pos = skipBlank(src, pos)
+        if pos < 0 {
+            return pos, -1
+        }
+        if src[pos] != ':' {
+            return -int(types.ERR_INVALID_CHAR), -1
+        }
+
+        pos++
+        pos, _ = skipValue(src, pos)
+        if pos < 0 {
+            return pos, -1
+        }
+
+        pos = skipBlank(src, pos)
+        if pos < 0 {
+            return pos, -1
+        }
+        if src[pos] == '}' {
+            return pos + 1, start
+        }
+        if src[pos] != ',' {
+            return -int(types.ERR_INVALID_CHAR), -1
+        }
+
+        pos++
+        pos = skipBlank(src, pos)
+        if pos < 0 {
+            return pos, -1
+        }
+
+    }
+}
+
+func skipArray(src string, pos int) (ret int, start int) {
+    start = skipBlank(src, pos)
+    if start < 0 {
+        return start, -1
+    }
+
+    if src[start] != '[' {
+        return -int(types.ERR_INVALID_CHAR), -1
+    }
+
+    pos = start + 1
+    pos = skipBlank(src, pos)
+    if pos < 0 {
+        return pos, -1
+    }
+    if src[pos] == ']' {
+        return pos + 1, start
+    }
+
+    for {
+        pos, _ = skipValue(src, pos)
+        if pos < 0 {
+            return pos, -1
+        }
+
+        pos = skipBlank(src, pos)
+        if pos < 0 {
+            return pos, -1
+        }
+        if src[pos] == ']' {
+            return pos + 1, start
+        }
+        if src[pos] != ',' {
+            return -int(types.ERR_INVALID_CHAR), -1
+        }
+        pos++
+    }
 }

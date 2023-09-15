@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"log"
 	"time"
 
@@ -60,9 +59,8 @@ func CountGateways() (int64, error) {
 
 // CreateGateway creates a new gateway
 func CreateGateway(gateway *Gateway) error {
-	req := DB.Create(gateway)
-	if req.RowsAffected == 0 {
-		return fmt.Errorf(fmt.Sprintf("gateway not saved: %v", req.Error))
+	if req := DB.Create(gateway); req.Error != nil {
+		return req.Error
 	}
 	return nil
 }

@@ -14,13 +14,7 @@ import (
 func mapUrls() {
 
 	r.GET("/", func(c *gin.Context) {
-		c.HTML(
-			http.StatusOK,
-			"index.html",
-			gin.H{
-				"title": "Home Page",
-			},
-		)
+		c.HTML(http.StatusOK, "home.html", gin.H{})
 	})
 
 	gw := r.Group("gateways")

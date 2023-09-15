@@ -1,10 +1,14 @@
 {
   "devDependencies": {
-    "cz-conventional-changelog": "^3.3.0"
+    "cz-conventional-changelog": "^3.3.0",
+    "tailwindcss": "^3.3.3"
   },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "preline": "^1.9.0"
   }
 }

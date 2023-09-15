@@ -19,6 +19,8 @@ import (
 var defaultPath = "/metrics"
 var defaultNs = "gin"
 var defaultSys = "gonic"
+var defaultHandlerNameFunc = (*gin.Context).HandlerName
+var defaultRequestPathFunc = (*gin.Context).FullPath
 
 var defaultReqCntMetricName = "requests_total"
 var defaultReqDurMetricName = "request_duration"
@@ -31,6 +33,9 @@ var ErrInvalidToken = errors.New("invalid or missing token")
 // ErrCustomGauge is returned when the custom gauge can't be found.
 var ErrCustomGauge = errors.New("error finding custom gauge")
 
+// ErrCustomCounter is returned when the custom counter can't be found.
+var ErrCustomCounter = errors.New("error finding custom counter")
+
 type pmapb struct {
 	sync.RWMutex
 	values map[string]bool
@@ -41,22 +46,30 @@ type pmapGauge struct {
 	values map[string]prometheus.GaugeVec
 }
 
+type pmapCounter struct {
+	sync.RWMutex
+	values map[string]prometheus.CounterVec
+}
+
 // Prometheus contains the metrics gathered by the instance and its path.
 type Prometheus struct {
 	reqCnt       *prometheus.CounterVec
 	reqDur       *prometheus.HistogramVec
 	reqSz, resSz prometheus.Summary
 
-	customGauges pmapGauge
+	customGauges   pmapGauge
+	customCounters pmapCounter
 
-	MetricsPath string
-	Namespace   string
-	Subsystem   string
-	Token       string
-	Ignored     pmapb
-	Engine      *gin.Engine
-	BucketsSize []float64
-	Registry    *prometheus.Registry
+	MetricsPath     string
+	Namespace       string
+	Subsystem       string
+	Token           string
+	Ignored         pmapb
+	Engine          *gin.Engine
+	BucketsSize     []float64
+	Registry        *prometheus.Registry
+	HandlerNameFunc func(c *gin.Context) string
+	RequestPathFunc func(c *gin.Context) string
 
 	RequestCounterMetricName  string
 	RequestDurationMetricName string
@@ -90,7 +103,7 @@ func (p *Prometheus) SetGaugeValue(name string, labelValues []string, value floa
 	return nil
 }
 
-// AddGaugeValue adds gauge to value.
+// AddGaugeValue adds value to custom gauge.
 func (p *Prometheus) AddGaugeValue(name string, labelValues []string, value float64) error {
 	p.customGauges.RLock()
 	defer p.customGauges.RUnlock()
@@ -142,125 +155,73 @@ func (p *Prometheus) AddCustomGauge(name, help string, labels []string) {
 	},
 		labels)
 	p.customGauges.values[name] = *g
-	prometheus.MustRegister(g)
+	p.mustRegister(g)
 }
 
-// Path is an option allowing to set the metrics path when intializing with New.
-func Path(path string) func(*Prometheus) {
-	return func(p *Prometheus) {
-		p.MetricsPath = path
+// IncrementCounterValue increments a custom counter.
+func (p *Prometheus) IncrementCounterValue(name string, labelValues []string) error {
+	p.customCounters.RLock()
+	defer p.customCounters.RUnlock()
+
+	if g, ok := p.customCounters.values[name]; ok {
+		g.WithLabelValues(labelValues...).Inc()
+	} else {
+		return ErrCustomCounter
 	}
+	return nil
 }
 
-// Ignore is used to disable instrumentation on some routes.
-func Ignore(paths ...string) func(*Prometheus) {
-	return func(p *Prometheus) {
-		p.Ignored.Lock()
-		defer p.Ignored.Unlock()
-		for _, path := range paths {
-			p.Ignored.values[path] = true
-		}
+// AddCounterValue adds value to custom counter.
+func (p *Prometheus) AddCounterValue(name string, labelValues []string, value float64) error {
+	p.customCounters.RLock()
+	defer p.customCounters.RUnlock()
+
+	if g, ok := p.customCounters.values[name]; ok {
+		g.WithLabelValues(labelValues...).Add(value)
+	} else {
+		return ErrCustomCounter
 	}
+	return nil
 }
 
-// BucketSize is used to define the default bucket size when initializing with
-// New.
-func BucketSize(b []float64) func(*Prometheus) {
-	return func(p *Prometheus) {
-		p.BucketsSize = b
-	}
+// AddCustomCounter adds a custom counter and registers it.
+func (p *Prometheus) AddCustomCounter(name, help string, labels []string) {
+	p.customCounters.Lock()
+	defer p.customCounters.Unlock()
+	g := prometheus.NewCounterVec(prometheus.CounterOpts{
+		Namespace: p.Namespace,
+		Subsystem: p.Subsystem,
+		Name:      name,
+		Help:      help,
+	}, labels)
+	p.customCounters.values[name] = *g
+	p.mustRegister(g)
 }
 
-// Subsystem is an option allowing to set the subsystem when intitializing
-// with New.
-func Subsystem(sub string) func(*Prometheus) {
-	return func(p *Prometheus) {
-		p.Subsystem = sub
-	}
-}
-
-// Namespace is an option allowing to set the namespace when intitializing
-// with New.
-func Namespace(ns string) func(*Prometheus) {
-	return func(p *Prometheus) {
-		p.Namespace = ns
-	}
-}
-
-// Token is an option allowing to set the bearer token in prometheus
-// with New.
-// Example: ginprom.New(ginprom.Token("your_custom_token"))
-func Token(token string) func(*Prometheus) {
-	return func(p *Prometheus) {
-		p.Token = token
-	}
-}
-
-// RequestCounterMetricName is an option allowing to set the request counter metric name.
-func RequestCounterMetricName(reqCntMetricName string) func(*Prometheus) {
-	return func(p *Prometheus) {
-		p.RequestCounterMetricName = reqCntMetricName
-	}
-}
-
-// RequestDurationMetricName is an option allowing to set the request duration metric name.
-func RequestDurationMetricName(reqDurMetricName string) func(*Prometheus) {
-	return func(p *Prometheus) {
-		p.RequestDurationMetricName = reqDurMetricName
-	}
-}
-
-// RequestSizeMetricName is an option allowing to set the request size metric name.
-func RequestSizeMetricName(reqSzMetricName string) func(*Prometheus) {
-	return func(p *Prometheus) {
-		p.RequestSizeMetricName = reqSzMetricName
-	}
-}
-
-// ResponseSizeMetricName is an option allowing to set the response size metric name.
-func ResponseSizeMetricName(resDurMetricName string) func(*Prometheus) {
-	return func(p *Prometheus) {
-		p.ResponseSizeMetricName = resDurMetricName
-	}
-}
-
-// Engine is an option allowing to set the gin engine when intializing with New.
-// Example:
-// r := gin.Default()
-// p := ginprom.New(Engine(r))
-func Engine(e *gin.Engine) func(*Prometheus) {
-	return func(p *Prometheus) {
-		p.Engine = e
-	}
-}
-
-// Registry is an option allowing to set a  *prometheus.Registry with New.
-// Use this option if you want to use a custom Registry instead of a global one that prometheus
-// client uses by default
-// Example:
-// r := gin.Default()
-// p := ginprom.New(Registry(r))
-func Registry(r *prometheus.Registry) func(*Prometheus) {
-	return func(p *Prometheus) {
-		p.Registry = r
-	}
+func (p *Prometheus) mustRegister(c ...prometheus.Collector) {
+	registerer, _ := p.getRegistererAndGatherer()
+	registerer.MustRegister(c...)
 }
 
 // New will initialize a new Prometheus instance with the given options.
 // If no options are passed, sane defaults are used.
 // If a router is passed using the Engine() option, this instance will
 // automatically bind to it.
-func New(options ...func(*Prometheus)) *Prometheus {
+func New(options ...PrometheusOption) *Prometheus {
 	p := &Prometheus{
 		MetricsPath:               defaultPath,
 		Namespace:                 defaultNs,
 		Subsystem:                 defaultSys,
+		HandlerNameFunc:           defaultHandlerNameFunc,
+		RequestPathFunc:           defaultRequestPathFunc,
 		RequestCounterMetricName:  defaultReqCntMetricName,
 		RequestDurationMetricName: defaultReqDurMetricName,
 		RequestSizeMetricName:     defaultReqSzMetricName,
 		ResponseSizeMetricName:    defaultResSzMetricName,
 	}
 	p.customGauges.values = make(map[string]prometheus.GaugeVec)
+	p.customCounters.values = make(map[string]prometheus.CounterVec)
+
 	p.Ignored.values = make(map[string]bool)
 	for _, option := range options {
 		option(p)
@@ -283,7 +244,6 @@ func (p *Prometheus) getRegistererAndGatherer() (prometheus.Registerer, promethe
 }
 
 func (p *Prometheus) register() {
-	registerer, _ := p.getRegistererAndGatherer()
 	p.reqCnt = prometheus.NewCounterVec(
 		prometheus.CounterOpts{
 			Namespace: p.Namespace,
@@ -293,7 +253,7 @@ func (p *Prometheus) register() {
 		},
 		[]string{"code", "method", "handler", "host", "path"},
 	)
-	registerer.MustRegister(p.reqCnt)
+	p.mustRegister(p.reqCnt)
 
 	p.reqDur = prometheus.NewHistogramVec(prometheus.HistogramOpts{
 		Namespace: p.Namespace,
@@ -302,7 +262,7 @@ func (p *Prometheus) register() {
 		Name:      p.RequestDurationMetricName,
 		Help:      "The HTTP request latency bucket.",
 	}, []string{"method", "path", "host"})
-	registerer.MustRegister(p.reqDur)
+	p.mustRegister(p.reqDur)
 
 	p.reqSz = prometheus.NewSummary(
 		prometheus.SummaryOpts{
@@ -312,7 +272,7 @@ func (p *Prometheus) register() {
 			Help:      "The HTTP request sizes in bytes.",
 		},
 	)
-	registerer.MustRegister(p.reqSz)
+	p.mustRegister(p.reqSz)
 
 	p.resSz = prometheus.NewSummary(
 		prometheus.SummaryOpts{
@@ -322,7 +282,7 @@ func (p *Prometheus) register() {
 			Help:      "The HTTP response sizes in bytes.",
 		},
 	)
-	registerer.MustRegister(p.resSz)
+	p.mustRegister(p.resSz)
 }
 
 func (p *Prometheus) isIgnored(path string) bool {
@@ -337,7 +297,7 @@ func (p *Prometheus) isIgnored(path string) bool {
 func (p *Prometheus) Instrument() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
-		path := c.FullPath()
+		path := p.RequestPathFunc(c)
 
 		if path == "" || p.isIgnored(path) {
 			c.Next()
@@ -352,7 +312,7 @@ func (p *Prometheus) Instrument() gin.HandlerFunc {
 		elapsed := float64(time.Since(start)) / float64(time.Second)
 		resSz := float64(c.Writer.Size())
 
-		p.reqCnt.WithLabelValues(status, c.Request.Method, c.HandlerName(), c.Request.Host, path).Inc()
+		p.reqCnt.WithLabelValues(status, c.Request.Method, p.HandlerNameFunc(c), c.Request.Host, path).Inc()
 		p.reqDur.WithLabelValues(c.Request.Method, path, c.Request.Host).Observe(elapsed)
 		p.reqSz.Observe(float64(reqSz))
 		p.resSz.Observe(resSz)

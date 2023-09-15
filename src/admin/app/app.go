@@ -5,7 +5,6 @@ import (
 
 	"github.com/Depado/ginprom"
 	"github.com/gin-gonic/gin"
-	"pks.pyfreebilling.com/models"
 )
 
 var (
@@ -16,8 +15,8 @@ func SetupRouter() *gin.Engine {
 	// Set the router as the default one provided by Gin
 	r = gin.Default()
 
-	r.Static("/static", "./static/")
-	r.LoadHTMLGlob("templates/**/*.html")
+	//r.Static("/static", "./static/")
+	//r.LoadHTMLGlob("templates/*/*.html")
 
 	p := ginprom.New(
 		ginprom.Engine(r),
@@ -31,13 +30,7 @@ func SetupRouter() *gin.Engine {
 }
 
 // StartApp function starts the whole application
-func StartApp(dbTarget string) {
-
-	// Initialize database
-	models.SetupDatabase(dbTarget)
-
-	// Define router info
-	r := SetupRouter()
+func StartApp() {
 
 	// Initialize the routes
 	mapUrls()

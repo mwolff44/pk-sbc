@@ -1,59 +1,33 @@
-{{ define "base/header.html" }}<!DOCTYPE html>
-<html>
-  <head>
-    <title>PKS: Admin panel</title>
-    <meta charset="utf-8">
-    <!-- Viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{{ define "header" }}
+  
+    <header>
+      <div class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+        <div class="container">
+          <a class="navbar-brand" href="/">PKS Admin</a>
+          <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="navbar-collapse collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link active" href="/">Home
+                  <span class="visually-hidden">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/gateways">Gateways</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Routes</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+            </ul>
 
-    <!-- Google Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
-    
-    <!-- CSS Reset -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
-    
-    <!-- Milligram CSS minified -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.1.0/milligram.min.css">
-    <link rel="stylesheet" href="/static/css/styles.css">
-    <script src="https://unpkg.com/htmx.org@1.9.2" integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h" crossorigin="anonymous"></script>
-  </head>
-  <body>
-
-  <header class='container header'>
-      <span class ='nav-heading nav-brand' >PKS admin </span>
-      <input type ='checkbox' class = 'menu-toggle' id ='menu-toggle'>
-      <nav class= 'header'>
-        <ul>
-          <li>
-            <a href = '/'>Home </a>
-          </li>
-            <li>
-            <a href = '/gateways/'>Gateways </a>
-          </li>
-            <li class='nav-header'>
-            <a href = '/gateways/new'>New Gateway </a>
-    
-          </li>
-            <li>
-            <a href = '#!'>Contact us </a>
-          </li>
-    
-        </ul>
-      </nav>
-      <label for='menu-toggle' class='menu-nav-toggle'>
-        <span>  </span>
-      </label>
-  </header>
- 
-  {{ if .messages }}
-  {{ range .messages }}
-  <div class="flash-message" role="alert">
-      {{ . }}
-  </div>
-  {{ end }}
-  {{ end }}
-  <div class="row"><div class="column"><p></p></div></div>
-
-  <main role="main">
+          </div>
+        </div>
+      </div>
+    </header>
 
 {{ end }}

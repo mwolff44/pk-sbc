@@ -1,11 +1,21 @@
 {{ define "base/errors.html" }}
+<div id="error-form">
+Error !
   {{ if .errors }}
-    <div class="error-messages">
-    {{ range .errors }}
-      <div class="error-message">
+    <div>
+      {{ range .errors }}
+      <div class="alert alert-danger">
         {{ . }}
       </div>
     {{  end  }}
     </div>
   {{ end }}
+
+  {{ .error }}
+  {{ if .error }}
+    <div class="alert alert-danger">
+      {{ .error }}
+    </div>
+  {{ end }}
+</div>
 {{ end }}
