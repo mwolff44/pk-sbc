@@ -39,7 +39,6 @@ There are some features supported. A few of them are:
 
 - IPBX/Customer add/modify/delete
   - IP termination and SIP authentication (Multitenant system support)
-  - Prepaid and/or postpaid
   - DID allocation and routing
 
 - Provider add/modify/delete
