@@ -333,9 +333,9 @@ dbFunc(){
           read -rp "  ${QST} Do you want to see DID or external routes [dD/eE] : " answer
             case ${answer} in
               [Dd]* ) echo "  ${INFO}Content of DID $db :"
-                      docker exec -t pks-sip kamcmd dialplan.dump 1;;
+                      docker exec -t pks-sip kamcmd dialplan.dump 1 | less;;
               [Ee]* ) echo "  ${INFO}Content of DID $db :"
-                      docker exec -t pks-sip kamcmd dialplan.dump 2;;
+                      docker exec -t pks-sip kamcmd dialplan.dump 2 | less;;
               * ) echo -e "${OVER}  ${COL_YELLOW}Ooops - unknown choice${COL_NC}";;
             esac;;
       "Address")
