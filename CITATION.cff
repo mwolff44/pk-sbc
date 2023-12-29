@@ -1,0 +1,33 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: >-
+  PKS : P-KISS-SBC, the simple and stupid Session Border
+  Controller
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Mathias
+    family-names: WOLFF
+    email: mathias@celea.org
+identifiers:
+  - type: url
+    value: 'https://www.pyfreebilling.com'
+    description: Website
+repository-code: 'https://github.com/mwolff44/pyfreebilling'
+url: 'https://www.pyfreebilling.com'
+abstract: >-
+  P-KISS-SBC, is an open source simple and stupid SBC based
+  on Kamailio and RTP Engine. 
+
+  Connect safely IPBX/SIP Proxies with SIP providers.
+keywords:
+  - SIP
+  - SBC
+  - Security
+  - Kamailio
+  - SIP Routing
+license: AGPL-3.0-or-later
