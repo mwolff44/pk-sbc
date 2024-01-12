@@ -1,20 +1,8 @@
-{{template "layout" .}}
+<!--gateways.html-->
 
-{{define "content"}}
+<!--Embed the header.html template at this location-->
+{{ template "header.html" .}}
 
-<main>
-    <div class="container">
+{{ template "list-gateway.html" .}}
 
-        <div class="row gy-5">
-            <div class="col-lg-8 col-md-7 col-sm-6">
-                <div class="h4 pb-2 mb-4 text-primary-emphasis border-bottom border-primary">My Gateways</div>
-            </div>
-        </div>
-
-    </div>
-</main>
-
-
-
-
-{{end}}
+{{ template "footer.html" . }}

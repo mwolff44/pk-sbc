@@ -1,5 +1,4 @@
-{{ define "gateways/index.html" }}
-{{ template "base/header.html" . }}
+<!--list-gateway.html-->
 
 <main>
   <div class="container">
@@ -20,16 +19,11 @@
 
     <div class="d-flex flex-row-reverse">
       <div class="p-2">
-        <button class="btn btn-outline-primary" hx-get="/gateways/new" hx-target="#gateway-create">
+        <button class="btn btn-outline-primary" hx-get="/gateways/new" hx-target="#gateway-create" hx-swap="outerHTML">
           Add a new gateway
         </button> 
-        <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
+        <button type="button" class="btn btn-primary" id="bulk-delete">Bulk Delete</button>
       </div>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-3">{{ template "base/errors.html" . }}</div>
-      <div id="gateway-create"></div>
     </div>
 
     <div class="row px-4">
@@ -47,24 +41,8 @@
             </tr>
           </thead>
           <tbody class="table-group-divider" hx-confirm="Are you sure?" hx-target="closest tr" hx-swap="outerHTML swap:1s" id="gateway-list">
-            {{ range .gateways }}
-            <tr id="datarow-{{.ID}}">
-              <th scope="row">{{.ID }}</td>
-              <td>{{ .Name }}</td>
-              <td>{{ .Protocol }}</td>
-              <td>{{ .IpAddress }}</td>
-              <td>{{ .Port}}</td>
-              <td>
-                <button class="btn btn-outline-warning" hx-delete="/gateways/{{.ID }}">
-                  Edit
-                </button>
-
-                <button class="btn btn-outline-danger" hx-delete="/gateways/{{.ID }}">
-                  Delete
-                </button>
-              </td>
-            </tr>
-            {{ end }}
+            <tr id="gateway-create"></tr>
+            {{ template "rows-gateway.html" . }}
           </tbody>
         </table>
 
@@ -86,7 +64,4 @@
   </div>  
 </main>
 
-  
-    
-{{ template "base/footer.html" . }}
-{{ end }}
+

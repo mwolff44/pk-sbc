@@ -1,0 +1,46 @@
+{{ define "gateways/add-gateway.html" }}
+
+<tr id="datarow-add">
+  <form class="was-validated" hx-post="/gateways/new" hx-target="#gateway-list" hx-swap="beforeend">
+    <th scope="row"></td>
+      <fieldset>
+        <td>
+          <label for="name" class="col-form-label col-form-label-sm">Name *</label>
+          <input type="text" class="form-control form-control-sm" name="name" id="name" placeholder="Enter a Gateway name" required>
+          <div class="invalid-feedback">Please fill out this field.</div>
+        </td>
+        <td>
+          <label for="protocol" class="col-form-label col-form-label-sm">Protocol</label>
+          <select class="form-select form-select-sm" name="protocol" id="protocol">
+            <option value="udp">udp</option>
+            <option value="tcp">tcp</option>
+            <option value="any">any</option>
+          </select>
+        </td>
+        <td>
+          <label for="ipaddress" class="col-form-label col-form-label-sm">IP Address *</label>
+          <input type="text" class="form-control form-control-sm" name="ipaddress" id="ipaddress" required pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$">
+          <div class="invalid-feedback">Please enter a valid ipv4 address.</div>
+        </td>
+        <td>
+          <label for="port" class="col-form-label col-form-label-sm">Port *</label>
+          <input type="number" class="form-control form-control-sm" name="port" id="port" value="5060" min="0" max="65535">
+          <div class="invalid-feedback">Port number must be < 65536.</div>
+        </td>
+      </fieldset>
+    <td>
+      <button type="button" class="btn btn-outline-warning">Cancel</button>
+      <button type="submit" class="btn btn-outline-primary">Submit</button>
+    </th>
+  </form>
+</tr>
+<script>
+  document.body.addEventListener('htmx:beforeSwap', function(evt) {
+      if(evt.detail.xhr.status === 400) {
+        alert("Error: Could not create : IP address, Port and protocol must be unique !");
+        evt.detail.shouldSwap = true;
+        
+      }
+  });
+</script>
+{{ end }}

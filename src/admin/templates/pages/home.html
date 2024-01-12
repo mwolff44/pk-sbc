@@ -1,6 +1,7 @@
-{{template "layout" .}}
+<!--home.html-->
 
-{{define "content"}}
+<!--Embed the header.html template at this location-->
+{{ template "header.html" .}}
 
 <main>
     <div class="container">
@@ -17,4 +18,4 @@
     </div>
 </main>
 
-{{end}}
+{{ template "footer.html" . }}

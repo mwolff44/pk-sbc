@@ -81,7 +81,7 @@ func GetGateways(c *gin.Context) {
 }
 
 func CreateGatewayGet(c *gin.Context) {
-	c.HTML(http.StatusOK, "gateways/add.html", gin.H{})
+	c.HTML(http.StatusOK, "gateways/add-gateway.html", gin.H{})
 }
 
 // CreateGateways  godoc
@@ -117,7 +117,7 @@ func CreateGateway(c *gin.Context) {
 					"%s is required, but was empty.",
 					verr.Field())
 			}
-			c.HTML(http.StatusBadRequest, "base/errors.html",
+			c.HTML(http.StatusBadRequest, "gateways/add-gateway.html",
 				gin.H{"errors": messages})
 			return
 		}
@@ -139,11 +139,11 @@ func CreateGateway(c *gin.Context) {
 		default:
 			if strings.Contains(fmt.Sprint(savErr), "UNIQUE constraint failed") {
 				log.Printf("DB duplicate key : %v", savErr)
-				c.HTML(http.StatusBadRequest, "base/errors.html",
+				c.HTML(http.StatusBadRequest, "gateways/add-gateway.html",
 					gin.H{"error": "Unique constraint failed"})
 				return
 			}
-			c.HTML(http.StatusBadRequest, "base/errors.html",
+			c.HTML(http.StatusBadRequest, "",
 				gin.H{"error": "Unexpected error when saving in DB"})
 			return
 		}
