@@ -22,6 +22,15 @@ theme:
     repo: fontawesome/brands/git-alt
   language: en
 
+extra:
+  alternate:
+    - name: English
+      link: /en/ 
+      lang: en
+    - name: French
+      link: /fr/
+      lang: fr
+
 # Extensions
 markdown_extensions:
 - abbr
@@ -31,9 +40,6 @@ markdown_extensions:
 - footnotes
 - md_in_html
 - pymdownx.details
-- pymdownx.emoji:
-    emoji_index: !!python/name:materialx.emoji.twemoji 
-    emoji_generator: !!python/name:materialx.emoji.to_svg
 - pymdownx.smartsymbols
 - pymdownx.superfences
 - toc:
@@ -44,6 +50,7 @@ plugins:
   - search
   - render_swagger
   - i18n:
+      docs_structure: suffix
       default_language: en
       default_language_only: false
       docs_structure: suffix
