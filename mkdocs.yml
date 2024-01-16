@@ -46,15 +46,12 @@ theme:
       toggle:
         icon: material/weather-night
         name: Switch to light mode
-  font:
-    text: Luciole
-    code: Luciole
   icon:
     repo: fontawesome/brands/git-alt
   language: en
 
 extra_css:
-  - stylesheets/extra.css
+  - assets/stylesheets/extra.css
 
 extra:
   alternate:
