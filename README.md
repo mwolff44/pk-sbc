@@ -11,7 +11,7 @@
 
 ## Table of content
 
-- About pyfreebilling
+- About P-Kiss-SBC
 - License
 - Features
 - Prerequisites
@@ -22,13 +22,13 @@
 - Donation
 - Stats
 
-## What is pyfreebilling
+## What is PKS : P-Kiss-SBC
 
 The new flavor of *pyfreebilling*, P-KISS-SBC, is an *open source simple and stupid SBC* based on *Kamailio* and *RTP Engine* .
 
 ## License
 
-pyfreebilling is under AGPLv3 license. You can read it in COPYING file.
+P-Kiss-SBC is under AGPLv3 license. You can read it in COPYING file.
 
 [![AGPLv3 License](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)](http://www.fsf.org)
 
@@ -58,7 +58,7 @@ There are some features supported. A few of them are:
 
 ## Prerequisites
 
-In order to run pyfreebilling, you need the following configured, secured  and
+In order to run PKS, you need the following configured, secured  and
 working Basic Operating System (Linux). P-KISS-SBC works in containers, it can be deployed on any docker or Kubernetes environment.
 
 The project uses Kamailio, RTP Engine, Redis and a Database (by default, SQLITE but also support POSTGRESQL, MARIADB, MYSQL and DBTEXT).
