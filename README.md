@@ -1,4 +1,4 @@
-# PyFB project
+# P-Kiss-SBC project
 
 ![logo](http://www.pyfreebilling.com/wp-content/uploads/2014/12/PyFreeBilling-logo-small.png)
 
