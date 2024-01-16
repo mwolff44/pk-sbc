@@ -97,6 +97,14 @@ plugins:
   - git-revision-date-localized:
         enable_creation_date: false
         type: iso_date
+  - rss:
+      match_path: .* 
+      date_from_meta:
+        as_creation: date
+      categories:
+        - categories
+        - tags 
+
 
 # Page tree
 nav:
