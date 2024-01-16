@@ -38,9 +38,15 @@ theme:
       toggle:
         icon: material/weather-night
         name: Switch to light mode
+  font:
+    text: Luciole
+    code: Luciole
   icon:
     repo: fontawesome/brands/git-alt
   language: en
+
+extra_css:
+  - stylesheets/extra.css
 
 extra:
   alternate:
@@ -62,13 +68,16 @@ markdown_extensions:
 - pymdownx.details
 - pymdownx.smartsymbols
 - pymdownx.superfences
+- pymdownx.emoji:
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
 - toc:
     permalink: true
 
 # Plugins
 plugins:
   - search
-  - render_swagger
+  - privacy
   - i18n:
       docs_structure: suffix
       default_language: en
