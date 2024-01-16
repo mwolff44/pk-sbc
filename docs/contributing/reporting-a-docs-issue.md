@@ -8,9 +8,10 @@ our public [issue tracker] by following this guide.
 
 ## Issue template
 
-Reporting a documentation issue is usually less involved than reporting a bug,
-as we don't need a [reproduction]. Please thoroughly read the following guide
-before creating a new documentation issue, and provide the following information
+Reporting a documentation issue is usually less involved than reporting a bug.
+
+Please thoroughly read the following guide before creating a new documentation issue, 
+and provide the following information
 as part of the issue:
 
 - [Title]
@@ -19,7 +20,6 @@ as part of the issue:
 - [Proposed change] <small>optional</small>
 - [Checklist]
 
-  [reproduction]: ../guides/creating-a-reproduction.md
   [Title]: #title
   [Description]: #description
   [Related links]: #related-links
@@ -45,11 +45,11 @@ encountered in the documentation or the documentation section that needs
 improvement. Explain why you think the documentation should be adjusted and 
 describe the severity of the issue:
 
--   __Keep it short and concise__ – if the inconsistency or issue can be 
+- __Keep it short and concise__ – if the inconsistency or issue can be 
     precisely explained in one or two sentences, perfect. Maintainers and
     future users will be grateful for having to read less.
 
--   __One issue at a time__ – if you encounter several unrelated inconsistencies,
+- __One issue at a time__ – if you encounter several unrelated inconsistencies,
     please create separate issues for them. Don't report them in the same issue – it makes attribution difficult.
 
 > __Why we need this__: in order for us to understand the problem, we need a

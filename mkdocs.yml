@@ -1,3 +1,5 @@
+# Copyright (c) 2011-2024 Mathias WOLFF <mathias@celea.org>
+
 # Project information
 site_name: P-KISS-SBC
 site_description: >-
@@ -17,7 +19,25 @@ copyright: Copyright &copy; 2011 - 2024 Mathias WOLFF
 theme:
   name: material
   palette:
-    primary: deep purple
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      toggle:
+        icon: material/weather-sunny 
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
   icon:
     repo: fontawesome/brands/git-alt
   language: en
