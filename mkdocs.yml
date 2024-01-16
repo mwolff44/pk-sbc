@@ -18,6 +18,14 @@ copyright: Copyright &copy; 2011 - 2024 Mathias WOLFF
 # Configuration
 theme:
   name: material
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - toc.follow
   palette:
     # Palette toggle for automatic mode
     - media: "(prefers-color-scheme)"
