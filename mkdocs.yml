@@ -26,6 +26,9 @@ theme:
     - navigation.tabs.sticky
     - navigation.top
     - toc.follow
+    - search.highlight
+    - search.share
+    - search.suggest
   palette:
     # Palette toggle for automatic mode
     - media: "(prefers-color-scheme)"
@@ -113,23 +116,32 @@ plugins:
 
 # Page tree
 nav:
-  - Welcome: index.md
-  - Philosophy: philosophy.md
-  - Use Cases: usecases.md
-  - Getting Started: getting-started.md
-  - User Guide:
-    - User Guide: user-guide/index.md
+  - Home:
+    - Welcome: index.md
+    - Philosophy: philosophy.md
+    - FAQs: faq/index.md
+    - License: license.md
+  - Use Cases: 
+    - Introduction: use-cases/usecases.md
+    - Securing VoIP system: use-cases/securing-telephony-system.md
+    - Failover: use-cases/failover.md
+    - High Availability: use-cases/ipbx-high-availability.md
+    - Geo routing: use-cases/geographical-distribution-ipbx.md
+    - Connect Multitenant IPBX: use-cases/connecting-mutitenant-ipbx-to-carrier.md
+    - Multiple Carriers: use-cases/connecting-ipbx-to-multiple-carriers.md
+  - Getting Started: 
+    - getting-started.md
+    - Pre-requisites: user-guide/prerequisites.md
+    - Installation: user-guide/installation.md
+    - Configuration: user-guide/index.md
     - Backup and Recovery: backup-recovery.md
-  - FAQs: faq/index.md
-  - Troubleshooting: troubleshooting.md
-  - Best Practices: bestpractices.md
-  - Stay up to date:
-    - Release Notes: changelog/index.md
     - How to Upgrade: upgrade.md
+    - Troubleshooting: troubleshooting.md
+    - Best Practices: bestpractices.md
   - Contributing:
     - contributing/index.md
     - Reporting a bug: contributing/reporting-a-bug.md
     - Reporting a docs issue: contributing/reporting-a-docs-issue.md
     - Requesting a change: contributing/requesting-a-change.md
     - Asking a question: https://github.com/mwolff44/pyfreebilling/discussions
-  - License: license.md
+  - Release Notes: changelog/index.md
