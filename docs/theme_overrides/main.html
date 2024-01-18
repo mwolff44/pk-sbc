@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block analytics %}
+       <script async defer data-domain="pyfreebilling.com" src="https://plausible.io/js/plausible.js"></script>
+       <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="6f2ab184-1293-4246-9345-7d883f602534";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+{% endblock %}
+
+{% block announce %}
+  <!-- Add announcement -->
+  <style>
+       .twemoji {
+       display: inline-block;
+       width: px2rem(24px);
+       height: px2rem(24px);
+       padding: px2rem(5px);
+       vertical-align: bottom;
+       border-radius: 100%;
+       box-shadow: 0 0 0 px2rem(1px) currentcolor inset;
+       transition: all 250ms;
+
+       svg {
+       display: block;
+       max-height: initial;
+       }
+    }
+  </style>
+  For update follow  
+  <a href="http://eepurl.com/gezpvH" target="_blank" rel="noopener noreferrer">
+    <span class="twemoji">
+      {% include ".icons/fontawesome/brands/mailchimp.svg" %}
+    </span>
+    <strong>PKS project</strong>
+  </a>
+
+{% endblock %}

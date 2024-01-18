@@ -13,12 +13,16 @@ repo_url: https://github.com/mwolff44/pyfreebilling
 edit_uri: ''
 
 # Copyright
-copyright: Copyright &copy; 2011 - 2024 Mathias WOLFF
+copyright: >
+  Copyright &copy; 2011 - 2024 Mathias WOLFF -- 
+  <a href="#__consent">Change cookie settings</a>
 
 # Configuration
 theme:
   name: material
+  custom_dir: docs/theme_overrides
   features:
+    - navigation.footer
     - navigation.instant
     - navigation.instant.progress
     - navigation.tracking
@@ -49,12 +53,12 @@ theme:
       toggle:
         icon: material/weather-night
         name: Switch to light mode
+  font:
+    text: Open Sans
+    code: Open Sans Mono
   icon:
     repo: fontawesome/brands/git-alt
   language: en
-
-extra_css:
-  - assets/stylesheets/extra.css
 
 extra:
   alternate:
@@ -64,6 +68,21 @@ extra:
     - name: French
       link: /fr/
       lang: fr
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/mwolff44
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/mathias-wolff-47a7941/
+    - icon: fontawesome/brands/docker
+      link: https://hub.docker.com/r/mwolff44w/
+  consent:
+    title: Cookie consent
+    description: >- 
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our documentation and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our documentation better.
+
 
 # Extensions
 markdown_extensions:
@@ -73,12 +92,19 @@ markdown_extensions:
 - def_list
 - footnotes
 - md_in_html
+- pymdownx.betterem:
+    smart_enable: all
 - pymdownx.details
+- pymdownx.emoji:
+    emoji_generator: !!python/name:material.extensions.emoji.to_svg
+    emoji_index: !!python/name:material.extensions.emoji.twemoji
+- pymdownx.highlight:
+    anchor_linenums: true
+    line_spans: __span
+    pygments_lang_class: true
+- pymdownx.inlinehilite
 - pymdownx.smartsymbols
 - pymdownx.superfences
-- pymdownx.emoji:
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
 - toc:
     permalink: true
 
@@ -86,6 +112,7 @@ markdown_extensions:
 plugins:
   - search
   - privacy
+  - social
   - i18n:
       docs_structure: suffix
       default_language: en
@@ -98,13 +125,25 @@ plugins:
         fr:
           Welcome: Bienvenue
           Philosophy: Philosophie
+          Differences between PyFreeBilling and PKS: Différences entre PyFreeBilling et PKS
+          Does PKS perform LCR: Est-ce que PKS fait du LCR
           Use Cases: Cas d'Utilisation
           Getting Started: Démarrage rapide
           User Guide: Guide Utilisateur
+          How To: Comment Faire
+          How to Upgrade: Comment Mettre à Jour
           Backup and Recovery: Sauvegarde et Restauration
+          Troubleshooting: Résolution de Problèmes
+          Requirements: Prérequis
+          Best Practices: Bonnes Pratiques
+          Contributing: Contribuer
+          Release Notes: Notes de Mise à Jour
+          Manage: Administrer
   - git-revision-date-localized:
-        enable_creation_date: false
-        type: iso_date
+      enable_creation_date: false
+      fallback_to_build_date: true
+      type: iso_date
+  - git-authors
   - rss:
       match_path: .* 
       date_from_meta:
@@ -113,13 +152,16 @@ plugins:
         - categories
         - tags 
 
-
 # Page tree
 nav:
   - Home:
-    - Welcome: index.md
+    - Introduction: index.md
     - Philosophy: philosophy.md
-    - FAQs: faq/index.md
+    - Best Practices: bestpractices.md
+    - FAQs:
+      - Index: faq/index.md
+      - Differences between PyFreeBilling and PKS: faq/pyfreebilling-pks-differences.md
+      - Does PKS perform LCR: faq/lcr-routing.md
     - License: license.md
   - Use Cases: 
     - Introduction: use-cases/usecases.md
@@ -131,13 +173,14 @@ nav:
     - Multiple Carriers: use-cases/connecting-ipbx-to-multiple-carriers.md
   - Getting Started: 
     - getting-started.md
-    - Pre-requisites: user-guide/prerequisites.md
+    - Requirements: user-guide/requirements.md
     - Installation: user-guide/installation.md
-    - Configuration: user-guide/index.md
-    - Backup and Recovery: backup-recovery.md
-    - How to Upgrade: upgrade.md
-    - Troubleshooting: troubleshooting.md
-    - Best Practices: bestpractices.md
+    - Configuration: user-guide/configuration.md
+    - Manage: user-guide/manage.md
+  - How To:
+    - Backup and Recovery: how-to/backup-recovery.md
+    - How to Upgrade: how-to/upgrade.md
+    - Troubleshooting: how-to/troubleshooting.md 
   - Contributing:
     - contributing/index.md
     - Reporting a bug: contributing/reporting-a-bug.md

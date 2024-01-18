@@ -1,28 +1,13 @@
 # Quick start
 
-## First steps
+:fontawesome-regular-map: __First steps__
 
-    1. Check prerequisites.
-    2. Download the PKS CLI and launch it.
-    3. Try PKS.
+- :octicons-tracked-by-closed-completed-24: [Check the requirements](user-guide/requirements.md)
+- :material-cloud-download: [Install P-KISS-SBC](user-guide/installation.md)
+- :octicons-paintbrush-16: [Configure P-KISS-SBC](user-guide/installation.md)
+- :material-phone-settings-outline: [Define the gateways, rules and routes]()
+- :material-play: [Try it]()
 
-## Prerequisites
-
-Use the following steps to install P-KISS-SBC :
-
-1. Install docker, docker-compose and git
-2. create folders in /srv for P-KISS-SBC datas
-3. download the PKS code
-
-## Requirements
-
-P-KISS-SBC uses Docker containers to run and supports all infrastructures that support containers.
-Automated deployment uses docker compose, but kubernetes will be supported in the near future.
-To deploy P-KISS-SBC, docker and docker compose must be installed.
-
-!!! Tip "HowTo install ?"
-
-    To install docker and docker compose on debian, follow this guide : [https://docs.docker.com/engine/install/debian/](https://docs.docker.com/engine/install/debian/)
 
 To download the PKS code, you need to have installed git and make commands. On debian/ubuntu :
 
