@@ -43,7 +43,7 @@ __Don't be shy to ask on our [discussion board] for help if you run into
 problems.__
 
   [latest version]: ../changelog/index.md
-  [upgrade guide]: ../upgrade.md
+  [upgrade guide]: ../how-to/upgrade.md
   [discussion board]: https://github.com/mwolff44/pyfreebilling/discussions
 
 
@@ -130,16 +130,15 @@ Now, to the bug you want to report. Provide a clear, focused, specific, and
 concise summary of the bug you encountered. Explain why you think this is a bug
 that should be reported to P-KISS-SBC. Adhere to the following principles:
 
-
--   __Explain the <u>what</u>, not the <u>how</u>__ – don't explain
+-__Explain the <u>what</u>, not the <u>how</u>__ – don't explain
     [how to reproduce the bug][Steps to reproduce] here, we're getting there.
     Focus on articulating the problem and its impact as clearly as possible.
 
--   __Keep it short and concise__ – if the bug can be precisely explained in one
+-__Keep it short and concise__ – if the bug can be precisely explained in one
     or two sentences, perfect. Don't inflate it – maintainers and future users
     will be grateful for having to read less.
 
--   __One bug at a time__ – if you encounter several unrelated bugs, please
+-__One bug at a time__ – if you encounter several unrelated bugs, please
     create separate issues for them. Don't report them in the same issue, as
     this makes attribution difficult.
 

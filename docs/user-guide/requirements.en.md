@@ -10,6 +10,21 @@ So, the only thing you need to install P-KISS-SBC is a server with Docker and do
 
     To install docker and docker compose on debian, follow this guide : [https://docs.docker.com/engine/install/debian/](https://docs.docker.com/engine/install/debian/)
 
+## Supported Operating Systems
+
+The one-step automated install script can be used with limited operating system.
+
+The following operating systems are __officially__ supported:
+
+| Distribution | Release          | Architecture        |
+| ------------ | ---------------- | ------------------- |
+| DietPi   | v8.xx | x86_64 |
+| Ubuntu | 22.04 | x86_64 |
+| Debian | 12 | x86_64 |
+
+!!! Note "Deploy to another OS
+    It is perfectly possible to deploy PKS on another OS. The prerequisites will have to be installed manually!
+
 ## VM sizing
 
 The server must have a __CPU with x86_64__ and support for SSE 4.2 or equivalent NEON instructions.

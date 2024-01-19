@@ -10,9 +10,24 @@ Ainsi, la seule chose dont vous avez besoin pour installer P-KISS-SBC est un ser
 
     Pour installer docker et docker compose sur debian, suivez ce guide : [https://docs.docker.com/engine/install/debian/](https://docs.docker.com/engine/install/debian/)
 
-Le serveur doit être équipé de __processeur x86_64__ et prendre en charge SSE 4.2 ou des instructions NEON équivalentes.
+## Systèmes d'exploitation supportés
+
+Le script d'installation automatique en une étape peut être utilisé avec un nombre limité de systèmes d'exploitation.
+
+Les systèmes d'exploitation suivants sont __officiellement__ pris en charge :
+
+| Distribution | Release          | Architecture        |
+| ------------ | ---------------- | ------------------- |
+| DietPi   | v8.xx | x86_64 |
+| Ubuntu | 22.04 | x86_64 |
+| Debian | 12 | x86_64 |
+
+!!! Note "Déployer sur un autre OS"
+    Il est tout à fait possible de déployer PKS sur un autre OS. Les pré-requis devront-être installés manuellement !
 
 ## Dimensionnement VM
+
+Le serveur doit être équipé de __processeur x86_64__ et prendre en charge SSE 4.2 ou des instructions NEON équivalentes.
 
 Nous recommandons d'utiliser un __minimum de 2 vcpu et 2GB de RAM__, mais les exigences dépendront de votre trafic VoIP en termes d'appels simultanés et de nouveaux appels par seconde.
 

@@ -175,7 +175,7 @@ nav:
     - getting-started.md
     - Requirements: user-guide/requirements.md
     - Installation: user-guide/installation.md
-    - Configuration: user-guide/configuration.md
+    - Post Install: user-guide/configuration.md
     - Manage: user-guide/manage.md
   - How To:
     - Backup and Recovery: how-to/backup-recovery.md
