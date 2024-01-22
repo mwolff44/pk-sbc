@@ -15,6 +15,9 @@ pks reload
 # To see containers status
 pks status
 
+# To display a live stream of containers resource usage statistics
+pks stats
+
 # To see the logs
 pks debug
 ```

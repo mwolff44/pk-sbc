@@ -15,6 +15,9 @@ pks reload
 # Pour voir l'état des conteneurs
 pks status
 
+# Pour afficher les statistiques d'utilisation des ressources en direct pour des conteneurs
+pks stats
+
 # Pour voir les logs
 pks debug
 ```

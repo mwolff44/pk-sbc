@@ -347,6 +347,10 @@ dbFunc(){
   done
 }
 
+statsFunc(){
+  docker stats
+}
+
 helpFunc(){
   echo "Usage: pks [options]
   Example: 'pks -r -h'
@@ -362,6 +366,7 @@ helpFunc(){
     -d, debug          View the live output of the PKS log
     -s, status         PKS containers status
     db                 Database internal data
+    stats              Display a live stream of containers resource usage statistics
 
   Options:
     -h, --help, help   Show this help dialog  
@@ -481,6 +486,7 @@ case "${1}" in
   "-d" | "debug"                ) debugFunc "$@";;
   "-s" | "status"               ) statusFunc "$@";;
   "db"                          ) dbFunc "$@";;
+  "stats"                       ) statsFunc "$@";;
   "-h" | "help" | "--help"      ) helpFunc;;
   "-v" | "version"              ) versionFunc "$@";;
   "uninstall"                   ) uninstallFunc "$@";;
