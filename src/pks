@@ -468,11 +468,22 @@ installFunc(){
   exit 0
 }
 
+checkUpdateFunc(){
+  lastRelease="$(curl --silent "https://api.github.com/repos/mwolff44/pyfreeBilling/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")'| cut -b 2-7)"
+  if [ "${VERSION}" == "${lastRelease}" ]; then
+    echo -e "   ${TICK} You run the latest PKS version.\n"
+  else
+    echo -e "   ${CROSS} A new PKS version is available (${lastRelease}). Think about updating.\n"
+  fi
+}
+
 ###### MAIN #####
 
 colorFunc
 
 show_ascii_pks
+
+checkUpdateFunc
 
 if [[ $# = 0 ]]; then
   helpFunc
