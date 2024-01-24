@@ -11,13 +11,11 @@ export PATH+=':/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
 # Variables
 VERSION="4.0.0"
-readonly PKS_GIT_URL="https://github.com/mwolff44/pyfreebilling"
+readonly PKS_GIT_URL="https://raw.githubusercontent.com/mwolff44/pyfreebilling"
 readonly DATA_DIR="/srv"
 ENV_FILE="/srv/pks/.env"
-DC_FILE_SOURCE="/usr/src/pyfreebilling/src/sip/docker-compose.yml"
 DC_FILE="/srv/pks/docker-compose.yml"
 DOCKER_COMPOSE=(docker compose -f "${DC_FILE}" --env-file "${ENV_FILE}")
-DBschema="/usr/src/pyfreebilling/src/sip/db/sqlite/init.sql"
 
 # Test for empty string. Use standard path in this case.
 if [ -z "$DBFILE" ]; then
@@ -35,11 +33,6 @@ show_ascii_pks() {
  ${COL_NC}                                                                     
  "                                                                                                                                                                                     
 }                                                                                                                                                                                    
-                                                                                                                                                                                      
-                                                                                                                                                                                      
-                                                                                                                                                                                      
-                                                                                                                                                                                      
-                                                                                                                                                                                      
 
 colorFunc(){
   COL_BOLD=$'\e[0;1m'
@@ -227,45 +220,6 @@ installPrerequesitesFunc(){
   unsupportedFunc
 }
 
-getRepoFunc() {
-  local directory="/usr/src"
-
-  # The message to display when this function is running
-  str="Clone ${PKS_GIT_URL} into ${directory} (it takes a while)"
-  # Display the message and use the color table to preface the message with an "info" indicator
-  printf "  %b %s..." "${INFO}" "${str}"
-
-  mkdir "${directory}"/pyfreebilling
-  git clone "${PKS_GIT_URL}" "${directory}"/pyfreebilling &> /dev/null
-
-  # Show a colored message showing it's status
-  printf "%b  %b %s\\n" "${OVER}" "${TICK}" "${str}"
-}
-
-Select_db(){
-    echo "Before installation, where do you want to store data ?"
-    PS3="Select your DB choice please: "
-
-    select db in Default DBtext MySQL PostgreSQL SQLite Quit
-    do
-        case $db in
-            "Default")
-                echo "$db database selected - we will use DBText";;
-            "MySQL")
-                echo "$db database selected";;
-            "PostgreSQL")
-                echo "$db database selected";;
-            "SQLite")
-                echo "$db database selected";;
-            "Quit")
-                echo "Install process aborted"
-                break;;
-            *)
-                echo "Ooops - unknown choice";;
-        esac
-    done
-}
-
 startFunc(){
   echo -e "  ${INFO} Start PKS ..."
   "${DOCKER_COMPOSE[@]}" up -d
@@ -420,22 +374,23 @@ installFunc(){
 
   testPrerequesitesFunc
 
-  # Get repository
-  getRepoFunc
-
   # Create necessary directories
-  mkdir -p "${DATA_DIR}/pks/db"
-  mkdir -p "${DATA_DIR}/pks/redis"
+  install -d "${DATA_DIR}/pks/db"
+  install -d "${DATA_DIR}/pks/redis"
 
   # Create env file for configuration
-  if [ ! -f "${DATA_DIR}/pks/.env" ]; then
-    touch "${DATA_DIR}/pks/.env"
-  fi
+  [[ -f "${DATA_DIR}/pks/.env" ]] || touch "${DATA_DIR}/pks/.env"
+  [[ -f "${DC_FILE}" ]] || curl -fsSL -o ${DC_FILE} "$PKS_GIT_URL/$VERSION/src/sip/docker-compose.yml"
+  [[ -f "${DATA_DIR}/pks/db/address" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/address" "$PKS_GIT_URL/$VERSION/src/sip/db/address"
+  [[ -f "${DATA_DIR}/pks/db/dialplan" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/dialplan" "$PKS_GIT_URL/$VERSION/src/sip/db/dialplan"
+  [[ -f "${DATA_DIR}/pks/db/dispatcher" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/dispatcher" "$PKS_GIT_URL/$VERSION/src/sip/db/dispatcher"
+  [[ -f "${DATA_DIR}/pks/db/htable" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/htable" "$PKS_GIT_URL/$VERSION/src/sip/db/htable"
+  [[ -f "${DATA_DIR}/pks/db/tenant" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/tenant" "$PKS_GIT_URL/$VERSION/src/sip/db/tenant"
+  [[ -f "${DATA_DIR}/pks/db/version" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/version" "$PKS_GIT_URL/$VERSION/src/sip/db/version"
 
   ## Define env variables
-  # Set SQLite3 as DB
-  echo "DB=.sqlite3" >> "${DATA_DIR}/pks/.env"
-  echo "DB_SQLITE=sqlite:///srv/pks/db/pks.db" >> "${DATA_DIR}/pks/.env"
+  # Set DBTEXT as DB
+  echo "DB=" >> "${DATA_DIR}/pks/.env"
   read -p "Enter public ip address: " PUBLIC_IP_ADDRESS
   read -p "Enter private ip address: " LOCAL_IP_ADDRESS
   echo "PUBLIC_IP=$PUBLIC_IP_ADDRESS" >> "${DATA_DIR}/pks/.env"
@@ -449,19 +404,6 @@ installFunc(){
   echo "BIND_HTTP_IP=127.0.0.1" >> "${DATA_DIR}/pks/.env"
   echo "REDIS_URL=127.0.0.1" >> "${DATA_DIR}/pks/.env"
   echo "NOT_PROBING=true" >> "${DATA_DIR}/pks/.env"
-
-  # Copy docker compose file
-  cp "${DC_FILE_SOURCE}" "${DATA_DIR}/pks/"
-
-  # Create database file only if not present
-  if [ ! -e "${DBFILE}" ]; then
-    # Create new database file
-    echo -e "  ${INFO} Creating new PKS database"
-    if ! sqlite3 "${DBFILE}" < "${DBschema}"; then
-      echo -e "   ${CROSS} Error creating new PKS database. Please contact support."
-      return 1
-    fi
-  fi
 
   printf "  %b %b Installation complete! %b\\n" "${TICK}" "${COL_LIGHT_GREEN}" "${COL_NC}"
 

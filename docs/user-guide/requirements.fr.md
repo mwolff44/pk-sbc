@@ -53,7 +53,7 @@ PKS se déploie sur une VM avec __une seule adresse IP privée__. Une __adresse 
 
 ### Ports réseaux
 
-PKS utilise __2 ports réseau différents__ pour la __signalisation__ (UDP 5060 et UDP 5070) et une __plage de ports__ prédéfinis pour le __média__ (UDP 16384 à 16485).
+PKS utilise __2 ports réseau différents__ pour la __signalisation__ (UDP 5060 et UDP 5070) et une __plage de ports__ prédéfinis pour le __média__ (UDP 16000 à 18000).
 
 Ces __paramètres__ peuvent-être __modifiés__ pour correspondre à vos besoins, notamment la plage de ports RTP afin de pouvoir gérer plus d'appels concurrents.
 

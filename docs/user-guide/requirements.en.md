@@ -53,7 +53,7 @@ PKS is deployed on a VM with __a single private IP address__. A __public IP addr
 
 ### Network ports
 
-PKS uses __2 different network ports__ for __signalling__ (UDP 5060 and UDP 5070) and a __range of predefined ports__ for __media__ (UDP 16384 to 16485).
+PKS uses __2 different network ports__ for __signalling__ (UDP 5060 and UDP 5070) and a __range of predefined ports__ for __media__ (UDP 16000 to 18000).
 
 These __parameters__ can be __modified__ to suit your needs, including the RTP port range to handle more concurrent calls.
 

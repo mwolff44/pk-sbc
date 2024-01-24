@@ -74,8 +74,8 @@ services:
       PUBLIC_IP: ${PUBLIC_IP}
       LOCAL_IP: ${LOCAL_IP}
       INTERNAL_IP: ${INTERNAL_IP}
-      PORT_MIN: ${PORT_MIN:-16384}
-      PORT_MAX: ${PORT_MAX:-16485}
+      PORT_MIN: ${PORT_MIN:-16000}
+      PORT_MAX: ${PORT_MAX:-18000}
       LOG_LEVEL: ${LOG_LEVEL:-6}
     network_mode: host
 
