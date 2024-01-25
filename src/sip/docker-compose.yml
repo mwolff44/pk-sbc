@@ -4,9 +4,7 @@ services:
   pks-sip:
     container_name: pks-sip
     hostname: sip.pks.local
-    build:
-      context: .
-      dockerfile: Dockerfile${DB}
+    image:mwolff44w/pks-sipproxy:4.0.0beta01
     restart: unless-stopped
     volumes:
       #- ./kamailio.cfg:/etc/kamailio/kamailio.cfg
@@ -59,7 +57,7 @@ services:
   pks-rtp:
     container_name: pks-rtp
     hostname: rtp.pks.local
-    image: registry.gitlab.com/mwolff44/pyfb-rtpproxy:1.2.2
+    image: mwolff44w/pks-rtpengine:v1.0.1
     restart: unless-stopped
     privileged: true
     expose:
