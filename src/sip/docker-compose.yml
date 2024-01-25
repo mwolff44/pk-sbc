@@ -4,7 +4,7 @@ services:
   pks-sip:
     container_name: pks-sip
     hostname: sip.pks.local
-    image:mwolff44w/pks-sipproxy:4.0.0beta01
+    image: mwolff44w/pks-sipproxy:4.0.0beta01
     restart: unless-stopped
     volumes:
       #- ./kamailio.cfg:/etc/kamailio/kamailio.cfg
