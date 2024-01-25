@@ -82,9 +82,6 @@ extra:
       as to measure the effectiveness of our documentation and whether users
       find what they're searching for. With your consent, you're helping us to
       make our documentation better.
-  analytics:
-    provider: plausible
-    domain: pk-sbc.io
 
 # Extensions
 markdown_extensions:
@@ -153,7 +150,6 @@ plugins:
       categories:
         - categories
         - tags
-  - material-plausible
 
 # Page tree
 nav:
