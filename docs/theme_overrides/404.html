@@ -1,0 +1,15 @@
+{% extends "main.html" %}
+
+<!-- Content -->
+{% block content %}
+<div>
+    <div style="float:right;">
+      <h2>Ah, nuts!</h2>
+      <p style="float:right">We were unable to find the page you were looking for, but we'll get cracking on the problem.</p>
+    </div>
+      <img src="../assets/images/pistachios.jpg" float="left" width=50% height=50%>
+</div>
+
+  <script>document.addEventListener('DOMContentLoaded', function () { plausible('404', { props: { path: document.location.pathname } }); });</script>
+
+{% endblock %}
