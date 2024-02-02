@@ -110,7 +110,9 @@ markdown_extensions:
 # Plugins
 plugins:
   - search
-  - privacy
+  - minify:
+      minify_html: true
+  #- privacy
   - social
   - i18n:
       docs_structure: suffix
