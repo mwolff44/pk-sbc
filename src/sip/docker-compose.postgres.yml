@@ -7,7 +7,7 @@
     environment:
       - DB_URL: postgres://postgres:mypass@pks-postgres/pks
   
-  pks-mysql:
+  pks-pgsql:
     container_name: pks-postgres
     hostname: postgres.pks.local
     image: image: postgres

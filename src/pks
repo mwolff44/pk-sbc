@@ -381,29 +381,40 @@ installFunc(){
   # Create env file for configuration
   [[ -f "${DATA_DIR}/pks/.env" ]] || touch "${DATA_DIR}/pks/.env"
   [[ -f "${DC_FILE}" ]] || curl -fsSL -o ${DC_FILE} "$PKS_GIT_URL/$VERSION/src/sip/docker-compose.yml"
-  [[ -f "${DATA_DIR}/pks/db/address" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/address" "$PKS_GIT_URL/$VERSION/src/sip/db/address"
-  [[ -f "${DATA_DIR}/pks/db/dialplan" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/dialplan" "$PKS_GIT_URL/$VERSION/src/sip/db/dialplan"
-  [[ -f "${DATA_DIR}/pks/db/dispatcher" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/dispatcher" "$PKS_GIT_URL/$VERSION/src/sip/db/dispatcher"
-  [[ -f "${DATA_DIR}/pks/db/htable" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/htable" "$PKS_GIT_URL/$VERSION/src/sip/db/htable"
-  [[ -f "${DATA_DIR}/pks/db/tenant" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/tenant" "$PKS_GIT_URL/$VERSION/src/sip/db/tenant"
-  [[ -f "${DATA_DIR}/pks/db/version" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/version" "$PKS_GIT_URL/$VERSION/src/sip/db/version"
+  # [[ -f "${DATA_DIR}/pks/db/address" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/address" "$PKS_GIT_URL/$VERSION/src/sip/db/address"
+  # [[ -f "${DATA_DIR}/pks/db/dialplan" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/dialplan" "$PKS_GIT_URL/$VERSION/src/sip/db/dialplan"
+  # [[ -f "${DATA_DIR}/pks/db/dispatcher" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/dispatcher" "$PKS_GIT_URL/$VERSION/src/sip/db/dispatcher"
+  # [[ -f "${DATA_DIR}/pks/db/htable" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/htable" "$PKS_GIT_URL/$VERSION/src/sip/db/htable"
+  # [[ -f "${DATA_DIR}/pks/db/tenant" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/tenant" "$PKS_GIT_URL/$VERSION/src/sip/db/tenant"
+  # [[ -f "${DATA_DIR}/pks/db/version" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/version" "$PKS_GIT_URL/$VERSION/src/sip/db/version"
 
   ## Define env variables
-  # Set DBTEXT as DB
-  echo "DB=" >> "${DATA_DIR}/pks/.env"
-  read -p "Enter public ip address: " PUBLIC_IP_ADDRESS
-  read -p "Enter private ip address: " LOCAL_IP_ADDRESS
-  echo "PUBLIC_IP=$PUBLIC_IP_ADDRESS" >> "${DATA_DIR}/pks/.env"
-  echo "LISTEN_ADVERTISE=$PUBLIC_IP_ADDRESS:5060" >> "${DATA_DIR}/pks/.env"
-  echo "LOCAL_IP=$LOCAL_IP_ADDRESS" >> "${DATA_DIR}/pks/.env"
+  if [ -f "${DATA_DIR}/pks/.install.lock" ]; then
+    # Set DBTEXT as DB
+    echo "DB=PGSQL" >> "${DATA_DIR}/pks/.env"
+    DB_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+    echo "DB_PGSQL=postgres://postgres:$DB_PASSWORD@127.0.0.1/pks" >> "${DATA_DIR}/pks/.env"
+    echo "DB_DSN=postgres://postgres:$DB_PASSWORD@127.0.0.1/pks" >> "${DATA_DIR}/pks/.env"
+    echo "POSTGRES_PASSWORD=$DB_PASSWORD" >> "${DATA_DIR}/pks/.env"
 
-  echo "PORT_MIN=16000" >> "${DATA_DIR}/pks/.env"
-  echo "PORT_MAX=18000" >> "${DATA_DIR}/pks/.env"
-  echo "ENVIRONMENT=prod" >> "${DATA_DIR}/pks/.env"
-  echo "RTPENGINE_URL=127.0.0.1" >> "${DATA_DIR}/pks/.env"
-  echo "BIND_HTTP_IP=127.0.0.1" >> "${DATA_DIR}/pks/.env"
-  echo "REDIS_URL=127.0.0.1" >> "${DATA_DIR}/pks/.env"
-  echo "NOT_PROBING=true" >> "${DATA_DIR}/pks/.env"
+    # Define IP addresses
+    read -p "Enter public ip address: " PUBLIC_IP_ADDRESS
+    read -p "Enter private ip address: " LOCAL_IP_ADDRESS
+    echo "PUBLIC_IP=$PUBLIC_IP_ADDRESS" >> "${DATA_DIR}/pks/.env"
+    echo "LISTEN_ADVERTISE=$PUBLIC_IP_ADDRESS:5060" >> "${DATA_DIR}/pks/.env"
+    echo "LOCAL_IP=$LOCAL_IP_ADDRESS" >> "${DATA_DIR}/pks/.env"
+
+    echo "PORT_MIN=16000" >> "${DATA_DIR}/pks/.env"
+    echo "PORT_MAX=18000" >> "${DATA_DIR}/pks/.env"
+    echo "ENVIRONMENT=prod" >> "${DATA_DIR}/pks/.env"
+    echo "RTPENGINE_URL=127.0.0.1" >> "${DATA_DIR}/pks/.env"
+    echo "BIND_HTTP_IP=127.0.0.1" >> "${DATA_DIR}/pks/.env"
+    echo "REDIS_URL=127.0.0.1" >> "${DATA_DIR}/pks/.env"
+    echo "NOT_PROBING=true" >> "${DATA_DIR}/pks/.env"
+  fi
+  # Add file to indicate that the 1st install has been done
+  [[ -f "${DATA_DIR}/pks/.install.lock" ]] || touch "${DATA_DIR}/pks/.install.lock"
+
 
   printf "  %b %b Installation complete! %b\\n" "${TICK}" "${COL_LIGHT_GREEN}" "${COL_NC}"
 

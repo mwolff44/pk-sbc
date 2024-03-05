@@ -23,14 +23,12 @@ RUN wget -O- http://deb.kamailio.org/kamailiodebkey.gpg | apt-key add -
 
 RUN apt-get update && apt-get install --assume-yes \
 libhiredis0.14 \
-libpq5 \
 kamailio \
 kamailio-extra-modules \
 kamailio-json-modules \
 kamailio-utils-modules \
 kamailio-redis-modules \
-kamailio-xml-modules \
-kamailio-postgres-modules
+kamailio-xml-modules
 
 # clean
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*

@@ -4,7 +4,7 @@ services:
   pks-sip:
     container_name: pks-sip
     hostname: sip.pks.local
-    image: mwolff44w/pks-sipproxy:4.0.0beta01
+    image: mwolff44w/pks-sipproxy:v4.0.0
     restart: unless-stopped
     volumes:
       #- ./kamailio.cfg:/etc/kamailio/kamailio.cfg
@@ -33,6 +33,8 @@ services:
     depends_on:
       - pks-redis
       - pks-rtp
+      - pks-db:
+        condition: service_healthy
     #ports:
     #  - "5060:5060/udp"
     #  - "5070:5070/udp"
@@ -57,7 +59,7 @@ services:
   pks-rtp:
     container_name: pks-rtp
     hostname: rtp.pks.local
-    image: mwolff44w/pks-rtpengine:v1.0.1
+    image: mwolff44w/pks-rtpengine:v1.0.2
     restart: unless-stopped
     privileged: true
     expose:
@@ -76,6 +78,50 @@ services:
       PORT_MAX: ${PORT_MAX:-18000}
       LOG_LEVEL: ${LOG_LEVEL:-6}
     network_mode: host
+
+  pks-db:
+    container_name: pks-db
+    hostname: db.pks.local
+    image: postgres:16
+    restart: unless-stopped
+    volumes:
+      - pks-db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: pks
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pa55word}
+      PGDATA: /var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
+  pks-admin:
+    container_name: pks-admin
+    hostname: admin.pks.local
+    image: mwolff44w/pks-admin:v1.0.0
+    restart: unless-stopped
+    depends_on:
+      pks-db:
+        condition: service_healthy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-dev}
+      DB_DSN: ${DB_PGSQL:-postgres://postgres:pa55word@pks-db/pks}
+    ports:
+      - "4444:4444"
 
 networks:
   main:

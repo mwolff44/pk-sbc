@@ -1,36 +1,38 @@
-FROM debian:bullseye
+FROM debian:bookworm-slim
 
-MAINTAINER Mathias WOLFF <mathias@celea.org>
+LABEL org.opencontainers.image.authors Mathias WOLFF <mathias@celea.org>
 
-ENV REFRESHED_AT 2023-04-29
-ENV VERSION 1.0.1
+ENV REFRESHED_AT 2024-03-05
+ENV VERSION 4.0.0
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV DIST="bullseye"
-ENV REL="56"
+ENV DIST="bookworm"
+ENV REL="5.7.4"
 
 ENV KAMAILIO_LOG_LEVEL info
 
-# avoid httpredir errors
-RUN sed -i 's/httpredir/deb/g' /etc/apt/sources.list
-
-RUN rm -rf /var/lib/apt/lists/* && apt-get update && apt-get install --assume-yes gnupg wget iproute2
+RUN rm -rf /var/lib/apt/lists/* && apt-get update && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -qq --assume-yes gnupg wget apt-transport-https
 
 # kamailio repo
-RUN echo "deb http://deb.kamailio.org/kamailio$REL $DIST main" >   /etc/apt/sources.list.d/kamailio.list
-RUN wget -O- http://deb.kamailio.org/kamailiodebkey.gpg | apt-key add -
+RUN echo "deb http://deb-archive.kamailio.org/repos/kamailio-$REL $DIST main" >   /etc/apt/sources.list.d/kamailio.list
+RUN wget -O /tmp/kamailiodebkey.gpg http://deb.kamailio.org/kamailiodebkey.gpg \
+  && gpg --output /etc/apt/trusted.gpg.d/deb-kamailio-org.gpg --dearmor /tmp/kamailiodebkey.gpg
 
-RUN apt-get update && apt-get install --assume-yes \
-libhiredis0.14 \
-kamailio \
-kamailio-extra-modules \
-kamailio-json-modules \
-kamailio-utils-modules \
-kamailio-redis-modules \
-kamailio-xml-modules
 
-# clean
+RUN apt-get update && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -qq --assume-yes \
+  libhiredis0.14 \
+  libpq5 \
+  kamailio \
+  kamailio-extra-modules \
+  kamailio-json-modules \
+  kamailio-utils-modules \
+  kamailio-redis-modules \
+  kamailio-xml-modules \
+  kamailio-postgres-modules
+
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY ./kamailio.cfg /etc/kamailio/kamailio.cfg
