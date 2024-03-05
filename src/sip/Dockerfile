@@ -35,8 +35,8 @@ RUN apt-get update && \
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-COPY ./kamailio.cfg /etc/kamailio/kamailio.cfg
-COPY ./bootstrap.sh /etc/kamailio/bootstrap.sh
+COPY src/sip/kamailio.cfg /etc/kamailio/kamailio.cfg
+COPY src/sip/bootstrap.sh /etc/kamailio/bootstrap.sh
 RUN chmod a+x /etc/kamailio/bootstrap.sh
 
 ENTRYPOINT ["/etc/kamailio/bootstrap.sh"]
