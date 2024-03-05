@@ -67,15 +67,15 @@ The project uses Kamailio, RTP Engine, Redis and a Database (by default, POSTGRE
 
 Name: *Mathias WOLFF*
 
-Email: *website contact form*
+Contact: [https://blog-des-telecoms.com](https://blog-des-telecoms.com)
 
-Website: [https://www.pyfreebilling.com](https://www.pyfreebilling.com)
+Website: [https://pk-sbc.io](https://pk-sbc.io)
 
 ## Support
 
 To get free support, use github issue tab.
 
-If you need paid support, specific features or consulting services, you will find support services prices on PyFreeBilling website : [https://www.pyfreebilling.com/](https://www.pyfreebilling.com/)
+If you need paid support, specific features or consulting services, you will find support services prices on PyFreeBilling website : [https://pk-sbc.io](https://pk-sbc.io)
 
 ## Contributing
 
