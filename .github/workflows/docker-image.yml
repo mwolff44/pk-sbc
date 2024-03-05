@@ -3,6 +3,8 @@ name: Build and Push Docker Image to Docker Hub
 on:
   push:
     tags: ["*"]
+    branches:
+      - "main"
   pull_request:
     branches: [ "main" ]
 
@@ -19,7 +21,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build /src/sip. --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build --platform=linux/amd64 . --file /src/sip/Dockerfile --tag my-image-name:$(date +%s)
 
   push_to_registry:
     name: Push Docker image to Docker Hub
