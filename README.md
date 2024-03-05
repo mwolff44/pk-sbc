@@ -61,7 +61,7 @@ There are some features supported. A few of them are:
 In order to run PKS, you need the following configured, secured  and
 working Basic Operating System (Linux). P-KISS-SBC works in containers, it can be deployed on any docker or Kubernetes environment.
 
-The project uses Kamailio, RTP Engine, Redis and a Database (by default, SQLITE but also support POSTGRESQL, MARIADB, MYSQL and DBTEXT).
+The project uses Kamailio, RTP Engine, Redis and a Database (by default, POSTGRESQL but also support POSTGRESQL, MARIADB, MYSQL and DBTEXT).
 
 ## Contact Information
 
