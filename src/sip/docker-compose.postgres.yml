@@ -3,7 +3,7 @@
       - pks-redis
       - pks-rtp
       - pks-fs-1
-      - pks_postgres
+      - pks_pgsql
     environment:
       - DB_URL: postgres://postgres:mypass@pks-postgres/pks
   
