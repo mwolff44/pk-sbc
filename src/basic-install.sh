@@ -43,7 +43,7 @@ echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-  tail -n +20 "$0"
+  curl -sSL http://bit.ly/pks-basic-install | less
 
   echo
   read -p "Do you want to execute the script ? [y/N]" -n 1 -r </dev/tty
