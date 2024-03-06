@@ -38,22 +38,15 @@ launchScript() {
 
 ###### MAIN #####
 
-read -p "Do you want to see the content of this script before execution ? [y/N]" -n 1 -r </dev/tty
+
+read -p "Do you want to execute the script ? [y/N]" -n 1 -r </dev/tty
 echo
 
-if [[ $REPLY =~ ^[Yy]$ ]]
+if [[ $REPLY =~ ^[Nn]$ ]]
 then
-  curl -sSL http://bit.ly/pks-basic-install | less
-
-  echo
-  read -p "Do you want to execute the script ? [y/N]" -n 1 -r </dev/tty
-  echo
-
-  if [[ $REPLY =~ ^[Nn]$ ]]
-  then
-    exit
-  fi
+  exit
 fi
+
 
 installScript
 launchScript
