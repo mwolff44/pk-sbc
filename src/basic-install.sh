@@ -13,7 +13,7 @@ export PATH+=':/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 readonly PKS_GIT_URL="https://raw.githubusercontent.com/mwolff44/pyfreebilling"
 readonly PKS_INSTALL_DIR="/srv/pks/scripts"
 readonly PKS_BIN_DIR="/usr/local/bin"
-readonly VERSION="4.0.0"
+readonly VERSION="v4.0.0"
 
 # Install the PKS script from repository
 installScript() {
@@ -38,7 +38,7 @@ launchScript() {
 
 ###### MAIN #####
 
-read -p "Do you want to see the content of this script before execution ? [y/N]" -n 1 -r
+read -p "Do you want to see the content of this script before execution ? [y/N]" -n 1 -r </dev/tty
 echo
 
 if [[ $REPLY =~ ^[Yy]$ ]]
@@ -46,7 +46,7 @@ then
   tail -n +20 "$0"
 
   echo
-  read -p "Do you want to execute the script ? [y/N]" -n 1 -r
+  read -p "Do you want to execute the script ? [y/N]" -n 1 -r </dev/tty
   echo
 
   if [[ $REPLY =~ ^[Nn]$ ]]

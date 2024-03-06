@@ -58,4 +58,4 @@ PKS utilise __2 ports réseau différents__ pour la __signalisation__ (UDP 5060 
 Ces __paramètres__ peuvent-être __modifiés__ pour correspondre à vos besoins, notamment la plage de ports RTP afin de pouvoir gérer plus d'appels concurrents.
 
 !!! note "Administration web"
-    De plus, si vous utilisez PKS-Admin, l'interface Web d'administration, le port TCP 443 devra être ouvert.
+    De plus, si vous utilisez PKS-Admin, l'interface Web d'administration, le port TCP 4444 devra être ouvert.

@@ -58,4 +58,4 @@ PKS uses __2 different network ports__ for __signalling__ (UDP 5060 and UDP 5070
 These __parameters__ can be __modified__ to suit your needs, including the RTP port range to handle more concurrent calls.
 
 !!! note "Web admin"
-    In addition, if you are using PKS-Admin, the Web administration interface, TCP port 443 must be open.
+    In addition, if you are using PKS-Admin, the Web administration interface, TCP port 4444 must be open.
