@@ -1,3 +1,9 @@
+<!---
+# P-KISS-SBC documentation © 2007-2024 by Mathias WOLFF 
+# is licensed under Attribution-NonCommercial-ShareAlike 4.0 International (see https://creativecommons.org/licenses/by-nc-sa/4.0/)
+# SPDX-License-Identifier: CC-BY-NC-SA-4.0
+--->
+
 ---
 title: Est-ce que P-KISS-SBC est un softswitch VoIP
 description: P-KISS-SBC est un softswitch VoIP de classe 4, il interconnecte les réseaux VoIP, les opérateurs et les IPBX.

@@ -1,3 +1,9 @@
+<!---
+# P-KISS-SBC documentation © 2007-2024 by Mathias WOLFF 
+# is licensed under Attribution-NonCommercial-ShareAlike 4.0 International (see https://creativecommons.org/licenses/by-nc-sa/4.0/)
+# SPDX-License-Identifier: CC-BY-NC-SA-4.0
+--->
+
 # What are the differences between PyFreeBilling and P-KISS-SBC (PKS)?
 
 PyfreeBilling was created in 2011 in response to the need to buy and resell VoIP minutes and the constraints of stability, performance and security.

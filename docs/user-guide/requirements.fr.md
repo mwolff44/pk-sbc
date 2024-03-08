@@ -1,3 +1,9 @@
+<!---
+# P-KISS-SBC documentation © 2007-2024 by Mathias WOLFF 
+# is licensed under Attribution-NonCommercial-ShareAlike 4.0 International (see https://creativecommons.org/licenses/by-nc-sa/4.0/)
+# SPDX-License-Identifier: CC-BY-NC-SA-4.0
+--->
+
 # Prérequis
 
 P-KISS-SBC utilise des __conteneurs Docker__ pour fonctionner et prend en charge toutes les infrastructures qui prennent en charge les conteneurs.
@@ -58,4 +64,4 @@ PKS utilise __2 ports réseau différents__ pour la __signalisation__ (UDP 5060 
 Ces __paramètres__ peuvent-être __modifiés__ pour correspondre à vos besoins, notamment la plage de ports RTP afin de pouvoir gérer plus d'appels concurrents.
 
 !!! note "Administration web"
-    De plus, si vous utilisez PKS-Admin, l'interface Web d'administration, le port TCP 4444 devra être ouvert.
+    De plus, si vous utilisez PKS-Admin, l'interface Web d'administration, le port TCP 4433 devra être ouvert.

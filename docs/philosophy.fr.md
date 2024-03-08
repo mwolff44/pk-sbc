@@ -1,3 +1,14 @@
+<!---
+# P-KISS-SBC documentation © 2007-2024 by Mathias WOLFF 
+# is licensed under Attribution-NonCommercial-ShareAlike 4.0 International (see https://creativecommons.org/licenses/by-nc-sa/4.0/)
+# SPDX-License-Identifier: CC-BY-NC-SA-4.0
+--->
+
+---
+title: PKS philosophie
+description: KISS Keep It SImple and Stupid
+---
+
 # Philosophie
 
 Avant d'opter pour P-KISS-SBC, il convient de comprendre la philosophie qui sous-tend le projet, afin de s'assurer qu'il correspond à vos objectifs.

@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
 # PKS P-KISS-SBC
-# (c) 2022-2024 Mathias WOLFF (mathias@celea.org)
 #
-# This file is copyright under the latest version of the EUPL.
-# Please see LICENSE file for your rights under this license.
+# Copyright: (c) 2007-2024 Mathias WOLFF (mathias@celea.org)
+# GNU Affero General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/agpl-3.0.txt)
+# SPDX-License-Identifier: AGPL-3.0-or-later
 
 # Append common folders to the PATH to ensure that all basic commands are available.
 export PATH+=':/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
 # Variables
-VERSION="v4.0.0"
+VERSION="v4.0.1"
 readonly PKS_GIT_URL="https://raw.githubusercontent.com/mwolff44/pyfreebilling"
 readonly DATA_DIR="/srv"
 ENV_FILE="/srv/pks/.env"
@@ -378,8 +378,9 @@ installFunc(){
   install -d "${DATA_DIR}/pks/db"
   install -d "${DATA_DIR}/pks/redis"
 
-  # Create env file for configuration
+  # Create files for configuration
   [[ -f "${DATA_DIR}/pks/.env" ]] || touch "${DATA_DIR}/pks/.env"
+  [[ -f "${DATA_DIR}/pks/Caddyfile" ]] || touch "${DATA_DIR}/pks/Caddyfile"
   [[ -f "${DC_FILE}" ]] || curl -fsSL -o ${DC_FILE} "$PKS_GIT_URL/$VERSION/src/sip/docker-compose.yml"
   # [[ -f "${DATA_DIR}/pks/db/address" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/address" "$PKS_GIT_URL/$VERSION/src/sip/db/address"
   # [[ -f "${DATA_DIR}/pks/db/dialplan" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/dialplan" "$PKS_GIT_URL/$VERSION/src/sip/db/dialplan"
@@ -413,6 +414,15 @@ installFunc(){
     echo "BIND_HTTP_IP=127.0.0.1" >> "${DATA_DIR}/pks/.env"
     echo "REDIS_URL=127.0.0.1" >> "${DATA_DIR}/pks/.env"
     echo "NOT_PROBING=true" >> "${DATA_DIR}/pks/.env"
+
+    # Set domain or IP address to Caddy
+    read -p "Enter the admin domain or IP adress for the web admin: " ADMIN_DOMAIN
+    echo "ADMIN_DOMAIN=$ADMIN_DOMAIN" >> "${DATA_DIR}/pks/.env"
+    echo "$ADMIN_DOMAIN:4433 {" >> "${DATA_DIR}/pks/Caddyfile"
+    echo "   tls internal" >> "${DATA_DIR}/pks/Caddyfile"
+    echo "   reverse_proxy 127.0.0.1:4444" >> "${DATA_DIR}/pks/Caddyfile"
+    echo "}" >> "${DATA_DIR}/pks/Caddyfile"
+
   fi
   # Add file to indicate that the 1st install has been done
   [[ -f "${DATA_DIR}/pks/.install.lock" ]] || touch "${DATA_DIR}/pks/.install.lock"

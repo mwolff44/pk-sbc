@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # PKS P-KISS-SBC
-# (c) 2022-2024 Mathias WOLFF (mathias@celea.org)
 #
-# This file is copyright under the latest version of the EUPL.
-# Please see LICENSE file for your rights under this license.
+# Copyright: (c) 2007-2024 Mathias WOLFF (mathias@celea.org)
+# GNU Affero General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/agpl-3.0.txt)
+# SPDX-License-Identifier: AGPL-3.0-or-later
 
 # Append common folders to the PATH to ensure that all basic commands are available.
 export PATH+=':/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
@@ -13,7 +13,7 @@ export PATH+=':/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 readonly PKS_GIT_URL="https://raw.githubusercontent.com/mwolff44/pyfreebilling"
 readonly PKS_INSTALL_DIR="/srv/pks/scripts"
 readonly PKS_BIN_DIR="/usr/local/bin"
-readonly VERSION="v4.0.0"
+readonly VERSION="v4.0.1"
 
 # Install the PKS script from repository
 installScript() {
