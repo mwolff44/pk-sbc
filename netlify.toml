@@ -11,3 +11,43 @@
   from = "/api/event"
   to = "https://plausible.io/api/event"
   status = 200
+
+[[redirects]]
+  from = "/knowledge-base/*"
+  to = "/getting-started"
+  status = 301
+
+[[redirects]]
+  from = "/faq/*"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/customer-portal/"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/home/"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/support/"
+  to = "/contributing/"
+  status = 301
+
+[[redirects]]
+  from = "/demo/"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/how-to-install-pyfreebilling-1-4-6-on-ubuntu-14-04-64-bits-lts/"
+  to = "/getting-started"
+  status = 301
+
+[[redirects]]
+  from = "/new-stats-panel/"
+  to = "/"
+  status = 301
