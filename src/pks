@@ -390,7 +390,7 @@ installFunc(){
   # [[ -f "${DATA_DIR}/pks/db/version" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/version" "$PKS_GIT_URL/$VERSION/src/sip/db/version"
 
   ## Define env variables
-  if [ -f "${DATA_DIR}/pks/.install.lock" ]; then
+  if [[ -f "${DATA_DIR}/pks/.install.lock" ]]; then
     printf "  %b %b Not a new install. Edit manually .env file for any changes! %b\\n" "${TICK}" "${COL_YELLOW}" "${COL_NC}"
   else
     # Set DBTEXT as DB
