@@ -116,8 +116,8 @@ services:
     restart: unless-stopped
     volumes:
       - $PWD/Caddyfile:/etc/caddy/Caddyfile
-      - caddy-config:/config
-      - caddy-data:/data
+      - pks-caddy-config:/config
+      - pks-caddy-data:/data
     logging:
       driver: "json-file"
       options:
@@ -165,3 +165,15 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '/srv/pks/db'
+  pks-caddy-config:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/srv/pks/caddy/config'
+  pks-caddy-data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/srv/pks/caddy/data'
