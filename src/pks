@@ -10,7 +10,7 @@
 export PATH+=':/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
 # Variables
-VERSION="v4.0.1"
+VERSION="v4.0.3"
 readonly PKS_GIT_URL="https://raw.githubusercontent.com/mwolff44/pyfreebilling"
 readonly DATA_DIR="/srv"
 ENV_FILE="/srv/pks/.env"
