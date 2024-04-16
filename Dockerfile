@@ -7,7 +7,7 @@ FROM debian:bookworm-slim
 LABEL org.opencontainers.image.authors Mathias WOLFF <mathias@celea.org>
 
 ENV REFRESHED_AT 2024-03-05
-ENV VERSION 4.0.1
+ENV VERSION 4.1.0
 
 ENV DEBIAN_FRONTEND noninteractive
 

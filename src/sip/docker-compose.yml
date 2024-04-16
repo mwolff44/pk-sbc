@@ -8,7 +8,7 @@ services:
   pks-sip:
     container_name: pks-sip
     hostname: sip.pks.local
-    image: mwolff44w/pks-sipproxy:v4.0.1
+    image: mwolff44w/pks-sipproxy:v4.1.0
     restart: unless-stopped
     volumes:
       - pks-db-data:/etc/kamailio/db:ro
@@ -132,7 +132,7 @@ services:
   pks-admin:
     container_name: pks-admin
     hostname: admin.pks.local
-    image: mwolff44w/pks-admin:v1.1.0
+    image: mwolff44w/pks-admin:v1.2.1
     restart: unless-stopped
     depends_on:
       pks-db:

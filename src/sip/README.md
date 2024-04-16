@@ -137,7 +137,7 @@ La liste des commandes ci-dessous permet d'effectuer les opérations de modifica
 
 ## Support
 
-L'utilisation des issues de Gitlab est une bonne pratique permettant une traçabilité des demandes et liées celles-ci à des modifications de code.
+L'utilisation des issues de Github est une bonne pratique permettant une traçabilité des demandes et liées celles-ci à des modifications de code.
 
 ## Roadmap
 
@@ -156,4 +156,3 @@ Please make sure to update tests as appropriate.
 ## License
 
 Le projet est soumis à la license AGPL.
-
