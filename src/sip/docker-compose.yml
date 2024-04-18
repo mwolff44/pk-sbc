@@ -132,7 +132,7 @@ services:
   pks-admin:
     container_name: pks-admin
     hostname: admin.pks.local
-    image: mwolff44w/pks-admin:v1.2.1
+    image: mwolff44w/pks-admin:v1.3.0
     restart: unless-stopped
     depends_on:
       pks-db:
