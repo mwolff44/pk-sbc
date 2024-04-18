@@ -1,11 +1,7 @@
 # P-Kiss-SBC project
 
-![logo](http://www.pyfreebilling.com/wp-content/uploads/2014/12/PyFreeBilling-logo-small.png)
-
-![PyFB release](https://img.shields.io/badge/PKS_version-4.0.3-8A2BE2)
+![PKS release](https://img.shields.io/badge/PKS_version-4.0.3-8A2BE2)
 ![Docker pks-sipproxy Pulls](https://img.shields.io/docker/pulls/mwolff44w/pks-sipproxy)
-![Docker pks-rtpengine Pulls](https://img.shields.io/docker/pulls/mwolff44w/pks-rtpengine)
-![Docker pks-admin Pulls](https://img.shields.io/docker/pulls/mwolff44w/pks-admin)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/?branch=master)
 [![AGPLv3 License](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)](http://www.fsf.org)
 [![Donate to this project using Paypal](https://img.shields.io/badge/paypal-donate-red.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FANG9JC63Q7DY&lc=FR&item_name=PyFreeBilling&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted&pk_campaign=donation)
