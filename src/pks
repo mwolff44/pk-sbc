@@ -10,7 +10,7 @@
 export PATH+=':/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
 # Variables
-VERSION="v4.1.1"
+VERSION="v4.1.2"
 readonly PKS_GIT_URL="https://raw.githubusercontent.com/mwolff44/pyfreebilling"
 readonly DATA_DIR="/srv"
 ENV_FILE="/srv/pks/.env"
@@ -377,6 +377,9 @@ installFunc(){
   # Create necessary directories
   install -d "${DATA_DIR}/pks/db"
   install -d "${DATA_DIR}/pks/redis"
+  install -d "${DATA_DIR}/pks/caddy"
+  install -d "${DATA_DIR}/pks/caddy/config"
+  install -d "${DATA_DIR}/pks/caddy/data"
 
   # Create files for configuration
   [[ -f "${DATA_DIR}/pks/.env" ]] || touch "${DATA_DIR}/pks/.env"
@@ -390,7 +393,7 @@ installFunc(){
   # [[ -f "${DATA_DIR}/pks/db/version" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/version" "$PKS_GIT_URL/$VERSION/src/sip/db/version"
 
   ## Define env variables
-  if [ -f "${DATA_DIR}/pks/.install.lock" ]; then
+  if [[ -f "${DATA_DIR}/pks/.install.lock" ]]; then
     printf "  %b %b Not a new install. Edit manually .env file for any changes! %b\\n" "${TICK}" "${COL_YELLOW}" "${COL_NC}"
   else
     # Set DBTEXT as DB
