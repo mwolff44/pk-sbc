@@ -11,7 +11,7 @@ Tous les paramètres sont conservés dans un seul fichier `.env` et la configura
 
 !!! Warning
 
-    Si vous n'utilisez pas la base de données par défaut, et que vous utilisez MySQL, MariaDB ou PostgreSQL, vous devez utiliser des outils spécifiques pour la sauvegarde et la restauration.
+    Si vous n'utilisez pas la base de données par défaut, PostgreSQL, vous devez utiliser des outils spécifiques pour la sauvegarde et la restauration.
 
 Dans la grande majorité des cas, ce fichier et ce répertoire peuvent être utilisés pour restaurer un système dans un état de fonctionnement identique à ce qui fonctionnait auparavant.
 

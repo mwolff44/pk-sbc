@@ -179,6 +179,7 @@ nav:
     - Post Install: user-guide/configuration.md
     - Manage: user-guide/manage.md
   - How To:
+    - Standy Failover Setup: how-to/pks-standby-failover.md
     - Backup and Recovery: how-to/backup-recovery.md
     - How to Upgrade: how-to/upgrade.md
     - Troubleshooting: how-to/troubleshooting.md 
