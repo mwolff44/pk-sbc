@@ -1,10 +1,10 @@
-mkdocs==1.5.3
-mkdocs-git-authors-plugin==0.7.2
-mkdocs-material[imaging]==9.5.3
+mkdocs==1.6.0
+mkdocs-git-authors-plugin==0.9.0
+mkdocs-material[imaging]==9.5.28
 mkdocs-minify-plugin==0.7.2
-mkdocs-static-i18n==0.56
-mkdocs-render-swagger-plugin==0.1.1
-mkdocs-git-revision-date-localized-plugin==1.2.2
+mkdocs-static-i18n==1.2.3
+mkdocs-render-swagger-plugin==0.1.2
+mkdocs-git-revision-date-localized-plugin==1.2.6
 mkdocs-redirects==1.2.1
 mkdocs-static-i18n[material]
-mkdocs-rss-plugin==1.12.0
+mkdocs-rss-plugin==1.15.0

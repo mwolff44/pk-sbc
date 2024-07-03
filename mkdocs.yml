@@ -116,30 +116,38 @@ plugins:
   - social
   - i18n:
       docs_structure: suffix
-      default_language: en
-      default_language_only: false
-      docs_structure: suffix
+      fallback_to_default: true
       languages:
-        en: '<img style="height: 10px; border: 0px;" alt="en" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f1ec-1f1e7.svg" title="english" /> English'
-        fr: '<img style="height: 10px; border: 0px;" alt="fr" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f1eb-1f1f7.svg" title="français" /> Français'
-      nav_translations:
-        fr:
-          Welcome: Bienvenue
-          Philosophy: Philosophie
-          Differences between PyFreeBilling and PKS: Différences entre PyFreeBilling et PKS
-          Does PKS perform LCR: Est-ce que PKS fait du LCR
-          Use Cases: Cas d'Utilisation
-          Getting Started: Démarrage rapide
-          User Guide: Guide Utilisateur
-          How To: Comment Faire
-          How to Upgrade: Comment Mettre à Jour
-          Backup and Recovery: Sauvegarde et Restauration
-          Troubleshooting: Résolution de Problèmes
-          Requirements: Prérequis
-          Best Practices: Bonnes Pratiques
-          Contributing: Contribuer
-          Release Notes: Notes de Mise à Jour
-          Manage: Administrer
+        - build: true
+          default: true
+          locale: en
+          name: '<img style="height: 10px; border: 0px;" alt="en" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f1ec-1f1e7.svg"
+            title="english" /> English'
+        - build: true
+          default: false
+          locale: fr
+          name: '<img style="height: 10px; border: 0px;" alt="fr" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f1eb-1f1f7.svg"
+            title="français" /> Français'
+          nav_translations:
+            Backup and Recovery: Sauvegarde et Restauration
+            Best Practices: Bonnes Pratiques
+            Contributing: Contribuer
+            Differences between PyFreeBilling and PKS: Différences entre PyFreeBilling
+              et PKS
+            Does PKS perform LCR: Est-ce que PKS fait du LCR
+            Getting Started: Démarrage rapide
+            How To: Comment Faire
+            How to Upgrade: Comment Mettre à Jour
+            Manage: Administrer
+            Philosophy: Philosophie
+            Release Notes: Notes de Mise à Jour
+            Requirements: Prérequis
+            Troubleshooting: Résolution de Problèmes
+            Use Cases: Cas d'Utilisation
+            User Guide: Guide Utilisateur
+            Welcome: Bienvenue
+      reconfigure_material: true
+      reconfigure_search: true
   - git-revision-date-localized:
       enable_creation_date: false
       fallback_to_build_date: true
