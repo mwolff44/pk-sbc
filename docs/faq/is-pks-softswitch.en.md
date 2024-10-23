@@ -4,11 +4,6 @@
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 --->
 
----
-title: Is P-KISS-SBC a voip softswitch
-description: P-KISS-SBC is a class 4 softswitch, it interconnects VoIP networks, carriers and IPBX.
----
-
 # Is P-KISS-SBC a VoIP softswitch ?
 
 A [softswitch](https://en.wikipedia.org/wiki/Softswitch) is a software component of a telecoms network used to connect calls between subscribers or other telecoms equipment.
