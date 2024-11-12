@@ -17,7 +17,7 @@ ENV REL="5.7.4"
 ENV KAMAILIO_LOG_LEVEL info
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -qq --assume-yes gnupg wget apt-transport-https
+  DEBIAN_FRONTEND=noninteractive apt-get install -qq --assume-yes gnupg wget curl apt-transport-https
 
 # kamailio repo
 RUN echo "deb http://deb-archive.kamailio.org/repos/kamailio-$REL $DIST main" >   /etc/apt/sources.list.d/kamailio.list
