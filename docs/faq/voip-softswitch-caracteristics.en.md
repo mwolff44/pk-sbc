@@ -4,11 +4,6 @@
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 --->
 
----
-title: What are the characteristics of a class 4 softswitch
-description: Softswitches used for the transit of VoIP traffic between operators are generally called class 4 softswitches. ...
----
-
 # What are the characteristics of a class 4 softswitch ?
 
 Softswitches used for the transit of VoIP traffic between operators are generally called class 4 softswitches.
