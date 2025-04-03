@@ -1,4 +1,4 @@
-# Copyright: (c) 2007-2024 Mathias WOLFF (mathias@celea.org)
+# Copyright: (c) 2007-2025 Mathias WOLFF (mathias@celea.org)
 # GNU Affero General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/agpl-3.0.txt)
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -8,7 +8,7 @@ services:
   pks-sip:
     container_name: pks-sip
     hostname: sip.pks.local
-    image: mwolff44w/pks-sipproxy:v4.1.2
+    image: mwolff44w/pks-sipproxy:v4.2.0
     restart: unless-stopped
     volumes:
       - pks-db-data:/etc/kamailio/db:ro
@@ -132,7 +132,7 @@ services:
   pks-admin:
     container_name: pks-admin
     hostname: admin.pks.local
-    image: mwolff44w/pks-admin:v1.3.1
+    image: mwolff44w/pks-admin:v1.6.0
     restart: unless-stopped
     depends_on:
       pks-db:

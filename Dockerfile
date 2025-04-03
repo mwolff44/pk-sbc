@@ -1,4 +1,4 @@
-# Copyright: (c) 2007-2024 Mathias WOLFF (mathias@celea.org)
+# Copyright: (c) 2007-2025 Mathias WOLFF (mathias@celea.org)
 # GNU Affero General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/agpl-3.0.txt)
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -6,13 +6,13 @@ FROM debian:bookworm-slim
 
 LABEL org.opencontainers.image.authors Mathias WOLFF <mathias@celea.org>
 
-ENV REFRESHED_AT 2024-03-05
-ENV VERSION 4.1.0
+ENV REFRESHED_AT 2025-04-03
+ENV VERSION 4.2.0
 
 ENV DEBIAN_FRONTEND noninteractive
 
 ENV DIST="bookworm"
-ENV REL="5.7.4"
+ENV REL="5.7.6"
 
 ENV KAMAILIO_LOG_LEVEL info
 

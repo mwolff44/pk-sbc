@@ -13,7 +13,7 @@ export PATH+=':/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 readonly PKS_GIT_URL="https://raw.githubusercontent.com/mwolff44/pyfreebilling"
 readonly PKS_INSTALL_DIR="/srv/pks/scripts"
 readonly PKS_BIN_DIR="/usr/local/bin"
-readonly VERSION="v4.1.2"
+readonly VERSION="v4.2.0"
 
 # Install the PKS script from repository
 installScript() {
