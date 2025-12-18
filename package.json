@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@divriots/jampack": "^0.24.4"
+    "@divriots/jampack": "^0.15.0"
   },
   "scripts": {
     "optimize": "jampack --nocache ./site"
