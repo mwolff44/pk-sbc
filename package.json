@@ -1,12 +1,6 @@
 {
   "devDependencies": {
-    "@divriots/jampack": "^0.24.4",
-    "cz-conventional-changelog": "^3.3.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
+    "@divriots/jampack": "^0.24.4"
   },
   "scripts": {
     "optimize": "jampack --nocache ./site"
