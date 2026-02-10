@@ -57,3 +57,6 @@ build/*
 
 # Node
 node_modules
+
+# MkDocs generated site
+site/

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright: (c) 2007-2024 Mathias WOLFF (mathias@celea.org)
+# Copyright: (c) 2007-2026 Mathias WOLFF (mathias@celea.org)
 # GNU Affero General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/agpl-3.0.txt)
 # SPDX-License-Identifier: AGPL-3.0-or-later
 

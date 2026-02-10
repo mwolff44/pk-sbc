@@ -2,7 +2,7 @@
 
 # PKS P-KISS-SBC
 #
-# Copyright: (c) 2007-2025 Mathias WOLFF (mathias@celea.org)
+# Copyright: (c) 2007-2026 Mathias WOLFF (mathias@celea.org)
 # GNU Affero General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/agpl-3.0.txt)
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -11,7 +11,7 @@ export PATH+=':/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 
 # Variables
 VERSION="v4.2.0"
-readonly PKS_GIT_URL="https://raw.githubusercontent.com/mwolff44/pyfreebilling"
+readonly PKS_GIT_URL="https://raw.githubusercontent.com/mwolff44/pk-sbc"
 readonly DATA_DIR="/srv"
 ENV_FILE="/srv/pks/.env"
 DC_FILE="/srv/pks/docker-compose.yml"
@@ -49,7 +49,11 @@ colorFunc(){
   # shellcheck disable=SC2034
   COL_PURPLE=$'\e[0;95m'
   # shellcheck disable=SC2034
-  COL_CYAN=$'\e[0;96'
+  COL_CYAN=$'\e[0;96m'
+  # shellcheck disable=SC2034
+  COL_LIGHT_RED=$'\e[1;91m'
+  # shellcheck disable=SC2034
+  COL_WHITE=$'\e[1;97m'
 
   TICK="[${COL_GREEN}✓${COL_NC}]"
   CROSS="[${COL_RED}✗${COL_NC}]"
@@ -352,13 +356,12 @@ uninstallFunc(){
   "${DOCKER_COMPOSE[@]}" rm
   "${DOCKER_COMPOSE[@]}" rmi
   rm -rf /srv/pks* &> /dev/null
-  rm -rf /usr/src/pyfreebilling* &> /dev/null
   echo -e "  ${TICK} Removed config files"
   exit 0
 }
 
 updateFunc(){
-  read -rp "  ${QST} PKS will be updated. ${COL_BOLD}${COL_RED}PKS will be retarded${COL_NC}, are you sure ? [y/N]" answer
+  read -rp "  ${QST} PKS will be updated. ${COL_BOLD}${COL_RED}PKS will be restarted${COL_NC}, are you sure ? [y/N]" answer
   case ${answer} in
     [Yy]* ) echo -e "  ${INFO} Starting update ...";;
     * ) echo -e "${OVER}  ${COL_GREEN}Update has been canceled${COL_NC}"; exit 0;;
@@ -437,7 +440,7 @@ installFunc(){
 }
 
 checkUpdateFunc(){
-  lastRelease="$(curl --silent "https://api.github.com/repos/mwolff44/pyfreeBilling/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")'| cut -b 2-7)"
+  lastRelease="$(curl --silent "https://api.github.com/repos/mwolff44/pk-sbc/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")'| cut -b 2-7)"
   if [ "${VERSION}" == "${lastRelease}" ]; then
     echo -e "   ${TICK} You run the latest PKS version.\n"
   else
