@@ -24,7 +24,7 @@ installScript() {
     apt install -y curl
 
     install -d ${PKS_INSTALL_DIR}
-    curl -fsSL -o ${PKS_INSTALL_DIR}/pks "$PKS_GIT_URL/$VERSION/src/pks"
+    curl -fsSL -o ${PKS_INSTALL_DIR}/pks "$PKS_GIT_URL/$VERSION/deploy/pks"
     chmod +x ${PKS_INSTALL_DIR}/pks
     ln -sf ${PKS_INSTALL_DIR}/pks ${PKS_BIN_DIR}/pks
 }

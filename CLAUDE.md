@@ -10,7 +10,7 @@ P-KISS-SBC is an open-source SIP Border Controller (SBC) built on **Kamailio 5.7
 
 The system runs as a set of Docker containers orchestrated via Docker Compose:
 
-- **pks-sip** — Kamailio-based SIP proxy (core component). Configuration in `src/sip/kamailio.cfg`.
+- **pks-sip** — Kamailio-based SIP proxy (core component). Configuration in `infra/kamailio.cfg`.
 - **pks-rtp** — RTP Engine for media relay.
 - **pks-redis** — Redis for caching/session state.
 - **pks-db** — PostgreSQL 16 (also supports MySQL, SQLite, DBTEXT).
@@ -28,10 +28,10 @@ The system runs as a set of Docker containers orchestrated via Docker Compose:
 
 | File | Purpose |
 |---|---|
-| `src/sip/kamailio.cfg` | Main Kamailio SIP proxy configuration (~700 lines) |
-| `src/sip/bootstrap.sh` | Container entrypoint — generates `kamailio-local.cfg` from environment variables, detects cloud provider IPs, validates config, launches Kamailio |
-| `src/pks` | Bash CLI for managing PKS (install, start, stop, reload, debug, DB viewer) |
-| `src/sip/docker-compose.yml` | Full stack orchestration |
+| `infra/kamailio.cfg` | Main Kamailio SIP proxy configuration (~700 lines) |
+| `infra/bootstrap.sh` | Container entrypoint — generates `kamailio-local.cfg` from environment variables, detects cloud provider IPs, validates config, launches Kamailio |
+| `deploy/pks` | Bash CLI for managing PKS (install, start, stop, reload, debug, DB viewer) |
+| `infra/docker-compose.yml` | Full stack orchestration |
 | `Dockerfile` | Main Docker image (Debian Bookworm + Kamailio 5.7.6) |
 
 ### Configuration System
@@ -46,54 +46,54 @@ Database backend is selected by which `DB_*` env var is set; falls back to DBTEX
 
 Core tables: `address` (IP auth), `dialplan` (routing rules), `dispatcher` (gateways), `htable` (tenant mapping), `acc`/`acc_cdrs` (call accounting), `domain`, `dialog`, `rtpengine`.
 
-Schemas live in `src/sip/db/{postgresql,mysql,sqlite}/` with DBTEXT definitions as `.txt` files in `src/sip/db/`.
+Schemas live in `infra/db/{postgresql,mysql,sqlite}/` with DBTEXT definitions as `.txt` files in `infra/db/`.
 
 ## Build & Development Commands
 
-All Docker Compose commands run from `src/sip/` and require `/srv/pks/.env` plus `src/sip/.envrc`.
+All Docker Compose commands run from `infra/` and require `/srv/pks/.env` plus `infra/.envrc`.
 
 ```bash
 # Validate Kamailio config syntax (builds a test container)
-make -C src/sip check/proxy
+make -C infra check/proxy
 
 # Build all containers
-make -C src/sip build/proxy
+make -C infra build/proxy
 
 # Start / stop / restart the full stack
-make -C src/sip run/proxy
-make -C src/sip stop/proxy
-make -C src/sip restart/proxy
+make -C infra run/proxy
+make -C infra stop/proxy
+make -C infra restart/proxy
 
 # Start / stop just the SIP proxy
-make -C src/sip run/sipproxy
-make -C src/sip stop/sipproxy
+make -C infra run/sipproxy
+make -C infra stop/sipproxy
 
 # View logs
-make -C src/sip logs/proxy
+make -C infra logs/proxy
 
 # Container status
-make -C src/sip ps/proxy
+make -C infra ps/proxy
 ```
 
-The `src/pks` CLI wraps Docker operations for production use:
+The `deploy/pks` CLI wraps Docker operations for production use:
 ```bash
-src/pks start | stop | restart
-src/pks -r          # reload config tables (address, dialplan, tenant, dispatcher)
-src/pks -d          # live debug logs
-src/pks -s          # container status
-src/pks db          # interactive DB viewer
+deploy/pks start | stop | restart
+deploy/pks -r          # reload config tables (address, dialplan, tenant, dispatcher)
+deploy/pks -d          # live debug logs
+deploy/pks -s          # container status
+deploy/pks db          # interactive DB viewer
 ```
 
 ## Testing
 
-BDD-style tests in `src/sip/tests/` use Gherkin `.feature` files and the `voip_patrol` tool:
+BDD-style tests in `infra/tests/` use Gherkin `.feature` files and the `voip_patrol` tool:
 
 ```bash
 # Run SIP call tests (requires a running stack + voip_patrol)
-VOIP_DOMAIN=dev-voip.com FROM_CALLER=+33613000014 TOKEN_TEST=... USER_ID_TEST=... src/sip/tests/test.sh
+VOIP_DOMAIN=dev-voip.com FROM_CALLER=+33613000014 TOKEN_TEST=... USER_ID_TEST=... infra/tests/test.sh
 ```
 
-Tests iterate over SIP response codes (403, 404, 408, 486, 487, 503, 200), making calls and verifying expected responses. Test DB fixtures are in `src/sip/tests/db-test/`.
+Tests iterate over SIP response codes (403, 404, 408, 486, 487, 503, 200), making calls and verifying expected responses. Test DB fixtures are in `infra/tests/db-test/`.
 
 ## CI/CD
 

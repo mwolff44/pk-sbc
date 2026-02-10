@@ -387,13 +387,13 @@ installFunc(){
   # Create files for configuration
   [[ -f "${DATA_DIR}/pks/.env" ]] || touch "${DATA_DIR}/pks/.env"
   [[ -f "${DATA_DIR}/pks/Caddyfile" ]] || touch "${DATA_DIR}/pks/Caddyfile"
-  [[ -f "${DC_FILE}" ]] || curl -fsSL -o ${DC_FILE} "$PKS_GIT_URL/$VERSION/src/sip/docker-compose.yml"
-  # [[ -f "${DATA_DIR}/pks/db/address" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/address" "$PKS_GIT_URL/$VERSION/src/sip/db/address"
-  # [[ -f "${DATA_DIR}/pks/db/dialplan" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/dialplan" "$PKS_GIT_URL/$VERSION/src/sip/db/dialplan"
-  # [[ -f "${DATA_DIR}/pks/db/dispatcher" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/dispatcher" "$PKS_GIT_URL/$VERSION/src/sip/db/dispatcher"
-  # [[ -f "${DATA_DIR}/pks/db/htable" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/htable" "$PKS_GIT_URL/$VERSION/src/sip/db/htable"
-  # [[ -f "${DATA_DIR}/pks/db/tenant" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/tenant" "$PKS_GIT_URL/$VERSION/src/sip/db/tenant"
-  # [[ -f "${DATA_DIR}/pks/db/version" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/version" "$PKS_GIT_URL/$VERSION/src/sip/db/version"
+  [[ -f "${DC_FILE}" ]] || curl -fsSL -o ${DC_FILE} "$PKS_GIT_URL/$VERSION/infra/docker-compose.yml"
+  # [[ -f "${DATA_DIR}/pks/db/address" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/address" "$PKS_GIT_URL/$VERSION/infra/db/address"
+  # [[ -f "${DATA_DIR}/pks/db/dialplan" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/dialplan" "$PKS_GIT_URL/$VERSION/infra/db/dialplan"
+  # [[ -f "${DATA_DIR}/pks/db/dispatcher" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/dispatcher" "$PKS_GIT_URL/$VERSION/infra/db/dispatcher"
+  # [[ -f "${DATA_DIR}/pks/db/htable" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/htable" "$PKS_GIT_URL/$VERSION/infra/db/htable"
+  # [[ -f "${DATA_DIR}/pks/db/tenant" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/tenant" "$PKS_GIT_URL/$VERSION/infra/db/tenant"
+  # [[ -f "${DATA_DIR}/pks/db/version" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/version" "$PKS_GIT_URL/$VERSION/infra/db/version"
 
   ## Define env variables
   if [[ -f "${DATA_DIR}/pks/.install.lock" ]]; then

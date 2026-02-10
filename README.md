@@ -35,8 +35,8 @@ P-KISS-SBC is an open source, simple SIP Border Controller (SBC) built on **Kama
 ```bash
 git clone https://github.com/mwolff44/pk-sbc.git
 cd pk-sbc
-src/pks install
-src/pks start
+deploy/pks install
+deploy/pks start
 ```
 
 See the full documentation for environment configuration and advanced setup.

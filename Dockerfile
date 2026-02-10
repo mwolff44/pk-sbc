@@ -17,16 +17,17 @@ ENV REL="5.7.6"
 ENV KAMAILIO_LOG_LEVEL info
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -qq --assume-yes gnupg wget curl apt-transport-https
+  apt-get install -qq --assume-yes gnupg wget curl && \
+  rm -rf /var/lib/apt/lists/*
 
 # kamailio repo
-RUN echo "deb http://deb-archive.kamailio.org/repos/kamailio-$REL $DIST main" >   /etc/apt/sources.list.d/kamailio.list
-RUN wget -O /tmp/kamailiodebkey.gpg http://deb.kamailio.org/kamailiodebkey.gpg \
-  && gpg --output /etc/apt/trusted.gpg.d/deb-kamailio-org.gpg --dearmor /tmp/kamailiodebkey.gpg
-
+RUN echo "deb http://deb-archive.kamailio.org/repos/kamailio-$REL $DIST main" > /etc/apt/sources.list.d/kamailio.list && \
+  wget -O /tmp/kamailiodebkey.gpg https://deb.kamailio.org/kamailiodebkey.gpg && \
+  gpg --output /etc/apt/trusted.gpg.d/deb-kamailio-org.gpg --dearmor /tmp/kamailiodebkey.gpg && \
+  rm -f /tmp/kamailiodebkey.gpg
 
 RUN apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -qq --assume-yes \
+  apt-get install -qq --assume-yes \
   libhiredis0.14 \
   libpq5 \
   kamailio \
@@ -35,12 +36,11 @@ RUN apt-get update && \
   kamailio-utils-modules \
   kamailio-redis-modules \
   kamailio-xml-modules \
-  kamailio-postgres-modules
+  kamailio-postgres-modules && \
+  apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-COPY src/sip/kamailio.cfg /etc/kamailio/kamailio.cfg
-COPY src/sip/bootstrap.sh /etc/kamailio/bootstrap.sh
+COPY infra/kamailio.cfg /etc/kamailio/kamailio.cfg
+COPY infra/bootstrap.sh /etc/kamailio/bootstrap.sh
 RUN chmod a+x /etc/kamailio/bootstrap.sh
 
 ENTRYPOINT ["/etc/kamailio/bootstrap.sh"]
