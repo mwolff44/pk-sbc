@@ -1,4 +1,4 @@
-# Copyright: (c) 2007-2025 Mathias WOLFF (mathias@celea.org)
+# Copyright: (c) 2007-2026 Mathias WOLFF (mathias@celea.org)
 # GNU Affero General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/agpl-3.0.txt)
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -17,27 +17,27 @@ ENV REL="5.7.6"
 ENV KAMAILIO_LOG_LEVEL info
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update && \
-  apt-get install -qq --assume-yes gnupg wget curl && \
-  rm -rf /var/lib/apt/lists/*
+    apt-get install -qq --assume-yes gnupg wget curl && \
+    rm -rf /var/lib/apt/lists/*
 
 # kamailio repo
 RUN echo "deb http://deb-archive.kamailio.org/repos/kamailio-$REL $DIST main" > /etc/apt/sources.list.d/kamailio.list && \
-  wget -O /tmp/kamailiodebkey.gpg https://deb.kamailio.org/kamailiodebkey.gpg && \
-  gpg --output /etc/apt/trusted.gpg.d/deb-kamailio-org.gpg --dearmor /tmp/kamailiodebkey.gpg && \
-  rm -f /tmp/kamailiodebkey.gpg
+    wget -O /tmp/kamailiodebkey.gpg https://deb.kamailio.org/kamailiodebkey.gpg && \
+    gpg --output /etc/apt/trusted.gpg.d/deb-kamailio-org.gpg --dearmor /tmp/kamailiodebkey.gpg && \
+    rm -f /tmp/kamailiodebkey.gpg
 
 RUN apt-get update && \
-  apt-get install -qq --assume-yes \
-  libhiredis0.14 \
-  libpq5 \
-  kamailio \
-  kamailio-extra-modules \
-  kamailio-json-modules \
-  kamailio-utils-modules \
-  kamailio-redis-modules \
-  kamailio-xml-modules \
-  kamailio-postgres-modules && \
-  apt-get clean && rm -rf /var/lib/apt/lists/*
+    apt-get install -qq --assume-yes \
+    libhiredis0.14 \
+    libpq5 \
+    kamailio \
+    kamailio-extra-modules \
+    kamailio-json-modules \
+    kamailio-utils-modules \
+    kamailio-redis-modules \
+    kamailio-xml-modules \
+    kamailio-postgres-modules && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY infra/kamailio.cfg /etc/kamailio/kamailio.cfg
 COPY infra/bootstrap.sh /etc/kamailio/bootstrap.sh
