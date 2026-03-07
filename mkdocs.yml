@@ -10,7 +10,7 @@ site_author: Mathias WOLFF
 # Repository
 repo_name: mwolff44/pk-sbc
 repo_url: https://github.com/mwolff44/pk-sbc
-edit_uri: ''
+edit_uri: ""
 
 # Copyright
 copyright: >
@@ -23,8 +23,7 @@ theme:
   custom_dir: docs/theme_overrides
   features:
     - navigation.footer
-    - navigation.instant
-    - navigation.instant.progress
+
     - navigation.tracking
     - navigation.tabs
     - navigation.tabs.sticky
@@ -44,7 +43,7 @@ theme:
       scheme: default
       primary: deep purple
       toggle:
-        icon: material/weather-sunny 
+        icon: material/weather-sunny
         name: Switch to dark mode
     # Palette toggle for dark mode
     - media: "(prefers-color-scheme: dark)"
@@ -63,7 +62,7 @@ theme:
 extra:
   alternate:
     - name: English
-      link: /en/ 
+      link: /en/
       lang: en
     - name: French
       link: /fr/
@@ -77,7 +76,7 @@ extra:
       link: https://hub.docker.com/r/mwolff44w/
   consent:
     title: Cookie consent
-    description: >- 
+    description: >-
       We use cookies to recognize your repeated visits and preferences, as well
       as to measure the effectiveness of our documentation and whether users
       find what they're searching for. With your consent, you're helping us to
@@ -85,27 +84,27 @@ extra:
 
 # Extensions
 markdown_extensions:
-- abbr
-- admonition
-- attr_list
-- def_list
-- footnotes
-- md_in_html
-- pymdownx.betterem:
-    smart_enable: all
-- pymdownx.details
-- pymdownx.emoji:
-    emoji_generator: !!python/name:material.extensions.emoji.to_svg
-    emoji_index: !!python/name:material.extensions.emoji.twemoji
-- pymdownx.highlight:
-    anchor_linenums: true
-    line_spans: __span
-    pygments_lang_class: true
-- pymdownx.inlinehilite
-- pymdownx.smartsymbols
-- pymdownx.superfences
-- toc:
-    permalink: true
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - toc:
+      permalink: true
 
 # Plugins
 plugins:
@@ -121,18 +120,21 @@ plugins:
         - build: true
           default: true
           locale: en
-          name: '<img style="height: 10px; border: 0px;" alt="en" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f1ec-1f1e7.svg"
+          name:
+            '<img style="height: 10px; border: 0px;" alt="en" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f1ec-1f1e7.svg"
             title="english" /> English'
         - build: true
           default: false
           locale: fr
-          name: '<img style="height: 10px; border: 0px;" alt="fr" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f1eb-1f1f7.svg"
+          name:
+            '<img style="height: 10px; border: 0px;" alt="fr" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f1eb-1f1f7.svg"
             title="français" /> Français'
           nav_translations:
             Backup and Recovery: Sauvegarde et Restauration
             Best Practices: Bonnes Pratiques
             Contributing: Contribuer
-            Differences between PyFreeBilling and PKS: Différences entre PyFreeBilling
+            Differences between PyFreeBilling and PKS:
+              Différences entre PyFreeBilling
               et PKS
             Does PKS perform LCR: Est-ce que PKS fait du LCR
             Getting Started: Démarrage rapide
@@ -154,7 +156,7 @@ plugins:
       type: iso_date
   - git-authors
   - rss:
-      match_path: .* 
+      match_path: .*
       date_from_meta:
         as_creation: date
       categories:
@@ -164,37 +166,37 @@ plugins:
 # Page tree
 nav:
   - Home:
-    - Introduction: index.md
-    - Philosophy: philosophy.md
-    - Best Practices: bestpractices.md
-    - FAQs:
-      - Index: faq/index.md
-      - Differences between PyFreeBilling and PKS: faq/pyfreebilling-pks-differences.md
-      - Does PKS perform LCR: faq/lcr-routing.md
-    - License: license.md
-  - Use Cases: 
-    - Introduction: use-cases/usecases.md
-    - Securing VoIP system: use-cases/securing-telephony-system.md
-    - Failover: use-cases/failover.md
-    - High Availability: use-cases/ipbx-high-availability.md
-    - Geo routing: use-cases/geographical-distribution-ipbx.md
-    - Connect Multitenant IPBX: use-cases/connecting-mutitenant-ipbx-to-carrier.md
-    - Multiple Carriers: use-cases/connecting-ipbx-to-multiple-carriers.md
-  - Getting Started: 
-    - getting-started.md
-    - Requirements: user-guide/requirements.md
-    - Installation: user-guide/installation.md
-    - Post Install: user-guide/configuration.md
-    - Manage: user-guide/manage.md
+      - Introduction: index.md
+      - Philosophy: philosophy.md
+      - Best Practices: bestpractices.md
+      - FAQs:
+          - Index: faq/index.md
+          - Differences between PyFreeBilling and PKS: faq/pyfreebilling-pks-differences.md
+          - Does PKS perform LCR: faq/lcr-routing.md
+      - License: license.md
+  - Use Cases:
+      - Introduction: use-cases/usecases.md
+      - Securing VoIP system: use-cases/securing-telephony-system.md
+      - Failover: use-cases/failover.md
+      - High Availability: use-cases/ipbx-high-availability.md
+      - Geo routing: use-cases/geographical-distribution-ipbx.md
+      - Connect Multitenant IPBX: use-cases/connecting-mutitenant-ipbx-to-carrier.md
+      - Multiple Carriers: use-cases/connecting-ipbx-to-multiple-carriers.md
+  - Getting Started:
+      - getting-started.md
+      - Requirements: user-guide/requirements.md
+      - Installation: user-guide/installation.md
+      - Post Install: user-guide/configuration.md
+      - Manage: user-guide/manage.md
   - How To:
-    - Standy Failover Setup: how-to/pks-standby-failover.md
-    - Backup and Recovery: how-to/backup-recovery.md
-    - How to Upgrade: how-to/upgrade.md
-    - Troubleshooting: how-to/troubleshooting.md 
+      - Standy Failover Setup: how-to/pks-standby-failover.md
+      - Backup and Recovery: how-to/backup-recovery.md
+      - How to Upgrade: how-to/upgrade.md
+      - Troubleshooting: how-to/troubleshooting.md
   - Contributing:
-    - contributing/index.md
-    - Reporting a bug: contributing/reporting-a-bug.md
-    - Reporting a docs issue: contributing/reporting-a-docs-issue.md
-    - Requesting a change: contributing/requesting-a-change.md
-    - Asking a question: https://github.com/mwolff44/pk-sbc/discussions
+      - contributing/index.md
+      - Reporting a bug: contributing/reporting-a-bug.md
+      - Reporting a docs issue: contributing/reporting-a-docs-issue.md
+      - Requesting a change: contributing/requesting-a-change.md
+      - Asking a question: https://github.com/mwolff44/pk-sbc/discussions
   - Release Notes: changelog/index.md
