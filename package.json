@@ -5,9 +5,6 @@
   "scripts": {
     "optimize": "jampack ./site"
   },
-  "dependencies": {
-    "preline": "^1.9.0"
-  },
   "overrides": {
     "svgo": ">=3.3.3",
     "esbuild": ">=0.25.0",
