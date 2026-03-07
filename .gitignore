@@ -48,6 +48,8 @@ Temporary Items
 
 
 .env
+.envrc
+infra/docker-compose.yml.sha256
 .envs/*
 !.envs/.local/
 !.envs/.example/
@@ -57,3 +59,6 @@ build/*
 
 # Node
 node_modules
+
+# MkDocs generated site
+site/

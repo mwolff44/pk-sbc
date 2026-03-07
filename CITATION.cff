@@ -15,10 +15,10 @@ authors:
     email: mathias@celea.org
 identifiers:
   - type: url
-    value: 'https://www.pyfreebilling.com'
+    value: 'https://www.pk-sbc.io'
     description: Website
-repository-code: 'https://github.com/mwolff44/pyfreebilling'
-url: 'https://www.pyfreebilling.com'
+repository-code: 'https://github.com/mwolff44/pk-sbc'
+url: 'https://www.pk-sbc.io'
 abstract: >-
   P-KISS-SBC, is an open source simple and stupid SBC based
   on Kamailio and RTP Engine. 

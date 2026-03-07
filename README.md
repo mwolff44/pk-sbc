@@ -1,80 +1,49 @@
-# P-Kiss-SBC project
+# P-KISS-SBC
 
-![PKS release](https://img.shields.io/badge/PKS_version-4.0.3-8A2BE2)
+![PKS release](https://img.shields.io/badge/PKS_version-4.2.0-8A2BE2)
 ![Docker pks-sipproxy Pulls](https://img.shields.io/docker/pulls/mwolff44w/pks-sipproxy)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mwolff44/pyfreebilling/?branch=master)
 [![AGPLv3 License](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)](http://www.fsf.org)
-[![Donate to this project using Paypal](https://img.shields.io/badge/paypal-donate-red.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FANG9JC63Q7DY&lc=FR&item_name=PyFreeBilling&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted&pk_campaign=donation)
 
 ---
 
-## Table of content
+## What is P-KISS-SBC
 
-- About P-Kiss-SBC
-- License
-- Features
-- Prerequisites
-- Installation
-- Contact information
-- Support
-- Contributing
-- Donation
-- Stats
-
-## What is PKS : P-Kiss-SBC
-
-The new flavor of *pyfreebilling*, P-KISS-SBC, is an *open source simple and stupid SBC* based on *Kamailio* and *RTP Engine* .
-
-## License
-
-P-Kiss-SBC is under AGPLv3 license. You can read it in COPYING file.
-
-[![AGPLv3 License](https://img.shields.io/badge/license-AGPLv3-blue.svg?style=flat-square)](http://www.fsf.org)
+P-KISS-SBC is an open source, simple SIP Border Controller (SBC) built on **Kamailio**, **RTP Engine**, **Redis** and **PostgreSQL**. It interconnects IPBXs and telecom operators with SIP routing, security and multi-tenant support.
 
 ## Features
 
-There are some features supported. A few of them are:
-
-- IPBX/Customer add/modify/delete
-  - IP termination and SIP authentication (Multitenant system support)
+- **IPBX / Customer management**
+  - IP termination and SIP authentication
+  - Multi-tenant support
   - DID allocation and routing
 
-- Provider add/modify/delete
+- **Provider management**
   - Routing based on area code
-  - DID Routing
-  - Routing decision based on load balancing
-  - Limit max channels by each provider gateway (TBD)
+  - DID routing
+  - Load-balanced gateway selection
 
-- Security
-  - Blocking SIP scanner attemps
-  - Blocking fraudulent connection attempts
+- **Security**
+  - SIP scanner blocking
+  - Fraudulent connection attempt blocking
   - SQL injection detection
   - SIP header validation
 
-- Design for simplicity, reliability and scalability
+- **Design** — simplicity, reliability and scalability
 
-... and much more :)
+## Quick Start
 
-## Prerequisites
+```bash
+git clone https://github.com/mwolff44/pk-sbc.git
+cd pk-sbc
+deploy/pks install
+deploy/pks start
+```
 
-In order to run PKS, you need the following configured, secured  and
-working Basic Operating System (Linux). P-KISS-SBC works in containers, it can be deployed on any docker or Kubernetes environment.
+See the full documentation for environment configuration and advanced setup.
 
-The project uses Kamailio, RTP Engine, Redis and a Database (by default, POSTGRESQL but also support POSTGRESQL, MARIADB, MYSQL and DBTEXT).
+## Documentation
 
-## Contact Information
-
-Name: *Mathias WOLFF*
-
-Contact: [https://blog-des-telecoms.com](https://blog-des-telecoms.com)
-
-Website: [https://pk-sbc.io](https://pk-sbc.io)
-
-## Support
-
-To get free support, use github issue tab.
-
-If you need paid support, specific features or consulting services, you will find support services prices on PyFreeBilling website : [https://pk-sbc.io](https://pk-sbc.io)
+[https://pk-sbc.io](https://pk-sbc.io)
 
 ## Contributing
 
@@ -85,12 +54,18 @@ Separate proposed changes and PRs into small, distinct patches by type so that t
 - Code style
 - Documentation
 
+## Support
+
+For free support, use the [GitHub issues](https://github.com/mwolff44/pk-sbc/issues) tab.
+
+For paid support, specific features or consulting services, contact [CELEA Consulting](https://celea.org).
+
+## Author
+
+Created and maintained by [Mathias WOLFF](https://www.linkedin.com/in/mathias-wolff-47a7941/).
+
 ## Donation
 
-If you want to support my developments you are welcome to offer me a cup of coffee :)
+If you want to support the project, you are welcome to offer a cup of coffee :)
 
-[![Paypal donation](static/donate_button_red.jpg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FANG9JC63Q7DY&lc=FR&item_name=PyFreeBilling&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
-
-## Stats
-
-[![Project Stats](https://www.openhub.net/p/pyfreebilling/widgets/project_thin_badge.gif)](https://www.openhub.net/p/pyfreebilling)
+[![Donate to this project using Paypal](https://img.shields.io/badge/paypal-donate-red.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FANG9JC63Q7DY&lc=FR&item_name=P-KISS-SBC&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)

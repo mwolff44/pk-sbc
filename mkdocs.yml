@@ -1,20 +1,20 @@
-# Copyright (c) 2011-2024 Mathias WOLFF <mathias@celea.org>
+# Copyright (c) 2011-2026 Mathias WOLFF <mathias@celea.org>
 
 # Project information
 site_name: P-KISS-SBC
 site_description: >-
   Simple, high performance, robust and reliable SIP Border Controller (SBC)
-site_url: https://www.pyfreebilling.com/
+site_url: https://www.pk-sbc.io/
 site_author: Mathias WOLFF
 
 # Repository
-repo_name: mwolff44/pyfreebilling
-repo_url: https://github.com/mwolff44/pyfreebilling
+repo_name: mwolff44/pk-sbc
+repo_url: https://github.com/mwolff44/pk-sbc
 edit_uri: ''
 
 # Copyright
 copyright: >
-  Copyright &copy; 2011 - 2024 Mathias WOLFF -- 
+  Copyright &copy; 2011 - 2026 Mathias WOLFF --
   <a href="#__consent">Change cookie settings</a>
 
 # Configuration
@@ -196,5 +196,5 @@ nav:
     - Reporting a bug: contributing/reporting-a-bug.md
     - Reporting a docs issue: contributing/reporting-a-docs-issue.md
     - Requesting a change: contributing/requesting-a-change.md
-    - Asking a question: https://github.com/mwolff44/pyfreebilling/discussions
+    - Asking a question: https://github.com/mwolff44/pk-sbc/discussions
   - Release Notes: changelog/index.md

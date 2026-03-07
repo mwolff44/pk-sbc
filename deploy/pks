@@ -1,0 +1,413 @@
+#!/usr/bin/env bash
+
+# PKS P-KISS-SBC
+#
+# Copyright: (c) 2007-2026 Mathias WOLFF (mathias@celea.org)
+# GNU Affero General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/agpl-3.0.txt)
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Append common folders to the PATH to ensure that all basic commands are available.
+export PATH+=':/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+
+# Variables
+readonly VERSION="v4.2.0"
+readonly PKS_GIT_URL="https://raw.githubusercontent.com/mwolff44/pk-sbc"
+readonly DATA_DIR="/srv"
+ENV_FILE="/srv/pks/.env"
+DC_FILE="/srv/pks/docker-compose.yml"
+DC_CHECKSUM_FILE="/srv/pks/docker-compose.yml.sha256"
+DOCKER_COMPOSE=(docker compose -f "${DC_FILE}" --env-file "${ENV_FILE}")
+
+# A simple function that just echoes out our name in ASCII format
+# This lets users know that it is a P-KISS-SBC
+show_ascii_pks() {
+    echo -e "
+
+ ${COL_LIGHT_RED} _____      _     _ _____ _______ _______     _______ ______  _______
+ |_____] ___ |____/    |   |______ |______ ___ |______ |_____] |
+ |           |    \_ __|__ ______| ______|     ______| |_____] |_____
+ ${COL_NC}
+ "
+}
+
+colorFunc(){
+  COL_BOLD=$'\e[0;1m'
+  # shellcheck disable=SC2034
+  COL_ULINE=$'\e[0;4m'
+  COL_NC=$'\e[0;0m'
+  # shellcheck disable=SC2034
+  COL_GRAY=$'\e[0;90m'
+  COL_RED=$'\e[0;91m'
+  COL_GREEN=$'\e[0;92m'
+  COL_YELLOW=$'\e[0;93m'
+  # shellcheck disable=SC2034
+  COL_BLUE=$'\e[0;94m'
+  # shellcheck disable=SC2034
+  COL_PURPLE=$'\e[0;95m'
+  # shellcheck disable=SC2034
+  COL_CYAN=$'\e[0;96m'
+  # shellcheck disable=SC2034
+  COL_LIGHT_RED=$'\e[1;91m'
+  # shellcheck disable=SC2034
+  COL_WHITE=$'\e[1;97m'
+
+  TICK="[${COL_GREEN}✓${COL_NC}]"
+  CROSS="[${COL_RED}✗${COL_NC}]"
+  INFO="[i]"
+  QST="[?]"
+  DONE="${COL_GREEN} done!${COL_NC}"
+  OVER="\\r[K"
+}
+
+testDockerFunc(){
+  output=$(docker --version | grep "Docker version")
+  if [[ $(which docker) && "${output}" ]];
+  then
+      echo -e "  ${INFO} ${output}"
+  else
+      echo -e "${OVER}  ${COL_RED}Please, install docker${COL_NC}"
+      exit 1
+  fi
+  output=$(docker compose version)
+  if [[ "${output}" ]];
+  then
+      echo -e "  ${INFO} ${output}"
+  else
+      echo -e "${OVER}  ${COL_RED}Please, install docker compose v2${COL_NC}"
+      exit 1
+  fi
+}
+
+testPrerequesitesFunc(){
+  echo "test if prerequesites are respected"
+  # This gives the machine architecture which may be different from the OS architecture...
+  local machine
+  machine=$(uname -m)
+
+  local str="Detecting processor"
+  printf "  %b %s..." "${INFO}" "${str}"
+
+  # If the machine is arm or aarch
+  if [[ "${machine}" == "arm"* || "${machine}" == *"aarch"* ]]; then
+    printf "%b  %b Detected ARM* or AArch*\\n" "${OVER}" "${TICK}"
+    printf "  %b %bAutomatic installed is not supported%b\\n" "${INFO}" "${COL_LIGHT_RED}" "${COL_NC}"
+    exit 1
+  elif [[ "${machine}" == "x86_64" ]]; then
+    # This gives the processor of packages dpkg installs (for example, "i386")
+    local dpkgarch
+    dpkgarch=$(dpkg --print-processor 2> /dev/null || dpkg --print-architecture 2> /dev/null)
+
+    # Special case: This is a 32 bit OS, installed on a 64 bit machine
+    # -> change machine processor to download the 32 bit executable
+    # We only check this for Debian-based systems as this has been an issue
+    # in the past (see https://github.com/pi-hole/pi-hole/pull/2004)
+    if [[ "${dpkgarch}" == "i386" ]]; then
+      printf "%b  %b Detected 32bit (i686) processor\\n" "${OVER}" "${TICK}"
+      printf "  %b %bAutomatic installed is not supported%b\\n" "${INFO}" "${COL_LIGHT_RED}" "${COL_NC}"
+      exit 1
+    else
+      # 64bit
+      printf "%b  %b Detected x86_64 processor\\n" "${OVER}" "${TICK}"
+    fi
+  elif [[ "${machine}" == "riscv64" ]]; then
+    printf "%b  %b Detected riscv64 processor\\n" "${OVER}" "${TICK}"
+    printf "  %b %bAutomatic installed is not supported%b\\n" "${INFO}" "${COL_LIGHT_RED}" "${COL_NC}"
+    exit 1
+  else
+    # Something else - we try to use 32bit executable and warn the user
+    if [[ ! "${machine}" == "i686" ]]; then
+      printf "%b  %b %s...\\n" "${OVER}" "${CROSS}" "${str}"
+      printf "  %b %bNot able to detect processor (unknown: %s), trying x86 (32bit) executable%b\\n" "${INFO}" "${COL_LIGHT_RED}" "${machine}" "${COL_NC}"
+      printf "  %b %bAutomatic installed is not supported%b\\n" "${INFO}" "${COL_LIGHT_RED}" "${COL_NC}"
+      exit 1
+    else
+      printf "%b  %b Detected 32bit (i686) processor\\n" "${OVER}" "${TICK}"
+      printf "  %b %bAutomatic installed is not supported%b\\n" "${INFO}" "${COL_LIGHT_RED}" "${COL_NC}"
+      exit 1
+    fi
+  fi
+}
+
+startFunc(){
+  echo -e "  ${INFO} Start PKS ..."
+  "${DOCKER_COMPOSE[@]}" up -d
+}
+
+stopFunc(){
+  echo -e "  ${INFO} Stop PKS ..."
+  "${DOCKER_COMPOSE[@]}" down
+}
+
+restartFunc(){
+  echo -e "  ${INFO} Stop PKS ..."
+  "${DOCKER_COMPOSE[@]}" down
+  sleep 1
+  echo -e "  ${INFO} Start PKS ..."
+  "${DOCKER_COMPOSE[@]}" up -d
+}
+
+reloadFunc(){
+  echo "PKS will reload data from database"
+  echo "  ${INFO} Reload address table ..."
+  docker exec -t pks-sip kamcmd permissions.addressReload
+  sleep 1
+  echo "  ${INFO} Reload dialplan table ..."
+  docker exec -t pks-sip kamcmd dialplan.reload
+  sleep 1
+  echo "  ${INFO} Reload tenant table ..."
+  docker exec -t pks-sip kamcmd htable.reload tenantmap
+  sleep 1
+  echo "  ${INFO} Reload dispatcher table ..."
+  docker exec -t pks-sip kamcmd dispatcher.reload
+  echo "  ${INFO} PKS has been refreshed with latest data"
+}
+
+debugFunc(){
+  "${DOCKER_COMPOSE[@]}" logs --tail=100 -f
+}
+
+statusFunc(){
+  "${DOCKER_COMPOSE[@]}" ps
+}
+
+dbFunc(){
+  # Menu
+  PS3="Select the table to view please: "
+
+  select db in Dispatcher Tenant Dialplan Address Quit
+  do
+    case $db in
+      "Dispatcher")
+          echo "  ${INFO}Content of $db :"
+          docker exec -t pks-sip kamcmd dispatcher.list | less;;
+      "Tenant")
+          echo "  ${INFO}Content of $db :"
+          docker exec -t pks-sip kamcmd htable.dump tenantmap | less;;
+      "Dialplan")
+          read -rp "  ${QST} Do you want to see DID or external routes [dD/eE] : " answer
+            case ${answer} in
+              [Dd]* ) echo "  ${INFO}Content of DID $db :"
+                      docker exec -t pks-sip kamcmd dialplan.dump 1 | less;;
+              [Ee]* ) echo "  ${INFO}Content of DID $db :"
+                      docker exec -t pks-sip kamcmd dialplan.dump 2 | less;;
+              * ) echo -e "${OVER}  ${COL_YELLOW}Ooops - unknown choice${COL_NC}";;
+            esac;;
+      "Address")
+          echo "  ${INFO}Content of $db :"
+          docker exec -t pks-sip kamcmd permissions.addressDump | less;;
+      "Quit")
+          echo "  ${INFO}We're done"
+          break;;
+      *)
+          echo "Ooops - unknown choice";;
+    esac
+  done
+}
+
+statsFunc(){
+  docker stats
+}
+
+helpFunc(){
+  echo "Usage: pks [options]
+  Example: 'pks -r -h'
+  Add '-h' after specific commands for more information on usage
+
+  Admin Options:
+    start              start PKS
+    stop               stop PKS
+    restart            restart PKS
+    -r, reload         reload PKS
+
+  Debugging Options:
+    -d, debug          View the live output of the PKS log
+    -s, status         PKS containers status
+    db                 Database internal data
+    stats              Display a live stream of containers resource usage statistics
+
+  Options:
+    -h, --help, help   Show this help dialog
+    -v, version        Show installed version
+    uninstall          Uninstall PKS from your system
+    update             Update PKS
+
+  install              Install PKS
+  ";
+
+  exit 0
+}
+
+versionFunc(){
+  echo -e "  ${INFO} P-KISS-SBC version ${VERSION}"
+  testDockerFunc
+  checkUpdateFunc
+  exit 0
+}
+
+uninstallFunc(){
+  while true; do
+      read -rp "  ${QST} Are you sure you would like to remove ${COL_WHITE}P-KISS-SBC${COL_NC}? [y/N] " answer
+      case ${answer} in
+          [Yy]* ) break;;
+          * ) echo -e "${OVER}  ${COL_LIGHT_GREEN}Uninstall has been canceled${COL_NC}"; exit 0;;
+      esac
+  done
+  "${DOCKER_COMPOSE[@]}" down --rmi all
+  rm -rf /srv/pks &> /dev/null
+  echo -e "  ${TICK} Removed config files"
+  exit 0
+}
+
+updateFunc(){
+  read -rp "  ${QST} PKS will be updated. ${COL_BOLD}${COL_RED}PKS will be restarted${COL_NC}, are you sure ? [y/N]" answer
+  case ${answer} in
+    [Yy]* ) echo -e "  ${INFO} Starting update ...";;
+    * ) echo -e "${OVER}  ${COL_GREEN}Update has been canceled${COL_NC}"; exit 0;;
+  esac
+
+  "${DOCKER_COMPOSE[@]}" build
+  echo -e "  ${TICK} Update successfully ${DONE}"
+  restartFunc
+  exit 0
+}
+
+validate_ip() {
+  [[ "$1" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]] || {
+    echo -e "${CROSS}  ${COL_RED}Invalid IP address: $1${COL_NC}"; exit 1
+  }
+  local IFS='.'
+  read -ra octets <<< "$1"
+  for octet in "${octets[@]}"; do
+    (( octet >= 0 && octet <= 255 )) || {
+      echo -e "${CROSS}  ${COL_RED}Invalid IP address: $1${COL_NC}"; exit 1
+    }
+  done
+}
+
+validate_domain() {
+  [[ "$1" =~ ^[a-zA-Z0-9._-]+$ ]] || {
+    echo -e "${CROSS}  ${COL_RED}Invalid domain or IP address: $1${COL_NC}"; exit 1
+  }
+}
+
+installFunc(){
+
+  testPrerequesitesFunc
+
+  # Create necessary directories
+  install -d "${DATA_DIR}/pks/db"
+  install -d "${DATA_DIR}/pks/redis"
+  install -d "${DATA_DIR}/pks/caddy"
+  install -d "${DATA_DIR}/pks/caddy/config"
+  install -d "${DATA_DIR}/pks/caddy/data"
+
+  # Create files for configuration
+  [[ -f "${DATA_DIR}/pks/.env" ]] || touch "${DATA_DIR}/pks/.env"
+  [[ -f "${DATA_DIR}/pks/Caddyfile" ]] || touch "${DATA_DIR}/pks/Caddyfile"
+  if [[ ! -f "${DC_FILE}" ]]; then
+    echo -e "  ${INFO} Downloading docker-compose.yml ..."
+    curl -fsSL -o "${DC_FILE}" "$PKS_GIT_URL/$VERSION/infra/docker-compose.yml"
+    curl -fsSL -o "${DC_CHECKSUM_FILE}" "$PKS_GIT_URL/$VERSION/infra/docker-compose.yml.sha256"
+    if ! sha256sum --check --status "${DC_CHECKSUM_FILE}"; then
+      echo -e "${CROSS}  ${COL_RED}Integrity check failed — aborting installation${COL_NC}"
+      rm -f "${DC_FILE}" "${DC_CHECKSUM_FILE}"
+      exit 1
+    fi
+    echo -e "  ${TICK} Integrity check passed"
+  fi
+  # [[ -f "${DATA_DIR}/pks/db/address" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/address" "$PKS_GIT_URL/$VERSION/infra/db/address"
+  # [[ -f "${DATA_DIR}/pks/db/dialplan" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/dialplan" "$PKS_GIT_URL/$VERSION/infra/db/dialplan"
+  # [[ -f "${DATA_DIR}/pks/db/dispatcher" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/dispatcher" "$PKS_GIT_URL/$VERSION/infra/db/dispatcher"
+  # [[ -f "${DATA_DIR}/pks/db/htable" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/htable" "$PKS_GIT_URL/$VERSION/infra/db/htable"
+  # [[ -f "${DATA_DIR}/pks/db/tenant" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/tenant" "$PKS_GIT_URL/$VERSION/infra/db/tenant"
+  # [[ -f "${DATA_DIR}/pks/db/version" ]] || curl -fsSL -o "${DATA_DIR}/pks/db/version" "$PKS_GIT_URL/$VERSION/infra/db/version"
+
+  ## Define env variables
+  if [[ -f "${DATA_DIR}/pks/.install.lock" ]]; then
+    printf "  %b %b Not a new install. Edit manually .env file for any changes! %b\\n" "${TICK}" "${COL_YELLOW}" "${COL_NC}"
+  else
+    # Set PostgreSQL as DB
+    DB_PASSWORD=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 32)
+    {
+      echo "DB=PGSQL"
+      echo "DB_PGSQL=postgres://postgres:$DB_PASSWORD@127.0.0.1/pks"
+      echo "DB_DSN=postgres://postgres:$DB_PASSWORD@127.0.0.1/pks"
+      echo "POSTGRES_PASSWORD=$DB_PASSWORD"
+    } >> "${DATA_DIR}/pks/.env"
+
+    # Define IP addresses
+    read -rp "Enter public ip address: " PUBLIC_IP_ADDRESS
+    validate_ip "${PUBLIC_IP_ADDRESS}"
+    read -rp "Enter private ip address: " LOCAL_IP_ADDRESS
+    validate_ip "${LOCAL_IP_ADDRESS}"
+    REDIS_PASSWORD=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 32)
+    {
+      echo "PUBLIC_IP=$PUBLIC_IP_ADDRESS"
+      echo "LISTEN_ADVERTISE=$PUBLIC_IP_ADDRESS:5060"
+      echo "LOCAL_IP=$LOCAL_IP_ADDRESS"
+      echo "PORT_MIN=16000"
+      echo "PORT_MAX=18000"
+      echo "ENVIRONMENT=prod"
+      echo "RTPENGINE_URL=127.0.0.1"
+      echo "BIND_HTTP_IP=127.0.0.1"
+      echo "REDIS_URL=127.0.0.1"
+      echo "NOT_PROBING=true"
+      echo "REDIS_PASSWORD=$REDIS_PASSWORD"
+    } >> "${DATA_DIR}/pks/.env"
+
+    # Set domain or IP address to Caddy
+    read -rp "Enter the admin domain or IP address for the web admin: " ADMIN_DOMAIN
+    validate_domain "${ADMIN_DOMAIN}"
+    echo "ADMIN_DOMAIN=$ADMIN_DOMAIN" >> "${DATA_DIR}/pks/.env"
+    {
+      echo "$ADMIN_DOMAIN:4433 {"
+      echo "   tls internal"
+      echo "   reverse_proxy 127.0.0.1:4444"
+      echo "}"
+    } >> "${DATA_DIR}/pks/Caddyfile"
+
+  fi
+  # Add file to indicate that the 1st install has been done
+  [[ -f "${DATA_DIR}/pks/.install.lock" ]] || touch "${DATA_DIR}/pks/.install.lock"
+
+
+  printf "  %b %b Installation complete! %b\\n" "${TICK}" "${COL_LIGHT_GREEN}" "${COL_NC}"
+
+  exit 0
+}
+
+checkUpdateFunc(){
+  lastRelease="$(curl --silent "https://api.github.com/repos/mwolff44/pk-sbc/releases/latest" | grep -o '"tag_name": "[^"]*"' | cut -d'"' -f4 | cut -b 2-7)"
+  if [ "${VERSION}" == "${lastRelease}" ]; then
+    echo -e "   ${TICK} You run the latest PKS version.\n"
+  else
+    echo -e "   ${CROSS} A new PKS version is available (${lastRelease}). Think about updating.\n"
+  fi
+}
+
+###### MAIN #####
+
+colorFunc
+
+show_ascii_pks
+
+if [[ $# = 0 ]]; then
+  helpFunc
+fi
+
+case "${1}" in
+  "start"                       ) startFunc "$@";;
+  "stop"                        ) stopFunc "$@";;
+  "restart"                     ) restartFunc "$@";;
+  "-r" | "reload"               ) reloadFunc "$@";;
+  "-d" | "debug"                ) debugFunc "$@";;
+  "-s" | "status"               ) statusFunc "$@";;
+  "db"                          ) dbFunc "$@";;
+  "stats"                       ) statsFunc "$@";;
+  "-h" | "help" | "--help"      ) helpFunc;;
+  "-v" | "version"              ) versionFunc "$@";;
+  "uninstall"                   ) uninstallFunc "$@";;
+  "update"                      ) updateFunc "$@";;
+  "install"                     ) installFunc "$@";;
+  *                             ) helpFunc;;
+esac

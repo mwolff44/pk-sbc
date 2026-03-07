@@ -1,0 +1,50 @@
+name: Validate
+
+on:
+  push:
+    branches:
+      - "main"
+    tags:
+      - "v*"
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  shellcheck:
+    name: ShellCheck — deploy/pks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@2.0.0
+        with:
+          scandir: "./deploy"
+          severity: error
+
+  yaml-lint:
+    name: YAML lint — infra/docker-compose.yml
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install yamllint
+        run: pip install yamllint
+      - name: Run yamllint
+        run: yamllint infra/docker-compose.yml
+
+  release-checksum:
+    name: Generate SHA256 checksum — release only
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate SHA256 checksum
+        run: |
+          sha256sum infra/docker-compose.yml > infra/docker-compose.yml.sha256
+          cat infra/docker-compose.yml.sha256
+      - name: Upload checksum to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            infra/docker-compose.yml
+            infra/docker-compose.yml.sha256
