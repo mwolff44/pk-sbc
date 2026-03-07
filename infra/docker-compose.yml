@@ -18,11 +18,12 @@ services:
         max-size: "200k"
         max-file: "10"
     environment:
-      ENVIRONMENT: ${ENVIRONMENT:-dev}
+      ENVIRONMENT: ${ENVIRONMENT:-prod}
       LISTEN_ADVERTISE: ${LISTEN_ADVERTISE}
       KAMAILIO_LOG_LEVEL: ${KAMAILIO_LOG_LEVEL:-info}
-      RTPENGINE_URL: ${RTPENGINE_URL:-rtp.pks.local}
-      REDIS_URL: ${REDIS_URL:-redis.pks.local}
+      RTPENGINE_URL: ${RTPENGINE_URL:-127.0.0.1}
+      REDIS_URL: ${REDIS_URL:-127.0.0.1}
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
       ALIAS: ${ALIAS:-sip.pks.local}
       DB: ${DB:-}
       DB_URL: ${DB_URL:-}
@@ -49,6 +50,18 @@ services:
     hostname: redis.pks.local
     image: redis:7-alpine
     restart: unless-stopped
+    # REDIS_PASSWORD is optional — if set, Redis requires authentication.
+    # pks-sip (Kamailio) must also receive REDIS_PASSWORD to connect.
+    command: >
+      sh -c "
+        if [ -n \"$$REDIS_PASSWORD\" ]; then
+          exec redis-server --requirepass \"$$REDIS_PASSWORD\"
+        else
+          exec redis-server
+        fi
+      "
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
     expose:
       - "6379"
     logging:
@@ -65,7 +78,15 @@ services:
     hostname: rtp.pks.local
     image: mwolff44w/pks-rtpengine:v1.0.2
     restart: unless-stopped
-    privileged: true
+    # RTPEngine requires host networking for UDP media (RTP) and communicates
+    # with Kamailio on 127.0.0.1:22222 — network_mode: host is mandatory.
+    # NET_ADMIN is required for iptables/nftables kernel hooks used by RTPEngine.
+    # SYS_NICE is required for real-time scheduling of media threads.
+    cap_add:
+      - NET_ADMIN
+      - SYS_NICE
+    cap_drop:
+      - ALL
     expose:
       - "22222/udp"
     logging:
@@ -93,7 +114,7 @@ services:
     environment:
       POSTGRES_DB: pks
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pa55word}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
       PGDATA: /var/lib/postgresql/data
     expose:
       - "${POSTGRES_PORT:-5432}"
@@ -112,7 +133,7 @@ services:
   pks-proxy:
     container_name: pks-proxy
     hostname: proxy.pks.local
-    image: caddy
+    image: caddy:2.8
     restart: unless-stopped
     volumes:
       - $PWD/Caddyfile:/etc/caddy/Caddyfile
@@ -143,8 +164,8 @@ services:
         max-size: "200k"
         max-file: "10"
     environment:
-      ENVIRONMENT: ${ENVIRONMENT:-dev}
-      DB_DSN: ${DB_PGSQL:-postgres://postgres:pa55word@pks-db/pks}
+      ENVIRONMENT: ${ENVIRONMENT:-prod}
+      DB_DSN: ${DB_PGSQL:?DB_PGSQL must be set in .env}
     expose:
       - "4444"
     network_mode: host

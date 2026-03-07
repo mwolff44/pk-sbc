@@ -49,6 +49,7 @@ Temporary Items
 
 .env
 .envrc
+infra/docker-compose.yml.sha256
 .envs/*
 !.envs/.local/
 !.envs/.example/
