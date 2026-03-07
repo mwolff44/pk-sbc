@@ -60,17 +60,6 @@ deploy/pks update      # pull latest images and restart
 deploy/pks uninstall   # remove all containers and data
 ```
 
-## Testing
-
-BDD-style tests in `infra/tests/` use Gherkin `.feature` files and the `voip_patrol` tool:
-
-```bash
-# Run SIP call tests (requires a running stack + voip_patrol)
-VOIP_DOMAIN=dev-voip.com FROM_CALLER=+33613000014 TOKEN_TEST=... USER_ID_TEST=... infra/tests/test.sh
-```
-
-Tests iterate over SIP response codes (403, 404, 408, 486, 487, 503, 200), making calls and verifying expected responses. Test DB fixtures are in `infra/tests/db-test/`.
-
 ## CI/CD
 
 GitHub Actions (`.github/workflows/validate.yml`):
