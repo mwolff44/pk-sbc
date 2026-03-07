@@ -1,4 +1,4 @@
 PATH=/usr/local/bin:/usr/sbin
 
-* 07 * * * root /usr/local/bin/pks reload >> /var/log/cron.log
+0 07 * * * root /usr/local/bin/pks reload >> /var/log/cron.log
 
