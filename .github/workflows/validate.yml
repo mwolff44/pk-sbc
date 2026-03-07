@@ -20,6 +20,7 @@ jobs:
         uses: ludeeus/action-shellcheck@master
         with:
           scandir: "./deploy"
+          severity: error
 
   yaml-lint:
     name: YAML lint — infra/docker-compose.yml

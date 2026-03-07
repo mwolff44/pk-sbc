@@ -271,6 +271,25 @@ updateFunc(){
   exit 0
 }
 
+validate_ip() {
+  [[ "$1" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]] || {
+    echo -e "${CROSS}  ${COL_RED}Invalid IP address: $1${COL_NC}"; exit 1
+  }
+  local IFS='.'
+  read -ra octets <<< "$1"
+  for octet in "${octets[@]}"; do
+    (( octet >= 0 && octet <= 255 )) || {
+      echo -e "${CROSS}  ${COL_RED}Invalid IP address: $1${COL_NC}"; exit 1
+    }
+  done
+}
+
+validate_domain() {
+  [[ "$1" =~ ^[a-zA-Z0-9._-]+$ ]] || {
+    echo -e "${CROSS}  ${COL_RED}Invalid domain or IP address: $1${COL_NC}"; exit 1
+  }
+}
+
 installFunc(){
 
   testPrerequesitesFunc
@@ -308,57 +327,44 @@ installFunc(){
     printf "  %b %b Not a new install. Edit manually .env file for any changes! %b\\n" "${TICK}" "${COL_YELLOW}" "${COL_NC}"
   else
     # Set PostgreSQL as DB
-    echo "DB=PGSQL" >> "${DATA_DIR}/pks/.env"
     DB_PASSWORD=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 32)
-    echo "DB_PGSQL=postgres://postgres:$DB_PASSWORD@127.0.0.1/pks" >> "${DATA_DIR}/pks/.env"
-    echo "DB_DSN=postgres://postgres:$DB_PASSWORD@127.0.0.1/pks" >> "${DATA_DIR}/pks/.env"
-    echo "POSTGRES_PASSWORD=$DB_PASSWORD" >> "${DATA_DIR}/pks/.env"
+    {
+      echo "DB=PGSQL"
+      echo "DB_PGSQL=postgres://postgres:$DB_PASSWORD@127.0.0.1/pks"
+      echo "DB_DSN=postgres://postgres:$DB_PASSWORD@127.0.0.1/pks"
+      echo "POSTGRES_PASSWORD=$DB_PASSWORD"
+    } >> "${DATA_DIR}/pks/.env"
 
     # Define IP addresses
-    validate_ip() {
-      [[ "$1" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]] || {
-        echo -e "${CROSS}  ${COL_RED}Invalid IP address: $1${COL_NC}"; exit 1
-      }
-      local IFS='.'
-      read -ra octets <<< "$1"
-      for octet in "${octets[@]}"; do
-        (( octet >= 0 && octet <= 255 )) || {
-          echo -e "${CROSS}  ${COL_RED}Invalid IP address: $1${COL_NC}"; exit 1
-        }
-      done
-    }
-    validate_domain() {
-      [[ "$1" =~ ^[a-zA-Z0-9._-]+$ ]] || {
-        echo -e "${CROSS}  ${COL_RED}Invalid domain or IP address: $1${COL_NC}"; exit 1
-      }
-    }
-
     read -rp "Enter public ip address: " PUBLIC_IP_ADDRESS
     validate_ip "${PUBLIC_IP_ADDRESS}"
     read -rp "Enter private ip address: " LOCAL_IP_ADDRESS
     validate_ip "${LOCAL_IP_ADDRESS}"
-    echo "PUBLIC_IP=$PUBLIC_IP_ADDRESS" >> "${DATA_DIR}/pks/.env"
-    echo "LISTEN_ADVERTISE=$PUBLIC_IP_ADDRESS:5060" >> "${DATA_DIR}/pks/.env"
-    echo "LOCAL_IP=$LOCAL_IP_ADDRESS" >> "${DATA_DIR}/pks/.env"
-
-    echo "PORT_MIN=16000" >> "${DATA_DIR}/pks/.env"
-    echo "PORT_MAX=18000" >> "${DATA_DIR}/pks/.env"
-    echo "ENVIRONMENT=prod" >> "${DATA_DIR}/pks/.env"
-    echo "RTPENGINE_URL=127.0.0.1" >> "${DATA_DIR}/pks/.env"
-    echo "BIND_HTTP_IP=127.0.0.1" >> "${DATA_DIR}/pks/.env"
-    echo "REDIS_URL=127.0.0.1" >> "${DATA_DIR}/pks/.env"
-    echo "NOT_PROBING=true" >> "${DATA_DIR}/pks/.env"
     REDIS_PASSWORD=$(tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 32)
-    echo "REDIS_PASSWORD=$REDIS_PASSWORD" >> "${DATA_DIR}/pks/.env"
+    {
+      echo "PUBLIC_IP=$PUBLIC_IP_ADDRESS"
+      echo "LISTEN_ADVERTISE=$PUBLIC_IP_ADDRESS:5060"
+      echo "LOCAL_IP=$LOCAL_IP_ADDRESS"
+      echo "PORT_MIN=16000"
+      echo "PORT_MAX=18000"
+      echo "ENVIRONMENT=prod"
+      echo "RTPENGINE_URL=127.0.0.1"
+      echo "BIND_HTTP_IP=127.0.0.1"
+      echo "REDIS_URL=127.0.0.1"
+      echo "NOT_PROBING=true"
+      echo "REDIS_PASSWORD=$REDIS_PASSWORD"
+    } >> "${DATA_DIR}/pks/.env"
 
     # Set domain or IP address to Caddy
     read -rp "Enter the admin domain or IP address for the web admin: " ADMIN_DOMAIN
     validate_domain "${ADMIN_DOMAIN}"
     echo "ADMIN_DOMAIN=$ADMIN_DOMAIN" >> "${DATA_DIR}/pks/.env"
-    echo "$ADMIN_DOMAIN:4433 {" >> "${DATA_DIR}/pks/Caddyfile"
-    echo "   tls internal" >> "${DATA_DIR}/pks/Caddyfile"
-    echo "   reverse_proxy 127.0.0.1:4444" >> "${DATA_DIR}/pks/Caddyfile"
-    echo "}" >> "${DATA_DIR}/pks/Caddyfile"
+    {
+      echo "$ADMIN_DOMAIN:4433 {"
+      echo "   tls internal"
+      echo "   reverse_proxy 127.0.0.1:4444"
+      echo "}"
+    } >> "${DATA_DIR}/pks/Caddyfile"
 
   fi
   # Add file to indicate that the 1st install has been done
