@@ -1,5 +1,7 @@
+---
 # Copyright: (c) 2007-2025 Mathias WOLFF (mathias@celea.org)
-# GNU Affero General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/agpl-3.0.txt)
+# GNU Affero General Public License v3.0+ (see COPYING or
+# https://www.gnu.org/licenses/agpl-3.0.txt)
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 version: "3"
@@ -78,10 +80,11 @@ services:
     hostname: rtp.pks.local
     image: mwolff44w/pks-rtpengine:v1.0.2
     restart: unless-stopped
-    # RTPEngine requires host networking for UDP media (RTP) and communicates
-    # with Kamailio on 127.0.0.1:22222 — network_mode: host is mandatory.
-    # NET_ADMIN is required for iptables/nftables kernel hooks used by RTPEngine.
-    # SYS_NICE is required for real-time scheduling of media threads.
+    # RTPEngine requires host networking for UDP media (RTP) and
+    # communicates with Kamailio on 127.0.0.1:22222.
+    # network_mode: host is mandatory.
+    # NET_ADMIN: required for iptables/nftables kernel hooks.
+    # SYS_NICE: required for real-time scheduling of media threads.
     cap_add:
       - NET_ADMIN
       - SYS_NICE
@@ -114,7 +117,8 @@ services:
     environment:
       POSTGRES_DB: pks
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
+      POSTGRES_PASSWORD: >-
+        ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set in .env}
       PGDATA: /var/lib/postgresql/data
     expose:
       - "${POSTGRES_PORT:-5432}"
