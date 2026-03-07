@@ -81,7 +81,7 @@ Deployed to Netlify automatically. Docs source is in `docs/`.
 
 ## Code Style
 
-Per `.editorconfig`:
+Code style conventions:
 - UTF-8, LF line endings, final newline required
 - Bash scripts: follow existing indentation patterns
 - YAML/JSON: 2-space indent
