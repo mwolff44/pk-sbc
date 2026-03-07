@@ -1,14 +1,16 @@
 {
   "devDependencies": {
-    "@divriots/jampack": "^0.15.0"
+    "@divriots/jampack": "^0.34.0"
   },
   "scripts": {
-    "optimize": "jampack --nocache ./site"
+    "optimize": "jampack ./site"
   },
   "dependencies": {
     "preline": "^1.9.0"
   },
   "overrides": {
-    "svgo": ">=3.3.3"
+    "svgo": ">=3.3.3",
+    "esbuild": ">=0.25.0",
+    "undici": ">=6.21.1"
   }
 }
