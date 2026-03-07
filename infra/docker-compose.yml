@@ -98,7 +98,7 @@ services:
     expose:
       - "${POSTGRES_PORT:-5432}"
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}" ]
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -149,31 +149,28 @@ services:
       - "4444"
     network_mode: host
 
-networks:
-  main:
-
 volumes:
   pks-redis-data:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '/srv/pks/redis'
+      type: "none"
+      o: "bind"
+      device: "/srv/pks/redis"
   pks-db-data:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '/srv/pks/db'
+      type: "none"
+      o: "bind"
+      device: "/srv/pks/db"
   pks-caddy-config:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '/srv/pks/caddy/config'
+      type: "none"
+      o: "bind"
+      device: "/srv/pks/caddy/config"
   pks-caddy-data:
     driver: local
     driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '/srv/pks/caddy/data'
+      type: "none"
+      o: "bind"
+      device: "/srv/pks/caddy/data"

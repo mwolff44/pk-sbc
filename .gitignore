@@ -48,6 +48,7 @@ Temporary Items
 
 
 .env
+.envrc
 .envs/*
 !.envs/.local/
 !.envs/.example/

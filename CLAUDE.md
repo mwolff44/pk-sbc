@@ -10,7 +10,7 @@ P-KISS-SBC is an open-source SIP Border Controller (SBC) built on **Kamailio 5.7
 
 The system runs as a set of Docker containers orchestrated via Docker Compose:
 
-- **pks-sip** — Kamailio-based SIP proxy (core component). Configuration in `infra/kamailio.cfg`.
+- **pks-sip** — Kamailio-based SIP proxy (core component). Image built and maintained in a separate repository.
 - **pks-rtp** — RTP Engine for media relay.
 - **pks-redis** — Redis for caching/session state.
 - **pks-db** — PostgreSQL 16 (also supports MySQL, SQLite, DBTEXT).
@@ -28,60 +28,36 @@ The system runs as a set of Docker containers orchestrated via Docker Compose:
 
 | File | Purpose |
 |---|---|
-| `infra/kamailio.cfg` | Main Kamailio SIP proxy configuration (~700 lines) |
-| `infra/bootstrap.sh` | Container entrypoint — generates `kamailio-local.cfg` from environment variables, detects cloud provider IPs, validates config, launches Kamailio |
 | `deploy/pks` | Bash CLI for managing PKS (install, start, stop, reload, debug, DB viewer) |
-| `infra/docker-compose.yml` | Full stack orchestration |
-| `Dockerfile` | Main Docker image (Debian Bookworm + Kamailio 5.7.6) |
+| `infra/docker-compose.yml` | Full stack orchestration — downloaded to `/srv/pks/` on install |
+| `infra/template.kamailio-local.cfg` | Reference template for Kamailio local config options |
+| `infra/cron/pks` | Cron job example for scheduled reloads |
 
 ### Configuration System
 
-Kamailio uses a two-layer config approach:
-- `kamailio.cfg` — static main config with `#!define` preprocessor directives and defaults
-- `kamailio-local.cfg` — generated at container startup by `bootstrap.sh` from environment variables (`LISTEN_PUBLIC`, `LISTEN_PRIVATE`, `LISTEN_ADVERTISE`, `DB_PGSQL`/`DB_MYSQL`/`DB_SQLITE`, `RTPENGINE_URL`, `REDIS_URL`, `ANTIFLOOD`, etc.)
+Kamailio uses a two-layer config approach (managed inside the Docker image):
+- `kamailio.cfg` — static main config with `#!define` preprocessor directives and defaults (lives in the build repo)
+- `kamailio-local.cfg` — generated at container startup from environment variables (`LISTEN_PUBLIC`, `LISTEN_PRIVATE`, `LISTEN_ADVERTISE`, `DB_PGSQL`/`DB_MYSQL`/`DB_SQLITE`, `RTPENGINE_URL`, `REDIS_URL`, `ANTIFLOOD`, etc.)
 
-Database backend is selected by which `DB_*` env var is set; falls back to DBTEXT (flat files) if none.
+See `infra/template.kamailio-local.cfg` for available options. Database backend is selected by which `DB_*` env var is set; falls back to DBTEXT (flat files) if none.
 
 ### Database Tables
 
 Core tables: `address` (IP auth), `dialplan` (routing rules), `dispatcher` (gateways), `htable` (tenant mapping), `acc`/`acc_cdrs` (call accounting), `domain`, `dialog`, `rtpengine`.
 
-Schemas live in `infra/db/{postgresql,mysql,sqlite}/` with DBTEXT definitions as `.txt` files in `infra/db/`.
+## Managing PKS
 
-## Build & Development Commands
-
-All Docker Compose commands run from `infra/` and require `/srv/pks/.env` plus `infra/.envrc`.
+The `deploy/pks` CLI is the sole management tool for production use. It operates on `/srv/pks/docker-compose.yml` (downloaded from this repo during install) and `/srv/pks/.env`.
 
 ```bash
-# Validate Kamailio config syntax (builds a test container)
-make -C infra check/proxy
-
-# Build all containers
-make -C infra build/proxy
-
-# Start / stop / restart the full stack
-make -C infra run/proxy
-make -C infra stop/proxy
-make -C infra restart/proxy
-
-# Start / stop just the SIP proxy
-make -C infra run/sipproxy
-make -C infra stop/sipproxy
-
-# View logs
-make -C infra logs/proxy
-
-# Container status
-make -C infra ps/proxy
-```
-
-The `deploy/pks` CLI wraps Docker operations for production use:
-```bash
+deploy/pks install     # first-time installation
 deploy/pks start | stop | restart
 deploy/pks -r          # reload config tables (address, dialplan, tenant, dispatcher)
 deploy/pks -d          # live debug logs
 deploy/pks -s          # container status
 deploy/pks db          # interactive DB viewer
+deploy/pks update      # pull latest images and restart
+deploy/pks uninstall   # remove all containers and data
 ```
 
 ## Testing
@@ -97,10 +73,9 @@ Tests iterate over SIP response codes (403, 404, 408, 486, 487, 503, 200), makin
 
 ## CI/CD
 
-GitHub Actions (`.github/workflows/docker-image.yml`):
-- **On push to main / tags / PRs**: builds the Docker image (`linux/amd64`)
-- **On non-PR events**: pushes to Docker Hub as `mwolff44w/pks-sipproxy` with semver + SHA tags
-- Uses BuildX with GitHub Actions cache, generates SBOM/provenance on releases
+GitHub Actions (`.github/workflows/validate.yml`):
+- **On push to main / PRs**: runs ShellCheck on `deploy/pks` and yamllint on `infra/docker-compose.yml`
+- Docker image builds are handled in a separate repository; images are published to Docker Hub as `mwolff44w/pks-sipproxy`
 
 ## Documentation
 
@@ -119,6 +94,5 @@ Deployed to Netlify automatically. Docs source is in `docs/`.
 
 Per `.editorconfig`:
 - UTF-8, LF line endings, final newline required
-- Kamailio `.cfg` files and Bash scripts: follow existing indentation patterns
-- Python: 4-space indent, 120 char line length
+- Bash scripts: follow existing indentation patterns
 - YAML/JSON: 2-space indent
